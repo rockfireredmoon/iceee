@@ -394,6 +394,8 @@ public:
 	void DecrementStack(InventorySlot *slot);
 	void RunFinishedCast(bool success);
 	bool CanMoveItems(void);
+	int PopulateBookDetails(int wpos, InventoryManager &inv, int container, std::set<int> &pagesFoundSet, BookDefinition &def);
+	int PopulateBookList(int wpos, InventoryManager &inv, int container, std::set<int> &booksFound);
 
 	void SetLoadingStatus(bool status, bool shutdown);
 	void ProcessDailyRewards(unsigned int days, unsigned int level);

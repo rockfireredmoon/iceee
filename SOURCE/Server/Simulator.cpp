@@ -3197,12 +3197,20 @@ int SimulatorThread :: handle_book_get(void)
 	wpos += PutShort(&SendBuf[wpos], 0);  //Have pages
 
 	InventoryManager inv = creatureInst->charPtr->inventory;
-	int pagesFound = 0;
 	std::set<int> pagesFoundSet;
-	for(size_t a = 0; a < inv.containerList[INV_CONTAINER].size(); a++) {
-		int slot = inv.containerList[INV_CONTAINER][a].GetSlot();
-		int ID = inv.containerList[INV_CONTAINER][a].IID;
-		ItemDef *itemDef = inv.containerList[INV_CONTAINER][a].ResolveSafeItemPtr();
+	wpos = PopulateBookDetails(wpos, inv, INV_CONTAINER, pagesFoundSet, def);
+	wpos = PopulateBookDetails(wpos, inv, BOOKSHELF_CONTAINER, pagesFoundSet, def);
+	PutShort(&SendBuf[7], pagesFoundSet.size());
+	PutShort(&SendBuf[1], wpos - 3);
+	return wpos;
+}
+
+int SimulatorThread :: PopulateBookDetails(int wpos, InventoryManager &inv, int container, std::set<int> &pagesFoundSet, BookDefinition &def) {
+
+	for(size_t a = 0; a < inv.containerList[container].size(); a++) {
+		int slot = inv.containerList[container][a].GetSlot();
+		int ID = inv.containerList[container][a].IID;
+		ItemDef *itemDef = inv.containerList[container][a].ResolveSafeItemPtr();
 		if(itemDef != NULL && itemDef->mType == ItemType::SPECIAL) {
 			int pageNo = itemDef->GetDynamicMax(ItemIntegerType::BOOK_PAGE);
 			if(itemDef->GetDynamicMax(ItemIntegerType::BOOK_PAGE) == -1 && itemDef->GetDynamicMax(ItemIntegerType::BOOK) == def.bookID) {
@@ -3213,7 +3221,6 @@ int SimulatorThread :: handle_book_get(void)
 					Util::SafeFormat(Aux2, sizeof(Aux2), "%d", i);
 					wpos += PutStringUTF(&SendBuf[wpos], Aux2);
 					wpos += PutStringUTF(&SendBuf[wpos], def.pages[i].c_str());
-					pagesFound++;
 				}
 			}
 			else if(itemDef->GetDynamicMax(ItemIntegerType::BOOK) == def.bookID && pageNo > 0 && pagesFoundSet.find(pageNo) == pagesFoundSet.end()) {
@@ -3223,12 +3230,9 @@ int SimulatorThread :: handle_book_get(void)
 				Util::SafeFormat(Aux2, sizeof(Aux2), "%d", pageNo - 1);
 				wpos += PutStringUTF(&SendBuf[wpos], Aux2);
 				wpos += PutStringUTF(&SendBuf[wpos], def.pages[pageNo - 1].c_str());
-				pagesFound++;
 			}
 		}
 	}
-	PutShort(&SendBuf[7], pagesFound);
-	PutShort(&SendBuf[1], wpos - 3);
 	return wpos;
 }
 
@@ -3322,12 +3326,21 @@ int SimulatorThread :: handle_book_list(void)
 	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
 	wpos += PutShort(&SendBuf[wpos], 0);      //Books
 
-	InventoryManager inv = creatureInst->charPtr->inventory;
 	std::set<int> booksFound;
-	for(size_t a = 0; a < inv.containerList[INV_CONTAINER].size(); a++) {
-		int slot = inv.containerList[INV_CONTAINER][a].GetSlot();
-		int ID = inv.containerList[INV_CONTAINER][a].IID;
-		ItemDef *itemDef = inv.containerList[INV_CONTAINER][a].ResolveSafeItemPtr();
+	InventoryManager inv = creatureInst->charPtr->inventory;
+	wpos = PopulateBookList(wpos, inv, INV_CONTAINER, booksFound);
+	wpos = PopulateBookList(wpos, inv, BOOKSHELF_CONTAINER, booksFound);
+	PutShort(&SendBuf[7], booksFound.size());
+	PutShort(&SendBuf[1], wpos - 3);
+	return wpos;
+}
+
+int SimulatorThread :: PopulateBookList(int wpos, InventoryManager &inv, int container, std::set<int> &booksFound) {
+
+	for(size_t a = 0; a < inv.containerList[container].size(); a++) {
+		int slot = inv.containerList[container][a].GetSlot();
+		int ID = inv.containerList[container][a].IID;
+		ItemDef *itemDef = inv.containerList[container][a].ResolveSafeItemPtr();
 		if(itemDef != NULL && itemDef->mType == ItemType::SPECIAL) {
 			int book = itemDef->GetDynamicMax(ItemIntegerType::BOOK);
 			if(book > -1 && booksFound.find(itemDef->mIvMax1) == booksFound.end()) {
@@ -3347,9 +3360,9 @@ int SimulatorThread :: handle_book_list(void)
 				}
 			}
 		}
+
+
 	}
-	PutShort(&SendBuf[7], booksFound.size());
-	PutShort(&SendBuf[1], wpos - 3);
 	return wpos;
 }
 
