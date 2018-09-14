@@ -3213,7 +3213,7 @@ int SimulatorThread :: PopulateBookDetails(int wpos, InventoryManager &inv, int 
 		ItemDef *itemDef = inv.containerList[container][a].ResolveSafeItemPtr();
 		if(itemDef != NULL && itemDef->mType == ItemType::SPECIAL) {
 			int pageNo = itemDef->GetDynamicMax(ItemIntegerType::BOOK_PAGE);
-			if(itemDef->GetDynamicMax(ItemIntegerType::BOOK_PAGE) == -1 && itemDef->GetDynamicMax(ItemIntegerType::BOOK) == def.bookID) {
+			if(pageNo == -1 && itemDef->GetDynamicMax(ItemIntegerType::BOOK) == def.bookID) {
 				/* An item with ItemIntegerType::BOOK but NO ItemIntegerType::BOOK_PAGE is a complete book, so return all the pages */
 				for(int i = 0 ; i < def.pages.size(); i++) {
 					pagesFoundSet.insert(itemDef->mIvMax2);
@@ -10177,11 +10177,12 @@ int SimulatorThread :: protected_helper_query_item_morph(bool command)
 	wpos += RemoveItemUpdate(&SendBuf[wpos], Aux3, newPtr);
 	pld.charPtr->inventory.RemItem(newLook);
 
-	if(unstack) {
+	if (reagentDef != NULL) {
 		Util::SafeFormat(Aux3, sizeof(Aux3), "You have used 1 %s.", reagentDef->mDisplayName.c_str());
 		wpos += PrepExt_SendInfoMessage(&SendBuf[wpos], Aux3, INFOMSG_INFO);
+		if(unstack)
 		/* This refashion is taking up a reagent of sorts, a portable refashioner */
-		wpos += pld.charPtr->inventory.RemoveItemsAndUpdate(INV_CONTAINER, reagentDef->mID, 1, &SendBuf[wpos]);
+			wpos += pld.charPtr->inventory.RemoveItemsAndUpdate(INV_CONTAINER, reagentDef->mID, 1, &SendBuf[wpos]);
 	}
 
 	wpos += AddItemUpdate(&SendBuf[wpos], Aux3, origPtr);
@@ -15016,15 +15017,19 @@ int SimulatorThread :: handle_query_mod_craft(void)
 	STRINGVECTOR outputMsg;
 	if(g_CraftManager.RunRecipe(recipe, inputs, outputs) == true)
 	{
-		//Verify whether the items exist in the item database.
+		//Verify whether the items exist in the item database and if it is a book or not.
 		bool verified = true;
+		bool book = false;
 		for(size_t i = 0; i < outputs.size(); i++)
 		{
-			if(g_ItemManager.GetPointerByID(outputs[i].mID) == NULL)
+			ItemDef *def = g_ItemManager.GetPointerByID(outputs[i].mID);
+			if(def == NULL)
 			{
 				verified = false;
 				break;
 			}
+			else if(def->GetDynamicMax(ItemIntegerType::BOOK_PAGE) == -1 && def->GetDynamicMax(ItemIntegerType::BOOK) > 0)
+				book = true;
 		}
 
 		if(verified == true)
@@ -15036,21 +15041,24 @@ int SimulatorThread :: handle_query_mod_craft(void)
 
 			if(creatureID == creatureInst->CreatureID) {
 				free = true;
-				reagentPtr = pld.charPtr->inventory.GetBestSpecialItem(GetContainerIDFromName("inv"), PORTABLE_CRAFTKIT);
-				if(reagentPtr == NULL) {
-					return QueryErrorMsg::NOCRAFT;
-				}
-				else {
-					reagentDef = g_ItemManager.GetPointerByID(reagentPtr->IID);
-					if(reagentDef == NULL) {
+				if(!book) {
+					/* Don't need a craft kit when making books */
+					reagentPtr = pld.charPtr->inventory.GetBestSpecialItem(GetContainerIDFromName("inv"), PORTABLE_CRAFTKIT);
+					if(reagentPtr == NULL) {
 						return QueryErrorMsg::NOCRAFT;
 					}
+					else {
+						reagentDef = g_ItemManager.GetPointerByID(reagentPtr->IID);
+						if(reagentDef == NULL) {
+							return QueryErrorMsg::NOCRAFT;
+						}
 
-					/* Ok to refashion. If item is stackable, then the stack is decreased too (one-off crafting items) */
-					if(reagentPtr->ResolveItemPtr()->GetDynamicMax(ItemIntegerType::STACKING) >= 1 && reagentPtr->GetStackCount() > 0) {
-						unstack = true;
+						/* Ok to refashion. If item is stackable, then the stack is decreased too (one-off crafting items) */
+						if(reagentPtr->ResolveItemPtr()->GetDynamicMax(ItemIntegerType::STACKING) >= 1 && reagentPtr->GetStackCount() > 0) {
+							unstack = true;
+						}
+
 					}
-
 				}
 			}
 			else {
