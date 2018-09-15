@@ -3030,16 +3030,17 @@ Obj.0.markerLocations=76950.1,971.136,50176.2,9
 ID=943
 Requires=942
 Title=The Cost of Peace
-BodyText=Now that we hold the key to Valkal's fortress of death on top the hill that overlooks the Dambat Pass, your objective is clear. However don't be fooled as this undertaking will be unlike ANYTHING you have ever experienced up until now. Valkal has personally been responsible for the death of thousands and can not be taken lightly. 
+BodyText=Now that we hold the key to Valkal's fortress of death on top the hill that overlooks the Dambat Pass, your objective is clear. However don't be fooled as this undertaking will be unlike ANYTHING you have ever experienced up until now. Valkal has personally been responsible for the death of thousands and can not be taken lightly.
 
 Even once inside the Keep, Valkal is protected in his fortress by the ancient fell magics of his kind. He cannot be confronted outright by any means. The only way to reach him is to find some way to break the seal that guards him. Only then can he be defeated. Further, because the Vampires within Lord Valkal's fortress are quite likely very powerful, barring Valkal himself, it would be wise to take strong friends with you in this endeavor. I cannot stress this enough.
 
 Speak to a few of the other Redeemers before you head to the Blood Keep. They also have tasks for you. Now, go warrior! Go and put an end to the dark shadow that Valkal has cast over Swinelnad once and for all!
-
 CompleteText=So, it is finished. It is finally over! It's funny, you know. Somehow we knew the exact moment that Valkal's life ended. There was an encumberance lifted off our shoulders. Not a soul in Swineland, nay, in all of Europe, that can express the debt we owe you for what you've done. You have saved so many lives by your deeds. Thank you mighty beast! Take this small token of our gratitude, you have more then deserved it.
-Suggested=49
+Level=50
+Suggested=50
 Exp=60000
 PartySize=4
+NumRewards=0
 Coin=1000000
 Unabandon=0
 QuestGiverID=3499
@@ -3053,38 +3054,35 @@ Obj.0.type=travel
 Obj.0.data1=79393,1316,52906,9
 Obj.0.data2=250
 Obj.0.description=Enter Valkal's Blood Keep
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText= 
-Obj.0.markerLocations=79441.5,1316.56,53065.2,9
+Obj.0.completeText=
+Obj.0.markerLocations=79441.5,1316.56,53065.2,9;
 [ACT]
 Act.BodyText=Discover Valkal's weakness and destroy him.
 Obj.0.type=kill
-Obj.0.data1=1385	
+Obj.0.data1=1385
 Obj.0.data2=1
 Obj.0.description=Destroy Valkal
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText= 
-Obj.0.markerLocations=4224.67,505.417,2787.58,66
+Obj.0.completeText=
+Obj.0.markerLocations=4224.67,505.417,2787.58,66;
 [ACT]
 Act.BodyText=Return to Captain Orso Ironhide with news of your victory!
 Obj.0.type=talk
-Obj.0.data1=	
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Captain Orso Ironhide
-Obj.0.complete=0
 Obj.0.myCreatureDefID=3499
 Obj.0.myItemID=
-Obj.0.completeText= 
-Obj.0.markerLocations=76850.6,968.205,49892.6,9
+Obj.0.completeText=
+Obj.0.markerLocations=76850.6,968.205,49892.6,9;
 RewardItem.0=8701,1,1
 
 [ENTRY]
 ID=944
-Requires=943
+Requires=942
 Title=Tearing Down a Bloodline
 BodyText=Hail Hero of Swineland! I hear you are actually venturing into the Blood Keep itself to face Lord Valkal!! If anyone can put an end to his menance, it's you.
 
@@ -3097,7 +3095,7 @@ PartySize=3
 NumRewards=0
 Coin=25677
 Unabandon=0
-QuestGiverID=3499
+QuestGiverID=1319
 QuestEnderID=1319
 Repeat=0
 sGiver=76600.1,978.548,50018.3,9
@@ -3144,7 +3142,7 @@ RewardItem.0=8701,1,1
 
 [ENTRY]
 ID=945
-Requires=944
+Requires=942
 Title=Hunting Legends
 BodyText=While it is very true Valkal's Blood Keep is filled with multitudes of Vampires of all sorts, they are not the only things said to be walking its dark halls. I, and others, have heard rumors of three legendary creatures, fell creatures of might and dark power, that Valkal, himself, has personally groomed as his personal pets. It is believed he plans to eventually release these fell creatures into Swineland and use them to lay waste to this fine province and it's inhabitants.
 
@@ -3154,12 +3152,13 @@ Level=50
 Suggested=50
 Exp=25000
 PartySize=3
+NumRewards=0
 Coin=25000
 Unabandon=0
-QuestGiverID=1319
+QuestGiverID=1315
 QuestEnderID=1315
 Repeat=0
-sGiver=76600.1,978.548,50018.3,9;
+sGiver=76600.1,978.548,50018.3,9
 sEnder=76721.5,983.165,50317.4,9
 [ACT]
 Act.BodyText=Enter the Blood Keep
