@@ -1410,7 +1410,7 @@ mIvType1=12
 
 [ENTRY]
 mID=1550003
-mType=813
+mType=8
 mDisplayName=Bound Book of Wilhelm's Crypt
 mIcon=Icon-32-Book.png|Icon-32-BG-White.png
 mLevel=1
