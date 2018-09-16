@@ -16,7 +16,7 @@
 	author = "Emerald Icemoon",
 	description = "Handles the final fight!",
 	queue_events = true,
-	vm_size = 4098
+	vm_size = 8096
 }
 
 // Supporting classes
@@ -144,7 +144,7 @@ finished <- false;
 
 // Debug
 no_adds <- false;
-debug <- true;
+debug <- false;
 verbose_debug <- false;
 manual_trigger <- false;
 
