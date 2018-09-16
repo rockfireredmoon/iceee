@@ -74713,7 +74713,7 @@ profession=2
 creature_category=Unliving
 rarity=3
 base_damage_melee=422
-base_health=100000
+base_health=16384
 ai_package=custom_heathendel_deathdruid40
 total_size=2
 
