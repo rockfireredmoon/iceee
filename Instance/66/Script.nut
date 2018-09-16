@@ -459,7 +459,8 @@ function tribute() {
         if(debug)
         	inst.info("Valkal home");
         inst.queue(function() {
-        	inst.info("Finding targets");
+        	if(debug)
+        		inst.info("Finding targets");
 	        local targets = inst.get_nearby_creature(300, cid_valkal2, TS_ENEMY_ALIVE, TS_ENEMY_ALIVE, TS_ENEMY_ALIVE);
 	        if(debug) {
 	            foreach(l in targets) {
