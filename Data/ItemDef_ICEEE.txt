@@ -994,7 +994,6 @@ mSpecialItemType=3
 mQualityLevel=4
 mMinUseLevel=1
 mUseAbilityId=27005
-
 [ENTRY]
 mID=8501
 mType=3
@@ -1008,11 +1007,11 @@ mEquipType=8
 mFlavorText=It's Really Strong
 mBonusConstitution=9999
 mArmorType=4
-mArmorResistMelee=20000
-mArmorResistFire=20000
-mArmorResistFrost=20000
-mArmorResistMystic=20000
-mArmorResistDeath=20000
+mArmorResistMelee=15000
+mArmorResistFire=15000
+mArmorResistFrost=15000
+mArmorResistMystic=15000
+mArmorResistDeath=15000
 mFlavorText=It's Really Strong
 
 [ENTRY]
