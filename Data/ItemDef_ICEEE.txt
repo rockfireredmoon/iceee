@@ -521,28 +521,27 @@ mValue=20170
 mQualityLevel=6
 mMinUseLevel=50
 mFlavorText=Searoxinohn's origins aren't entirely known. Named after its owner the Ancient Demon used this blade to obliterate empires and enslave countless. A blade may not exist which has more blood on it then Searoxinohn.
-
 [ENTRY]
 mID=8201
 mType=2
 mDisplayName=Excalibur
-mAppearance=[{["a"]={["type"]="Item-1hMace-Epic4",["colors"]=["AFB1D4","AAA91A","FFFFFF","2147DF","00FF0F"],["effect"]="Par-WE-1hMace-Yellow",["node"]="left_hand"}},null]
+mAppearance=[{["a"]={["type"]="Item-1hSword-Epic2",["colors"]=["AFB1D4","AAA91A","FFFFFF","2147DF","00FF0F"],["effect"]="Par-WE-1hMace-Yellow",["node"]="left_hand"}},null]
 mIcon=Icon-32-Sword10.png|Icon-32-BG-Yellow.png
 mLevel=50
-mBindingType=2
+mValue=20170
+mMinUseLevel=50
+mQualityLevel=6
 mEquipType=1
-mMeleeCritMod=7.5
-mMagicCritMod=7.5
+mBindingType=2
+mFlavorText=The famous "Sword in the Stone" once destined for King Arthur. Stolen by the Mystarch they performed powerful magic to try and destroy the unmatched weapon.  Although somewhat succeeding the Sword is no long bound to Arthur, however still retains unimaginable powers.
+mBonusConstitution=40
+mBonusDexterity=30
+mBonusSpirit=100
+mBonusStrength=75
 mWeaponType=2
 mWeaponDamageMin=128
 mWeaponDamageMax=185
-mBonusStrength=50
-mBonusDexterity=30
-mBonusConstitution=40
-mValue=20170
-mQualityLevel=6
-mMinUseLevel=50
-mFlavorText=The famous "Sword in the Stone" once destined for King Arthur. Stolen by the Mystarch they performed powerful magic to try and destroy the unmatched weapon.  Although somewhat succeeding the Sword is no long bound to Arthur, however still retains unimaginable powers.
+mWeaponDamageMax=185
 
 [ENTRY]
 mID=8202
@@ -1253,3 +1252,45 @@ mMinUseLevel=1
 mQualityLevel=1
 mBindingType=1
 mFlavorText=Double-click to craft items wherever you are. This sturdy kit will last a lifetime!
+
+[ENTRY]
+mID=8709
+mType=2
+mDisplayName=Merlins Wand
+mAppearance=[{["a"]={["type"]="Item-1hMace-Epic4",["colors"]=["AFB1D4","AAA91A","FFFFFF","2147DF","00FF0F"],["effect"]="Par-WE-1hMace-Yellow",["node"]="left_hand"}},null]
+mIcon=Icon-32-Ability-W_Wand_Weapons_S.png|Icon-32-BG-Yellow.png
+mLevel=50
+mValue=20170
+mMinUseLevel=50
+mQualityLevel=6
+mEquipType=1
+mBindingType=2
+mFlavorText=This wand was owned by Merlin, it was believed to be made of English oak.[1] It is unconfirmed whether he made it himself or bought it. He did not always use it as he could perform Wandless magic.
+mBonusConstitution=40
+mBonusDexterity=30
+mBonusPsyche=75
+mBonusSpirit=100
+mWeaponType=5
+mWeaponDamageMin=128
+mWeaponDamageMax=185
+[ENTRY]
+mID=8710
+mType=2
+mDisplayName=Thors Hammer
+mAppearance=[{["a"]={["type"]="Item-2hMace-High1",["colors"]=["AFB1D4","AAA91A","FFFFFF","2147DF","00FF0F"],["effect"]="Par-WE-1hMace-Yellow",["node"]="left_hand"}},null]
+mIcon=Icon-32-Mace9.png|Icon-32-BG-Yellow.png
+mLevel=50
+mValue=40225
+mMinUseLevel=50
+mQualityLevel=6
+mEquipType=5
+mBindingType=2
+mFlavorText=The hammer was his primary weapon. Thor (whose name goes back to a Proto-Germanic root that means “Thunder”[1]) was the god of the storm, and thunder was experienced as being the sound of his hammer crashing down on his foes. It should come as no surprise, therefore, that the Old Norse name for his hammer, Mjöllnir, probably meant “Lightning.”
+mBonusConstitution=40
+mBonusDexterity=30
+mBonusSpirit=100
+mBonusStrength=75
+mWeaponType=2
+mWeaponDamageMin=256
+mWeaponDamageMax=390
+mWeaponDamageMax=390

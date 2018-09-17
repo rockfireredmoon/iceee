@@ -25649,18 +25649,17 @@ mMinUseLevel=1
 mID=1142367
 mType=2
 mDisplayName=Old Carved Wand
-mAppearance={["a"]={["type"]="Item-Wand-Basic4",["colors"]=["6A4909","804A2C"]}}
+mAppearance=[{["a"]={["type"]="Item-Wand-Epic7",["colors"]=["6A4909","804A2C"]}},null]
 mIcon=Icon-32-Ability-W_Wand_Weapons.png|Icon-32-BG-Purple.png
 mLevel=2
+mValue=15
+mMinUseLevel=2
 mQualityLevel=0
-mBindingType=2
 mEquipType=6
+mBindingType=2
 mWeaponType=5
 mWeaponDamageMin=10
 mWeaponDamageMax=13
-mValue=15
-mValueType=0
-mMinUseLevel=2
 
 [ENTRY]
 mID=1142368
