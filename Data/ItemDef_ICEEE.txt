@@ -526,7 +526,6 @@ mFlavorText=Searoxinohn's origins aren't entirely known. Named after its owner t
 mID=8201
 mType=2
 mDisplayName=Excalibur
-mAppearance=[{["a"]={["type"]="Item-1hMace-Epic4",["colors"]=["AFB1D4","AAA91A","FFFFFF","2147DF","00FF0F"],["effect"]="Par-WE-1hMace-Yellow",["node"]="left_hand"}},null]
 mIcon=Icon-32-Sword10.png|Icon-32-BG-Yellow.png
 mLevel=50
 mBindingType=2
@@ -667,6 +666,27 @@ mValue=22651
 mQualityLevel=6
 mMinUseLevel=50
 mFlavorText=A staff of unimaginable power the crystal shards the gravitate around the staff are said to come from a different plain entirely powers from beyond this world pulsate through arcane powerhouse. Rumor has it the wielder of Perfect Storm can control the weather using its power.
+
+[ENTRY]
+mID=8208
+mType=2
+mDisplayName=Merlins Wand
+mAppearance=[{["a"]={["type"]="Item-Wand-Epic3",["colors"]=["949494","FFFD00"],["effect"]="Par-WE-1hSword-Yellow",["node"]="left_hand"}},null]
+mIcon=Icon-32-Ability-W_Wand_Weapons_S.png|Icon-32-BG-Yellow.png
+mLevel=50
+mValue=20170
+mMinUseLevel=50
+mQualityLevel=6
+mEquipType=1
+mBindingType=2
+mFlavorText=This wand was owned by Merlin, it was believed to be made of English oak. It is unconfirmed whether he made it himself or bought it. He did not always use it as he could perform Wandless magic.
+mBonusConstitution=40
+mBonusDexterity=30
+mBonusPsyche=75
+mBonusSpirit=100
+mWeaponType=5
+mWeaponDamageMin=128
+mWeaponDamageMax=185
 
 [ENTRY]
 mID=8300
