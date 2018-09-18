@@ -144,7 +144,7 @@ finished <- false;
 
 // Debug
 no_adds <- false;
-debug <- false;
+debug <- true;
 verbose_debug <- false;
 manual_trigger <- false;
 
