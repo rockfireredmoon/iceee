@@ -372,8 +372,11 @@ function is_list_dead(l) {
 function valkal_2_pick_spot(spawns) {
 	if(is_list_dead(spawns))  {
 	    if(debug)
-			inst.info("list of " + spawns.len() + " now dead, engaging");      	
-    	valkal_2_engage();
+			inst.info("list of " + spawns.len() + " now dead, engaging");  
+			  	
+    	inst.queue(function() {    	
+    		valkal_2_engage();
+    	}, 5000);
 	}
     else {
 	    if(debug)
