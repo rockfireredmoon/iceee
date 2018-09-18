@@ -3103,8 +3103,8 @@ sEnder=76600.1,978.548,50018.3,9
 [ACT]
 Act.BodyText=Enter Valkal's Blood Keep.
 Obj.0.type=travel
-Obj.0.data1=0
-Obj.0.data2=0
+Obj.0.data1=740,660,2796,66
+Obj.0.data2=250
 Obj.0.description=Enter Valkal's Bloodkeep
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
@@ -3163,8 +3163,8 @@ sEnder=76721.5,983.165,50317.4,9
 [ACT]
 Act.BodyText=Enter the Blood Keep
 Obj.0.type=travel
-Obj.0.data1=0
-Obj.0.data2=0
+Obj.0.data1=740,660,2796,66
+Obj.0.data2=250
 Obj.0.description=Enter Valkal's Blood Keep
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
