@@ -1015,6 +1015,7 @@ mSpecialItemType=3
 mQualityLevel=4
 mMinUseLevel=1
 mUseAbilityId=27005
+
 [ENTRY]
 mID=8501
 mType=3
