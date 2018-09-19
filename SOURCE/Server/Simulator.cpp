@@ -3280,7 +3280,7 @@ int SimulatorThread :: handle_book_item(void)
 		const CraftRecipe *recipe = g_CraftManager.GetFirstRecipeForResult(bookItemId);
 		if(recipe == NULL) {
 			g_Log.AddMessageFormat("[WARNING] Request for recipe for book item that doesn't exist. Book item ID is %d", bookItemId);
-			return PrepExt_QueryResponseError(SendBuf, query.ID, "Recipe for book missing");
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "This page cannot be bound.");
 		}
 
 		std::vector<int> results;
@@ -15021,6 +15021,11 @@ int SimulatorThread :: handle_query_mod_getpet(void)
 
 int SimulatorThread :: handle_query_mod_craft(void)
 {
+	/* TODO item numbers in craft def must be sequential within their type. We need to remove
+	 * this restriction.
+	 */
+
+
 	//Requires a modded client to perform this action.
 	// Arguments: list of container/slot IDs in hexadecimal notation.
 
