@@ -3,19 +3,37 @@ TITLE=Grimm's Tales
 
 [PAGE]
 TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called "Snow White and the Seven Dvergar".
+
+The story of a beautiful princess named Snow White, fairest in the land, who is forced to flee her stepmother, the Evil Queen, and winds up living in the forest cottage of the Seven Dvergar.
 [PAGE]
 TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called "The Legend of Old Scratch".
+
+The cautionary tale of unwary Beasts who dare to explore the dark corrupted forests at night, where legend has it Old Scratch, a minion of Djall, roams, waiting to take them to the UnderRealm, never to be heard from again.
 [PAGE]
 TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called "Jack the Giant Slayer".
+
+This tale tells the story of a poor Beast named Jack who rises to fame and fortune by ridding his homeland of an invasion of Giants such as the mighty Galligantus.
 [PAGE]
 TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called "Little Red Hood and the Bad Wolf".
+
+The cautionary tale of Little Red Hood who encounters the Bad Wolf on her way to her grandmother's house deep in the woods.
 [PAGE]
 TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called "Cinderella".
+
+The story of a nobleman's daughter who, after her father's death, is forced into servitude by her wicked Step-mother and step-sisters, only to have her dreams come true thanks to her magical Godmother.
 [PAGE]
 TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called "The Sleeping Beauty".
+
+The tale of a beautiful princess who is cursed at birth by the evil sorceress Maleficent and forced to sleep for a hundred years on her sixteenth birthday.
 [PAGE]
 TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called "The Pied Piper of Hamlin".
+
+The cautionary tale of ingratitude and greed that robs the town of Hamlin of it's children to the musical prowess of the Pied Piper.
 [PAGE]
 TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called "Rumplestiltzkin".
+
+The story of a poor girl who is forced to spin flax into gold continually, unless she can guess the name of her mysterious benefactor: Rumplestiltzkin.
 [PAGE]
 TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called "Beauty and The Beast".
+
+The tale of a vain Prince who's cold unkindness results in him being cursed by a powerful sorceress and turned into a monstrous Beast until he can find someone who will look past his hideous features, showing him the meaning of selflessness and love. It also tells of the fair Beauty whose father stumbles upon the Beast's castle and is ultimately forced to exchange his only daughter's life for his own.
