@@ -651,20 +651,20 @@ mID=8207
 mType=2
 mDisplayName=Perfect Storm
 mAppearance=[{["a"]={["type"]="Item-Staff-Epic5",["effect"]="Par-WE-Staff-Green",["colors"]=["555555","3C407F","00FF0F","978F97","009409"]}},null]
-mIcon=Icon-32-Axe10.png|Icon-32-BG-Yellow.png
+mIcon=Icon-32-Staff6.png|Icon-32-BG-Yellow.png
 mLevel=50
-mBindingType=2
+mValue=22651
+mMinUseLevel=50
+mQualityLevel=6
 mEquipType=5
-mWeaponType=3
-mWeaponDamageMin=184
-mWeaponDamageMax=240
+mBindingType=2
+mFlavorText=A staff of unimaginable power the crystal shards the gravitate around the staff are said to come from a different plain entirely powers from beyond this world pulsate through arcane powerhouse. Rumor has it the wielder of Perfect Storm can control the weather using its power.
+mBonusConstitution=35
 mBonusPsyche=52
 mBonusSpirit=45
-mBonusConstitution=35
-mValue=22651
-mQualityLevel=6
-mMinUseLevel=50
-mFlavorText=A staff of unimaginable power the crystal shards the gravitate around the staff are said to come from a different plain entirely powers from beyond this world pulsate through arcane powerhouse. Rumor has it the wielder of Perfect Storm can control the weather using its power.
+mWeaponType=4
+mWeaponDamageMin=184
+mWeaponDamageMax=240
 
 [ENTRY]
 mID=8208
