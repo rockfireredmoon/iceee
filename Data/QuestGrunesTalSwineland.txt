@@ -3041,7 +3041,7 @@ sEnder=76850.6,968.205,49892.6,9
 [ACT]
 Act.BodyText=Travel up the hill and enter Valkal's Blood Keep.
 Obj.0.type=travel
-Obj.0.data1=79393,1316,52906,9
+Obj.0.data1=740,660,2796,66
 Obj.0.data2=250
 Obj.0.description=Enter Valkal's Blood Keep
 Obj.0.myCreatureDefID=
