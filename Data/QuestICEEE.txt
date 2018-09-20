@@ -32,48 +32,48 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=5628.72,682.027,5964.53,59
 RewardItem.0=8116,5,1
-
 [ENTRY]
 ID=856
 Title=What Wonderful Stories They Were
-BodyText=Greeting's welcome to Chillville! Don't let the cold bother you.. you get use to it. You'll see Winterland is a wonderful place this time of year!
-Err... well it use to be until that terrible Grindle showed up... He's using some kind of dark magic to curse Winterland it's caused all sorts of problems!!
-
-In fact I was trying to read an old Chillville tale to the children when the Holiday Tomes spouted wings and attacked us !  We managed to shoo them out of town
-but now I have nothing to read to the kids!  You look well put together can you try beating down a few of the now "Holiday Horror Books" and see if the stories can be saved?
-CompleteText=It worked!! The children thank you!! Here take this as a reward! Enjoy your stay in Winterland.
-Level=15,56
+[ENTRY]
+ID=857
+Title=BOUNTY: Frozen Slug
+BodyText=The population of Frozen Slugs is getting too large!
+Whoever kills 12 Frozen Slugs will be rewarded!
+CompleteText=Claim your reward!
+Level=15,55
 Suggested=20
-Exp=5000
+Exp=0
 PartySize=1
 NumRewards=0
-Coin=4076
-Heroism=50
+Coin=3045
+Heroism=10
 Unabandon=0
-QuestGiverID=18002
-QuestEnderID=18002
-Repeat=0
-sGiver=25716.0,132.411,33121.0,105
-sEnder=25716.0,132.411,33121.0,105
+QuestGiverID=3554
+QuestEnderID=3554
+Repeat=1
+sGiver=24120.0,122.146,32929.0,105
+sEnder=24120.0,122.146,32929.0,105
 [ACT]
-Act.BodyText=Head South across the bridge and beat 12 Twisted Holiday Books into submission
+Act.BodyText=Kill 12 Frozen Slugs
 Obj.0.type=kill
-Obj.0.data1=18006
+Obj.0.data1=18007
 Obj.0.data2=12
-Obj.0.description=Defeat 12 Twisted Holiday Tomes
+Obj.0.description=Kill 12 Frozen Slugs
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 12
-Obj.0.markerLocations=22656.0,240.607,34257.0,105;
+Obj.0.markerLocations=23479.0,111.401,32144.0,105;
 [ACT]
-Act.BodyText=Return to Thomas Frost
+Act.BodyText=Return to Bounty Board
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
-Obj.0.description=Return to Thomas Frost
-Obj.0.myCreatureDefID=
+Obj.0.description=Return to Bounty Board
+Obj.0.myCreatureDefID=3554
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=24120.0,122.146,32929.0,105;
 Obj.0.markerLocations=25716.0,132.411,33121.0,105;
 
 [ENTRY]

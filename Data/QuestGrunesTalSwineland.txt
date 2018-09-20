@@ -31,34 +31,33 @@ Obj.0.myCreatureDefID=1293
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=58229,801,67155,9;
-
 [ENTRY]
 ID=790
 Title=Caretakers of the Lanterns
-BodyText=Friend! Yes, you there! If you are headed out to the farms around Shadowfield would you be willing to perform a task for us as well? You see, we are... how to say... the 'lanternkeepers' of Grunes Tal. It is a largely thankless job and a dangerous one as well! Simply put, we are in charge of maintaining the lanterns that can be found all along the roads of Grunes Tal and here at the Hall and making certain they are kept lit. While this doesn't exactly drive off the hordes of Undead, it DOES serve to keep our paths visible; especially when travelling during the night.
+BodyText=Friend! Yes, you there! If you are headed out to the farms around Shadowfield would you be willing to perform a task for us as well? You see, we are... how to say... the 'lanternkeepers' of Grunes Tal. It is a largely thankless job and a dangerous one as well! Simply put, we are in charge of maintaining the lanterns that can be found all along the roads of Grunes Tal and here at the Hall and making certain they are kept lit. While this doesn't exactly drive off the hordes of Undead, it DOES serve to keep our paths visible; especially when traveling during the night.
 
 As for your task? Yes, well, you see... over the long years, it was discovered that the glowing iridescence within the eyes of the local Spiteful Lanterneyes lit up the night rather well. Further research discovered that this iridescence was to be found within the fluid in the eyes. Over time, some of us Redeemers found a way to preserve this fluid so that it could be used as a source of natural light. Every few months to a year or so, we go out and hunt the Lanterneyes for their eye fluid until we have a good size supply to last us for a good while. Once again, our stores of Lanterneye Eye Fluid has begun to run low and unfortunately, due to the recent activity in the area, we have been unable to go out and collect the fluid ourselves.
 
-This is where you come in! All we ask is that you gather a good... let's say...thirty...yes, fifteen vials of fluid sounds good enough... of the eye fluid from the Spiteful Lanterneyes. Once you have them, return to me and I shall pay you a fair sum for the lot.
+This is where you come in! All we ask is that you gather a good... let's say...fifteen...yes, fifteen vials of fluid sounds good enough... of the eye fluid from the Spiteful Lanterneyes. Once you have them, return to me and I shall pay you a fair sum for the lot.
 CompleteText=You have the vials of Eye Fluid! Friend, if only you knew how much time you have spared us in our already thankless task here in these dark lands. As promised, here is your reward and our thanks for your help.
 Level=42
 Suggested=43
 Exp=3921
 PartySize=1
+NumRewards=0
 Coin=1159
 Unabandon=0
 QuestGiverID=3520
 QuestEnderID=3520
 Repeat=0
-sGiver=58298,790.683,66901.5,9
-sGiver=58298,790.683,66901.5,9
+sGiver=58298.0,790.683,66901.5,9
+sEnder=0.0,0.0,0.0,0
 [ACT]
 Act.BodyText=Collect 15 vials of Lanterneye Eye Fluid from the local Spiteful Lanterneyes that roam around the farms outside the Shadowfield.
 Obj.0.type=kill
 Obj.0.data1=1210
 Obj.0.data2=15
-Obj.0.description=Gather 15 Lanterneye eye fluid vials 
-Obj.0.complete=0
+Obj.0.description=Gather 15 Lanterneye eye fluid vials
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=10000
 Obj.0.completeText=0 of 15
@@ -69,11 +68,10 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Lanternkeeper Lumin
-Obj.0.complete=0
 Obj.0.myCreatureDefID=3520
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=58298,790.683,66901.5,9;
+Obj.0.markerLocations=58298.0,790.683,66901.5,9;
 RewardItem.0=8700,1,1
 
 
@@ -320,49 +318,49 @@ RewardItem.0=8700,1,1
 [ENTRY]
 Requires=818
 ID=819
-Title=General Bodiccea
-BodyText=Now that Glutt is out of the way, we can move on Shadowfield itself. Be warned though, that the city will not be taken so easily. Stationed within the city is a warrior with a tragic story.
+[ENTRY]
+ID=820
+Title=Everlasting Regeneration
+BodyText=Listen not to the others here who scorn me, and label me vain - I am here for profit, and nothing is more profitable than taking advantage of other beasts' vanity!
 
-General Bodiccea was once a warrior of great reknown and a highly respected beast. 
+Note the undead you will encounter in this area. Yes, they are a constant menace, but they carry on quite well and keep their facilities about them rather nicely. Of utmost importance to me, however, is the distilling of whatever essence they hold which keeps that wee spark of life within them. If I could harness that without all the unsightly side effects of undead life, I could make a mint!
 
-Legend has it Bodiccea and her troops were able to hold back the Undead for several years before this region fell to their onslaught. Her last stand was in Greenfeld City, now called Shadowfield, where she and her forces fought to the last beast while the citizens were evacuated. The story goes that after several days of battle, the Undead finally infiltrated the city and slaughtered all who remained, including Bodiccea and her troops. Even in death, Bodiccea was not to be deterred and she continues to guard the Shadowfield to this very day.
+Travel south of Redeemer's Hall, and you will find a small encampment of Undead which serves as the "clinic" for any zombies needing repair. The Undead Chirurgeons within that medical camp carry upon them Scrolls of Everlasting Regeneration. I have seen those scrolls repair years of damage, and even attach severed limbs! Can you imagine what that would do for a few wrinkles?
 
-While her cause in life was selfless and noble, Bodiccea and her troops now fight mindlessly, forever trapped in bodies long since robbed of life. 
-
-Your task is to enter Shadowfield City and put to rest Bodiccea and her followers once and for all. Return to me once you have freed the General and her troops from their pain and restored those tragic heroes to Gaia's embrace.
-CompleteText=You have again returned safely! With Shadowfield City removed as a threat, we can now move supplies to and from our allies in Swineland much easier. I truly hope Bodiccea is now at peace, along with those who died with her while defending beastkind in their darkest hour here in Grunes Tal. Thank you for finally putting them to rest at last.
+Gather fifteen Everlasting Regeneration Scrolls from Undead Chirurgeons, and soon I will be able to begin my life of luxury!
+CompleteText=You have them? Excellent! Give them to me! Yes, yes! Now I can finally enjoy a long and luxurious life without worry of the effects of aging or any malady out there! What? No, you cannot have them for yourself! Take this bit of coin and be off with you!
 Level=43
-Suggested=43
-Exp=7724
+Suggested=44
+Exp=7258
 PartySize=1
-NumRewards=1
-Coin=1297
+NumRewards=0
+Coin=1127
 Unabandon=0
-QuestGiverID=1293
-QuestEnderID=1293
+QuestGiverID=1246
+QuestEnderID=1246
 Repeat=0
-sGiver=58221,792.103,67113,9
-sEnder=58221,792.103,67113,9
+sGiver=57917.6,802.236,67007.5,9
+sEnder=57917.6,802.236,67007.5,9
 [ACT]
-Act.BodyText=Kill General Bodiccea's Hordes and weaken her footholdon the Shadowfields
+Act.BodyText=Travel to the Undead camps south of Redeemer's Hall and collect fifteen Everlasting Regeneration Scrolls from the Undead Chirurgeons there.
 Obj.0.type=kill
-Obj.0.data1=1213
-Obj.0.data2=20
-Obj.0.description=Kill 20 Bodiccea Bonethrall
-Obj.0.complete=0
+Obj.0.data1=1207,1208
+Obj.0.data2=15
+Obj.0.description=Collect Everlasting Regeneration Scroll
 Obj.0.myCreatureDefID=
+Obj.0.myItemID=500121
+Obj.0.completeText=0 of 15
+Obj.0.markerLocations=55361.0,613.183,69635.0,9;
+[ACT]
+Act.BodyText=Return to Hayden Illsnor
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Hayden Illsnor
+Obj.0.myCreatureDefID=1246
 Obj.0.myItemID=
-Obj.0.completeText=0 of 20
-Obj.0.markerLocations=58834.1,976.883,63182.6,9
-Obj.1.type=kill
-Obj.1.data1=1214
-Obj.1.data2=20
-Obj.1.description=Kill 20 Bodiccea Frostthrall
-Obj.1.complete=0
-Obj.1.myCreatureDefID=
-Obj.1.myItemID=
-Obj.1.completeText=0 of 20
-Obj.1.markerLocations=58834.1,976.883,63182.6,9
+Obj.0.completeText=
+Obj.0.markerLocations=57917.6,802.236,67007.5,9;
 [ACT]
 Act.BodyText=Kill General Bodiccea 
 Obj.0.type=kill
@@ -783,103 +781,6 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=10014
 Obj.0.completeText=0 of 15
 Obj.0.markerLocations=59900.0,591.671,55525.1,9;
-Obj.0.ActivateTime=2000
-Obj.0.ActivateText=Taking the mushroom chunks...
-[ACT]
-Act.BodyText=Return to Billko
-Obj.0.type=talk
-Obj.0.data1=0
-Obj.0.data2=0
-Obj.0.description=Return to Billko
-Obj.0.myCreatureDefID=1248
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=64137.3,780.062,56620.3,9;
-
-
-[ENTRY]
-ID=829
-Title=Unholy Night
-BodyText=You! Could I speak to you for just a moment? Excellent thank you.  You seem to be helping everyone around here, quite the explorer, quite the... dare I say... Hero? Enough flattery. I wonder if you can help me with a little hunting.  We have been trying to solve the Wailing Crypt problem and restore that part of Grunes Tal to a bit of a more welcoming environment... But these accursed Wrath Stags are always grouping up near the Crypt.  They'll attack on sight and aren't as jolly as you'd think. If could take a few of them out for us, just enough to maybe scare them off or give us an advantage of numbers, we'd appreciate it. I'll reward you for your efforts of course!
-CompleteText=Amazing! You made quick of those vermin, thank you.  What?! An Alpha you say? Ah yes I think I've heard rumors of Bahmut.  Anyways here's your reward as promised.
-Level=44
-Suggested=44
-Exp=8076
-PartySize=1
-Coin=2234
-Unabandon=0
-QuestGiverID=1197
-QuestEnderID=1197
-Repeat=0
-sGiver=57964.9,809.567,66777.6,9
-sEnder=57964.9,809.567,66777.6,9
-[ACT]
-Act.BodyText=Kill 20 Wrath Stags near The Wailing Crypt
-Obj.0.type=kill
-Obj.0.data1=1228,1229
-Obj.0.data2=20
-Obj.0.description=Kill 20 Wrath Stags
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=0 of 20
-Obj.0.markerLocations=51357.5,699.868,69163.6,9;
-[ACT]
-Act.BodyText= Return to Jon Darkeye
-Obj.0.type=talk
-Obj.0.data1=0
-Obj.0.data2=0
-Obj.0.description=Return to Jon Darkeye
-Obj.0.myCreatureDefID=1197
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=57964.9,809.567,66777.6,9;
-RewardItem.0=8700,1,1
-
-[ENTRY]
-Requires=829
-ID=830
-Title=Bahmut the Red Nosed Wrath Stag
-BodyText=Thank you again for helping with the Wrath Stags, I just wish my idea would have worked.  You were right about Bahmut, he's an Alpha Wrath Stag. As long as he's around, the Wrath Stags will stay put, remaining a threat to us while we try to restore order in Grunes Tal.  You don't owe me anything, you've helped us so much, but if you can find it in yourself to travel back and eliminate Bahmut, you could be saving dozens of potential lives!
-CompleteText=You did it! My reports have said that the Wrath Stags have become a bit more timid and aren't showing as much aggression now that you cut the head off the snake.  I can't thank you enough! I know it's not much but here take this coin, and take this too. It was my fathers, but I want you to have it.
-Level=44
-Suggested=45
-Exp=8127
-PartySize=2
-NumRewards=1
-Coin=2340
-Unabandon=0
-QuestGiverID=1197
-QuestEnderID=1197
-Repeat=0
-sGiver=57964.9,809.567,66777.6,9
-sEnder=57964.9,809.567,66777.6,9
-[ACT]
-Act.BodyText=Travel to Wrath Stag grounds near the Wailing Crypt and Kill Bahmut
-Obj.0.type=kill
-Obj.0.data1=1232
-Obj.0.data2=1
-Obj.0.description=Kill Bahmut
-Obj.0.complete=0
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=0 of 1
-Obj.0.markerLocations=51357.5,699.868,69163.6,9
-[ACT]
-Act.BodyText= Return to Jon Darkeye
-Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
-Obj.0.description=Return to Jon Darkeye
-Obj.0.complete=0
-Obj.0.myCreatureDefID=1197
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=57964.9,809.567,66777.6,9
-RewardItem.0=10020,1,0
-RewardItem.1=10021,1,0
-RewardItem.2=10022,1,0
-RewardItem.3=10023,1,0
-
 [ENTRY]
 ID=831
 Title=Haunted Hill
@@ -898,8 +799,8 @@ The Folkirk family however, was not amused. Not a single Beast was let inside th
 
 Most of the resistance died within a week, if they could flee, less if not. Their vengeance-hungry ghosts still haunt that hill outside the manor to this day, but there is some justice in that the Folkirk family seems to have been "turned" into undead as well.
 
-I cannot bear the anguished cries the wind carries any longer! Please, travel to Haunted Hill north of Redeemer's Hall. Put the Vengance-Singers out of their misery by freeing eleven of them from this realm.
-CompleteText=Ah, at last, the anguished cries on the wind are no more! After you left I heard the cries of the Singers again for a short time, yet soon all went quiet. I was certain the sudden silence was your handiwork and I was right! Finally I can have some peace around here, not that there is much peace in a land filled with undead mind you, yet I will take what I can get!
+I cannot bear the anguished cries the wind carries any longer! Please, travel to Haunted Hill north of Redeemer's Hall. Put the Vengeance-Singers out of their misery by freeing eleven of them from this realm.
+CompleteText=Ah, at last, the anguished cries on the wind are no more! After you left, I heard the cries of the Singers again for a short time, yet soon all went quiet. I was certain the sudden silence was your handiwork and I was right! Finally I can have some peace around here, not that there is much peace in a land filled with undead mind you, yet I will take what I can get!
 
 At any rate, I can only hope those poor souls are finally at peace. I wish upon no beast the horrible fate they had to endure. Thanks again for your help!
 Level=44
@@ -934,7 +835,26 @@ Obj.0.myCreatureDefID=1199
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=58079.8,803.302,66771.8,9;
-
+ID=830
+Title=Bahmut the Red Nosed Wrath Stag
+BodyText=Thank you again for helping with the Wrath Stags, I just wish my idea would have worked.  You were right about Bahmut, he's an Alpha Wrath Stag. As long as he's around, the Wrath Stags will stay put, remaining a threat to us while we try to restore order in Grunes Tal.  You don't owe me anything, you've helped us so much, but if you can find it in yourself to travel back and eliminate Bahmut, you could be saving dozens of potential lives!
+CompleteText=You did it! My reports have said that the Wrath Stags have become a bit more timid and aren't showing as much aggression now that you cut the head off the snake.  I can't thank you enough! I know it's not much but here take this coin, and take this too. It was my fathers, but I want you to have it.
+Level=44
+Suggested=45
+Exp=8127
+PartySize=2
+NumRewards=1
+Coin=2340
+Unabandon=0
+QuestGiverID=1197
+QuestEnderID=1197
+Repeat=0
+sGiver=57964.9,809.567,66777.6,9
+sEnder=57964.9,809.567,66777.6,9
+[ACT]
+Act.BodyText=Travel to Wrath Stag grounds near the Wailing Crypt and Kill Bahmut
+Obj.0.type=kill
+Obj.0.data1=1232
 [ENTRY]
 ID=844
 Title=Foresight Of The Elders
@@ -950,6 +870,76 @@ During the Outcast Wars, the Elders located one of these relics and stashed it a
 
 After the Undead invaded and emptied the lands of Grunes Tal of most anything living, few if any with breath still in them have been near that crypt. Yet with the Undead presence, it is quite likely that anyone resting within that place has long since been revived.
 
+We here at Redeemer's Hall feel the time has come to retrieve the relic Mason had buried with him and fulfill the purpose for which it was originally obtained. Thus, I task you with entering the Crypt and locating Mason Stromfeld's tomb. Inside you should find the relic among his bones. If the forces of Abidan have indeed revived him, there is a chance you will have to destroy him before claiming the item. We know not what exactly this relic is, yet Mason's tomb is it's resting place. Once you have it, return to me. Now hurry up and get out of here!
+CompleteText=So, you survived did you? And you have the relic? Good, let me see it!
+
+...
+
+So, that's what it looks like. Hmm, I must say I wasn't expecting anything of this sort really. Anyway, on to the next task!
+Level=45
+Suggested=46
+Exp=11842
+PartySize=3
+NumRewards=0
+Coin=2318
+Unabandon=0
+QuestGiverID=1247
+QuestEnderID=1247
+Repeat=0
+sGiver=58209.1,787.832,66820.6,9
+sEnder=58209.1,787.832,66820.6,9
+[ACT]
+Act.BodyText=Travel to the Wailing Crypt
+Obj.0.type=travel
+Obj.0.data1=52248,652,68636,9
+Obj.0.data2=250
+Obj.0.description=Travel to the Wailing Crypt
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=52248.0,652.907,68636.1,9;
+[ACT]
+Act.BodyText=Enter the Wailing Crypt
+Obj.0.type=travel
+Obj.0.data1=2125,660,597,56
+Obj.0.data2=250
+Obj.0.description=Enter the Wailing Crypt
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=
+[ACT]
+Act.BodyText=Find Mason Stromfeld and take the Age of Man Relic from his coffin. You may have to kill him to accomplish this task.
+Obj.0.type=kill
+Obj.0.data1=3674
+Obj.0.data2=1
+Obj.0.description=Kill Mason Stromfeld
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=3306.31,600.0,791.158,56;
+[ACT]
+Act.BodyText=Take the unguarded relic from it's hiding place in the coffin.
+Obj.0.type=activate
+Obj.0.data1=7795
+Obj.0.data2=1
+Obj.0.description=Take the unguarded relic
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=10012
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=3306.31,600.0,791.158,56;
+Obj.0.ActivateTime=4000
+Obj.0.ActivateText=Taking the relic...
+[ACT]
+Act.BodyText= Return to Sarayn Nexsol
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Sarayn Nexsol
+Obj.0.myCreatureDefID=1247
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=58209.1,787.832,66820.6,9;
 We here at Redeemer's Hall feel the time has come to retrieve the relic Mason had buried with him and fulfill the purpose for which it was originally obtained. Thus, I task you with entering the Crypt and locating Mason Stromfeld's tomb. Inside you should find the relic among his bones. If the forces of Abidan have indeed revived him, there is a chance you will have to destroy him before claiming the item. We know not what exactly this relic is, yet Mason's tomb is it's resting place. Once you have it, return to me. Now hurry up and get out of here!
 CompleteText=So, you survived did you? And you have the relic? Good, let me see it!
 
@@ -1434,12 +1424,11 @@ Obj.0.myCreatureDefID=3521
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=58337.0,789.456,66885.7,9;
-
 [ENTRY]
 ID=855
 Requires=854
 Title=Creatures of Grunes Tal Part 2
-BodyText=The wolf packs may be decreasing in size but those massive Deathweaver spiders are everywhere. Go exterminate a few of them off and I'll once again reward you.
+BodyText=The wolf packs may be decreasing in size but those massive Deathweaver spiders are everywhere. Go exterminate a few of them and I'll once again reward you.
 CompleteText=Those spiders didn't have a chance did they?! Excellent, there are a few more creatures that need dealing with though.
 Level=43
 Suggested=43
@@ -1472,6 +1461,7 @@ Obj.0.description=Return to Lanternkeeper Rosco
 Obj.0.myCreatureDefID=3521
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=58337.0,789.456,66885.7,9;
 Obj.0.markerLocations=58337.0,789.456,66885.7,9;
 
 [ENTRY]
@@ -1506,14 +1496,13 @@ Obj.0.myCreatureDefID=1318
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=73239.8,856.26,60816.6,9;
-
 [ENTRY]
 ID=901
 Requires=900
 Title=Black Gold
 BodyText=Unikorns are a necessary evil in this land, foul as their presence may be. We do our best to keep the population healthy, but never so large a herd that they are uncontrollable.
 
-You see, the local Night-Mares provide us Redeemers with a valuable resource: Vile Bihyl. This thick ichor, extracted from Night-Mare spleens protects us against vampires by turning our blood repugnant to vampires. The taste is foul beyond measure, but a necessary evil if you wish to survive here at the Front Line.
+You see, the local Night-Mares provide us Redeemers with a valuable resource: Vile Bihyl. This thick ichor, extracted from Night-Mare spleens, protects us against vampires by turning our blood repugnant to vampires. The taste is foul beyond measure, but a necessary evil if you wish to survive here at the Front Line.
 
 Take to the wilds and harvest eight pints of Vile Bihyl from Night-Mares, and kill twelve of their handlers, the Valkal Steedmasters. It may save your own life one day!
 CompleteText=Excellent work! This will replenish our supply as well as allow us to treat more Redeemer blood and increase our numbers in the fight against Valkal's legions.
@@ -1556,6 +1545,7 @@ Obj.0.description=Return to Damian Talamasca
 Obj.0.myCreatureDefID=1318
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=73239.8,856.26,60816.6,9;
 Obj.0.markerLocations=73239.8,856.26,60816.6,9;
 
 [ENTRY]
@@ -1610,7 +1600,6 @@ Obj.0.myCreatureDefID=1300
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=73175.5,856.287,60806.4,9;
-
 [ENTRY]
 ID=903
 Requires=902
@@ -1619,9 +1608,9 @@ BodyText=Justi Ambereye, once one of the most adored of The Redeemers, now roams
 
 The Ursine's gentle paws had saved countless lives, ruled fairly in the council, and even taught my son to fish after the death of his father. Now, he bears the same face, and with twisted savagery has torn apart several of his family and friends.
 
-You see, the Vampires knew what a strategist Justi was, and he brought The Redeemers so very close to defeating the entire brood before they took him. Vampires have not been known to "turn"beasts, I do not even believe they can! Yet one of their mages had sucessfully ensorcelled poor Justi into believing he was of Vampire-Kind! And he believes it today - living in the wastes as a heartless, killing machine.
+You see, the Vampires knew what a strategist Justi was, and he brought The Redeemers so very close to defeating the entire brood before they took him. Vampires have not been known to "turn" beasts, I do not even believe they can! Yet one of their mages had successfully ensorcelled poor Justi into believing he was of Vampire-Kind! And he believes it today - living in the wastes as a heartless, killing machine.
 
-I cannot stand for this to continue! The beast that once was, no longer exists. He serves no real threat to The Redeemers, but seeing one of our "family"so defiled is an affront to all that exists!
+I cannot stand for this to continue! The beast that once was, no longer exists. He serves no real threat to The Redeemers, but seeing one of our "family" so defiled is an affront to all that exists!
 
 Travel to Old Scraptown, as Justi was seen there last. Bring him peace, friend, and return to me with the Ambereye Signet Ring.
 CompleteText=Justi.... He was the best of us and they got him.  Everything he worked so hard to do was undone... His death won't be in vain! Thank you for bringing him peace.
@@ -1656,6 +1645,7 @@ Obj.0.description=Return to Damian Talamasca
 Obj.0.myCreatureDefID=1318
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=73239.8,856.26,60816.6,9;
 Obj.0.markerLocations=73239.8,856.26,60816.6,9;
 
 [ENTRY]
@@ -1958,24 +1948,6 @@ Level=44
 Suggested=44
 Exp=8342
 PartySize=1
-Coin=3739
-Unabandon=0
-QuestGiverID=1304
-QuestEnderID=1322
-Repeat=0
-sGiver=73527.3,879.169,60373.5,9
-sEnder=62380.9,393.845,48938.6,9
-[ACT]
-Act.BodyText=Travel to Nook Town and speak to the Great Speaker of Nook.
-Obj.0.type=talk
-Obj.0.data1=0
-Obj.0.data2=0
-Obj.0.description=Find the Great Speaker of Nook
-Obj.0.myCreatureDefID=1322
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=62380.9,393.845,48938.6,9;
-
 [ENTRY]
 ID=911
 Requires=905
@@ -1999,7 +1971,7 @@ Repeat=0
 sGiver=76647.6,979.647,50172.0,9
 sEnder=76647.6,979.647,50172.0,9
 [ACT]
-Act.BodyText=Defeat twenty of the bloodsuckers roaming around the place so you can search in peace!
+Act.BodyText=Defeat fifteen of the bloodsuckers roaming around the place so you can search in peace!
 Obj.0.type=kill
 Obj.0.data1=1347,1348,1350,1349,1417,7750
 Obj.0.data2=20
@@ -2009,20 +1981,37 @@ Obj.0.myItemID=
 Obj.0.completeText=0 of 15
 Obj.0.markerLocations=79042.1,1297.9,52837.1,9;
 [ACT]
-Act.BodyText=Search the Blood Keep grounds for clues on how to gain entry into the Keep itself. 
+Act.BodyText=Search the Blood Keep grounds for clues on how to gain entry into the Keep itself.
 Obj.0.type=travel
 Obj.0.data1=79133,1299,52748,9
 Obj.0.data2=100
 Obj.0.description=Search the grounds for clues
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
+Obj.0.completeText=
 Obj.0.markerLocations=
-Obj.0.completeText=   
 [ACT]
-Act.BodyText=You see a worn and blood spattered message running around the edge of fountain.  
+Act.BodyText=You see a worn and blood spattered message running along the edge of a fountain.
 Obj.0.type=activate
 Obj.0.data1=7883
 Obj.0.data2=1
+Obj.0.description=Examine the inscribed message.
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=You memorise the words of the message
+Obj.0.markerLocations=79133.0,1299.0,52748.0,9;
+Obj.0.ActivateTime=5000
+Obj.0.ActivateText=Examining the inscribed message ...
+[ACT]
+Act.BodyText=Return to Alain Darkfeather with your discovery.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Alain Darkfeather
+Obj.0.myCreatureDefID=1319
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=76647.6,979.647,50172.0,9;
 Obj.0.description=Examine the inscribed message.
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
@@ -2125,19 +2114,19 @@ Obj.0.myCreatureDefID=1307
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=76840.2,970.62,49964.3,9;
-
 [ENTRY]
 ID=914
 Requires=912
 Title=A Possible Bloodkin Raid
 BodyText=Hey, I heard you're headed to the Old Wartown Cemetery. Dangerous place, keep your wits about you! I wonder if you can do the Redeemers another favor while you're over there. I was doing my midnight patrol the other day when I spotted a sizable Vampire pack headed in the direction of Wartown. Assuming it was a raid I quickly followed them, but suddenly they seemed to vanish out of sight. My only thought is they are hiding out in the old Mausoleum until they are ready to attack.
 
-To make things worse a Giant Vampider recently took refuge outside the Mausoleum door.  I doubt its a coincedence!  Kill the Vampider and 20 of Valkal's kin as well! Show them they aren't as clever as they think.
+To make things worse a Giant Vampider recently took refuge outside the Mausoleum door.  I doubt its a coincidence!  Kill the Vampider and 20 of Valkal's kin as well! Show them they aren't as clever as they think.
 CompleteText=I was right!? I knew it!! I can't thank you enough. I dont know if you fully understand what you may have prevented! The Redeemers and the people of Wartown are forever in your debt.
 Level=45
 Suggested=45
 Exp=9761
 PartySize=2
+NumRewards=0
 Coin=3727
 Unabandon=0
 QuestGiverID=1315
@@ -2174,6 +2163,7 @@ Obj.0.description=Return to Marley Roberts
 Obj.0.myCreatureDefID=1315
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=76772.5,978.741,50232.0,9;
 Obj.0.markerLocations=76772.5,978.741,50232.0,9;
 
 [ENTRY]

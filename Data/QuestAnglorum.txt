@@ -835,7 +835,7 @@ RewardItem.0=21329,1,1
 [ENTRY]
 ID=554
 Title=Daily: Petrie
-BodyText=Test your Heroism by hunting down and killing aerial predator known as Petrie.  He can be found East of Tallgrass Farm.
+BodyText=Test your Heroism by hunting down and killing the aerial predator known as Petrie.  He can be found East of Tallgrass Farm.
 CompleteText=
 Level=15,20
 Suggested=15
@@ -4010,7 +4010,7 @@ RewardItem.0=21331,1,1
 [ENTRY]
 ID=560
 Title=Daily: Mosk
-BodyText=There's a GIANT blood sucking Bloodfiend known as Mosk who is terrorizing locals just East of the Crossroads Inn.  The Crown is offering a generous reward for anyone willing to get these pests under control
+BodyText=There's a GIANT blood sucking Bloodfiend known as Mosk who is terrorizing locals just East of the Crossroads Inn.  The Crown is offering a generous reward for anyone willing to eliminate this pest.
 CompleteText=
 Level=18,22
 Suggested=20
@@ -4783,7 +4783,7 @@ Obj.0.markerLocations=48308.2,221.414,44412.0,81;
 [ENTRY]
 ID=562
 Title=Daily: Trabid
-BodyText=An enormous hare who's been referred to before as Trabid is attacking local gardens in Southshield stealing their carrots!! The Crown is offering a generous reward to rid the world of the vermin
+BodyText=An enormous hare who's been referred to before as Trabid is attacking local gardens in Southshield stealing their carrots!! The Crown is offering a generous reward to rid the world of this vermin.
 CompleteText=
 Level=18,22
 Suggested=20

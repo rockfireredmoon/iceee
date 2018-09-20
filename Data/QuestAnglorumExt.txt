@@ -593,7 +593,7 @@ BodyText="I see you've been entrusted with the key."
 
 Sonny stroked his chin fur.
 
-"I don't know what you did to earn Mike's trust," (neither did you), "but time is a wasting.  In order to light the next orb you'll need to travel to the Gloom Witches lair and obtain fetishes of death from the elemental there."
+"I don't know what you did to earn Mike's trust," (neither did you), "but time is a wasting.  In order to light the next orb you'll need to travel to the Gloom Witches' lair and obtain fetishes of death from the elemental there."
 CompleteText="You made it back? Maybe there is something to you."
 Level=20
 Suggested=20
@@ -609,7 +609,7 @@ Repeat=0
 sGiver=3818.0,509.0,2993.0,60
 sEnder=3818.0,509.0,2993.0,60
 [ACT]
-Act.BodyText=Enter the Gloom Witches lair, Cold Storm Cavern in Anglorum, and defeat Stormwitch Cyclona to obtain fetishes of death.
+Act.BodyText=Enter the Gloom Witches' lair, Cold Storm Cavern in Anglorum, and defeat Stormwitch Cyclona to obtain fetishes of death.
 Obj.0.type=kill
 Obj.0.data1=1841
 Obj.0.data2=1
