@@ -600,7 +600,7 @@ function valkal1_health() {
 		tod("Sunset");
     	valkal1_full_health_count = 0;
     	
-	    if(health <= 5 && phase < 9) {
+	    if(health <= 10 && phase < 9) {
 	        // Flee and leave this loop
 	        if(debug)
 	        	inst.info("Flee!");
