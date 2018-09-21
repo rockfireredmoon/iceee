@@ -206,50 +206,45 @@ Obj.0.myCreatureDefID=3038
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=61135.0,207.0,52272.0,9;
-
-
 [ENTRY]
 ID=621
 Requires=620
 Title=Blue Crown Mushrooms
 BodyText=Greetings! If you are planning to explore the Down Below then perhaps you could do me a favor. There is a rare type of mushroom - Blue Crown Mushrooms they are called - that grow in abundance inside. I could really use a dozen of these mushrooms to study. If you could collect them for me I would greatly appreciate it! Also, if you have not already, you should speak with Trent. He is studying the effects of the Blue Crown Mushrooms on some denizens of the Down Below.
 CompleteText=You have returned with the mushrooms - excellent!
-Level=30
+Level=34
 Suggested=35
 Exp=5675
 PartySize=5
 NumRewards=0
 Coin=1508
+Heroism=14
 Unabandon=0
 QuestGiverID=3042
 QuestEnderID=3042
 Repeat=0
 sGiver=61035.7,203.232,52301.5,9
 sEnder=61035.7,203.232,52301.5,9
-Heroism=14
 [ACT]
 Act.BodyText=Collect twelve Blue Crown Mushrooms from the Down Below.
 Obj.0.type=gather
 Obj.0.data1=2995
 Obj.0.data2=12
 Obj.0.description=Collect 12 Blue Crown Mushrooms
-Obj.0.complete=0
 Obj.0.myCreatureDefID=500281
 Obj.0.myItemID=
 Obj.0.completeText=0 of 12
 Obj.0.markerLocations=
-Obj.0.ActivateTime=2000
-Obj.0.ActivateText=Gathering Blue Crown Mushroom...
 [ACT]
 Act.BodyText=Return to Marzala Kir.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Marzala Kir
-Obj.0.complete=0
 Obj.0.myCreatureDefID=3042
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=61035.7,203.232,52301.5,9;
 Obj.0.markerLocations=61035.7,203.232,52301.5,9;
 
 
@@ -391,33 +386,11 @@ Obj.1.complete=0
 Obj.1.myCreatureDefID=500287
 Obj.1.myItemID=
 Obj.1.completeText=
-Obj.1.markerLocations=
-Obj.2.type=kill
-Obj.2.data1=3048
-Obj.2.data2=1
-Obj.2.description=Collect a sample: Sillum
-Obj.2.complete=0
-Obj.2.myCreatureDefID=500288
-Obj.2.myItemID=
-Obj.2.completeText=
-Obj.2.markerLocations=
-[ACT]
-Act.BodyText=Return to Trent Prentiss.
-Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
-Obj.0.description=Return to Trent Prentiss
-Obj.0.complete=0
-Obj.0.myCreatureDefID=3040
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=61091.0,207.0,52145.0,9;
-
 [ENTRY]
 ID=625
 Requires=620
 Title=Lost Below
-BodyText=Friend if you are heading into the Down Below I would ask you to keep an eye out for our lost brother - Ulton Klinon. He ventured into the depths some time ago and we have not seen him since! He is a brave fellow but prone to getting in to matters too difficult to handle. Please if you can - find him and help him return to camp.
+BodyText=Friend, if you are heading into the Down Below, I would ask you to keep an eye out for our lost brother - Ulton Klinon. He ventured into the depths some time ago and we have not seen him since! He is a brave fellow but prone to getting into matters too difficult to handle. Please if you can - find him and help him return to camp.
 CompleteText=Oh thank Gaia you have come!
 Level=34
 Suggested=36
@@ -425,30 +398,28 @@ Exp=5907
 PartySize=5
 NumRewards=0
 Coin=1598
+Heroism=14
 Unabandon=0
 QuestGiverID=3039
 QuestEnderID=3043
 Repeat=0
-sGiver=61235,212,52198,9
-sEnder=
-Heroism=14
+sGiver=61235.0,212.0,52198.0,9
+sEnder=0.0,0.0,0.0,0
 [ACT]
 Act.BodyText=Find Ulton Klinon.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Find Ulton Klinon
-Obj.0.complete=0
 Obj.0.myCreatureDefID=3043
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=10160.3,5,4268.33,26;
-
-
+Obj.0.markerLocations=10160.3,5.0,4268.33,26;
+PartySize=5
 [ENTRY]
 ID=626
 Title=Lost Below: Find the Key
-BodyText=Help me! Please get the key to my cage. It doesn't look like a key though! It looks like a skull and cross-bones - I know that makes it soooo much easier to find in HERE - right? *sigh* It must be some where down here please find it and get me out of here!
+BodyText=Help me! Please get the key to my cage. It doesn't look like a key though! It looks like a skull and cross-bones - I know that makes it soooo much easier to find in HERE - right? *sigh* It must be somewhere down here. Please find it and get me out of here!
 CompleteText=Finally I can leave this wretched place! Give me the key!
 Level=34
 Suggested=36
@@ -456,16 +427,33 @@ Exp=5907
 PartySize=5
 NumRewards=0
 Coin=1598
+Heroism=14
 Unabandon=0
 QuestGiverID=3043
 QuestEnderID=3043
 Repeat=0
-sGiver=10054,5,4265.04,26
-sEnder=10054,5,4265.04,26
-Heroism=14
+sGiver=10054.0,5.0,4265.04,26
+sEnder=10054.0,5.0,4265.04,26
 [ACT]
 Act.BodyText=Find the key to Ulton's cage.
 Obj.0.type=gather
+Obj.0.data1=3081
+Obj.0.data2=1
+Obj.0.description=Find the key to Ulton's cage
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500289
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=
+[ACT]
+Act.BodyText=Return to Ulton Klinon.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Ulton Klinon
+Obj.0.myCreatureDefID=3043
+Obj.0.myItemID=500289
+Obj.0.completeText=
+Obj.0.markerLocations=
 Obj.0.data1=3081
 Obj.0.data2=1
 Obj.0.description=Find the key to Ulton's cage

@@ -286,13 +286,11 @@ Obj.0.description=Return to Hank Glendale
 Obj.0.myCreatureDefID=342
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=39871.5,183.396,48509.0,9;
-
 [ENTRY]
 ID=394
 Requires=393
 Title=Rumble Growl Fur Boots
-BodyText=Well, you did such a grand job of getting those wolf pelts, how about doing a spot of hunting for me, again? This time, I have an idea for making some lovely gloves and matching boots, but I need pelts from Rumble Growl Bears. They are ferocious creatures, but they have such silky fur. What do you say?
+BodyText=Well, you did such a grand job of getting those wolf pelts, how about doing a spot of hunting for me again? This time, I have an idea for making some lovely gloves and matching boots, but I need pelts from Rumble Growl Bears. They are ferocious creatures, but they have such silky fur. What do you say?
 CompleteText=Again, you have not failed me. Oh, these are absolutely fabulous! Thank you!
 Level=21
 Suggested=22
@@ -300,20 +298,19 @@ Exp=3351
 PartySize=1
 NumRewards=0
 Coin=675
+Heroism=10
 Unabandon=0
 QuestGiverID=432
 QuestEnderID=432
 Repeat=0
 sGiver=39879.0,245.633,49175.0,9
 sEnder=39879.0,245.633,49175.0,9
-Heroism=10
 [ACT]
-Act.BodyText=Travel southwest of Baffle Gate and hunt Rumble Growl bears for ten of their pelts.
+Act.BodyText=Travel southwest of Baffle Gate and hunt Rumble Growl Bears for ten of their pelts.
 Obj.0.type=kill
 Obj.0.data1=352,353
 Obj.0.data2=10
 Obj.0.description=Collect 10 Rumble Growl Bear Pelts
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500056
 Obj.0.completeText=0 of 10
@@ -324,9 +321,10 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Brundhild vonDame
-Obj.0.complete=0
 Obj.0.myCreatureDefID=432
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=39882.797,245.686,49170.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=39882.797,245.686,49170.0,9;
 
@@ -799,14 +797,12 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=2205
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=41854.0,341.955,59624.0,9;
-
 [ENTRY]
 ID=406
 Title=Lighting the Way
-BodyText=Friend, welcome. It is time for use to pay homage to our Mother Gaia. All who wish to show their respect to Gaia should make the pilgrimage. The rite is simple and meant to show your faith in Gaia's protection of this world. There are three braziers, one for each of the three towns here in Midlands. The pilgrimage is simply to light all three. One lays just beyond the city limits of Listerm. The other two are also just outside of the town propers of Baffle Gate and Bandit's Bluff.
+BodyText=Friend, welcome. It is time for us to pay homage to our Mother Gaia. All who wish to show their respect to Gaia should make the pilgrimage. The rite is simple and meant to show your faith in Gaia's protection of this world. There are three braziers, one for each of the three towns here in Midlands. The pilgrimage is simply to light all three. One lays just beyond the city limits of Listerm. The other two are also just outside of the town propers of Baffle Gate and Bandit's Bluff.
 
-If you wish to ensure Gaia's blessing, then simply light the three braziers. Once you have done, speak with Ceryn Yewl in Bandit's Bluff. Gaia's blessings go with you.
+If you wish to ensure Gaia's blessing, then simply light the three braziers. Once you have done so, speak with Ceryn Yewl in Bandit's Bluff. Gaia's blessings go with you.
 CompleteText=You have arrived and I can see the light of Gaia's blessing surrounds you. You have done yourself a great service in showing our Mother Gaia devotion.
 Level=23
 Suggested=24
@@ -814,20 +810,19 @@ Exp=3633
 PartySize=1
 NumRewards=0
 Coin=765
+Heroism=6
 Unabandon=0
 QuestGiverID=2204
 QuestEnderID=2209
 Repeat=0
 sGiver=41978.0,369.0,59932.0,9
 sEnder=49008.0,190.0,54278.0,9
-Heroism=6
 [ACT]
 Act.BodyText=Seek out and light the Prayer Braziers near Listerm, Baffle Gate and Bandit's Bluff.
 Obj.0.type=activate
 Obj.0.data1=460
 Obj.0.data2=1
 Obj.0.description=Light Listerm Prayer Brazier
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
@@ -838,7 +833,6 @@ Obj.1.type=activate
 Obj.1.data1=456
 Obj.1.data2=1
 Obj.1.description=Light Baffle Gate Prayer Braizer
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=
@@ -849,7 +843,6 @@ Obj.2.type=activate
 Obj.2.data1=457
 Obj.2.data2=1
 Obj.2.description=Light Bandit's Bluff Prayer Brazier
-Obj.2.complete=0
 Obj.2.myCreatureDefID=
 Obj.2.myItemID=
 Obj.2.completeText=
@@ -862,9 +855,10 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Speak with Ceryn Yewl
-Obj.0.complete=0
 Obj.0.myCreatureDefID=2209
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=49005.6,190.53,54276.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=49005.6,190.53,54276.0,9;
 
@@ -908,14 +902,12 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=2210
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=29988.0,73.0144,54446.0,9;
-
 [ENTRY]
 ID=402
 Requires=401
 Title=Return to Listerm
 BodyText=You are a true hero! I still need to rest a little. Please, return to Listerm and tell Fendle about what has transpired here.
-CompleteText=Oh, my heart is saddened. While I am joyous to hear Gyta is alive and well, the loss of Jod is a truely terrible. We shall all mourn his passing for some time, but always remember his adventures! Thank you for bringing the news to me and for killing the beast as well.
+CompleteText=Oh, my heart is saddened. While I am joyous to hear Gyta is alive and well, the loss of Jod is a truly terrible tragedy. We shall all mourn his passing for some time, but always remember his adventures! Thank you for bringing the news to me and for killing the beast as well.
 Level=22
 Suggested=23
 Exp=1048
@@ -926,7 +918,7 @@ Unabandon=0
 QuestGiverID=2210
 QuestEnderID=340
 Repeat=0
-sGiver=29988.7,73.1486,54446.0,9
+sGiver=29988.7,73.149,54446.0,9
 sEnder=41525.4,282.186,60543.3,9
 [ACT]
 Act.BodyText=Return to Fendle Walkabout in Listerm.
@@ -934,13 +926,14 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Fendle Walkabout
-Obj.0.complete=0
 Obj.0.myCreatureDefID=340
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=41530.797,271.559,60534.0,9;
 RewardItem.0=5160,1,0
 RewardItem.1=5161,1,0
+RewardItem.2=5162,1,0
+RewardItem.3=5163,1,0
 RewardItem.2=5162,1,0
 RewardItem.3=5163,1,0
 
@@ -1002,14 +995,12 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=439
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=49166.1,316.777,54791.0,9;
-
 [ENTRY]
 ID=412
 Title=Shiny Stones
 BodyText=A minute of your time?
 
-I am a maker of fine jewerly. I have need of some special stones which I would pay you to gather for me. I am not sure exactly what they are, but I had a traveler sell me some. They were very shiny stones, fairly large. I have used them to make some very nice rings. The traveler said he found them near the southern Goliath mound. He claimed they were everywhere there, just lying around on the ground! If you would travel the southern Goliath mound and collect a dozen of the shiny stones for me, I would be most happy and pay you, as well.
+I am a maker of fine jewelry. I have need of some special stones which I would pay you to gather for me. I am not sure exactly what they are, but I had a traveler sell me some. They were very shiny stones, fairly large. I have used them to make some very nice rings. The traveler said he found them near the southern Goliath mound. He claimed they were everywhere there, just lying around on the ground! If you would travel to the southern Goliath mound and collect a dozen of the shiny stones for me, I would be most happy and pay you, as well.
 CompleteText=You got them? Ah yes! These are the ones. Thank you so much!
 Level=22
 Suggested=23
@@ -1017,35 +1008,33 @@ Exp=3494
 PartySize=1
 NumRewards=0
 Coin=720
+Heroism=6
 Unabandon=0
 QuestGiverID=437
 QuestEnderID=437
 Repeat=0
 sGiver=41255.0,274.357,59794.0,9
 sEnder=41255.0,274.357,59794.0,9
-Heroism=6
 [ACT]
 Act.BodyText=Travel to the southern Goliath mound and gather twelve Shiny Stones.
 Obj.0.type=gather
 Obj.0.data1=2312
 Obj.0.data2=12
 Obj.0.description=Gather 12 Shiny Stones
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500054
 Obj.0.completeText=0 of 12
 Obj.0.markerLocations=48185.4,203.851,61802.0,9;
-Obj.0.ActivateTime=2000
-Obj.0.ActivateText=Taking Shiny Stone...
 [ACT]
 Act.BodyText=Return to Volker Stump in Listerm.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Volker Stump
-Obj.0.complete=0
 Obj.0.myCreatureDefID=437
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=41250.297,268.974,59801.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=41250.297,268.974,59801.0,9;
 
@@ -1163,13 +1152,11 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=2203
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=49216.703,256.462,53918.0,9;
-
 [ENTRY]
 ID=415
 Requires=399
 Title=Meet with Gaelon Scree
-BodyText=Again, thank you for bringing this news from the other towns to me. We do try to keep up relations as much as possible. We have some issues here of our own. First and foremost is a Spibear infestation. Something has them riled up and sometimes they wander into the borders of the town. I sent Gaelon Scree south to see if he could sort the problem out. I was informed he needs help. If you would travel south and speak with him, you would do our town a great service.
+BodyText=Again, thank you for bringing this news from the other towns to me. We do try to keep up relations as much as possible. Still, we have some issues here of our own. First and foremost is a Spibear infestation. Something has them riled up and sometimes they wander into the borders of the town. I sent Gaelon Scree south to see if he could sort the problem out. I was informed he needs help. If you would travel south and speak with him, you would do our town a great service.
 CompleteText=Cuyper sent you? It's about time!
 Level=22
 Suggested=23
@@ -1189,9 +1176,10 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Travel to Gaelon Scree
-Obj.0.complete=0
 Obj.0.myCreatureDefID=2201
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=50933.5,269.062,56658.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=50933.5,269.062,56658.0,9;
 
@@ -1494,13 +1482,11 @@ Obj.0.markerLocations=49826.4,337.679,54476.0,9;
 RewardItem.0=5178,1,0
 RewardItem.1=5179,1,0
 RewardItem.2=5180,1,0
-RewardItem.3=5181,1,0
-
 [ENTRY]
 ID=420
 Requires=419
 Title=Mama's List of Herbs
-BodyText=You have proven yourself very useful. Perhaps you can do me one more favor - I will pay you of course. I was meant to get some items for Mama Greywhiskers in the gypsy camp. I normally have one of my workers do it, but I forgot! The list is short and easy to find. It is just some wild herbs that grow locally around the borders of the town. If you could collect the herbs and deliver them to Mama Greyswhiskers in the gypsy camp, you would save me some embarrassment due to my fading memory.
+BodyText=You have proven yourself very useful. Perhaps you can do me one more favor - I will pay you of course. I was meant to get some items for Mama Greywhiskers in the gypsy camp. I normally have one of my workers do it, but I forgot! The list is short and easy to find. It is just some wild herbs that grow locally around the borders of the town. If you could collect the herbs and deliver them to Mama Greywhiskers in the gypsy camp, you would save me some embarrassment due to my fading memory.
 CompleteText=Oh, hello there. You have something for me...? Oh, that is just lovely, deary. Give those to me, please.
 Level=23
 Suggested=24
@@ -1508,13 +1494,13 @@ Exp=3633
 PartySize=1
 NumRewards=0
 Coin=765
+Heroism=6
 Unabandon=0
 QuestGiverID=345
 QuestEnderID=348
 Repeat=0
 sGiver=49101.0,365.0,54662.0,9
 sEnder=57203.0,250.0,50369.0,9
-Heroism=6
 [ACT]
 Act.BodyText=Gather six Honey Root near the road north of Bandit's Bluff.
 
@@ -1525,44 +1511,36 @@ Obj.0.type=gather
 Obj.0.data1=2270
 Obj.0.data2=8
 Obj.0.description=Gather 8 Edgewater Mushrooms
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500235
 Obj.0.completeText=0 of 8
 Obj.0.markerLocations=53366.6,271.373,51364.0,9;
-Obj.0.ActivateTime=2000
-Obj.0.ActivateText=Gathering Edgewater Mushroom...
 Obj.1.type=gather
 Obj.1.data1=2271
 Obj.1.data2=6
 Obj.1.description=Gather 6 Honey Root
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=500234
 Obj.1.completeText=0 of 6
 Obj.1.markerLocations=46183.703,312.298,47826.0,9;
-Obj.1.ActivateTime=2000
-Obj.1.ActivateText=Gathering Honey Root...
 Obj.2.type=gather
 Obj.2.data1=2272
 Obj.2.data2=6
 Obj.2.description=Gather 6 Elden Sprig
-Obj.2.complete=0
 Obj.2.myCreatureDefID=
 Obj.2.myItemID=500233
 Obj.2.completeText=0 of 6
 Obj.2.markerLocations=48001.203,189.251,57371.0,9;
-Obj.2.ActivateTime=2000
-Obj.2.ActivateText=Gathering Elden Sprig...
 [ACT]
-Act.BodyText=Take the herbs you have collect to Mama Greywhiskers in the Gypsy Camp.
+Act.BodyText=Take the herbs you have collected to Mama Greywhiskers in the Gypsy Camp.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Travel to Mama Greywhiskers
-Obj.0.complete=0
 Obj.0.myCreatureDefID=348
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=57204.703,250.36,50365.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=57204.703,250.36,50365.0,9;
 
@@ -2057,8 +2035,6 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=428
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=54234.4,171.936,58883.0,9;
-
 [ENTRY]
 ID=434
 Requires=420
@@ -2071,39 +2047,34 @@ Exp=3783
 PartySize=1
 NumRewards=0
 Coin=833
+Heroism=6
 Unabandon=0
 QuestGiverID=348
 QuestEnderID=348
 Repeat=0
 sGiver=57203.0,250.0,50369.0,9
 sEnder=57203.0,250.0,50369.0,9
-Heroism=6
 [ACT]
 Act.BodyText=Travel north and gather eight Yaryn Ferns.
 Obj.0.type=gather
-Obj.0.data1=466 
+Obj.0.data1=466
 Obj.0.data2=8
-Obj.0.description=Gather 8 Yayrn Ferns
-Obj.0.complete=0
+Obj.0.description=Gather 8 Yaryn Ferns
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500046
 Obj.0.completeText=0 of 8
 Obj.0.markerLocations=55827.797,532.034,45557.0,9;
-Obj.0.ActivateTime=2000
-Obj.0.ActivateText=Gathering Yaryn Fern...
 [ACT]
 Act.BodyText=Return to Mama Greywhiskers at the Gypsy Camp.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Mama Greywhiskers
-Obj.0.complete=0
 Obj.0.myCreatureDefID=348
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=57204.703,250.36,50365.0,9;
-
-
+Obj.0.markerLocations=57204.703,250.36,50365.0,9;
 [ENTRY]
 ID=436
 Title=Stonelions Thieves!
@@ -2115,35 +2086,33 @@ Exp=3783
 PartySize=1
 NumRewards=0
 Coin=833
+Heroism=6
 Unabandon=0
 QuestGiverID=440
 QuestEnderID=440
 Repeat=0
 sGiver=56601.7,427.694,49557.0,9
 sEnder=56601.7,427.694,49557.0,9
-Heroism=6
 [ACT]
-Act.BodyText=Travel to the Stonlion encampment to the north and retrieve three crates of Thaddeus Toadhollow's stolen goods.
+Act.BodyText=Travel to the Stonelion encampment to the north and retrieve three crates of Thaddeus Toadhollow's stolen goods.
 Obj.0.type=gather
 Obj.0.data1=452
 Obj.0.data2=3
 Obj.0.description=Find 3 crates of Stolen Goods
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500047
 Obj.0.completeText=0 of 3
 Obj.0.markerLocations=52003.1,345.918,45779.0,9;
-Obj.0.ActivateTime=2000
-Obj.0.ActivateText=Taking Stolen Goods
 [ACT]
 Act.BodyText=Return to Thaddeus Toadhollow at the Gypsy Camp.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Thaddeus Toadhollow
-Obj.0.complete=0
 Obj.0.myCreatureDefID=440
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=56596.5,427.513,49564.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=56596.5,427.513,49564.0,9;
 
@@ -2661,13 +2630,11 @@ Obj.0.markerLocations=61416.297,687.87,43880.0,9;
 RewardItem.0=5194,1,0
 RewardItem.1=5195,1,0
 RewardItem.2=5196,1,0
-RewardItem.3=5197,1,0
-
 [ENTRY]
 ID=441
 Requires=440
 Title=Mad Cows
-BodyText=I am glad you have come. The Madcows started arriving out of the blue! One day, I am just minding my own business, next thing I know Madcows are everywhere destroying everything! While I was running away from my home, I even lost my Keepsake Chest; it has all my prized possession in it.
+BodyText=I am glad you have come. The Madcows started arriving out of the blue! One day, I am just minding my own business, next thing I know Madcows are everywhere destroying everything! While I was running away from my home, I even lost my Keepsake Chest; it has all my prized possessions in it.
 
 So please, if you can find the reason these blasted things are rampaging all over my farm, I would be grateful. Further, if you could retrieve my Keepsake Chest, I would be even more appreciative.
 CompleteText=You found what? Some kind of Undead shrine? At my farm?! Bast be wary, that is terrible news! Oh, but I see you got my chest. Thank you kindly for that.
@@ -2677,31 +2644,27 @@ Exp=3941
 PartySize=1
 NumRewards=0
 Coin=878
+Heroism=6
 Unabandon=0
 QuestGiverID=574
 QuestEnderID=574
 Repeat=0
 sGiver=61542.0,396.368,40208.0,9
 sEnder=61542.0,396.368,40208.0,9
-Heroism=6
 [ACT]
 Act.BodyText=Search the farm for Johan's lost Keepsake Chest and look for the cause of the Mad Cow rampage.
 Obj.0.type=gather
 Obj.0.data1=2404
 Obj.0.data2=1
 Obj.0.description=Find the Keepsake Chest
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500237
 Obj.0.completeText=0 of 1
 Obj.0.markerLocations=60788.0,507.5,38632.0,9;
-Obj.0.ActivateTime=2000
-Obj.0.ActivateText=Take Keepsake Chest...
 Obj.1.type=activate
 Obj.1.data1=2403
 Obj.1.data2=1
 Obj.1.description=Investigate the cause of the Mad Cow rampage
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=
@@ -2714,9 +2677,10 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Johan Brederbeck
-Obj.0.complete=0
 Obj.0.myCreatureDefID=574
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=61543.0,396.046,40208.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=61543.0,396.046,40208.0,9;
 
@@ -2748,13 +2712,11 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=2343
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=60899.1,506.822,44525.0,9;
-
 [ENTRY]
 ID=607
 Title=Ritual of the Mist
-BodyText=Greetings. Eastbridge could use your aid traveller. To the east is an old ruin. It is filled with mist and within the mist lurk deadly spiders. Long ago a local druid built three altars in the ruins. When the spiders begin to spill out of the mist and encroach on the town we must go and cleanse the altars in the blood of a giant spider. That time has come again. Would you aid us?
-That task is simple but dangerous. There is a giant spider in the ruins known as Lurrk. You must first kill him. Once he is dead you must take some of his blood to each of the three altars. Once this is done the ritual should keep the spiders at bay for at least another season. Be wary though! Lurrk is very powerful and deadly - bring friends with you if you truly wish to succeed!
+BodyText=Greetings. Eastbridge could use your aid traveler. To the east is an old ruin. It is filled with mist and within the mist lurk deadly spiders. Long ago a local druid built three altars in the ruins. When the spiders begin to spill out of the mist and encroach on the town we must go and cleanse the altars in the blood of a giant spider. That time has come again. Would you aid us?
+That task is simple but dangerous. There is a giant spider in the ruins known as Lurrk. You must first kill it. Once it is dead you must take some of it's blood to each of the three altars. Once this is done the ritual should keep the spiders at bay for at least another season. Be wary though! Lurrk is very powerful and deadly - bring friends with you if you truly wish to succeed!
 CompleteText=You are a true friend to Eastbridge! Please take one of these rewards and our heartfelt thanks.
 Level=27
 Suggested=28
@@ -2762,20 +2724,19 @@ Exp=4271
 PartySize=5
 NumRewards=0
 Coin=990
+Heroism=10
 Unabandon=0
 QuestGiverID=2936
 QuestEnderID=2936
 Repeat=0
 sGiver=60794.0,485.0,43485.0,9
 sEnder=60794.0,485.0,43485.0,9
-Heroism=10
 [ACT]
-Act.BodyText=Travel to the Misty Ruins ruins in the east and kill the giant spider known as Lurrk.
+Act.BodyText=Travel to the Misty Ruins in the east and kill the giant spider known as Lurrk.
 Obj.0.type=kill
 Obj.0.data1=2963
 Obj.0.data2=1
 Obj.0.description=Kill Lurrk
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
@@ -2786,7 +2747,6 @@ Obj.0.type=activate
 Obj.0.data1=2960
 Obj.0.data2=1
 Obj.0.description=Cleanse an Altar
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
@@ -2797,7 +2757,6 @@ Obj.1.type=activate
 Obj.1.data1=2961
 Obj.1.data2=1
 Obj.1.description=Cleanse an Altar
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=
@@ -2808,7 +2767,6 @@ Obj.2.type=activate
 Obj.2.data1=2962
 Obj.2.data2=1
 Obj.2.description=Cleanse an Altar
-Obj.2.complete=0
 Obj.2.myCreatureDefID=
 Obj.2.myItemID=
 Obj.2.completeText=
@@ -2821,18 +2779,17 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Amaren Mor
-Obj.0.complete=0
 Obj.0.myCreatureDefID=2936
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=60793.2,485.447,43487.6,9;
 RewardItem.0=5706,1,1
-
+Obj.0.markerLocations=60793.2,485.447,43487.6,9;
 [ENTRY]
 ID=451
 Requires=450
 Title=Rhine Tail Ale
-BodyText=I do not suppose you would be willing to do some more hunting for me? I also make a magnificent Rhine Tale Ale. It requires some tails from Rhineswine and Rhinewolfs. It is a bit bitter, but for a true ale fan it is exquisite in its fine flavor. Would you have the time to collect the tails for me?
+BodyText=I do not suppose you would be willing to do some more hunting for me? I also make a magnificent Rhine Tail Ale. It requires some tails from Rhineswine and Rhinewolves. It is a bit bitter, but for a true ale fan it is exquisite in its fine flavor. Would you have the time to collect the tails for me?
 CompleteText=You are back and so soon! Ah yes, yes. These are perfect for my next brewing. You are truly a gifted hunter. Thank you so much.
 Level=25
 Suggested=26
@@ -2840,20 +2797,19 @@ Exp=3941
 PartySize=1
 NumRewards=0
 Coin=878
+Heroism=10
 Unabandon=0
 QuestGiverID=487
 QuestEnderID=487
 Repeat=0
 sGiver=60115.0,365.0,43958.0,9
 sEnder=60115.0,365.0,43958.0,9
-Heroism=10
 [ACT]
 Act.BodyText=Travel north of Eastbridge. Hunt and kill Rhineswine for twelve Rhineswine Tails. Hunt and kill Rhinewolves for six Rhinewolf Tails.
 Obj.0.type=kill
 Obj.0.data1=531,544
 Obj.0.data2=12
 Obj.0.description=Collect 12 Rhineswine Tails
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500239
 Obj.0.completeText=0 of 12
@@ -2862,7 +2818,6 @@ Obj.1.type=kill
 Obj.1.data1=542,543
 Obj.1.data2=6
 Obj.1.description=Collect 6 Rhinewolf Tails
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=500240
 Obj.1.completeText=0 of 6
@@ -2873,9 +2828,10 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Sooty Grogs
-Obj.0.complete=0
 Obj.0.myCreatureDefID=487
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=60113.1,446.346,43958.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=60113.1,446.346,43958.0,9;
 
@@ -3120,13 +3076,11 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=482
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=65983.0,62.7899,32419.0,9;
-
 [ENTRY]
 ID=462
 Requires=449
 Title=Retrieve the Stolen Shipment
-BodyText=If Shanks has you heading out to play with the Scallywags, then I have something for you to while you are there. They stole a shipment from some folks who would really like their goods returned.
+BodyText=If Shanks has you heading out to play with the Scallywags, then I have something for you to do while you are there. They stole a shipment from some folks who would really like their goods returned.
 
 While you are out there playing with the pirates, look around and see if you can find three iron bound chests. Those would be the goods that were stolen.  Return them to me please.
 CompleteText=Those are them, for sure. You have done more than you know, this day. I thank you. Good luck!
@@ -3136,35 +3090,33 @@ Exp=4104
 PartySize=1
 NumRewards=0
 Coin=945
+Heroism=6
 Unabandon=0
 QuestGiverID=576
 QuestEnderID=576
 Repeat=0
-sGiver=65939.0,63.5309,32385.0,9
-sEnder=65939.0,63.5309,32385.0,9
-Heroism=6
+sGiver=65939.0,63.531,32385.0,9
+sEnder=65939.0,63.531,32385.0,9
 [ACT]
 Act.BodyText=Travel west to the Scallywag camps on the Storm Coast. Reclaim three stolen Iron-Bound Chests.
 Obj.0.type=gather
 Obj.0.data1=2405
 Obj.0.data2=3
 Obj.0.description=Reclaim 3 stolen Iron-Bound Chests
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500243
 Obj.0.completeText=0 of 3
 Obj.0.markerLocations=57457.203,151.667,34115.0,9;
-Obj.0.ActivateTime=2000
-Obj.0.ActivateText=Taking Iron-Bound Chest...
 [ACT]
 Act.BodyText=Return to Ananzhee in Seascape.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Ananzhee in Seascape
-Obj.0.complete=0
 Obj.0.myCreatureDefID=576
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=65939.0,63.5584,32384.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=65939.0,63.5584,32384.0,9;
 
@@ -3207,8 +3159,6 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=2347
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=65116.1,420.766,34397.0,9;
-
 [ENTRY]
 ID=459
 Title=Taking Stock
@@ -3221,35 +3171,33 @@ Exp=3941
 PartySize=1
 NumRewards=0
 Coin=878
+Heroism=6
 Unabandon=0
 QuestGiverID=480
 QuestEnderID=480
 Repeat=0
 sGiver=64919.0,458.752,33566.0,9
 sEnder=64919.0,458.752,33566.0,9
-Heroism=6
 [ACT]
-Act.BodyText=Travel to docks and collect ten sacks of Packaged Spices from the barrels of spice.
+Act.BodyText=Travel to the docks and collect ten sacks of Packaged Spices from the barrels of spice.
 Obj.0.type=gather
 Obj.0.data1=600
 Obj.0.data2=10
 Obj.0.description=Collect 10 of the Packaged Spices
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500291
 Obj.0.completeText=0 of 10
 Obj.0.markerLocations=65780.8,70.9174,31982.8,9;
-Obj.0.ActivateTime=2000
-Obj.0.ActivateText=Retrieving Packaged Spices...
 [ACT]
 Act.BodyText=Return to Deputy Chancellor Milo.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Deputy Chancellor Milo
-Obj.0.complete=0
 Obj.0.myCreatureDefID=480
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=64921.297,458.752,33566.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=64921.297,458.752,33566.0,9;
 
@@ -3444,13 +3392,11 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=489
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=78379.0,444.664,39893.0,9;
-
 [ENTRY]
 ID=463
 Requires=457
 Title=Spiked Toad Stew
-BodyText=You ever had Spiked Toad Stew? No? Oh friend, you have no idea what you are missing! If you happen upon some SpikeCroakers, kill'em and bring me their legs. I only need a dozen to make a full pot of tasty stew.
+BodyText=You ever had Spiked Toad Stew? No? Oh friend, you have no idea what you are missing! If you happen upon some Spiked Croakers, kill 'em and bring me their legs. I only need a dozen to make a full pot of tasty stew.
 CompleteText=Are those Spiked Toad Legs? Wonderful! Thank you very much.
 Level=27
 Suggested=28
@@ -3458,20 +3404,19 @@ Exp=4271
 PartySize=1
 NumRewards=0
 Coin=990
+Heroism=10
 Unabandon=0
 QuestGiverID=477
 QuestEnderID=477
 Repeat=0
 sGiver=68964.0,434.543,35003.0,9
 sEnder=68964.0,434.543,35003.0,9
-Heroism=10
 [ACT]
 Act.BodyText=Hunt and kill twelve Spiked Croakers, and collect twelve of their legs.
 Obj.0.type=kill
 Obj.0.data1=2330,2331
 Obj.0.data2=12
 Obj.0.description=Collect 12 Spiked Croaker Legs
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500245
 Obj.0.completeText=0 of 12
@@ -3482,9 +3427,10 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Leviston Wynkyn
-Obj.0.complete=0
 Obj.0.myCreatureDefID=477
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=68964.0,434.543,35003.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=68964.0,434.543,35003.0,9;
 
@@ -3677,12 +3623,10 @@ Obj.0.description=Speak with Prince Duncan Emberson
 Obj.0.myCreatureDefID=492
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=67965.0,545.149,36522.0,9;
-
 [ENTRY]
 ID=465
 Title=Messenger to Camelot
-BodyText=Welcome to Bremen. I am Lady Shinja Emberson, the sovereign of New Badari.  These are trying times and we need stalwart friends to aid us in holding back the growing tide of evil. I have already been told of your deeds and I am duly impressed.  I would ask you to perform a task for me. I have an urgent message I need delivered to Camelot. Please take this message to Veran Kolnere. You should be able to find him in the Crown and Sword Tavern. Know that this is a delicate matter and I implore you to travel with care.
+BodyText=Welcome to Bremen. I am Lady Shinja Emberson, the sovereign of New Badari.  These are trying times and we need stalwart friends to aid us in holding back the growing tide of evil. I have already been told of your deeds and I am duly impressed.  I would ask you to perform a task for me. I have an urgent message I need delivered to Camelot. Please take this message to Veran Kolnere. You should be able to find him in the Pigspit Tavern. Know that this is a delicate matter and I implore you to travel with care.
 CompleteText=Yes? Ah, I was expecting this.
 Level=26
 Suggested=27
@@ -3697,14 +3641,15 @@ Repeat=0
 sGiver=68110.0,489.827,36515.0,9
 sEnder=54095.0,154.0,63428.0,81
 [ACT]
-Act.BodyText=Take Lady Shinja's message to Veran Kolnere at the Crown and Sword Tavern in Camelot.
+Act.BodyText=Take Lady Shinja's message to Veran Kolnere at the Pigspit Tavern in Camelot.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Take Lady Shinja's message to Veran Kolnere
-Obj.0.complete=0
 Obj.0.myCreatureDefID=2401
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=54093.797,154.009,63424.0,81;
 Obj.0.completeText=
 Obj.0.markerLocations=54093.797,154.009,63424.0,81;
 
@@ -3929,7 +3874,7 @@ BodyText=Well, I suppose I am getting ahead of myself. My apologies. Allow me to
 
 Now to the matter at hand. The Lady sent you to me for a single purpose - VonGruber. She cannot openly oppose him in more than the political arena. She has tried every avenue to appease him, or get him to back down on his separatist ideals. Nothing has worked and he is now threatening civil war. You have seen firsthand the Legion of Sheol's dirty work here and in Midlands. The last thing this land can stand now is a civil war. Thus, it falls to us to end the problem at the tip of a blade.
 
-It is bloody task, no doubt. I assure you, if the Lady was convinced there was any other solution she would pursue it with all her might, but there is not. VonGruber has openly called for war and is building an army. The Lady will not allow this to stand. The quickest way to end the entire affair is in the dark of night with a blade to the throat. This is where you come in.
+It is a bloody task, no doubt. I assure you, if the Lady was convinced there was any other solution she would pursue it with all her might, but there is not. VonGruber has openly called for war and is building an army. The Lady will not allow this to stand. The quickest way to end the entire affair is in the dark of night with a blade to the throat. This is where you come in.
 
 Yes, I am asking you to assassinate Baron VonGruber. The only question is, do you have the heart for it?
 
@@ -3941,20 +3886,19 @@ Exp=4271
 PartySize=2
 NumRewards=0
 Coin=990
+Heroism=14
 Unabandon=0
 QuestGiverID=478
 QuestEnderID=478
 Repeat=0
 sGiver=1240.42,145.948,690.695,68
 sEnder=1240.42,145.948,690.695,68
-Heroism=14
 [ACT]
 Act.BodyText=Travel to the VonGruber Estate north of Bremen. Kill fifteen of VonGruber's followers and assassinate Baron VonGruber.
 Obj.0.type=kill
 Obj.0.data1=581,582,583,584,586,587,588,589
 Obj.0.data2=15
 Obj.0.description=Kill 15 followers of VonGruber
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 15
@@ -3963,7 +3907,6 @@ Obj.1.type=kill
 Obj.1.data1=527
 Obj.1.data2=1
 Obj.1.description=Assassinate Baron VonGruber
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=0 of 1
@@ -3974,7 +3917,6 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Lucius Nightswift
-Obj.0.complete=0
 Obj.0.myCreatureDefID=478
 Obj.0.myItemID=
 Obj.0.completeText=
@@ -4301,33 +4243,30 @@ Obj.0.description=Travel to Larking Breel in Heartwood
 Obj.0.myCreatureDefID=2402
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=29209.8,770.386,62269.0,9;
-
 [ENTRY]
 ID=489
 Title=Rumble Tromper Horns
 BodyText=Hello! Have you ever seen a Rumble Tromper? Big beasts, they are! Hide thick as a brick, hard as granite and horns, oh the horns - all magical and brimming with energy! It is the horns that interest me. They maintain some of that energy and are highly sought after by mages and other practitioners of magic, alike! Collect six horns for me and I will give you a nice reward for doing so!
-CompleteText=You have brought me twelve horns as requested. Thus, I shall reward you in kind. Take one of these and be on your way!
+CompleteText=You have brought me six horns as requested. Thus, I shall reward you in kind. Take one of these and be on your way!
 Level=28
 Suggested=29
 Exp=4453
 PartySize=1
 NumRewards=1
 Coin=1058
+Heroism=10
 Unabandon=0
 QuestGiverID=493
 QuestEnderID=493
 Repeat=0
 sGiver=77805.0,458.0,39795.0,9
 sEnder=77805.0,458.0,39795.0,9
-Heroism=10
 [ACT]
 Act.BodyText=Travel east of Rolsburg and hunt Rumble Trompers. Collect six of their horns.
 Obj.0.type=kill
 Obj.0.data1=2333
 Obj.0.data2=6
 Obj.0.description=Collect 6 Rumble Tromper Horns
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500256
 Obj.0.completeText=0 of 6
@@ -4338,7 +4277,6 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Salaerno Primluk
-Obj.0.complete=0
 Obj.0.myCreatureDefID=493
 Obj.0.myItemID=
 Obj.0.completeText=
@@ -4347,7 +4285,7 @@ RewardItem.0=5207,1,0
 RewardItem.1=5208,1,0
 RewardItem.2=5209,1,0
 RewardItem.3=5210,1,0
-
+RewardItem.2=5209,1,0
 [ENTRY]
 ID=491
 Title=Shellback Slider Shells
@@ -4359,20 +4297,19 @@ Exp=4453
 PartySize=1
 NumRewards=0
 Coin=1058
+Heroism=10
 Unabandon=0
 QuestGiverID=490
 QuestEnderID=490
 Repeat=0
 sGiver=77934.0,486.0,39855.0,9
 sEnder=77934.0,486.0,39855.0,9
-Heroism=10
 [ACT]
-Act.BodyText=Hunt Shellback Sliders east of Rolsburg, for fifteen of their shells.
+Act.BodyText=Hunt Shellback Sliders east of Rolsburg for fifteen of their shells.
 Obj.0.type=kill
 Obj.0.data1=2334,2335
 Obj.0.data2=15
 Obj.0.description=Collect 15 Shellback Slider Shells
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500258
 Obj.0.completeText=0 of 15
@@ -4383,9 +4320,10 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Baeulan Tuks
-Obj.0.complete=0
 Obj.0.myCreatureDefID=490
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=77934.0,458.527,39855.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=77934.0,458.527,39855.0,9;
 
@@ -4664,7 +4602,7 @@ Obj.0.markerLocations=29388.2,293.465,61232.5,9;
 [ENTRY]
 ID=516
 Title=Hunting the Strongest: Rageclaw
-BodyText=Greetings. Matoska always seeks to thin numbers of creature by bulk slaying. I, on the other hand, prefer to destroy the strongest among each creature brood. Amongst the Doomhounds, is one known as Rageclaw. He is bigger and more deadly than the rest of his kin. Seek him out, slay him and bring me his paw.
+BodyText=Greetings. Matoska always seeks to thin the numbers of creatures by bulk slaying. I, on the other hand, prefer to destroy the strongest among each creature brood. Amongst the Doomhounds, is one known as Rageclaw. He is bigger and more deadly than the rest of his kin. Seek him out, slay him and bring me his paw.
 CompleteText=You return with the paw. Very well done.
 Level=30
 Suggested=31
@@ -4672,20 +4610,19 @@ Exp=4828
 PartySize=2
 NumRewards=0
 Coin=1193
+Heroism=10
 Unabandon=0
 QuestGiverID=777
 QuestEnderID=777
 Repeat=0
 sGiver=29150.0,318.0,61175.0,9
 sEnder=29150.0,318.0,61175.0,9
-Heroism=10
 [ACT]
 Act.BodyText=Travel outside the city boundaries. Hunt and kill Rageclaw.
 Obj.0.type=kill
 Obj.0.data1=2468
 Obj.0.data2=1
 Obj.0.description=Kill Rageclaw
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
@@ -4696,18 +4633,15 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Huntress Diandra
-Obj.0.complete=0
 Obj.0.myCreatureDefID=777
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=29149.8,318.251,61175.9,9;
-
 [ENTRY]
 ID=509
 Title=Sleeping Giant: Preparations
 BodyText=To the east sleeps Thingir Mossheart, a giant even amongst the Treekin. He still slumbers amidst the rot that surrounds him. He was the last of the Treekin to fade into slumber and thus is still slumbering. The Rotted seek to corrupt his heart before he awakens. If this were to come to pass, it would be a devastating blow to our cause. Mossheart is more than just a Treekin, he is both a symbol and a mighty warrior. If he were to fall to the darkness of the rot, this war would turn very decidedly against us.
 
-We do what we can to bolster his protection while he slumbers. This is where I can use your help. There is a rune stone at the base of where he sleeps. On a regular basis we activate its power to help drive back the rot and allow Mossheart to slumber in peace. There are preparations that must be made before doing so. First, I would ask you to travel to the ruins north of the city. The place is infested with giant walking eyes. While they are vile, they do serve a purpose. Their pupils contain a fluid that is used as part of the rune stone activation. We allow them to flourish in the ruins just for this purpose. Travel the ruins and collect ten pupils from the creatures, and then return to me.
+We do what we can to bolster his protection while he slumbers. This is where I can use your help. There is a rune stone at the base of where he sleeps. On a regular basis we activate its power to help drive back the rot and allow Mossheart to slumber in peace. There are preparations that must be made before doing so. First, I would ask you to travel to the ruins north of the city. The place is infested with giant walking eyes. While they are vile, they do serve a purpose. Their pupils contain a fluid that is used as part of the rune stone activation. We allow them to flourish in the ruins just for this purpose. Travel to the ruins and collect ten vials of pupil fluid from the creatures and then return to me.
 CompleteText=I hope the creatures were not too much trouble for you.
 Level=30
 Suggested=31
@@ -4715,20 +4649,19 @@ Exp=4828
 PartySize=1
 NumRewards=0
 Coin=1193
+Heroism=10
 Unabandon=0
 QuestGiverID=672
 QuestEnderID=672
 Repeat=0
 sGiver=30050.0,622.393,61415.0,9
 sEnder=30050.0,622.393,61415.0,9
-Heroism=10
 [ACT]
 Act.BodyText=Travel to the ruins north of Heartwood and collect ten vials of Pupil Fluid from the Ruins Watchers found there.
 Obj.0.type=kill
 Obj.0.data1=803,804
 Obj.0.data2=10
 Obj.0.description=Collect 10 vials of Pupil Fluid
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500267
 Obj.0.completeText=0 of 10
@@ -4739,9 +4672,10 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Hierophant Luger
-Obj.0.complete=0
 Obj.0.myCreatureDefID=672
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=30050.5,622.393,61415.6,9;
 Obj.0.completeText=
 Obj.0.markerLocations=30050.5,622.393,61415.6,9;
 
@@ -4999,14 +4933,12 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=2465
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=54618.5,162.362,63457.0,81;
-
 [ENTRY]
 ID=608
 Title=Scallywag Thieves
-BodyText=Thieves! Blasted thieves! 
+BodyText=Thieves! Blasted thieves!
 I am not a beast of great means but nearly all I had has been taken from me. Even so I do not despair except for one object I prize dearly. A jewelry box that contains some very personal items that I cherish above all else. Could you help me?
-I was on the road, traveling from Eastbridge to Bremen. As I approached the Henge I was beset by brigands! They attacked my wagon and killed my servant. I ran for my life - I barely escaped with my life! As I said I can do without most of the stolen items but the jewelry box has precious heirlooms I most dearly desire be returned to me. Please travel to the site of the attack and see if you can retrieve the jewelry box.
+I was on the road, traveling from Eastbridge to Bremen. As I approached the Henge I was beset by brigands! They attacked my wagon and killed my servant. I ran for my life - I barely escaped with my life! As I said I can do without most of the stolen items, but the jewelry box has precious heirlooms I most dearly desire be returned to me. Please travel to the site of the attack and see if you can retrieve the jewelry box.
 CompleteText=You have it!?
 Level=26
 Suggested=27
@@ -5014,35 +4946,33 @@ Exp=4104
 PartySize=1
 NumRewards=0
 Coin=945
+Heroism=6
 Unabandon=0
 QuestGiverID=2938
 QuestEnderID=2938
 Repeat=0
 sGiver=67332.0,675.0,35892.0,9
 sEnder=67332.0,675.0,35892.0,9
-Heroism=6
 [ACT]
 Act.BodyText=Travel to the location of the bandit attack and search for the jewelry box.
 Obj.0.type=gather
 Obj.0.data1=2964
 Obj.0.data2=1
 Obj.0.description=Find the jewelry box
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=62633.9,417.015,41554.5,9;
-Obj.0.ActivateTime=2000
-Obj.0.ActivateText=Taking Jewelry Box...
 [ACT]
 Act.BodyText=Return to Anina Larkem in Bremen.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Anina Larkem
-Obj.0.complete=0
 Obj.0.myCreatureDefID=2938
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=67330.6,675.898,35890.4,9;
 Obj.0.completeText=
 Obj.0.markerLocations=67330.6,675.898,35890.4,9;
 
@@ -5151,13 +5081,11 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=2937
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=67943.1,427.34,37104.9,9;
-
 [ENTRY]
 ID=609
 Requires=608
 Title=Scallywag Thieves: Reclaim the Broach
-BodyText=No! This is terrible! This is indeed the jewelry box  I spoke of but my family broach is not here! They must have taken it from the box. These "scallywags" have a camp along the Storm Coast to the west. Our family broach is very precious and beautiful item. I would bet that their leader took it for himself! Please go to the Scallywag camp and retrieve my broach from the Scallywag leader! I have heard tales of their leader be quite firece! You would be well served bringing help to defeat him.
+BodyText=No! This is terrible! This is indeed the jewelry box I spoke of but my family broach is not here! They must have taken it from the box. These "scallywags" have a camp along the Storm Coast to the west. Our family broach is a very precious and beautiful item. I would bet that their leader took it for himself! Please go to the Scallywag camp and retrieve my broach from the Scallywag leader! I have heard tales that claim their leader to be quite fierce! You would be well served bringing help to defeat him.
 CompleteText=You have it! Oh goodness thank you! Thank you! I would be lost without this precious heirloom.
 Please take this reward for your aid! Thank you again!
 Level=27
@@ -5166,20 +5094,19 @@ Exp=4271
 PartySize=5
 NumRewards=0
 Coin=990
+Heroism=14
 Unabandon=0
 QuestGiverID=2938
 QuestEnderID=2938
 Repeat=0
 sGiver=67332.0,675.0,35892.0,9
 sEnder=67332.0,675.0,35892.0,9
-Heroism=14
 [ACT]
 Act.BodyText=Travel to the Scallywag camp in the west and kill the Scallywag leader in order to reclaim the broach.
 Obj.0.type=kill
 Obj.0.data1=2949
 Obj.0.data2=1
 Obj.0.description=Kill the Scallywag Leader
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
@@ -5190,10 +5117,11 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Anina Larkem
-Obj.0.complete=0
 Obj.0.myCreatureDefID=2938
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=67330.6,675.898,35890.4,9;
+RewardItem.0=5707,1,1
 Obj.0.markerLocations=67330.6,675.898,35890.4,9;
 RewardItem.0=5707,1,1
 
@@ -5259,7 +5187,7 @@ ID=613
 Requires=612
 Title=Crystal Armor: Finished
 BodyText=Just give me one moment to forge the items for you.
-CompleteText=Here you go - choose one of the armor piece!
+CompleteText=Here you go - choose one of the armor pieces!
 Level=29
 Suggested=30
 Exp=0
@@ -5278,7 +5206,6 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Speak with Belzor Quintlin
-Obj.0.complete=0
 Obj.0.myCreatureDefID=2937
 Obj.0.myItemID=
 Obj.0.completeText=
@@ -5443,16 +5370,14 @@ Obj.0.myCreatureDefID=672
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=30050.5,622.393,61415.6,9;
-RewardItem.0=21163,1,1
-
 [ENTRY]
 ID=132
 Title=Merchant Guild Membership
-BodyText=I am proud to tell you that I am the first one in my family to own his own business! I specialize in rare spices and treasures from afar, or at least I plan to!
+BodyText=I am proud to tell you that I am the first one in my family to own their own business! I specialize in rare spices and treasures from afar, or at least I plan to!
 
 The only problem I am having is that in order to be a merchant of any worth, you must be a member of the Merchant's Guild, headquartered in Bazarrt. Not just anyone can join either, you have to be recommended, and that is particularly cumbersome.
 
-I have one small glimmer of hope, however! If you could travel to Cracked Rock to the south and make your way along the road to Nantes Waystation, there is a beast there named Lazlo Gont. He is the Merchant's Guild representative there, and I would like you to bring him this letter to formally request my membership into the guild.
+I have one small glimmer of hope, however! If you could travel to Dustshore to the south and make your way along the road to Nantes Waystation, there is a beast there named Lazlo Gont. He is the Merchant's Guild representative there, and I would like you to bring him this letter to formally request my membership into the guild.
 
 Bring my request to Lazlo in Nantes Waystation and, I beg of you, do anything you can to earn my favor with him. My future livelihood depends on it!
 CompleteText=Yes, yes? Who are you?
@@ -5474,9 +5399,10 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Meet with Lazlo Gont in Nantes Waystation
-Obj.0.complete=0
 Obj.0.myCreatureDefID=795
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=29761.898,165.248,71285.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=29761.898,165.248,71285.0,9;
 
@@ -5650,7 +5576,7 @@ Obj.0.markerLocations=10084.6,270.72,62392.1,9;
 [ENTRY]
 ID=501
 Title=Hunting for Pieter: Frightfang Furs
-BodyText=Hail. I trade heavily in furs all across the continent. I have come to this corner of the Great Forest in search of some special prey. First and foremost, I need furs from Frightfang Wolves found to the east. The place is thick with them. I would normally do the work myself, but I am also here to meet with someone who may arrive at any moment. If you could, hunt the wolves in my stead, I would happily pay you for your time.
+BodyText=Hail. I trade heavily in furs all across the continent. I have come to this corner of the Great Forest in search of some special prey. First and foremost, I need furs from Frightfang Wolves found to the east. The place is thick with them. I would normally do the work myself, but I am also here to meet with someone who may arrive at any moment. If you could hunt the wolves in my stead, I would happily pay you for your time.
 CompleteText=These are some fine quality furs, well done.
 Level=32
 Suggested=33
@@ -5658,20 +5584,19 @@ Exp=5232
 PartySize=1
 NumRewards=0
 Coin=1350
+Heroism=10
 Unabandon=0
 QuestGiverID=1100
 QuestEnderID=1100
 Repeat=0
 sGiver=9882.0,256.519,62701.0,9
 sEnder=9882.0,256.519,62701.0,9
-Heroism=10
 [ACT]
 Act.BodyText=Travel to the Frightfang Dens and collect twelve Frightfang Furs.
 Obj.0.type=kill
 Obj.0.data1=801,802
 Obj.0.data2=12
 Obj.0.description=Collect 12 Frightfang Furs
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500263
 Obj.0.completeText=0 of 12
@@ -5682,37 +5607,33 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Pieter Deadeye
-Obj.0.complete=0
 Obj.0.myCreatureDefID=1100
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=9881.1,256.545,62700.7,9;
-
 [ENTRY]
 ID=123
 Title=Shadows: The Ruins of Tall Stand
 BodyText=You have arrived at a time of vital importance. Not far from this place - to the north - lies the ruins of Tall Stand. Once a thriving village, it was destroyed when a splinter fell from the heavens - a shard of the Spirit Mother. The effect on the town was terrible. All who approached too close were driven mad or died. As if that was not bad enough, this particular shard had a greater impact on the area. It has opened a passage for Shadows to enter this world. This, in particular, is where I need your assistance. The Shadow Legion is a great threat. Even a small break that allows them to enter our world is dangerous. I ask of you to go to the ruins of Tall Stand and destroy at least twenty-five Shadows. Every effort to keep them contained is indeed a good effort.
-CompleteText=You return. Your efforts are indeed valued and I am grateful for your assistance. I hope we may continue to cull the growth of Shadow in this area. Thank you.
+CompleteText=You return. Your efforts are indeed valued and I am grateful for your assistance. I hope we may continue to cull the growth of the Shadow in this area. Thank you.
 Level=34
 Suggested=35
 Exp=5675
 PartySize=1
 NumRewards=0
 Coin=1508
+Heroism=10
 Unabandon=0
 QuestGiverID=680
 QuestEnderID=680
 Repeat=0
 sGiver=10016.0,255.024,62607.0,9
 sEnder=10016.0,255.024,62607.0,9
-Heroism=10
 [ACT]
 Act.BodyText=Travel to the Ruins of Tall Stand and eliminate twenty-five Shadows.
 Obj.0.type=kill
 Obj.0.data1=650,651
 Obj.0.data2=25
 Obj.0.description=Destroy 25 Shadows
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 25
@@ -5723,9 +5644,10 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Oakhand
-Obj.0.complete=0
 Obj.0.myCreatureDefID=680
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=10016.0,255.024,62607.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=10016.0,255.024,62607.0,9;
 
@@ -6326,8 +6248,6 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=1465
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=29646.7,152.99,71128.0,9;
-
 [ENTRY]
 ID=133
 Requires=132
@@ -6336,7 +6256,7 @@ BodyText=What a presumption! You really think that I would give a recommendation
 
 Lucky for you, I have a problem which needs solving and no inclination to deal with it myself. Carrionite Savages and Carrionite Warrior Priests, in festering camps southeast of here, are a constant problem to any merchant, treasure-seeker or traveler along the road to Bazaart. Liberate some of the stolen crates you may find in their camps. I know of at least five caches of treasure they have stolen, and recently! Feel free to pulverize them on my behalf while you are there!
 
-You should aslo ask around town a bit. I am sure there are others who have had issues with these rot-eating birds!
+You should also ask around town a bit. I am sure there are others who have had issues with these rot-eating birds!
 CompleteText=So, you return... ...and you have returned with the goods!
 Level=32
 Suggested=33
@@ -6344,34 +6264,33 @@ Exp=5232
 PartySize=1
 NumRewards=0
 Coin=1350
+Heroism=6
 Unabandon=0
 QuestGiverID=795
 QuestEnderID=795
 Repeat=0
 sGiver=29763.0,165.301,71285.0,9
 sEnder=29763.0,165.301,71285.0,9
-Heroism=6
 [ACT]
 Act.BodyText=Travel to the Carrionite camps and gather five crates of Stolen Goods.
 Obj.0.type=gather
 Obj.0.data1=1053
 Obj.0.data2=5
 Obj.0.description=Collect 5 Crates of Stolen Goods
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500111
 Obj.0.completeText=0 of 5
 Obj.0.markerLocations=34203.0,265.583,72376.0,9;
-Obj.0.ActivateTime=2000
-Obj.0.ActivateText=Gathering Crate of Stolen Goods
 [ACT]
 Act.BodyText=Return to Lazlo Gont.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Lazlo Gont
-Obj.0.complete=0
 Obj.0.myCreatureDefID=795
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=29761.898,165.248,71285.0,9;
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=29761.898,165.248,71285.0,9;
@@ -6780,8 +6699,6 @@ Obj.0.markerLocations=22677.398,412.796,90722.0,9;
 RewardItem.0=5283,1,0
 RewardItem.1=5284,1,0
 RewardItem.2=5285,1,0
-RewardItem.3=5286,1,0
-
 [ENTRY]
 ID=146
 Title=Sending Backup To Oslis
@@ -6791,7 +6708,7 @@ You would be an invaluable resource to the small Outcast encampment of Oslis - n
 
 Both the Stone Lion Maoiri Darkstalker and Carrionite Jatat Kekk would welcome your assistance in getting the rest of their tribes to stop their raiding activities and preserve their races for future generations.
 
-Travel north to Oslis, and unless you are outright insane, I advise avoiding Dustfields and going the long way around - and speak to Maoiri Dustchanter.
+Travel north to Oslis, and unless you are outright insane, I advise avoiding the Dustfields and going the long way around - and speak to Maoiri Dustchanter.
 CompleteText=You have come in a time of need. Welcome to Oslis.
 Level=37
 Suggested=38
@@ -6811,9 +6728,10 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Find Maoiri Dustchanter
-Obj.0.complete=0
 Obj.0.myCreatureDefID=855
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=29591.898,1156.02,79456.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=29591.898,1156.02,79456.0,9;
 
@@ -7472,15 +7390,13 @@ Obj.0.markerLocations=28979.102,1018.49,80322.0,9;
 RewardItem.0=4785,1,0
 RewardItem.1=4784,1,0
 RewardItem.2=4783,1,0
-RewardItem.3=4782,1,0
-
 [ENTRY]
 ID=219
 Requires=218
-Title=Sphynxs' Crab Delight
+Title=Sphinx's Crab Delight
 BodyText=This is so exciting! Do you not agree?! I feel I am finally ready to try a recipe of such a rarity, that even the jaded nobles at Camelot will not turn their noses up at the dish!
 
-Are you ready to gather the ingredients for Sphinx' Crab Delight? Worry not, no actual sphinxes will be harmed in the making of this dish - you might get bruised however.
+Are you ready to gather the ingredients for Sphinx's Crab Delight? Worry not, no actual sphinxes will be harmed in the making of this dish - you might get bruised however.
 
 I need you to gather some Sphinx-Tail Ale from the Windswept Shores, on the western edge of Dustshore. When the Anubian fleet shipwrecked on the coast, they lost quite a bit of their cargo in the wreckage, and among the supplies was an entire shipment of Sphinx-Tail Ale. The Anubians might be heartless killing machines, but I would swear on my favorite spoon as to the quality of their ale!
 
@@ -7496,31 +7412,27 @@ Exp=6947
 PartySize=1
 NumRewards=0
 Coin=1980
+Heroism=6
 Unabandon=0
 QuestGiverID=1476
 QuestEnderID=1476
 Repeat=0
 sGiver=29333.0,1221.97,79899.0,9
 sEnder=29333.0,1221.97,79899.0,9
-Heroism=6
 [ACT]
 Act.BodyText=Gather a dozen Sphinx-Tail Ales from the Windswept Shores on the western edge of Dustshore. While you are there, collect Scuttler Legs from Ambercoast Scuttlers.
 Obj.0.type=gather
 Obj.0.data1=1487
 Obj.0.data2=12
-Obj.0.description=Collect 12 Bottles of Sphynx-Tail Ale
-Obj.0.complete=0
+Obj.0.description=Collect 12 Bottles of Sphinx-Tail Ale
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500146
 Obj.0.completeText=0 of 12
 Obj.0.markerLocations=20636.0,86.1219,82690.0,9;
-Obj.0.ActivateTime=2000
-Obj.0.ActivateText=Gathering Bottle of Sphynx-Tail Ale
 Obj.1.type=kill
 Obj.1.data1=1466,1468
 Obj.1.data2=15
 Obj.1.description=Gather 15 Scuttler Legs
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=500141
 Obj.1.completeText=0 of 15
@@ -7531,9 +7443,10 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Fergus Brewchanter
-Obj.0.complete=0
 Obj.0.myCreatureDefID=1476
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=29333.3,1221.55,79891.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=29333.3,1221.55,79891.0,9;
 
@@ -8386,8 +8299,6 @@ Obj.0.markerLocations=41410.5,205.202,66418.0,9;
 RewardItem.0=5309,1,0
 RewardItem.1=5310,1,0
 RewardItem.2=5311,1,0
-RewardItem.3=5312,1,0
-
 [ENTRY]
 ID=162
 Requires=500
@@ -8396,7 +8307,7 @@ BodyText=Welcome to the front lines in the fight against The Rotted! Certainly, 
 
 I need you to travel south from Greenline Thicket and into Box Blight, and take some samples from the corrupted life there.
 
-The same plague which is killing our Treekin bretheren is also affecting other forest life in curious ways. For example, the wolves in the area, Gloomfang Stalkers, have been twisted beyond recognition! This is no mere case of rabies!
+The same plague which is killing our Treekin brethren is also affecting other forest life in curious ways. For example, the wolves in the area, Gloomfang Stalkers, have been twisted beyond recognition! This is no mere case of rabies!
 
 I need you to gather blood samples from ten of the Gloomfang Stalkers and ten bark samples from Rotted Timberfiends.
 
@@ -8410,20 +8321,19 @@ Exp=6403
 PartySize=1
 NumRewards=0
 Coin=1778
+Heroism=10
 Unabandon=0
 QuestGiverID=1063
 QuestEnderID=1063
 Repeat=0
 sGiver=41876.0,267.123,65601.0,9
 sEnder=41876.0,267.123,65601.0,9
-Heroism=10
 [ACT]
 Act.BodyText=Venture into the Box Blight to gather blood samples from ten of the Gloomfang Stalkers and ten bark samples from Rotted Timberfiends.
 Obj.0.type=kill
 Obj.0.data1=927,928
 Obj.0.data2=10
 Obj.0.description=Collect 10 Gloomfang Stalker Blood Samples
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500113
 Obj.0.completeText=0 of 10
@@ -8432,7 +8342,6 @@ Obj.1.type=kill
 Obj.1.data1=921,922,923
 Obj.1.data2=10
 Obj.1.description=Collect 10 Rotted Timberfiend Bark Samples
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=500114
 Obj.1.completeText=0 of 10
@@ -8443,9 +8352,10 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Mary Ferguson
-Obj.0.complete=0
 Obj.0.myCreatureDefID=1063
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=41867.5,267.123,65620.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=41867.5,267.123,65620.0,9;
 
@@ -8553,8 +8463,6 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=1510
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=45253.0,205.974,64492.0,9;
-
 [ENTRY]
 ID=169
 Requires=167
@@ -8563,7 +8471,7 @@ BodyText=This fight against the efforts of the Pact of Decay has brought me to u
 
 At any rate, we have had a victory, however small, and Ironbirch should be notified!
 
-Ironbirch runs a small camp south of us in Bleeding Sap, where he and a tiny group of faithful tirelessly resolve to re-populate the forest with healthy saplings.
+Ironbirch runs a small camp south of us in Bleeding Sap, where he and a tiny group of faithful Beasts and Treekin tirelessly resolve to re-populate the forest with healthy saplings.
 
 Bring him word of our victory, but be careful friend, his camp is under constant threat from the Rotted and Black Shroomies!
 CompleteText=You have come from the thicket? Good. There is much to be done, here.
@@ -8580,16 +8488,17 @@ Repeat=0
 sGiver=45311.0,206.821,64416.0,9
 sEnder=52733.0,844.671,78506.0,9
 [ACT]
-Act.BodyText=Ironbirch runs a small camp south of Greenline Thicket within Bleeding Sap, where he and a tiny group of faithful tirelessly resolve to re-populate the forest with healthy saplings.
+Act.BodyText=Ironbirch runs a small camp south of Greenline Thicket within Bleeding Sap, where he and a tiny group of faithful Beasts and Treekin tirelessly resolve to re-populate the forest with healthy saplings.
 
 Bring him word of the victory at Bileforge, but be careful friend, his camp is under constant threat from the Rotted and Black Shroomies!
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Speak to Ironbirch
-Obj.0.complete=0
 Obj.0.myCreatureDefID=1077
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=53183.9,735.595,78010.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=53183.9,735.595,78010.0,9;
 
@@ -9255,8 +9164,6 @@ Obj.0.markerLocations=52635.0,695.476,77737.0,9;
 RewardItem.0=5317,1,0
 RewardItem.1=5318,1,0
 RewardItem.2=5319,1,0
-RewardItem.3=5320,1,0
-
 [ENTRY]
 ID=243
 Requires=241
@@ -9268,7 +9175,7 @@ Those lunatics murdered my wife! They took her from me and dragged her away into
 I beg of you! Bring me vengeance!
 CompleteText=You killed them?!
 
-I know this will not bring her back, but at least they have paid the price with their own l
+I know this will not bring her back, but at least they have paid the price with their own lives!
 
 I am so very grateful!
 Level=41
@@ -9277,20 +9184,19 @@ Exp=7532
 PartySize=3
 NumRewards=0
 Coin=2205
+Heroism=10
 Unabandon=0
 QuestGiverID=1106
 QuestEnderID=1106
 Repeat=0
 sGiver=52885.7,708.417,77737.0,9
 sEnder=52885.7,708.417,77737.0,9
-Heroism=10
 [ACT]
 Act.BodyText=Be the hand of vengeance for Matthew Ravensheen and kill thirty members of the Khazechek. Attacking any Cabalist, Occultist, Bladebane, or Bloodgorger will do! As would assassinating Durgan Wrathborn and Elia Scorn.
 Obj.0.type=kill
 Obj.0.data1=1128,1129,1526
 Obj.0.data2=30
 Obj.0.description=Kill 30 members of the Khazechek
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 30
@@ -9301,19 +9207,18 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Matthew Ravensheen
-Obj.0.complete=0
 Obj.0.myCreatureDefID=1106
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=52877.4,704.917,77756.0,9;
-
+Obj.0.completeText=
 [ENTRY]
 ID=174
 Requires=242
 Title=Relief For The Everdying
 BodyText=You have proven a worthy aid, young one. Now I must ask you to aid me again in a most serious matter.
 
-The Stumpslayers make all attempts to capture and corrupt my Treekin brethren. Those who do not fall into the pit of corruption, decay and despair, are burned in horrible magical fires. This great travesty must be put to an end so my kind may finally rest in peace.
+The Stump Slayers make all attempts to capture and corrupt my Treekin brethren. Those who do not fall into the pit of corruption, decay and despair, are burned in horrible magical fires. This great travesty must be put to an end so my kind may finally rest in peace.
 
 Travel to the Pyres and kill the Pyreguards.
 CompleteText=Thank you, young one. You have put an end to some of the suffering in this once-great wood.
@@ -9323,20 +9228,19 @@ Exp=7532
 PartySize=1
 NumRewards=0
 Coin=2205
+Heroism=10
 Unabandon=0
 QuestGiverID=1077
 QuestEnderID=1077
 Repeat=0
 sGiver=52733.0,844.671,78506.0,9
 sEnder=52733.0,844.671,78506.0,9
-Heroism=10
 [ACT]
 Act.BodyText=Travel south from Ironbirch Camp and south into the dismal Pyres.
 Obj.0.type=travel
 Obj.0.data1=51213,446,82147,9
 Obj.0.data2=400
 Obj.0.description=Travel to the Pyreguards Grove
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
@@ -9347,7 +9251,6 @@ Obj.0.type=kill
 Obj.0.data1=1184
 Obj.0.data2=15
 Obj.0.description=Kill 15 Stumpslayer Pyreguards
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 15
@@ -9358,12 +9261,11 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Ironbirch
-Obj.0.complete=0
 Obj.0.myCreatureDefID=1077
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=52749.203,844.777,78509.0,9;
-
+Obj.0.completeText=
 [ENTRY]
 ID=214
 Requires=228
@@ -9374,7 +9276,7 @@ We must reclaim the tunnel to Cazador. The remaining forces in Spain can only ho
 
 To do this, you must defeat the force holding the inside of the tunnel. To do that, you must defeat General Thothmes, the leader of the Anubian force. He is no normal Anubian - his armor is imbued with powerful magic beyond my own reckoning. During the initial invasion of Dustshore, he alone slew groups of men single-handedly.
 
-I ask you to do this not for me, but for the lives of those brave men who will die if we do not get more men and supplies to Cazador as soon as possible!
+I ask you to do this not for me, but for the lives of those brave beasts who will die if we do not get more beasts and supplies to Cazador as soon as possible!
 
 Go now and may Gaia watch over you!
 CompleteText=You have done yourself and this land a great deed. This will not be forgotten. I shall speak with Arthur of your deeds, personally, the next chance I have to visit Camelot. Take this key and use it to unlock my personal chest. You may take one item from inside.
@@ -9386,20 +9288,19 @@ Exp=8165
 PartySize=5
 NumRewards=0
 Coin=2430
+Heroism=14
 Unabandon=0
 QuestGiverID=851
 QuestEnderID=851
 Repeat=0
 sGiver=22703.0,409.613,90743.0,9
 sEnder=22703.0,409.613,90743.0,9
-Heroism=14
 [ACT]
 Act.BodyText=Reclaim the tunnel to Cazador for the crown by assassinating the Anubian warleader, General Thothmes.
 Obj.0.type=kill
 Obj.0.data1=1431
 Obj.0.data2=1
 Obj.0.description=Kill General Thothmes
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
@@ -9410,10 +9311,11 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Sir Gawain
-Obj.0.complete=0
 Obj.0.myCreatureDefID=851
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=22677.398,412.796,90722.0,9;
+RewardItem.0=21173,1,1
 Obj.0.markerLocations=22677.398,412.796,90722.0,9;
 RewardItem.0=21173,1,1
 
@@ -9568,7 +9470,7 @@ RewardItem.3=5253,1,0
 ID=517
 Requires=516
 Title=Hunting the Strongest: Ironjaw
-BodyText=Amongst the Trappers, you will also find a superior specimen. This one is known as Ironjaw. It has been known to bite clean through heavy armor, so use caution. Kill Ironjaw and bring me his lantern. Goodluck.
+BodyText=Amongst the Trappers, you will also find a superior specimen. This one is known as Ironjaw. It has been known to bite clean through heavy armor, so use caution. Kill Ironjaw and bring me it's lantern. Good luck.
 CompleteText=Ah, very well done. I was not sure you would be able to take the beast down, but you seemed to have handled it quite easily.
 Level=32
 Suggested=33
@@ -9576,20 +9478,19 @@ Exp=5232
 PartySize=2
 NumRewards=0
 Coin=1350
+Heroism=10
 Unabandon=0
 QuestGiverID=777
 QuestEnderID=777
 Repeat=0
 sGiver=29150.0,318.0,61175.0,9
 sEnder=29150.0,318.0,61175.0,9
-Heroism=10
 [ACT]
 Act.BodyText=Travel north outside of the city. Hunt and kill Ironjaw.
 Obj.0.type=kill
 Obj.0.data1=2469
 Obj.0.data2=1
 Obj.0.description=Kill Ironjaw
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
@@ -9600,7 +9501,6 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Huntress Diandra
-Obj.0.complete=0
 Obj.0.myCreatureDefID=777
 Obj.0.myItemID=
 Obj.0.completeText=
@@ -9653,7 +9553,7 @@ RewardItem.0=21164,1,1
 ID=518
 Requires=517
 Title=Hunting the Strongest: Nilus
-BodyText=Finally, I send you after Nilus. A large Wayward Murkfly. Kill it and bring me its proboscis. I wish you luck, again.
+BodyText=Finally, I send you after Nilus. A large Wayward Murkfly. Kill it and bring me it's proboscis. I wish you luck, again.
 CompleteText=A third time sent hunting and a third triumph. Quite impressive, indeed! As a reward, please choose one of these amulets. Use it wisely. Farewell.
 Level=33
 Suggested=34
@@ -9661,20 +9561,19 @@ Exp=5447
 PartySize=2
 NumRewards=1
 Coin=1418
+Heroism=10
 Unabandon=0
 QuestGiverID=777
 QuestEnderID=777
 Repeat=0
 sGiver=29150.0,318.0,61175.0,9
 sEnder=29150.0,318.0,61175.0,9
-Heroism=10
 [ACT]
 Act.BodyText=Travel west of the Dire Murk and kill Nilus.
 Obj.0.type=kill
 Obj.0.data1=1031
 Obj.0.data2=1
 Obj.0.description=Kill Nilus
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
@@ -9685,7 +9584,6 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Huntress Diandra
-Obj.0.complete=0
 Obj.0.myCreatureDefID=777
 Obj.0.myItemID=
 Obj.0.completeText=
@@ -10024,7 +9922,7 @@ RewardItem.0=21342,1,1
 [ENTRY]
 ID=531
 Title=Hajeen Qaraba
-BodyText=Hail. I am the leader of the hired guards that protect Nante's Waystation. Our time is mostly kept making sure creatures or bandits do not make their way into town. That is a full time job. I have worries of late, though. The Djinn at the Oasis rarely encroach on town, but recently a Djinn known as Hajeen Qaraba has been roaming the Oasis. I am told he is inciting the other Djinn to violence against Nante's Waystation. This is where I could use your help. In plain terms, I want him killed. I do not need more threats on this town. We barely get paid enough for what do now without having to worry about the Djinn as well.
+BodyText=Hail. I am the leader of the hired guards that protect Nante's Waystation. Our time is mostly kept making sure creatures or bandits do not make their way into town. That is a full time job. I have worries of late, though. The Djinn at the Oasis rarely encroach on the town, but recently a Djinn known as Hajeen Qaraba has been roaming the Oasis. I am told he is inciting the other Djinn to violence against Nante's Waystation. This is where I could use your help. In plain terms, I want him killed. I do not need more threats on this town. We barely get paid enough for what we do now without having to worry about the Djinn as well.
 CompleteText=Welcome back. The deed is done? Good work. Choose one of these items as a reward.
 
 Farewell.
@@ -10034,20 +9932,19 @@ Exp=6149
 PartySize=2
 NumRewards=1
 Coin=1688
+Heroism=10
 Unabandon=0
 QuestGiverID=2490
 QuestEnderID=2490
 Repeat=0
 sGiver=30030.0,150.0,70874.0,9
 sEnder=30030.0,150.0,70874.0,9
-Heroism=10
 [ACT]
 Act.BodyText=Travel to the Oasis and kill Hajeen Qaraba.
 Obj.0.type=kill
 Obj.0.data1=1452
 Obj.0.data2=1
 Obj.0.description=Kill Hajeen Qaraba
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
@@ -10058,7 +9955,6 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Heran Whitescale
-Obj.0.complete=0
 Obj.0.myCreatureDefID=2490
 Obj.0.myItemID=
 Obj.0.completeText=
@@ -10114,7 +10010,7 @@ RewardItem.0=21336,1,1
 ID=530
 Requires=529
 Title=Big Game Hunting: Windwail
-BodyText=I have one more beast you might be interested in hunting. This one, mind you, is a truly magnificent creature. South past Bazaart is the roaming grounds of a giant Flametail known as Windwail. This is a beast not to be hunted lightly. In fact, I would suggest you gather some companions if you truly seek to hunt this prey.
+BodyText=I have one more beast you might be interested in hunting. This one, mind you, is a truly magnificent creature. South past Bazaart is the roaming grounds of a giant Flamewing known as Windwail. This is a beast not to be hunted lightly. In fact, I would suggest you gather some companions if you truly seek to hunt this prey.
 CompleteText=I am duly impressed with your hunting skills. You have slain three of the massive beasts that roam the wastes.  Not only have you earned my respect, but you have also earned a prize. I keep a chest of items here just for these types of occasions. Take this key. It will allow you to open the chest and take one item. Farewell and good hunting!
 Level=36
 Suggested=37
@@ -10122,20 +10018,19 @@ Exp=6149
 PartySize=5
 NumRewards=0
 Coin=1688
+Heroism=14
 Unabandon=0
 QuestGiverID=2462
 QuestEnderID=2462
 Repeat=0
 sGiver=29393.0,150.0,70598.0,9
 sEnder=29393.0,150.0,70598.0,9
-Heroism=14
 [ACT]
 Act.BodyText=Travel far to the south from Nante's Waystation. Hunt and kill the giant Flamewing known as Windwail.
 Obj.0.type=kill
 Obj.0.data1=2489
 Obj.0.data2=1
 Obj.0.description=Kill Windwail
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
@@ -10146,7 +10041,6 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Finix Glint
-Obj.0.complete=0
 Obj.0.myCreatureDefID=2462
 Obj.0.myItemID=
 Obj.0.completeText=
@@ -10431,12 +10325,10 @@ Obj.0.myCreatureDefID=2822
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=22512.0,280.018,78082.0,9;
-RewardItem.0=21336,1,1
-
 [ENTRY]
 ID=537
 Title=Speak to the Warden
-BodyText=Hello traveler.  My name is Spencer Gallows. I am a doctor, of sorts, and I once lived in Bremen. I worked in the Bremen Asylum before it was closed up for good. The place was once a haven for those who, for whatever reason, had need of care not for the body, but for the mind. Some were bewitched, others had just gone plain mad. It was a peaceful place, though, until one night something went terribly wrong. A new patient had arrived. He was a man obviously shaken by some traumatic event. He kept going on and on about "...east...always east...," or talking about demons and generally not making much sense.
+BodyText=Hello traveler.  My name is Spencer Gallows. I am a doctor, of sorts, and I once lived in Bremen. I worked in the Bremen Asylum before it was closed up for good. The place was once a haven for those who, for whatever reason, had need of care not for the body, but for the mind. Some were bewitched, others had just gone plain mad. It was a peaceful place, though, until one night when something went terribly wrong. A new patient had arrived. He was a beast obviously shaken by some traumatic event. He kept going on and on about "...east...always east...," or talking about demons and generally not making much sense.
 
 I am still not even sure what happened. What I do know is from his room that night came screams of terror. Most of us fled when the entire place began to shake. Those who did not escape went mad within hours. I lost...friends...that day. That was over ten years ago. Prince Emberson tried to reclaim the place but every attempt ended badly. Eventually, it was just closed up tight. Still, at night you can sometimes hear screams of pain or insanity coming from the inside. Sorry I have rambled on quite a bit. I have need of someone to reenter the asylum. It may sound trivial but I left behind a journal there. My reasons for wanting it back are my own, but I do wish it returned to me. I am not ashamed to say I do not bear the mark of bravery required to even think of entering that place, now. You, on the other hand, look like the adventurous type. You can gain entrance to the asylum if you speak with Verlos Clarron, the former warden of the asylum. He keeps watch on the place to this very day.
 CompleteText=What do you want? Gallows sent you? Hmm...
@@ -10458,9 +10350,10 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Speak with Verlos Clarron
-Obj.0.complete=0
 Obj.0.myCreatureDefID=2500
 Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=68647.2,621.832,34516.6,9;
 Obj.0.completeText=
 Obj.0.markerLocations=68647.2,621.832,34516.6,9;
 
@@ -10693,33 +10586,30 @@ Obj.0.myCreatureDefID=2828
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=52734.3,844.052,78358.5,9;
-RewardItem.0=21335,1,1
-
 [ENTRY]
 ID=536
 Title=Spiketail Juggernauts
-BodyText=Hello friend! I wonder if you could possibly obtain some items for me? I make armor from Spiketail shells. And not just any Spiketails! I only use the amazing hard shells from the Juggernauts. If you would collect ten shells for me, I would pay you kindly.
-CompleteText=These are great shells. These will make some fine heavy armor. Please take a set of these shoulders as a reward for you hard work.
+BodyText=Hello friend! I wonder if you could possibly obtain some items for me? I make armor from Spiketail shells. And not just any Spiketails! I only use the amazingly hard shells from the Juggernauts. If you would collect ten shells for me, I would pay you kindly.
+CompleteText=These are great shells. These will make some fine heavy armor. Please take a set of these shoulders as a reward for your hard work.
 Level=36
 Suggested=37
 Exp=6149
 PartySize=1
 NumRewards=1
 Coin=1688
+Heroism=10
 Unabandon=0
 QuestGiverID=2498
 QuestEnderID=2498
 Repeat=0
 sGiver=23117.0,421.0,90468.0,9
 sEnder=23117.0,421.0,90468.0,9
-Heroism=10
 [ACT]
 Act.BodyText=Travel east and collect ten Spiketail Juggernaut Shells.
 Obj.0.type=kill
 Obj.0.data1=717
 Obj.0.data2=10
 Obj.0.description=Collect 10 Spiketail Juggernaut Shells
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500273
 Obj.0.completeText=0 of 10
@@ -10730,13 +10620,14 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Warren Sosslin
-Obj.0.complete=0
 Obj.0.myCreatureDefID=2498
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=23117.0,421.149,90468.3,9;
 RewardItem.0=5283,1,0
 RewardItem.1=5284,1,0
+RewardItem.2=5285,1,0
+RewardItem.3=5286,1,0
 RewardItem.2=5285,1,0
 RewardItem.3=5286,1,0
 

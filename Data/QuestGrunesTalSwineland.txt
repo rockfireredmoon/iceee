@@ -1084,52 +1084,52 @@ Exp=8042
 PartySize=1
 NumRewards=0
 Coin=2318
+[ENTRY]
+ID=849
+Requires=848
+Title=Sythrex the Overseer
+BodyText=Now that that's taken care of we can move on to the next step: The Overseer.  This Lich, called Sythrex, seems to keep reanimating corpses from the graveyard. It's literally a breeding ground for Abidan's forces! In addition, Sythrex tends to be accompanied by a rather strong fell creature called in these parts a Putrid Avien. Eliminate both Sythrex the Overseer and his Putrid Avien 'pet' then report back to me when you're finished!
+CompleteText=Ah you've returned! It's taken care of then I assume? Good, now I have an even more important matter that requires your attention.
+Level=45
+Suggested=45
+Exp=8212
+PartySize=2
+NumRewards=0
+Coin=2418
 Unabandon=0
-QuestGiverID=1245
-QuestEnderID=1245
+QuestGiverID=1202
+QuestEnderID=1202
 Repeat=0
-sGiver=2216.55,286.536,2523.62,93
-sEnder=2216.55,286.536,2523.62,93
+sGiver=58956.5,776.751,67025.6,9
+sEnder=58956.5,776.751,67025.6,9
 [ACT]
-Act.BodyText=Kill 25 Hogcatcher Mages, Hogcatcher Rogues, Hogcatcher Druids and Hogcatcher Knights in the Hogcatcher camps.
+Act.BodyText=Travel to the Iron Hills and defeat Sythrex the Overseer and his Putrid Avien
 Obj.0.type=kill
-Obj.0.data1=1216,1218,1219,1220,1221,1222,1223,1224
-Obj.0.data2=25
-Obj.0.description=Kill 25 Hogcatchers
+Obj.0.data1=1196
+Obj.0.data2=1
+Obj.0.description=Kill Sythrex The Overseer
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText=0 of 25
-Obj.0.markerLocations=66596.1,614.328,57510.0,9;
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=52132.9,734.057,68157.2,9;
+Obj.1.type=kill
+Obj.1.data1=1203,1226,1227
+Obj.1.data2=1
+Obj.1.description=Kill Putrid Avien
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=52132.9,734.057,68157.2,9;
 [ACT]
-Act.BodyText=Speak with Norris
+Act.BodyText= Return to Derk Vilander
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
-Obj.0.description=Speak with Norris
-Obj.0.myCreatureDefID=1245
+Obj.0.description=Return to Derk Vilander
+Obj.0.myCreatureDefID=1202
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=63956.4,781.573,56691.6,9;2216.55,286.536,2523.62,93;
-
-[ENTRY]
-ID=847
-Title=The Missing Envoy
-BodyText=Hello there. It's nice to see a friendly face among so many ruffians! Don't misunderstand, our collaboration with the warpigs both here and in Swineland has been invaluable even if a bit on rocky terms. Even still, I never expected to be hung up here!
-
-*Sigh* I apologize friend. It would seem my temper has gotten the better of me of late. You see I have a problem. Several days ago I was sent from the Redeemer's Camp in Swineland to meet up with an envoy from our fellow Redeemers here in Grunes Tal. We were supposed to meet here at the Warpig Protectorate Camp at the borders of Swineland, but, my contact has not arrived.
-
-I am full aware of the dangers of the Undead hordes that infest this land and would rather not stay too long; however, the person I have been sent to meet was carrying information that would greatly assist the Redeemers against both the Undead here and the Vampires in Swineland. It has been almost a week now and I have become worried that something has happened to my contact.
-
-Since you appear to be strong, would you do me this favor and look for the envoy sent from the Hall? If you happen to find the envoy alive, please inform them that their contact is waiting at the Warpig encampment. If the worst has happened and they have fallen victim to the vile forces of Abidan, then please retrieve the documents I was sent to collect in their stead.
-
-I shall wait here in the meantime.
-CompleteText=You return. And the Envoy? ...I see. So, you found his camp and he was already dead? That is sad news indeed.
-
-Were you able to at least locate the documents? ...Yes, these appear to be the items I was sent to retrieve. While I am indeed saddened that a fellow Redeemer has met such a terrible end, I am at least grateful that all was not lost and you were able to complete the mission in their stead. Thank you for delivering these to me along with the news of my contact's fate.
-Level=44
-Suggested=44
-Exp=7842
-PartySize=1
+Obj.0.markerLocations=58956.5,776.751,67025.6,9;
 NumRewards=0
 Coin=2418
 Unabandon=0
@@ -1752,48 +1752,48 @@ Travel afield, and slay eleven Moonskull Hunters. Show the Vampires that our bar
 CompleteText=That'll make the Vampires take us a little more seriously. Good work, soldier!
 Level=45
 Suggested=46
-Exp=9497
+[ENTRY]
+ID=909
+Requires=908
+Title=Snorg's Shinies
+BodyText=Welcome to th' best, most wonderful Shiny Place ye'll ev'r find! Now lissen here, I'm th' smartest Warpig that ever lived! Just nobody knows it as of yet. That keeps me safe, see? If they knew the riches I had, well Boss Hawg hisself would be sendin' his Commandos down here to take me out!
+
+Just east o' here, where th' Ice Goliaths roam, there's some fancy crystals. These crystals are special, and I've found some itty-bitty pieces o' mankind's relics trapped within! I must have more, but I'se not so dumb as to take on the Ice Goliaths meself.
+
+Go on up that path to th' Crystal Fields, and gather eight Crystal-Relics fer me!
+CompleteText=Wow! Can't believe ya took 'em on and won!! And ya got me Shinies too! Ahaha! Give 'em here an' lemme see what ya found me!
+Level=45
+Suggested=45
+Exp=9672
 PartySize=1
 NumRewards=0
-Coin=3296
+Coin=4139
 Unabandon=0
-QuestGiverID=1318
-QuestEnderID=1318
+QuestGiverID=1328
+QuestEnderID=1328
 Repeat=0
-sGiver=73239.8,856.26,60816.6,9
-sEnder=73239.8,856.26,60816.6,9
+sGiver=66369.3,630.469,65092.0,9
+sEnder=66369.3,630.469,65092.0,9
 [ACT]
-Act.BodyText=Kill 11 Moonskull Hunters.
-Obj.0.type=kill
-Obj.0.data1=1330,1331
-Obj.0.data2=11
-Obj.0.description=Kill 11 Moonskull Hunters
+Act.BodyText=Travel east to the camps of the Ice Goliaths and collect 8 Crystal-Relics for Snorg.
+Obj.0.type=gather
+Obj.0.data1=3527
+Obj.0.data2=8
+Obj.0.description=Gather 8 Crystal-Relics
 Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=0 of 11
-Obj.0.markerLocations=78712.3,868.15,58974.7,9;
+Obj.0.myItemID=10049
+Obj.0.completeText=0 of 8
+Obj.0.markerLocations=68690.9,414.457,64098.2,9;
 [ACT]
-Act.BodyText=Return to Damian Talamasca.
+Act.BodyText=Return to Snorg with the Crystal-Relics.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
-Obj.0.description=Return to Damian Talamasca
-Obj.0.myCreatureDefID=1318
+Obj.0.description=Return to Snorg
+Obj.0.myCreatureDefID=1328
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=73239.8,856.26,60816.6,9;
-
-[ENTRY]
-ID=907
-Requires=906
-Title=Breaking The Chain Of Command
-BodyText=Now that the Vampires are seeing us as more of threat, they are beginning to mobilize to try and wipe us out.  However, an army without proper leadership is vulnerable and weak.
-
-Vaj Cruentes and Vaj Coltres are two of Valkal's so-called 'sons' who have been entrusted with commanding the Vampires' advance troops here in Swineland. Both have been spotted in their respective camps and if we can defeat these two, their armies will be left leaderless. Valkal himself, like most of his ilk, is arrogant and not likely to bother leaving his Blood Keep without due cause.
-
-Do this favor for us, friend, and the Redeemers will forever be in your debt. Please do not take the Vajs lightly! I know you are a seasoned warrior, but this is an ancient evil and both of these creatures have immense power.
-CompleteText=I don't believe my eyes, you've returned! I started to worry they got the best of... I won't lie, I had my doubts that you'd survive what with the sorts you had to contend with! You cannot even begin to understand what this means to the war effort!
-Level=46
+Obj.0.markerLocations=66369.3,630.469,65092.0,9;
 Suggested=46
 Exp=10476
 PartySize=2
@@ -2745,37 +2745,38 @@ Level=48
 Suggested=49
 Exp=9554
 PartySize=1
-Coin=4791
+[ENTRY]
+ID=931
+Requires=930
+Title=Payment In Full
+BodyText=Okay, ya got paid now beat it! OH! Before ya go, just remember I got lots of work needin' doin' so if ya ever need sum extra cash I got some Yeti problems that could use an enforcers touch!
+CompleteText=Yer back.
+
+(Clint takes Duke's payment from you.)
+
+AHA! Excellent! Dem Dukes are good folk, just need a lesson on what's what every now an' agin'. HAH... Here's yer cut.
+Level=48
+Suggested=48
+Exp=9474
+PartySize=1
+NumRewards=0
+Coin=4485
 Unabandon=0
-QuestGiverID=1325
+QuestGiverID=1340
 QuestEnderID=1325
 Repeat=0
-sGiver=71482.2,1130.07,47871.1,9
+sGiver=70543.5,992.447,50150.5,9
 sEnder=71482.2,1130.07,47871.1,9
 [ACT]
-Act.BodyText=Kill 20 Skrill for Clint.
-Obj.0.type=kill
-Obj.0.data1=1396,1399,1402,1405,1408
-Obj.0.data2=20
-Obj.0.description=Defeat 20 Skrill
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=0 of 20
-Obj.0.markerLocations=71323.9,776.777,45415.9,9;
-[ACT]
-Act.BodyText=Return to Clint.
+Act.BodyText=Deliver Duke's payment to Clint.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
-Obj.0.description=Speak with Clint
+Obj.0.description=Deliver the money to Clint
 Obj.0.myCreatureDefID=1325
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=71482.2,1130.07,47871.1,9;
-RewardItem.0=8700,1,1
-
-[ENTRY]
-ID=930
 Requires=929
 Title=You Scratch My Back, I Scratch Yours
 BodyText=Alright kid, now what most folks around here seem ta fergit is we keep these dang dambugs from spillin' into th' rest o' Swineland. Population control see!? Few o' them "Ally" Clans are fergettin' that.
@@ -2871,57 +2872,58 @@ sGiver=71482.2,1130.07,47871.1,9
 sEnder=71482.2,1130.07,47871.1,9
 [ACT]
 Act.BodyText=Locate the Skrill Queen's Lair Entrance.
-Obj.0.type=travel
-Obj.0.data1=71214,1129,44584,9
-Obj.0.data2=100
-Obj.0.description=Find the Skrill Queen's Lair
+[ENTRY]
+ID=941
+Requires=940
+Title=Piece of the Puzzle
+BodyText=So, these last few weeks I've been examining the Mark of Death artifact trying to understand what was wrong with it and why it won't work. After many almost-sleepless nights of scrutinizing this thing, it finally hit me! The key itself isn't complete. Look, right there! As you can see, there is a piece missing, a stone by the looks of the rather subtle impression. With us closing in on his Blood Keep I'm willing to bet Valkal decided to pull one over on us and split the key to his Keep in two. He left the largest part of it in that Mausoleum with his shadow as a lure to keep us distracted. However, in the event that piece was somehow taken by us, he likely had the other piece hidden somewhere else.
+
+While some of us sent for you, a few others went investigating where that other piece to the Mark of Death might be. They came back only yesterday with information that makes your return all the more timely. A partially torn note was found on one of those bloodsuckers near the base of the Keep that revealed the other piece of the Mark of Death has likely been taken out of Swineland itself. Well, not yet at least. It seems Valkal had been keeping the other piece with one of his 'sons' until you defeated his shadow.
+
+Realizing a powerful opponent has appeared on our side, Valkal now seems to be trying to get that piece out of Swineland and to a more secure location...which can only mean he's sent it to be taken through the Dambat Door.
+
+The Dambat Door, or so the warpigs call it, is the gate that leads out of Swineland and into the Lurkers Vale beyond. The Vale is a terrible place in recent years as the Blood Clans have gained near complete control over the region. We have reason to believe this is where the stone is being taken by some discreet courier. Hurry to the Dambat Door and intercept that courier carrying the other piece to the Mark of Death before it is too late!!
+CompleteText=The Dambat Door is probably the most dangerous place in Swineland outside of the Blood Keep itself! I can't believe you were able to fight them off and retrieve the stone. INCREDIBLE!
+Level=49
+Suggested=49
+Exp=10857
+PartySize=2
+NumRewards=0
+Coin=4465
+Unabandon=0
+QuestGiverID=1307
+QuestEnderID=1307
+Repeat=0
+sGiver=76850.6,968.205,49892.6,9
+sEnder=76850.6,968.205,49892.6,9
+[ACT]
+Act.BodyText=Defeat Valkal's Legions
+Obj.0.type=kill
+Obj.0.data1=3492
+Obj.0.data2=1
+Obj.0.description=Retrieve the Mark of Death
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=71210.9,1128.34,44596.5,9;
-[ACT]
-Act.BodyText=Exterminate 20 Skrill and the Skrill Queen in the Skrill Queen's Lair.
-Obj.0.type=kill
-Obj.0.data1=1397,1398,1400,1401,1403,1404,1406,1407,1409,1410
-Obj.0.data2=20
-Obj.0.description=Defeat 20 Skrill
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText= 0 of 20
-Obj.0.markerLocations=3008.76,720.981,2469.53,69;
+Obj.0.markerLocations=82302.1,785.077,54681.8,9;
 Obj.1.type=kill
-Obj.1.data1=1412
-Obj.1.data2=1
-Obj.1.description=Defeat the Skrill Queen
+Obj.1.data1=1346,1347,1349,1350,1417
+Obj.1.data2=20
+Obj.1.description=Defeat Valkal's Legions
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
-Obj.1.completeText=0 of 1
-Obj.1.markerLocations=3008.76,720.981,2469.53,69;
+Obj.1.completeText=(0 of 20)
+Obj.1.markerLocations=81868.5,790.799,54416.6,9;
 [ACT]
-Act.BodyText=Return to Clint.
+Act.BodyText=Return to Maddie Paintedhoof
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
-Obj.0.description=Return to Clint
-Obj.0.myCreatureDefID=1325
+Obj.0.description=Return to Maddie Paintedhoof
+Obj.0.myCreatureDefID=1307
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=71482.2,1130.07,47871.1,9;
-
-[ENTRY]
-ID=940
-Requires=932
-Title=Breakthrough With the Bloodkeep
-BodyText=Hey youse! Come back here right quick! One o' my boys just got this here letter from some o' them dambat killers located back east. They sez it's fer you!
-CompleteText=Excellent, you got our letter! To be honest I was rather surprised your travels brought you to the company of Clint and the Squishers. They are an old group, tough as nails but dumb as boards. Anyway, we finally made a breakthrough with the Mark of Death artifact!
-Level=49
-Suggested=49
-Exp=9857
-PartySize=1
-Coin=3465
-Unabandon=0
-QuestGiverID=1325
-QuestEnderID=1307
+Obj.0.markerLocations=76850.6,968.205,49892.6,9;
 Repeat=0
 sGiver=71482.2,1130.07,47871.1,9
 sEnder=76850.6,968.205,49892.6,9

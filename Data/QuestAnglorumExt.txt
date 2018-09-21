@@ -551,12 +551,12 @@ ScriptCompleteAction=remove_item 7066 1
 
 
 [ENTRY]
-Requires=797
 ID=798
+Requires=797
 Title=It's always Sonny in Europe.
-BodyText="Remember that tale I told you when we first met? As you can imagine it is all true." the hart would say.  You begin to make regrets for tuning him out when you first met.
+BodyText="Remember that tale I told you when we first met? As you can imagine it is all true." the hart would say.  You begin to have regrets for tuning him out when you first met.
 
-"That ring is the key to unlocking the truth. Seek out Sonny "The snail" for the next step. He was on his way to Baffle-Gate last I knew." 
+"That ring is the key to unlocking the truth. Seek out Sonny "The snail" for the next step. He was on his way to Baffle-Gate last I knew."
 CompleteText=The Broccan eyes your ring.
 
 "Did Zean send you? If he did, we have much to talk about."
@@ -570,20 +570,18 @@ Unabandon=0
 QuestGiverID=3626
 QuestEnderID=3627
 Repeat=0
-sGiver=42310,737.331,66784,81
-sEnder=3818,509,2993,60
+sGiver=42310.0,737.331,66784.0,81
+sEnder=3818.0,509.0,2993.0,60
 [ACT]
 Act.BodyText=Seek out Sonny "The snail" for the next step. He may be somewhere on the way to Baffle-Gate.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Find Sonny "The Snail" near Baffle-Gate
-Obj.0.complete=0
 Obj.0.myCreatureDefID=3627
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=
-
 
 [ENTRY]
 ID=799

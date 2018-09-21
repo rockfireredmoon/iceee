@@ -4783,7 +4783,7 @@ Obj.0.markerLocations=48308.2,221.414,44412.0,81;
 [ENTRY]
 ID=562
 Title=Daily: Trabid
-BodyText=An enormous hare who's been referred to before as Trabid is attacking local gardens in Southshield stealing their carrots!! The Crown is offering a generous reward to rid the world of this vermin.
+BodyText=An enormous hare who's been referred to before as Trabid is attacking local gardens in Southshield stealing their carrots!! The Crown is offering a generous reward to anyone who can rid the land of this vermin.
 CompleteText=
 Level=18,22
 Suggested=20
