@@ -206,6 +206,7 @@ Obj.0.myCreatureDefID=3038
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=61135.0,207.0,52272.0,9;
+
 [ENTRY]
 ID=621
 Requires=620
@@ -264,6 +265,34 @@ Unabandon=0
 QuestGiverID=3042
 QuestEnderID=3042
 Repeat=0
+sGiver=61035.7,203.232,52301.5,9
+sEnder=61035.7,203.232,52301.5,9
+Heroism=14
+[ACT]
+Act.BodyText=Collect twenty Blue Crown Mushrooms from the Down Below.
+Obj.0.type=gather
+Obj.0.data1=2995
+Obj.0.data2=20
+Obj.0.description=Collect 20 Blue Crown Mushrooms
+Obj.0.complete=0
+Obj.0.myCreatureDefID=500282
+Obj.0.myItemID=
+Obj.0.completeText=0 of 20
+Obj.0.markerLocations=61035.7,203.232,52301.5,9;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Gathering Blue Crown Mushroom...
+[ACT]
+Act.BodyText=Return to Marzala Kir.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Marzala Kir
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3042
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=61035.7,203.232,52301.5,9;
+
 [ENTRY]
 ID=623
 Requires=620
@@ -386,6 +415,28 @@ Obj.1.complete=0
 Obj.1.myCreatureDefID=500287
 Obj.1.myItemID=
 Obj.1.completeText=
+Obj.1.markerLocations=
+Obj.2.type=kill
+Obj.2.data1=3048
+Obj.2.data2=1
+Obj.2.description=Collect a sample: Sillum
+Obj.2.complete=0
+Obj.2.myCreatureDefID=500288
+Obj.2.myItemID=
+Obj.2.completeText=
+Obj.2.markerLocations=
+[ACT]
+Act.BodyText=Return to Trent Prentiss.
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Trent Prentiss
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3040
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=61091.0,207.0,52145.0,9;
+
 [ENTRY]
 ID=625
 Requires=620
