@@ -411,12 +411,12 @@ namespace ScriptCore
 
 	void NutPlayer::ClearQueue() {
 		std::vector<ScriptCore::NutScriptEvent*>::iterator it;
-		for(it = mQueue.begin(); it != mQueue.end(); ++it)
-			delete *it;
-		for(it = mQueueAdd.begin(); it != mQueueAdd.end(); ++it)
-			delete *it;
-		for(it = mQueueInsert.begin(); it != mQueueInsert.end(); ++it)
-			delete *it;
+		for(it = mQueue.begin(); it != mQueue.end(); )
+			delete *it++;
+		for(it = mQueueAdd.begin(); it != mQueueAdd.end(); )
+			delete *it++;
+		for(it = mQueueInsert.begin(); it != mQueueInsert.end(); )
+			delete *it++;
 		mQueue.clear();
 		mQueueAdd.clear();
 		mQueueInsert.clear();

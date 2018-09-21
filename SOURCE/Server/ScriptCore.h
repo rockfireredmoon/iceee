@@ -460,7 +460,7 @@ public:
 class PauseCondition : public NutCondition
 {
 public:
-	unsigned long mPaused;         //Time to fire this event.
+	bool mPaused;
 	PauseCondition();
 	~PauseCondition();
 

@@ -882,9 +882,6 @@ int ActiveInstance :: UnloadPlayer(SimulatorThread *callSim)
 		return -1;
 	}
 
-	RemovePlayerByID(creatureID);
-	AdjustPlayerCount(-1);
-
 
 	if(nutScriptPlayer != NULL && callSim->creatureInst != NULL) {
 		std::vector<ScriptCore::ScriptParam> p;
@@ -892,6 +889,9 @@ int ActiveInstance :: UnloadPlayer(SimulatorThread *callSim)
 		// Don't queue this, it's like the script will want to clean up before actual removal
 		nutScriptPlayer->RunFunction("on_unloaded", p, true);
 	}
+
+	RemovePlayerByID(creatureID);
+	AdjustPlayerCount(-1);
 	
 	return 1;
 }
@@ -899,10 +899,11 @@ int ActiveInstance :: UnloadPlayer(SimulatorThread *callSim)
 int ActiveInstance :: RemovePlayerByID(int creatureID)
 {
 	list<CreatureInstance>::iterator it;
-	for(it = PlayerList.begin(); it != PlayerList.end(); ++it)
+	for(it = PlayerList.begin(); it != PlayerList.end();)
 	{
 		if(it->CreatureID == creatureID)
 		{
+
 			if(nutScriptPlayer != NULL) {
 				std::vector<ScriptCore::ScriptParam> p;
 				p.push_back(creatureID);
@@ -914,7 +915,8 @@ int ActiveInstance :: RemovePlayerByID(int creatureID)
 			LSendToLocalSimulator(GSendBuf, size, it->CurrentX, it->CurrentZ);
 			EraseAllCreatureReference(&*it);
 			g_Log.AddMessageFormat("PLAYER REMOVED (%s) at (%p)", it->css.display_name, &*it);
-			PlayerList.erase(it);
+
+			PlayerList.erase(it++);
 			RebuildPlayerList();
 
 			if(nutScriptPlayer != NULL) {
@@ -926,6 +928,8 @@ int ActiveInstance :: RemovePlayerByID(int creatureID)
 
 			return 1;
 		}
+		else
+			++it;
 	}
 	return 0;
 }

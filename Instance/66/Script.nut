@@ -372,11 +372,8 @@ function is_list_dead(l) {
 function valkal_2_pick_spot(spawns) {
 	if(is_list_dead(spawns))  {
 	    if(debug)
-			inst.info("list of " + spawns.len() + " now dead, engaging");  
-			  	
-    	inst.queue(function() {    	
-    		valkal_2_engage();
-    	}, 5000);
+			inst.info("list of " + spawns.len() + " now dead, engaging");      	
+    	valkal_2_engage();
 	}
     else {
 	    if(debug)
@@ -532,16 +529,14 @@ function valkals_desperation() {
 		inst.set_flag(cid_valkal1, SF_NON_COMBATANT, false);
 		inst.resume_ai(cid_valkal1);
 		inst.set_creature_gtae(cid_valkal1);
-		inst.exec(function() {
-	        if(!inst.creature_use(cid_valkal1, THOUSAND_BATS)) {
-	        	if(debug)
-	            	inst.info("Failed to THOUSAND_BATS");
-	            valkal_1_engage();
-	        }
-	        else {
-	            inst.queue(valkal_1_engage, 10000);
-		    }
-		});
+        if(!inst.creature_use(cid_valkal1, THOUSAND_BATS)) {
+        	if(debug)
+            	inst.info("Failed to THOUSAND_BATS");
+            valkal_1_engage();
+        }
+        else {
+            inst.queue(valkal_1_engage, 10000);
+	    }
     });
 }
 
@@ -554,12 +549,8 @@ function reset_valkal1() {
     disengage_valkal(cid_valkal1);
    	inst.creature_chat(cid_valkal1, "s/", "Will no one face me? ... Cowards");
 	valkal1_full_health_count = 0;
-	
-	inst.exec(function() {
-		/* Must be queued as the function is not reentrant */
-		inst.walk_then(cid_valkal1, loc_platform_centre, 192, CREATURE_WALK_SPEED, 0, function(res) {
-			inst.set_flag(cid_valkal1, SF_NON_COMBATANT, false);
-		});
+	inst.walk_then(cid_valkal1, loc_platform_centre, 192, CREATURE_WALK_SPEED, 0, function(res) {
+		inst.set_flag(cid_valkal1, SF_NON_COMBATANT, false);
 	});
 }
 
@@ -573,11 +564,8 @@ function reset_valkal2() {
     disengage_valkal(cid_valkal2);
    	inst.creature_chat(cid_valkal2, "s/", "You've failed! You've all failed! ... You'll ALWAYS fail ....");
 	valkal2_full_health_count = 0;
-	inst.exec(function() {
-		/* Must be queued as the function is not reentrant */
-		inst.walk_then(cid_valkal2, valkal_2_positions[2].pos, valkal_2_positions[2].rot, CREATURE_RUN_SPEED, 0, function(res) {
-			inst.set_flag(cid_valkal2, SF_NON_COMBATANT, false);
-		});
+	inst.walk_then(cid_valkal2, valkal_2_positions[2].pos, valkal_2_positions[2].rot, CREATURE_RUN_SPEED, 0, function(res) {
+		inst.set_flag(cid_valkal2, SF_NON_COMBATANT, false);
 	});
 }
 
