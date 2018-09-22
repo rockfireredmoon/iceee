@@ -286,6 +286,8 @@ Obj.0.description=Return to Hank Glendale
 Obj.0.myCreatureDefID=342
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=39871.5,183.396,48509.0,9;
+
 [ENTRY]
 ID=394
 Requires=393
@@ -323,8 +325,6 @@ Obj.0.data2=0
 Obj.0.description=Return to Brundhild vonDame
 Obj.0.myCreatureDefID=432
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=39882.797,245.686,49170.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=39882.797,245.686,49170.0,9;
 
@@ -797,6 +797,8 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=2205
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=41854.0,341.955,59624.0,9;
+
 [ENTRY]
 ID=406
 Title=Lighting the Way
@@ -859,8 +861,6 @@ Obj.0.myCreatureDefID=2209
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=49005.6,190.53,54276.0,9;
-Obj.0.completeText=
-Obj.0.markerLocations=49005.6,190.53,54276.0,9;
 
 [ENTRY]
 ID=401
@@ -902,6 +902,8 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=2210
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=29988.0,73.0144,54446.0,9;
+
 [ENTRY]
 ID=402
 Requires=401
@@ -932,8 +934,6 @@ Obj.0.completeText=
 Obj.0.markerLocations=41530.797,271.559,60534.0,9;
 RewardItem.0=5160,1,0
 RewardItem.1=5161,1,0
-RewardItem.2=5162,1,0
-RewardItem.3=5163,1,0
 RewardItem.2=5162,1,0
 RewardItem.3=5163,1,0
 
@@ -995,6 +995,8 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=439
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=49166.1,316.777,54791.0,9;
+
 [ENTRY]
 ID=412
 Title=Shiny Stones
@@ -1025,6 +1027,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=500054
 Obj.0.completeText=0 of 12
 Obj.0.markerLocations=48185.4,203.851,61802.0,9;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking Shiny Stone...
 [ACT]
 Act.BodyText=Return to Volker Stump in Listerm.
 Obj.0.type=talk
@@ -1033,8 +1037,6 @@ Obj.0.data2=0
 Obj.0.description=Return to Volker Stump
 Obj.0.myCreatureDefID=437
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=41250.297,268.974,59801.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=41250.297,268.974,59801.0,9;
 
@@ -1152,6 +1154,8 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=2203
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=49216.703,256.462,53918.0,9;
+
 [ENTRY]
 ID=415
 Requires=399
@@ -1178,8 +1182,6 @@ Obj.0.data2=0
 Obj.0.description=Travel to Gaelon Scree
 Obj.0.myCreatureDefID=2201
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=50933.5,269.062,56658.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=50933.5,269.062,56658.0,9;
 
@@ -1482,6 +1484,8 @@ Obj.0.markerLocations=49826.4,337.679,54476.0,9;
 RewardItem.0=5178,1,0
 RewardItem.1=5179,1,0
 RewardItem.2=5180,1,0
+RewardItem.3=5181,1,0
+
 [ENTRY]
 ID=420
 Requires=419
@@ -1501,6 +1505,7 @@ QuestEnderID=348
 Repeat=0
 sGiver=49101.0,365.0,54662.0,9
 sEnder=57203.0,250.0,50369.0,9
+
 [ACT]
 Act.BodyText=Gather six Honey Root near the road north of Bandit's Bluff.
 
@@ -1515,6 +1520,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=500235
 Obj.0.completeText=0 of 8
 Obj.0.markerLocations=53366.6,271.373,51364.0,9;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Gathering Edgewater Mushroom...
 Obj.1.type=gather
 Obj.1.data1=2271
 Obj.1.data2=6
@@ -1523,6 +1530,8 @@ Obj.1.myCreatureDefID=
 Obj.1.myItemID=500234
 Obj.1.completeText=0 of 6
 Obj.1.markerLocations=46183.703,312.298,47826.0,9;
+Obj.1.ActivateTime=2000
+Obj.1.ActivateText=Gathering Honey Root...
 Obj.2.type=gather
 Obj.2.data1=2272
 Obj.2.data2=6
@@ -1531,6 +1540,8 @@ Obj.2.myCreatureDefID=
 Obj.2.myItemID=500233
 Obj.2.completeText=0 of 6
 Obj.2.markerLocations=48001.203,189.251,57371.0,9;
+Obj.2.ActivateTime=2000
+Obj.2.ActivateText=Gathering Elden Sprig...
 [ACT]
 Act.BodyText=Take the herbs you have collected to Mama Greywhiskers in the Gypsy Camp.
 Obj.0.type=talk
@@ -1539,8 +1550,6 @@ Obj.0.data2=0
 Obj.0.description=Travel to Mama Greywhiskers
 Obj.0.myCreatureDefID=348
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=57204.703,250.36,50365.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=57204.703,250.36,50365.0,9;
 
@@ -2035,6 +2044,8 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=428
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=54234.4,171.936,58883.0,9;
+
 [ENTRY]
 ID=434
 Requires=420
@@ -2064,6 +2075,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=500046
 Obj.0.completeText=0 of 8
 Obj.0.markerLocations=55827.797,532.034,45557.0,9;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Gathering Yaryn Fern...
 [ACT]
 Act.BodyText=Return to Mama Greywhiskers at the Gypsy Camp.
 Obj.0.type=talk
@@ -2074,7 +2087,7 @@ Obj.0.myCreatureDefID=348
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=57204.703,250.36,50365.0,9;
-Obj.0.markerLocations=57204.703,250.36,50365.0,9;
+
 [ENTRY]
 ID=436
 Title=Stonelions Thieves!
@@ -2103,6 +2116,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=500047
 Obj.0.completeText=0 of 3
 Obj.0.markerLocations=52003.1,345.918,45779.0,9;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking Stolen Goods
 [ACT]
 Act.BodyText=Return to Thaddeus Toadhollow at the Gypsy Camp.
 Obj.0.type=talk
@@ -2111,8 +2126,6 @@ Obj.0.data2=0
 Obj.0.description=Return to Thaddeus Toadhollow
 Obj.0.myCreatureDefID=440
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=56596.5,427.513,49564.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=56596.5,427.513,49564.0,9;
 
@@ -2661,6 +2674,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=500237
 Obj.0.completeText=0 of 1
 Obj.0.markerLocations=60788.0,507.5,38632.0,9;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Take Keepsake Chest...
 Obj.1.type=activate
 Obj.1.data1=2403
 Obj.1.data2=1
@@ -2679,8 +2694,6 @@ Obj.0.data2=0
 Obj.0.description=Return to Johan Brederbeck
 Obj.0.myCreatureDefID=574
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=61543.0,396.046,40208.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=61543.0,396.046,40208.0,9;
 
@@ -2712,6 +2725,8 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=2343
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=60899.1,506.822,44525.0,9;
+
 [ENTRY]
 ID=607
 Title=Ritual of the Mist
@@ -2784,7 +2799,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=60793.2,485.447,43487.6,9;
 RewardItem.0=5706,1,1
-Obj.0.markerLocations=60793.2,485.447,43487.6,9;
+
 [ENTRY]
 ID=451
 Requires=450
@@ -2830,8 +2845,6 @@ Obj.0.data2=0
 Obj.0.description=Return to Sooty Grogs
 Obj.0.myCreatureDefID=487
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=60113.1,446.346,43958.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=60113.1,446.346,43958.0,9;
 
@@ -3076,6 +3089,8 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=482
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=65983.0,62.7899,32419.0,9;
+
 [ENTRY]
 ID=462
 Requires=449
@@ -3107,6 +3122,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=500243
 Obj.0.completeText=0 of 3
 Obj.0.markerLocations=57457.203,151.667,34115.0,9;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking Iron-Bound Chest...
 [ACT]
 Act.BodyText=Return to Ananzhee in Seascape.
 Obj.0.type=talk
@@ -3115,8 +3132,6 @@ Obj.0.data2=0
 Obj.0.description=Return to Ananzhee in Seascape
 Obj.0.myCreatureDefID=576
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=65939.0,63.5584,32384.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=65939.0,63.5584,32384.0,9;
 
@@ -3159,6 +3174,8 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=2347
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=65116.1,420.766,34397.0,9;
+
 [ENTRY]
 ID=459
 Title=Taking Stock
@@ -3188,6 +3205,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=500291
 Obj.0.completeText=0 of 10
 Obj.0.markerLocations=65780.8,70.9174,31982.8,9;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Retrieving Packaged Spices...
 [ACT]
 Act.BodyText=Return to Deputy Chancellor Milo.
 Obj.0.type=talk
@@ -3196,8 +3215,6 @@ Obj.0.data2=0
 Obj.0.description=Return to Deputy Chancellor Milo
 Obj.0.myCreatureDefID=480
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=64921.297,458.752,33566.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=64921.297,458.752,33566.0,9;
 
@@ -3392,6 +3409,8 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=489
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=78379.0,444.664,39893.0,9;
+
 [ENTRY]
 ID=463
 Requires=457
@@ -3429,8 +3448,6 @@ Obj.0.data2=0
 Obj.0.description=Return to Leviston Wynkyn
 Obj.0.myCreatureDefID=477
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=68964.0,434.543,35003.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=68964.0,434.543,35003.0,9;
 
@@ -3623,6 +3640,8 @@ Obj.0.description=Speak with Prince Duncan Emberson
 Obj.0.myCreatureDefID=492
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=67965.0,545.149,36522.0,9;
+
 [ENTRY]
 ID=465
 Title=Messenger to Camelot
@@ -3648,8 +3667,6 @@ Obj.0.data2=0
 Obj.0.description=Take Lady Shinja's message to Veran Kolnere
 Obj.0.myCreatureDefID=2401
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=54093.797,154.009,63424.0,81;
 Obj.0.completeText=
 Obj.0.markerLocations=54093.797,154.009,63424.0,81;
 
@@ -4243,6 +4260,8 @@ Obj.0.description=Travel to Larking Breel in Heartwood
 Obj.0.myCreatureDefID=2402
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=29209.8,770.386,62269.0,9;
+
 [ENTRY]
 ID=489
 Title=Rumble Tromper Horns
@@ -4285,7 +4304,7 @@ RewardItem.0=5207,1,0
 RewardItem.1=5208,1,0
 RewardItem.2=5209,1,0
 RewardItem.3=5210,1,0
-RewardItem.2=5209,1,0
+
 [ENTRY]
 ID=491
 Title=Shellback Slider Shells
@@ -4322,8 +4341,6 @@ Obj.0.data2=0
 Obj.0.description=Return to Baeulan Tuks
 Obj.0.myCreatureDefID=490
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=77934.0,458.527,39855.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=77934.0,458.527,39855.0,9;
 
@@ -4636,6 +4653,8 @@ Obj.0.description=Return to Huntress Diandra
 Obj.0.myCreatureDefID=777
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=29149.8,318.251,61175.9,9;
+
 [ENTRY]
 ID=509
 Title=Sleeping Giant: Preparations
@@ -4674,8 +4693,6 @@ Obj.0.data2=0
 Obj.0.description=Return to Hierophant Luger
 Obj.0.myCreatureDefID=672
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=30050.5,622.393,61415.6,9;
 Obj.0.completeText=
 Obj.0.markerLocations=30050.5,622.393,61415.6,9;
 
@@ -4792,6 +4809,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=500079
 Obj.0.completeText=0 of 10
 Obj.0.markerLocations=37641.7,213.996,63306.4,9;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Destroying Pustule...
 [ACT]
 Act.BodyText=Return to Apprentice Druid Rhys.
 Obj.0.type=talk
@@ -4933,6 +4952,8 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=2465
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=54618.5,162.362,63457.0,81;
+
 [ENTRY]
 ID=608
 Title=Scallywag Thieves
@@ -4963,6 +4984,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=62633.9,417.015,41554.5,9;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking Jewelry Box...
 [ACT]
 Act.BodyText=Return to Anina Larkem in Bremen.
 Obj.0.type=talk
@@ -4971,8 +4994,6 @@ Obj.0.data2=0
 Obj.0.description=Return to Anina Larkem
 Obj.0.myCreatureDefID=2938
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=67330.6,675.898,35890.4,9;
 Obj.0.completeText=
 Obj.0.markerLocations=67330.6,675.898,35890.4,9;
 
@@ -5016,6 +5037,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=500277
 Obj.0.completeText=0 of 12
 Obj.0.markerLocations=53801.8,59.9694,40116.7,9;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking Crystal...
 [ACT]
 Act.BodyText=Return to Belzor Quintlin in Bremen.
 Obj.0.type=talk
@@ -5081,6 +5104,8 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=2937
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=67943.1,427.34,37104.9,9;
+
 [ENTRY]
 ID=609
 Requires=608
@@ -5120,8 +5145,6 @@ Obj.0.description=Return to Anina Larkem
 Obj.0.myCreatureDefID=2938
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=67330.6,675.898,35890.4,9;
-RewardItem.0=5707,1,1
 Obj.0.markerLocations=67330.6,675.898,35890.4,9;
 RewardItem.0=5707,1,1
 
@@ -5370,6 +5393,8 @@ Obj.0.myCreatureDefID=672
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=30050.5,622.393,61415.6,9;
+RewardItem.0=21163,1,1
+
 [ENTRY]
 ID=132
 Title=Merchant Guild Membership
@@ -5401,8 +5426,6 @@ Obj.0.data2=0
 Obj.0.description=Meet with Lazlo Gont in Nantes Waystation
 Obj.0.myCreatureDefID=795
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=29761.898,165.248,71285.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=29761.898,165.248,71285.0,9;
 
@@ -5440,6 +5463,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=500080
 Obj.0.completeText=0 of 12
 Obj.0.markerLocations=32212.0,181.506,58713.0,9;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Gathering Festering Spasparilla Plant
 [ACT]
 Act.BodyText=Return to Barkeep Barkles in Heartwood.
 Obj.0.type=talk
@@ -5610,6 +5635,8 @@ Obj.0.description=Return to Pieter Deadeye
 Obj.0.myCreatureDefID=1100
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=9881.1,256.545,62700.7,9;
+
 [ENTRY]
 ID=123
 Title=Shadows: The Ruins of Tall Stand
@@ -5646,8 +5673,6 @@ Obj.0.data2=0
 Obj.0.description=Return to Oakhand
 Obj.0.myCreatureDefID=680
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=10016.0,255.024,62607.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=10016.0,255.024,62607.0,9;
 
@@ -6281,6 +6306,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=500111
 Obj.0.completeText=0 of 5
 Obj.0.markerLocations=34203.0,265.583,72376.0,9;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Gathering Crate of Stolen Goods
 [ACT]
 Act.BodyText=Return to Lazlo Gont.
 Obj.0.type=talk
@@ -6291,11 +6318,6 @@ Obj.0.myCreatureDefID=795
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=29761.898,165.248,71285.0,9;
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=29761.898,165.248,71285.0,9;
-//[ACT]
-//Act.BodyText=You have succeeded! Quite amazing!
 
 [ENTRY]
 ID=221
@@ -6386,6 +6408,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=500153
 Obj.0.completeText=0 of 1
 Obj.0.markerLocations=
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking Rare Statuette...
 [ACT]
 Act.BodyText=Return to Mork Duststomper.
 Obj.0.type=talk
@@ -6699,6 +6723,8 @@ Obj.0.markerLocations=22677.398,412.796,90722.0,9;
 RewardItem.0=5283,1,0
 RewardItem.1=5284,1,0
 RewardItem.2=5285,1,0
+RewardItem.3=5286,1,0
+
 [ENTRY]
 ID=146
 Title=Sending Backup To Oslis
@@ -6730,8 +6756,6 @@ Obj.0.data2=0
 Obj.0.description=Find Maoiri Dustchanter
 Obj.0.myCreatureDefID=855
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=29591.898,1156.02,79456.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=29591.898,1156.02,79456.0,9;
 
@@ -7390,6 +7414,8 @@ Obj.0.markerLocations=28979.102,1018.49,80322.0,9;
 RewardItem.0=4785,1,0
 RewardItem.1=4784,1,0
 RewardItem.2=4783,1,0
+RewardItem.3=4782,1,0
+
 [ENTRY]
 ID=219
 Requires=218
@@ -7429,6 +7455,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=500146
 Obj.0.completeText=0 of 12
 Obj.0.markerLocations=20636.0,86.1219,82690.0,9;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Gathering Bottle of Sphynx-Tail Ale
 Obj.1.type=kill
 Obj.1.data1=1466,1468
 Obj.1.data2=15
@@ -7445,8 +7473,6 @@ Obj.0.data2=0
 Obj.0.description=Return to Fergus Brewchanter
 Obj.0.myCreatureDefID=1476
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=29333.3,1221.55,79891.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=29333.3,1221.55,79891.0,9;
 
@@ -7484,6 +7510,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=500094
 Obj.0.completeText=0 of 6
 Obj.0.markerLocations=33840.0,1320.67,82412.0,9;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Gathering Crystal Shard
 Obj.1.type=kill
 Obj.1.data1=752,753
 Obj.1.data2=10
@@ -8299,6 +8327,8 @@ Obj.0.markerLocations=41410.5,205.202,66418.0,9;
 RewardItem.0=5309,1,0
 RewardItem.1=5310,1,0
 RewardItem.2=5311,1,0
+RewardItem.3=5312,1,0
+
 [ENTRY]
 ID=162
 Requires=500
@@ -8354,8 +8384,6 @@ Obj.0.data2=0
 Obj.0.description=Return to Mary Ferguson
 Obj.0.myCreatureDefID=1063
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=41867.5,267.123,65620.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=41867.5,267.123,65620.0,9;
 
@@ -8463,6 +8491,8 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=1510
 Obj.0.myItemID=
 Obj.0.completeText=
+Obj.0.markerLocations=45253.0,205.974,64492.0,9;
+
 [ENTRY]
 ID=169
 Requires=167
@@ -8497,8 +8527,6 @@ Obj.0.data2=0
 Obj.0.description=Speak to Ironbirch
 Obj.0.myCreatureDefID=1077
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=53183.9,735.595,78010.0,9;
 Obj.0.completeText=
 Obj.0.markerLocations=53183.9,735.595,78010.0,9;
 
@@ -8865,6 +8893,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=500164
 Obj.0.completeText=0 of 1
 Obj.0.markerLocations=48285.9,701.293,77456.0,9;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking Strange Book
 [ACT]
 Act.BodyText=Return to Ironbirch.
 Obj.0.type=talk
@@ -9164,6 +9194,8 @@ Obj.0.markerLocations=52635.0,695.476,77737.0,9;
 RewardItem.0=5317,1,0
 RewardItem.1=5318,1,0
 RewardItem.2=5319,1,0
+RewardItem.3=5320,1,0
+
 [ENTRY]
 ID=243
 Requires=241
@@ -9211,7 +9243,7 @@ Obj.0.myCreatureDefID=1106
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=52877.4,704.917,77756.0,9;
-Obj.0.completeText=
+
 [ENTRY]
 ID=174
 Requires=242
@@ -9265,7 +9297,7 @@ Obj.0.myCreatureDefID=1077
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=52749.203,844.777,78509.0,9;
-Obj.0.completeText=
+
 [ENTRY]
 ID=214
 Requires=228
@@ -9314,8 +9346,6 @@ Obj.0.description=Return to Sir Gawain
 Obj.0.myCreatureDefID=851
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=22677.398,412.796,90722.0,9;
-RewardItem.0=21173,1,1
 Obj.0.markerLocations=22677.398,412.796,90722.0,9;
 RewardItem.0=21173,1,1
 
@@ -10325,6 +10355,8 @@ Obj.0.myCreatureDefID=2822
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=22512.0,280.018,78082.0,9;
+RewardItem.0=21336,1,1
+
 [ENTRY]
 ID=537
 Title=Speak to the Warden
@@ -10352,8 +10384,6 @@ Obj.0.data2=0
 Obj.0.description=Speak with Verlos Clarron
 Obj.0.myCreatureDefID=2500
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=68647.2,621.832,34516.6,9;
 Obj.0.completeText=
 Obj.0.markerLocations=68647.2,621.832,34516.6,9;
 
@@ -10395,6 +10425,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=500272
 Obj.0.completeText=0 of 6
 Obj.0.markerLocations=
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking parchment...
 [ACT]
 Act.BodyText=Return Era Naulice in Bazaart.
 Obj.0.type=talk
@@ -10586,6 +10618,8 @@ Obj.0.myCreatureDefID=2828
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=52734.3,844.052,78358.5,9;
+RewardItem.0=21335,1,1
+
 [ENTRY]
 ID=536
 Title=Spiketail Juggernauts
@@ -10626,8 +10660,6 @@ Obj.0.completeText=
 Obj.0.markerLocations=23117.0,421.149,90468.3,9;
 RewardItem.0=5283,1,0
 RewardItem.1=5284,1,0
-RewardItem.2=5285,1,0
-RewardItem.3=5286,1,0
 RewardItem.2=5285,1,0
 RewardItem.3=5286,1,0
 

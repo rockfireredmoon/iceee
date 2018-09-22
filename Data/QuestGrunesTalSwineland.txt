@@ -31,6 +31,7 @@ Obj.0.myCreatureDefID=1293
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=58229,801,67155,9;
+
 [ENTRY]
 ID=790
 Title=Caretakers of the Lanterns
@@ -318,49 +319,49 @@ RewardItem.0=8700,1,1
 [ENTRY]
 Requires=818
 ID=819
-[ENTRY]
-ID=820
-Title=Everlasting Regeneration
-BodyText=Listen not to the others here who scorn me, and label me vain - I am here for profit, and nothing is more profitable than taking advantage of other beasts' vanity!
+Title=General Bodiccea
+BodyText=Now that Glutt is out of the way, we can move on Shadowfield itself. Be warned though, that the city will not be taken so easily. Stationed within the city is a warrior with a tragic story.
 
-Note the undead you will encounter in this area. Yes, they are a constant menace, but they carry on quite well and keep their facilities about them rather nicely. Of utmost importance to me, however, is the distilling of whatever essence they hold which keeps that wee spark of life within them. If I could harness that without all the unsightly side effects of undead life, I could make a mint!
+General Bodiccea was once a warrior of great reknown and a highly respected beast. 
 
-Travel south of Redeemer's Hall, and you will find a small encampment of Undead which serves as the "clinic" for any zombies needing repair. The Undead Chirurgeons within that medical camp carry upon them Scrolls of Everlasting Regeneration. I have seen those scrolls repair years of damage, and even attach severed limbs! Can you imagine what that would do for a few wrinkles?
+Legend has it Bodiccea and her troops were able to hold back the Undead for several years before this region fell to their onslaught. Her last stand was in Greenfeld City, now called Shadowfield, where she and her forces fought to the last beast while the citizens were evacuated. The story goes that after several days of battle, the Undead finally infiltrated the city and slaughtered all who remained, including Bodiccea and her troops. Even in death, Bodiccea was not to be deterred and she continues to guard the Shadowfield to this very day.
 
-Gather fifteen Everlasting Regeneration Scrolls from Undead Chirurgeons, and soon I will be able to begin my life of luxury!
-CompleteText=You have them? Excellent! Give them to me! Yes, yes! Now I can finally enjoy a long and luxurious life without worry of the effects of aging or any malady out there! What? No, you cannot have them for yourself! Take this bit of coin and be off with you!
+While her cause in life was selfless and noble, Bodiccea and her troops now fight mindlessly, forever trapped in bodies long since robbed of life. 
+
+Your task is to enter Shadowfield City and put to rest Bodiccea and her followers once and for all. Return to me once you have freed the General and her troops from their pain and restored those tragic heroes to Gaia's embrace.
+CompleteText=You have again returned safely! With Shadowfield City removed as a threat, we can now move supplies to and from our allies in Swineland much easier. I truly hope Bodiccea is now at peace, along with those who died with her while defending beastkind in their darkest hour here in Grunes Tal. Thank you for finally putting them to rest at last.
 Level=43
-Suggested=44
-Exp=7258
+Suggested=43
+Exp=7724
 PartySize=1
-NumRewards=0
-Coin=1127
+NumRewards=1
+Coin=1297
 Unabandon=0
-QuestGiverID=1246
-QuestEnderID=1246
+QuestGiverID=1293
+QuestEnderID=1293
 Repeat=0
-sGiver=57917.6,802.236,67007.5,9
-sEnder=57917.6,802.236,67007.5,9
+sGiver=58221,792.103,67113,9
+sEnder=58221,792.103,67113,9
 [ACT]
-Act.BodyText=Travel to the Undead camps south of Redeemer's Hall and collect fifteen Everlasting Regeneration Scrolls from the Undead Chirurgeons there.
+Act.BodyText=Kill General Bodiccea's Hordes and weaken her footholdon the Shadowfields
 Obj.0.type=kill
-Obj.0.data1=1207,1208
-Obj.0.data2=15
-Obj.0.description=Collect Everlasting Regeneration Scroll
+Obj.0.data1=1213
+Obj.0.data2=20
+Obj.0.description=Kill 20 Bodiccea Bonethrall
+Obj.0.complete=0
 Obj.0.myCreatureDefID=
-Obj.0.myItemID=500121
-Obj.0.completeText=0 of 15
-Obj.0.markerLocations=55361.0,613.183,69635.0,9;
-[ACT]
-Act.BodyText=Return to Hayden Illsnor
-Obj.0.type=talk
-Obj.0.data1=0
-Obj.0.data2=0
-Obj.0.description=Return to Hayden Illsnor
-Obj.0.myCreatureDefID=1246
 Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=57917.6,802.236,67007.5,9;
+Obj.0.completeText=0 of 20
+Obj.0.markerLocations=58834.1,976.883,63182.6,9
+Obj.1.type=kill
+Obj.1.data1=1214
+Obj.1.data2=20
+Obj.1.description=Kill 20 Bodiccea Frostthrall
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=0 of 20
+Obj.1.markerLocations=58834.1,976.883,63182.6,9
 [ACT]
 Act.BodyText=Kill General Bodiccea 
 Obj.0.type=kill
@@ -387,7 +388,6 @@ RewardItem.0=10016,1,0
 RewardItem.1=10017,1,0
 RewardItem.2=10018,1,0
 RewardItem.3=10019,1,0
-
 
 [ENTRY]
 ID=820
@@ -781,6 +781,103 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=10014
 Obj.0.completeText=0 of 15
 Obj.0.markerLocations=59900.0,591.671,55525.1,9;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking the mushroom chunks...
+[ACT]
+Act.BodyText=Return to Billko
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Billko
+Obj.0.myCreatureDefID=1248
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=64137.3,780.062,56620.3,9;
+
+
+[ENTRY]
+ID=829
+Title=Unholy Night
+BodyText=You! Could I speak to you for just a moment? Excellent thank you.  You seem to be helping everyone around here, quite the explorer, quite the... dare I say... Hero? Enough flattery. I wonder if you can help me with a little hunting.  We have been trying to solve the Wailing Crypt problem and restore that part of Grunes Tal to a bit of a more welcoming environment... But these accursed Wrath Stags are always grouping up near the Crypt.  They'll attack on sight and aren't as jolly as you'd think. If could take a few of them out for us, just enough to maybe scare them off or give us an advantage of numbers, we'd appreciate it. I'll reward you for your efforts of course!
+CompleteText=Amazing! You made quick of those vermin, thank you.  What?! An Alpha you say? Ah yes I think I've heard rumors of Bahmut.  Anyways here's your reward as promised.
+Level=44
+Suggested=44
+Exp=8076
+PartySize=1
+Coin=2234
+Unabandon=0
+QuestGiverID=1197
+QuestEnderID=1197
+Repeat=0
+sGiver=57964.9,809.567,66777.6,9
+sEnder=57964.9,809.567,66777.6,9
+[ACT]
+Act.BodyText=Kill 20 Wrath Stags near The Wailing Crypt
+Obj.0.type=kill
+Obj.0.data1=1228,1229
+Obj.0.data2=20
+Obj.0.description=Kill 20 Wrath Stags
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 20
+Obj.0.markerLocations=51357.5,699.868,69163.6,9;
+[ACT]
+Act.BodyText= Return to Jon Darkeye
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Jon Darkeye
+Obj.0.myCreatureDefID=1197
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=57964.9,809.567,66777.6,9;
+RewardItem.0=8700,1,1
+
+[ENTRY]
+Requires=829
+ID=830
+Title=Bahmut the Red Nosed Wrath Stag
+BodyText=Thank you again for helping with the Wrath Stags, I just wish my idea would have worked.  You were right about Bahmut, he's an Alpha Wrath Stag. As long as he's around, the Wrath Stags will stay put, remaining a threat to us while we try to restore order in Grunes Tal.  You don't owe me anything, you've helped us so much, but if you can find it in yourself to travel back and eliminate Bahmut, you could be saving dozens of potential lives!
+CompleteText=You did it! My reports have said that the Wrath Stags have become a bit more timid and aren't showing as much aggression now that you cut the head off the snake.  I can't thank you enough! I know it's not much but here take this coin, and take this too. It was my fathers, but I want you to have it.
+Level=44
+Suggested=45
+Exp=8127
+PartySize=2
+NumRewards=1
+Coin=2340
+Unabandon=0
+QuestGiverID=1197
+QuestEnderID=1197
+Repeat=0
+sGiver=57964.9,809.567,66777.6,9
+sEnder=57964.9,809.567,66777.6,9
+[ACT]
+Act.BodyText=Travel to Wrath Stag grounds near the Wailing Crypt and Kill Bahmut
+Obj.0.type=kill
+Obj.0.data1=1232
+Obj.0.data2=1
+Obj.0.description=Kill Bahmut
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=51357.5,699.868,69163.6,9
+[ACT]
+Act.BodyText= Return to Jon Darkeye
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Jon Darkeye
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1197
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=57964.9,809.567,66777.6,9
+RewardItem.0=10020,1,0
+RewardItem.1=10021,1,0
+RewardItem.2=10022,1,0
+RewardItem.3=10023,1,0
+
 [ENTRY]
 ID=831
 Title=Haunted Hill
@@ -835,26 +932,7 @@ Obj.0.myCreatureDefID=1199
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=58079.8,803.302,66771.8,9;
-ID=830
-Title=Bahmut the Red Nosed Wrath Stag
-BodyText=Thank you again for helping with the Wrath Stags, I just wish my idea would have worked.  You were right about Bahmut, he's an Alpha Wrath Stag. As long as he's around, the Wrath Stags will stay put, remaining a threat to us while we try to restore order in Grunes Tal.  You don't owe me anything, you've helped us so much, but if you can find it in yourself to travel back and eliminate Bahmut, you could be saving dozens of potential lives!
-CompleteText=You did it! My reports have said that the Wrath Stags have become a bit more timid and aren't showing as much aggression now that you cut the head off the snake.  I can't thank you enough! I know it's not much but here take this coin, and take this too. It was my fathers, but I want you to have it.
-Level=44
-Suggested=45
-Exp=8127
-PartySize=2
-NumRewards=1
-Coin=2340
-Unabandon=0
-QuestGiverID=1197
-QuestEnderID=1197
-Repeat=0
-sGiver=57964.9,809.567,66777.6,9
-sEnder=57964.9,809.567,66777.6,9
-[ACT]
-Act.BodyText=Travel to Wrath Stag grounds near the Wailing Crypt and Kill Bahmut
-Obj.0.type=kill
-Obj.0.data1=1232
+
 [ENTRY]
 ID=844
 Title=Foresight Of The Elders
@@ -870,76 +948,6 @@ During the Outcast Wars, the Elders located one of these relics and stashed it a
 
 After the Undead invaded and emptied the lands of Grunes Tal of most anything living, few if any with breath still in them have been near that crypt. Yet with the Undead presence, it is quite likely that anyone resting within that place has long since been revived.
 
-We here at Redeemer's Hall feel the time has come to retrieve the relic Mason had buried with him and fulfill the purpose for which it was originally obtained. Thus, I task you with entering the Crypt and locating Mason Stromfeld's tomb. Inside you should find the relic among his bones. If the forces of Abidan have indeed revived him, there is a chance you will have to destroy him before claiming the item. We know not what exactly this relic is, yet Mason's tomb is it's resting place. Once you have it, return to me. Now hurry up and get out of here!
-CompleteText=So, you survived did you? And you have the relic? Good, let me see it!
-
-...
-
-So, that's what it looks like. Hmm, I must say I wasn't expecting anything of this sort really. Anyway, on to the next task!
-Level=45
-Suggested=46
-Exp=11842
-PartySize=3
-NumRewards=0
-Coin=2318
-Unabandon=0
-QuestGiverID=1247
-QuestEnderID=1247
-Repeat=0
-sGiver=58209.1,787.832,66820.6,9
-sEnder=58209.1,787.832,66820.6,9
-[ACT]
-Act.BodyText=Travel to the Wailing Crypt
-Obj.0.type=travel
-Obj.0.data1=52248,652,68636,9
-Obj.0.data2=250
-Obj.0.description=Travel to the Wailing Crypt
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=52248.0,652.907,68636.1,9;
-[ACT]
-Act.BodyText=Enter the Wailing Crypt
-Obj.0.type=travel
-Obj.0.data1=2125,660,597,56
-Obj.0.data2=250
-Obj.0.description=Enter the Wailing Crypt
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=
-[ACT]
-Act.BodyText=Find Mason Stromfeld and take the Age of Man Relic from his coffin. You may have to kill him to accomplish this task.
-Obj.0.type=kill
-Obj.0.data1=3674
-Obj.0.data2=1
-Obj.0.description=Kill Mason Stromfeld
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=0 of 1
-Obj.0.markerLocations=3306.31,600.0,791.158,56;
-[ACT]
-Act.BodyText=Take the unguarded relic from it's hiding place in the coffin.
-Obj.0.type=activate
-Obj.0.data1=7795
-Obj.0.data2=1
-Obj.0.description=Take the unguarded relic
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=10012
-Obj.0.completeText=0 of 1
-Obj.0.markerLocations=3306.31,600.0,791.158,56;
-Obj.0.ActivateTime=4000
-Obj.0.ActivateText=Taking the relic...
-[ACT]
-Act.BodyText= Return to Sarayn Nexsol
-Obj.0.type=talk
-Obj.0.data1=0
-Obj.0.data2=0
-Obj.0.description=Return to Sarayn Nexsol
-Obj.0.myCreatureDefID=1247
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=58209.1,787.832,66820.6,9;
 We here at Redeemer's Hall feel the time has come to retrieve the relic Mason had buried with him and fulfill the purpose for which it was originally obtained. Thus, I task you with entering the Crypt and locating Mason Stromfeld's tomb. Inside you should find the relic among his bones. If the forces of Abidan have indeed revived him, there is a chance you will have to destroy him before claiming the item. We know not what exactly this relic is, yet Mason's tomb is it's resting place. Once you have it, return to me. Now hurry up and get out of here!
 CompleteText=So, you survived did you? And you have the relic? Good, let me see it!
 
@@ -1084,52 +1092,52 @@ Exp=8042
 PartySize=1
 NumRewards=0
 Coin=2318
-[ENTRY]
-ID=849
-Requires=848
-Title=Sythrex the Overseer
-BodyText=Now that that's taken care of we can move on to the next step: The Overseer.  This Lich, called Sythrex, seems to keep reanimating corpses from the graveyard. It's literally a breeding ground for Abidan's forces! In addition, Sythrex tends to be accompanied by a rather strong fell creature called in these parts a Putrid Avien. Eliminate both Sythrex the Overseer and his Putrid Avien 'pet' then report back to me when you're finished!
-CompleteText=Ah you've returned! It's taken care of then I assume? Good, now I have an even more important matter that requires your attention.
-Level=45
-Suggested=45
-Exp=8212
-PartySize=2
-NumRewards=0
-Coin=2418
 Unabandon=0
-QuestGiverID=1202
-QuestEnderID=1202
+QuestGiverID=1245
+QuestEnderID=1245
 Repeat=0
-sGiver=58956.5,776.751,67025.6,9
-sEnder=58956.5,776.751,67025.6,9
+sGiver=2216.55,286.536,2523.62,93
+sEnder=2216.55,286.536,2523.62,93
 [ACT]
-Act.BodyText=Travel to the Iron Hills and defeat Sythrex the Overseer and his Putrid Avien
+Act.BodyText=Kill 25 Hogcatcher Mages, Hogcatcher Rogues, Hogcatcher Druids and Hogcatcher Knights in the Hogcatcher camps.
 Obj.0.type=kill
-Obj.0.data1=1196
-Obj.0.data2=1
-Obj.0.description=Kill Sythrex The Overseer
+Obj.0.data1=1216,1218,1219,1220,1221,1222,1223,1224
+Obj.0.data2=25
+Obj.0.description=Kill 25 Hogcatchers
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText=0 of 1
-Obj.0.markerLocations=52132.9,734.057,68157.2,9;
-Obj.1.type=kill
-Obj.1.data1=1203,1226,1227
-Obj.1.data2=1
-Obj.1.description=Kill Putrid Avien
-Obj.1.myCreatureDefID=
-Obj.1.myItemID=
-Obj.1.completeText=0 of 1
-Obj.1.markerLocations=52132.9,734.057,68157.2,9;
+Obj.0.completeText=0 of 25
+Obj.0.markerLocations=66596.1,614.328,57510.0,9;
 [ACT]
-Act.BodyText= Return to Derk Vilander
+Act.BodyText=Speak with Norris
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
-Obj.0.description=Return to Derk Vilander
-Obj.0.myCreatureDefID=1202
+Obj.0.description=Speak with Norris
+Obj.0.myCreatureDefID=1245
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=58956.5,776.751,67025.6,9;
+Obj.0.markerLocations=63956.4,781.573,56691.6,9;2216.55,286.536,2523.62,93;
+
+[ENTRY]
+ID=847
+Title=The Missing Envoy
+BodyText=Hello there. It's nice to see a friendly face among so many ruffians! Don't misunderstand, our collaboration with the warpigs both here and in Swineland has been invaluable even if a bit on rocky terms. Even still, I never expected to be hung up here!
+
+*Sigh* I apologize friend. It would seem my temper has gotten the better of me of late. You see I have a problem. Several days ago I was sent from the Redeemer's Camp in Swineland to meet up with an envoy from our fellow Redeemers here in Grunes Tal. We were supposed to meet here at the Warpig Protectorate Camp at the borders of Swineland, but, my contact has not arrived.
+
+I am full aware of the dangers of the Undead hordes that infest this land and would rather not stay too long; however, the person I have been sent to meet was carrying information that would greatly assist the Redeemers against both the Undead here and the Vampires in Swineland. It has been almost a week now and I have become worried that something has happened to my contact.
+
+Since you appear to be strong, would you do me this favor and look for the envoy sent from the Hall? If you happen to find the envoy alive, please inform them that their contact is waiting at the Warpig encampment. If the worst has happened and they have fallen victim to the vile forces of Abidan, then please retrieve the documents I was sent to collect in their stead.
+
+I shall wait here in the meantime.
+CompleteText=You return. And the Envoy? ...I see. So, you found his camp and he was already dead? That is sad news indeed.
+
+Were you able to at least locate the documents? ...Yes, these appear to be the items I was sent to retrieve. While I am indeed saddened that a fellow Redeemer has met such a terrible end, I am at least grateful that all was not lost and you were able to complete the mission in their stead. Thank you for delivering these to me along with the news of my contact's fate.
+Level=44
+Suggested=44
+Exp=7842
+PartySize=1
 NumRewards=0
 Coin=2418
 Unabandon=0
@@ -1462,7 +1470,6 @@ Obj.0.myCreatureDefID=3521
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=58337.0,789.456,66885.7,9;
-Obj.0.markerLocations=58337.0,789.456,66885.7,9;
 
 [ENTRY]
 ID=900
@@ -1545,7 +1552,6 @@ Obj.0.description=Return to Damian Talamasca
 Obj.0.myCreatureDefID=1318
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=73239.8,856.26,60816.6,9;
 Obj.0.markerLocations=73239.8,856.26,60816.6,9;
 
 [ENTRY]
@@ -1646,7 +1652,6 @@ Obj.0.myCreatureDefID=1318
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=73239.8,856.26,60816.6,9;
-Obj.0.markerLocations=73239.8,856.26,60816.6,9;
 
 [ENTRY]
 ID=904
@@ -1740,6 +1745,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=76585.8,979.052,50077.1,9;
 Requires=903
+
 [ENTRY]
 ID=906
 Requires=903
@@ -1752,48 +1758,48 @@ Travel afield, and slay eleven Moonskull Hunters. Show the Vampires that our bar
 CompleteText=That'll make the Vampires take us a little more seriously. Good work, soldier!
 Level=45
 Suggested=46
-[ENTRY]
-ID=909
-Requires=908
-Title=Snorg's Shinies
-BodyText=Welcome to th' best, most wonderful Shiny Place ye'll ev'r find! Now lissen here, I'm th' smartest Warpig that ever lived! Just nobody knows it as of yet. That keeps me safe, see? If they knew the riches I had, well Boss Hawg hisself would be sendin' his Commandos down here to take me out!
-
-Just east o' here, where th' Ice Goliaths roam, there's some fancy crystals. These crystals are special, and I've found some itty-bitty pieces o' mankind's relics trapped within! I must have more, but I'se not so dumb as to take on the Ice Goliaths meself.
-
-Go on up that path to th' Crystal Fields, and gather eight Crystal-Relics fer me!
-CompleteText=Wow! Can't believe ya took 'em on and won!! And ya got me Shinies too! Ahaha! Give 'em here an' lemme see what ya found me!
-Level=45
-Suggested=45
-Exp=9672
+Exp=9497
 PartySize=1
 NumRewards=0
-Coin=4139
+Coin=3296
 Unabandon=0
-QuestGiverID=1328
-QuestEnderID=1328
+QuestGiverID=1318
+QuestEnderID=1318
 Repeat=0
-sGiver=66369.3,630.469,65092.0,9
-sEnder=66369.3,630.469,65092.0,9
+sGiver=73239.8,856.26,60816.6,9
+sEnder=73239.8,856.26,60816.6,9
 [ACT]
-Act.BodyText=Travel east to the camps of the Ice Goliaths and collect 8 Crystal-Relics for Snorg.
-Obj.0.type=gather
-Obj.0.data1=3527
-Obj.0.data2=8
-Obj.0.description=Gather 8 Crystal-Relics
+Act.BodyText=Kill 11 Moonskull Hunters.
+Obj.0.type=kill
+Obj.0.data1=1330,1331
+Obj.0.data2=11
+Obj.0.description=Kill 11 Moonskull Hunters
 Obj.0.myCreatureDefID=
-Obj.0.myItemID=10049
-Obj.0.completeText=0 of 8
-Obj.0.markerLocations=68690.9,414.457,64098.2,9;
+Obj.0.myItemID=
+Obj.0.completeText=0 of 11
+Obj.0.markerLocations=78712.3,868.15,58974.7,9;
 [ACT]
-Act.BodyText=Return to Snorg with the Crystal-Relics.
+Act.BodyText=Return to Damian Talamasca.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
-Obj.0.description=Return to Snorg
-Obj.0.myCreatureDefID=1328
+Obj.0.description=Return to Damian Talamasca
+Obj.0.myCreatureDefID=1318
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=66369.3,630.469,65092.0,9;
+Obj.0.markerLocations=73239.8,856.26,60816.6,9;
+
+[ENTRY]
+ID=907
+Requires=906
+Title=Breaking The Chain Of Command
+BodyText=Now that the Vampires are seeing us as more of threat, they are beginning to mobilize to try and wipe us out.  However, an army without proper leadership is vulnerable and weak.
+
+Vaj Cruentes and Vaj Coltres are two of Valkal's so-called 'sons' who have been entrusted with commanding the Vampires' advance troops here in Swineland. Both have been spotted in their respective camps and if we can defeat these two, their armies will be left leaderless. Valkal himself, like most of his ilk, is arrogant and not likely to bother leaving his Blood Keep without due cause.
+
+Do this favor for us, friend, and the Redeemers will forever be in your debt. Please do not take the Vajs lightly! I know you are a seasoned warrior, but this is an ancient evil and both of these creatures have immense power.
+CompleteText=I don't believe my eyes, you've returned! I started to worry they got the best of... I won't lie, I had my doubts that you'd survive what with the sorts you had to contend with! You cannot even begin to understand what this means to the war effort!
+Level=46
 Suggested=46
 Exp=10476
 PartySize=2
@@ -1948,6 +1954,24 @@ Level=44
 Suggested=44
 Exp=8342
 PartySize=1
+Coin=3739
+Unabandon=0
+QuestGiverID=1304
+QuestEnderID=1322
+Repeat=0
+sGiver=73527.3,879.169,60373.5,9
+sEnder=62380.9,393.845,48938.6,9
+[ACT]
+Act.BodyText=Travel to Nook Town and speak to the Great Speaker of Nook.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Find the Great Speaker of Nook
+Obj.0.myCreatureDefID=1322
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=62380.9,393.845,48938.6,9;
+
 [ENTRY]
 ID=911
 Requires=905
@@ -1995,23 +2019,6 @@ Act.BodyText=You see a worn and blood spattered message running along the edge o
 Obj.0.type=activate
 Obj.0.data1=7883
 Obj.0.data2=1
-Obj.0.description=Examine the inscribed message.
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=You memorise the words of the message
-Obj.0.markerLocations=79133.0,1299.0,52748.0,9;
-Obj.0.ActivateTime=5000
-Obj.0.ActivateText=Examining the inscribed message ...
-[ACT]
-Act.BodyText=Return to Alain Darkfeather with your discovery.
-Obj.0.type=talk
-Obj.0.data1=0
-Obj.0.data2=0
-Obj.0.description=Return to Alain Darkfeather
-Obj.0.myCreatureDefID=1319
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=76647.6,979.647,50172.0,9;
 Obj.0.description=Examine the inscribed message.
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
@@ -2163,7 +2170,6 @@ Obj.0.description=Return to Marley Roberts
 Obj.0.myCreatureDefID=1315
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=76772.5,978.741,50232.0,9;
 Obj.0.markerLocations=76772.5,978.741,50232.0,9;
 
 [ENTRY]
@@ -2745,38 +2751,37 @@ Level=48
 Suggested=49
 Exp=9554
 PartySize=1
-[ENTRY]
-ID=931
-Requires=930
-Title=Payment In Full
-BodyText=Okay, ya got paid now beat it! OH! Before ya go, just remember I got lots of work needin' doin' so if ya ever need sum extra cash I got some Yeti problems that could use an enforcers touch!
-CompleteText=Yer back.
-
-(Clint takes Duke's payment from you.)
-
-AHA! Excellent! Dem Dukes are good folk, just need a lesson on what's what every now an' agin'. HAH... Here's yer cut.
-Level=48
-Suggested=48
-Exp=9474
-PartySize=1
-NumRewards=0
-Coin=4485
+Coin=4791
 Unabandon=0
-QuestGiverID=1340
+QuestGiverID=1325
 QuestEnderID=1325
 Repeat=0
-sGiver=70543.5,992.447,50150.5,9
+sGiver=71482.2,1130.07,47871.1,9
 sEnder=71482.2,1130.07,47871.1,9
 [ACT]
-Act.BodyText=Deliver Duke's payment to Clint.
+Act.BodyText=Kill 20 Skrill for Clint.
+Obj.0.type=kill
+Obj.0.data1=1396,1399,1402,1405,1408
+Obj.0.data2=20
+Obj.0.description=Defeat 20 Skrill
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 20
+Obj.0.markerLocations=71323.9,776.777,45415.9,9;
+[ACT]
+Act.BodyText=Return to Clint.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
-Obj.0.description=Deliver the money to Clint
+Obj.0.description=Speak with Clint
 Obj.0.myCreatureDefID=1325
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=71482.2,1130.07,47871.1,9;
+RewardItem.0=8700,1,1
+
+[ENTRY]
+ID=930
 Requires=929
 Title=You Scratch My Back, I Scratch Yours
 BodyText=Alright kid, now what most folks around here seem ta fergit is we keep these dang dambugs from spillin' into th' rest o' Swineland. Population control see!? Few o' them "Ally" Clans are fergettin' that.
@@ -2872,58 +2877,57 @@ sGiver=71482.2,1130.07,47871.1,9
 sEnder=71482.2,1130.07,47871.1,9
 [ACT]
 Act.BodyText=Locate the Skrill Queen's Lair Entrance.
-[ENTRY]
-ID=941
-Requires=940
-Title=Piece of the Puzzle
-BodyText=So, these last few weeks I've been examining the Mark of Death artifact trying to understand what was wrong with it and why it won't work. After many almost-sleepless nights of scrutinizing this thing, it finally hit me! The key itself isn't complete. Look, right there! As you can see, there is a piece missing, a stone by the looks of the rather subtle impression. With us closing in on his Blood Keep I'm willing to bet Valkal decided to pull one over on us and split the key to his Keep in two. He left the largest part of it in that Mausoleum with his shadow as a lure to keep us distracted. However, in the event that piece was somehow taken by us, he likely had the other piece hidden somewhere else.
-
-While some of us sent for you, a few others went investigating where that other piece to the Mark of Death might be. They came back only yesterday with information that makes your return all the more timely. A partially torn note was found on one of those bloodsuckers near the base of the Keep that revealed the other piece of the Mark of Death has likely been taken out of Swineland itself. Well, not yet at least. It seems Valkal had been keeping the other piece with one of his 'sons' until you defeated his shadow.
-
-Realizing a powerful opponent has appeared on our side, Valkal now seems to be trying to get that piece out of Swineland and to a more secure location...which can only mean he's sent it to be taken through the Dambat Door.
-
-The Dambat Door, or so the warpigs call it, is the gate that leads out of Swineland and into the Lurkers Vale beyond. The Vale is a terrible place in recent years as the Blood Clans have gained near complete control over the region. We have reason to believe this is where the stone is being taken by some discreet courier. Hurry to the Dambat Door and intercept that courier carrying the other piece to the Mark of Death before it is too late!!
-CompleteText=The Dambat Door is probably the most dangerous place in Swineland outside of the Blood Keep itself! I can't believe you were able to fight them off and retrieve the stone. INCREDIBLE!
-Level=49
-Suggested=49
-Exp=10857
-PartySize=2
-NumRewards=0
-Coin=4465
-Unabandon=0
-QuestGiverID=1307
-QuestEnderID=1307
-Repeat=0
-sGiver=76850.6,968.205,49892.6,9
-sEnder=76850.6,968.205,49892.6,9
-[ACT]
-Act.BodyText=Defeat Valkal's Legions
-Obj.0.type=kill
-Obj.0.data1=3492
-Obj.0.data2=1
-Obj.0.description=Retrieve the Mark of Death
+Obj.0.type=travel
+Obj.0.data1=71214,1129,44584,9
+Obj.0.data2=100
+Obj.0.description=Find the Skrill Queen's Lair
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=82302.1,785.077,54681.8,9;
+Obj.0.markerLocations=71210.9,1128.34,44596.5,9;
+[ACT]
+Act.BodyText=Exterminate 20 Skrill and the Skrill Queen in the Skrill Queen's Lair.
+Obj.0.type=kill
+Obj.0.data1=1397,1398,1400,1401,1403,1404,1406,1407,1409,1410
+Obj.0.data2=20
+Obj.0.description=Defeat 20 Skrill
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText= 0 of 20
+Obj.0.markerLocations=3008.76,720.981,2469.53,69;
 Obj.1.type=kill
-Obj.1.data1=1346,1347,1349,1350,1417
-Obj.1.data2=20
-Obj.1.description=Defeat Valkal's Legions
+Obj.1.data1=1412
+Obj.1.data2=1
+Obj.1.description=Defeat the Skrill Queen
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
-Obj.1.completeText=(0 of 20)
-Obj.1.markerLocations=81868.5,790.799,54416.6,9;
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=3008.76,720.981,2469.53,69;
 [ACT]
-Act.BodyText=Return to Maddie Paintedhoof
+Act.BodyText=Return to Clint.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
-Obj.0.description=Return to Maddie Paintedhoof
-Obj.0.myCreatureDefID=1307
+Obj.0.description=Return to Clint
+Obj.0.myCreatureDefID=1325
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=76850.6,968.205,49892.6,9;
+Obj.0.markerLocations=71482.2,1130.07,47871.1,9;
+
+[ENTRY]
+ID=940
+Requires=932
+Title=Breakthrough With the Bloodkeep
+BodyText=Hey youse! Come back here right quick! One o' my boys just got this here letter from some o' them dambat killers located back east. They sez it's fer you!
+CompleteText=Excellent, you got our letter! To be honest I was rather surprised your travels brought you to the company of Clint and the Squishers. They are an old group, tough as nails but dumb as boards. Anyway, we finally made a breakthrough with the Mark of Death artifact!
+Level=49
+Suggested=49
+Exp=9857
+PartySize=1
+Coin=3465
+Unabandon=0
+QuestGiverID=1325
+QuestEnderID=1307
 Repeat=0
 sGiver=71482.2,1130.07,47871.1,9
 sEnder=76850.6,968.205,49892.6,9
