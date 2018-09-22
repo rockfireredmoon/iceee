@@ -361,7 +361,6 @@ namespace ScriptCore
 
 	NutPlayer::NutPlayer() {
 		mInitTime = 0;
-		mPause = NULL;
 		mSleeping = 0;
 		vm = NULL;
 		def = NULL;
@@ -380,6 +379,7 @@ namespace ScriptCore
 		mCaller = 0;
 		mSuspendTop = 0;
 		mPreventReentry = false;
+		mPauseEvent = -1;
 	}
 
 	NutPlayer::~NutPlayer() {
@@ -1122,19 +1122,33 @@ namespace ScriptCore
 
 	bool NutPlayer::Resume()
 	{
-		if(mPause == NULL) {
+		if(!IsPaused()) {
 			g_Log.AddMessage("Attempt to resume not paused script");
 		}
-		else if(mPause->mPaused) {
-			mPause->mPaused = false;
-			return true;
+		else {
+			NutScriptEvent *nse = NULL;
+			if(mPauseEvent != -1)
+				nse = (NutScriptEvent *)GetEvent(mPauseEvent);
+			if(nse != NULL) {
+				((PauseCondition*)nse->mCondition)->mPaused = false;
+				mPauseEvent = -1;
+				return true;
+			}
 		}
 		return false;
 	}
 
+	bool NutPlayer::IsPaused()
+	{
+		NutScriptEvent *nse = NULL;
+		if(mPauseEvent != -1)
+			nse = GetEvent(mPauseEvent);
+		return nse != NULL;
+	}
+
 	bool NutPlayer::Pause()
 	{
-		if(mPause != NULL) {
+		if(IsPaused()) {
 			g_Log.AddMessage("Attempt to pause already paused script");
 			return false;
 		}
@@ -1144,10 +1158,10 @@ namespace ScriptCore
 		}
 
 		ResumeCallback *cb = new ResumeCallback(this);
-		mPause = new PauseCondition ();
+		PauseCondition *mPause = new PauseCondition ();
 		NutScriptEvent *nse = new NutScriptEvent(mPause, cb);
 		nse->mRunWhenSuspended = true;
-		QueueAdd(nse);
+		mPauseEvent = QueueAdd(nse);
 		SQInteger ret = sq_suspendvm(vm);
         mSuspendTop = sq_gettop(vm);
 		return ret;
@@ -1158,7 +1172,7 @@ namespace ScriptCore
 	    if (sq_gettop(v) == 2) {
 	        Sqrat::Var<NutPlayer&> left(v, 1);
 	        if (!Sqrat::Error::Occurred(v)) {
-	        	if((&left.value)->mPause != NULL)
+	        	if((&left.value)->mPauseEvent != -1)
 	    	        return sq_throwerror(v, _SC("already paused"));
 	        	if((&left.value)->mSleeping > 0)
 	    	        return sq_throwerror(v, _SC("already sleeping"));

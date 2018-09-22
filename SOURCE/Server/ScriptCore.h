@@ -478,7 +478,7 @@ public:
 	bool mRunning; //If true, a function call is currently running (will make halts be queued)
 	bool mHalted; //If true, VM is halted
 	unsigned long mNextId;
-	PauseCondition *mPause; // If non-null is the current pause condition
+	long mPauseEvent;
 	long mSleeping; // If non-zero, how long the VM is sleeping for
 	int mSuspendTop; //Top of stack after a successful suspend, zero other
 	bool mPreventReentry; // Currently used for instance walks, will prevent certain calls calling themselves
@@ -510,6 +510,7 @@ public:
 	void FullReset(void);
 	void Halt(void);
 	bool Pause(void);
+	bool IsPaused(void);
 	bool Resume(void);
 	int GC(void);
 	bool JumpToLabel(const char *name);
