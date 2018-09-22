@@ -236,6 +236,8 @@ Obj.0.myCreatureDefID=500281
 Obj.0.myItemID=
 Obj.0.completeText=0 of 12
 Obj.0.markerLocations=
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Gathering Blue Crown Mushroom...
 [ACT]
 Act.BodyText=Return to Marzala Kir.
 Obj.0.type=talk
@@ -246,8 +248,6 @@ Obj.0.myCreatureDefID=3042
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=61035.7,203.232,52301.5,9;
-Obj.0.markerLocations=61035.7,203.232,52301.5,9;
-
 
 [ENTRY]
 ID=622
@@ -341,36 +341,9 @@ Obj.2.markerLocations=
 [ACT]
 Act.BodyText=Return to Trent Prentiss.
 Obj.0.type=talk
-Obj.0.data1=0
-Obj.0.data2=0
-Obj.0.description=Return to Trent Prentiss
-Obj.0.myCreatureDefID=3040
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=61091.0,207.0,52145.0,9;
-Obj.1.data2=1
-Obj.1.description=Collect a sample: Verash
-Obj.1.complete=0
-Obj.1.myCreatureDefID=500284
-Obj.1.myItemID=
-Obj.1.completeText=0 of 1
-Obj.1.markerLocations=
-Obj.2.type=kill
-Obj.2.data1=249
-Obj.2.data2=1
-Obj.2.description=Collect a sample: Gurlop
-Obj.2.complete=0
-Obj.2.myCreatureDefID=500285
-Obj.2.myItemID=
-Obj.2.completeText=0 of 1
-Obj.2.markerLocations=
-[ACT]
-Act.BodyText=Return to Trent Prentiss.
-Obj.0.type=talk
 Obj.0.data1=
 Obj.0.data2=
 Obj.0.description=Return to Trent Prentiss
-Obj.0.complete=0
 Obj.0.myCreatureDefID=3040
 Obj.0.myItemID=
 Obj.0.completeText=
@@ -465,8 +438,8 @@ Obj.0.description=Find Ulton Klinon
 Obj.0.myCreatureDefID=3043
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=10160.3,5.0,4268.33,26;
-PartySize=5
+Obj.0.markerLocations=10160.3,5,4268.33,26;
+
 [ENTRY]
 ID=626
 Title=Lost Below: Find the Key
@@ -488,23 +461,6 @@ sEnder=10054.0,5.0,4265.04,26
 [ACT]
 Act.BodyText=Find the key to Ulton's cage.
 Obj.0.type=gather
-Obj.0.data1=3081
-Obj.0.data2=1
-Obj.0.description=Find the key to Ulton's cage
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=500289
-Obj.0.completeText=0 of 1
-Obj.0.markerLocations=
-[ACT]
-Act.BodyText=Return to Ulton Klinon.
-Obj.0.type=talk
-Obj.0.data1=0
-Obj.0.data2=0
-Obj.0.description=Return to Ulton Klinon
-Obj.0.myCreatureDefID=3043
-Obj.0.myItemID=500289
-Obj.0.completeText=
-Obj.0.markerLocations=
 Obj.0.data1=3081
 Obj.0.data2=1
 Obj.0.description=Find the key to Ulton's cage
