@@ -10,7 +10,8 @@ NewCorsica	Terrain-NewCorsica	Terrain-NewCorsica#Terrain-NewCorsica.cfg	NightSky
 Earthend	Terrain-Earthend	Terrain-Earthend#Terrain-Earthend.cfg	EarthriseInstance			5	5	7	8	11279	281	13469
 Europe	Terrain-Europe	Terrain-Europe#Terrain-Europe.cfg	Fields	Maps-Europe	Terrain-Europe/Europe_Regions.png	1	3	98	94	29560	214	65552
 Fangarians_Lair	Terrain-Fangarians_Lair	Terrain-Fangarians_Lair#Terrain-Fangarians_Lair.cfg	Dungeon1			0	0	1	1	1283	1109	1862
-Filler_Tiles	Terrain-Filler_Tiles					0	0	0	0			
+Filler_Tiles	Terrain-Filler_Tiles					0	0	0	0
+ForestClearing	Terrain-ForestClearing	Terrain-ForestClearing#Terrain-ForestClearing.cfg	Fields			0	0	2	8	3839	436	4871			
 Hall_of_Bones	Terrain-Hall_of_Bones	Terrain-Hall_of_Bones#Terrain-Hall_of_Bones.cfg	Dungeon1			0	0	1	1	1728	1281	1958
 Haunted_Grove	Terrain-Haunted_Grove	Terrain-Haunted_Grove#Terrain-Haunted_Grove.cfg	Undead			0	0	1	1	1907	266	468
 Hollow_Tree	Terrain-Hollow_Tree	Terrain-Hollow_Tree#Terrain-Hollow_Tree.cfg	Forest			0	0	0	0	1010	192	1152
@@ -30,4 +31,5 @@ Starting_Zone2	Terrain-Starting_Zone2	Terrain-Starting_Zone2#Terrain-Starting_Zo
 Templates	Terrain-Templates	Terrain-Templates#Terrain-Templates.cfg	Fields			0	0	2	8	3839	436	4871
 TestDungeon1C	Terrain-TestDungeon1C	Terrain-TestDungeon1C#Terrain-TestDungeon1C.cfg	CloudyDay			0	0	1	1	1420	1107	1836
 Testing_Gauntlet	Terrain-Testing_Gauntlet	Terrain-Testing_Gauntlet#Terrain-Testing_Gauntlet.cfg	Fields			5	5	9	9	12353	477	11309
+TranquilSpring	Terrain-TranquilSpring	Terrain-TranquilSpring#Terrain-TranquilSpring.cfg	Fields			0	0	2	8	3839	436	4871
 Zhushis_Lair	Terrain-Zhushis_Lair	Terrain-Zhushis_Lair#Terrain-Zhushis_Lair.cfg	Rotted			0	0	0	0	1068	192	1167
