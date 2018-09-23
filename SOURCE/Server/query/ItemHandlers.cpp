@@ -1386,11 +1386,15 @@ int ModCraftHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	if (g_CraftManager.RunRecipe(recipe, inputs, outputs) == true) {
 		//Verify whether the items exist in the item database.
 		bool verified = true;
+		bool book = false;
 		for (size_t i = 0; i < outputs.size(); i++) {
-			if (g_ItemManager.GetPointerByID(outputs[i].mID) == NULL) {
+			ItemDef *def = g_ItemManager.GetPointerByID(outputs[i].mID);
+			if(def == NULL) {
 				verified = false;
 				break;
 			}
+			else if(def->GetDynamicMax(ItemIntegerType::BOOK_PAGE) == -1 && def->GetDynamicMax(ItemIntegerType::BOOK) > 0)
+				book = true;
 		}
 
 		if (verified == true) {
@@ -1400,23 +1404,25 @@ int ModCraftHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 			bool unstack = false;
 
 			if (creatureID == creatureInstance->CreatureID) {
-				reagentPtr = pld->charPtr->inventory.GetBestSpecialItem(
-						GetContainerIDFromName("inv"), PORTABLE_CRAFTKIT);
-				if (reagentPtr == NULL) {
-					return QueryErrorMsg::NOCRAFT;
-				} else {
-					reagentDef = g_ItemManager.GetPointerByID(reagentPtr->IID);
-					if (reagentDef == NULL) {
+				if(!book) {
+					reagentPtr = pld->charPtr->inventory.GetBestSpecialItem(
+							GetContainerIDFromName("inv"), PORTABLE_CRAFTKIT);
+					if (reagentPtr == NULL) {
 						return QueryErrorMsg::NOCRAFT;
-					}
+					} else {
+						reagentDef = g_ItemManager.GetPointerByID(reagentPtr->IID);
+						if (reagentDef == NULL) {
+							return QueryErrorMsg::NOCRAFT;
+						}
 
-					/* Ok to refashion. If item is stackable, then the stack is decreased too (one-off crafting items) */
-					if (reagentPtr->ResolveItemPtr()->GetDynamicMax(
-							ItemIntegerType::STACKING) >= 1
-							&& reagentPtr->GetStackCount() > 0) {
-						unstack = true;
-					}
+						/* Ok to refashion. If item is stackable, then the stack is decreased too (one-off crafting items) */
+						if (reagentPtr->ResolveItemPtr()->GetDynamicMax(
+								ItemIntegerType::STACKING) >= 1
+								&& reagentPtr->GetStackCount() > 0) {
+							unstack = true;
+						}
 
+					}
 				}
 			} else {
 				// Make sure this object isn't too far away.

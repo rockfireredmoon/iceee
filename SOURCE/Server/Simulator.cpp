@@ -3711,6 +3711,25 @@ void SimulatorThread::CreatureUseHenge(int creatureID, int creatureDefID) {
  }
  */
 
+void SimulatorThread::FinaliseTransfer(Shard &shard, const std::string &token) {
+	g_Logs.simulator->info("Finalising transfer of %v to %v", pld.charPtr->cdef.css.display_name, shard.mName);
+	int wpos = 0;
+	wpos += PutByte(&SendBuf[wpos], 56);  //_handleSimSwitch
+	wpos += PutShort(&SendBuf[wpos], 0);
+	wpos += PutStringUTF(&SendBuf[wpos], shard.mSimulatorAddress.c_str());
+	wpos += PutInteger(&SendBuf[wpos], shard.mSimulatorPort);
+	wpos += PutStringUTF(&SendBuf[wpos], token.c_str());
+	wpos += PutStringUTF(&SendBuf[wpos], pld.charPtr->cdef.css.display_name);
+	PutShort(&SendBuf[1], wpos - 3);
+	AttemptSend(SendBuf, wpos);
+
+	/* Make sure this and any other packets are delivered immediately. Upon receiving this
+	 * the client will do the actual disconnection, then reconnection to the new simulator
+	 */
+	g_PacketManager.SendPacketsFor(this->sc.ClientSocket);
+	ProcessDetach();
+}
+
 std::string SimulatorThread::ShardSet(std::string shardName, std::string charName) {
 	if (creatureInst->Speed != 0) {
 		return "You must be stationary.";
@@ -3753,25 +3772,7 @@ std::string SimulatorThread::ShardSet(std::string shardName, std::string charNam
 	else {
 
 	}
-	std::string token = g_ClusterManager.SimTransfer(pld.CreatureDefID, shardName);
-	g_Scheduler.Submit([this, s, token](){
-		int wpos = 0;
-		wpos += PutByte(&SendBuf[wpos], 56);  //_handleSimSwitch
-		wpos += PutShort(&SendBuf[wpos], 0);
-		wpos += PutStringUTF(&SendBuf[wpos], s.mSimulatorAddress.c_str());
-		wpos += PutInteger(&SendBuf[wpos], s.mSimulatorPort);
-		wpos += PutStringUTF(&SendBuf[wpos], token.c_str());
-		wpos += PutStringUTF(&SendBuf[wpos], pld.charPtr->cdef.css.display_name);
-		PutShort(&SendBuf[1], wpos - 3);
-		AttemptSend(SendBuf, wpos);
-
-		/* Make sure this and any other packets are delivered immiediately. Upon receiving this
-		 * the client will do the actual disconnection, then reconnection to the new simulator
-		 */
-		g_PacketManager.SendPacketsFor(this->sc.ClientSocket);
-		ProcessDetach();
-	});
-
+	g_ClusterManager.SimTransfer(pld.CreatureDefID, shardName, InternalID);
 	return "";
 }
 

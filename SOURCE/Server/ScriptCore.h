@@ -491,7 +491,7 @@ public:
 	bool mHalted; //If true, VM is halted
 	bool mClear;
 	unsigned long mNextId;
-	PauseCondition *mPause; // If non-null is the current pause condition
+	long mPauseEvent; // If > -1 is the current pause event id
 	long mSleeping; // If non-zero, how long the VM is sleeping for
 	int mSuspendTop; //Top of stack after a successful suspend, zero other
 	bool mPreventReentry; // Currently used for instance walks, will prevent certain calls calling themselves
@@ -525,6 +525,7 @@ public:
 	void HaltVM();
 	void HaltEvent(bool immediate);
 	bool Pause(void);
+	bool IsPaused(void);
 	bool Resume(void);
 	int GC(void);
 	std::string GetStatus();

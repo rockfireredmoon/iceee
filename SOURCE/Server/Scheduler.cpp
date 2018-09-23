@@ -53,42 +53,47 @@ void Scheduler::Init() {
 }
 
 void Scheduler::Cancel(int id) {
-	SYNCHRONIZED(mMutex){
-		for (auto it = scheduled.begin();
-				it != scheduled.end(); ++it) {
-			if (it->mTaskId == id) {
-				scheduled.erase(it);
-				return;
-			}
+	mMutex.lock();
+	for (auto it = scheduled.begin();
+			it != scheduled.end(); ++it) {
+		if (it->mTaskId == id) {
+			mMutex.unlock();
+			scheduled.erase(it);
+			return;
 		}
 	}
+	mMutex.unlock();
 }
 
 void Scheduler::RunProcessingCycle() {
-	SYNCHRONIZED(mMutex){
-		int c = 0;
+	mMutex.lock();
+	int c = 0;
 
-		while(mNextRun > 0 && c < MAX_TASKS_PER_CYCLE && scheduled.size() > 0) {
-			unsigned long now = g_PlatformTime.getMilliseconds();
-			if(now > mNextRun) {
-				ScheduledTimerTask t = scheduled[0];
-				scheduled.erase(scheduled.begin());
-				t.mTask();
+//	g_Logs.server->info("Have %v tasks in scheduler, next run is %v", scheduled.size(), mNextRun);
+	while(mNextRun > 0 && c < MAX_TASKS_PER_CYCLE && scheduled.size() > 0) {
+		unsigned long now = g_PlatformTime.getMilliseconds();
+		if(now > mNextRun) {
+			ScheduledTimerTask t = scheduled[0];
+			scheduled.erase(scheduled.begin());
+			g_Logs.server->info("Scheduled task running");
+			mMutex.unlock();
+			t.mTask();
+			mMutex.lock();
 
-				// Update next run time
-				if(scheduled.size() > 0) {
-					mNextRun = scheduled[0].mWhen;
-					g_Logs.server->debug("Next scheduler task will run at %v", mNextRun);
-				}
-				else {
-					mNextRun = 0;
-				}
-				c++;
+			// Update next run time
+			if(scheduled.size() > 0) {
+				mNextRun = scheduled[0].mWhen;
+				g_Logs.server->info("Next scheduler task will run at %v", mNextRun);
 			}
-			else
-				break;
+			else {
+				mNextRun = 0;
+			}
+			c++;
 		}
+		else
+			break;
 	}
+	mMutex.unlock();
 }
 
 int Scheduler::Pool(const TaskType& task) {
@@ -96,15 +101,23 @@ int Scheduler::Pool(const TaskType& task) {
 	return 0;
 }
 
+int Scheduler::ScheduleIn(const TaskType& task, unsigned long when) {
+	return Schedule(task, when + g_ServerTime);
+}
+
 int Scheduler::Schedule(const TaskType& task, unsigned long when) {
-	ScheduledTimerTask taskWrapper(task, when);
-	SYNCHRONIZED(mMutex){
-		taskWrapper.mTaskId = mNextTaskId++;
-		scheduled.push_back(taskWrapper);
-		sort(scheduled.begin(), scheduled.end(), ScheduledTaskSort);
-		mNextRun = scheduled[0].mWhen;
-		g_Logs.server->debug("Next scheduler task will run at %v", mNextRun);
+	if(when <= g_ServerTime) {
+		when = g_ServerTime + g_MainSleep;
 	}
+	ScheduledTimerTask taskWrapper(task, when);
+	g_Logs.server->info("This scheduler task will run at %v", when);
+	mMutex.lock();
+	taskWrapper.mTaskId = mNextTaskId++;
+	scheduled.push_back(taskWrapper);
+	sort(scheduled.begin(), scheduled.end(), ScheduledTaskSort);
+	mNextRun = scheduled[0].mWhen;
+	g_Logs.server->info("Next scheduler task will run at %v", mNextRun);
+	mMutex.unlock();
 	return taskWrapper.mTaskId;
 }
 

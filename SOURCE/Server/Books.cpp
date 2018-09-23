@@ -57,7 +57,6 @@ void BookManager::LoadFile(std::string filename) {
 	int bookID = atoi(Platform::Basename(filename).c_str());
 	BookDefinition newItem;
 	newItem.bookID = bookID;
-	lfr.CommentStyle = Comment_Semi;
 	int r = 0;
 	std::string page;
 	bool inPageText = false;

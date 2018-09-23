@@ -43,6 +43,7 @@ static string LOGOUT = "logout";
 static string AUCTION_ITEM = "auction-item";
 static string AUCTION_ITEM_REMOVED = "auction-item-removed";
 static string AUCTION_ITEM_UPDATED = "auction-item-updated";
+static string CONFIRM_TRANSFER = "confirm-transfer";
 
 using namespace std;
 
@@ -418,6 +419,7 @@ ClusterManager::ClusterManager() {
 	mPingSentTime = 0;
 	mMasterShard = "";
 	mMaster = false;
+	mClusterable = false;
 }
 
 string ClusterManager::GetMaster() {
@@ -644,6 +646,17 @@ void ClusterManager::ShardPong(const string &shardName) {
 
 void ClusterManager::LeftOtherShard(const string &shardName, int cdefid) {
 	SYNCHRONIZED(mMutex){
+		for (auto it = mPending.begin();
+				it != mPending.end(); ++it) {
+			if((*it).mID == cdefid) {
+				g_Logs.cluster->info(
+						"Ignoring that %v left shard %v, as we will be their new shard.",
+						cdefid, shardName);
+				return;
+			}
+		}
+
+
 		map<int, ShardPlayer>::iterator it = mActivePlayers.find(cdefid);
 		if (it == mActivePlayers.end()) {
 			g_Logs.cluster->info(
@@ -797,12 +810,21 @@ void ClusterManager::ServerConfigurationReceived(const string &shardName,
 	}
 }
 
-string ClusterManager::SimTransfer(int cdefId, const string &shardName) {
+string ClusterManager::SimTransfer(int cdefId, const string &shardName, int simID) {
+	/* Called from the sim that the player is currently on. We expect a CONFIRM_TRANSFER
+	 * message to come back when the receiving sim is ready.
+	 */
 	string token = Util::RandomStr(32, false);
-	g_Logs.cluster->info("Notifying shard %v that %v is about to connect to them using token %v.", shardName, cdefId, token);
-	mClient.publish(SIM_TRANSFER, StringUtil::Format("%s:%s:%d:%s",mShardName.c_str(), shardName.c_str(), cdefId, token.c_str()));
+	g_Logs.cluster->info("Notifying shard %v that %v (sim %v) is about to connect to them using token %v.", shardName, cdefId, simID, token);
+	mClient.publish(SIM_TRANSFER, StringUtil::Format("%s:%s:%d:%s:%d",mShardName.c_str(), shardName.c_str(), cdefId, token.c_str(), simID));
 	mClient.commit();
 	return token;
+}
+
+void ClusterManager::ConfirmTransfer(int cdefId, const string &shardName, const string &token, int simID) {
+	g_Logs.cluster->info("Notifying shard %v that %v will be accepted for transfer to this shard using token %v [%v]", shardName, cdefId, token, simID);
+	mClient.publish(CONFIRM_TRANSFER, StringUtil::Format("%s:%s:%d:%s:%d",mShardName.c_str(), shardName.c_str(), cdefId, token.c_str(), simID));
+	mClient.commit();
 }
 
 void ClusterManager::SendConfiguration() {
@@ -851,7 +873,8 @@ void ClusterManager::LeftShard(int CDefID) {
 			}
 		}
 		else
-			g_Logs.cluster->warn("Local player %v left shard, but we didn't know about them!", CDefID);
+			/* Happens on sim switch */
+			g_Logs.cluster->debug("Local player %v left shard, but we didn't know about them!", CDefID);
 	}
 }
 
@@ -949,9 +972,6 @@ void ClusterManager::ShardRemoved(const string &shardName) {
 					++it2;
 			}
 
-			g_Logs.cluster->info(
-					"A shard was shutdown [%v]. %v players were on this shard at the time. There are now %v in the cluster.",
-					shardName, mActivePlayers.size() - l.size(), mActiveShards.size());
 			for(auto it2 = l.begin(); it2 != l.end(); ++it2)
 				LeftOtherShard(shardName, *it2);
 
@@ -961,6 +981,11 @@ void ClusterManager::ShardRemoved(const string &shardName) {
 			});
 
 			mActiveShards.erase(it);
+
+			g_Logs.cluster->info(
+					"A shard was shutdown [%v]. %v players were on this shard at the time. There are now %v in the cluster.",
+					shardName, l.size(), mActiveShards.size());
+
 			FindMasterShard();
 		} else
 			g_Logs.cluster->info("A shard we didn't know about has shutdown [%v]",
@@ -972,7 +997,7 @@ void ClusterManager::NewShard(const string &shardName) {
 	SYNCHRONIZED(mMutex){
 		if (mActiveShards.find(shardName) != mActiveShards.end()) {
 			g_Logs.cluster->warn(
-					"Got a new shard notification [%v] for a shard we already knew about. This suggests is crashed uncleanly, but came back up before the ping interval expired.",
+					"Got a new shard notification [%v] for a shard we already knew about. This suggests it crashed uncleanly, but came back up before the ping interval expired.",
 					shardName);
 			ShardRemoved(shardName);
 		}
@@ -996,7 +1021,19 @@ PendingShardPlayer ClusterManager::FindToken(const string &token) {
 				it != mPending.end(); ++it) {
 			if((*it).mToken.compare(token) == 0) {
 				PendingShardPlayer p = *it;
+
+				map<int, ShardPlayer>::iterator ait = mActivePlayers.find(p.mID);
+				if (ait == mActivePlayers.end()) {
+
+					mActiveShards[p.mShardName].mPlayers--;
+					ShardPlayer sp = mActivePlayers[p.mID];
+					g_Logs.cluster->info("Player %v (%v) left shard %v for us, removing their current shard information.", p.mID,
+							sp.mCharacterData->cdef.css.display_name, p.mShardName);
+					mActivePlayers.erase(ait);
+				}
+
 				mPending.erase(it);
+
 				return p;
 			}
 		}
@@ -1004,17 +1041,31 @@ PendingShardPlayer ClusterManager::FindToken(const string &token) {
 	return PendingShardPlayer();
 }
 
-void ClusterManager::TransferFromOtherShard(int cdefId, string token) {
+void ClusterManager::ConfirmTransferToOtherShard(int cdefId, const std::string &shardName, string token, int simID) {
+	SimulatorThread *sim = g_SimulatorManager.GetPtrByID(simID);
+	if(sim == NULL)
+		g_Logs.cluster->error(
+				"Got sim transfer confirmation for simulator we know nothing about, ID: %v (for CDefID %v and token %v).",
+				simID, cdefId, token);
+	else {
+		Shard s = GetActiveShard(shardName);
+		sim->FinaliseTransfer(s, token);
+	}
+}
+
+void ClusterManager::TransferFromOtherShard(int cdefId, const std::string &shardName, string token, int simID) {
 	g_Logs.cluster->info(
 			"Expecting sim transfer for %v (using %v).",
 			cdefId, token);
 	PendingShardPlayer p;
 	p.mID = cdefId;
 	p.mToken = token;
+	p.mShardName = shardName;
 	p.mReceived = g_PlatformTime.getMilliseconds();
 	SYNCHRONIZED(mMutex){
 		mPending.push_back(p);
 	}
+	ConfirmTransfer(cdefId, shardName, token, simID);
 }
 
 void ClusterManager::OtherShardWeather(int zoneId, const string &mapName, const string &weatherType, int weight) {
@@ -1512,10 +1563,22 @@ void ClusterManager::Ready() {
 						Util::Split(msg, ":", l);
 						if(l[0].compare(mShardName) != 0 && l[1].compare(mShardName) == 0) {
 							g_Scheduler.Pool([this,l](){
-								TransferFromOtherShard(atoi(l[2].c_str()), l[3]);
+								TransferFromOtherShard(atoi(l[2].c_str()), l[0], l[3], atoi(l[4].c_str()));
 							});
 						}
 					});
+
+		mSub.subscribe(CONFIRM_TRANSFER,
+					[this](const string& chan, const string& msg) {
+						vector<string> l;
+						Util::Split(msg, ":", l);
+						if(l[0].compare(mShardName) != 0 && l[1].compare(mShardName) == 0) {
+							g_Scheduler.Submit([this,l](){
+								ConfirmTransferToOtherShard(atoi(l[2].c_str()), l[0], l[3], atoi(l[4].c_str()));
+							});
+						}
+					});
+
 		mSub.commit();
 
 		g_Logs.cluster->info("Informing cluster of readyness");

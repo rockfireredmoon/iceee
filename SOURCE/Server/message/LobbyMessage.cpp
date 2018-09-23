@@ -70,6 +70,7 @@ int LobbyAuthenticateMessage::handleMessage(SimulatorThread *sim, CharacterServe
 		}
 		std::string errorMessage;
 		AccountData *accPtr = authHandler->authenticate(loginName, authHash, &errorMessage);
+		g_Logs.simulator->info("Completed first phase of authentiation for %v (%v)", loginName, simID);
 
 		if (accPtr == NULL) {
 			g_Logs.simulator->error("[%v] Could not find account: %v", sim->InternalID, loginName);
@@ -86,7 +87,11 @@ int LobbyAuthenticateMessage::handleMessage(SimulatorThread *sim, CharacterServe
 			}
 
 			/* Now the lengthy operation is over, complete authentication on the main server thread */
+
+			g_Logs.simulator->info("Submitting authentication on main thread for %v (%v)", accPtr->Name, simID);
 			g_Scheduler.Submit([this, accPtr, simID](){
+				g_Logs.server->info("Completing authentication on main thread for %v (%v)", accPtr->Name, simID);
+
 				SimulatorThread *sim = g_SimulatorManager.GetPtrByID(simID);
 				if(sim == NULL) {
 					g_Logs.server->error("Lost simulator %v whilst authenticating. Aborting.", simID);

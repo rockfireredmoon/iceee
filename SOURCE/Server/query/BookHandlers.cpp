@@ -115,9 +115,7 @@ int BookGetHandler :: PopulateBookDetails(SimulatorThread *sim, int wpos, Invent
 				inv.containerList[INV_CONTAINER][a].ResolveSafeItemPtr();
 		if (itemDef != NULL && itemDef->mType == ItemType::SPECIAL) {
 			int pageNo = itemDef->GetDynamicMax(ItemIntegerType::BOOK_PAGE);
-			if (itemDef->GetDynamicMax(ItemIntegerType::BOOK_PAGE) == -1
-					&& itemDef->GetDynamicMax(ItemIntegerType::BOOK)
-							== def.bookID) {
+			if(itemDef->GetDynamicMax(ItemIntegerType::BOOK_PAGE) == -1 && itemDef->GetDynamicMax(ItemIntegerType::BOOK) == def.bookID) {
 				/* An item with ItemIntegerType::BOOK but NO ItemIntegerType::BOOK_PAGE is a complete book, so return all the pages */
 				for (size_t i = 0; i < def.pages.size(); i++) {
 					pagesFoundSet.insert(itemDef->mIvMax2);
@@ -193,7 +191,7 @@ int BookItemHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 					"Request for recipe for book item that doesn't exist. Book item ID is %v",
 					bookItemId);
 			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
-					"Recipe for book missing");
+					"This page cannot be bound.");
 		}
 
 		std::vector<int> results;

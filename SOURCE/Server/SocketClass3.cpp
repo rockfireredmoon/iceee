@@ -126,7 +126,7 @@ int SocketClass :: CreateSocket(char *port, const char *address)
 			serveraddr.sin_addr.s_addr = INADDR_ANY;
 		}
 		else {
-			g_Logs.server->info("Bound port %v to %v", portNum);
+			g_Logs.server->info("Bound port %v to %v", portNum, address);
 		}
 	}
 	else {

@@ -81,6 +81,7 @@ public:
 	void Init();
 	void RunProcessingCycle();
 	int Pool(const TaskType& task);
+	int ScheduleIn(const TaskType& task, unsigned long wait);
 	int Schedule(const TaskType& task, unsigned long when);
 	int Submit(const TaskType& task);
 	void Cancel(int id);

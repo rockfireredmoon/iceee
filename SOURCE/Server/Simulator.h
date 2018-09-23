@@ -12,6 +12,7 @@
 #include "Guilds.h"
 #include "DropTable.h"
 #include "PartyManager.h"
+#include "Cluster.h"
 
 #include <vector>
 
@@ -281,6 +282,8 @@ public:
 	void RunTranslocate(void);
 	void RunPortalRequest(void);
 	void CreatureUseHenge(int creatureID, int creatureDefID);
+
+	void FinaliseTransfer(Shard &shard, const std::string &token);
 	std::string ShardSet(std::string shardName, std::string charName);
 
 	const char * GetGenericErrorString(int errCode);

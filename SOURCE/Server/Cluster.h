@@ -116,6 +116,7 @@ class PendingShardPlayer {
 
 public:
 	std::string mToken;
+	std::string mShardName;
 	int mID;
 	unsigned long mReceived;
 };
@@ -159,7 +160,8 @@ public:
 	void Weather(int zoneId, const std::string &mapType, const std::string &type, int weight);
 	PendingShardPlayer FindToken(const std::string &token);
 	ShardPlayer GetActivePlayer(int CDefId);
-	std::string SimTransfer(int CDefID, const std::string &shardName);
+	std::string SimTransfer(int CDefID, const std::string &shardName, int simID);
+	void ConfirmTransfer(int cdefId, const string &shardName, const string &token, int simID);
 	bool IsPlayerOnOtherShard(const std::string &characterName);
 	std::string GetMaster();
 	std::recursive_mutex mMutex;
@@ -184,7 +186,8 @@ private:
 	bool mMaster;
 	unsigned long mPingSentTime;
 	unsigned long mNextPing;
-	void TransferFromOtherShard(int cdefId, std::string token);
+	void TransferFromOtherShard(int cdefId, const std::string &shardName, std::string token, int simID);
+	void ConfirmTransferToOtherShard(int cdefId, const std::string &shardName, std::string token, int simID);
 	void FindMasterShard();
 	void SendConfiguration();
 	void NewShard(const std::string &shardName);
