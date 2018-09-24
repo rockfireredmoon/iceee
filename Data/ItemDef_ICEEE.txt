@@ -533,6 +533,38 @@ mMinUseLevel=10
 mUseAbilityId=27105
 
 [ENTRY]
+mID=8120
+mType=5
+mDisplayName=New Ancient Atoll Grove
+mAppearance=[{}]
+mIcon=Icon-32-Grove3.png|Icon-32-BG-Blue.png
+mIvType1=1
+mIvMax1=1
+mLevel=1
+mBindingType=1
+mValue=1
+mFlavorText=Double click to open!
+mQualityLevel=3
+mMinUseLevel=10
+mUseAbilityId=27106
+
+[ENTRY]
+mID=8121
+mType=5
+mDisplayName=New Desert Oasis Grove
+mAppearance=[{}]
+mIcon=Icon-32-Grove3.png|Icon-32-BG-Blue.png
+mIvType1=1
+mIvMax1=1
+mLevel=1
+mBindingType=1
+mValue=1
+mFlavorText=Double click to open!
+mQualityLevel=3
+mMinUseLevel=10
+mUseAbilityId=27107
+
+[ENTRY]
 mID=8200
 mType=2
 mDisplayName=Searoxinohn
