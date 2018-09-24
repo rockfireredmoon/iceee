@@ -3057,7 +3057,7 @@ Obj.0.markerLocations=79441.5,1316.56,53065.2,9;
 [ACT]
 Act.BodyText=Discover Valkal's weakness and destroy him.
 Obj.0.type=kill
-Obj.0.data1=1385
+Obj.0.data1=3351
 Obj.0.data2=1
 Obj.0.description=Destroy Valkal
 Obj.0.myCreatureDefID=
