@@ -2661,6 +2661,25 @@ int AbilityCalculator :: AddGrove(ARGUMENT_LIST args)
 			bp.x2 = gt->mTileX2;
 			bp.y2 = gt->mTileY2;
 
+			if(gt->HasProps()) {
+				std::vector<SceneryObject> objects;
+				// TODO this should go off in a thread
+				gt->GetProps(objects);
+				g_SceneryManager.GetOrCreateZone(bp.ZoneID);
+				for(std::vector<SceneryObject>::iterator oit = objects.begin(); oit != objects.end(); ++oit) {
+					SceneryObject so;
+					SceneryObject oo = *oit;
+					so.copyFrom(&oo);
+					so.ID = g_SceneryVars.BaseSceneryID + g_SceneryVars.SceneryAdditive++;
+					g_SceneryManager.GetThread("AbilityCalculator::AddGrove");
+					bool isSpawnPoint = so.IsSpawnPoint();
+					g_SceneryManager.AddProp(bp.ZoneID, so);
+					g_SceneryManager.ReleaseThread();
+				}
+
+				SessionVarsChangeData.AddChange();
+			}
+
 			ciTarget->simulatorPtr->pld.accPtr->BuildPermissionList.push_back(bp);
 			ciTarget->simulatorPtr->pld.accPtr->PendingMinorUpdates++;
 

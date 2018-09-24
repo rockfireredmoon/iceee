@@ -1603,6 +1603,40 @@ void GroveTemplate :: Clear(void)
 	mDefZ = 0;
 }
 
+bool GroveTemplate :: HasProps()  const
+{
+	char fileName[256];
+	Platform::GenerateFilePath(fileName, "GroveTemplates", mShortName.c_str());
+	return Platform::DirExists(fileName);
+}
+
+void GroveTemplate :: GetProps(std::vector<SceneryObject> &objects) const
+{
+	char fileName[256];
+	Platform::GenerateFilePath(fileName, "GroveTemplates", mShortName.c_str());
+
+	Platform_DirectoryReader r;
+	std::string dir = r.GetDirectory();
+	r.SetDirectory(fileName);
+	r.ReadFiles();
+	r.SetDirectory(dir.c_str());
+
+	std::vector<std::string>::iterator it;
+	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
+		std::string p = *it;
+		if (Util::HasEnding(p, ".txt")) {
+			SceneryPage page;
+			Platform::GenerateFilePath(fileName, "GroveTemplates", mShortName.c_str());
+			std::string gpath = fileName;
+			Platform::GenerateFilePath(fileName, gpath.c_str(), p.c_str());
+			page.LoadSceneryFromFile(fileName);
+			for(std::map<int, SceneryObject>::iterator mit = page.mSceneryList.begin(); mit != page.mSceneryList.end(); ++mit) {
+				objects.push_back((*mit).second);
+			}
+		}
+	}
+}
+
 GroveTemplateManager :: GroveTemplateManager()
 {
 }

@@ -189,10 +189,10 @@ public:
 	SceneryObject *GetPropPtr(int propID);
 	void NotifyAccess(bool notifyPendingChange);
 	bool IsTileExpired(void);
+	void LoadSceneryFromFile(const char *fileName);  //Handles the actual work of loading a file.
 
 private:
 	PlatformTime::TIME_VALUE mLastAccessTime;
-	void LoadSceneryFromFile(const char *fileName);  //Handles the actual work of loading a file.
 	void RemoveFile(const char *fileName);
 	bool SaveFile(const char *fileName);
 };

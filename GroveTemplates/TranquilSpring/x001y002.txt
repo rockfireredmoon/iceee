@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1000012
+Asset=Prop-Hill_Tree3
+Name=
+Pos=3556.8,484.375,4863.88
+Orient=0,0,0,1
+Scale=1,1,1
+
