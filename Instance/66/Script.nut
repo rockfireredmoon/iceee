@@ -468,32 +468,41 @@ function tribute() {
 	            }
 	        }
 	        if(targets.len() > 0) {
-	            local cid = targets[randmodrng(0, targets.len())];
-	            inst.set_target(cid_valkal2, cid);
+	        	local roll = randmodrng(0, targets.len());
 	            if(debug)
-	            	inst.info("Targetted " + inst.get_display_name(cid));
-				
-	            if(!inst.creature_use(cid_valkal2, TRIBUTE)) {
-	            	if(debug)
-	                	inst.info("Failed to tribute " + cid);
+	            	inst.info("Rolled " + roll + " / " + targets.len());
+	            	
+	            local cid = targets[roll];
+	            if(inst.set_target(cid_valkal2, cid)) {
+		            if(debug)
+		            	inst.info("Targetted " + inst.get_display_name(cid));
+		            	
+		            if(!inst.creature_use(cid_valkal2, TRIBUTE)) {
+		            	if(debug)
+		                	inst.info("Failed to tribute " + cid);
+		            }
+		            	
 	            }
 	            else {
-	                inst.queue(function() {
-	            		inst.target_self(cid_valkal2);
-		            	if(inst.creature_use(cid_valkal2, SELF_STUN)) {
-					        inst.queue(function() {
-								inst.leave_combat(cid_valkal2);  
-					            valkal_2_engage();
-					        }, 12000);
-					    }
-		            	else {	     
-							inst.leave_combat(cid_valkal2);
-	            			if(debug)       	
-	                			inst.info("Stunned fail"); 
-					        valkal_2_engage();
-					    }
-		            }, 6000);
+		            if(debug)
+		            	inst.info("Failed to Target " + inst.get_display_name(cid));
 	            }
+                inst.queue(function() {
+            		inst.target_self(cid_valkal2);
+	            	if(inst.creature_use(cid_valkal2, SELF_STUN)) {
+				        inst.queue(function() {
+							inst.leave_combat(cid_valkal2);  
+				            valkal_2_engage();
+				        }, 12000);
+				    }
+	            	else {	     
+						inst.leave_combat(cid_valkal2);
+            			if(debug)       	
+                			inst.info("Stunned fail"); 
+				        valkal_2_engage();
+				    }
+	            }, 6000);
+
 	        }
 	        else {
 	            if(debug)       	

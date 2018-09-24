@@ -539,6 +539,7 @@ void CreatureInstance :: Clear(void)
 	LastUseDefID = 0;
 
 	swimming = false;
+	initialisingAbilities = false;
 }
 
 bool CreatureInstance :: KillAI(void)
