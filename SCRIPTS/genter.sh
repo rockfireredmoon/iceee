@@ -49,10 +49,10 @@ cat << __HERE__ > Terrain-${name}/Terrain-${name}.cfg
 CustomMaterialName=Terrain/Splatting
 
 # Allow per-page options to be set.
-PerPageConfig=Blank_x%dy%d.cfg
+PerPageConfig=${name}_x%dy%d.cfg
 
-Texture.Base=Blank_Base_x%dy%d.jpg
-Texture.Coverage=Blank_Coverage_x%dy%d.png
+Texture.Base=${name}_Base_x%dy%d.jpg
+Texture.Coverage=${name}_Coverage_x%dy%d.png
 Texture.Splatting0=Grass_01.png
 Texture.Splatting1=Mud_01.png
 Texture.Splatting2=Cobbles_01.png
@@ -76,7 +76,7 @@ DetailTile=12
 PageSource=Heightmap
 
 # Heightmap-source specific settings
-Heightmap.image=Blank_Height_x%dy%d.png
+Heightmap.image=${name}_Height_x%dy%d.png
 
 PageMaxX=30
 
@@ -157,8 +157,8 @@ do
 	while [ $sx != $x ]
 	do
 		mkdir Terrain-${name}_x${sx}y${sy}
-		cp ../../sparkplayer-eartheternal/src/assets/Terrain-Blank_x0y0/Blank_Coverage_x0y0.png Terrain-${name}_x${sx}y${sy}/Blank_Coverage_x${sx}y${sy}.png 
-		cp ../../sparkplayer-eartheternal/src/assets/Terrain-Blank_x0y0/Blank_Height_x0y0.png Terrain-${name}_x${sx}y${sy}/Blank_Height_x${sx}y${sy}.png
+		cp ../../sparkplayer-eartheternal/src/assets/Terrain-Blank_x0y0/Blank_Coverage_x0y0.png Terrain-${name}_x${sx}y${sy}/${name}_Coverage_x${sx}y${sy}.png 
+		cp ../../sparkplayer-eartheternal/src/assets/Terrain-Blank_x0y0/Blank_Height_x0y0.png Terrain-${name}_x${sx}y${sy}/${name}_Height_x${sx}y${sy}.png
 		sx=$(expr $sx + 1)
 	done
 	sy=$(expr $sy + 1)
