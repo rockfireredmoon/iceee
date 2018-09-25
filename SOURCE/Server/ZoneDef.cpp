@@ -1843,9 +1843,10 @@ void WeatherState :: RunCycle(ActiveInstance *instance) {
 
 void WeatherState :: SendWeatherUpdate(ActiveInstance *instance) {
 	for(std::vector<SimulatorThread*>::iterator it = instance->RegSim.begin(); it != instance->RegSim.end(); ++it) {
+		SimulatorThread * sim = *it;
 		for(std::vector<std::string>::iterator it2 = mMapNames.begin(); it2 != mMapNames.end(); it2++) {
-			if((*it)->pld.CurrentMapInt == -1 || MapDef.mMapList[(*it)->pld.CurrentMapInt].Name.compare(*it2) == 0) {
-				(*it)->AttemptSend((*it)->Aux1, PrepExt_SetWeather((*it)->Aux1, mWeatherType, mWeatherWeight));
+			if(sim->pld.CurrentMapInt == -1 || MapDef.mMapList[sim->pld.CurrentMapInt].Name.compare(*it2) == 0) {
+				sim->AttemptSend(sim->Aux1, PrepExt_SetWeather(sim->Aux1, mWeatherType, mWeatherWeight));
 				break;
 			}
 		}
@@ -1853,9 +1854,10 @@ void WeatherState :: SendWeatherUpdate(ActiveInstance *instance) {
 }
 void WeatherState :: SendThunder(ActiveInstance *instance) {
 	for(std::vector<SimulatorThread*>::iterator it = instance->RegSim.begin(); it != instance->RegSim.end(); ++it) {
+		SimulatorThread * sim = *it;
 		for(std::vector<std::string>::iterator it2 = mMapNames.begin(); it2 != mMapNames.end(); it2++) {
-			if((*it)->pld.CurrentMapInt == -1 || MapDef.mMapList[(*it)->pld.CurrentMapInt].Name.compare(*it2) == 0) {
-				(*it)->AttemptSend((*it)->Aux1, PrepExt_Thunder((*it)->Aux1, mWeatherWeight));
+			if(sim->pld.CurrentMapInt == -1 || MapDef.mMapList[sim->pld.CurrentMapInt].Name.compare(*it2) == 0) {
+				sim->AttemptSend(sim->Aux1, PrepExt_Thunder(sim->Aux1, mWeatherWeight));
 				break;
 			}
 		}
@@ -2010,9 +2012,10 @@ void WeatherManager :: Deregister(std::vector<WeatherState*> states) {
 	int s;
 	for(std::vector<WeatherState*>::iterator it = states.begin(); it != states.end(); ++it) {
 		s = 0;
-		for(std::vector<std::string>::iterator it2 = (*it)->mMapNames.begin(); it2 != (*it)->mMapNames.end(); ++it2) {
+		WeatherState *ws = *it;
+		for(std::vector<std::string>::iterator it2 = (*it)->mMapNames.begin(); it2 != ws->mMapNames.end(); ++it2) {
 			WeatherKey k;
-			k.instance = (*it)->mInstanceId;
+			k.instance = ws->mInstanceId;
 			k.mapName = *it2;
 			if(s == 0)
 				/* Only delete the state in the first key, as the other keys have a copy */

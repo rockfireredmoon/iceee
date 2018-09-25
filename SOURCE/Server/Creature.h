@@ -685,7 +685,7 @@ public:
 	bool HasStatus(int statusID);
 	
 	bool Reagent(int itemID, int amount);
-	int Add(unsigned char tier, unsigned char buffCategory, int abID, int abgID, int statID, float calcAmount, float descAmount, float durationSec);
+	int Add(unsigned char tier, unsigned char buffCategory, int abID, int abgID, int statID, float calcAmount, float descAmount, double durationSec);
 	void Heal(int amount);
 	void RestrictHealth();
 	bool hasOffHandWeapon(void);

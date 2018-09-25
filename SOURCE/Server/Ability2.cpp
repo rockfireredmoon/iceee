@@ -2715,7 +2715,7 @@ int AbilityCalculator :: Add(ARGUMENT_LIST args)
 		return ABILITY_GENERIC;
 
 	float amount = args.GetEvaluation(1, &g_AbilityManager);
-	int timeSec = static_cast<int>(args.GetEvaluation(2, &g_AbilityManager));
+	double timeSec = static_cast<double>(args.GetEvaluation(2, &g_AbilityManager));
 
 	int buffType = ResolveBuffCategoryID(mAbilityEntry->GetRowAsCString(ABROW::BUFF_CATEGORY));
 
@@ -3261,7 +3261,7 @@ int AbilityCalculator :: AddWDesc(ARGUMENT_LIST args)
 int AbilityCalculator :: HealthRestrict(ARGUMENT_LIST args)
 {
 	float amount = args.GetEvaluation(0, &g_AbilityManager);
-	int timeSec = static_cast<int>(args.GetEvaluation(1, &g_AbilityManager));
+	double timeSec = static_cast<double>(args.GetEvaluation(1, &g_AbilityManager));
 	int buffType = ResolveBuffCategoryID(mAbilityEntry->GetRowAsCString(ABROW::BUFF_CATEGORY));
 	float max = ciTarget->GetMaxHealth(true);
 	ciTarget->Add(mAbilityEntry->mTier, buffType, mAbilityEntry->mAbilityID, mAbilityEntry->mAbilityGroupID, STAT::MAX_HEALTH_PC, -(100-amount), -(100-amount), timeSec);

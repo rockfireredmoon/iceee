@@ -4,11 +4,11 @@
 
 FileReader3 :: FileReader3()
 {
-	memset(DataBuffer, 0, sizeof(DataBuffer));
-	memset(CopyBuffer, 0, sizeof(CopyBuffer));
+	memset(&DataBuffer, 0, sizeof(DataBuffer));
+	memset(&CopyBuffer, 0, sizeof(CopyBuffer));
 
-	memset(BlockPos, 0, sizeof(BlockPos));
-	memset(BlockLen, 0, sizeof(BlockLen));
+	memset(&BlockPos, 0, sizeof(BlockPos));
+	memset(&BlockLen, 0, sizeof(BlockLen));
 
 	fileHandle = NULL;
 	lineNumber = 0;
@@ -61,14 +61,16 @@ int FileReader3 :: ReadLine(void)
 	DataBuffer[0] = 0;
 
 	//Need to reserve an extra character of space for the break functions.
-	fgets(DataBuffer, sizeof(DataBuffer) - 1, fileHandle);
+	if(fgets(DataBuffer, sizeof(DataBuffer) - 1, fileHandle) != NULL) {
+		RemoveTrailingWhitespace();
+		RemoveComment();
 
-	RemoveTrailingWhitespace();
-	RemoveComment();
+		lineNumber++;
 
-	lineNumber++;
-
-	return strlen(DataBuffer);
+		return strlen(DataBuffer);
+	}
+	else
+		return 0;
 }
 
 void FileReader3 :: RemoveTrailingWhitespace(void)

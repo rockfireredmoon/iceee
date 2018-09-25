@@ -1622,7 +1622,7 @@ int CreatureInstance :: _GetExistingModIndex(int type, int groupID, int statID)
 	return -1;
 }
 
-int CreatureInstance :: Add(unsigned char tier, unsigned char buffCategory, int abID, int abgID, int statID, float calcAmount, float descAmount, float durationSec)
+int CreatureInstance :: Add(unsigned char tier, unsigned char buffCategory, int abID, int abgID, int statID, float calcAmount, float descAmount, double durationSec)
 {
 	//This emulated, centralized function has four additional parameters:
 	//tier and buffType, so that CheckBuffLimits can scan the buff array for existing buffs.
@@ -2396,7 +2396,7 @@ void CreatureInstance :: Amp(unsigned char tier, unsigned char buffType, int abI
 	if((StatList[statIndex].etype == StatType::SHORT) || (StatList[statIndex].etype == StatType::INTEGER))
 		amount = Util::Round(amount);
 
-	Add(tier, buffType, abID, abgID, statID, amount, percent, time);
+	Add(tier, buffType, abID, abgID, statID, amount, percent, (double)time);
 }
 
 void CreatureInstance :: Set(unsigned char tier, unsigned char buffType, int abID, int abgID, int statID, float amount, int time)
@@ -7856,8 +7856,10 @@ std::string CreatureInstance :: PeekAppearanceEq()
 {
 	std::string appearance = css.eq_appearance;
 	std::vector<AppearanceModifier*>::iterator it = appearanceModifiers.begin();
-	for(; it != appearanceModifiers.end(); ++it)
-		appearance = (*it)->ModifyEq(appearance);
+	for(; it != appearanceModifiers.end(); ++it) {
+		AppearanceModifier* am = *it;
+		appearance = am->ModifyEq(appearance);
+	}
 	return appearance;
 }
 
@@ -7865,8 +7867,10 @@ std::string CreatureInstance :: PeekAppearance()
 {
 	std::string appearance = css.appearance;
 	std::vector<AppearanceModifier*>::iterator it = appearanceModifiers.begin();
-	for(; it != appearanceModifiers.end(); ++it)
-		appearance = (*it)->Modify(appearance);
+	for(; it != appearanceModifiers.end(); ++it) {
+		AppearanceModifier* am = *it;
+		appearance = am->Modify(appearance);
+	}
 	return appearance;
 }
 

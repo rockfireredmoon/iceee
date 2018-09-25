@@ -37,6 +37,7 @@
 #include "PVP.h"
 #include "QuestScript.h"
 #include "CreditShop.h"
+#include "Creature.h"
 //#include "restclient.h"
 #include "Daily.h"
 #include <curl/curl.h>
@@ -3904,7 +3905,8 @@ int SimulatorThread :: handle_query_map_marker(void)
 			/* All henges in zone */
 			if(pld.zoneDef != NULL && !pld.zoneDef->IsOverworld()) {
 				for(std::vector<InteractObject>::iterator it = g_InteractObjectContainer.objList.begin(); it != g_InteractObjectContainer.objList.end(); ++it) {
-					if((*it).opType == InteractObject::TYPE_HENGE && (*it).WarpID == pld.CurrentZoneID) {
+					InteractObject io = *it;
+					if((*it).opType == InteractObject::TYPE_HENGE && io.WarpID == pld.CurrentZoneID) {
 						qRes.push_back(STRINGLIST());
 						qRes.back().push_back((*it).useMessage);
 						Util::SafeFormat(Aux1, sizeof(Aux1), "(%d %d %d)", (*it).WarpX, (*it).WarpY, (*it).WarpZ);
@@ -15913,8 +15915,9 @@ int SimulatorThread :: handle_query_zone_mode(void)
 		switch(mode) {
 		case PVP::GameMode::PVP:
 			for (std::vector<CreatureInstance*>::iterator it=inst->PlayerListPtr.begin(); it!=inst->PlayerListPtr.end(); ++it) {
-				if((*it)->charPtr->Mode == PVP::GameMode::PVP && (*it)->_HasStatusList(StatusEffects::PVPABLE) == -1)
-					(*it)->_AddStatusList(StatusEffects::PVPABLE, -1);
+				CreatureInstance *ci = *it;
+				if(ci->charPtr->Mode == PVP::GameMode::PVP && ci->_HasStatusList(StatusEffects::PVPABLE) == -1)
+					ci->_AddStatusList(StatusEffects::PVPABLE, -1);
 			}
 			Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a PVP zone", inst->mZoneDefPtr->mName.c_str());
 			break;
@@ -15941,8 +15944,9 @@ int SimulatorThread :: handle_query_zone_mode(void)
 			break;
 		default:
 			for (std::vector<CreatureInstance*>::iterator it=inst->PlayerListPtr.begin(); it!=inst->PlayerListPtr.end(); ++it) {
-				if((*it)->charPtr->Mode == PVP::GameMode::PVE && (*it)->_HasStatusList(StatusEffects::PVPABLE) != -1)
-					(*it)->_RemoveStatusList(StatusEffects::PVPABLE);
+				CreatureInstance *ci = *it;
+				if(ci->charPtr->Mode == PVP::GameMode::PVE && ci->_HasStatusList(StatusEffects::PVPABLE) != -1)
+					ci->_RemoveStatusList(StatusEffects::PVPABLE);
 			}
 			Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a PVE zone", inst->mZoneDefPtr->mName.c_str());
 			break;
