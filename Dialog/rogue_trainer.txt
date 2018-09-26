@@ -5,7 +5,7 @@ Sequence=0
 
 [PARAGRAPH]
 Type=0
-Value=Ah a Rogue if ever I saw one! The launch event for 'Earth Eternal - Valkal's Shadow' has begun! ... Speaking of shadows, we Rogues are masters of hiding in them. You won't regret joining us!
+Value=Ah a Rogue if ever I saw one! We Rogues are masters of hiding in shadows. You won't regret joining us!
 [PARAGRAPH]
 Type=0
 Value=Sneaking beasts of all kinds, you want to join the coolest class of all, the Rogues Of Gaia? Of course you do! Well just sign here ...

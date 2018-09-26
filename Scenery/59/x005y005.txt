@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1000014
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
+Name=
 Pos=5620,678.033,5955.91
 Orient=0,0.849481,0,0.52762
 Scale=1,1,1
@@ -10,7 +10,7 @@ spawnPackage=#F7813
 [ENTRY]
 ID=1000015
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
+Name=
 Pos=5605.11,676.042,5973.55
 Orient=0,0.526943,0,0.849901
 Scale=1,1,1
@@ -24,22 +24,6 @@ Pos=5560,678,5950
 Orient=0,0.129634,0,0.991562
 Scale=1,1,1
 spawnPackage=#2165
-
-[ENTRY]
-ID=1154730
-Asset=Prop-Fog#Prop-Fog_Green_Ground
-Name=
-Pos=5669.69,672.353,5775.19
-Orient=-0.00471832,-0.314531,0.014238,0.949129
-Scale=1,1,1
-
-[ENTRY]
-ID=1154731
-Asset=Prop-Dungeon_Accents1#Prop-Dungeon-Cobwebs1
-Name=
-Pos=5768.31,781.998,5923.35
-Orient=0,0.556361,0,0.830941
-Scale=1.5,1.5,1.5
 
 [ENTRY]
 ID=989855767
