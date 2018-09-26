@@ -10,15 +10,15 @@ Scale=1,1,1
 ID=1105400
 Asset=Prop-Wooden_Furniture#Prop-Endtable1
 Name=Untitled
-Pos=79507.6,1319.55,52885.3
-Orient=0,-0.309816,0,0.950796
+Pos=79507.6,1316.24,52885.3
+Orient=0,-0.309816,0,0.950797
 Scale=1.5,1.5,1.5
 
 [ENTRY]
 ID=1105836
 Asset=Prop-Vampire1#Prop-Vampire_Chair
 Name=Untitled
-Pos=79536.5,1319.55,53005.1
+Pos=79536.5,1316.69,53005.1
 Orient=0,-0.257081,0,0.96639
 Scale=1,1,1
 
@@ -26,15 +26,15 @@ Scale=1,1,1
 ID=1105837
 Asset=Prop-Vampire1#Prop-Vampire_Chair
 Name=Untitled
-Pos=79517.7,1319.55,53018.3
-Orient=0,0.479426,0,0.877583
+Pos=79517.7,1316.42,53018.3
+Orient=0,0.479426,0,0.877582
 Scale=1,1,1
 
 [ENTRY]
 ID=1105838
 Asset=Prop-Vampire1#Prop-Vampire_Chair
 Name=Untitled
-Pos=79515.6,1319.55,53042.2
+Pos=79515.6,1317.02,53042.2
 Orient=0,0.973485,0,0.228753
 Scale=1,1,1
 
@@ -42,7 +42,7 @@ Scale=1,1,1
 ID=1105839
 Asset=Prop-Vampire1#Prop-Vampire_Table
 Name=Untitled
-Pos=79526.6,1319.55,53023
+Pos=79526.6,1317.12,53023
 Orient=0,0.501213,0,0.865324
 Scale=1,1,1
 

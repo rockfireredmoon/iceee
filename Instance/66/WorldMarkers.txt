@@ -11,7 +11,7 @@ Position=4721.0,670.0,2827.0
 [ENTRY]
 Name=Valkals Throne Room
 Comment=[Comment here]
-Position=4039.0,480.0,2794.0
+Position=4047.0,480.0,2788.0
 
 [ENTRY]
 Name=Silkula's Room

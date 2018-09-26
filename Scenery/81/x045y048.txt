@@ -1,6 +1,7 @@
 [ENTRY]
 ID=1358957318
 Asset=Forest?d=0.9&s=873459&sz=800
+Name=Untitled
 Pos=45503.6,208.655,48592
 Orient=0,-0.461779,0,0.886995
 Scale=1,1,1
@@ -8,6 +9,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1358957319
 Asset=Prop-Boulder2
+Name=Untitled
 Pos=45549.6,303.609,48026
 Orient=0.186162,-0.96798,0.0318033,-0.165367
 Scale=2.15,2.15,2.15
@@ -15,6 +17,7 @@ Scale=2.15,2.15,2.15
 [ENTRY]
 ID=1358957320
 Asset=Prop-Boulder2
+Name=Untitled
 Pos=45800.2,234.289,48552
 Orient=-0.262785,-0.754717,-0.439639,0.409956
 Scale=4.4,4.4,4.4
@@ -22,6 +25,7 @@ Scale=4.4,4.4,4.4
 [ENTRY]
 ID=1358957321
 Asset=Prop-Boulder2
+Name=Untitled
 Pos=45784.1,237.052,48479
 Orient=0.0439657,-0.573008,0.183923,0.797434
 Scale=3.125,3.125,3.125
@@ -29,6 +33,7 @@ Scale=3.125,3.125,3.125
 [ENTRY]
 ID=1358957322
 Asset=Prop-Boulder2
+Name=Untitled
 Pos=45784.1,281.021,48479
 Orient=0.0533878,-0.574568,0.181156,0.796369
 Scale=2.15,2.15,2.15
@@ -36,6 +41,7 @@ Scale=2.15,2.15,2.15
 [ENTRY]
 ID=1358957323
 Asset=Prop-Boulder4
+Name=Untitled
 Pos=45764.4,198.159,48473
 Orient=0,0.897911,0,0.440177
 Scale=4.4,4.4,4.4
@@ -43,6 +49,7 @@ Scale=4.4,4.4,4.4
 [ENTRY]
 ID=1358957324
 Asset=Prop-Boulder4
+Name=Untitled
 Pos=45566.3,218.635,48014
 Orient=0,0,0,1
 Scale=4.4,4.4,4.4
@@ -50,6 +57,7 @@ Scale=4.4,4.4,4.4
 [ENTRY]
 ID=1358957325
 Asset=Prop-Boulder2
+Name=Untitled
 Pos=45549.6,259.64,48026
 Orient=0.184499,-0.96825,0.0414814,-0.163497
 Scale=3.125,3.125,3.125
@@ -57,6 +65,7 @@ Scale=3.125,3.125,3.125
 [ENTRY]
 ID=1358957326
 Asset=Prop-Boulder2
+Name=Untitled
 Pos=45484.7,279.377,48026
 Orient=-0.373719,0.515309,0.247828,0.730323
 Scale=4.4,4.4,4.4
@@ -64,6 +73,7 @@ Scale=4.4,4.4,4.4
 [ENTRY]
 ID=1358957327
 Asset=Prop-Boulder2
+Name=Untitled
 Pos=45533.5,345.592,48026
 Orient=-0.0861045,-0.760454,-0.124737,0.631456
 Scale=2.15,2.15,2.15
@@ -71,27 +81,30 @@ Scale=2.15,2.15,2.15
 [ENTRY]
 ID=1358961235
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=45363.7,192.451,48878
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_mosquitoCamp03_general
-outerRadius=1
+wanderRadius=75
 
 [ENTRY]
 ID=1358961236
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=45834.1,175.975,48787
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_mosquitoCamp03_general
-outerRadius=1
+wanderRadius=75
 
 [ENTRY]
 ID=1358961238
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=45035.4,199.082,48587
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_mosquitoCamp03_general
-outerRadius=1
+wanderRadius=75
 

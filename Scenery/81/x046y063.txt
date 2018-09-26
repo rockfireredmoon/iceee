@@ -2,10 +2,11 @@
 ID=1128520
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=46556.3,293.634,63318.5
+Pos=46562.5,289.888,63322.5
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#3411
+despawnTime=900
 links_count=2
 link=1128531,1
 link=1128530,1

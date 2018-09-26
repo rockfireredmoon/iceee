@@ -4153,15 +4153,6 @@ links_count=1
 link=1151588,1
 
 [ENTRY]
-ID=1151729
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=2988.25,600,3613.88
-Orient=0,0.688921,0,0.724836
-Scale=1,1,1
-spawnPackage=#3
-
-[ENTRY]
 ID=1154509
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
@@ -4187,4 +4178,13 @@ Pos=2116.23,600,1925.4
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#F16077
+
+[ENTRY]
+ID=1156225
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=2980.89,600,3608.31
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=VBloodkeep_Creature_Mix
 

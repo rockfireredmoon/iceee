@@ -109,17 +109,8 @@ Name=Untitled
 Pos=47180.1,189.441,62995.8
 Orient=0,-0.059964,0,0.998201
 Scale=1,1,1
-spawnPackage=#F23
-
-[ENTRY]
-ID=1127482
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=47236.2,176.786,62989.5
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#F1283
-maxActive=0
+spawnPackage=#F43
+dialog=kilvath_warning
 
 [ENTRY]
 ID=1358955572

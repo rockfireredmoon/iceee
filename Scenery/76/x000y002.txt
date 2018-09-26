@@ -150,12 +150,19 @@ link=1275068550,1
 ID=1126707
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=898.484,539.53,2442.28
-Orient=0,0,0,1
+Pos=895.092,539.53,2438.85
+Orient=0,-0.0799147,0,0.996802
 Scale=1,1,1
 spawnPackage=#3402
-maxActive=0
 despawnTime=180
+
+[ENTRY]
+ID=1156175
+Asset=Prop-Vine_Hanging
+Name=
+Pos=978.917,682.695,2406.63
+Orient=0,0,0,1
+Scale=0.75,0.75,0.75
 
 [ENTRY]
 ID=1275068427
@@ -458,12 +465,4 @@ Name=Untitled
 Pos=918.22,682.695,2493.9
 Orient=0,0,0,1
 Scale=0.5,0.5,0.5
-
-[ENTRY]
-ID=1275068626
-Asset=Prop-Vine_Hanging
-Name=Untitled
-Pos=978.917,682.695,2406.63
-Orient=0,0,0,1
-Scale=0.75,0.75,0.75
 

@@ -1,6 +1,7 @@
 [ENTRY]
 ID=1358954498
 Asset=Prop-Bridge-Large_Wooden1#Prop-Bridge-Large_Wooden1
+Name=Untitled
 Pos=51072.8,125.014,60986
 Orient=0,0.0399893,0,0.9992
 Scale=1,1,1
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=1358954524
 Asset=Prop-Dead-Forest-Tree#Prop-Dead-Forest-Tree2
+Name=Untitled
 Pos=51254.5,150.94,60620
 Orient=0,0,0,1
 Scale=1.275,1.275,1.275
@@ -17,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=1358954578
 Asset=Prop-Tent
+Name=Untitled
 Pos=51919.5,331.187,60638
 Orient=-0.00329637,-0.0548735,0.0598734,0.996691
 Scale=2,2,2
@@ -25,6 +28,7 @@ Flags=1
 [ENTRY]
 ID=1358954579
 Asset=Prop-Tent
+Name=Untitled
 Pos=51929.2,333.508,60472
 Orient=-0.00329636,-0.0548735,0.0598733,0.996691
 Scale=2,2,2
@@ -33,6 +37,7 @@ Flags=1
 [ENTRY]
 ID=1358954707
 Asset=Prop-Anubian_Palisade
+Name=Untitled
 Pos=51814.4,248.555,60428
 Orient=-0.181444,0.286979,0.0664081,0.938249
 Scale=3.25,3.25,3.25
@@ -40,6 +45,7 @@ Scale=3.25,3.25,3.25
 [ENTRY]
 ID=1358954708
 Asset=Prop-Anubian_Palisade
+Name=Untitled
 Pos=51968.6,287.025,60783
 Orient=0.130225,-0.0494471,-0.0354482,0.989616
 Scale=3.25,3.25,3.25
@@ -47,6 +53,7 @@ Scale=3.25,3.25,3.25
 [ENTRY]
 ID=1358954712
 Asset=Prop-Campfires#Prop-Campfire2
+Name=Untitled
 Pos=51995.5,327.017,60663.6
 Orient=-0.00995935,-0.00807815,0.0895148,0.995903
 Scale=1.325,1.325,1.325
@@ -55,33 +62,34 @@ Flags=1
 [ENTRY]
 ID=1358958557
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51142.8,173.15,60103
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_koaCamp03_general
-outerRadius=1
 
 [ENTRY]
 ID=1358958601
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51279.6,147.432,60454
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_obji_mh02a_battlefieldweapons
-outerRadius=50
 
 [ENTRY]
 ID=1358958602
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51252,162.806,60169
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_obji_mh02a_battlefieldweapons
-outerRadius=50
 
 [ENTRY]
 ID=1358960645
 Asset=Prop-Boulder3
+Name=Untitled
 Pos=51850.1,60.4406,60975
 Orient=0,-0.539632,0,0.841901
 Scale=3.4,3.4,3.4
@@ -89,6 +97,7 @@ Scale=3.4,3.4,3.4
 [ENTRY]
 ID=1358962132
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=51983.4,297.823,60245
 Orient=0,0,0,1
 Scale=1,1,1
@@ -99,25 +108,27 @@ link=1358962135,1
 [ENTRY]
 ID=1358962133
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51698.4,206.65,60222
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1a_koaCamp03_general
 links_count=1
 link=1358962132,1
-spawnPackage=1a_koaCamp03_general
 
 [ENTRY]
 ID=1358962134
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51928.8,278.692,60063
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_koaCamp03_general
-outerRadius=1
 
 [ENTRY]
 ID=1358962135
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=51972.1,333.935,60395
 Orient=0,0,0,1
 Scale=1,1,1
@@ -127,6 +138,7 @@ link=1358962132,1
 [ENTRY]
 ID=1358962162
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=51947.7,332.126,60557
 Orient=0,0,0,1
 Scale=1,1,1
@@ -137,6 +149,7 @@ link=1358962166,1
 [ENTRY]
 ID=1358962163
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=51963.9,326.446,60608
 Orient=0,0,0,1
 Scale=1,1,1
@@ -147,17 +160,19 @@ link=1358962164,1
 [ENTRY]
 ID=1358962166
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51997.1,338.746,60487
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1a_koaCamp03_general
 links_count=2
 link=1358962162,1
 link=1358962165,1
-spawnPackage=1a_koaCamp03_general
 
 [ENTRY]
 ID=1358962168
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51924,332.578,60510
 Orient=0,-0.727726,0,0.685868
 Scale=1,1,1
@@ -166,15 +181,16 @@ spawnPackage=1a_koaCamp03_general
 [ENTRY]
 ID=1358962169
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51810.1,321.555,60544
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_koaCamp03_general
-outerRadius=1
 
 [ENTRY]
 ID=1358962170
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51995.1,326.639,60647
 Orient=0,-0.727726,0,0.685868
 Scale=1,1,1
@@ -183,6 +199,7 @@ spawnPackage=1a_koaCamp03_general
 [ENTRY]
 ID=1358962171
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51995.6,332.018,60692
 Orient=0,0.720831,0,0.693111
 Scale=1,1,1
@@ -191,6 +208,7 @@ spawnPackage=1a_koaCamp03_general
 [ENTRY]
 ID=1358962173
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51973.2,324.746,60664
 Orient=0,0,0,1
 Scale=1,1,1
@@ -199,51 +217,53 @@ spawnPackage=1a_koaCamp03_general
 [ENTRY]
 ID=1358962309
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51577.5,175.307,60233
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_koaCamp03_general
-outerRadius=1
 
 [ENTRY]
 ID=1358962310
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51410.7,156.518,60050
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_koaCamp03_general
-outerRadius=1
 
 [ENTRY]
 ID=1358962311
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51084.8,162.78,60321
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_koaCamp03_general
-outerRadius=1
 
 [ENTRY]
 ID=1358962313
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51326.5,159.182,60280
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_koaCamp03_general
-outerRadius=1
 
 [ENTRY]
 ID=1358962314
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51102.1,130.623,60566
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_koaCamp03_general
-outerRadius=1
+wanderRadius=80
 
 [ENTRY]
 ID=1358964672
 Asset=CL-Battlefield3#CL-Battlefield3
+Name=Untitled
 Pos=51076.6,186.189,60126
 Orient=0,0,0,1
 Scale=1,1,1
@@ -252,6 +272,7 @@ Flags=1
 [ENTRY]
 ID=1358964674
 Asset=CL-Battlefield1#CL-Battlefield1
+Name=Untitled
 Pos=51316.8,156.911,60090
 Orient=0,0,0,1
 Scale=1,1,1
@@ -260,6 +281,7 @@ Flags=1
 [ENTRY]
 ID=1358964837
 Asset=Prop-Bird1#Prop-Bird1
+Name=Untitled
 Pos=51177.3,166.754,60003
 Orient=0.0509849,0.971553,0.0857204,-0.214796
 Scale=1.2,1.2,1.2

@@ -87,6 +87,7 @@ Orient=0,0,0,1
 Scale=1,1,1
 Facing=215
 spawnPackage=#1817
+dialog=generic_weapon_merchant
 
 [ENTRY]
 ID=10000162

@@ -10,7 +10,7 @@ Scale=2.4,2.4,2.4
 ID=1105398
 Asset=Prop-Dungeon_Bookcases#Prop-Dungeon-Huge_Bookcase2
 Name=Untitled
-Pos=79484,1319.55,52871.1
+Pos=79484,1316.75,52871.1
 Orient=0,0.963558,0,0.267499
 Scale=1.5,1.5,1.5
 
@@ -18,7 +18,7 @@ Scale=1.5,1.5,1.5
 ID=1105401
 Asset=Prop-Wooden_Furniture#Prop-Endtable1
 Name=Untitled
-Pos=79461.9,1319.55,52857.6
+Pos=79461.9,1316.32,52857.6
 Orient=0,-0.257081,0,0.96639
 Scale=1.5,1.5,1.5
 
@@ -50,7 +50,7 @@ spawnPackage=#F7866
 [ENTRY]
 ID=1155115
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=79128.3,1297.98,52756.9
 Orient=0,0,0,1
 Scale=1,1,1

@@ -1,15 +1,24 @@
 [ENTRY]
+ID=1155444
+Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
+Pos=5385.86,499.275,3022.18
+Orient=0,0,-0.531186,0.847255
+Scale=4,4,4
+
+[ENTRY]
 ID=10000000
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=5681,570,3005
 Orient=0,0,0,1
 Scale=1,1,1
-sceneryName=generated_spawn
 spawnPackage=z60_ch_gen_Exit_to_Midlands_2417
 
 [ENTRY]
 ID=1006633052
 Asset=Dng-Subway-TrackE#Dng-Subway-TrackE?ATS=ATS-Cave_Subway
+Name=Untitled
 Pos=5085,510,3000
 Orient=0,0.707107,0,-0.707107
 Scale=1,1,1
@@ -18,6 +27,7 @@ Flags=1
 [ENTRY]
 ID=1006633055
 Asset=Dng-Subway-Platform_Stairs#Dng-Subway-Platform_Stairs?ATS=ATS-Cave_Subway
+Name=Untitled
 Pos=5265,540,3180
 Orient=0,0.707107,0,-0.707107
 Scale=1,1,1
@@ -26,6 +36,7 @@ Flags=1
 [ENTRY]
 ID=1006633067
 Asset=Dng-Subway-TrackB#Dng-Subway-TrackB?ATS=ATS-Cave_Subway
+Name=Untitled
 Pos=5265,510,3000
 Orient=0,0.707107,0,-0.707107
 Scale=1,1,1
@@ -34,14 +45,16 @@ Flags=1
 [ENTRY]
 ID=1006633070
 Asset=Cav-Room_Divider?ATS=ATS-Cave_Rock
+Name=Untitled
 Pos=5360,510,3000
-Orient=0,-1,0,-5.96046e-008
+Orient=0,-1,0,-5.96046e-08
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=1006633072
 Asset=Cav-Room_Wall?ATS=ATS-Cave_Rock
+Name=Untitled
 Pos=5360,510,3270
 Orient=0,-0.707107,0,-0.707107
 Scale=1,1,1
@@ -50,6 +63,7 @@ Flags=1
 [ENTRY]
 ID=1006633076
 Asset=Dng-Subway-PlatformA?ATS=ATS-Cave_Subway
+Name=Untitled
 Pos=5085,540,3180
 Orient=0,0.707107,0,-0.707107
 Scale=1,1,1
@@ -58,6 +72,7 @@ Flags=1
 [ENTRY]
 ID=1006633077
 Asset=Cav-Hall_Straight1?ATS=ATS-Cave_Rock
+Name=Untitled
 Pos=5605,570,3005
 Orient=0,-0.707107,0,-0.707107
 Scale=1,1,1
@@ -66,14 +81,16 @@ Flags=1
 [ENTRY]
 ID=1006633078
 Asset=Cav-Room_Divider?ATS=ATS-Cave_Rock
+Name=Untitled
 Pos=5680,570,3005
-Orient=0,1,0,-5.96046e-008
+Orient=0,1,0,-5.96046e-08
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=1006633079
 Asset=Cav-Hall_Stair1?ATS=ATS-Cave_Rock
+Name=Untitled
 Pos=5425,570,3005
 Orient=0,-0.707107,0,-0.707107
 Scale=1,1,1
@@ -82,6 +99,7 @@ Flags=1
 [ENTRY]
 ID=1006633080
 Asset=Cav-Hall_Short2?ATS=ATS-Cave_Rock
+Name=Untitled
 Pos=5380,510,3005
 Orient=0,-0.707107,0,-0.707107
 Scale=1,1,1
@@ -90,6 +108,7 @@ Flags=1
 [ENTRY]
 ID=1006633081
 Asset=Cav-Room_Wall?ATS=ATS-Cave_Rock
+Name=Untitled
 Pos=5360,690,3085
 Orient=0,-0.707107,0,-0.707107
 Scale=1,1,1
@@ -98,6 +117,7 @@ Flags=1
 [ENTRY]
 ID=1006633111
 Asset=Prop-Boulder2
+Name=Untitled
 Pos=5515.33,225.807,3104.33
 Orient=0,0.524987,0,0.85111
 Scale=20,20,20
@@ -106,6 +126,7 @@ Flags=1
 [ENTRY]
 ID=1006633114
 Asset=Prop-Boulder4
+Name=Untitled
 Pos=5447.85,271.58,3533.37
 Orient=0,-0.0822077,0,0.996615
 Scale=25,25,25
@@ -114,6 +135,7 @@ Flags=1
 [ENTRY]
 ID=1006633342
 Asset=CL-Furniture1#CL-Furniture1
+Name=Untitled
 Pos=5189.33,540,3122.44
 Orient=0,-0.0449849,0,0.998988
 Scale=1,1,1
@@ -122,6 +144,7 @@ Flags=1
 [ENTRY]
 ID=1006633344
 Asset=Prop-Wooden_Furniture#Prop-Bench2
+Name=Untitled
 Pos=5061.08,536.813,3111
 Orient=0,0,0,1
 Scale=2,2,2
@@ -129,6 +152,7 @@ Scale=2,2,2
 [ENTRY]
 ID=1006633349
 Asset=Prop-Lamp_Post2#Prop-Lamp_Post2
+Name=Untitled
 Pos=5204.53,540,3178.52
 Orient=0,0,0,1
 Scale=2.5,2.5,2.5
@@ -137,6 +161,7 @@ Flags=1
 [ENTRY]
 ID=1006633350
 Asset=Prop-Lamp_Post2
+Name=Untitled
 Pos=5021.09,540,3177.79
 Orient=0,0,0,1
 Scale=2.5,2.5,2.5
@@ -144,6 +169,7 @@ Scale=2.5,2.5,2.5
 [ENTRY]
 ID=1006633356
 Asset=Light-Large?COLOR=FFFF66
+Name=Untitled
 Pos=5023.24,616.107,3169.19
 Orient=0,0,0,1
 Scale=1,1,1
@@ -151,6 +177,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1006633360
 Asset=Prop-Lamp_Post_NB#Prop-Lamp_Post_NB1
+Name=Untitled
 Pos=5525.4,573.146,3044.48
 Orient=0,0,0,1
 Scale=2,2,2
@@ -159,6 +186,7 @@ Flags=1
 [ENTRY]
 ID=1006633362
 Asset=Light-Large?COLOR=FF9900
+Name=Untitled
 Pos=5520.77,635.428,3007.97
 Orient=0,0,0,1
 Scale=1,1,1
@@ -167,6 +195,7 @@ Flags=1
 [ENTRY]
 ID=1006633364
 Asset=Prop-Bench2
+Name=Untitled
 Pos=5086.01,536.813,3251.05
 Orient=0,0,0,1
 Scale=2,2,2
@@ -174,6 +203,7 @@ Scale=2,2,2
 [ENTRY]
 ID=1006633368
 Asset=Prop-Cup2#Prop-Cup2
+Name=Untitled
 Pos=5148.41,546.928,3142.32
 Orient=0,0,0,1
 Scale=1,1,1
@@ -182,6 +212,7 @@ Flags=1
 [ENTRY]
 ID=1006633369
 Asset=Prop-Cup2
+Name=Untitled
 Pos=5229.74,546.901,3242.2
 Orient=0,0,0,1
 Scale=1,1,1
@@ -190,6 +221,7 @@ Flags=1
 [ENTRY]
 ID=1006633370
 Asset=Prop-Cup2
+Name=Untitled
 Pos=5231.75,547.005,3248.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -198,6 +230,7 @@ Flags=1
 [ENTRY]
 ID=1006633371
 Asset=Prop-Cup2
+Name=Untitled
 Pos=5148.67,546.988,3136.45
 Orient=0,0,0,1
 Scale=1,1,1
@@ -206,6 +239,7 @@ Flags=1
 [ENTRY]
 ID=1006633378
 Asset=CL-Vampire_Roadside1#CL-Vampire_Roadside1
+Name=Untitled
 Pos=5177.52,540,3093.14
 Orient=0,0.0249974,0,0.999687
 Scale=2,2,2
@@ -214,6 +248,7 @@ Flags=1
 [ENTRY]
 ID=1006633384
 Asset=Prop-Boulder5
+Name=Untitled
 Pos=5216.48,509.062,3085.04
 Orient=0,0,0,1
 Scale=1.625,1.625,1.625
@@ -222,6 +257,7 @@ Flags=1
 [ENTRY]
 ID=1006633421
 Asset=CL-Furniture1
+Name=Untitled
 Pos=5286.36,540,3243.67
 Orient=0,-0.984588,0,0.174892
 Scale=1,1,1
@@ -230,6 +266,7 @@ Flags=1
 [ENTRY]
 ID=1006633422
 Asset=CL-Grasses6#CL-Grasses6
+Name=Untitled
 Pos=5626.33,570,3004.44
 Orient=0,0,0,1
 Scale=1,1,1
@@ -238,6 +275,7 @@ Flags=1
 [ENTRY]
 ID=1006633424
 Asset=CL-Grasses4
+Name=Untitled
 Pos=5551.06,570,3005.12
 Orient=0,0,0,1
 Scale=1,1,1
@@ -246,14 +284,16 @@ Flags=1
 [ENTRY]
 ID=1006633454
 Asset=Cav-Ent_Up?ATS=ATS-Cave_Rock
+Name=Untitled
 Pos=5580,570,3005
-Orient=0,1.35102e-007,0,1
+Orient=0,1.35102e-07,0,1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=1006633504
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=5327.06,510,3078.34
 Orient=0,0,0,1
 Scale=1,1,1
@@ -264,6 +304,7 @@ link=1006633537,1
 [ENTRY]
 ID=1006633505
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=5317.5,540,3177.05
 Orient=0,0,0,1
 Scale=1,1,1
@@ -276,6 +317,7 @@ link=1006633509,1
 [ENTRY]
 ID=1006633506
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=5223.95,540,3245.97
 Orient=0,0,0,1
 Scale=1,1,1
@@ -285,6 +327,7 @@ link=1006633505,1
 [ENTRY]
 ID=1006633507
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=5121.49,540,3242.56
 Orient=0,0,0,1
 Scale=1,1,1
@@ -294,6 +337,7 @@ link=1006633505,1
 [ENTRY]
 ID=1006633520
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=5337.16,510,3032.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -305,16 +349,18 @@ link=1006633536,1
 [ENTRY]
 ID=1006633537
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=5331.83,516.901,3065
 Orient=0,-0.707107,0,0.707107
 Scale=1,1,1
+spawnPackage=1a_npc_City_Watch
 links_count=1
 link=1006633504,1
-spawnPackage=1a_npc_City_Watch
 
 [ENTRY]
 ID=1006633541
 Asset=Prop-Instance_Entrance
+Name=Untitled
 Pos=5678.97,597.925,3004.81
 Orient=0,-0.00499937,0,0.999987
 Scale=1.625,1.625,1.625
@@ -322,6 +368,7 @@ Scale=1.625,1.625,1.625
 [ENTRY]
 ID=1006633542
 Asset=Light-Medium?COLOR=33FFFF
+Name=Untitled
 Pos=5663.22,590.904,3001.83
 Orient=0,0.696135,0,0.717911
 Scale=1,1,1

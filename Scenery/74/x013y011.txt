@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1126744
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=13099.9,441.675,11922.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -12,7 +12,7 @@ link=1241514354,1
 [ENTRY]
 ID=1126745
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=13143.8,440.804,11861.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -22,12 +22,20 @@ link=1126744,1
 [ENTRY]
 ID=1126747
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=13321,441.155,11986.9
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=1
 link=1126746,1
+
+[ENTRY]
+ID=1156197
+Asset=Prop-Loot1#Prop-Loot-Bag1
+Name=
+Pos=13513.5,443.462,11852
+Orient=0,0,0,1
+Scale=1,1,1
 
 [ENTRY]
 ID=1241514025

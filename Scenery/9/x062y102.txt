@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151058476
 Asset=Effects#Par-Waves-1-Emitter
+Name=Untitled
 Pos=46887.3,181.386,76937.9
 Orient=0,-0.479426,0,0.877582
 Scale=1.6,1.6,1.6
@@ -8,6 +9,7 @@ Scale=1.6,1.6,1.6
 [ENTRY]
 ID=151058478
 Asset=Par-Waves-1-Emitter
+Name=Untitled
 Pos=46861.9,181.645,76819.2
 Orient=0,-0.479426,0,0.877582
 Scale=2,2,2
@@ -15,6 +17,7 @@ Scale=2,2,2
 [ENTRY]
 ID=151059149
 Asset=Prop-Boulder7
+Name=Untitled
 Pos=46577.6,120.074,76690.8
 Orient=-0.0620194,-0.882557,-0.0420482,-0.464196
 Scale=3.375,3.375,3.375
@@ -23,6 +26,7 @@ Flags=1
 [ENTRY]
 ID=151059151
 Asset=Effects#Par-Waves-1-Emitter
+Name=Untitled
 Pos=46830.2,200.703,76828
 Orient=0,-0.501213,0,0.865324
 Scale=2.125,2.125,2.125
@@ -31,6 +35,7 @@ Flags=1
 [ENTRY]
 ID=151062469
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=Untitled
 Pos=46679.4,204.296,76899.8
 Orient=0.0522946,-0.036239,-0.709361,0.701968
 Scale=3,3,3
@@ -38,8 +43,10 @@ Scale=3,3,3
 [ENTRY]
 ID=151062470
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=46735.6,205.144,76904.2
 Orient=0,0.564642,0,0.825336
 Scale=1,1,1
 spawnPackage=Europe_overlandboss_thara_SP
+despawnTime=900
 

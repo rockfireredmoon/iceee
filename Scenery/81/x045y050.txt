@@ -1,6 +1,7 @@
 [ENTRY]
 ID=1358961198
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=45390.2,297.88,50340
 Orient=0,0,0,1
 Scale=1,1,1
@@ -11,6 +12,7 @@ link=1358961266,1
 [ENTRY]
 ID=1358961199
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=45677.7,251.919,50461
 Orient=0,0,0,1
 Scale=1,1,1
@@ -21,6 +23,7 @@ link=1358961200,1
 [ENTRY]
 ID=1358961200
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=45677.7,251.92,50461
 Orient=0,0,0,1
 Scale=1,1,1
@@ -31,6 +34,7 @@ link=1358961201,1
 [ENTRY]
 ID=1358961201
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=45703.8,294.282,50232
 Orient=0,0,0,1
 Scale=1,1,1
@@ -41,36 +45,40 @@ link=1358961261,1
 [ENTRY]
 ID=1358961266
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=45344.6,317.565,50202
 Orient=0,0.928369,0,0.37166
 Scale=1,1,1
+spawnPackage=1a_mosquitoCamp03_Mosk
+wanderRadius=75
 links_count=2
 link=1358961198,1
 link=1358961269,1
-spawnPackage=1a_mosquitoCamp03_Mosk
-outerRadius=10
 
 [ENTRY]
 ID=1358961270
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=45598.9,288.89,50225
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_mosquitoCamp03_general
-outerRadius=1
+wanderRadius=75
 
 [ENTRY]
 ID=1358961277
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=45241.5,280.735,50371
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_mosquitoCamp03_general
-outerRadius=1
+wanderRadius=75
 
 [ENTRY]
 ID=1358963242
 Asset=CL-Hills_Bush5#CL-Hills_Bush5
+Name=Untitled
 Pos=45850.7,233.62,50695
 Orient=0,0,0,1
 Scale=1,1,1
@@ -79,6 +87,7 @@ Flags=1
 [ENTRY]
 ID=1358964184
 Asset=CL-Rock-Clutter#CL-Rock-Clutter
+Name=Untitled
 Pos=45128.2,290.982,50197
 Orient=0,-0.91071,0,0.413046
 Scale=1,1,1
@@ -87,14 +96,16 @@ Flags=1
 [ENTRY]
 ID=1358965013
 Asset=Prop-Lamp_Post1#Prop-Lamp_Post1
+Name=Untitled
 Pos=45851.6,223.473,50688.8
-Orient=3.27826e-007,0.0499792,-7.45058e-009,0.99875
+Orient=3.27826e-07,0.0499792,-7.45058e-09,0.99875
 Scale=1.5,1.5,1.5
 Flags=1
 
 [ENTRY]
 ID=1358965014
 Asset=Cl-Swamp-BullRushes1#CL-Swamp-BullRushes1
+Name=Untitled
 Pos=45857.8,233.105,50687
 Orient=0,0,0,1
 Scale=1,1,1

@@ -1,12 +1,4 @@
 [ENTRY]
-ID=1152156
-Asset=Prop-Bones_Dragon#Prop-Bones_Dragon1
-Name=
-Pos=37438.9,1047.67,78756.1
-Orient=0,0,0,1
-Scale=1.5,1.5,1.5
-
-[ENTRY]
 ID=151039274
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled

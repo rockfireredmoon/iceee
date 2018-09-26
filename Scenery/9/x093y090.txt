@@ -1,8 +1,0 @@
-[ENTRY]
-ID=1150703
-Asset=Prop-Interact1#Prop-Interact_Rectangle
-Name=Untitled
-Pos=70230.9,204.363,67586.2
-Orient=0.357445,0.492035,-0.231641,0.759261
-Scale=20,20,20
-

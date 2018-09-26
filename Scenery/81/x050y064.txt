@@ -1,6 +1,5 @@
 [ENTRY]
 ID=1358956393
-PlacedBy=0
 Asset=Prop-Anubian_Palisade
 Name=Untitled
 Pos=50860,203.055,64159
@@ -10,7 +9,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956395
-PlacedBy=0
 Asset=Prop-Runestone2
 Name=Untitled
 Pos=50904.9,240.374,64576
@@ -20,7 +18,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956396
-PlacedBy=0
 Asset=Prop-Nordic_Props#Prop-Runestone1
 Name=Untitled
 Pos=50876.6,242.431,64577
@@ -30,7 +27,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956408
-PlacedBy=0
 Asset=Prop-Runestone1
 Name=Untitled
 Pos=50344,198.701,64487
@@ -40,7 +36,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956412
-PlacedBy=0
 Asset=Prop-Anubian_Palisade
 Name=Untitled
 Pos=50976,200.64,64426
@@ -50,7 +45,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956414
-PlacedBy=0
 Asset=Prop-Tent2
 Name=Untitled
 Pos=50460.3,230.214,64271
@@ -60,7 +54,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956415
-PlacedBy=0
 Asset=Prop-Hanging_Cage1
 Name=Untitled
 Pos=50463.7,310.08,64113
@@ -70,7 +63,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956418
-PlacedBy=0
 Asset=Prop-Hanging_Cage1#Prop-Hanging_Cage1
 Name=Untitled
 Pos=50446.7,310.08,64160
@@ -80,7 +72,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956420
-PlacedBy=0
 Asset=Prop-Hanging_Cage1
 Name=Untitled
 Pos=50528.3,310.08,64151
@@ -90,7 +81,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956421
-PlacedBy=0
 Asset=Prop-Hanging_Cage1
 Name=Untitled
 Pos=50564.6,310.08,64120
@@ -100,7 +90,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956422
-PlacedBy=0
 Asset=Prop-Tent2
 Name=Untitled
 Pos=50688.2,232.765,64472
@@ -110,7 +99,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956424
-PlacedBy=0
 Asset=Prop-Anubian_Palisade
 Name=Untitled
 Pos=50443,255.183,64555
@@ -120,7 +108,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956428
-PlacedBy=0
 Asset=Prop-Anubian_Palisade
 Name=Untitled
 Pos=50662.4,251.43,64573
@@ -130,7 +117,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956429
-PlacedBy=0
 Asset=Prop-Anubian_Palisade
 Name=Untitled
 Pos=50737.6,261.514,64564
@@ -140,7 +126,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956430
-PlacedBy=0
 Asset=Prop-Anubian_Palisade
 Name=Untitled
 Pos=50514.1,250.137,64563
@@ -150,7 +135,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956431
-PlacedBy=0
 Asset=Prop-Anubian_Palisade
 Name=Untitled
 Pos=50591.5,243.661,64571
@@ -160,7 +144,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956432
-PlacedBy=0
 Asset=Prop-Tent2
 Name=Untitled
 Pos=50524.1,232.264,64463
@@ -170,7 +153,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956435
-PlacedBy=0
 Asset=Prop-Anubian_Palisade
 Name=Untitled
 Pos=50425.1,183.987,64485
@@ -180,7 +162,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956437
-PlacedBy=0
 Asset=Prop-Anubian_Camp#Prop-Anubian_Palisade
 Name=Untitled
 Pos=50412.5,197.62,64298
@@ -190,7 +171,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956439
-PlacedBy=0
 Asset=Prop-Walls#Prop-Wooden_Tower
 Name=Untitled
 Pos=50595.9,237.453,64462
@@ -200,7 +180,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956441
-PlacedBy=0
 Asset=Prop-Runestone2
 Name=Untitled
 Pos=50324.3,190.794,64517
@@ -210,7 +189,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956453
-PlacedBy=0
 Asset=Light-Small?COLOR=FF9900
 Name=Untitled
 Pos=50411.5,220.979,64955
@@ -220,7 +198,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956468
-PlacedBy=0
 Asset=Prop-Dead-Forest-Tree2
 Name=Untitled
 Pos=50612.3,288.604,64624
@@ -230,7 +207,6 @@ Flags=1
 
 [ENTRY]
 ID=1358956488
-PlacedBy=0
 Asset=CL-Camp1
 Name=Untitled
 Pos=50376.7,202.468,64996
@@ -240,7 +216,6 @@ Flags=1
 
 [ENTRY]
 ID=1358959894
-PlacedBy=0
 Asset=Prop-Runestone2
 Name=Untitled
 Pos=50392.4,218.587,64200
@@ -250,7 +225,6 @@ Flags=1
 
 [ENTRY]
 ID=1358959898
-PlacedBy=0
 Asset=Prop-Runestone2
 Name=Untitled
 Pos=50392.4,218.587,64095
@@ -260,7 +234,6 @@ Flags=1
 
 [ENTRY]
 ID=1358961710
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50927.6,238.852,64566
@@ -273,7 +246,6 @@ link=1358961719,1
 
 [ENTRY]
 ID=1358961716
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=50640.6,334.739,64237
@@ -285,7 +257,6 @@ link=1358961817,1
 
 [ENTRY]
 ID=1358961717
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=50713.2,334.739,64122
@@ -297,7 +268,6 @@ link=1358961720,1
 
 [ENTRY]
 ID=1358961720
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50742.1,334.739,64019
@@ -309,7 +279,6 @@ link=1358961721,1
 
 [ENTRY]
 ID=1358961721
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50394.6,334.739,64034
@@ -322,7 +291,6 @@ link=1358961720,1
 
 [ENTRY]
 ID=1358961722
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50401.4,202.191,64964
@@ -333,7 +301,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961723
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50444.6,201.603,64954
@@ -344,7 +311,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961727
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50385.9,334.739,64002
@@ -355,7 +321,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961728
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50415,203.075,64936
@@ -366,7 +331,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961729
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50429.5,201.45,64976
@@ -377,7 +341,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961731
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50791.8,202.761,64983
@@ -387,7 +350,6 @@ spawnPackage=1a_koaCamp01_general
 
 [ENTRY]
 ID=1358961732
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50470.8,201.572,64977
@@ -399,7 +361,6 @@ link=1358961733,1
 
 [ENTRY]
 ID=1358961737
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50493.7,205.208,64902
@@ -409,7 +370,6 @@ spawnPackage=1a_koaCamp01_general
 
 [ENTRY]
 ID=1358961738
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50784.7,334.739,64217
@@ -421,7 +381,6 @@ link=1358961752,1
 
 [ENTRY]
 ID=1358961739
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50759.5,334.739,64244
@@ -433,7 +392,6 @@ link=1358961740,1
 
 [ENTRY]
 ID=1358961740
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50761.7,354.739,64364
@@ -446,7 +404,6 @@ link=1358961739,1
 
 [ENTRY]
 ID=1358961741
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=50684.3,354.739,64398
@@ -457,7 +414,6 @@ link=1358961742,1
 
 [ENTRY]
 ID=1358961742
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50771.8,354.739,64387
@@ -469,7 +425,6 @@ link=1358961743,1
 
 [ENTRY]
 ID=1358961743
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50817.3,354.739,64414
@@ -482,7 +437,6 @@ link=1358961742,1
 
 [ENTRY]
 ID=1358961744
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50786.7,354.739,64419
@@ -493,7 +447,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961745
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50714.9,334.739,64240
@@ -504,7 +457,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961746
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=50413.2,334.739,64020
@@ -515,7 +467,6 @@ link=1358961747,1
 
 [ENTRY]
 ID=1358961747
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=50556.2,334.739,64026
@@ -527,7 +478,6 @@ link=1358961748,1
 
 [ENTRY]
 ID=1358961748
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50739.1,334.739,64025
@@ -539,7 +489,6 @@ link=1358961749,1
 
 [ENTRY]
 ID=1358961749
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50737.8,334.739,64089
@@ -552,7 +501,6 @@ link=1358961748,1
 
 [ENTRY]
 ID=1358961750
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50821.4,364.739,64007
@@ -563,7 +511,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961751
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50742,334.739,64158
@@ -574,7 +521,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961752
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50782.2,334.739,64079
@@ -585,7 +531,6 @@ link=1358961738,1
 
 [ENTRY]
 ID=1358961753
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50620.6,334.739,64248
@@ -596,7 +541,6 @@ link=1358961756,1
 
 [ENTRY]
 ID=1358961754
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50499,334.72,64402
@@ -607,7 +551,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961755
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50542.8,274.725,64294
@@ -618,7 +561,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961756
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50543.8,274.725,64250
@@ -631,7 +573,6 @@ link=1358961753,1
 
 [ENTRY]
 ID=1358961757
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50508.7,244.719,64077
@@ -642,7 +583,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961758
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50599.1,274.912,64312
@@ -653,7 +593,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961759
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50533.6,274.719,64209
@@ -664,7 +603,6 @@ link=1358961916,1
 
 [ENTRY]
 ID=1358961760
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50587.4,301.215,64210
@@ -675,7 +613,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961761
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=50695.9,334.739,64197
@@ -687,7 +624,6 @@ link=1358961764,1
 
 [ENTRY]
 ID=1358961762
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=50637.7,334.739,64252
@@ -699,7 +635,6 @@ link=1358961763,1
 
 [ENTRY]
 ID=1358961763
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50636,335.955,64331
@@ -713,7 +648,6 @@ link=1358961764,1
 
 [ENTRY]
 ID=1358961764
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50643.1,334.739,64109
@@ -725,7 +659,6 @@ link=1358961763,1
 
 [ENTRY]
 ID=1358961765
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=50643.9,334.739,64357
@@ -736,7 +669,6 @@ link=1358961768,1
 
 [ENTRY]
 ID=1358961766
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50668.6,335.955,64305
@@ -747,7 +679,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961767
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50484.9,334.739,64375
@@ -760,7 +691,6 @@ link=1358961768,1
 
 [ENTRY]
 ID=1358961768
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50529.3,334.739,64354
@@ -772,7 +702,6 @@ link=1358961767,1
 
 [ENTRY]
 ID=1358961817
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=50653.6,334.739,64348
@@ -784,7 +713,6 @@ link=1358961818,1
 
 [ENTRY]
 ID=1358961818
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=50506,334.725,64360
@@ -795,7 +723,6 @@ link=1358961817,1
 
 [ENTRY]
 ID=1358961898
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50994.8,206.951,64808
@@ -805,7 +732,6 @@ spawnPackage=1a_koaCamp01_general
 
 [ENTRY]
 ID=1358961899
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=50457.5,231.965,64499
@@ -817,7 +743,6 @@ link=1358961921,1
 
 [ENTRY]
 ID=1358961900
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50434,230.915,64381
@@ -829,7 +754,6 @@ link=1358961901,1
 
 [ENTRY]
 ID=1358961901
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50226.6,185.774,64378
@@ -842,7 +766,6 @@ link=1358961900,1
 
 [ENTRY]
 ID=1358961905
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50907,224.716,64018
@@ -853,7 +776,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961906
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50896.9,234.26,64287
@@ -864,7 +786,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961907
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50746.3,227.371,64772
@@ -875,7 +796,6 @@ link=1358961908,1
 
 [ENTRY]
 ID=1358961908
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50448.6,233.599,64767
@@ -887,7 +807,6 @@ link=1358961907,1
 
 [ENTRY]
 ID=1358961909
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50306.5,241.68,64752
@@ -897,7 +816,6 @@ spawnPackage=1a_koaCamp01_general
 
 [ENTRY]
 ID=1358961910
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50255.5,217.844,64000
@@ -908,7 +826,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961915
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50525.8,244.719,64134
@@ -919,7 +836,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961916
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50439.7,244.719,64210
@@ -932,7 +848,6 @@ link=1358961759,1
 
 [ENTRY]
 ID=1358961919
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50820.7,232.955,64523
@@ -945,7 +860,6 @@ link=1358961920,1
 
 [ENTRY]
 ID=1358961920
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50887.7,233.106,64516
@@ -957,7 +871,6 @@ link=1358961925,1
 
 [ENTRY]
 ID=1358961921
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=50659.3,235.928,64516
@@ -969,7 +882,6 @@ link=1358961922,1
 
 [ENTRY]
 ID=1358961922
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=50805.7,233.26,64521
@@ -980,7 +892,6 @@ link=1358961921,1
 
 [ENTRY]
 ID=1358961923
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=50897.5,226.273,64075
@@ -992,7 +903,6 @@ link=1358961926,1
 
 [ENTRY]
 ID=1358961925
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=50899.2,233.499,64305
@@ -1004,7 +914,6 @@ link=1358961926,1
 
 [ENTRY]
 ID=1358961926
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=50929.5,242.342,64231
@@ -1016,7 +925,6 @@ link=1358961925,1
 
 [ENTRY]
 ID=1358961943
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50282.5,189.228,64552
@@ -1028,7 +936,6 @@ link=1358961944,1
 
 [ENTRY]
 ID=1358961944
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50307.1,190.153,64476
@@ -1040,7 +947,6 @@ link=1358961945,1
 
 [ENTRY]
 ID=1358961945
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=50364.3,212.062,64423
@@ -1051,7 +957,6 @@ link=1358961944,1
 
 [ENTRY]
 ID=1358961946
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50485.7,232.004,64461
@@ -1062,7 +967,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961947
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50448.9,230.547,64306
@@ -1073,7 +977,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961948
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50723.8,232.893,64472
@@ -1084,7 +987,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961956
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50369,225.795,64095
@@ -1095,7 +997,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961957
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50369.3,227.141,64199
@@ -1106,7 +1007,6 @@ despawnTime=480
 
 [ENTRY]
 ID=1358961958
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=50317.9,191.749,64349
@@ -1117,8 +1017,7 @@ despawnTime=480
 
 [ENTRY]
 ID=1358964671
-PlacedBy=0
-Asset=Bldg-Castle-Small_Keep1?ATS=ATS-Castle
+Asset=Bldg-Castle-Small_Keep1?ATS=ATS-Castle_Camelot
 Name=Untitled
 Pos=50423.9,234.779,64182
 Orient=0,-0.710353,0,0.703846
@@ -1127,7 +1026,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965585
-PlacedBy=0
 Asset=CL-Hills_Bush4#CL-Hills_Bush4
 Name=Untitled
 Pos=50979.5,254.489,64611
@@ -1137,7 +1035,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965587
-PlacedBy=0
 Asset=CL-Hills_Bush5#CL-Hills_Bush5
 Name=Untitled
 Pos=50978,259.122,64641
@@ -1147,7 +1044,6 @@ Flags=1
 
 [ENTRY]
 ID=1358968143
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50550.1,274.727,64252.2
@@ -1158,7 +1054,6 @@ link=1358968144,0
 
 [ENTRY]
 ID=1358968144
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50627.1,334.739,64251
@@ -1169,7 +1064,6 @@ link=1358968143,0
 
 [ENTRY]
 ID=1358968145
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50780.5,334.739,64073.6
@@ -1180,7 +1074,6 @@ link=1358968146,0
 
 [ENTRY]
 ID=1358968146
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50781.9,364.739,64029.8
@@ -1191,7 +1084,6 @@ link=1358968145,0
 
 [ENTRY]
 ID=1358968147
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50631.3,334.739,64081.1
@@ -1202,7 +1094,6 @@ link=1358968148,0
 
 [ENTRY]
 ID=1358968148
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50620.9,334.739,64030
@@ -1213,7 +1104,6 @@ link=1358968147,0
 
 [ENTRY]
 ID=1358968149
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50767.8,334.739,64255.2
@@ -1224,7 +1114,6 @@ link=1358968150,0
 
 [ENTRY]
 ID=1358968150
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50767.9,354.739,64291.2
@@ -1235,7 +1124,6 @@ link=1358968149,0
 
 [ENTRY]
 ID=1358968151
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50618.4,334.739,64363.9
@@ -1246,7 +1134,6 @@ link=1358968153,0
 
 [ENTRY]
 ID=1358968152
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50856.1,232.031,64303
@@ -1255,7 +1142,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1358968153
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50645.2,334.739,64342.8
@@ -1266,7 +1152,6 @@ link=1358968151,0
 
 [ENTRY]
 ID=1358968154
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50678.6,334.739,64145.6
@@ -1277,7 +1162,6 @@ link=1358968155,0
 
 [ENTRY]
 ID=1358968155
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50714.4,334.739,64104.3
@@ -1288,7 +1172,6 @@ link=1358968154,0
 
 [ENTRY]
 ID=1358968156
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50785.2,334.739,64096.8
@@ -1299,7 +1182,6 @@ link=1358968157,0
 
 [ENTRY]
 ID=1358968157
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50784.1,334.739,64237.6
@@ -1310,7 +1192,6 @@ link=1358968156,0
 
 [ENTRY]
 ID=1358968159
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50753.9,334.739,64234.3
@@ -1321,7 +1202,6 @@ link=1358968160,0
 
 [ENTRY]
 ID=1358968160
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50710.1,334.739,64213.4
@@ -1332,7 +1212,6 @@ link=1358968159,0
 
 [ENTRY]
 ID=1358968161
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50726.1,354.739,64390.5
@@ -1343,7 +1222,6 @@ link=1358968162,0
 
 [ENTRY]
 ID=1358968162
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50761.4,354.739,64373.6
@@ -1354,7 +1232,6 @@ link=1358968161,0
 
 [ENTRY]
 ID=1358968163
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50523.8,274.722,64248.4
@@ -1365,7 +1242,6 @@ link=1358968164,0
 
 [ENTRY]
 ID=1358968164
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50524.2,274.719,64213.2
@@ -1376,7 +1252,6 @@ link=1358968163,0
 
 [ENTRY]
 ID=1358968166
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50517.2,274.719,64205.6
@@ -1387,7 +1262,6 @@ link=1358968167,0
 
 [ENTRY]
 ID=1358968167
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50439.9,244.719,64205.9
@@ -1398,7 +1272,6 @@ link=1358968166,0
 
 [ENTRY]
 ID=1358968168
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50587.3,300.915,64206.9
@@ -1409,7 +1282,6 @@ link=1358968169,0
 
 [ENTRY]
 ID=1358968169
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50556.3,274.719,64208.8
@@ -1420,7 +1292,6 @@ link=1358968168,0
 
 [ENTRY]
 ID=1358968170
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50420.6,244.719,64145.9
@@ -1431,7 +1302,6 @@ link=1358968171,0
 
 [ENTRY]
 ID=1358968171
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50335.2,211.528,64148.3
@@ -1442,7 +1312,6 @@ link=1358968170,0
 
 [ENTRY]
 ID=1358968172
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50413.4,334.739,64027.8
@@ -1453,7 +1322,6 @@ link=1358968173,0
 
 [ENTRY]
 ID=1358968173
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50596.7,334.739,64029.9
@@ -1464,7 +1332,6 @@ link=1358968172,0
 
 [ENTRY]
 ID=1358968174
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50506,334.725,64382.7
@@ -1475,7 +1342,6 @@ link=1358968175,0
 
 [ENTRY]
 ID=1358968175
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50545.5,334.739,64351.2
@@ -1486,7 +1352,6 @@ link=1358968174,0
 
 [ENTRY]
 ID=1358968176
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50585.7,274.733,64309.2
@@ -1497,7 +1362,6 @@ link=1358968177,0
 
 [ENTRY]
 ID=1358968177
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=50528.2,274.723,64276.5

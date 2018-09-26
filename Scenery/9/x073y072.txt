@@ -60,4 +60,5 @@ Pos=55177.1,283.663,54141.8
 Orient=0,-0.986549,0,-0.163467
 Scale=1,1,1
 spawnPackage=Midlands_overlandboss_Nilana_SP
+despawnTime=900
 

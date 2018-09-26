@@ -42,10 +42,11 @@ Scale=1,1,1
 ID=1127481
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=47238.4,182.169,63064.6
+Pos=47199,196.108,63063.9
 Orient=0,0.412321,0,0.911039
 Scale=1,1,1
-spawnPackage=#F22
+spawnPackage=#F42
+dialog=kilvath_warning
 
 [ENTRY]
 ID=1358956281

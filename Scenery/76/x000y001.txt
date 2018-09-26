@@ -1,13 +1,4 @@
 [ENTRY]
-ID=1000003
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=536.563,600,1540.87
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#F16003
-
-[ENTRY]
 ID=1126669
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled

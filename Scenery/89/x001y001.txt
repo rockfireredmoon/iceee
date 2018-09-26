@@ -224,7 +224,7 @@ Scale=4,4,4
 
 [ENTRY]
 ID=1030162
-Asset=Bldg-Gladiator-Arena_Towers?ATS=ATS-Castle_Camelot
+Asset=Bldg-Gladiator-Arena_Towers?ATS=ATS-Castle_Underground
 Name=Untitled
 Pos=2318.08,1252.81,3048.81
 Orient=0,0.847043,0,0.531524
@@ -232,7 +232,7 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1030163
-Asset=Bldg-Gladiator-Arena_Towers?ATS=ATS-Castle_Camelot
+Asset=Bldg-Gladiator-Arena_Towers?ATS=ATS-Castle_Underground
 Name=Untitled
 Pos=2620,1255.66,3355
 Orient=0,0.971882,0,0.235467
@@ -240,15 +240,15 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1030165
-Asset=Bldg-Gladiator-Arena_Stands?ATS=ATS-Castle_Camelot
+Asset=Bldg-Gladiator-Arena_Stands?ATS=ATS-Castle_Underground
 Name=Untitled
 Pos=2820,1255.67,3375
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 
 [ENTRY]
 ID=1030166
-Asset=Bldg-Gladiator-Arena_Towers?ATS=ATS-Castle_Camelot
+Asset=Bldg-Gladiator-Arena_Towers?ATS=ATS-Castle_Underground
 Name=Untitled
 Pos=3045,1256.01,3355
 Orient=0,-0.992809,0,0.119712
@@ -256,7 +256,7 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1030168
-Asset=Bldg-Gladiator-Arena_Stands?ATS=ATS-Castle_Camelot
+Asset=Bldg-Gladiator-Arena_Stands?ATS=ATS-Castle_Underground
 Name=Untitled
 Pos=3195,1255.39,3225
 Orient=0,-0.92388,0,0.382683
@@ -264,7 +264,7 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1030169
-Asset=Bldg-Gladiator-Arena_Towers?ATS=ATS-Castle_Camelot
+Asset=Bldg-Gladiator-Arena_Towers?ATS=ATS-Castle_Underground
 Name=Untitled
 Pos=3335,1255.17,3050
 Orient=0,-0.867423,0,0.497571
@@ -272,7 +272,7 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1030170
-Asset=Bldg-Gladiator-Arena_Stands?ATS=ATS-Castle_Camelot
+Asset=Bldg-Gladiator-Arena_Stands?ATS=ATS-Castle_Underground
 Name=Untitled
 Pos=3355,1255.21,2855
 Orient=0,-0.707107,0,0.707107
@@ -280,7 +280,7 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1030171
-Asset=Bldg-Gladiator-Arena_Stands?ATS=ATS-Castle_Camelot
+Asset=Bldg-Gladiator-Arena_Stands?ATS=ATS-Castle_Underground
 Name=Untitled
 Pos=3205,1255.26,2480
 Orient=0,-0.382683,0,0.92388
@@ -288,7 +288,7 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1030172
-Asset=Bldg-Gladiator-Arena_Stands?ATS=ATS-Castle_Camelot
+Asset=Bldg-Gladiator-Arena_Stands?ATS=ATS-Castle_Underground
 Name=Untitled
 Pos=2835,1255.19,2320
 Orient=0,0,0,1
@@ -296,7 +296,7 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1030173
-Asset=Bldg-Gladiator-Arena_Stands?ATS=ATS-Castle_Camelot
+Asset=Bldg-Gladiator-Arena_Stands?ATS=ATS-Castle_Underground
 Name=Untitled
 Pos=2460,1255,2470
 Orient=0,0.382683,0,0.92388
@@ -304,7 +304,7 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1030174
-Asset=Bldg-Gladiator-Arena_Towers?ATS=ATS-Castle_Camelot
+Asset=Bldg-Gladiator-Arena_Towers?ATS=ATS-Castle_Underground
 Name=Untitled
 Pos=2620,1255.33,2340
 Orient=0,0.183947,0,0.982936
@@ -312,7 +312,7 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1030175
-Asset=Bldg-Gladiator-Arena_Towers?ATS=ATS-Castle_Camelot
+Asset=Bldg-Gladiator-Arena_Towers?ATS=ATS-Castle_Underground
 Name=Untitled
 Pos=3044.93,1255.21,2343.5
 Orient=0,-0.159318,0,0.987227
@@ -320,15 +320,15 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1030176
-Asset=Bldg-Gladiator-Arena_Towers?ATS=ATS-Castle_Camelot
+Asset=Bldg-Gladiator-Arena_Towers?ATS=ATS-Castle_Underground
 Name=Untitled
 Pos=3337,1255.66,2635
-Orient=0,-0.576959,0,0.816774
+Orient=0,-0.576959,0,0.816773
 Scale=1,1,1
 
 [ENTRY]
 ID=1030177
-Asset=Bldg-Gladiator-Arena_Towers?ATS=ATS-Castle_Camelot
+Asset=Bldg-Gladiator-Arena_Towers?ATS=ATS-Castle_Underground
 Name=Untitled
 Pos=2316.75,1255.37,2632.81
 Orient=0,0.548024,0,0.836463
@@ -339,7 +339,7 @@ ID=1030180
 Asset=Prop-Door2
 Name=Untitled
 Pos=2237.16,1254.93,2829.25
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1.5,1.5,1.5
 
 [ENTRY]
@@ -355,7 +355,7 @@ ID=1030183
 Asset=Prop-Instance_Entrance
 Name=Untitled
 Pos=2305,1275,2847.27
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1.5,1.5,1.5
 
 [ENTRY]
@@ -531,7 +531,7 @@ ID=1030231
 Asset=Prop-Wooden_Wall2
 Name=Untitled
 Pos=2927.78,1245.86,3212.4
-Orient=0,1,0,7.54979e-008
+Orient=0,1,0,7.54979e-08
 Scale=1,1,1
 
 [ENTRY]
@@ -592,7 +592,7 @@ Scale=1.2,1.2,1.2
 
 [ENTRY]
 ID=1030248
-Asset=Bldg-Gladiator-Arena_Stands?ATS=ATS-Castle_Camelot
+Asset=Bldg-Gladiator-Arena_Stands?ATS=ATS-Castle_Underground
 Name=Untitled
 Pos=2450,1254.37,3215
 Orient=0,-0.92388,0,-0.382683
@@ -691,7 +691,7 @@ ID=1030281
 Asset=Prop-Wooden_Wall2
 Name=Untitled
 Pos=3115,1255.21,2720
-Orient=0,1,0,8.9407e-008
+Orient=0,1,0,8.9407e-08
 Scale=1,1,1
 
 [ENTRY]
@@ -739,7 +739,7 @@ ID=1030287
 Asset=Prop-Shield1
 Name=Untitled
 Pos=3076.6,1336.86,2729.02
-Orient=0,1,0,7.54979e-008
+Orient=0,1,0,7.54979e-08
 Scale=5,5,5
 
 [ENTRY]
@@ -747,7 +747,7 @@ ID=1030301
 Asset=Prop-Shield4
 Name=Untitled
 Pos=2927.99,1334.19,3222.52
-Orient=0,1,0,7.54979e-008
+Orient=0,1,0,7.54979e-08
 Scale=5,5,5
 
 [ENTRY]
@@ -952,7 +952,7 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1030330
-Asset=Bldg-Gladiator-Arena_Entrance?ATS=ATS-Castle_Camelot
+Asset=Bldg-Gladiator-Arena_Entrance?ATS=ATS-Castle_Underground
 Name=Untitled
 Pos=2300,1255.44,2840
 Orient=0,0.707107,0,0.707107

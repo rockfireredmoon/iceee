@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1154514
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=1894.59,48.856,1535.36
 Orient=0,0,0,1
 Scale=1,1,1
@@ -227,7 +227,7 @@ Flags=1
 ID=469763893
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=1987.1,49.696,1515.92
+Pos=1969.84,49.9999,1510.29
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1_dng_uh_BramblebaneRND_15

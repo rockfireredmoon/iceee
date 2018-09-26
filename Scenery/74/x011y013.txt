@@ -10,7 +10,7 @@ spawnPackage=#FH3508
 [ENTRY]
 ID=1126719
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=11491.8,281.954,13052.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -21,7 +21,7 @@ link=1241514332,1
 [ENTRY]
 ID=1126722
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=11576.1,282.271,13027.6
 Orient=0,0,0,1
 Scale=1,1,1
@@ -32,7 +32,7 @@ link=1241514333,1
 [ENTRY]
 ID=1126723
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=11655.8,281.772,13002.4
 Orient=0,0,0,1
 Scale=0.925,0.925,0.925
@@ -43,13 +43,29 @@ link=1126722,1
 [ENTRY]
 ID=1126724
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=11519.8,281.758,13064
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=2
 link=1241514385,1
 link=1241514386,1
+
+[ENTRY]
+ID=1156181
+Asset=Prop-Loot1#Prop-Loot-Wood_Chest1
+Name=
+Pos=11450.4,280.156,13900.8
+Orient=0,-0.710353,0,0.703845
+Scale=1.5,1.5,1.5
+
+[ENTRY]
+ID=1156182
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=11457.6,280.156,13901.6
+Orient=0,0,0,1
+Scale=1,1,1
 
 [ENTRY]
 ID=1241513991
@@ -135,7 +151,7 @@ Flags=1
 ID=1241514075
 Asset=Prop-Wooden_Barricade2
 Name=Untitled
-Pos=11293.3,280.434,13670.5
+Pos=11291.2,280.434,13670.5
 Orient=0,0.034993,0,0.999388
 Scale=2.35,2.35,2.35
 Flags=1
@@ -144,8 +160,8 @@ Flags=1
 ID=1241514076
 Asset=Prop-Wooden_Barricade1
 Name=Untitled
-Pos=11454.1,280.422,13635.6
-Orient=0,0.21823,0,0.975897
+Pos=11467.9,280.422,13635.6
+Orient=0,0.276356,0,0.961055
 Scale=2,2,2
 Flags=1
 

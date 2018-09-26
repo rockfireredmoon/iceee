@@ -167,6 +167,7 @@ Orient=0,0.958016,0,0.286715
 Scale=1,1,1
 spawnPackage=#3484
 aiModule=custom_heathendel_epicmagefrost40
+despawnTime=900
 
 [ENTRY]
 ID=1153986

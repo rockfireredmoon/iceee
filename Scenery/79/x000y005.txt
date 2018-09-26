@@ -15,6 +15,7 @@ Pos=942,116,5725
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2134
+mobTotal=1
 sequential=1
 
 [ENTRY]
@@ -509,6 +510,7 @@ Pos=941.305,122.229,5725.15
 Orient=0,-0.999958,0,-0.00920344
 Scale=1,1,1
 spawnPackage=newb_alimatSummon_Alimat
+mobTotal=1
 maxActive=0
 sequential=1
 

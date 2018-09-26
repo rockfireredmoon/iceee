@@ -1,6 +1,7 @@
 [ENTRY]
 ID=1358957868
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=46702.5,94.4835,50113
 Orient=0,0,0,1
 Scale=1,1,1
@@ -11,16 +12,18 @@ link=1358957871,1
 [ENTRY]
 ID=1358957869
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=46566.8,98.1112,50099
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1a_swampNorth_general
 links_count=1
 link=1358957868,1
-spawnPackage=1a_swampNorth_general
 
 [ENTRY]
 ID=1358957871
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=46716.4,91.7955,50216
 Orient=0,0,0,1
 Scale=1,1,1
@@ -30,24 +33,26 @@ link=1358957868,1
 [ENTRY]
 ID=1358960902
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=46996.9,94.0936,50028
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_swampNorth_general
-outerRadius=1
 
 [ENTRY]
 ID=1358961271
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=46038.3,157.625,50129
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_mosquitoCamp03_general
-outerRadius=1
+wanderRadius=75
 
 [ENTRY]
 ID=1358963073
 Asset=Prop-Bush-Swamp_Large2
+Name=Untitled
 Pos=46775.5,79.9896,50743
 Orient=0,-0.741296,0,0.671178
 Scale=3,3,3
@@ -56,6 +61,7 @@ Flags=1
 [ENTRY]
 ID=1358963074
 Asset=Swamp_Ruin?d=0.9&s=8733459&sz=800
+Name=Untitled
 Pos=46903.9,73.6697,50111
 Orient=0,-0.741296,0,0.671178
 Scale=1,1,1
@@ -64,6 +70,7 @@ Flags=1
 [ENTRY]
 ID=1358963079
 Asset=Swamp_Ruin?d=0.9&s=123456&sz=900
+Name=Untitled
 Pos=46536.4,60.3451,50569
 Orient=0,-0.741296,0,0.671178
 Scale=1,1,1
@@ -72,6 +79,7 @@ Flags=1
 [ENTRY]
 ID=1358963080
 Asset=Prop-Bush-Swamp_Large1
+Name=Untitled
 Pos=46865.7,93.5759,50767
 Orient=0,-0.741296,0,0.671178
 Scale=1.875,1.875,1.875
@@ -80,6 +88,7 @@ Flags=1
 [ENTRY]
 ID=1358963103
 Asset=Swamp_Ruin?d=0.9&s=123456&sz=800
+Name=Untitled
 Pos=46938,86.2118,50049
 Orient=0,0,0,1
 Scale=1,1,1
@@ -88,6 +97,7 @@ Flags=1
 [ENTRY]
 ID=1358963689
 Asset=Prop-Bush-Swamp_Med1
+Name=Untitled
 Pos=46856.3,99.2118,50736
 Orient=0,0,0,1
 Scale=2.7,2.7,2.7
@@ -96,6 +106,7 @@ Flags=1
 [ENTRY]
 ID=1358963690
 Asset=Prop-Bush-Swamp_Small2#Prop-Bush-Swamp_Small2
+Name=Untitled
 Pos=46982.2,96.0425,50764
 Orient=0,0,0,1
 Scale=1.9,1.9,1.9
@@ -104,6 +115,7 @@ Flags=1
 [ENTRY]
 ID=1358963711
 Asset=CL-Swamp_Bushes3#CL-Swamp_Bushes3
+Name=Untitled
 Pos=46828.9,75.5406,50499
 Orient=0,-0.807558,0,0.589788
 Scale=1.675,1.675,1.675
@@ -112,6 +124,7 @@ Flags=1
 [ENTRY]
 ID=1358963714
 Asset=Prop-Bush-Swamp_Small1#Prop-Bush-Swamp_Small1
+Name=Untitled
 Pos=46648.8,93.6288,50318
 Orient=0,0,0,1
 Scale=1.425,1.425,1.425
@@ -120,6 +133,7 @@ Flags=1
 [ENTRY]
 ID=1358963720
 Asset=Prop-Swamp-TreeA.png#Prop-Swamp-Tree1
+Name=Untitled
 Pos=46848.1,87.4272,50641
 Orient=0,0,0,1
 Scale=2.125,2.125,2.125
@@ -128,6 +142,7 @@ Flags=1
 [ENTRY]
 ID=1358963721
 Asset=Prop-Bush-Swamp_Med1#Prop-Bush-Swamp_Med1
+Name=Untitled
 Pos=46856.9,89.3019,50678
 Orient=0,0,0,1
 Scale=2.225,2.225,2.225
@@ -136,6 +151,7 @@ Flags=1
 [ENTRY]
 ID=1358964297
 Asset=Prop-Bridge-Large_Wooden1#Prop-Bridge-Large_Wooden1
+Name=Untitled
 Pos=46636.2,80.6551,50698
 Orient=0,0.375559,0,0.926798
 Scale=1,1,1
@@ -144,6 +160,7 @@ Flags=1
 [ENTRY]
 ID=1358968194
 Asset=Environment-Marker?type=Fields
+Name=Untitled
 Pos=46033.3,157.782,50491.1
 Orient=0,0,0,1
 Scale=2.65,2.65,2.65
@@ -151,6 +168,7 @@ Scale=2.65,2.65,2.65
 [ENTRY]
 ID=1358968552
 Asset=Prop-Boat1
+Name=Untitled
 Pos=46955.5,70.1629,50513.5
 Orient=-0.440769,0.47238,0.121987,0.753458
 Scale=1.725,1.725,1.725
@@ -158,6 +176,7 @@ Scale=1.725,1.725,1.725
 [ENTRY]
 ID=1358968553
 Asset=Prop-Desk_Set#Prop-Paper
+Name=Untitled
 Pos=46948.4,72.0808,50506.4
 Orient=0,-0.509841,0,0.860269
 Scale=0.775,0.775,0.775
@@ -165,6 +184,7 @@ Scale=0.775,0.775,0.775
 [ENTRY]
 ID=1358968554
 Asset=Prop-Paper
+Name=Untitled
 Pos=46944.5,72.0559,50515
 Orient=0,0,0,1
 Scale=1,1,1

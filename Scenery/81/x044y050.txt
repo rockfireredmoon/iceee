@@ -1,6 +1,7 @@
 [ENTRY]
 ID=1358961267
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=44604,273.579,50031
 Orient=0,0,0,1
 Scale=1,1,1
@@ -10,6 +11,7 @@ link=1358961272,1
 [ENTRY]
 ID=1358961272
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=44654.2,304.625,50193
 Orient=0,0,0,1
 Scale=1,1,1
@@ -20,34 +22,39 @@ link=1358961273,1
 [ENTRY]
 ID=1358961273
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=44601,322.663,50493
 Orient=0,0.663135,0,0.7485
 Scale=1,1,1
+spawnPackage=1a_mosquitoCamp03_general
+wanderRadius=75
 links_count=1
 link=1358961272,1
-spawnPackage=1a_mosquitoCamp03_general
 
 [ENTRY]
 ID=1358961275
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=44408.6,303.476,50284
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_mosquitoCamp03_general
-outerRadius=1
+wanderRadius=50
 
 [ENTRY]
 ID=1358961276
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=44855.6,279.015,50388
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_mosquitoCamp03_general
-outerRadius=1
+wanderRadius=75
 
 [ENTRY]
 ID=1358965157
 Asset=CL-Roadside2
+Name=Untitled
 Pos=44911.1,205.129,50748.7
 Orient=0,0,-0.0149994,0.999888
 Scale=1.5,1.5,1.5
@@ -55,6 +62,7 @@ Scale=1.5,1.5,1.5
 [ENTRY]
 ID=1358966935
 Asset=CL-Roadside5#CL-Roadside5
+Name=Untitled
 Pos=44382.3,207.807,50619.3
 Orient=-0.0021983,-0.0549283,0.00998478,0.998438
 Scale=1.5,1.5,1.5
@@ -62,6 +70,7 @@ Scale=1.5,1.5,1.5
 [ENTRY]
 ID=1358966937
 Asset=CL-Wooden_Fence2
+Name=Untitled
 Pos=44305.6,212.366,50700
 Orient=0,-0.0649542,0,0.997888
 Scale=1.5,1.5,1.5

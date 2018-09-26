@@ -1,6 +1,5 @@
 [ENTRY]
 ID=10000000
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5856,779,1436
@@ -11,7 +10,6 @@ spawnPackage=z65_rm_gen_Dungeon_Loot_2710
 
 [ENTRY]
 ID=1090519097
-PlacedBy=0
 Asset=Cav-Hall_Straight_Long1?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=5270,780,1360
@@ -21,27 +19,24 @@ Flags=1
 
 [ENTRY]
 ID=1090519099
-PlacedBy=0
 Asset=Cav-Room_Round_Corner1?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=5910,780,1540
-Orient=0,-5.96046e-008,0,-1
+Orient=0,-5.96046e-08,0,-1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=1090519104
-PlacedBy=0
 Asset=Cav-Room_Corner_PlatformA#Cav-Room_Corner_PlatformA?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=5550,780,1180
-Orient=0,1,0,6.55651e-007
+Orient=0,1,0,6.55651e-07
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=1090519109
-PlacedBy=0
 Asset=Cav-Room_1Sided?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=5730,780,1540
@@ -51,7 +46,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519110
-PlacedBy=0
 Asset=Cav-Room_Corner_PlatformA?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=5550,780,1540
@@ -61,17 +55,15 @@ Flags=1
 
 [ENTRY]
 ID=1090519111
-PlacedBy=0
 Asset=Cav-Room_Center?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=5730,780,1360
-Orient=0,1,0,7.7486e-007
+Orient=0,1,0,7.7486e-07
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=1090519112
-PlacedBy=0
 Asset=Cav-Room_1SidedB?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=5730,780,1180
@@ -81,17 +73,15 @@ Flags=1
 
 [ENTRY]
 ID=1090519113
-PlacedBy=0
 Asset=Cav-Room_1Sided_Door?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=5550,780,1360
-Orient=0,1,0,7.7486e-007
+Orient=0,1,0,7.7486e-07
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=1090519115
-PlacedBy=0
 Asset=Cav-Room_Round_Corner1?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=5910,780,1180
@@ -101,17 +91,15 @@ Flags=1
 
 [ENTRY]
 ID=1090519119
-PlacedBy=0
 Asset=Cav-Room_1Sided_RaisedDoor?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=5910,780,1360
-Orient=0,8.50358e-007,0,-1
+Orient=0,8.50358e-07,0,-1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=1090519336
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks1
 Name=Untitled
 Pos=5066.38,719.524,1289.18
@@ -121,7 +109,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519341
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks1
 Name=Untitled
 Pos=5019.36,720.04,1414.18
@@ -131,7 +118,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519358
-PlacedBy=0
 Asset=Prop-Banner-DOTC1#Prop-Banner-DOTC
 Name=Untitled
 Pos=5167.86,889.936,1358.09
@@ -141,7 +127,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519359
-PlacedBy=0
 Asset=Prop-Banner-DOTC
 Name=Untitled
 Pos=5392.55,889.936,1361.1
@@ -151,7 +136,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519360
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks2
 Name=Untitled
 Pos=5254.96,778.931,1307.39
@@ -161,7 +145,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519361
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks2
 Name=Untitled
 Pos=5148.75,778.403,1312.03
@@ -171,7 +154,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519363
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks1
 Name=Untitled
 Pos=5272.37,780.067,1403.47
@@ -181,7 +163,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519364
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks2
 Name=Untitled
 Pos=5438.62,779.767,1406.94
@@ -191,7 +172,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519367
-PlacedBy=0
 Asset=Prop-Mining_Pick#Prop-Mining_Pick
 Name=Untitled
 Pos=5294.71,780,1336.83
@@ -201,7 +181,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519368
-PlacedBy=0
 Asset=Prop-Mining_Cart#Prop-Mine-Cart
 Name=Untitled
 Pos=5321.78,780,1364.96
@@ -211,7 +190,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519369
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks2
 Name=Untitled
 Pos=5927.65,779.452,1397.89
@@ -221,7 +199,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519370
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks1
 Name=Untitled
 Pos=5982.46,780,1461.77
@@ -231,7 +208,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519371
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks1
 Name=Untitled
 Pos=5913.75,782.077,1601.46
@@ -241,7 +217,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519373
-PlacedBy=0
 Asset=Prop-Hide_Tent1#Prop-Hide_Tent1
 Name=Untitled
 Pos=5910.3,780.18,1207.54
@@ -251,7 +226,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519374
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks2
 Name=Untitled
 Pos=5967.12,780,1243.92
@@ -261,7 +235,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519375
-PlacedBy=0
 Asset=Prop-Chunks2
 Name=Untitled
 Pos=5936.84,779.806,1278.24
@@ -271,7 +244,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519376
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks1
 Name=Untitled
 Pos=5971.64,780,1307.76
@@ -281,7 +253,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519377
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks2
 Name=Untitled
 Pos=5867.92,780.001,1113.74
@@ -291,7 +262,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519378
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks1
 Name=Untitled
 Pos=5845.29,778.827,1165.74
@@ -301,7 +271,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519379
-PlacedBy=0
 Asset=Prop-Tribal_Furniture#Prop-Tribal_Table1
 Name=Untitled
 Pos=5910.99,774.037,1212.04
@@ -311,7 +280,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519380
-PlacedBy=0
 Asset=Prop-Tribal_Furniture#Prop-Tribal_Stool1
 Name=Untitled
 Pos=5883.23,778.201,1217.49
@@ -321,7 +289,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519381
-PlacedBy=0
 Asset=Prop-Tribal_Stool1
 Name=Untitled
 Pos=5909.08,776.513,1235.89
@@ -331,7 +298,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519382
-PlacedBy=0
 Asset=Prop-Tribal_Stool1
 Name=Untitled
 Pos=5907.39,780.404,1183.95
@@ -341,7 +307,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519383
-PlacedBy=0
 Asset=Light-Medium
 Name=Untitled
 Pos=5907.86,791.586,1210.63
@@ -351,7 +316,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519384
-PlacedBy=0
 Asset=Prop-Lantern1#Prop-Lantern1
 Name=Untitled
 Pos=5912.55,786.971,1210.34
@@ -361,7 +325,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519385
-PlacedBy=0
 Asset=Effects#Par-Lamp_Glow1-Emitter
 Name=Untitled
 Pos=5913.07,788.375,1210.09
@@ -371,7 +334,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519386
-PlacedBy=0
 Asset=Prop-Map
 Name=Untitled
 Pos=5916.14,786.971,1218.91
@@ -381,7 +343,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519387
-PlacedBy=0
 Asset=Prop-Cup1#Prop-Cup1
 Name=Untitled
 Pos=5903.53,786.971,1211.19
@@ -391,7 +352,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519388
-PlacedBy=0
 Asset=Prop-Cup1
 Name=Untitled
 Pos=5901.23,786.971,1208.1
@@ -401,7 +361,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519389
-PlacedBy=0
 Asset=Prop-Cup1
 Name=Untitled
 Pos=5903.44,786.971,1204.38
@@ -411,7 +370,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519390
-PlacedBy=0
 Asset=CL-Camp2
 Name=Untitled
 Pos=5788.84,782.395,1240.24
@@ -421,7 +379,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519391
-PlacedBy=0
 Asset=Lights#Light-Large?COLOR=FF6600
 Name=Untitled
 Pos=5777.61,806.359,1479.14
@@ -431,7 +388,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519392
-PlacedBy=0
 Asset=Effects#Par-Ground_Fog1
 Name=Untitled
 Pos=5718.31,781.869,1384.02
@@ -441,7 +397,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519393
-PlacedBy=0
 Asset=Prop-Brazier
 Name=Untitled
 Pos=5505.39,838.912,1466.55
@@ -451,7 +406,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519394
-PlacedBy=0
 Asset=Prop-Brazier_Unlit
 Name=Untitled
 Pos=5500.66,838.56,1188.65
@@ -461,7 +415,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519395
-PlacedBy=0
 Asset=Light-Large?COLOR=FF6600
 Name=Untitled
 Pos=5510.34,868.409,1464.65
@@ -471,7 +424,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519396
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks2
 Name=Untitled
 Pos=5462.82,839.79,1527.68
@@ -481,7 +433,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519397
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks2
 Name=Untitled
 Pos=5492.02,839.063,1102.59
@@ -491,7 +442,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519398
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks1
 Name=Untitled
 Pos=5556.24,839.641,1094.82
@@ -501,7 +451,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519399
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks1
 Name=Untitled
 Pos=5503.83,838.795,1613.78
@@ -511,7 +460,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519400
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks2
 Name=Untitled
 Pos=5492.2,780,1226.18
@@ -521,7 +469,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519401
-PlacedBy=0
 Asset=CL-Camp1
 Name=Untitled
 Pos=5754.95,780.067,1520.28
@@ -531,7 +478,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519402
-PlacedBy=0
 Asset=Light-Large?COLOR=FF6600
 Name=Untitled
 Pos=5777.61,806.359,1247.43
@@ -541,7 +487,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519403
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks2
 Name=Untitled
 Pos=5989.4,839.252,1416.07
@@ -551,7 +496,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519404
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks2
 Name=Untitled
 Pos=5663.54,779.266,1110.55
@@ -561,7 +505,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519405
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks2
 Name=Untitled
 Pos=5478.72,780,1440.95
@@ -571,7 +514,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519406
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks1
 Name=Untitled
 Pos=5591.34,779.977,1619.7
@@ -581,7 +523,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519407
-PlacedBy=0
 Asset=Prop-Mining_Cart#Prop-Mine-Cart
 Name=Untitled
 Pos=5520.9,779.975,1278.67
@@ -591,7 +532,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519408
-PlacedBy=0
 Asset=Prop-Mine-Cart
 Name=Untitled
 Pos=5526.21,779.579,1415.72
@@ -601,7 +541,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519409
-PlacedBy=0
 Asset=Prop-Mining_Cart#Prop-Mine-Cart
 Name=Untitled
 Pos=5644.62,780,1286.31
@@ -611,7 +550,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519411
-PlacedBy=0
 Asset=Light-Large
 Name=Untitled
 Pos=5727.07,928.81,1381.52
@@ -621,7 +559,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519413
-PlacedBy=0
 Asset=Prop-Wall_Lamp#Prop-Wall_Lamp
 Name=Untitled
 Pos=5713.38,966.608,1370.72
@@ -631,7 +568,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519414
-PlacedBy=0
 Asset=Prop-Wall_Lamp
 Name=Untitled
 Pos=5736.26,966.608,1370.72
@@ -641,7 +577,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519415
-PlacedBy=0
 Asset=Effects#Par-Lamp_Glow1-Emitter
 Name=Untitled
 Pos=5714.12,953.572,1370.21
@@ -651,7 +586,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519416
-PlacedBy=0
 Asset=Par-Lamp_Glow1-Emitter
 Name=Untitled
 Pos=5738.51,954.307,1370.6
@@ -661,7 +595,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519417
-PlacedBy=0
 Asset=Prop-Chunks2
 Name=Untitled
 Pos=5475.18,838.87,1172.28
@@ -671,7 +604,6 @@ Flags=1
 
 [ENTRY]
 ID=1090519418
-PlacedBy=0
 Asset=Prop-Banner-DOTC1#Prop-Banner-DOTC
 Name=Untitled
 Pos=5719.57,965.629,1370.59
@@ -680,7 +612,6 @@ Scale=3.125,3.125,3.125
 
 [ENTRY]
 ID=1090519419
-PlacedBy=0
 Asset=Prop-Containers1#Prop-Barrel_Broken
 Name=Untitled
 Pos=5890.89,779.227,1315.53
@@ -689,7 +620,6 @@ Scale=1.875,1.875,1.875
 
 [ENTRY]
 ID=1090519422
-PlacedBy=0
 Asset=Prop-Containers1#Prop-Barrel2
 Name=Untitled
 Pos=5876.2,779.758,1322.11
@@ -698,7 +628,6 @@ Scale=1.15,1.15,1.15
 
 [ENTRY]
 ID=1090519423
-PlacedBy=0
 Asset=CL-Junk4
 Name=Untitled
 Pos=5847.65,778.922,1315
@@ -707,7 +636,6 @@ Scale=1.525,1.525,1.525
 
 [ENTRY]
 ID=1090519745
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5055,778.808,1425
@@ -719,7 +647,6 @@ link=1090520392,1
 
 [ENTRY]
 ID=1090519746
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5055,780.04,1360
@@ -731,7 +658,6 @@ link=1090520390,1
 
 [ENTRY]
 ID=1090519756
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5292.45,780,1363.87
@@ -743,7 +669,6 @@ link=1090519758,1
 
 [ENTRY]
 ID=1090519757
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5324.68,780,1394.43
@@ -755,7 +680,6 @@ link=1090519759,1
 
 [ENTRY]
 ID=1090519758
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5320,780,1325
@@ -767,7 +691,6 @@ link=1090519759,1
 
 [ENTRY]
 ID=1090519759
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5372.93,780,1359.13
@@ -780,7 +703,6 @@ link=1090520405,1
 
 [ENTRY]
 ID=1090519761
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5522.15,839.84,1535.43
@@ -792,7 +714,6 @@ link=1090520463,1
 
 [ENTRY]
 ID=1090519762
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5501.51,840.413,1493.55
@@ -804,7 +725,6 @@ link=1090519763,1
 
 [ENTRY]
 ID=1090519763
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5635.87,781.868,1477.88
@@ -815,7 +735,6 @@ link=1090519762,1
 
 [ENTRY]
 ID=1090519765
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5614.65,841.074,1132.48
@@ -826,7 +745,6 @@ link=1090519766,1
 
 [ENTRY]
 ID=1090519766
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5545,839.818,1150
@@ -838,7 +756,6 @@ link=1090519767,1
 
 [ENTRY]
 ID=1090519767
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5543.56,838.644,1191.83
@@ -850,22 +767,21 @@ link=1090520465,1
 
 [ENTRY]
 ID=1090519951
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5860,781.256,1235
 Orient=0,0.946885,0,-0.321571
 Scale=1,1,1
 spawnPackage=2_VangarOneEye_k_50
+aiModule=custom_heathendel_knight40b
 sequential=1
 
 [ENTRY]
 ID=1090520341
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5020,779.862,1360
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=2_rm_DominionMinemaster_k_47
 links_count=1
@@ -873,7 +789,6 @@ link=1090520342,1
 
 [ENTRY]
 ID=1090520343
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5020,781.712,1360
@@ -885,7 +800,6 @@ link=1090520344,1
 
 [ENTRY]
 ID=1090520345
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5020,781.8,1360
@@ -897,7 +811,6 @@ link=1090520346,1
 
 [ENTRY]
 ID=1090520390
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5150,780,1365
@@ -909,17 +822,15 @@ link=1090520394,1
 
 [ENTRY]
 ID=1090520391
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5040,778.921,1415
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=2_rm_DominionOutridersRoom_47
 
 [ENTRY]
 ID=1090520392
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5055,780.334,1400
@@ -931,7 +842,6 @@ link=1090520393,1
 
 [ENTRY]
 ID=1090520393
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5055,778.176,1425
@@ -942,11 +852,10 @@ link=1090520392,1
 
 [ENTRY]
 ID=1090520394
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5155,780,1365
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=2_rm_DominionOutridersRoom_47
 links_count=1
@@ -954,7 +863,6 @@ link=1090520390,1
 
 [ENTRY]
 ID=1090520395
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5190,780,1355
@@ -964,17 +872,15 @@ spawnPackage=2_rm_DominionOutridersRoom_47
 
 [ENTRY]
 ID=1090520396
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5200,780,1330
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=2_rm_DominionOutridersRoom_47
 
 [ENTRY]
 ID=1090520397
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5245,780,1345
@@ -986,7 +892,6 @@ link=1090520398,1
 
 [ENTRY]
 ID=1090520398
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5245,780,1375
@@ -998,7 +903,6 @@ link=1090520399,1
 
 [ENTRY]
 ID=1090520399
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5245,780,1345
@@ -1010,7 +914,6 @@ link=1090520400,1
 
 [ENTRY]
 ID=1090520400
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5245,780,1375
@@ -1022,7 +925,6 @@ link=1090520401,1
 
 [ENTRY]
 ID=1090520401
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5245,780,1345
@@ -1034,7 +936,6 @@ link=1090520402,1
 
 [ENTRY]
 ID=1090520402
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5245,780,1375
@@ -1046,7 +947,6 @@ link=1090520403,1
 
 [ENTRY]
 ID=1090520403
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5245,780,1360
@@ -1058,7 +958,6 @@ link=1090520404,1
 
 [ENTRY]
 ID=1090520404
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5280,780,1360
@@ -1069,11 +968,10 @@ link=1090520403,1
 
 [ENTRY]
 ID=1090520405
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5370,779.822,1360
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=2_rm_DominionMinemaster_k_47
 links_count=1
@@ -1081,7 +979,6 @@ link=1090519759,1
 
 [ENTRY]
 ID=1090520407
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5405,780,1385
@@ -1091,7 +988,6 @@ spawnPackage=2_rm_DominionOutridersRoom_47
 
 [ENTRY]
 ID=1090520408
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5355,785.971,1330
@@ -1104,7 +1000,6 @@ link=1090520413,1
 
 [ENTRY]
 ID=1090520409
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5410,780,1335
@@ -1116,7 +1011,6 @@ link=1090520410,1
 
 [ENTRY]
 ID=1090520410
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5390,780,1375
@@ -1128,7 +1022,6 @@ link=1090520411,1
 
 [ENTRY]
 ID=1090520411
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5435,780,1360
@@ -1140,7 +1033,6 @@ link=1090520412,1
 
 [ENTRY]
 ID=1090520412
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5410,780,1325
@@ -1152,7 +1044,6 @@ link=1090520413,1
 
 [ENTRY]
 ID=1090520413
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5380,780,1345
@@ -1164,7 +1055,6 @@ link=1090520412,1
 
 [ENTRY]
 ID=1090520414
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5543.83,778.744,1403.88
@@ -1174,7 +1064,6 @@ spawnPackage=2_rm_DominionOutridersRoom_47
 
 [ENTRY]
 ID=1090520415
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5521.06,779.701,1297.18
@@ -1184,11 +1073,10 @@ spawnPackage=2_rm_DominionOutridersRoom_47
 
 [ENTRY]
 ID=1090520416
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5515,779.778,1355
-Orient=0,1,0,7.54979e-008
+Orient=0,1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=2_rm_DominionOutridersRoom_47
 links_count=1
@@ -1196,7 +1084,6 @@ link=1090520417,1
 
 [ENTRY]
 ID=1090520417
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5560,780.459,1345
@@ -1207,7 +1094,6 @@ link=1090520416,1
 
 [ENTRY]
 ID=1090520418
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5785.82,781.911,1478.98
@@ -1217,7 +1103,6 @@ spawnPackage=2_rm_DominionOutridersRoom_47
 
 [ENTRY]
 ID=1090520419
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5809.34,780.213,1486.13
@@ -1227,7 +1112,6 @@ spawnPackage=2_rm_DominionOutridersRoom_47
 
 [ENTRY]
 ID=1090520420
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5794.7,780.054,1502.66
@@ -1237,7 +1121,6 @@ spawnPackage=2_rm_DominionOutridersRoom_47
 
 [ENTRY]
 ID=1090520421
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5937.08,779.833,1514.46
@@ -1249,7 +1132,6 @@ link=1090520422,1
 
 [ENTRY]
 ID=1090520422
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5901.39,780,1568.76
@@ -1260,7 +1142,6 @@ link=1090520421,1
 
 [ENTRY]
 ID=1090520423
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5596.84,778.579,1550.21
@@ -1272,7 +1153,6 @@ link=1090520424,1
 
 [ENTRY]
 ID=1090520424
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5656.47,779.386,1561.75
@@ -1284,7 +1164,6 @@ link=1090520425,1
 
 [ENTRY]
 ID=1090520425
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5677.62,780,1584.78
@@ -1296,7 +1175,6 @@ link=1090520426,1
 
 [ENTRY]
 ID=1090520426
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5678.38,780,1611.23
@@ -1307,7 +1185,6 @@ link=1090520425,1
 
 [ENTRY]
 ID=1090520427
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5833.88,779.005,1404.49
@@ -1319,7 +1196,6 @@ link=1090520428,1
 
 [ENTRY]
 ID=1090520428
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5848.6,781.001,1463.35
@@ -1331,7 +1207,6 @@ link=1090520430,1
 
 [ENTRY]
 ID=1090520430
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5860.37,778.538,1534.31
@@ -1343,7 +1218,6 @@ link=1090520431,1
 
 [ENTRY]
 ID=1090520431
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5839.07,779.301,1560.61
@@ -1355,7 +1229,6 @@ link=1090520432,1
 
 [ENTRY]
 ID=1090520432
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5755.54,780.229,1538.27
@@ -1366,7 +1239,6 @@ link=1090520431,1
 
 [ENTRY]
 ID=1090520433
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5770,781.18,1240
@@ -1376,7 +1248,6 @@ spawnPackage=2_rm_DominionMinemaster_k_47
 
 [ENTRY]
 ID=1090520434
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5790,781.621,1225
@@ -1386,7 +1257,6 @@ spawnPackage=2_rm_DominionMinemaster_k_47
 
 [ENTRY]
 ID=1090520435
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5870,780.033,1310
@@ -1398,7 +1268,6 @@ link=1090520436,1
 
 [ENTRY]
 ID=1090520436
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5855,779.53,1275
@@ -1410,7 +1279,6 @@ link=1090520437,1
 
 [ENTRY]
 ID=1090520437
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5800,780.872,1245
@@ -1421,7 +1289,6 @@ link=1090520436,1
 
 [ENTRY]
 ID=1090520438
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5885,779.98,1305
@@ -1431,7 +1298,6 @@ spawnPackage=2_rm_DominionMinemaster_k_47
 
 [ENTRY]
 ID=1090520439
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5675,779.804,1185
@@ -1441,7 +1307,6 @@ spawnPackage=2_rm_DominionOutridersRoom_47
 
 [ENTRY]
 ID=1090520440
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5825,779.804,1145
@@ -1451,7 +1316,6 @@ spawnPackage=2_rm_DominionOutridersRoom_47
 
 [ENTRY]
 ID=1090520441
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5800,781.165,1135
@@ -1463,7 +1327,6 @@ link=1090520442,1
 
 [ENTRY]
 ID=1090520442
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5770,780,1185
@@ -1475,7 +1338,6 @@ link=1090520443,1
 
 [ENTRY]
 ID=1090520443
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5740,780,1180
@@ -1487,7 +1349,6 @@ link=1090520444,1
 
 [ENTRY]
 ID=1090520444
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5685,780,1195
@@ -1498,7 +1359,6 @@ link=1090520443,1
 
 [ENTRY]
 ID=1090520445
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5675,780,1265
@@ -1510,7 +1370,6 @@ link=1090520450,1
 
 [ENTRY]
 ID=1090520446
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5735,779.868,1265
@@ -1522,7 +1381,6 @@ link=1090520447,1
 
 [ENTRY]
 ID=1090520447
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5735,781.113,1415
@@ -1535,7 +1393,6 @@ link=1090520451,1
 
 [ENTRY]
 ID=1090520448
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5680,780.704,1465
@@ -1547,7 +1404,6 @@ link=1090520449,1
 
 [ENTRY]
 ID=1090520449
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5615,781.702,1360
@@ -1560,7 +1416,6 @@ link=1090520452,1
 
 [ENTRY]
 ID=1090520450
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5660,780.48,1315
@@ -1572,7 +1427,6 @@ link=1090520449,1
 
 [ENTRY]
 ID=1090520451
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5735,781.728,1415
@@ -1584,7 +1438,6 @@ link=1090520447,1
 
 [ENTRY]
 ID=1090520452
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5615,781.974,1360
@@ -1596,7 +1449,6 @@ link=1090520449,1
 
 [ENTRY]
 ID=1090520453
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5810.69,785.949,1588.48
@@ -1609,7 +1461,6 @@ link=1090520458,1
 
 [ENTRY]
 ID=1090520454
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5633.86,779.602,1294.74
@@ -1619,7 +1470,6 @@ spawnPackage=2_rm_DominionOutridersRoom_47
 
 [ENTRY]
 ID=1090520455
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5785,779.962,1565
@@ -1631,7 +1481,6 @@ link=1090520456,1
 
 [ENTRY]
 ID=1090520456
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5745,780.334,1585
@@ -1643,7 +1492,6 @@ link=1090520457,1
 
 [ENTRY]
 ID=1090520457
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5790,780.334,1600
@@ -1655,7 +1503,6 @@ link=1090520458,1
 
 [ENTRY]
 ID=1090520458
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5770,779.686,1560
@@ -1667,7 +1514,6 @@ link=1090520457,1
 
 [ENTRY]
 ID=1090520459
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5500,838.388,1530
@@ -1677,7 +1523,6 @@ spawnPackage=2_rm_DominionOutridersRoom_47
 
 [ENTRY]
 ID=1090520461
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5515,839.705,1555
@@ -1687,7 +1532,6 @@ spawnPackage=2_rm_DominionOutridersRoom_47
 
 [ENTRY]
 ID=1090520463
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5558.56,839.782,1568.71
@@ -1699,7 +1543,6 @@ link=1090519761,1
 
 [ENTRY]
 ID=1090520464
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5534.3,845.015,1137.46
@@ -1709,7 +1552,6 @@ spawnPackage=2_rm_battleBoars
 
 [ENTRY]
 ID=1090520465
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5550,844.373,1190
@@ -1721,7 +1563,6 @@ link=1090519767,1
 
 [ENTRY]
 ID=1090520466
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5990,840.736,1350
@@ -1731,7 +1572,6 @@ spawnPackage=2_rm_DominionMinemaster_k_47
 
 [ENTRY]
 ID=1090520468
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5990,840.382,1380
@@ -1741,7 +1581,6 @@ spawnPackage=2_rm_DominionMinemaster_k_47
 
 [ENTRY]
 ID=1090520469
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5956.35,839.492,1401.96
@@ -1753,7 +1592,6 @@ link=1090520470,1
 
 [ENTRY]
 ID=1090520470
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5965.69,840.04,1362.64
@@ -1765,7 +1603,6 @@ link=1090520471,1
 
 [ENTRY]
 ID=1090520471
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5889.91,810.687,1358.62
@@ -1776,7 +1613,6 @@ link=1090520470,1
 
 [ENTRY]
 ID=1090520592
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5875,779.729,1235

@@ -552,6 +552,7 @@ Pos=2454.53,698.604,1215.19
 Orient=0,-0.994409,0,0.105599
 Scale=1,1,1
 spawnPackage=1a_dng_gfl_Al'zahrazzi_m_47
+aiModule=custom_heathendel_rogueknight40
 
 [ENTRY]
 ID=402653599

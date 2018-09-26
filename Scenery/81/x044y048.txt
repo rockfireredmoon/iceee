@@ -1,51 +1,57 @@
 [ENTRY]
 ID=1358961229
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=44376.2,246.888,48973
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_mosquitoCamp03_general
-outerRadius=1
+wanderRadius=75
 
 [ENTRY]
 ID=1358961232
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=44102.5,229.78,48627
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_mosquitoCamp03_general
-outerRadius=1
+wanderRadius=75
 
 [ENTRY]
 ID=1358961237
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=44560.2,185.53,48529
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_mosquitoCamp03_general
-outerRadius=1
+wanderRadius=75
 
 [ENTRY]
 ID=1358961239
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=44770.2,235.695,48085
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_mosquitoCamp03_general
-outerRadius=1
+wanderRadius=75
 
 [ENTRY]
 ID=1358961240
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=44247.2,197.35,48161
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_mosquitoCamp03_general
-outerRadius=1
+wanderRadius=75
 
 [ENTRY]
 ID=1358961264
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=44975,200.504,48219
 Orient=0,0,0,1
 Scale=1,1,1
@@ -56,6 +62,7 @@ link=1358961265,1
 [ENTRY]
 ID=1358961265
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=44515,185.923,48490
 Orient=0,0,0,1
 Scale=1,1,1
@@ -66,6 +73,7 @@ link=1358961264,1
 [ENTRY]
 ID=1358966069
 Asset=Environment-Marker?type=Fields
+Name=Untitled
 Pos=44458.3,201.256,48299
 Orient=0,0,0,1
 Scale=6.75,6.75,6.75

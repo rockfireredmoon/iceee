@@ -41,7 +41,7 @@ Position=71586.0,932.0,63326.0
 [ENTRY]
 Name=Dambat Pass
 Comment=Swineland
-Position=29560.0,214.0,65552.0
+Position=82600.0,789.0,54831.0
 
 [ENTRY]
 Name=Grunes - Swineland Bridge
@@ -157,4 +157,9 @@ Position=74345.0,875.0,50945.0
 Name=War Town
 Comment=
 Position=72307.0,1075.0,52469.0
+
+[ENTRY]
+Name=Swineland Redeemer Camp
+Comment=[Comment here]
+Position=76831.0,977.0,50185.0
 

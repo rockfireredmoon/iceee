@@ -1,6 +1,5 @@
 [ENTRY]
 ID=1358960357
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=54231.4,185.835,62096
@@ -10,7 +9,6 @@ spawnPackage=1a_guineafowlCamp01_general
 
 [ENTRY]
 ID=1358960358
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=54543,192.03,62199
@@ -20,7 +18,6 @@ spawnPackage=1a_guineafowlCamp01_general
 
 [ENTRY]
 ID=1358960359
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=54307.8,199.085,62435
@@ -30,7 +27,6 @@ spawnPackage=1a_guineafowlCamp01_general
 
 [ENTRY]
 ID=1358962653
-PlacedBy=0
 Asset=CL-Hills_Tree2
 Name=Untitled
 Pos=54166,195.904,62564
@@ -40,7 +36,6 @@ Flags=1
 
 [ENTRY]
 ID=1358962926
-PlacedBy=0
 Asset=Bldg-Stable2#Bldg-Stable2?ATS=ATS-Wooden
 Name=Untitled
 Pos=54908.6,164.869,62317
@@ -50,7 +45,6 @@ Flags=1
 
 [ENTRY]
 ID=1358962935
-PlacedBy=0
 Asset=Prop-Haystack
 Name=Untitled
 Pos=54802.8,165.587,62234
@@ -59,7 +53,6 @@ Scale=2.15,2.15,2.15
 
 [ENTRY]
 ID=1358962936
-PlacedBy=0
 Asset=Prop-Well1#Prop-Well1
 Name=Untitled
 Pos=54913.3,166.077,62114
@@ -68,7 +61,6 @@ Scale=1.25,1.25,1.25
 
 [ENTRY]
 ID=1358962937
-PlacedBy=0
 Asset=Prop-Haystack#Prop-Haystack
 Name=Untitled
 Pos=54909.3,162.355,62228.5
@@ -77,7 +69,6 @@ Scale=2.85,2.85,2.85
 
 [ENTRY]
 ID=1358962938
-PlacedBy=0
 Asset=Prop-Haystack
 Name=Untitled
 Pos=54983.4,165.924,62233.1
@@ -86,7 +77,6 @@ Scale=2.15,2.15,2.15
 
 [ENTRY]
 ID=1358962939
-PlacedBy=0
 Asset=CL-Junk2
 Name=Untitled
 Pos=54777.1,167.345,62285
@@ -95,7 +85,6 @@ Scale=1.425,1.425,1.425
 
 [ENTRY]
 ID=1358962940
-PlacedBy=0
 Asset=CL-Junk_Barrel-Stack2#CL-Junk_Barrel-Stack2
 Name=Untitled
 Pos=54849.7,166.583,62124
@@ -104,7 +93,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1358962941
-PlacedBy=0
 Asset=Prop-Bucket
 Name=Untitled
 Pos=54921.9,166.967,62123
@@ -113,7 +101,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1358962944
-PlacedBy=0
 Asset=Prop-Haystack#Prop-Haystack
 Name=Untitled
 Pos=54812.8,167.103,62300
@@ -122,7 +109,6 @@ Scale=1.175,1.175,1.175
 
 [ENTRY]
 ID=1358962945
-PlacedBy=0
 Asset=Prop-Haystack
 Name=Untitled
 Pos=54850.8,167.103,62300
@@ -131,7 +117,6 @@ Scale=1.5,1.5,1.5
 
 [ENTRY]
 ID=1358964743
-PlacedBy=0
 Asset=Prop-Banner-Camelot2#Prop-Banner-Camelot2
 Name=Untitled
 Pos=54893.1,277.514,62807
@@ -141,7 +126,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964953
-PlacedBy=0
 Asset=Prop-Henge-SarsenStone#Prop-Henge-BlueStone
 Name=Untitled
 Pos=54233.3,152.22,62768
@@ -150,7 +134,6 @@ Scale=1.4,1.4,1.4
 
 [ENTRY]
 ID=1358964955
-PlacedBy=0
 Asset=Prop-Henge-SarsenStone#Prop-Henge-BlueStone
 Name=Untitled
 Pos=54007.9,199.996,62397
@@ -159,7 +142,6 @@ Scale=1.675,1.675,1.675
 
 [ENTRY]
 ID=1358964956
-PlacedBy=0
 Asset=Prop-Henge-SarsenStone#Prop-Henge-BlueStone
 Name=Untitled
 Pos=54203.7,147.266,62853
@@ -168,7 +150,6 @@ Scale=1.5,1.5,1.5
 
 [ENTRY]
 ID=1358965478
-PlacedBy=-400000056
 Asset=Bldg-Wall18_Camelot?ATS=ATS-Castle_Camelot
 Name=Untitled
 Pos=54903.7,147.733,62918
@@ -178,7 +159,6 @@ Flags=1
 
 [ENTRY]
 ID=1358967225
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=54351.1,196.538,62411.4
@@ -188,7 +168,6 @@ spawnPackage=HOLIDAY_turkatrice_15_16
 
 [ENTRY]
 ID=1358967227
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=54190.8,190.9,62077.8
@@ -198,7 +177,6 @@ spawnPackage=HOLIDAY_turkatrice_15_16
 
 [ENTRY]
 ID=1358967500
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=54229,153.391,62854.5
@@ -208,7 +186,6 @@ spawnPackage=HOLIDAY_turkatrice_15_16
 
 [ENTRY]
 ID=1358967505
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=54023.6,186.906,62501.5
@@ -220,7 +197,6 @@ link=1358967506,1
 
 [ENTRY]
 ID=1358967506
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=54069.4,177.287,62620.1
@@ -232,7 +208,6 @@ link=1358967507,1
 
 [ENTRY]
 ID=1358967507
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=54124.5,163.558,62711.3
@@ -243,7 +218,6 @@ link=1358967506,1
 
 [ENTRY]
 ID=1358967614
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=54213.5,194.705,62338.1
@@ -255,7 +229,6 @@ link=1358967615,1
 
 [ENTRY]
 ID=1358968573
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=54845,151.99,62991.6

@@ -289,7 +289,7 @@ Scale=5,5,5
 [ENTRY]
 ID=1126556
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=71666.3,943.17,63247.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -297,7 +297,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1126557
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=71663.9,942.847,63252
 Orient=0,0,0,1
 Scale=1,1,1
