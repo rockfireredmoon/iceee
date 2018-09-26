@@ -1,36 +1,4 @@
 [ENTRY]
-ID=1154739
-Asset=CL-Vampire#CL-Vampire_Camp1
-Name=Untitled
-Pos=6754.71,605.363,7085.94
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
-ID=1154740
-Asset=Prop-Spider_Webs#Prop-Spider_Webs1
-Name=Untitled
-Pos=6735.61,605.611,7225.63
-Orient=0,-0.703279,0,0.710914
-Scale=1,1,1
-
-[ENTRY]
-ID=1154746
-Asset=Prop-Dungeon_Accents1#Prop-Dungeon-Cobwebs1
-Name=Untitled
-Pos=6037.48,695.657,7178.19
-Orient=0,0.352274,0,0.935897
-Scale=1,1,1
-
-[ENTRY]
-ID=1154750
-Asset=Prop-Vampire1#Prop-Vampire_Wagon
-Name=Untitled
-Pos=6193.11,611.157,7344.63
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
 ID=989855873
 Asset=Prop-Log2#Prop-Log2
 Name=Untitled
@@ -55,11 +23,35 @@ Orient=0,0.257081,0,0.96639
 Scale=1.5,1.5,1.5
 
 [ENTRY]
+ID=989856156
+Asset=Prop-Tent
+Name=Untitled
+Pos=6775.51,605.184,7162.83
+Orient=0,0.0898785,0,0.995953
+Scale=1.5,1.5,1.5
+
+[ENTRY]
+ID=989856157
+Asset=Prop-Campfire
+Name=Untitled
+Pos=6806.77,605.426,7089.95
+Orient=0,0,0,1
+Scale=1.5,1.5,1.5
+
+[ENTRY]
 ID=989856158
 Asset=Prop-Table4
 Name=Untitled
-Pos=6831.63,604.484,7115.05
+Pos=6833.22,604.46,7113.14
 Orient=0,0.37092,0,0.928665
+Scale=1.5,1.5,1.5
+
+[ENTRY]
+ID=989856159
+Asset=Prop-Crate3
+Name=Untitled
+Pos=6801.37,605.51,7142.8
+Orient=0,0.257081,0,0.96639
 Scale=1.5,1.5,1.5
 
 [ENTRY]
@@ -85,7 +77,7 @@ Name=Untitled
 Pos=6721.69,608.353,7112.86
 Orient=0,-0.974616,0,0.223883
 Scale=1,1,1
-spawnPackage=#3497
+spawnPackage=def_989855786
 links_count=1
 link=989856169,1
 
@@ -93,7 +85,7 @@ link=989856169,1
 ID=989856166
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
-Pos=6756.56,605.564,7068.92
+Pos=6692.53,606.427,7065.62
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=1
@@ -125,7 +117,7 @@ link=989856167,1
 ID=989856169
 Asset=Manipulator-PathNode
 Name=Untitled
-Pos=6670.39,605.715,7140.82
+Pos=6737.61,607.226,7175.63
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=2
@@ -136,10 +128,10 @@ link=989856168,1
 ID=989856170
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=6829.76,616.622,7115.58
+Pos=6832.77,616.622,7113.96
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#2171
+spawnPackage=def_989855787
 despawnTime=10
 
 [ENTRY]
@@ -149,7 +141,7 @@ Name=Untitled
 Pos=6809.56,605.529,7108.84
 Orient=0,0.991458,0,0.130424
 Scale=1,1,1
-spawnPackage=#3498
+spawnPackage=def_989855799
 
 [ENTRY]
 ID=989856248

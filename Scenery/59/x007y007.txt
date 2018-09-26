@@ -1,7 +1,6 @@
 [ENTRY]
 ID=989855874
 Asset=Prop-Log2
-Name=Untitled
 Pos=7320.29,437.832,7020.4
 Orient=0.0148098,0.981743,-0.0023779,0.189619
 Scale=3.275,3.275,3.275
@@ -9,7 +8,6 @@ Scale=3.275,3.275,3.275
 [ENTRY]
 ID=989855951
 Asset=Prop-Boat-Fishing#Prop-Boat-Fishing
-Name=Untitled
 Pos=7126.16,429.709,7222.83
 Orient=0,0.622233,0,-0.782832
 Scale=1,1,1
@@ -18,7 +16,6 @@ Flags=1
 [ENTRY]
 ID=989856171
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=7121.93,427.411,7195.23
 Orient=0,0,0,1
 Scale=1,1,1
@@ -27,7 +24,6 @@ spawnPackage=def_989855789
 [ENTRY]
 ID=989856231
 Asset=Prop-Interact_Rectangle
-Name=Untitled
 Pos=7445.98,264.857,7005.82
 Orient=0,-0.0433955,0,-0.999058
 Scale=15,15,15
@@ -36,7 +32,6 @@ Flags=1
 [ENTRY]
 ID=989856250
 Asset=Prop-Boat_Parts1
-Name=Untitled
 Pos=7135.05,427.63,7547.54
 Orient=0.488872,0.000694738,0.872355,0.000389334
 Scale=1.9,1.9,1.9
@@ -44,7 +39,6 @@ Scale=1.9,1.9,1.9
 [ENTRY]
 ID=989856251
 Asset=Prop-Boat_Parts1
-Name=Untitled
 Pos=7095.62,425.662,7586.41
 Orient=-0.138755,0.000788689,0.990326,-0.000110503
 Scale=1.875,1.875,1.875
@@ -52,7 +46,6 @@ Scale=1.875,1.875,1.875
 [ENTRY]
 ID=989856252
 Asset=Prop-Boat_Parts1
-Name=Untitled
 Pos=7025.11,427.63,7423.04
 Orient=1,0,0,0.000796393
 Scale=1.375,1.375,1.375
@@ -60,7 +53,6 @@ Scale=1.375,1.375,1.375
 [ENTRY]
 ID=989856324
 Asset=Prop-Interact_Rectangle
-Name=Untitled
 Pos=7273.49,271.209,7373.85
 Orient=0,0.445373,0,-0.895345
 Scale=15,15,15
@@ -69,7 +61,6 @@ Flags=1
 [ENTRY]
 ID=989856325
 Asset=Effects#Par-Waves-1-Emitter
-Name=Untitled
 Pos=7605.16,425.367,7107.54
 Orient=0,0.213347,0,0.976977
 Scale=1.5,1.5,1.5
@@ -77,15 +68,13 @@ Scale=1.5,1.5,1.5
 [ENTRY]
 ID=989856326
 Asset=Par-Waves-1-Emitter
-Name=Untitled
 Pos=7226.78,425.537,7277.36
 Orient=0,0.342898,0,0.939373
 Scale=1.5,1.5,1.5
 
 [ENTRY]
 ID=989856370
-Asset=Sound?SOUND=Sound-Ambient-Oceanloop.ogg&amp
-Name=Untitled
+Asset=Sound?SOUND=Sound-Ambient-Oceanloop.ogg&amp;GAIN=0.4
 Pos=7069.6,460.965,7298.93
 Orient=0,0.00499998,0,0.999987
 Scale=1,1,1
@@ -93,8 +82,7 @@ Flags=1
 
 [ENTRY]
 ID=989856373
-Asset=Sound?SOUND=Sound-Ambient-Wave1.ogg&amp
-Name=Untitled
+Asset=Sound?SOUND=Sound-Ambient-Wave1.ogg&amp;GAIN=0.4
 Pos=7329.13,438.994,7133.6
 Orient=0,0,0,1
 Scale=1,1,1
@@ -102,8 +90,7 @@ Flags=1
 
 [ENTRY]
 ID=989856374
-Asset=Sound?SOUND=Sound-Ambient-Wave2.ogg&amp
-Name=Untitled
+Asset=Sound?SOUND=Sound-Ambient-Wave2.ogg&amp;GAIN=0.3
 Pos=7207.28,435.781,7321.54
 Orient=0,0,0,1
 Scale=1,1,1

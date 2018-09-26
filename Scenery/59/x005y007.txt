@@ -1,15 +1,6 @@
 [ENTRY]
-ID=1154747
-Asset=Prop-Dungeon_Accents1#Prop-Dungeon-Cobwebs1
-Name=
-Pos=5998.29,677.753,7153.24
-Orient=0,0.183947,0,0.982936
-Scale=1,1,1
-
-[ENTRY]
 ID=989856196
 Asset=Prop-Giant_Mushroom2
-Name=Untitled
 Pos=5224.51,548.384,7187.65
 Orient=0.162234,0.323053,0.0967704,0.927336
 Scale=1.775,1.775,1.775
@@ -17,7 +8,6 @@ Scale=1.775,1.775,1.775
 [ENTRY]
 ID=989856228
 Asset=CL-Wooden_Fence1
-Name=Untitled
 Pos=5781.72,610.393,7049.84
 Orient=-0.00170626,-0.51418,0.0222924,0.857391
 Scale=1.2,1.2,1.2
@@ -25,7 +15,6 @@ Scale=1.2,1.2,1.2
 [ENTRY]
 ID=989856235
 Asset=Prop-Fences#Prop-Fence_Piece2
-Name=Untitled
 Pos=5762.79,622.117,7019.09
 Orient=-0.0569779,0.875348,-0.0311861,0.47911
 Scale=1.2,1.2,1.2
@@ -33,7 +22,6 @@ Scale=1.2,1.2,1.2
 [ENTRY]
 ID=989856296
 Asset=Prop-Giant_Mushroom1
-Name=Untitled
 Pos=5844.25,460.702,7654.19
 Orient=0.0767082,-0.833069,-0.150179,-0.526838
 Scale=1.075,1.075,1.075
@@ -41,7 +29,6 @@ Scale=1.075,1.075,1.075
 [ENTRY]
 ID=989856320
 Asset=Prop-Interact_Rectangle
-Name=Untitled
 Pos=5774.76,541.237,7104.99
 Orient=0,0.252246,0,0.967663
 Scale=9,9,9
@@ -49,7 +36,6 @@ Scale=9,9,9
 [ENTRY]
 ID=989856327
 Asset=Effects#Par-Waves-1-Emitter
-Name=Untitled
 Pos=5585.02,425.415,7689.07
 Orient=0,-0.535416,0,0.844589
 Scale=2,2,2
@@ -57,7 +43,6 @@ Scale=2,2,2
 [ENTRY]
 ID=989856329
 Asset=Par-Waves-1-Emitter
-Name=Untitled
 Pos=5292.65,425.415,7442.75
 Orient=0,0.149438,0,0.988771
 Scale=2,2,2
@@ -65,7 +50,6 @@ Scale=2,2,2
 [ENTRY]
 ID=989856330
 Asset=Prop-Bush-Large3#Prop-Bush-Large3
-Name=Untitled
 Pos=5945.16,618.98,7197.64
 Orient=0,0,0,1
 Scale=1.975,1.975,1.975

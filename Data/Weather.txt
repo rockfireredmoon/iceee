@@ -1,5 +1,5 @@
 [ENTRY]
-Name=Corsica
+Name=XXXX_Corsica
 FineMin=300
 FineMax=1200
 LightChance=100
@@ -14,7 +14,7 @@ ThunderGapMax=60
 Escalate=0
 
 [ENTRY]
-Name=Earthrise
+Name=XXXX_Earthrise
 FineMin=300
 FineMax=1200
 LightChance=100
@@ -29,7 +29,7 @@ ThunderGapMax=60
 Escalate=0
 
 [ENTRY]
-Name=Anglorum
+Name=XXXX_Anglorum
 FineMin=300
 FineMax=1200
 LightChance=100
@@ -44,11 +44,11 @@ ThunderGapMax=60
 Escalate=50
 
 [ENTRY]
-Name=Camelot
+Name=XXXX_Camelot
 Use=Anglorum
 
 [ENTRY]
-Name=Ironstone
+Name=XXXX_Ironstone
 FineMin=300
 FineMax=1200
 LightChance=100
@@ -61,7 +61,7 @@ ThunderChance=0
 Escalate=50
 
 [ENTRY]
-Name=New Bremen
+Name=Winterland
 FineMin=30
 FineMax=40
 LightChance=100

@@ -5,7 +5,7 @@ Sequence=0
 
 [PARAGRAPH]
 Type=0
-Value=The Mages welcome you to the 'Earth Eternal - Valkal's Shadow' launch event!
+Value=The Mages welcome you to the Earth Eternal!
 [PARAGRAPH]
 Type=0
 Value=New beasts who wish to follow the magical profession, come see me and I will set you on your way.

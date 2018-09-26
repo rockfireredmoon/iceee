@@ -5,7 +5,7 @@ Sequence=0
 
 [PARAGRAPH]
 Type=0
-Value=Newcomer! Mother Gaia needs you, the Druids of Gaia need you! Come join us for the 'Earth Eternal - Valkal's Shadow' launch event!
+Value=Newcomer! Mother Gaia needs you, the Druids of Gaia need you! Come join us.
 [PARAGRAPH]
 Type=0
 Value=As a Druid, you will harness the very forces of nature. Interested? Well I can point you down the path...

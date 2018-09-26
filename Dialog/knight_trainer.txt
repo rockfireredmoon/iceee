@@ -5,7 +5,7 @@ Sequence=1
 
 [PARAGRAPH]
 Type=0
-Value=The Knights Of Gaia greet you. Come join us for the 'Earth Eternal - Valkal's Shadow' launch event!
+Value=The Knights Of Gaia greet you. Come join us!
 [PARAGRAPH]
 Type=0
 Value=Honorable beasts who wish to follow the path of the Knight. Come closer, for I have information for you.
