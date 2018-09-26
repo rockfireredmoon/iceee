@@ -381,3 +381,15 @@ u0=8909
 v0=10790
 u1=13651
 v1=14074
+
+[ENTRY]
+Name=Winterland
+Primary=Maps-Winterland
+Type=World
+numPagesAcross=3
+numPagesDown=2
+image=Starting_Grove_Map_World_Grove
+u0=0
+v0=1920
+u1=5760
+v1=5760
