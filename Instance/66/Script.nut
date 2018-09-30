@@ -146,8 +146,8 @@ finished <- false;
 
 // Debug
 no_adds <- false;
-debug <- true;
-verbose_debug <- true;
+debug <- false;
+verbose_debug <- false;
 manual_trigger <- false;
 
 /* Keep scanning for Valkal1 until he spawns. When he does, we start to monitor his health  */ 
