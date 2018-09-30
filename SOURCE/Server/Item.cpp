@@ -160,7 +160,7 @@ InventoryMappingDef InventoryMapping[InventoryMappingCount] = {
 	{"buyback",   4 },
 	{"trade",     5 },
 	{"stamps",    7 },
-	{"develiery", 8 },
+	{"delivery",  8 },
 	{"auction",   9 },
 	{"bookshelf", 10 }
 };

@@ -29,7 +29,7 @@ base=$(pwd)
 
 folder="$1"
 if [ -z "$folder" ] ; then
-	echo  "$0: <name> <folder>" >&2
+	echo  "$0: <folder>" >&2
 	exit 1
 fi
 
@@ -39,7 +39,8 @@ for i in "${folder}"/* ; do
 	name=$(echo "${base}"|awk -F. '{ print $1 }')
 	pos=$(echo "${name}"|awk -F_ '{ print $NF }')
 	terrain=$(echo "${name}"|awk -F_ '{ print $1 }')
-	mkdir -p SOURCE/AssetPatches/Terrain-${terrain}_${pos}
+	mkdir -p ../sparkplayer-eartheternal/src/assets/Terrain-${terrain}_${pos}
 	echo "Moving $pos / $terrain"
-	mv "${i}" SOURCE/AssetPatches/Terrain-${terrain}_${pos}
+	echo "mv \"${i}\" ../sparkplayer-eartheternal/src/assets/Terrain-${terrain}_${pos}"
+	mv "${i}" ../sparkplayer-eartheternal/src/assets/Terrain-${terrain}_${pos}
 done

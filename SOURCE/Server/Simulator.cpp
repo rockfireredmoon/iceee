@@ -4355,7 +4355,7 @@ int SimulatorThread :: handle_query_item_move(void)
 
 	if(destContainer == -1)
 	{
-		LogMessageL(MSG_ERROR, "[ERROR] item.move: unknown destination container [%s] for CCSID [%lu]", query.args[0].c_str(), CCSID);
+		LogMessageL(MSG_ERROR, "[ERROR] item.move: unknown destination container [%s] (%s) for CCSID [%lu]", query.args[0].c_str(), query.args[1].c_str(), CCSID);
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Unknown destination container.");
 	}
 
