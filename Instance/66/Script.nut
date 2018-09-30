@@ -48,6 +48,8 @@ class TargetPos {
 
 // Abilities
 const HEALING_SCREAM = 24009;
+const HEALING_SCREAM_FIRST = 24013;
+const HEALING_SCREAM_SECOND = 24013;
 const SELF_STUN = 24008;
 const TRIBUTE = 24005;
 const BRINGING_DOWN_THE_HOUSE = 24006;
@@ -301,7 +303,7 @@ function valkal_2_engage() {
 					
         		heal(cid_valkal2, 100, function() {
         			valkal2_health();
-        		});
+        		}, HEALING_SCREAM);
         		return; 
         	}
         }
@@ -313,11 +315,11 @@ function valkal_2_engage() {
 
 /* Keeping a creature self healing until they gets to a limit, then queue
  * another function */
-function heal(cid, limit, on_healed) {
+function heal(cid, limit, on_healed, ability) {
 	if(inst.get_health_pc(cid) < limit) {
-    	inst.creature_use(cid, HEALING_SCREAM);
+    	inst.creature_use(cid, ability);
     	inst.exec(function() {
-    		heal(cid, limit, on_healed);
+    		heal(cid, limit, on_healed, ability);
     	});
     }
     else
@@ -326,12 +328,12 @@ function heal(cid, limit, on_healed) {
 
 /* Starts the sequence of Valkal 1 running from the fight his platform to
    heal. */
-function valkal_1_heal_sequence() {
+function valkal_1_heal_sequence(ability) {
     if(debug)
 		inst.info("Heal sequence");
     disengage_valkal(cid_valkal1);
 	inst.walk_then(cid_valkal1, loc_platform_centre, loc_platform_rot, CREATURE_JOG_SPEED, 0, function(res) {
-        heal(cid_valkal1, 95, valkal_1_engage); 
+        heal(cid_valkal1, 95, valkal_1_engage, ability); 
 	});
 }
 
@@ -348,7 +350,7 @@ function valkal_2_heal_sequence(spawns) {
         	if(debug)
         		inst.info("Looking for spot to walk to");
        		valkal_2_pick_spot(spawns);
-        }); 
+        }, HEALING_SCREAM); 
 	});
 }
 
@@ -639,7 +641,7 @@ function valkal1_health() {
 	        if(debug)
 	        	inst.info("Heal 2");
 	        phase = 5;
-	        valkal_1_heal_sequence();
+	        valkal_1_heal_sequence(HEALING_SCREAM_SECOND);
 			spawn_adds(valkal_1_palatine_adds.len() / 2, valkal_1_palatine_adds);
 	        return;
 	    }
@@ -653,7 +655,7 @@ function valkal1_health() {
 	        if(debug)
 	        	inst.info("Heal 1");
 	        phase = 3;
-	        valkal_1_heal_sequence();
+	        valkal_1_heal_sequence(HEALING_SCREAM_FIRST);
 			spawn_adds(valkal_1_palatine_adds.len() / 2, valkal_1_palatine_adds);
 	        return;
 	    }
