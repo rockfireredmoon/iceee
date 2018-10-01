@@ -74715,6 +74715,7 @@ rarity=3
 base_damage_melee=422
 ai_package=custom_heathendel_deathdruid40
 total_size=2
+ExtraData=namedmob=&droprateprofile=bloodkeep_valkal
 
 [ENTRY]
 ID=3454
