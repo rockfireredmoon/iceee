@@ -8308,7 +8308,14 @@ int SimulatorThread :: handle_query_trade_essence(void)
 	if(currentItemCount < iptr->EssenceCost)
 	{
 		LogMessageL(MSG_SHOW, "DEBUG] Essence requirement for item %d: %d / %d", esptr->EssenceID, currentItemCount, iptr->EssenceCost);
-		return PrepExt_QueryResponseString(SendBuf, query.ID, "You do not have enough essences.");
+		ItemDef *item = g_ItemManager.GetSafePointerByID(esptr->EssenceID);
+		if(item == NULL)
+			Util::SafeFormat(Aux1, sizeof(Aux1), "You do not have enough essences. %d %s required.", iptr->EssenceCost, iptr->EssenceCost < 2 ? "is": "are");
+		else if(iptr->EssenceCost == 1)
+			Util::SafeFormat(Aux1, sizeof(Aux1), "A %s is required in exchange for this item.", item->mDisplayName.c_str());
+		else
+			Util::SafeFormat(Aux1, sizeof(Aux1), "%d %ss are required in exchange in for this. ", iptr->EssenceCost, item->mDisplayName.c_str());
+		return PrepExt_QueryResponseString(SendBuf, query.ID, Aux1);
 	}
 
 	InventorySlot *newItem = pld.charPtr->inventory.AddItem_Ex(INV_CONTAINER, iptr->ItemID, 1);
