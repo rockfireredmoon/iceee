@@ -11230,7 +11230,7 @@ exit:
 	// Inform the active player if we have one
 	if(inst != NULL && itemsSent > 0) {
 		inst->simulatorPtr->SendInventoryData(destInv->containerList[DELIVERY_CONTAINER]);
-		Util::SafeFormat(Aux1, sizeof(Aux1), "%s just sent you %d item%s to your delivery box. You may collect at any vault.", pld.charPtr->cdef.css.display_name, itemsSent);
+		Util::SafeFormat(Aux1, sizeof(Aux1), "%s just sent you %d item%s to your delivery box. You may collect at any vault.", pld.charPtr->cdef.css.display_name, itemsSent, itemsSent < 2 ? "" : "s");
 		inst->simulatorPtr->SendInfoMessage(Aux1,  INFOMSG_INFO);
 	}
 
