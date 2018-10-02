@@ -39,15 +39,6 @@ links_count=1
 link=151027860,1
 
 [ENTRY]
-ID=1155002
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=66638.1,667.963,58298.1
-Orient=0,0.977865,0,0.209239
-Scale=1,1,1
-spawnPackage=#F7808
-
-[ENTRY]
 ID=1155006
 Asset=Prop-Warpig_Walls#Prop-Warpig_Tower
 Name=Untitled

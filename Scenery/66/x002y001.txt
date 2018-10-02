@@ -174,7 +174,7 @@ Scale=2.3,2.3,2.3
 ID=938483
 Asset=Prop-Vampire_Chair#Prop-Vampire_Chair
 Name=Scenery/82168
-Pos=4355.1,502.602,2790.99
+Pos=4339.15,502.602,2720.08
 Orient=0,-0.710353,0,0.703845
 Scale=3.325,3.325,3.325
 

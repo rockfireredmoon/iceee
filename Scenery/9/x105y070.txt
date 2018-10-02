@@ -43,7 +43,7 @@ ID=1150670
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
 Pos=79426,1310,53102.4
-Orient=0,-0.247404,0,0.968912
+Orient=0,-0.29552,0,0.955336
 Scale=1,1,1
 spawnPackage=#F7866
 
