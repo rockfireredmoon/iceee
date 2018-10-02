@@ -1126,7 +1126,6 @@ Spawn=951,10  ;Stump Slayer (43) at 0
 [ENTRY]
 Name=4_ewd_greySunMix2_35
 spawnDelay=300
-loyaltyRadius=120
 Spawn=1093,50  ;Greysun Armsman (35) at 0
 Spawn=1094,50  ;Greysun Brigand (35) at 0
 
