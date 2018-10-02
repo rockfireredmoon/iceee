@@ -996,7 +996,6 @@ Spawn=1119,100  ;Black Shroomling Spore Cropper (38) at 0
 
 [ENTRY]
 Name=4_hwo_greysunMix_35
-loyaltyRadius=120
 spawnDelay=300
 Spawn=1090,50  ;Greysun Assassin (35) at 0
 Spawn=1091,50  ;Greysun Brawler (35) at 0
@@ -1004,13 +1003,11 @@ Spawn=1091,50  ;Greysun Brawler (35) at 0
 ; TODO: is this a boss? it has 3 spawn points
 [ENTRY]
 Name=4_hwo_greysun_GalenFrostfist_h_35
-loyaltyRadius=120
 spawnDelay=300
 Spawn=1092,100  ;Galen Frostfist (35) at 18
 
 [ENTRY]
 Name=4_hwo_greysunAssassin_35
-loyaltyRadius=120
 spawnDelay=300
 Spawn=1090,100  ;Greysun Assassin (35) at 0
 
