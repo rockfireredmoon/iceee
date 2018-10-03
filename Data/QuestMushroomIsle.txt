@@ -32,10 +32,9 @@ Obj.0.markerLocations=5560,678,5950,59;
 ID=381
 Requires=378
 Profession=4
-Title=Wings of Death
-BodyText=We must move like the wind, for battle is nearly upon you! Valkal's Shadow has stretched far indeed! his reach has now begun to infect our sacred Groves!
+Title=Wings of Fire
+BodyText=We must move like the wind, for battle is nearly upon you!
 
-You must purge his ilk from this island destroy those Vampiders!
 * Right-click on an enemy to begin combat.
 * Press '2' (or 2nd button on quickbar) to engage auto-attack with your bow.
 * Press '3' or the third button on your quickbar to use the Sting ability, which uses three Might - the green orbs above your health bar in the upper-left part of the screen. Kill three Flamemoths by the ocean cliffs to the southwest and then talk to me again.
@@ -63,9 +62,9 @@ Act.BodyText=We must move like the wind, for battle is nearly upon you!
 * Press '2' (or 2nd button on quickbar) to engage auto-attack with your bow.
 * Press '3' or the third button on your quickbar to use the Sting ability, which uses three Might - the green orbs above your health bar in the upper-left part of the screen. Kill three Flamemoths by the ocean cliffs to the southwest and then talk to me again.
 Obj.0.type=kill
-Obj.0.data1=3496
+Obj.0.data1=2168
 Obj.0.data2=3
-Obj.0.description=Slay 3 Vampider Hatchlings
+Obj.0.description=Slay 3 Flamemoths
 Obj.0.complete=0 of 3
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
@@ -90,7 +89,7 @@ ID=382
 Requires=381
 Profession=4
 Title=Fix Your Escape Boat
-BodyText=There's a boat to the Southeast that you can use to escape the island, but the Vampires have dismantled it! You'll need a hammer to repair.  There might be one in the Vampire Raider camp near the beach!
+BodyText=There's a boat waiting for you on the beach down the path to the southeast. You'll need a hammer to repair it, which you can probably find in a Dvergar Raider's camp near the beach.
 
 * Each time you use the Sting ability (a 'Charge Ability') you will generate Melee charges.
 
@@ -116,7 +115,7 @@ Each time you use the Sting abilty (a 'Charge Ability') you will generate Melee 
 Obj.0.type=travel
 Obj.0.data1=6307,598,7251,59
 Obj.0.data2=150
-Obj.0.description=Find the Vampire's camp.
+Obj.0.description=Find the raider's camp.
 Obj.0.complete=
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
@@ -168,10 +167,8 @@ Obj.0.markerLocations=15854,1116,12749,58;
 ID=385
 Requires=378
 Profession=3
-Title=Wings of Death
-BodyText=Greetings, fellow seeker of the mystical arts. I must instruct you quickly, for danger lurks everywhere.  Valkal's Shadow has stretched far indeed! his reach has now begun to infect our sacred Groves!
-
-You must purge his ilk from this island destroy those Vampiders!
+Title=Wings of Fire
+BodyText=Greetings, fellow seeker of the mystical arts. I must instruct you quickly, for danger lurks everywhere.
 
 * Right-click on an enemy to begin combat.
 * Press '2' (or 2nd button on quickbar) to engage auto-attack with your wand.
@@ -200,9 +197,9 @@ Act.BodyText=Greetings, fellow seeker of the mystical arts. I must instruct you 
 * Press '2' (or 2nd button on quickbar) to engage auto-attack with your wand.
 * Press '3' (or 3rd button on quickbar) to use the Firebolt ability, which uses three Will - the blue orbs under your health bar in the upper-left part of the screen. Kill three Flamemoths by the ocean cliffs to the southwest and then talk to me again.
 Obj.0.type=kill
-Obj.0.data1=3496
+Obj.0.data1=2168
 Obj.0.data2=3
-Obj.0.description=Slay 3 Vampider Hatchlings
+Obj.0.description=Slay 3 Flamemoths
 Obj.0.complete=0 of 3
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
@@ -227,7 +224,7 @@ ID=386
 Requires=385
 Profession=3
 Title=Fix Your Escape Boat
-BodyText=There's a boat to the Southeast that you can use to escape the island, but the Vampires have dismantled it! You'll need a hammer to repair.  There might be one in the Vampire Raider camp near the beach!
+BodyText=There's a boat waiting for you on the beach down the path to the southeast. You'll need a hammer to repair it, which you can probably find in a Dvergar Raider's camp near the beach.
 
 * Each time you use the Firebolt ability (a 'Charge Ability') you will generate Magic charges.
 
@@ -254,7 +251,7 @@ Act.BodyText=There's a boat waiting for you on the beach down the path to the so
 Obj.0.type=travel
 Obj.0.data1=6307,598,7251,59
 Obj.0.data2=150
-Obj.0.description=Find the Vampire's camp.
+Obj.0.description=Find the raider's camp.
 Obj.0.complete=
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
@@ -303,10 +300,8 @@ Obj.0.markerLocations=15854,1116,12749,58;
 ID=379
 Requires=378
 Profession=1
-Title=Wings of Death
-BodyText=Let's get to it, soldier! No time to lose, as you'll be in the thick of battle soon.  Valkal's Shadow has stretched far indeed! his reach has now begun to infect our sacred Groves!
-
-You must purge his ilk from this island destroy those Vampiders!
+Title=Wings of Fire
+BodyText=Let's get to it, soldier! No time to lose, as you'll be in the thick of battle soon.
 
 * Right-click on an enemy to begin combat.
 * Press '1' (or 1st button on quickbar) to engage auto-attack (you must be in close range to attack with your sword).
@@ -335,9 +330,9 @@ Act.BodyText=Let's get to it, soldier! No time to lose, as you'll be in the thic
 * Press '1' (or 1st button on quickbar) to engage auto-attack (you must be in close range to attack with your sword).
 * Press '3' (or 3rd button on quickbar) to use the Assault ability, which uses three Might - the green orbs above your health bar in the upper-left part of the screen. Kill three Flamemoths by the ocean cliffs to the southwest and then talk to me again.
 Obj.0.type=kill
-Obj.0.data1=3496
+Obj.0.data1=2168
 Obj.0.data2=3
-Obj.0.description=Slay 3 Vampider Hatchlings
+Obj.0.description=Slay 3 Flamemoths
 Obj.0.complete=0 of 3
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
@@ -362,10 +357,10 @@ ID=380
 Requires=379
 Profession=1
 Title=Fix Your Escape Boat
-BodyText=There's a boat to the Southeast that you can use to escape the island, but the Vampires have dismantled it! You'll need a hammer to repair.  There might be one in the Vampire Raider camp near the beach!
+BodyText=There's a boat waiting for you on the beach down the path to the southeast. You'll need a hammer to repair it, which you can probably find in a Dvergar Raider's camp near the beach.
 
 * Each time you use the Assault ability (a 'Charge Ability') you will generate Melee charges.
-* You then use those Melee charges to power 'Execute Abilities' such as the Shieldbash ability (press '4' to use it).
+* You then use those Melee charges to power 'Execute Abilities' such as the Shield Bash ability (press '4' to use it).
 CompleteText=Welcome to Corsica! Glad to see you've made it. 
 Level=1
 Suggested=1
@@ -386,7 +381,7 @@ Each time you use the Assault ability (a 'Charge Ability') you will generate Mel
 Obj.0.type=travel
 Obj.0.data1=6307,598,7251,59
 Obj.0.data2=150
-Obj.0.description=Find the Vampire's camp.
+Obj.0.description=Find the raider's camp.
 Obj.0.complete=
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
@@ -436,10 +431,8 @@ Obj.0.markerLocations=15854,1116,12749,58;
 ID=383
 Requires=378
 Profession=2
-Title=Wings of Death
-BodyText=Hail and well met! We must get started for there's dark work to be done ahead of you.  Valkal's Shadow has stretched far indeed! his reach has now begun to infect our sacred Groves!
-
-You must purge his ilk from this island destroy those Vampiders!
+Title=Wings of Fire
+BodyText=Hail and well met! We must get started for there's dark work to be done ahead of you.
 
 * Right-click on an enemy to begin combat.
 * Press '1' (or first button on quickbar) to engage auto-attack with your weapon.
@@ -468,9 +461,9 @@ Act.BodyText=Hail and well met! We must get started for there's dark work to be 
 * Press '1' (or first button on quickbar) to engage auto-attack with your weapon.
 * Press '3' (or 3rd button on quickbar) to use the Assail ability, which uses three Might - the green orbs above your health bar in the upper-left part of the screen. Kill three Flamemoths by the ocean cliffs to the southwest and then talk to me again.
 Obj.0.type=kill
-Obj.0.data1=3496
+Obj.0.data1=2168
 Obj.0.data2=3
-Obj.0.description=Slay 3 Vampider Hatchlings
+Obj.0.description=Slay 3 Flamemoths
 Obj.0.complete=0 of 3
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
@@ -495,7 +488,7 @@ ID=384
 Requires=383
 Profession=2
 Title=Fix Your Escape Boat
-BodyText=There's a boat to the Southeast that you can use to escape the island, but the Vampires have dismantled it! You'll need a hammer to repair.  There might be one in the Vampire Raider camp near the beach!
+BodyText=There's a boat waiting for you on the beach down the path to the southeast. You'll need a hammer to repair it, which you can probably find in a Dvergar Raider's camp near the beach.
 
 * Each time you use the Assail ability (a 'Charge Ability') you will generate Melee charges.
 
@@ -522,7 +515,7 @@ Act.BodyText=There's a boat waiting for you on the beach down the path to the so
 Obj.0.type=travel
 Obj.0.data1=6307,598,7251,59
 Obj.0.data2=150
-Obj.0.description=Find the Vampire's camp.
+Obj.0.description=Find the raider's camp.
 Obj.0.complete=
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
