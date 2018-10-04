@@ -20,13 +20,13 @@ HTTPDistributeManager g_HTTPDistributeManager;
 Platform_CriticalSection http_cs("HTTP_CS");
 FileChecksum g_FileChecksum;
 
-void FileChecksum :: LoadFromFile(const char *filename)
+bool FileChecksum :: LoadFromFile(const char *filename)
 {
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[WARNING] Could not open file: %s", filename);
-		return;
+		g_Log.AddMessageFormat("[FATAL] Could not open file: %s", filename);
+		return false;
 	}
 	lfr.CommentStyle = Comment_Semi;
 	std::string readfilename;
@@ -44,6 +44,11 @@ void FileChecksum :: LoadFromFile(const char *filename)
 		}
 	}
 	lfr.CloseCurrent();
+	if(mChecksumData.size() == 0) {
+		g_Log.AddMessageFormat("[FATAL] No checksums in file: %s", filename);
+		return false;
+	}
+	return true;
 }
 
 bool FileChecksum :: MatchChecksum(const std::string &filename, const std::string &checksum)

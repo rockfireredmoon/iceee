@@ -125,7 +125,7 @@ int RunRemoteAction(ReportBuffer &report, MULTISTRING &header, MULTISTRING &para
 	}
 	else if(strcmp(action, "reloadchecksum") == 0)
 	{
-		g_FileChecksum.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "Data", "HTTPChecksum.txt"));
+		g_FileChecksum.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, g_HTTPBaseFolder, Platform::FixPaths("Release/Current/HTTPChecksum.txt")));
 		return REMOTE_COMPLETE;
 	}
 	else if(strcmp(action, "reloadconfig") == 0)

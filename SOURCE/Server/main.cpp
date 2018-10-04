@@ -507,7 +507,10 @@ int InitServerMain() {
 	LoadSession("SessionVars.txt");
 	g_Log.LoggingEnabled = g_GlobalLogging;
 
-	g_FileChecksum.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "Data", "HTTPChecksum.txt"));
+	if(!g_FileChecksum.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, g_HTTPBaseFolder, Platform::FixPaths("Release/Current/HTTPChecksum.txt")))) {
+		RunMessageListQueue();
+		exit(EXIT_FAILURE);
+	}
 	g_Log.AddMessageFormat("Loaded %d checksums.", g_FileChecksum.mChecksumData.size());
 
 	g_ItemManager.LoadData();

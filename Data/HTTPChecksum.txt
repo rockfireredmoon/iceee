@@ -1,1 +1,0 @@
-../asset/Release/Current/HTTPChecksum.txt
