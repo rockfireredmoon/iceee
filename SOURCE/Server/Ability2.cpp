@@ -1701,7 +1701,10 @@ int AbilityManager2 :: ActivateAbility(CreatureInstance *cInst, short abilityID,
 	{
 		abProcessing.mIsRequestGTAE = (it->second.mTargetType == TargetType::GTAE);
 
-		cInst->OverrideCurrentAbility(abilityID);
+		// https://github.com/rockfireredmoon/iceee/issues/217
+		if(eventType == EventType::onRequest)
+			cInst->OverrideCurrentAbility(abilityID);
+
 		EnumerateTargets(cInst, it->second.mTargetType, it->second.mTargetFilter, it->second.mTargetTypeRange);
 
 		if(g_Config.CustomAbilityMechanics == true)
