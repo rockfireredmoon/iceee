@@ -2368,12 +2368,13 @@ Spawn=510,25  ;Knife Twirler (27) at 0
 Spawn=2276,25  ;Sea Charmer (26) at 0
 Spawn=2277,25  ;Beach Brute (27) at 0
 
-; TODO: need a divider since they're spawning near the warpig camp
 [ENTRY]
 Name=2a_rhl_madCowCamp_general
 Spawn=540,25  ;Madcow Basher (24) at 0
 Spawn=541,25  ;Madcow Mootilator (26) at 0
-Divide=67144,1,51
+
+[ENTRY]
+Name=2a_rhl_dunkelhimerBrewery_general
 Spawn=3117,25  ;Warpig Brewmaster (25)
 Spawn=3118,25  ;Warpig Brewslinker (26)
 
