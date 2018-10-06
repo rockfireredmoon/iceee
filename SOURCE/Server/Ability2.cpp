@@ -1227,6 +1227,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertFunction("Scale", &AbilityCalculator::Scale);
 	InsertFunction("Untransform", &AbilityCalculator::Untransform);
 	InsertFunction("NotTransformed", &AbilityCalculator::NotTransformed);
+	InsertFunction("NotMaxSlots", &AbilityCalculator::NotMaxSlots);
 	
 	//The verifier indicates which argument indexes should be flagged for examination
 	//as valid expressions.
@@ -1234,6 +1235,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertVerifier("StatusSelf",  ABVerifier(ABVerifier::EFFECT, ABVerifier::TIME));  //Status(statusEffect, time)
 	InsertVerifier("NotSilenced", ABVerifier());                          //NotSilenced()
 	InsertVerifier("NotTransformed", ABVerifier());                          //NotTransformed()
+	InsertVerifier("NotMaxSlots", ABVerifier());                          //NotMaxSlots()
 	InsertVerifier("HasStatus", ABVerifier(ABVerifier::EFFECT));          //HasStatus(effectName)
 	InsertVerifier("NotStatus", ABVerifier(ABVerifier::EFFECT));          //NotStatus(effectName)
 	InsertVerifier("Interrupt", ABVerifier());                            //Interrupt()
@@ -3344,6 +3346,14 @@ int AbilityCalculator :: DisplayEffect(ARGUMENT_LIST args)
 int AbilityCalculator :: NotTransformed(ARGUMENT_LIST args)
 {
 	if(ciSource->transformModifier == NULL)
+		return ABILITY_SUCCESS;
+	return ABILITY_GENERIC;
+}
+
+//Action.  Condition.  True when player has less than the number number of allowed character slots.
+int AbilityCalculator :: NotMaxSlots(ARGUMENT_LIST args)
+{
+	if(ciTarget->simulatorPtr->pld.accPtr->MaxCharacters < AccountData::MAX_CHARACTER_SLOTS)
 		return ABILITY_SUCCESS;
 	return ABILITY_GENERIC;
 }

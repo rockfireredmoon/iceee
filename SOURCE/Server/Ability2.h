@@ -681,6 +681,7 @@ public:
 	int Scale(ARGUMENT_LIST args);
 	int Untransform(ARGUMENT_LIST args);
 	int NotTransformed(ARGUMENT_LIST args);
+	int NotMaxSlots(ARGUMENT_LIST args);
 
 	//Server-side helper functions.
 	int GetImplicitDamage(void);
