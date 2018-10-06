@@ -163,3 +163,8 @@ Name=Swineland Redeemer Camp
 Comment=[Comment here]
 Position=76831.0,977.0,50185.0
 
+[ENTRY]
+Name=Goliath Mound
+Comment=
+Position=58547.0,1023.0,48088.0
+

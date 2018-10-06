@@ -1,16 +1,17 @@
 [ENTRY]
 ID=10000347
 Asset=Manipulator-SpawnPoint
-Pos=58586,1089,47841
+Name=Untitled
+Pos=58586,1075.16,47853.3
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=119
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Goliath_Ruins_899
 
 [ENTRY]
 ID=151002370
 Asset=Prop-Cave_Entrance1#Prop-Cave_Entrance1
+Name=Untitled
 Pos=58585.7,1055.19,47828
 Orient=0,0.994043,0,-0.108987
 Scale=4.375,4.375,4.375
@@ -19,6 +20,7 @@ Flags=1
 [ENTRY]
 ID=151002371
 Asset=Prop-Statue-HillGoliath#Prop-Statue-HillGoliath2
+Name=Untitled
 Pos=58532.5,558.946,47523
 Orient=0,0.114746,0,0.993395
 Scale=10,10,10
@@ -27,16 +29,18 @@ Flags=1
 [ENTRY]
 ID=151051732
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=58600.9,1021.49,47978
 Orient=0,-0.844162,0,0.536088
 Scale=1,1,1
+spawnPackage=3a_caveGoliathCamp01_general
 links_count=1
 link=151051734,1
-spawnPackage=3a_caveGoliathCamp01_general
 
 [ENTRY]
 ID=151051778
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=58906.6,1036.93,47859
 Orient=0,0.0749297,0,0.997189
 Scale=1,1,1
@@ -45,6 +49,7 @@ spawnPackage=3a_caveGoliathCamp01_general
 [ENTRY]
 ID=151058358
 Asset=Prop-Lily_Pads1
+Name=Untitled
 Pos=59146.5,708.279,47428
 Orient=0,0,0,1
 Scale=1.65,1.65,1.65
@@ -53,6 +58,7 @@ Flags=1
 [ENTRY]
 ID=151058433
 Asset=CL-Swamp-BullRushes2#CL-Swamp-BullRushes2
+Name=Untitled
 Pos=59040.8,708.2,47313.3
 Orient=0,-0.514136,0,0.857709
 Scale=1.825,1.825,1.825
@@ -61,7 +67,8 @@ Flags=1
 [ENTRY]
 ID=151059536
 Asset=Prop-Instance_Entrance#Prop-Instance_Entrance
-Pos=58587.5,1111.81,47872.4
+Name=Untitled
+Pos=58587.5,1116.25,47874.6
 Orient=0,0.696135,0,0.717911
 Scale=2,2,2
 
