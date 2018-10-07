@@ -80,6 +80,7 @@ vald_SOURCES = md5.cc \
 	SocketClass3.cpp \
 	Stats.cpp \
 	StringList.cpp \
+	System.cpp \
 	Trade.cpp \
 	URL.cpp \
 	Util.cpp \
@@ -164,6 +165,7 @@ vald_SOURCES = md5.cc \
 	SocketClass3.h \
 	Stats.h \
 	StringList.h \
+	System.h \
 	Trade.h \
 	TradingBoard.h \
 	URL.h \
@@ -250,6 +252,7 @@ valdsvc_SOURCES = md5.cc \
 	SocketClass3.cpp \
 	Stats.cpp \
 	StringList.cpp \
+	System.cpp \
 	Trade.cpp \
 	URL.cpp \
 	Util.cpp \
@@ -334,6 +337,7 @@ valdsvc_SOURCES = md5.cc \
 	SocketClass3.h \
 	Stats.h \
 	StringList.h \
+	System.h \
 	Trade.h \
 	TradingBoard.h \
 	URL.h \

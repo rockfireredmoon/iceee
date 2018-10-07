@@ -416,6 +416,8 @@ public:
 	std::string chatHeader;
 	std::string chatFooter;
 
+	bool restartPending;
+
 	ThreadRequest threadsys;
 
 	bool WaitUntilNonzero(int *data);
@@ -525,6 +527,7 @@ public:
 	int handle_command_set_tailsize(void);
 	int handle_command_sping(void);
 	int handle_command_info(void);
+	int handle_command_update(void);
 	int handle_command_achievements(void);
 	int handle_command_grovesetting(void);
 	int handle_command_grovepermission(void);

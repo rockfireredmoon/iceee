@@ -207,6 +207,10 @@ char LogBuffer[4096];
 
 void Debug_FullDump(void);
 
+#ifndef EXIT_RESTART
+#define	EXIT_RESTART	2	/* Failing exit status.  */
+#endif
+
 #ifdef WINDOWS_PLATFORM
 void SystemLoop_Windows(void);
 #endif
@@ -693,7 +697,10 @@ int InitServerMain() {
 #endif
 
 	UnloadResources();
-	exit(EXIT_SUCCESS);
+	if(g_ServerStatus == SERVER_STATUS_RESTART)
+		exit(EXIT_RESTART);
+	else
+		exit(EXIT_SUCCESS);
 #ifdef _CRTDEBUGGING
 	_CrtDumpMemoryLeaks();
 #endif

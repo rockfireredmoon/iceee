@@ -38,6 +38,7 @@
 #include "QuestScript.h"
 #include "CreditShop.h"
 #include "Creature.h"
+#include "System.h"
 //#include "restclient.h"
 #include "Daily.h"
 #include <curl/curl.h>
@@ -586,7 +587,7 @@ SimulatorThread :: SimulatorThread()
 	TimeOnline = 0;
 	TimeLastAutoSave = 0;
 	creatureTweakModifier = NULL;
-
+	restartPending = false;
 	threadsys.status = 0;
 	
 	questScript.Clear();
@@ -2975,6 +2976,8 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 		PendingData = handle_command_sping();
 	else if(query.name.compare("info") == 0)
 		PendingData = handle_command_info();
+	else if(query.name.compare("update") == 0)
+		PendingData = handle_command_update();
 	else if(query.name.compare("achievements") == 0)
 		PendingData = handle_command_achievements();
 	else if(query.name.compare("grovesetting") == 0)
@@ -15203,6 +15206,96 @@ int SimulatorThread :: handle_query_mod_getdungeonprofiles(void)
 	MULTISTRING response;
 	g_InstanceScaleManager.EnumProfileList(response);
 	return PrepExt_QueryResponseMultiString(SendBuf, query.ID, response);
+}
+
+int SimulatorThread :: handle_command_update(void)
+{
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+	if(query.argCount >= 1)
+	{
+		Aux1[0] = 0;
+		bool err = false;
+		if(query.args[0].compare("restart") == 0) {
+			if(restartPending) {
+				g_Log.AddMessageFormat("[NOTICE] A restart was requested by an administrator.");
+				sprintf(Aux1, "Restarting.");
+				g_ServerStatus = SERVER_STATUS_RESTART;
+			}
+			else {
+				sprintf(Aux1, "Run '/update restart' again to perform the restart.");
+				restartPending = true;
+			}
+		}
+		else {
+			restartPending = false;
+			if(query.args[0].compare("pull") == 0) {
+				int ret = g_System.Execute("git pull --quiet");
+				if(ret == 0)
+					sprintf(Aux1, "Pull completed OK.");
+				else {
+					err = true;
+					sprintf(Aux1, "Pull failed with status %d.", ret);
+				}
+			}
+			else if(query.args[0].compare("push") == 0) {
+				int ret = g_System.Execute("git push --quiet");
+				if(ret == 0)
+					sprintf(Aux1, "Push completed OK.");
+				else {
+					err = true;
+					sprintf(Aux1, "Push failed with status %d.", ret);
+				}
+			}
+			else if(query.args[0].compare("commit") == 0) {
+				if(query.args.size() < 2) {
+					sprintf(Aux1, "Usage: /update commit \"<message>\"");
+					err = true;
+				}
+				else {
+					sprintf(Aux1, "git commit -a --message=\"%s\"", query.args[1].c_str());
+					int ret = g_System.Execute(Aux1);
+					if(ret == 0)
+						sprintf(Aux1, "Commit completed OK. Try '/update push' to push the commited changes to the remote repository.");
+					else {
+						err = true;
+						sprintf(Aux1, "Push failed with status %d.", ret);
+					}
+				}
+			}
+			else if(query.args[0].compare("status") == 0) {
+				if(g_System.Execute("git fetch") == 1) {
+					int hasUnstagedLocal = g_System.Execute("git diff --quiet") == 1;
+					int hasStagedLocal = g_System.Execute("git diff --quiet --cached") == 1;
+					bool hasIncoming = g_System.ExecuteCapture("git log ..origin/master").size() > 0;
+					if(hasUnstagedLocal == 1 || hasStagedLocal == 1) {
+						sprintf(Aux1, "There are outgoing changes to commit. Use '/update commit \"<message>\"' to commit changes.");
+					}
+					else if(hasUnstagedLocal > 1|| hasStagedLocal > 1) {
+						err = true;
+						sprintf(Aux1, "Failed to check for outgoing changes.");
+					}
+					else if(hasIncoming) {
+						sprintf(Aux1, "There are incoming changes. Use '/update pull'.");
+					}
+					else {
+						sprintf(Aux1, "Everything is up to date.");
+					}
+				}
+				else {
+					err = true;
+					sprintf(Aux1, "Failed to check for incoming changes.");
+				}
+			}
+		}
+		if(Aux1[0] != 0) {
+			if(err)
+				SendInfoMessage(Aux1, INFOMSG_ERROR);
+			else
+				SendInfoMessage(Aux1, INFOMSG_INFO);
+		}
+	}
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 
 int SimulatorThread :: handle_query_mod_morestats(void)
