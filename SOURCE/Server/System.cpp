@@ -38,8 +38,8 @@ std::string SystemService::ExecuteCapture(const char* cmd) {
 
 
 int SystemService::Execute(const char* cmd) {
-	int st = WEXITSTATUS(system(cmd));
-	return st;
+	int v = system(cmd);
+	return WEXITSTATUS(v);
 }
 
 }
