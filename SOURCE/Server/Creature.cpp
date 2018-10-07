@@ -849,8 +849,6 @@ void CreatureInstance :: Instantiate(void)
 	css.mod_attack_speed = ABGlobals::MINIMAL_FLOAT;
 	css.mod_casting_speed = ABGlobals::MINIMAL_FLOAT;
 
-	ApplyGlobalInstanceBuffs();
-
 	// TODO floods events
 	/*if(actInst != NULL && actInst->nutScriptPlayer != NULL && actInst->nutScriptPlayer->mActive) {
 		std::vector<ScriptCore::ScriptParam> parms;
@@ -8116,16 +8114,8 @@ void CreatureInstance :: BuildZoneString(int instanceID, int zoneID, int unknown
 	Util::SafeFormat(ZoneString, sizeof(ZoneString), "[%d-%d-%d]", instanceID, zoneID, unknownID);
 }
 
-void CreatureInstance :: ApplyGlobalInstanceBuffs(void)
-{
-	if(g_Config.GlobalMovementBonus != 0)
-		AddBuff(BuffSource::INSTANCE, 0, 0, 0, 0, STAT::MOD_MOVEMENT, g_Config.GlobalMovementBonus, g_Config.GlobalMovementBonus, -1);
-}
-
 void CreatureInstance :: OnInstanceEnter(const ArenaRuleset &arenaRuleset)
 {
-	ApplyGlobalInstanceBuffs();
-
 
 	if(arenaRuleset.mEnabled == false)
 		return;
@@ -8876,13 +8866,13 @@ int PrepExt_UpdateMods(char *buffer, CreatureInstance *cInst)
 					wpos += PutFloat(&buffer[wpos], cInst->activeStatMod[a].clientAmount);
 				else
 					wpos += PutShort(&buffer[wpos], (short)cInst->activeStatMod[a].clientAmount);
-
 			}
 			else
 			{
 				wpos += PutShort(&buffer[wpos], cInst->activeStatMod[a].modStatID);  //ID
 				wpos += PutShort(&buffer[wpos], cInst->activeStatMod[a].abilityID);  //Ability ID
 				wpos += PutShort(&buffer[wpos], static_cast<short>(cInst->activeStatMod[a].clientAmount));  //amount
+
 			}
 //			wpos += PutInteger(&buffer[wpos], (int)((cInst->activeStatMod[a].expireTime - g_ServerTime) / 1000));  //duration
 			wpos += PutInteger(&buffer[wpos], cInst->GetStatDurationSec(a));  //duration

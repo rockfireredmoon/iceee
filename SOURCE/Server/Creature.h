@@ -47,7 +47,7 @@ extern const int AGGRO_LEVEL_MOD;
 extern const double Cone_180;
 extern const double Cone_90;
 
-const float DEFAULT_CREATURE_SPEED = 50.0F;      //Should match the 'gDefaultCreatureSpeed' value in the client.  Number of units a creature moves per second.
+const float DEFAULT_CREATURE_SPEED = 52.5F;      //Should match the 'gDefaultCreatureSpeed' value in the client.  Number of units a creature moves per second.
 
 const int MOVEMENT_THRESHOLD = 30;
 
@@ -767,8 +767,6 @@ public:
 
 	void OnInstanceEnter(const ArenaRuleset &arenaRuleset);
 	void OnInstanceExit(void);
-	void ApplyGlobalInstanceBuffs(void);
-
 
 	//Custom Ability Functions, called through the ability system to handle special operations
 	bool IsTransformed();

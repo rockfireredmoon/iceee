@@ -360,8 +360,6 @@ void LoadConfig(const char *filename)
 				g_Config.DebugPacketSendDelay = lfr.BlockToIntC(1);
 			else if(strcmp(NameBlock, "DebugPacketSendMessage") == 0)
 				g_Config.DebugPacketSendMessage = lfr.BlockToBoolC(1);
-			else if(strcmp(NameBlock, "GlobalMovementBonus") == 0)
-				g_Config.GlobalMovementBonus = lfr.BlockToIntC(1);
 			else if(strcmp(NameBlock, "AllowEliteMob") == 0)
 				g_Config.AllowEliteMob = lfr.BlockToBoolC(1);
 			else if(strcmp(NameBlock, "DexBlockDivisor") == 0)
@@ -630,7 +628,6 @@ GlobalConfigData :: GlobalConfigData()
 	VaultDefaultSize = 16;
 	VaultInitialPurchaseSize = 8;
 
-	GlobalMovementBonus = 0;
 	AllowEliteMob = true;
 	DexBlockDivisor = 0.0F;
 	DexParryDivisor = 0.0F;

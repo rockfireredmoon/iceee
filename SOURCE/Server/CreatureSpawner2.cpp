@@ -671,8 +671,6 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 		ptr->deathTime = g_ServerTime + (leaseTime * 1000);
 	}
 
-	ptr->ApplyGlobalInstanceBuffs();
-
 	ptr->spawnGen = spawner;
 	ptr->spawnTile = this;
 

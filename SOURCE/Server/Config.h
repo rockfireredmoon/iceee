@@ -146,7 +146,6 @@ public:
 	int VaultDefaultSize;            //Number of vault slots that all characters have.  If characters have not purchased any slots at all, this amount will still be available.
 	int VaultInitialPurchaseSize;    //Newly created characters will be given this many free slots (considered as purchased space).
 
-	int GlobalMovementBonus;         //If nonzero, all objects placed into a instance (players, mobs, NPCs, etc) will gain this default modifier to run speed.
 	bool AllowEliteMob;              //If true, mobs may spawn as elite variants.
 	
 	float DexBlockDivisor;           //Points of dexterity may provide a bonus chance to block physical attacks.
