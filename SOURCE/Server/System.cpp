@@ -5,6 +5,8 @@
 #include <stdexcept>
 #include <stdio.h>
 #include <string>
+#include <stdlib.h>
+
 System::SystemService g_System;
 
 namespace System {
