@@ -3620,7 +3620,7 @@ void SimulatorThread :: SetLoadingStatus(bool status, bool shutdown)
 			g_PartyManager.CheckMemberLogin(creatureInst);
 			AddMessage(0, 0, BCM_Notice_MOTD);
 
-			ProcessDailyRewards(pld.accPtr->ConsecutiveDaysLoggedIn, pld.charPtr->cdef.css.level);
+			ProcessDailyRewards(pld.accPtr->ConsecutiveDaysLoggedIn, creatureInst->css.level);
 
 			LoadStage = LOADSTAGE_LOADED;  //Initial loading screen is finished, players should be able to control their characters.
 		}
@@ -3674,7 +3674,7 @@ void SimulatorThread :: ProcessDailyRewards(unsigned int days, unsigned int leve
 				CreatureInstance* lootInst = creatureInst->actInst->SpawnGeneric(lootProfiles[0].spawnCreatureDefID, creatureInst->CurrentX, creatureInst->CurrentY, creatureInst->CurrentZ, 0, 0);
 				lootInst->deathTime = g_ServerTime;
 				lootInst->PrepareDeath();
-				lootInst->PlayerLoot(creatureInst->css.level, lootProfiles);
+				lootInst->PlayerLoot(level, lootProfiles);
 				lootInst->AddLootableID(creatureInst->CreatureDefID);
 				if(lootInst->activeLootID != 0) {
 					Util::SafeFormat(buf, sizeof(buf), " * A daily reward chest");

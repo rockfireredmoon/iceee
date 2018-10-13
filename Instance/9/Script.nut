@@ -10,31 +10,61 @@
 
 // Pawl/Babe and the Trail Blazers
 
-const RESET_TRAILBLAZERS_DELAY = 180000; // 3 minutes
+const RESET_BOSS_DELAY = 1800000; // 30 minutes
+const RESET_TRAILBLAZERS_DELAY = 300000; // 5 minutes
 const KILLS_TO_SPAWN_PAWL =  5;
 const PAWL_BABE_SPAWNER_PROP_ID = 151026296;
 
 trailblazer_kills <- 0;
 last_trailblazer_kill <- 0;
+pawl_spawned <- false;
+babe_cid <- 0;
+pawl_cid <- 0;
+babe_cancel <- 0;
+pawl_cancel <- 0;
 
 function on_package_kill_4_Trailblazer_StepUp() {
-	local now = inst.get_server_time();
-
-	// If there was too long a gap between kills, reset the count
-	if(now > last_trailblazer_kill + RESET_TRAILBLAZERS_DELAY)
-		trailblazer_kills = 0;
-	last_trailblazer_kill = now;
-
-	trailblazer_kills++;
-	if(trailblazer_kills >= KILLS_TO_SPAWN_PAWL) {
-		inst.spawn(PAWL_BABE_SPAWNER_PROP_ID,1098,0);
-		trailblazer_kills = 0;
+	if(!pawl_spawned) {
+		local now = inst.get_server_time();
+	
+		// If there was too long a gap between kills, reset the count
+		if(now > last_trailblazer_kill + RESET_TRAILBLAZERS_DELAY)
+			trailblazer_kills = 0;
+			
+		last_trailblazer_kill = now;
+	
+		trailblazer_kills++;
+		
+		if(trailblazer_kills >= KILLS_TO_SPAWN_PAWL) {
+			pawl_spawned = true;
+			pawl_cid = inst.spawn(PAWL_BABE_SPAWNER_PROP_ID,1098,0);
+			pawl_cancel = inst.queue(function() {
+				trailblazer_kills = 0;
+				pawl_spawned = false;
+				inst.despawn(pawl_cid);
+			}, RESET_BOSS_DELAY);
+		}
 	}
 }
 
 function on_kill_1098() {
-	if(inst.spawn(PAWL_BABE_SPAWNER_PROP_ID,1099,0) < 1) 
-		inst.queue(on_kill_1098, 5000);
+	inst.cancel(pawl_cancel);
+	babe_cid = inst.spawn(PAWL_BABE_SPAWNER_PROP_ID,1099,0);
+	if(babe_cid < 1) 
+		inst.queue(on_kill_1099, 5000);
+	else {
+		babe_cancel = inst.queue(function() {
+			trailblazer_kills = 0;
+			pawl_spawned = false;
+			inst.despawn(babe_cid);
+		}, RESET_BOSS_DELAY);
+	}
+}
+
+function on_kill_1099() {
+	inst.cancel(babe_cancel);
+	trailblazer_kills = 0;
+	pawl_spawned = false;
 }
 
 /*
