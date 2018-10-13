@@ -92,6 +92,7 @@ void AccountData :: ClearAll(void)
 
 	LastLogOnTimeSec = 0;
 	ConsecutiveDaysLoggedIn = 0;
+	specialMessage = "";
 
 	Credits = 0;
 	DeliveryBoxSlots = 0;

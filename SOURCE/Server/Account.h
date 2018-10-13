@@ -110,6 +110,7 @@ public:
 	std::map<std::string, Achievements::Achievement> Achievements;
 
 	int MaxCharacters;
+	std::string specialMessage;
 
 	// Transient stuff (not store in character data)
 	bool DueDailyRewards;	// When set to true, when login has completely finished the player will be given their daily rewards

@@ -2109,13 +2109,22 @@ void SimulatorThread :: LoadCharacterSession(void)
 
 	time_t curtime;
 	time(&curtime);
-	strftime(pld.charPtr->LastLogOn, sizeof(pld.charPtr->LastLogOn), "%Y-%m-%d, %I:%M %p", localtime(&curtime));
 
 	// Determine if we should give a daily reward for the account
 	if(pld.accPtr->LastLogOn[0] == 0) {
 		pld.accPtr->DueDailyRewards = false;
+		if(pld.charPtr->LastLogOn[0] != 0) {
+			// https://github.com/rockfireredmoon/iceee/issues/473
+			pld.accPtr->Credits += 1000;
+			pld.accPtr->PendingMinorUpdates++;
+			pld.accPtr->specialMessage = "You have been given 1000 credits as compensation for bug 475 (Daily Rewards bug). See the Release notes for details.";
+		}
+
+		strftime(pld.charPtr->LastLogOn, sizeof(pld.charPtr->LastLogOn), "%Y-%m-%d, %I:%M %p", localtime(&curtime));
+		pld.accPtr->PendingMinorUpdates++;
 	}
 	else {
+		strftime(pld.charPtr->LastLogOn, sizeof(pld.charPtr->LastLogOn), "%Y-%m-%d, %I:%M %p", localtime(&curtime));
 		long loginDay = (long)(pld.accPtr->LastLogOnTimeSec / 86400 );
 		long todayDay = (long)(curtime / 86400 );
 		if(loginDay != todayDay) {
@@ -2127,14 +2136,14 @@ void SimulatorThread :: LoadCharacterSession(void)
 			pld.accPtr->DueDailyRewards = false;
 		}
 	}
+	strcpy(pld.accPtr->LastLogOn, pld.charPtr->LastLogOn);
+	unsigned long lastLoginDay = pld.accPtr->LastLogOnTimeSec / 86400;
+	pld.accPtr->LastLogOnTimeSec = time(NULL);
+
 	if(pld.accPtr->DueDailyRewards) {
 		LogMessageL(MSG_SHOW, "%s is logging on for the first time today", pld.accPtr->Name);
-		strcpy(pld.accPtr->LastLogOn, pld.charPtr->LastLogOn);
 
 		// Is this a consecutive day?
-		unsigned long lastLoginDay = pld.accPtr->LastLogOnTimeSec / 86400;
-		pld.accPtr->LastLogOnTimeSec = time(NULL);
-		strftime(pld.accPtr->LastLogOn, sizeof(pld.accPtr->LastLogOn), "%Y-%m-%d", localtime(&curtime));
 		unsigned long today =  pld.accPtr->LastLogOnTimeSec / 86400;
 		if(lastLoginDay == 0 || today == lastLoginDay + 1) {
 			// It is!
@@ -3620,6 +3629,10 @@ void SimulatorThread :: SetLoadingStatus(bool status, bool shutdown)
 
 void SimulatorThread :: ProcessDailyRewards(unsigned int days, unsigned int level)
 {
+	if(pld.accPtr->specialMessage.length() > 0) {
+		AttemptSend(SendBuf, PrepExt_SendInfoMessage(SendBuf, pld.accPtr->specialMessage.c_str(), INFOMSG_INFO));
+		 pld.accPtr->specialMessage = "";
+	}
 
 	// Handle daily rewards
 	if(pld.accPtr->DueDailyRewards) {
