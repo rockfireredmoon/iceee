@@ -37,6 +37,7 @@ function on_package_kill_4_Trailblazer_StepUp() {
 		trailblazer_kills++;
 		
 		if(trailblazer_kills >= KILLS_TO_SPAWN_PAWL) {
+			/* TODO Ideally, fightig pawl should reset the timer. This will require his (and Babes) AI script calling into the instance script */
 			pawl_spawned = true;
 			pawl_cid = inst.spawn(PAWL_BABE_SPAWNER_PROP_ID,1098,0);
 			pawl_cancel = inst.queue(function() {
