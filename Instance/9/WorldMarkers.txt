@@ -1,82 +1,82 @@
 [ENTRY]
-Name=Grunes Tal -  North Warpig Town
-Comment=Next to Entrance to swineline
-Position=60178.0,595.0,55121.0
+Name=Grunes Tal - Warpig Protectorate
+Comment=West of the Grunes Tal / Swineland Bridge
+Position=65102.0,550.0,67411.0
 
 [ENTRY]
 Name=Grunes Tal - NE Marker
-Comment=move as needed
+Comment=Northeastern most corner of Grunes Tal.
 Position=66775.0,760.0,56753.0
 
 [ENTRY]
 Name=Swineland - Frontline Camp
-Comment=[Comment here]
+Comment=Duplicate of the above marker.
 Position=73234.0,881.0,60068.0
 
 [ENTRY]
-Name=Grunes Tal SW Marker
-Comment=[Comment here]
-Position=52517.0,677.0,68409.0
+Name=Grunes Tal - SW Marker
+Comment=Wailing Crypt Entrance
+Position=59987.0,595.0,55540.0
 
 [ENTRY]
-Name=Grune Marker NW
-Comment=[Comment here]
-Position=56369.0,684.0,57910.0
+Name=Grunes Tal - NW Marker
+Comment=Northwest edge of Grunes Tal and just southwest of the Mushroom Fields
+Position=73234.0,881.0,60068.0
 
 [ENTRY]
-Name=GT -West Midland North
-Comment=[Comment here]
-Position=56354.0,684.0,57918.0
+Name=GT -West Midlands North
+Comment=Duplicate of GT - NW Marker entry.
+Position=73234.0,881.0,60068.0
 
 [ENTRY]
-Name=Swineland Keystone Sanctuary
-Comment=
+Name=Grunes Tal Keystone Sanctuary
+Comment=Keystone Sanctuary in the Grunes Tal region.
 Position=57007.0,902.0,60763.0
 
 [ENTRY]
-Name=Frost Peak Henge
-Comment=[Comment here]
+Name=Swineland Henge
+Comment=Henge in southern Swineland
 Position=71586.0,932.0,63326.0
 
 [ENTRY]
-Name=Dambat Pass
-Comment=Swineland
-Position=82600.0,789.0,54831.0
+Name=Swineland - Dambat Pass
+Comment=Near the Swineland / Lurker's Vale border.
+Position=57007.0,902.0,60763.0
 
 [ENTRY]
-Name=Grunes - Swineland Bridge
-Comment=[Comment here]
-Position=67453.0,669.0,58236.0
+Name=Grunes Tal/Swineland Bridge 2
+Comment=Swineland side of the Bridge.
+Position=73234.0,881.0,60068.0
 
 [ENTRY]
-Name=Unknown Destroyed Town
-Comment=Swineland
+Name=Swineland - Front Line Camp
+Comment=Redeemer and Warpig outpost in Swineland.
 Position=73826.0,878.0,60023.0
 
 [ENTRY]
-Name=Skrill Hive
-Comment=Swineland
+Name=Swineland - Skrill Hives
+Comment=Behind the entrance to the Skrill Queen's Lair.
 Position=71235.0,1153.0,44793.0
 
 [ENTRY]
 Name=North Swineland Junction
-Comment=For map alignment
+Comment=For map alignment.\n\nThis crossroads is just south of the Swineland/New Badari Gate.
 Position=68515.0,797.0,48005.0
 
 [ENTRY]
-Name=Grunes side of Bridge
-Comment=[Comment here]
-Position=66634.0,667.0,58258.0
+Name=Grunes Tal/Swineland Bridge 1
+Comment=Grunes Tal side of the Bridge.
+Position=73234.0,881.0,60068.0
 
 [ENTRY]
-Name=Mushrooms
-Comment=Grunes
+Name=Grunes Tal - Mushroom Fields
+Comment=The Mushroom Fields in Northern Grunes Tal.
 Position=59987.0,595.0,55540.0
 
 [ENTRY]
 Name=Junderbrood Spitterskrill
-Comment=[Comment here]
-Position=57701.0,738.0,61520.0
+Comment=Western side of Grunes Tal  where the Junderlund meets the Shadowfields. Junderbrood Skrill are found  here.
+Position=73234.0,881.0,60068.0
 
 [ENTRY]
 Name=Jump test 1
@@ -84,87 +84,352 @@ Comment=Ascending eifel tower
 Position=29051.0,500.0,62577.0
 
 [ENTRY]
-Name=1 Swineland SW cornerish
-Comment=here where the map turns to frost peak in about a step\n
-Position=67435.0,964.0,61427.0
-
-[ENTRY]
-Name=1 Swineland SE Corner
-Comment=on the compass star
+Name=Swineland SW cornerish
+Comment=Here is where the map turns to Frost Peak in about a step.\n
 Position=82105.0,727.0,61393.0
 
 [ENTRY]
-Name=1 Swineland NW corner
-Comment=in the mountains above nooktown
-Position=61676.0,1221.0,48258.0
+Name=Swineland SE Corner
+Comment=On the compass star.
+Position=82105.0,727.0,61393.0
 
 [ENTRY]
-Name=1 Swineland NE
-Comment=map may need to be reworked this is as far as i can get north east
-Position=78015.0,722.0,50191.0
+Name=Swineland - NW corner
+Comment=In the mountains above Nook Town.
+Position=76831.0,977.0,50185.0
 
 [ENTRY]
-Name=1 Swineland South center
-Comment= road referance
-Position=73653.0,879.0,60018.0
+Name=Swineland - NE
+Comment=Map may need to be reworked this is as far as i can get north east
+Position=76831.0,977.0,50185.0
 
 [ENTRY]
-Name=1 Swineland N Centerish
-Comment=Road Referance
-Position=29694.0,225.0,65698.0
+Name=Swineland South center
+Comment=Road reference.
+Position=82105.0,727.0,61393.0
 
 [ENTRY]
-Name=! Water low spot that needs to be fixed
-Comment=between grune and swine we need to fix this or block it off
-Position=65327.0,600.0,66938.0
+Name=Grunes Tal - N Centerish
+Comment=Duplicate Marker for the Keystone Sanctuary.
+Position=57007.0,902.0,60763.0
 
 [ENTRY]
-Name=Swineland Boss Hawgs
-Comment=[Comment here]
+Name=Water low spot between GT/SL
+Comment=Unfinished area located between eastern Grunes Tal and south of Swineland. Area is blocked off until we decide to work on Frost Peak.
+Position=84532.0,1006.0,61277.0
+
+[ENTRY]
+Name=Swineland - Junk Palace Compound
+Comment=On a hill overlooking Boss Hawg's Junk Palace Compound.
 Position=67475.0,1368.0,54254.0
 
 [ENTRY]
-Name=Swineland Nooktown
-Comment=near the nook
+Name=Swineland - Nook Town 2
+Comment=Near the  Nook.
 Position=62328.0,392.0,48997.0
 
 [ENTRY]
-Name=!possible tiles for  isntances
-Comment=there is  a serise of tiles ehre that might make good instance maps
-Position=97246.0,57.0,33395.0
+Name=Possible tiles for  instances
+Comment=There is  a series of tiles here that might make good instance maps.
+Position=68515.0,797.0,48005.0
 
 [ENTRY]
-Name=Valkals Bloodkeep
-Comment=[Comment here]
-Position=79278.0,1300.0,52845.0
+Name=Swineland - Valkal's Blood Keep
+Comment=In front of Valkal's Blood Keep.
+Position=57007.0,902.0,60763.0
 
 [ENTRY]
-Name=Nook Town
-Comment=[Comment here]
+Name=Swineland - Nook Town
+Comment=The Warpig Holy City of Nook Town.
 Position=63405.0,717.0,50014.0
 
 [ENTRY]
 Name=Tip Of Frost Peak
-Comment=Entrance to Lurkers
+Comment=Unfinished area just east of the Frost Peak Gate. Shows the map of Lurker's Vale. Map shows location to be the northernmost tip of the Frost Peak region itself.
 Position=84532.0,1006.0,61277.0
 
 [ENTRY]
-Name=The Mausoleum
-Comment=[Comment here]
+Name=Swineland - Mausoleum
+Comment=War Town Mausoleum Entrance
 Position=74345.0,875.0,50945.0
 
 [ENTRY]
-Name=War Town
-Comment=
-Position=72307.0,1075.0,52469.0
+Name=Swineland - War Town
+Comment=Swineland's major city of War Town.
+Position=60464.0,403.0,43901.0
 
 [ENTRY]
-Name=Swineland Redeemer Camp
-Comment=[Comment here]
+Name=Swineland - Redeemer Camp
+Comment=Redeemers' Base of Operations in Swineland.
 Position=76831.0,977.0,50185.0
 
 [ENTRY]
-Name=Goliath Mound
-Comment=
-Position=58547.0,1023.0,48088.0
+Name=Midlands - Goliath Temple
+Comment=In front of the Goliath Temple Entrance.
+Position=58285.0,210.0,45239.0
+
+[ENTRY]
+Name=Grunes Tal - Redeemer's Hall
+Comment=This is the first friendly camp players encounter in the region.
+Position=58204.0,791.0,66952.0
+
+[ENTRY]
+Name=Midlands - The Down Below
+Comment=At the Camp in front of The Down Below Entrance.
+Position=61168.0,211.0,52189.0
+
+[ENTRY]
+Name=Midlands - Longtail Gypsy Camp
+Comment=Gypsy Camp at the northwest side of Midlands Lake.
+Position=56666.0,426.0,49743.0
+
+[ENTRY]
+Name=Midlands - Stone Lion Compound
+Comment=Bentclaw's Stone Lion Compound in the Midlands.
+Position=51597.0,400.0,46558.0
+
+[ENTRY]
+Name=Midlands - Stone Lion Camps
+Comment=Bentclaw's Stone Lion Encampments near the Compound.
+Position=58285.0,210.0,45239.0
+
+[ENTRY]
+Name=Midlands/New Badari Border - Island
+Comment=Island situated west of the waterfall in the river that divides the Midlands and New Badari regions.
+Position=53071.0,132.0,42472.0
+
+[ENTRY]
+Name=Midlands - Unknown Henge Site
+Comment=Believe it or not, there is a Henge setup here in NW Midlands. Not sure if old or new. Has four crystals on four stones surrounding the Sarsen Stone.
+Position=50872.0,179.0,43080.0
+
+[ENTRY]
+Name=Midlands - The Roc  Cliffs
+Comment=The Roc Cliffs in Northwestern Midlands.
+Position=46740.0,597.0,45388.0
+
+[ENTRY]
+Name=Midlands Keystone Sanctuary
+Comment=The Midlands Keystone Sanctuary located in the town of Bandit's Bluff.
+Position=48643.0,312.0,54803.0
+
+[ENTRY]
+Name=Midlands - Bandit's Bluff
+Comment=The town of Bandit's Bluff in Midlands.
+Position=49308.0,282.0,54417.0
+
+[ENTRY]
+Name=Midlands - Hychithah Temple
+Comment=The unused Hychithah Temple in the Midlands Lake. World Boss Ni' Lania Vexus is here.
+Position=54948.0,213.0,53878.0
+
+[ENTRY]
+Name=Midlands - Goliath Ruins
+Comment=The Goliath Ruins in the northern most part of Midlands near the border with New Badari. The Goliath Temple dungeon is located here. Quite frankly, the Temple itself is closer to actual "ruins" than the 'mounds' labeled as 'ruins' on the map.
+Position=58285.0,210.0,45239.0
+
+[ENTRY]
+Name=Midlands/New Badari Bridge 1
+Comment=The Midlands side of the Bridge.
+Position=58786.0,295.0,43939.0
+
+[ENTRY]
+Name=Midlands/New Badari Bridge 2
+Comment=New Badari side of the Bridge.
+Position=59229.0,309.0,43569.0
+
+[ENTRY]
+Name=New Badari - Eastbridge
+Comment=Town of Eastbridge in New Badari.
+Position=60464.0,403.0,43901.0
+
+[ENTRY]
+Name=Anglorum/Midlands - The Chunnel 2
+Comment=Chunnel exit on the Bafflegate side in the Midlands.
+Position=39382.0,165.0,48235.0
+
+[ENTRY]
+Name=Midlands - Bafflegate
+Comment=Town of Bafflegate in Midlands.
+Position=39678.0,175.0,48623.0
+
+[ENTRY]
+Name=Midlands - The Unikorn Grove
+Comment=The Corrupted Unikorn Grove in Midlands in front of the central Totem on the platform.
+Position=41038.0,298.0,51968.0
+
+[ENTRY]
+Name=Midlands - Northern Goliath Mound
+Comment=The Northern Goliath Mounds in Midlands. This is the Mounds with the low level Goliath mobs.
+Position=41792.0,241.0,55600.0
+
+[ENTRY]
+Name=Midlands - Listerm
+Comment=The town of Listerm in Midlands.
+Position=41592.0,256.0,60089.0
+
+[ENTRY]
+Name=Midlands - Listerm Lake
+Comment=Other side of the lake just south of Listerm.
+Position=40731.0,176.0,61091.0
+
+[ENTRY]
+Name=Midlands/Great Forest Lake Crossover
+Comment=The Listerm Lake mountain crossover point between the Midlands and Great Forest regions.
+Position=40450.0,522.0,61987.0
+
+[ENTRY]
+Name=Midlands/Great Forest Bridge 1
+Comment=Midlands side of the Bridge.
+Position=39103.0,254.0,59747.0
+
+[ENTRY]
+Name=Midlands/Great Forest Bridge 2
+Comment=Great Forest side of the Bridge.
+Position=38874.0,240.0,60430.0
+
+[ENTRY]
+Name=Midlands - Coastal Cave
+Comment=In front of the Coastal Cave Entrance
+Position=29962.0,67.0,54587.0
+
+[ENTRY]
+Name=Midlands - Sunken Ruins
+Comment=The set of "sunken" ruins near Coastal Cave. Frankly I think the name is a  misnomer.  There's nothing sunken about the ruins at all. Especially since they're both inland and up on a cliff above the instance!
+Position=31287.0,229.0,54404.0
+
+[ENTRY]
+Name=Midlands - North Central Goliath Mound
+Comment=The North Central Goliath Mound in Midlands.  Granite Roots and Krell Blossoms can be found here.
+Position=44779.0,270.0,58376.0
+
+[ENTRY]
+Name=Midlands - Central Goliath Mound
+Comment=The Central Goliath Mound in Midlands.
+Position=44779.0,270.0,58376.0
+
+[ENTRY]
+Name=Midlands - East Central Goliath Mound
+Comment=The East Central Goliath Mound in Midlands. Gork the Elder Goliath wanders the outer spanse of this Mound.
+Position=47034.0,264.0,58544.0
+
+[ENTRY]
+Name=Midlands - Southern Goliath Mound
+Comment=The Southern Goliath Mounds in Midlands. The mobs here are the same as those in the East Central Goliath Mound. This Mound is close to Haunted Grove.
+Position=48324.0,196.0,62040.0
+
+[ENTRY]
+Name=Midlands - Spibear Lair
+Comment=In front of the Spibear Lair Entrance.
+Position=50721.0,43.0,57918.0
+
+[ENTRY]
+Name=Midlands - Hunter's Camp
+Comment=The Hunter's Camp in Midlands. Base of the Thunderhoofs.
+Position=54617.0,168.0,58952.0
+
+[ENTRY]
+Name=Midlands - Wilderbeastial Camp
+Comment=The Wilderbeastial Camps in Midlands. Home of the Beasts 'gone feral'.
+Position=52904.0,130.0,61897.0
+
+[ENTRY]
+Name=Midlands - Forest Cavern
+Comment=In front of the Forest Cavern Entrance.
+Position=52613.0,204.0,63267.0
+
+[ENTRY]
+Name=Midlands - Haunted Grove
+Comment=In front of the Haunted Grove Entrance. Just ignore the fact it claims to be in Grunes Tal.
+Position=50493.0,242.0,63891.0
+
+[ENTRY]
+Name=Midlands/Grunes Tal Road 1
+Comment=Midlands section of the Road.
+Position=49306.0,445.0,66264.0
+
+[ENTRY]
+Name=Midlands/Grunes Tal Road 2
+Comment=Grunes Tal section of the Road.
+Position=50615.0,754.0,66294.0
+
+[ENTRY]
+Name=Midlands - Amanita Virosa Grove
+Comment=The Amanita Virosa Grove in Midlands. Foulcap roams here.
+Position=48455.0,255.0,50483.0
+
+[ENTRY]
+Name=Midlands - East of the Lake
+Comment=On the shores of the river east of Midlands Lake near The Down Below.
+Position=61465.0,154.0,53551.0
+
+[ENTRY]
+Name=Midlands/New Badari Border - Lone Tree Falls
+Comment=A pond with a lone tree hidden near the Goliath Temple along the Midlands/New Badari Border. A set of waterfalls flows into New Badari from here. Could be a neat place to hide something.
+Position=59330.0,705.0,47212.0
+
+[ENTRY]
+Name=New  Badari - Mad Cow Farm
+Comment=Johan Brederbeck's farm also known as the Mad Cow Farm in New Badari.
+Position=60571.0,418.0,39262.0
+
+[ENTRY]
+Name=New  Badari Henge
+Comment=The Henge in New Badari.
+Position=63635.0,384.0,39545.0
+
+[ENTRY]
+Name=New Badari - Dunklehimer Brewery
+Comment=In front of the Dunklehimer Brewery Entrance.
+Position=68613.0,534.0,38720.0
+
+[ENTRY]
+Name=New Badari/Swineland Gate 1
+Comment=New Badari side of the Gate.
+Position=68342.0,496.0,46241.0
+
+[ENTRY]
+Name=New Badari/Swineland Gate 2
+Comment=Swineland side of the Gate.
+Position=67968.0,784.0,47382.0
+
+[ENTRY]
+Name=New Badari - Seascape
+Comment=The town of Seascape in New Badari.
+Position=65234.0,428.0,33639.0
+
+[ENTRY]
+Name=New Badari - Slag Pits
+Comment=The Slag Pits south of Bremen in New Badari. Wind Elementals roam here.
+Position=64539.0,245.0,35483.0
+
+[ENTRY]
+Name=New Badari - Bremen 1
+Comment=New Badari's major city of Bremen. At the main gate by the Sanctuary. The Regency Palace is also here.
+Position=67161.0,675.0,35598.0
+
+[ENTRY]
+Name=New Badari - Bremen 2
+Comment=New Badari's major city of Bremen. At the Marketplace near the northern city gate.
+Position=69229.0,425.0,35260.0
+
+[ENTRY]
+Name=New Badari - Bremen Asylum
+Comment=In front of the Bremen Asylum entrance in the New Badari major city of Bremen.
+Position=68621.0,621.0,34583.0
+
+[ENTRY]
+Name=New Badari - Bremen 3
+Comment=New Badari's major city of Bremen. In front of the Dead End Tavern.
+Position=69207.0,342.0,36920.0
+
+[ENTRY]
+Name=New Badari - Bremen 4
+Comment=New Badari's major city of Bremen. At the western Gate. The Vault is nearby this location.
+Position=67161.0,675.0,35598.0
+
+[ENTRY]
+Name=New Badari - VonGruber Manor
+Comment=In front of the VonGruber Manor entrance.
+Position=70226.0,624.0,32255.0
 

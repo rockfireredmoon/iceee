@@ -6,6 +6,7 @@ Pos=1207.13,540.56,2465
 Orient=0,-0.996802,0,-0.0799147
 Scale=1,1,1
 spawnPackage=#3403
+maxActive=0
 despawnTime=180
 
 [ENTRY]
@@ -63,7 +64,7 @@ link=1126712,1
 [ENTRY]
 ID=1156171
 Asset=Prop-Water_Plants#Prop-Water_Plant1
-Name=
+Name=Untitled
 Pos=1030.74,538.238,2391.06
 Orient=0,0,0,1
 Scale=1,1,1
@@ -71,7 +72,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1156172
 Asset=Prop-Water_Plants#Prop-Water_Plant1
-Name=
+Name=Untitled
 Pos=1016.88,539.53,2515.18
 Orient=0,0,0,1
 Scale=1,1,1
@@ -79,23 +80,15 @@ Scale=1,1,1
 [ENTRY]
 ID=1156173
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=1007.92,539.53,2513.82
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
-ID=1156174
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=1026.6,539.53,2391.94
 Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
 ID=1156177
 Asset=Prop-Mushrooms1#Prop-Mushroom_Chimney2
-Name=
+Name=Untitled
 Pos=1015.6,539.53,2515.73
 Orient=0,-0.744643,0,0.667463
 Scale=0.2,0.2,0.2
@@ -103,7 +96,7 @@ Scale=0.2,0.2,0.2
 [ENTRY]
 ID=1156178
 Asset=Prop-Mushrooms1#Prop-Mushroom_Chimney1
-Name=
+Name=Untitled
 Pos=1031.11,539.53,2389.58
 Orient=0,0,0,1
 Scale=0.2,0.2,0.2

@@ -103,3 +103,8 @@ Name=Stonehenge
 Comment=[Comment here]
 Position=43339.0,262.0,67738.0
 
+[ENTRY]
+Name=Anglorum/Midlands - Chunnel 1
+Comment=Chunnel exit on the Anglorum side.
+Position=59205.0,15.0,66961.0
+
