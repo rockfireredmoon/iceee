@@ -11044,7 +11044,7 @@ RewardItem.0=21335,1,1
 
 [ENTRY]
 ID=628
-Title=Weekly: God's of Europe
+Title=Weekly: Gods of Europe
 BodyText=To those who would dare attempt.  There is a bounty on the 4 monstrous Guardians.  Seek out and Kill Ni'Lania Vexus, Kilvath L'vithian, Thara Vikath and L'ough Garoum.
 CompleteText=Take your reward hero(e)
 Level=50,56
