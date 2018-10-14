@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1155467
+Asset=Prop-Bush_Arid#Prop-Bush_Arid4
+Name=
+Pos=38775.3,1285.55,84763.4
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1155468
+Asset=Prop-Bush_Arid#Prop-Bush_Arid1
+Name=
+Pos=38788.9,1287.71,84786.3
+Orient=0,0,0,1
+Scale=1,1,1
+

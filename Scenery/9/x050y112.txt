@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1155447
+Asset=Prop-Bones_Dragon#Prop-Bones_DragonSkull1
+Name=
+Pos=37919.1,1389.86,84455.1
+Orient=0,-0.457338,0,0.889293
+Scale=3,3,3
+
