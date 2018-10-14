@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1154918
+Asset=CL-Snowy#CL-SnowyPine1
+Name=
+Pos=67880.9,855.962,66741.1
+Orient=0,0,0,1
+Scale=3,3,3
+
