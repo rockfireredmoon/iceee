@@ -25696,20 +25696,16 @@ total_size=5
 
 [ENTRY]
 ID=1095
-ExtraData=namedmob=1
 strength=55
 dexterity=71
 constitution=80
 psyche=89
 spirit=100
-base_damage_melee=126
 damage_resist_melee=1565
 damage_resist_fire=1565
 damage_resist_frost=1252
 damage_resist_mystic=1173
 damage_resist_death=1565
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -25720,6 +25716,8 @@ sub_name=Greysun Captain
 profession=5
 creature_category=Mortal
 rarity=1
+base_damage_melee=126
+ExtraData=namedmob=
 ai_package=druid_bow_brave_6
 total_size=5
 
