@@ -490,7 +490,7 @@ Level=34
 Suggested=35
 Exp=5137
 PartySize=2
-NumRewards=4
+NumRewards=1
 Coin=1458
 Unabandon=0
 QuestGiverID=671
@@ -519,9 +519,9 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=29824.3,647.221,62866.8,9;
 RewardItem.0=900073,1,0
-RewardItem.0=900074,1,0
-RewardItem.0=900072,1,0
-RewardItem.0=900071,1,0
+RewardItem.1=900074,1,0
+RewardItem.2=900072,1,0
+RewardItem.3=900071,1,0
 
 [ENTRY]
 ID=781
