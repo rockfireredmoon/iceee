@@ -22,6 +22,7 @@ pawl_cid <- 0;
 babe_cancel <- 0;
 pawl_cancel <- 0;
 mob_cancel <- 0;
+kill_limit <- 0;
 
 function cancel_trailblazer() {
 	if(trailblazer_kills > 0) {
@@ -33,6 +34,8 @@ function cancel_trailblazer() {
 function on_package_kill_4_Trailblazer_StepUp() {
 	if(!pawl_spawned) {
 		local now = inst.get_server_time();
+		if(kill_limit == 0) 
+			kill_limit = 9 + randmodrng(1, 6);
 	
 		trailblazer_kills++;
 		
@@ -42,6 +45,7 @@ function on_package_kill_4_Trailblazer_StepUp() {
 			pawl_cid = inst.spawn(PAWL_BABE_SPAWNER_PROP_ID,1098,0);
 			pawl_cancel = inst.queue(function() {
 				trailblazer_kills = 0;
+				kill_limit = 0;
 				pawl_spawned = false;
 				inst.despawn(pawl_cid);
 			}, RESET_BOSS_DELAY);
@@ -64,6 +68,7 @@ function on_kill_1098() {
 			trailblazer_kills = 0;
 			pawl_spawned = false;
 			inst.despawn(babe_cid);
+			kill_limit = 0;
 		}, RESET_BOSS_DELAY);
 	}
 }
@@ -71,6 +76,7 @@ function on_kill_1098() {
 function on_kill_1099() {
 	inst.cancel(babe_cancel);
 	trailblazer_kills = 0;
+	kill_limit = 0;
 	pawl_spawned = false;
 }
 
