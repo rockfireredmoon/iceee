@@ -327,7 +327,9 @@ void SceneryObject::WriteToStream(FILE *file) const
 	fprintf(file, "[ENTRY]\r\n");
 	fprintf(file, "ID=%d\r\n", ID);
 	fprintf(file, "Asset=%s\r\n", Asset);
-	fprintf(file, "Name=%s\r\n", Name);
+	if(strcmp(Name, "Untitled") != 0) {
+		fprintf(file, "Name=%s\r\n", Name);
+	}
 	fprintf(file, "Pos=%g,%g,%g\r\n", LocationX, LocationY, LocationZ);
 	fprintf(file, "Orient=%g,%g,%g,%g\r\n", QuatX, QuatY, QuatZ, QuatW);
 	fprintf(file, "Scale=%g,%g,%g\r\n", ScaleX, ScaleY, ScaleZ);
@@ -340,7 +342,6 @@ void SceneryObject::WriteToStream(FILE *file) const
 		Util::WriteInteger(file, "Facing", extraData->facing);
 		Util::WriteString(file, "spawnName", extraData->spawnName);
 		Util::WriteInteger(file, "leaseTime", extraData->leaseTime);
-		Util::WriteString(file, "spawnPackage", extraData->spawnPackage);
 		Util::WriteString(file, "dialog", extraData->dialog);
 		Util::WriteInteger(file, "mobTotal", extraData->mobTotal);
 		if(extraData->maxActive != CreatureSpawnDef::DEFAULT_MAXACTIVE)
@@ -362,6 +363,13 @@ void SceneryObject::WriteToStream(FILE *file) const
 				if(extraData->link[i].propID != 0)
 					fprintf(file, "link=%d,%d\r\n", extraData->link[i].propID, extraData->link[i].type);
 			}
+		}
+		Util::WriteString(file, "spawnPackage", extraData->spawnPackage);
+		if(extraData->innerRadius != 0) {
+			Util::WriteInteger(file, "innerRadius", extraData->innerRadius);
+		}
+		if(extraData->outerRadius != 0) {
+			Util::WriteInteger(file, "loyaltyRadius", extraData->outerRadius);
 		}
 	}
 	fprintf(file, "\r\n");
