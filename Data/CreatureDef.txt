@@ -76491,3 +76491,14 @@ profession=1
 creature_category=Mortal
 rarity=3
 ai_package=nothing
+
+[ENTRY]
+ID=3561
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Chest1"}
+level=1
+display_name=Iron Chest
+profession=1
+creature_category=Inanimate
+ai_package=nothing
