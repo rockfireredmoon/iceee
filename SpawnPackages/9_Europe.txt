@@ -2370,13 +2370,13 @@ Spawn=2277,25  ;Beach Brute (27) at 0
 
 [ENTRY]
 Name=2a_rhl_madCowCamp_general
-Spawn=540,25  ;Madcow Basher (24) at 0
-Spawn=541,25  ;Madcow Mootilator (26) at 0
+Spawn=540,50  ;Madcow Basher (24) at 0
+Spawn=541,50  ;Madcow Mootilator (26) at 0
 
 [ENTRY]
 Name=2a_rhl_dunkelhimerBrewery_general
-Spawn=3117,25  ;Warpig Brewmaster (25)
-Spawn=3118,25  ;Warpig Brewslinker (26)
+Spawn=3117,50  ;Warpig Brewmaster (25)
+Spawn=3118,50  ;Warpig Brewslinker (26)
 
 [ENTRY]
 Name=2a_rhl_dunkelhimerBrewery_outside
