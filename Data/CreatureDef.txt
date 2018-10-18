@@ -25715,7 +25715,7 @@ display_name=Ezra Darktouch
 sub_name=Greysun Captain
 profession=5
 creature_category=Mortal
-rarity=1
+rarity=2
 base_damage_melee=126
 ExtraData=namedmob=
 ai_package=druid_bow_brave_6
