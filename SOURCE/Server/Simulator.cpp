@@ -12603,41 +12603,42 @@ int SimulatorThread :: handle_query_util_addfunds() {
 		}
 
 		g_AccountManager.cs.Enter("AddFundsHandler::handleQuery");
-		AccountData *ad = g_AccountManager.FetchIndividualAccount(
-				cd->AccountID);
 
 		if (cd == NULL) {
 			err = "Cannot find character.";
-		} else if (ad == NULL) {
-			err = "Cannot find account.";
 		} else {
-			if (css != NULL) {
-				if (query.args[0].compare("COPPER") == 0) {
-					css->copper += amount;
-					if (css->copper < 0)
-						css->copper = 0;
-					if (creatureInst != NULL)
-						creatureInst->SendStatUpdate(STAT::COPPER);
-					cd->pendingChanges++;
-				} else {
-					if (g_Config.AccountCredits)
-						css->credits = ad->Credits;
-					css->credits += amount;
-					if (css->credits < 0)
-						css->credits = 0;
-					if (g_Config.AccountCredits) {
-						ad->Credits = css->credits;
-						ad->PendingMinorUpdates++;
-					} else
-						cd->pendingChanges++;
-					if (creatureInst != NULL)
-						creatureInst->SendStatUpdate(STAT::CREDITS);
-				}
-
-				Debug::Log("[SAGE] %s gave %s %d %s because '%s'",
-						pld.charPtr->cdef.css.display_name, creature->charPtr->cdef.css.display_name, amount, query.args[0].c_str(), query.args[2].c_str());
+			AccountData *ad = g_AccountManager.FetchIndividualAccount(cd->AccountID);
+			if (ad == NULL) {
+				err = "Cannot find account.";
 			} else {
-				err = "Cannot find player.";
+				if (css != NULL) {
+					if (query.args[0].compare("COPPER") == 0) {
+						css->copper += amount;
+						if (css->copper < 0)
+							css->copper = 0;
+						if (creatureInst != NULL)
+							creatureInst->SendStatUpdate(STAT::COPPER);
+						cd->pendingChanges++;
+					} else {
+						if (g_Config.AccountCredits)
+							css->credits = ad->Credits;
+						css->credits += amount;
+						if (css->credits < 0)
+							css->credits = 0;
+						if (g_Config.AccountCredits) {
+							ad->Credits = css->credits;
+							ad->PendingMinorUpdates++;
+						} else
+							cd->pendingChanges++;
+						if (creatureInst != NULL)
+							creatureInst->SendStatUpdate(STAT::CREDITS);
+					}
+
+					Debug::Log("[SAGE] %s gave %s %d %s because '%s'",
+							pld.charPtr->cdef.css.display_name, creature->charPtr->cdef.css.display_name, amount, query.args[0].c_str(), query.args[2].c_str());
+				} else {
+					err = "Cannot find player.";
+				}
 			}
 		}
 		g_AccountManager.cs.Leave();
