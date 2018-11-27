@@ -2551,6 +2551,8 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		handle_query_item_split();
 	else if(query.name.compare("admin.check") == 0)
 		PendingData = handle_query_admin_check();
+	else if(query.name.compare("clientperms.list") == 0)
+		PendingData = handle_query_clientperms_list();
 	else if(query.name.compare("account.fulfill") == 0)
 		handle_query_account_fulfill();
 	else if(query.name.compare("ab.remainingcooldowns") == 0)
@@ -3537,6 +3539,66 @@ void SimulatorThread :: handle_query_client_loading(void)
 		}
 	}
 	PendingSend = true;
+}
+
+int SimulatorThread :: handle_query_clientperms_list(void)
+{
+	STRINGLIST l;
+
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin)) {
+		l.push_back("dev");
+		l.push_back("tweakScreens");
+		l.push_back("scriptTest");
+		l.push_back("importAbilities");
+		l.push_back("worldBuild");
+		l.push_back("groveBuild");
+		l.push_back("debug");
+		l.push_back("compositor");
+		l.push_back("setappearance");
+		l.push_back("playSound");
+		l.push_back("reassemble");
+		l.push_back("version");
+		l.push_back("auditlog");
+		l.push_back("sage");
+	}
+	else {
+
+		if(CheckPermissionSimple(Perm_Account, Permission_TweakOther) == true ||
+				CheckPermissionSimple(Perm_Account, Permission_TweakSelf) == true ||
+				CheckPermissionSimple(Perm_Account, Permission_TweakNPC) == true ||
+				CheckPermissionSimple(Perm_Account, Permission_TweakClient) == true) {
+			l.push_back("tweakScreens");
+		}
+
+		if(CheckPermissionSimple(Perm_Account, Permission_Developer) == true) {
+			l.push_back("dev");
+			l.push_back("scriptTest");
+			l.push_back("importAbilities");
+			l.push_back("playSound");
+			l.push_back("compositor");
+			l.push_back("reassemble");
+			l.push_back("auditlog");
+			l.push_back("worldBuild");
+		}
+
+		if(CheckPermissionSimple(Perm_Account, Permission_Developer) == true ||
+		   CheckPermissionSimple(Perm_Account, Permission_Sage) == true) {
+			l.push_back("setappearance");
+			l.push_back("sage");
+		}
+
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == true) {
+			l.push_back("debug");
+		}
+
+		l.push_back("groveBuild");
+		l.push_back("playSound");
+		l.push_back("version");
+	}
+	l.push_back("build");
+	LogMessageL(MSG_WARN, "WARNING: Sending %d permissions", l.size());
+
+	return PrepExt_QueryResponseStringList(SendBuf, query.ID, l);
 }
 
 int SimulatorThread :: handle_query_admin_check(void)
@@ -15860,7 +15922,6 @@ int SimulatorThread :: handle_query_player_achievements(void)
 	else {
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Missing argument.");
 	}
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 
 

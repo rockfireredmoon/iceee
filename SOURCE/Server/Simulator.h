@@ -209,8 +209,9 @@ public:
 	void handle_query_pref_set(void);
 	void handle_query_client_loading(void);
 	int handle_query_admin_check(void);
-	int handle_query_persona_gm(void);
+	int handle_query_clientperms_list(void);
 	int handle_query_item_contents(void);
+	int handle_query_persona_gm(void);
 	int handle_query_scenery_list(void);
 	void handle_query_account_tracking(void);
 	void handle_query_account_fulfill(void);
