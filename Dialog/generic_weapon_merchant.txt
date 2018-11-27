@@ -27,6 +27,3 @@ Value=You won't find better quality, guaranteed! (usual terms and conditions app
 [PARAGRAPH]
 Type=0
 Value=Come browse our fine selection, you won't find finer.
-[PARAGRAPH]
-Type=0
-Value=null
