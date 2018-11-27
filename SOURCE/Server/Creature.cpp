@@ -2153,6 +2153,11 @@ int CreatureInstance :: CalcRestrictedHealth(int health, bool addmod)
 		if(health > maxHealth)
 			health = maxHealth;
 	}
+	if(css.min_health_pc != 0) {
+		int minHealth = (int)( ( (float)GetMaxHealth(addmod) / 100.0) * css.min_health_pc );
+		if(health < minHealth)
+			health = minHealth;
+	}
 	return health;
 }
 

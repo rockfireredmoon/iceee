@@ -32190,6 +32190,7 @@ rarity=3
 base_damage_melee=422
 ai_package=custom_heathendel_deathdruid40
 total_size=2
+min_health_pc=5
 
 [ENTRY]
 ID=1386
