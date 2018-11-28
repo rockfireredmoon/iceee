@@ -553,7 +553,7 @@ void CharacterStatSet :: Clear(void)
 	will_regen = 1.0F;
 	might_regen = 1.0F;
 	max_health_pc = 100;
-	min_health_pc = 100;
+	min_health_pc = 0;
 }
 
 void CharacterStatSet :: SetAppearance(const char *data)
