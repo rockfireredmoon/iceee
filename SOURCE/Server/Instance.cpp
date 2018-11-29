@@ -3658,6 +3658,11 @@ void ActiveInstance :: RunObjectInteraction(SimulatorThread *simPtr, int CDef)
 			simPtr->MainCallSetZone(intObj->WarpID, 0, false);
 			simPtr->SetPosition(intObj->WarpX, intObj->WarpY, intObj->WarpZ, 1);
 		}
+		else if(intObj->opType == InteractObject::TYPE_SCALEPOINT)
+		{
+			int wpos = PrepExt_SendUICommand(simPtr->SendBuf, "show", "DngScale");
+			simPtr->AttemptSend(simPtr->SendBuf,wpos);
+		}
 		else if(intObj->opType == InteractObject::TYPE_LOCATIONRETURN)
 		{
 			int x = simPtr->pld.charPtr->groveReturnPoint[0];

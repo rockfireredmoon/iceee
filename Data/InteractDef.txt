@@ -1564,3 +1564,9 @@ ObjectID=7876
 WarpTo=74318,885,50938,9
 Message=Exiting To Swineland
 Facing=50
+
+[ENTRY]
+Name=open_dungeon_scaler
+Type=scalepoint
+ObjectID=7886
+Message=Opening Dungeon Scale...
