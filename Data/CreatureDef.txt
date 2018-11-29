@@ -68331,7 +68331,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=c2:{["a"]=[{["type"]="Item-Dagger-High1",["node"]="right_hand"},{["type"]="Item-Dagger-Medium1",["node"]="left_hand",["colors"]=["5A6268","F26522","9D0A0E"]}],["c"]={["boots"]={["type"]="Armor-Light-High1",["colors"]=["292a3f","603913","baae95","9e0b0f","d8ccb3"]},["leggings"]={["type"]="Armor-Light-High1",["colors"]=["292a3f","603913","baae95","9e0b0f","d8ccb3"]},["belt"]={["type"]="Armor-Light-High1",["colors"]=["292a3f","603913","baae95","9e0b0f","d8ccb3"]},["chest"]={["type"]="Armor-Light-High1",["colors"]=["292a3f","603913","baae95","9e0b0f","d8ccb3"]}},["b"]="n",["sk"]={["eyeball"]="808080",["body_tat"]="7E855B",["body_spots"]="7E855B",["hair_highlight"]="EAB749",["arm_tat"]="7E855B",["lips"]="697261",["skin"]="48552F",["pupil"]="2B2B2B",["face_tat"]="B98947",["eye"]="537689",["hair"]="BF4538",["horns"]="A6A6A6",["fur"]="7F571F"},["sz"]="1.5",["h"]=0,["g"]="f",["r"]="p"}
+appearance=c2:{["a"]=[{["type"]="Item-Dagger-High1",["node"]="right_hand"},{["type"]="Item-Dagger-Medium1",["node"]="left_hand",["colors"]=["5A6268","F26522","9D0A0E"]}],["c"]={["boots"]={["type"]="Armor-Light-High1",["colors"]=["292a3f","603913","baae95","9e0b0f","d8ccb3"]},["leggings"]={["type"]="Armor-Light-High1",["colors"]=["292a3f","603913","baae95","9e0b0f","d8ccb3"]},["belt"]={["type"]="Armor-Light-High1",["colors"]=["292a3f","603913","baae95","9e0b0f","d8ccb3"]},["chest"]={["type"]="Armor-Light-High1",["colors"]=["292a3f","603913","baae95","9e0b0f","d8ccb3"]}},["b"]="n",["sk"]={["eyeball"]="808080",["body_tat"]="7E855B",["body_spots"]="7E855B",["hair_highlight"]="EAB749",["arm_tat"]="7E855B",["lips"]="697261",["skin"]="48552F",["pupil"]="2B2B2B",["face_tat"]="B98947",["eye"]="537689",["hair"]="BF4538",["horns"]="A6A6A6",["fur"]="7F571F"},["sz"]="1.5",["h"]=0,["g"]="f",["r"]="o"}
 level=35
 display_name=Keyt
 sub_name=Overseer
@@ -68360,7 +68360,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=c2:{["a"]=[{["type"]="Item-Wand-High5",["node"]="right_hand"}],["c"]={["leggings"]={["type"]="Armor-Cloth-High3",["colors"]=["2c9dd9","4e4657","dedfe1","c45f0f","feb22b","2c4661"]},["belt"]={["type"]="Armor-Cloth-High3",["colors"]=["2c9dd9","4e4657","dedfe1","c45f0f","feb22b","2c4661"]},["chest"]={["type"]="Armor-Cloth-High3",["colors"]=[]}},["b"]="n",["sk"]={["plates"]="675757",["eyeball"]="999999",["body_tattoo"]="713B3B",["nails"]="4D4141",["arm_tattoo"]="713B3B",["horns"]="674B4B",["head_tattoo"]="713B3B",["leg_tattoo"]="713B3B",["eye"]="43A364",["horn_tips"]="7B6558",["skin"]="3F2105",["teeth"]="BABABA"},["sz"]="1.5",["h"]=0,["g"]="m",["r"]="e"}
+appearance=c2:{["a"]=[{["type"]="Item-Wand-High5",["node"]="right_hand"}],["c"]={["leggings"]={["type"]="Armor-Cloth-High3",["colors"]=["2c9dd9","4e4657","dedfe1","c45f0f","feb22b","2c4661"]},["belt"]={["type"]="Armor-Cloth-High3",["colors"]=["2c9dd9","4e4657","dedfe1","c45f0f","feb22b","2c4661"]},["chest"]={["type"]="Armor-Cloth-High3",["colors"]=[]}},["b"]="n",["sk"]={["plates"]="675757",["eyeball"]="999999",["body_tattoo"]="713B3B",["nails"]="4D4141",["arm_tattoo"]="713B3B",["horns"]="674B4B",["head_tattoo"]="713B3B",["leg_tattoo"]="713B3B",["eye"]="43A364",["horn_tips"]="7B6558",["skin"]="3F2105",["teeth"]="BABABA"},["sz"]="1.5",["h"]=0,["g"]="m",["r"]="v"}
 level=35
 display_name=Flammus
 sub_name=Overseer
@@ -69274,7 +69274,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=c2:{["a"]=[{["type"]="Item-Wand-High4",["node"]="right_hand",["colors"]=["E9E9E9","848441"]}],["c"]={["boots"]={["type"]="Armor-Cloth-Mid1",["colors"]=["354f5c","ac6432","704525","808c38","608c71"]},["leggings"]={["type"]="Armor-CC-Mage",["colors"]=["354f5c","ac6432","704525","808c38","608c71"]},["belt"]={["type"]="Armor-Cloth-Mid1",["colors"]=["354f5c","ac6432","704525","808c38","608c71"]},["chest"]={["type"]="Armor-CC-Mage",["colors"]=["354f5c","ac6432","704525","808c38","608c71"]}},["b"]="n",["sk"]={["hair"]="BE892B",["body_tats"]="7E855B",["arm_tats"]="7E855B",["skin"]="517F7F",["head_spots"]="9E9016",["eyeball"]="878787",["horn"]="8E8A6E",["eye_color"]="537EB2",["head_tattoos"]="8F7144",["body_spots"]="7E855B",["teeth"]="808080"},["sz"]="1.5",["h"]=0,["g"]="m",["r"]="p"}
+appearance=c2:{["a"]=[{["type"]="Item-Wand-High4",["node"]="right_hand",["colors"]=["E9E9E9","848441"]}],["c"]={["boots"]={["type"]="Armor-Cloth-Mid1",["colors"]=["354f5c","ac6432","704525","808c38","608c71"]},["leggings"]={["type"]="Armor-CC-Mage",["colors"]=["354f5c","ac6432","704525","808c38","608c71"]},["belt"]={["type"]="Armor-Cloth-Mid1",["colors"]=["354f5c","ac6432","704525","808c38","608c71"]},["chest"]={["type"]="Armor-CC-Mage",["colors"]=["354f5c","ac6432","704525","808c38","608c71"]}},["b"]="n",["sk"]={["hair"]="BE892B",["body_tats"]="7E855B",["arm_tats"]="7E855B",["skin"]="517F7F",["head_spots"]="9E9016",["eyeball"]="878787",["horn"]="8E8A6E",["eye_color"]="537EB2",["head_tattoos"]="8F7144",["body_spots"]="7E855B",["teeth"]="808080"},["sz"]="1.5",["h"]=0,["g"]="m",["r"]="o"}
 level=35
 display_name=Zack Emberfrost
 profession=4
