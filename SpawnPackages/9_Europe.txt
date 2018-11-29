@@ -739,6 +739,7 @@ Spawn=660,50  ;Verdant Snaptrap (33) at 1
 Name=4_ewd_waywardMurkflyCamps
 Spawn=1027,50  ;Wayward Murkfly (32) at 3
 Spawn=1030,50  ;Wayward Murkfly (33) at 2
+wanderRadius=200
 
 [ENTRY]
 Name=4_ewd_nilus
@@ -1125,6 +1126,7 @@ Name=4_ewd_greySunMix2_35
 spawnDelay=300
 Spawn=1093,50  ;Greysun Armsman (35) at 0
 Spawn=1094,50  ;Greysun Brigand (35) at 0
+wanderRadius=150
 
 [ENTRY]
 Name=4_ewd_greysun_EzraDarktouch_h_d_35
