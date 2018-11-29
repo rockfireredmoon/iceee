@@ -798,6 +798,7 @@ public:
 	static int CreateAbilityError(int errorCode, int parameter);
 	static bool IsGlobalIntrinsicAbility(int abilityID);
 	const AbilityEntry2* GetAbilityPtrByID(int abilityID);
+	const AbilityEntry2* GetBestAbilityPtrByID(int abilityID, int level);
 
 	void GetCooldownCategoryStrings(STRINGLIST &output);
 	const char* GetAbilityNameByID(int abilityID);

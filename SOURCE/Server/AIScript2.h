@@ -36,8 +36,11 @@ public:
 	bool HasTarget();
 	bool HasBuff(int tier, int buffType);
 	bool Use(int abilityID);
+	int GetBestAbility(int abilityID);
+	bool UseHighest(int abilityID);
+	bool UseHighestNoRetry(int abilityID);
 	bool UseNoRetry(int abilityID);
-	bool DoUse(int abilityID, bool retry);
+	bool DoUse(int abilityID, bool retry, bool highest);
 	short GetWill();
 	short GetWillCharge();
 	short GetMight();
