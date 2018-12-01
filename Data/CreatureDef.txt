@@ -865,9 +865,6 @@ will_regen=1
 might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
-
-
-
 channeling_break_chance=500
 appearance=c2:{["a"]=[{["type"]="Item-Dagger-Basic5",["node"]="right_hand"}],["h"]=1,["c"]={["leggings"]={["type"]="Armor-CC-Clothing1",["colors"]=["293f2a","3f2105","ffaf16"]},["boots"]={["type"]="Armor-CC-Clothing1",["colors"]=["293f2a","3f2105","ffaf16"]},["chest"]={["type"]="Armor-CC-Clothing1",["colors"]=["293f2a","3f2105","ffaf16"]}},["b"]="n",["sk"]={["hair"]="843C2B",["leg_patches"]="843C2B",["chest_patch"]="974632",["tusks"]="C8BBA5",["eye_white"]="ADADAD",["nails"]="63594E",["base"]="847668",["inner_ear"]="994936",["eye"]="B18B65",["eye_brows"]="994936",["snout"]="994936",["arm_patches"]="6E3325"},["g"]="m",["r"]="k"}
 level=16

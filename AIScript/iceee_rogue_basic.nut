@@ -1,5 +1,5 @@
 /*
- * Basic Knight Script for new overworld mob Ai.
+ * Basic Rogue Script for new overworld mob Ai.
  *
  * This script automatically adjusts the ability tier in use
  * based on the creatures level (so we don't need different
@@ -8,17 +8,17 @@
  * https://github.com/rockfireredmoon/iceee/issues/347
  */
  
-const ASSAULT = 224; 			//  1 
-const BLENDER = 333; 			//  20 
-const CONCUSSION = 535;			//	1 [Cooldown=Concussion]
-const TAURIAN_MIGHT = 120;		//	6 [GroupID=44] 
-const MELEE = 32766;			//	Melee Auto-attack	
+const DISEMBOWL = 292; 
+const ASSAIL = 232; 
+const PIERCE = 281;
+const FELINES_GRACE = 93; 
+const MELEE = 32766;	
 
 info <- {
-	name = "iceee_knight_basic",
+	name = "iceee_rogue_basic",
 	enabled = true,
 	author = "Emerald Icemoon",
-	description = "Basic Knight"
+	description = "Basic Rogue"
 	speed = 2
 }
 
@@ -26,26 +26,26 @@ function on_target_lost(target_cid)
 	ai.clear_queue();
 
 function on_target_acquired(target_cid) {
-	ai.use_highest_once(TAURIAN_MIGHT);
+	ai.use_highest_once(FELINES_GRACE);
 	ai.queue(function() {
 		ai.use(MELEE);
-	}, 0);
+	},0);
 	
-	ai.queue(main, 0);
+	ai.queue(mai,0n);
 }
 
 function main() {
 	if(ai.get_might() >= 1) {
-		if(ai.get_might_charge() >= 3) 	
-			ai.use_highest_once(BLENDER);
+		if(ai.get_might_charge() >= 3)	
+			ai.use_highest_once(ASSAIL);
 		else if(ai.get_might() >= 3 && randmod(5) < 3) {	
-			if(!ai.is_on_cooldown("Concussion"))
-				ai.use_highest_once(CONCUSSION);
+			if(!ai.is_on_cooldown("Pierce"))
+				ai.use_highest_once(PIERCE);
 			else
-				ai.use_highest_once(ASSAULT);
+				ai.use_highest_once(DISEMBOWL);
 		}
 		else if(randmod(5) < 3)
-			ai.use_highest_once(ASSAULT);		
+			ai.use_highest_once(DISEMBOWL);		
 	}
 	
 	ai.exec(main);
