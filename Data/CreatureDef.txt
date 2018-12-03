@@ -76411,6 +76411,7 @@ creature_category=Divine
 rarity=1
 base_damage_melee=60
 base_health=300
+
 [ENTRY]
 defHints=48
 ID=3553
