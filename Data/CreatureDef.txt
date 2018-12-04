@@ -3168,7 +3168,7 @@ damage_resist_death=6000
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["c"]="Boss-Sand_Dragon",["sz"]="2.5",["sk"]={["base"]="625048",["belly"]="736a42",["claws"]="6e624c",["eye"]="961a1a",["horns"]="553a14",["mouth"]="703430",["teeth"]="c0bbaa",["wing"]="968560"}}
+appearance=n4:{["c"]="Boss-Dragon",["sz"]="2.5"}
 level=55
 display_name=Fengarian
 profession=2
