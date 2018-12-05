@@ -207,6 +207,16 @@ bool ActiveParty :: UpdatePlayerReferences(CreatureInstance* member)
 	return false;
 }
 
+
+int ActiveParty :: GetOnlineMemberCount(void)
+{
+	int c = 0;
+	for(size_t i = 0; i < mMemberList.size(); i++)
+		if(mMemberList[i].IsOnlineAndValid())
+			c++;
+	return c;
+}
+
 bool ActiveParty :: RemovePlayerReferences(int memberDefID, bool disconnect)
 {
 	RemoveCreatureTags(-1, memberDefID);

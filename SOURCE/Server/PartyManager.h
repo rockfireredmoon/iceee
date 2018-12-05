@@ -112,6 +112,7 @@ public:
 	void DebugDestroyParty(const char *buffer, int length);
 	void Disband(char *buffer);
 	int GetMaxPlayerLevel(void);
+	int GetOnlineMemberCount(void);
 	void BroadcastInfoMessageToAllMembers(const char *buffer);
 
 	void BroadCast(const char *buffer, int length);
