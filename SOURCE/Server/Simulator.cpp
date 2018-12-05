@@ -4154,7 +4154,7 @@ void SimulatorThread :: handle_updateVelocity(void)
 		//There are tons of weird cases where verification fails on legit movement, so it may be necessary
 		//to just disable it entirely.
 				
-		if((g_Config.VerifyMovement == true) && (CheckPermissionSimple(Perm_Account, Permission_Admin) == false))
+		if(g_Config.VerifyMovement == true && CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Developer) == false)
 		{
 			int expectedSpeed = 100 + creatureInst->css.base_movement + creatureInst->css.mod_movement;
 			
@@ -5107,7 +5107,7 @@ int SimulatorThread :: CheckValidWarpZone(int ZoneID)
 	}
 
 	//For administrative access
-	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == true)
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == true || CheckPermissionSimple(Perm_Account, Permission_Developer) == true)
 		return ERROR_NONE;
 
 	//For regular players
@@ -5571,7 +5571,7 @@ int SimulatorThread :: handle_command_fa(void)
 
 	if(abID >= 26000 && abID <= 26100)
 	{
-		if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+		if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Developer) == false)
 		{
 			SendInfoMessage("Thou art not a deity.", INFOMSG_ERROR);
 			abID = 0;
@@ -5990,7 +5990,7 @@ int SimulatorThread :: handle_command_giveid(void)
 		will be invalidated.
 		Args : [0] = ID of object to give.
     */
-	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Developer) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount == 0)
@@ -6699,7 +6699,7 @@ bool SimulatorThread :: HasPropEditPermission(SceneryObject *prop, float x, floa
 		checkZ = prop->LocationZ;
 	}
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Admin) || pld.accPtr->CheckBuildPermissionAdv(pld.zoneDef->mID, pld.zoneDef->mPageSize, checkX, checkZ) == true)
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) || CheckPermissionSimple(Perm_Account, Permission_Developer) || pld.accPtr->CheckBuildPermissionAdv(pld.zoneDef->mID, pld.zoneDef->mPageSize, checkX, checkZ) == true)
 		return true;
 
 	if(pld.zoneDef->HasEditPermission(pld.accPtr->ID, pld.CreatureDefID, creatureInst->css.display_name, checkX, checkZ) == true)
@@ -10494,7 +10494,7 @@ int SimulatorThread :: handle_command_adjustexp(void)
 		Args : [0] amount
 	*/
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Developer) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 1)
@@ -13934,7 +13934,7 @@ int SimulatorThread :: handle_query_mod_setenvironment(void)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
 
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Sage) == false) {
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Sage) == false && CheckPermissionSimple(Perm_Account, Permission_Developer) == false) {
 		if(pld.zoneDef->mGrove == false)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "You are not in a grove.");
 		if(pld.zoneDef->mAccountID != pld.accPtr->ID)
@@ -14495,7 +14495,7 @@ int SimulatorThread :: handle_command_forumlock(void)
 
 int SimulatorThread :: handle_command_dtrig(void)
 {
-	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Developer) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	int action = 0;
@@ -15468,7 +15468,7 @@ int SimulatorThread :: handle_command_achievements(void)
 {
 	if(query.argCount >= 1)
 	{
-		if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+		if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Developer) == false)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 
@@ -16141,7 +16141,7 @@ int SimulatorThread :: handle_query_zone_mode(void)
 
 int SimulatorThread :: handle_query_script_exec(void)
 {
-	bool ok = CheckPermissionSimple(Perm_Account, Permission_Admin);
+	bool ok = CheckPermissionSimple(Perm_Account, Permission_Admin) || CheckPermissionSimple(Perm_Account, Permission_Developer);
 	if(!ok) {
 		if(pld.zoneDef->mGrove == true && pld.zoneDef->mAccountID != pld.accPtr->ID)
 			ok = true;
