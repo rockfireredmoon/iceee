@@ -3002,7 +3002,7 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 	else if(query.name.compare("targ") == 0)
 	{
 		int wpos = 0;
-		if(creatureInst->CurrentTarget.targ != NULL && CheckPermissionSimple(Perm_Account, Permission_Debug) == true)
+		if(creatureInst->CurrentTarget.targ != NULL && CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == true)
 		{
 			int dist = ActiveInstance::GetPlaneRange(creatureInst, creatureInst->CurrentTarget.targ, 99999);
 			sprintf(Aux1, "Name: %s (%d), ID: %d, CDef: %d (%d) (D:%d) PVPable: %s", creatureInst->CurrentTarget.targ->css.display_name, creatureInst->CurrentTarget.targ->css.level, creatureInst->CurrentTarget.targ->CreatureID, creatureInst->CurrentTarget.targ->CreatureDefID, creatureInst->CurrentTarget.targ->css.health, dist, creatureInst->CanPVPTarget(creatureInst->CurrentTarget.targ) ? "yes" : "no");
@@ -3013,7 +3013,7 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 	}
 	else if(query.name.compare("elev") == 0)
 	{
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == true && query.argCount > 0)
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == true && query.argCount > 0)
 		{
 			creatureInst->CurrentY = query.GetInteger(0);
 			creatureInst->BroadcastUpdateElevationSelf();
@@ -3022,7 +3022,7 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 	}
 	else if(query.name.compare("cycle") == 0)
 	{
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == true)
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == true)
 			g_EnvironmentCycleManager.EndCurrentCycle();
 		g_Log.AddMessageFormat("Cycle is now: %u (%s)", g_EnvironmentCycleManager.mCurrentCycleIndex, g_EnvironmentCycleManager.GetCurrentTimeOfDay().c_str());
 		PendingData = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
@@ -3587,7 +3587,7 @@ int SimulatorThread :: handle_query_clientperms_list(void)
 			l.push_back("sage");
 		}
 
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == true) {
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == true) {
 			l.push_back("debug");
 		}
 
@@ -3610,7 +3610,7 @@ int SimulatorThread :: handle_query_admin_check(void)
 	   This is used to unlock some debug features in the client.
 	*/
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
@@ -4064,7 +4064,7 @@ void SimulatorThread :: handle_updateVelocity(void)
 
 	if(g_Config.HasAdministrativeBehaviorFlag(ADMIN_BEHAVIOR_VERIFYSPEED) == true)
 	{
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		{
 			int xlen = abs(x - (creatureInst->CurrentX & 0xFFFF));
 			int zlen = abs(z - (creatureInst->CurrentZ & 0xFFFF));
@@ -4316,7 +4316,7 @@ void SimulatorThread :: handle_abilityActivate(void)
 	else
 	{
 		bool allow = false;
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == true)
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == true)
 			allow = true;
 		else if(pld.charPtr->abilityList.GetAbilityIndex(aID) >= 0)
 			allow = true;
@@ -5112,7 +5112,7 @@ int SimulatorThread :: CheckValidWarpZone(int ZoneID)
 
 	//For regular players
 	if(zonePtr->mGrove == false && zonePtr->mArena == false && zonePtr ->mGuildHall == false)
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 			return ERROR_WARPGROVEONLY;
 
 	//For guild hall
@@ -5147,7 +5147,7 @@ int SimulatorThread :: handle_command_warp(void)
     */
 
 	if(pld.zoneDef->mGrove == false)
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 1)
@@ -5279,7 +5279,7 @@ int SimulatorThread :: handle_command_warpi(void)
     */
 
 	if(pld.zoneDef->mGrove == false)
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 1)
@@ -5323,7 +5323,7 @@ int SimulatorThread :: handle_command_warpt(void)
     */
 
 	if(pld.zoneDef->mGrove == false)
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 2)
@@ -5496,7 +5496,7 @@ int SimulatorThread :: handle_command_health(void)
 		Args : [0] = Hit Points to assign.
     */
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 1)
@@ -5535,7 +5535,7 @@ int SimulatorThread :: handle_command_speed(void)
 		Args : [0] = Base Speed.
     */
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 1)
@@ -5559,7 +5559,7 @@ int SimulatorThread :: handle_command_fa(void)
 		Args : [0] = ID of the ability to use.
     */
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(HasQueryArgs(1) == false)
@@ -5613,7 +5613,7 @@ int SimulatorThread :: handle_command_skadd(void)
 		Args : 0 or 1, [0] = CreatureDefID
     */
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	int CDefID = 0;
@@ -5841,7 +5841,7 @@ int SimulatorThread :: handle_command_who(void)
 
 	WritePos = 0;
 
-	bool debug = CheckPermissionSimple(Perm_Account, Permission_Debug);
+	bool debug = CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer );
 	SIMULATOR_IT it;
 	for(it = Simulator.begin(); it != Simulator.end(); ++it)
 	{
@@ -6095,7 +6095,7 @@ int SimulatorThread :: handle_command_daily(void)
 		       [1] = partial appearance string to match
     */
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	pld.accPtr->DueDailyRewards = true;
@@ -10393,7 +10393,7 @@ int SimulatorThread :: protected_helper_checkdistance(int creatureID)
 
 int SimulatorThread :: handle_command_backup(void)
 {
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	pld.charPtr->originalAppearance = creatureInst->css.appearance;
@@ -10433,7 +10433,7 @@ int SimulatorThread :: handle_command_god(void)
 	    Cheat to enable or disable auto aggro hostility between players and mobs.
 		Args : [0] zero or nonzero
 	*/
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	int wpos = 0;
@@ -10785,7 +10785,7 @@ int SimulatorThread :: handle_query_spawn_create(void)
 		      [1] = CreatureDef ID.
 	*/
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 2)
@@ -11395,7 +11395,7 @@ int SimulatorThread :: handle_command_partyall(void)
 		Args: [none]
 	*/
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	int wpos = creatureInst->actInst->PartyAll(creatureInst, SendBuf);
@@ -11534,7 +11534,7 @@ int SimulatorThread :: handle_command_ccc(void)
 		Args: [none]
 	*/
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	const char *category = NULL;
@@ -15774,7 +15774,7 @@ int SimulatorThread :: handle_query_instance(void)
 		Util::SafeFormat(Aux1, sizeof(Aux1), "Total mobs killed: %d", inst->mKillCount);
 		SendInfoMessage(Aux1, INFOMSG_INFO);
 
-		if(inst->mZoneDefPtr->IsDungeon() == true || CheckPermissionSimple(Perm_Account, Permission_Debug) == true)
+		if(inst->mZoneDefPtr->IsDungeon() == true || CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == true)
 		{
 			Util::SafeFormat(Aux1, sizeof(Aux1), "Drop rate bonus: %gx", inst->mDropRateBonusMultiplier);
 			SendInfoMessage(Aux1, INFOMSG_INFO);
@@ -15804,7 +15804,7 @@ int SimulatorThread :: handle_query_instance(void)
 			SendInfoMessage(Aux1, INFOMSG_INFO);
 		}
 
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == true)
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == true)
 		{
 			Util::SafeFormat(Aux1, sizeof(Aux1), "Drop rate profile: %s", inst->mZoneDefPtr->GetDropRateProfile().c_str());
 			SendInfoMessage(Aux1, INFOMSG_INFO);
@@ -16225,7 +16225,7 @@ int SimulatorThread :: handle_query_go(void)
 	// [0], [1], [2] = x, y, z coordinates, respectively.
 
 	if(pld.zoneDef->mGrove == false)
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	int x = creatureInst->CurrentX;
