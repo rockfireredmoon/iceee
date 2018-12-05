@@ -5107,12 +5107,12 @@ int SimulatorThread :: CheckValidWarpZone(int ZoneID)
 	}
 
 	//For administrative access
-	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == true || CheckPermissionSimple(Perm_Account, Permission_Developer) == true)
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin | Permission_Developer | Permission_Sage) == true )
 		return ERROR_NONE;
 
 	//For regular players
 	if(zonePtr->mGrove == false && zonePtr->mArena == false && zonePtr ->mGuildHall == false)
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
+		if(CheckPermissionSimple(Perm_Account, Permission_Sage | Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 			return ERROR_WARPGROVEONLY;
 
 	//For guild hall
@@ -5147,7 +5147,7 @@ int SimulatorThread :: handle_command_warp(void)
     */
 
 	if(pld.zoneDef->mGrove == false)
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
+		if(CheckPermissionSimple(Perm_Account, Permission_Sage | Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 1)
@@ -5945,7 +5945,7 @@ int SimulatorThread :: handle_command_give(void)
 		Args : [0] = name of object to search for.
     */
 
-	if(CheckPermissionSimple(Perm_Account, Permission_ItemGive | Permission_Admin | Permission_Developer) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_ItemGive | Permission_Admin | Permission_Developer | Permission_Sage) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 1)
@@ -6037,7 +6037,7 @@ int SimulatorThread :: handle_command_giveall(void)
 		Args : [0] = name of object to search for.
     */
 
-	if(CheckPermissionSimple(Perm_Account, Permission_ItemGive | Permission_Admin | Permission_Developer) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_ItemGive | Permission_Admin | Permission_Developer | Permission_Sage) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 1)
@@ -6123,7 +6123,7 @@ int SimulatorThread :: handle_command_giveapp(void)
 		       [1] = partial appearance string to match
     */
 
-	if(CheckPermissionSimple(Perm_Account, Permission_ItemGive | Permission_Admin | Permission_Developer) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_ItemGive | Permission_Admin | Permission_Developer | Permission_Sage) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 2)
@@ -6186,7 +6186,7 @@ int SimulatorThread :: handle_command_deleteall(void)
 		Args : none
     */
 
-	if(CheckPermissionSimple(Perm_Account, Permission_ItemGive | Permission_Admin | Permission_Developer) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_ItemGive | Permission_Admin | Permission_Developer | Permission_Sage) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	int size = pld.charPtr->inventory.containerList[INV_CONTAINER].size();
