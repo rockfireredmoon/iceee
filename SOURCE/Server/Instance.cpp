@@ -3878,7 +3878,10 @@ int ActiveInstanceManager :: AddSimulator_Ex(PlayerInstancePlacementData &pd)
 	ActiveInstance *ptr = ResolveExistingInstance(pd, zoneDef);
 	if(ptr == NULL)
 	{
-		g_Log.AddMessageFormat("Creating new instance for zone: %d", pd.in_zoneID);
+		if(pd.in_scaleProfile == NULL)
+			g_Log.AddMessageFormat("Creating new instance for zone: %d with default profile", pd.in_zoneID);
+		else
+			g_Log.AddMessageFormat("Creating new instance for zone: %d with profile %s", pd.in_zoneID, pd.in_scaleProfile->mDifficultyName.c_str());
 		ptr = CreateInstance(pd.in_zoneID, pd);
 		created = true;
 	}
@@ -4025,6 +4028,21 @@ void ActiveInstanceManager :: DebugFlushInactiveInstances(void)
 	nextInstanceCheck = g_ServerTime;
 }
 
+PlayerInstancePlacementData :: PlayerInstancePlacementData(const PlayerInstancePlacementData *data) {
+	in_cInst = data->in_cInst;
+	in_simPtr = data->in_simPtr;
+	in_instanceID = data->in_instanceID;
+	in_partyID = data->in_partyID;
+	in_creatureDefID = data->in_creatureDefID;
+	in_zoneID = data->in_zoneID;
+	in_serverSessionID = data->in_serverSessionID;
+	in_playerLevel = data->in_playerLevel;
+	in_scaleProfile = data->in_scaleProfile;
+	out_cInst = data->out_cInst;
+	out_zoneDef = data->out_zoneDef;
+	out_instanceID = data->out_instanceID;
+	mPartyLeaderDefID = data->mPartyLeaderDefID;
+}
 
 PlayerInstancePlacementData :: PlayerInstancePlacementData()
 {
@@ -4044,21 +4062,20 @@ void PlayerInstancePlacementData :: SetInstanceScaler(const std::string &name)
 		if(in_partyID == 0 || (in_partyID != 0 && mPartyLeaderDefID == this->in_creatureDefID))
 		{
 			profile = g_InstanceScaleManager.GetProfile(name);
-			//g_Log.AddMessageFormat("Setting default: Party:%d, profile:%s", in_partyID, name.c_str());
+			g_Log.AddMessageFormat("Setting default: Party:%d, profile:%s", in_partyID, name.c_str());
 		}
 	}
-	/*
 	if(profile != NULL)
 		g_Log.AddMessageFormat("Setting [%s]", profile->mDifficultyName.c_str());
-	*/
-
+	else
+		g_Log.AddMessageFormat("Setting NO profile");
 	in_scaleProfile = profile;
 }
 
 const InstanceScaleProfile* PlayerInstancePlacementData :: GetPartyLeaderInstanceScaler(void)
 {
 	mPartyLeaderDefID = 0;
-	//g_Log.AddMessageFormat("Party: %d", in_partyID);
+	g_Log.AddMessageFormat("Party: %d", in_partyID);
 
 	if(in_partyID == 0)
 		return NULL;
@@ -4071,18 +4088,15 @@ const InstanceScaleProfile* PlayerInstancePlacementData :: GetPartyLeaderInstanc
 	if(member == NULL)
 		return NULL;
 
-	CreatureInstance *creature = member->mCreaturePtr;
-	if(creature == NULL)
-		return NULL;
-
-	if(!(creature->serverFlags & ServerFlags::IsPlayer))
-		return NULL;
-
-	CharacterData *charDat = creature->charPtr;
+	CharacterData *charDat = member->mCharPtr;
 	if(charDat == NULL)
 		return NULL;
+	CreatureInstance *creature = member->mCreaturePtr;
 
-	//g_Log.AddMessageFormat("Returning party leader %s [%d] scaler %s", creature->css.display_name, party->mLeaderDefID, charDat->InstanceScaler.c_str());
+	if(creature != NULL && !(creature->serverFlags & ServerFlags::IsPlayer))
+		return NULL;
+
+	g_Log.AddMessageFormat("Returning party leader %s [%d] scaler %s", charDat->cdef.css.display_name, party->mLeaderDefID, charDat->InstanceScaler.c_str());
 	mPartyLeaderDefID = party->mLeaderDefID;
 	return g_InstanceScaleManager.GetProfile(charDat->InstanceScaler);
 }

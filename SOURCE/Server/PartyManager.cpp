@@ -68,6 +68,7 @@ void ActiveParty :: AddMember(CreatureInstance* member)
 	newMember.mCreatureID = member->CreatureID;
 	newMember.mDisplayName = member->css.display_name;
 	newMember.mCreaturePtr = member;
+	newMember.mCharPtr = member->charPtr;
 	newMember.mSocket = member->simulatorPtr->sc.ClientSocket;
 	mMemberList.push_back(newMember);
 
@@ -200,6 +201,7 @@ bool ActiveParty :: UpdatePlayerReferences(CreatureInstance* member)
 		{
 			mMemberList[i].mCreatureID = member->CreatureID;
 			mMemberList[i].mCreaturePtr = member;
+			mMemberList[i].mCharPtr = member->charPtr;
 			mMemberList[i].mSocket = member->simulatorPtr->sc.ClientSocket;
 			return true;
 		}
@@ -226,6 +228,7 @@ bool ActiveParty :: RemovePlayerReferences(int memberDefID, bool disconnect)
 		if(mMemberList[i].mCreatureDefID == memberDefID)
 		{
 			mMemberList[i].mCreaturePtr = NULL;
+			mMemberList[i].mCharPtr = NULL;
 			if(disconnect == true)
 				mMemberList[i].mSocket = SocketClass::Invalid_Socket;
 			return true;

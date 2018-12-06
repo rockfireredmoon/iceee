@@ -211,6 +211,7 @@ struct PlayerInstancePlacementData
 	int out_instanceID;           //The instance ID that the player has been placed into.
 
 	PlayerInstancePlacementData();
+	PlayerInstancePlacementData(const PlayerInstancePlacementData *data);
 	void Clear();
 	void SetInstanceScaler(const std::string &name);
 

@@ -12,6 +12,7 @@ public:
 	int mCreatureID;
 	std::string mDisplayName;
 	CreatureInstance *mCreaturePtr;
+	CharacterData *mCharPtr;
 	int mSocket;
 
 	// PVP scores (a team is a party)
