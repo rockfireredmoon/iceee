@@ -2035,7 +2035,7 @@ bool SimulatorThread :: MainCallSetZone(int newZoneID, int newInstanceID, bool s
 	}
 
 	//The party needs to be checked before placing into a zone.
-	if(LoadStage == LOADSTAGE_UNLOADED)
+	if(LoadStage == LOADSTAGE_UNLOADED || LoadStage == LOADSTAGE_GAMEPLAY)
 	{
 		ActiveParty *party = g_PartyManager.GetPartyWithMember(pld.CreatureDefID);
 		if(party != NULL)
@@ -2285,6 +2285,10 @@ void SimulatorThread :: MainCallHelperInstanceRegister(int ZoneID, int InstanceI
 
 	PlayerInstancePlacementData pd;
 	FillPlayerInstancePlacementData(pd, ZoneID, InstanceID);
+	if(pd.in_scaleProfile == NULL)
+		g_Log.AddMessageFormat("Creating new instance for zone: %d with default profile", pd.in_zoneID);
+	else
+		g_Log.AddMessageFormat("Creating new instance for zone: %d using profile %s", pd.in_zoneID, pd.in_scaleProfile->mDifficultyName.c_str());
 
 	if(g_ActiveInstanceManager.AddSimulator_Ex(pd) == -1)
 	{
