@@ -13637,19 +13637,27 @@ int SimulatorThread :: OfferLoot(int mode, ActiveLootContainer *loot, ActivePart
 	if(mode == LOOT_MASTER) {
 		LogMessageL(MSG_SHOW, "Offer Loot Master");
 		// Offer to the leader first
-		PartyMember *leader = party->GetMemberByID(party->mLeaderID);
-		int slot = leader->mCreaturePtr->charPtr->inventory.GetFreeSlot(INV_CONTAINER);
-		LootTag tag = party->TagItem(ItemID, leader->mCreaturePtr->CreatureID, CID, slot);
+		PartyMember *member = party->GetMemberByID(party->mLeaderID);
+		int idx = 0;
+		while((member == NULL|| !member->IsOnlineAndValid()) && idx < party->mMemberList.size()) {
+			member = &party->mMemberList[idx++];
+		}
+		if(member == NULL || !member->IsOnlineAndValid()) {
+			/* Nobody left! */
+			return QueryErrorMsg::GENERIC;
+		}
+		int slot = member->mCreaturePtr->charPtr->inventory.GetFreeSlot(INV_CONTAINER);
+		LootTag tag = party->TagItem(ItemID, member->mCreaturePtr->CreatureID, CID, slot);
 		Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag.lootTag);
 		WriteIdx = PartyManager::OfferLoot(SendBuf, ItemID, Aux3, false);
 
-		if(receivingCreature->CreatureID == leader->mCreaturePtr->CreatureID) {
+		if(receivingCreature->CreatureID == member->mCreaturePtr->CreatureID) {
 			LogMessageL(MSG_SHOW, "Sending Offer Loot Master to looter, so returning with this response");
 			return WriteIdx;
 		}
 		else {
 			LogMessageL(MSG_SHOW, "Sending Offer Loot Master to someone other than looter, so returning on its simulator");
-			leader->mCreaturePtr->actInst->LSendToOneSimulator(SendBuf, WriteIdx, leader->mCreaturePtr->simulatorPtr);
+			member->mCreaturePtr->actInst->LSendToOneSimulator(SendBuf, WriteIdx, member->mCreaturePtr->simulatorPtr);
 			return QueryErrorMsg::NONE;
 		}
 	}
