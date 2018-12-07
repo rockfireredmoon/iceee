@@ -1772,7 +1772,7 @@ int AbilityManager2 :: ActivateAbility(CreatureInstance *cInst, short abilityID,
 			}
 			else
 			{
-				g_Log.AddMessageFormat("Attempting call [%s]", abEvent->mFunctionList[f].mFunctionName.c_str());
+//				g_Log.AddMessageFormat("Attempting call [%s]", abEvent->mFunctionList[f].mFunctionName.c_str());
 
 				bool pass = abProcessing.CheckActivationChance(abEvent->mFunctionList[f].mChance, abEvent->mFunctionList[f].mChanceID);
 

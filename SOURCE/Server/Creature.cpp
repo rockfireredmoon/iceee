@@ -1242,7 +1242,8 @@ bool CreatureInstance :: RegisterHostility(CreatureInstance *attacker, int hosti
 		return false;
 	}
 
-	g_Log.AddMessageFormat("RegisterHostility attacker %s %d", attacker->css.display_name, hostility);
+	if(g_Config.DebugVerbose)
+		g_Log.AddMessageFormat("RegisterHostility attacker %s %d", attacker->css.display_name, hostility);
 
 	if(hostility < 1)
 		return false;
@@ -1304,7 +1305,8 @@ bool CreatureInstance :: RegisterHostility(CreatureInstance *attacker, int hosti
 
 void CreatureInstance :: SetCombatStatus(void)
 {
-	g_Log.AddMessageFormat("SetCombatStatus %s", css.display_name);
+	if(g_Config.DebugVerbose)
+		g_Log.AddMessageFormat("SetCombatStatus %s", css.display_name);
 
 	if(HasStatus(StatusEffects::DEAD) == true)
 		return;
