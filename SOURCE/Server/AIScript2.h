@@ -46,6 +46,8 @@ public:
 	short GetMight();
 	short GetMightCharge();
 	short GetLevel();
+	short AddWillCharge(int charges);
+	short AddMightCharge(int charges);
 	bool IsOnCooldown(const char *category);
 	bool IsBusy();
 

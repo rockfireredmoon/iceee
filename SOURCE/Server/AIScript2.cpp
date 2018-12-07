@@ -126,12 +126,24 @@ bool AINutPlayer::DoUse(int abilityID, bool retry, bool highest) {
 	return false;
 }
 
+
+
 short AINutPlayer::GetWill() {
 	return attachedCreature->css.will;
 }
 
 short AINutPlayer::GetWillCharge() {
 	return attachedCreature->css.will_charges;
+}
+
+short AINutPlayer::AddWillCharge(int charges) {
+	attachedCreature->AddWillCharge(charges);
+	return attachedCreature->css.will_charges;
+}
+
+short AINutPlayer::AddMightCharge(int charges) {
+	attachedCreature->AddMightCharge(charges);
+	return attachedCreature->css.might_charges;
 }
 
 short AINutPlayer::GetMight() {
@@ -372,6 +384,8 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 	clazz->Func(_SC("use_once"), &AINutPlayer::UseNoRetry);
 	clazz->Func(_SC("use_highest"), &AINutPlayer::UseHighest);
 	clazz->Func(_SC("use_highest_once"), &AINutPlayer::UseHighestNoRetry);
+	clazz->Func(_SC("add_will_chage"), &AINutPlayer::AddWillCharge);
+	clazz->Func(_SC("add_might_chage"), &AINutPlayer::AddMightCharge);
 	clazz->Func(_SC("get_will"), &AINutPlayer::GetWill);
 	clazz->Func(_SC("get_will_charge"), &AINutPlayer::GetWillCharge);
 	clazz->Func(_SC("get_might"), &AINutPlayer::GetMight);

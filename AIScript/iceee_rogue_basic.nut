@@ -22,16 +22,16 @@ info <- {
 	speed = 2
 }
 
+function on_combat_ready()
+	if(!ai.is_on_cooldown("Stat"))
+		ai.use_highest(FELINES_GRACE);
+
 function on_target_lost(target_cid)
 	ai.clear_queue();
 
 function on_target_acquired(target_cid) {
-	ai.use_highest_once(FELINES_GRACE);
-	ai.queue(function() {
-		ai.use(MELEE);
-	},0);
-	
-	ai.queue(mai,0n);
+	ai.use(MELEE);
+	ai.exec(main);
 }
 
 function main() {

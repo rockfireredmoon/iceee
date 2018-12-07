@@ -22,15 +22,16 @@ info <- {
 	speed = 2
 }
 
+function on_combat_ready()
+	if(!ai.is_on_cooldown("Stat"))
+		ai.use_highest(SPIRIT_OF_SOLOMON);
+
 function on_target_lost(target_cid)
 	ai.clear_queue();
 
 function on_target_acquired(target_cid) {
-	ai.use_highest_once(SPIRIT_OF_SOLOMON);
-	ai.queue(function() {
-		ai.use(MELEE);
-	}, 0);
-	ai.queue(main, 0);
+	ai.use(MELEE);
+	ai.exec(main);
 }
 
 function main() {
