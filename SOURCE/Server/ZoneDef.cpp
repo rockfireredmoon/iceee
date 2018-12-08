@@ -1908,15 +1908,19 @@ bool WeatherState :: PickNewWeather() {
 	}
 	else {
 		/* Weather is stopping */
-		mThunder = false;
-		mNextThunder = 0;
-		mNextStateChange = g_ServerTime + ( randmodrng(mDefinition.mFineMin, mDefinition.mFineMax) * 1000 );
-		mWeatherType = "";
-		mWeatherWeight = WeatherState::LIGHT;
-		mEscalateState = WeatherState::ONE_OFF;
+		StopWeather();
 	}
 
 	return true;
+}
+
+void WeatherState :: StopWeather() {
+	mThunder = false;
+	mNextThunder = 0;
+	mNextStateChange = g_ServerTime + ( randmodrng(mDefinition.mFineMin, mDefinition.mFineMax) * 1000 );
+	mWeatherType = "";
+	mWeatherWeight = WeatherState::LIGHT;
+	mEscalateState = WeatherState::ONE_OFF;
 }
 
 bool WeatherManager :: MaybeAddWeatherDef(int instanceID, std::string actualMapName, std::vector<WeatherState*> &m) {
@@ -2013,13 +2017,21 @@ void WeatherManager :: Deregister(std::vector<WeatherState*> states) {
 	for(std::vector<WeatherState*>::iterator it = states.begin(); it != states.end(); ++it) {
 		s = 0;
 		WeatherState *ws = *it;
+		if(g_Config.DebugVerbose)
+			g_Log.AddMessageFormat("Clearing up weather for %d (%s)", ws->mInstanceId, ws->mDefinition.mMapName.c_str());
 		for(std::vector<std::string>::iterator it2 = (*it)->mMapNames.begin(); it2 != ws->mMapNames.end(); ++it2) {
+			if(g_Config.DebugVerbose)
+				g_Log.AddMessageFormat("    Map (%s)", (*it2).c_str());
 			WeatherKey k;
 			k.instance = ws->mInstanceId;
 			k.mapName = *it2;
-			if(s == 0)
+			if(s == 0) {
+				if(mWeather.find(k) == mWeather.end())
+					g_Log.AddMessageFormat("[WARNING] No weather state for %d / %s in map %s", ws->mInstanceId, ws->mDefinition.mMapName.c_str(), (*it2).c_str());
+				else
 				/* Only delete the state in the first key, as the other keys have a copy */
-				delete mWeather[k];
+					delete mWeather[k];
+			}
 			mWeather.erase(k);
 			s++;
 		}

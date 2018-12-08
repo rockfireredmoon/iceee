@@ -156,6 +156,7 @@ public:
 	void SendWeatherUpdate(ActiveInstance *instance); // send the weather update message to everyone in this instance/area
 	void SendThunder(ActiveInstance *instance); // send the thunder message to everyone in this instance/area
 	bool PickNewWeather();
+	void StopWeather();
 
 private:
 	void RollThunder(); // send the thunder message to everyone in this instance/area

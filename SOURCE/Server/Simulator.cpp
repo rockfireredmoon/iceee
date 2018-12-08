@@ -3059,12 +3059,21 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 	}
 	else if(query.name.compare("weather") == 0)
 	{
-		WeatherState *ws = g_WeatherManager.GetWeather(MapDef.mMapList[pld.CurrentMapInt].Name, pld.CurrentInstanceID);
+		string mapName;
+		if(pld.CurrentMapInt == -1)
+			mapName = pld.zoneDef->mName;
+		else
+			mapName = MapDef.mMapList[pld.CurrentMapInt].Name;
+		WeatherState *ws = g_WeatherManager.GetWeather(mapName, pld.CurrentInstanceID);
 		if(ws != NULL) {
-			if(!CheckPermissionSimple(Perm_Account, Permission_Sage))
+			if(!CheckPermissionSimple(Perm_Account, Permission_Sage | Permission_Admin | Permission_Developer))
 				PendingData = PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 			else {
-				ws->PickNewWeather();
+				if(query.argCount > 0 && query.GetStringObject(0).compare("stop"))
+					ws->StopWeather();
+				else
+					ws->PickNewWeather();
+				ws->SendWeatherUpdate(creatureInst->actInst);
 				PendingData += PrepExt_QueryResponseString(&SendBuf[PendingData], query.ID, "OK");
 			}
 		}
