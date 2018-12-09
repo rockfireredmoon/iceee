@@ -228,9 +228,10 @@ bool ActiveParty :: RemovePlayerReferences(int memberDefID, bool disconnect)
 		if(mMemberList[i].mCreatureDefID == memberDefID)
 		{
 			mMemberList[i].mCreaturePtr = NULL;
-			mMemberList[i].mCharPtr = NULL;
-			if(disconnect == true)
+			if(disconnect == true) {
+				mMemberList[i].mCharPtr = NULL;
 				mMemberList[i].mSocket = SocketClass::Invalid_Socket;
+			}
 			return true;
 		}
 	}
