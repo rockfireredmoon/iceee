@@ -15286,7 +15286,7 @@ int SimulatorThread :: handle_query_mod_craft(void)
 	{
 		int wpos = 0;
 		if(outputMsg.size() > 0)
-			wpos = PrepExt_SendInfoMessage(SendBuf, "Succesful craft!", INFOMSG_INFO);
+			wpos = PrepExt_SendInfoMessage(SendBuf, "Successful craft!", INFOMSG_INFO);
 		for(size_t i = 0; i < outputMsg.size(); i++)
 			wpos += PrepExt_SendInfoMessage(&SendBuf[wpos], outputMsg[i].c_str(), INFOMSG_INFO);
 		AttemptSend(SendBuf, wpos);
