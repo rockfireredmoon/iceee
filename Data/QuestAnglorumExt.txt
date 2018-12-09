@@ -767,8 +767,8 @@ Unabandon=0
 QuestGiverID=327
 QuestEnderID=327
 Repeat=0
-sGiver=0.0,0.0,0.0,0
-sEnder=0.0,0.0,0.0,0
+sGiver=57645.7,363.346,61878.0,81
+sEnder=57645.7,363.346,61878.0,81
 [ACT]
 Act.BodyText=According to the notes given to you by Druid Felina, two notable members of King Wilhelm's court have been raised along with him:
 
@@ -847,7 +847,7 @@ Obj.0.description=Return to Druid Felina
 Obj.0.myCreatureDefID=327
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=
+Obj.0.markerLocations=57631.5,363.687,61871.0,81;
 
 [ENTRY]
 ID=811
