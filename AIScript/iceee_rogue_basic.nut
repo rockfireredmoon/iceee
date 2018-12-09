@@ -24,7 +24,7 @@ info <- {
 
 function on_combat_ready()
 	if(!ai.is_on_cooldown("Stat"))
-		ai.use_highest(FELINES_GRACE);
+		ai.use_highest_once(FELINES_GRACE);
 
 function on_target_lost(target_cid)
 	ai.clear_queue();

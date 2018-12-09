@@ -24,7 +24,7 @@ info <- {
 
 function on_combat_ready()
 	if(!ai.is_on_cooldown("Stat"))
-		ai.use_highest(TAURIAN_MIGHT);
+		ai.use_highest_once(TAURIAN_MIGHT);
 
 function on_target_lost(target_cid)
 	ai.clear_queue();
