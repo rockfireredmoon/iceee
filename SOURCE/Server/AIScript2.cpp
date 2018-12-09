@@ -261,6 +261,13 @@ int AINutPlayer::GetSelfDefID() {
 	return attachedCreature->CreatureDefID;
 }
 
+void AINutPlayer::SelectTarget(int targetCID) {
+	CreatureInstance *target = actInst->GetInstanceByCID(targetCID);
+	if(target != NULL)
+		attachedCreature->SelectTarget(target);
+}
+
+
 void AINutPlayer::SetOtherTarget(int CID, int targetCID) {
 	attachedCreature->AIOtherSetTarget(CID, targetCID);
 }
@@ -406,6 +413,7 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 	clazz->Func(_SC("get_target"), &AINutPlayer::GetTarget);
 	clazz->Func(_SC("get_self"), &AINutPlayer::GetSelf);
 	clazz->Func(_SC("get_self_def_id"), &AINutPlayer::GetSelfDefID);
+	clazz->Func(_SC("select_target"), &AINutPlayer::SetOtherTarget);
 	clazz->Func(_SC("set_other_target"), &AINutPlayer::SetOtherTarget);
 	clazz->Func(_SC("is_target_enemy"), &AINutPlayer::IsTargetEnemy);
 	clazz->Func(_SC("is_target_friendly"), &AINutPlayer::IsTargetFriendly);

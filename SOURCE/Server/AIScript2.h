@@ -64,6 +64,7 @@ public:
 	int GetSelf();
 	int GetSelfDefID();
 	void SetOtherTarget(int CID, int targetCID);
+	void SelectTarget(int targetCID);
 	bool IsTargetEnemy();
 	bool IsTargetFriendly();
 	void SetSpeed(int speed);
