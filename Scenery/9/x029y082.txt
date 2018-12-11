@@ -11,9 +11,9 @@ Asset=Manipulator-SpawnPoint
 Pos=22252.3,209.411,62088
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=145
+loyaltyRadius=150
 spawnPackage=4_ewd_waywardMurkflyCamps
-outerRadius=150
+innerRadius=145
 
 [ENTRY]
 ID=151021305
@@ -21,9 +21,9 @@ Asset=Manipulator-SpawnPoint
 Pos=22153.6,276.834,61527
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=95
+loyaltyRadius=100
 spawnPackage=4_ewd_waywardMurkflyCamps
-outerRadius=100
+innerRadius=95
 
 [ENTRY]
 ID=151021313
@@ -31,8 +31,8 @@ Asset=Manipulator-SpawnPoint
 Pos=22110,249.027,61817
 Orient=0,0,0,1
 Scale=1,1,1
+loyaltyRadius=10
 spawnPackage=4_ewd_waywardMurkflyCamps
-outerRadius=10
 
 [ENTRY]
 ID=151021315
@@ -40,8 +40,8 @@ Asset=Manipulator-SpawnPoint
 Pos=21861,279.797,61553
 Orient=0,0,0,1
 Scale=1,1,1
+loyaltyRadius=10
 spawnPackage=4_ewd_waywardMurkflyCamps
-outerRadius=10
 
 [ENTRY]
 ID=151021322
@@ -107,7 +107,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151026152
 Asset=Manipulator-SpawnPoint
-Pos=21849.2,235.519,61804.8
+Pos=21854.5,235.716,61797.3
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=4_ewd_greySunMix2_35
@@ -124,7 +124,7 @@ spawnPackage=4_ewd_greySunMix2_35
 ID=151026154
 Asset=Manipulator-SpawnPoint
 Pos=21780.9,236.257,61864
-Orient=0,0,0,1
+Orient=0,0.556361,0,0.830941
 Scale=1,1,1
 spawnPackage=4_ewd_greySunMix2_35
 
@@ -134,29 +134,34 @@ Asset=Manipulator-SpawnPoint
 Pos=21863.9,236.326,61905.2
 Orient=0,-0.237703,0,0.971338
 Scale=1,1,1
+wanderRadius=70
 spawnPackage=4_ewd_greySunMix2_35
 
 [ENTRY]
 ID=151026157
 Asset=Manipulator-SpawnPoint
 Pos=21842.9,236.435,61730.1
-Orient=0,0,0,1
+Orient=0,0.836026,0,0.54869
 Scale=1,1,1
+wanderRadius=60
 spawnPackage=4_ewd_greySunMix2_35
 
 [ENTRY]
 ID=151026158
 Asset=Manipulator-SpawnPoint
 Pos=21937,233.514,61855.2
-Orient=0,0,0,1
+Orient=0,0.747971,0,0.663731
 Scale=1,1,1
+loyaltyRadius=60
+wanderRadius=60
 spawnPackage=4_ewd_greySunMix2_35
 
 [ENTRY]
 ID=151026159
 Asset=Manipulator-SpawnPoint
 Pos=21925,243.529,61704
-Orient=0,0,0,1
+Orient=0,0.285952,0,0.958244
 Scale=1,1,1
+wanderRadius=70
 spawnPackage=4_ewd_greySunMix2_35
 
