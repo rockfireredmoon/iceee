@@ -106,6 +106,8 @@ int PrepExt_SetTimeOfDay(char *buffer, const char *timeOfDay)
 
 int PrepExt_SetWeather(char *buffer, std::string type, int weight)
 {
+	if(g_Config.DebugVerbose)
+		g_Log.AddMessageFormat("PrepExt_SetWeather %s : %d", type.c_str(), weight);
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg
 	wpos += PutShort(&buffer[wpos], 0);

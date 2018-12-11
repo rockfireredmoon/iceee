@@ -370,7 +370,7 @@ public:
 	std::map<WeatherKey, WeatherState*> mWeather; // all currently maintained weather
 	std::map<std::string, WeatherDef> mWeatherDefinitions; // all weather definitions
 	std::vector<WeatherState*> RegisterInstance(ActiveInstance *instance); // when an instance loads, we find all of it's weather regions (i.e. map names) and start maintaining them if there is a weather definition
-	void Deregister(std::vector<WeatherState*> states); // when an instance dies, we stop maintaining its weather regions (i.e. map names)
+	void Deregister(std::vector<WeatherState*> *states); // when an instance dies, we stop maintaining its weather regions (i.e. map names)
 	int LoadFromFile(const char *filename);
 	WeatherState* GetWeather(std::string mapName, int instanceId);
 private:

@@ -596,9 +596,7 @@ ActiveInstance :: ~ActiveInstance()
 
 void ActiveInstance :: Clear(void)
 {
-	g_WeatherManager.Deregister(mWeather);
-
-	mWeather.clear();
+	g_WeatherManager.Deregister(&mWeather);
 	mZone = 0;
 	mMode = PVP::GameMode::PVE_ONLY;
 	mZoneDefPtr = NULL;
