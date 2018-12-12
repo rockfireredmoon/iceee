@@ -2229,6 +2229,21 @@ const AbilityEntry2* AbilityManager2 :: GetAbilityPtrByID(int abilityID)
 	return NULL;
 }
 
+
+const AbilityEntry2* AbilityManager2 :: GetBestAbilityPtrByID(int abilityID, int level)
+{
+	ABILITY_ITERATOR it;
+	it = mAbilityIndex.find(abilityID);
+	if(it != mAbilityIndex.end()) {
+		AbilityEntry2* ab = &it->second;
+		for(it = mAbilityIndex.begin(); it != mAbilityIndex.end(); ++it)
+			if(it->second.mAbilityGroupID == ab->mAbilityGroupID && it->second.mTier > ab->mTier && it->second.mReqLevel <= level)
+				ab = &it->second;
+		return ab;
+	}
+	return NULL;
+}
+
 //An external debug command uses this to retrieve a list of cooldown category names
 //so that all cooldowns may be reset in the client.
 void AbilityManager2 :: GetCooldownCategoryStrings(STRINGLIST &output)

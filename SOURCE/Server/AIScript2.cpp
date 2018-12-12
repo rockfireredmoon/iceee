@@ -61,17 +61,38 @@ bool AINutPlayer::HasBuff(int tier, int buffType) {
 	return attachedCreature->buffManager.HasBuff(tier, buffType);
 }
 
+int AINutPlayer::GetBestAbility(int abilityID) {
+	const Ability2::AbilityEntry2* abptr =
+			g_AbilityManager.GetBestAbilityPtrByID(abilityID, attachedCreature->css.level);
+	return abptr == NULL ? 0 : abptr->mAbilityID;
+}
+
 bool AINutPlayer::Use(int abilityID) {
-	return DoUse(abilityID, true);
+	return DoUse(abilityID, true, false);
+}
+
+bool AINutPlayer::UseHighestNoRetry(int abilityID) {
+	return DoUse(abilityID, true, false);
+}
+
+bool AINutPlayer::UseHighest(int abilityID) {
+	return DoUse(abilityID, true, true);
 }
 
 bool AINutPlayer::UseNoRetry(int abilityID) {
-	return DoUse(abilityID, false);
+	return DoUse(abilityID, false, false);
 }
 
-bool AINutPlayer::DoUse(int abilityID, bool retry) {
+bool AINutPlayer::DoUse(int abilityID, bool retry, bool highest) {
 
 	if (attachedCreature->ab[0].bPending == false) {
+		if(highest) {
+			const Ability2::AbilityEntry2* abptr =
+					g_AbilityManager.GetBestAbilityPtrByID(abilityID, attachedCreature->css.level);
+			if(abptr != NULL)
+				abilityID = abptr->mAbilityID;
+		}
+
 		//DEBUG OUTPUT
 		if (g_Config.DebugLogAIScriptUse == true) {
 			const Ability2::AbilityEntry2* abptr =
@@ -349,7 +370,10 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 	clazz->Func(_SC("has_target"), &AINutPlayer::HasTarget);
 	clazz->Func(_SC("has_buff"), &AINutPlayer::HasBuff);
 	clazz->Func(_SC("use"), &AINutPlayer::Use);
+	clazz->Func(_SC("get_best_ab"), &AINutPlayer::GetBestAbility);
 	clazz->Func(_SC("use_once"), &AINutPlayer::UseNoRetry);
+	clazz->Func(_SC("use_highest"), &AINutPlayer::UseHighest);
+	clazz->Func(_SC("use_highest_once"), &AINutPlayer::UseHighestNoRetry);
 	clazz->Func(_SC("get_will"), &AINutPlayer::GetWill);
 	clazz->Func(_SC("get_will_charge"), &AINutPlayer::GetWillCharge);
 	clazz->Func(_SC("get_might"), &AINutPlayer::GetMight);
