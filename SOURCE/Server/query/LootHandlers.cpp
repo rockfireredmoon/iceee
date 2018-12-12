@@ -116,41 +116,41 @@ int LootNeedGreedPassHandler::protected_helper_query_loot_need_greed_pass(Simula
 
 	ActiveInstance *aInst = creatureInstance->actInst;
 	int lootTag = atoi(query->args[1].c_str());
-	LootTag *tag = party->lootTags[lootTag];
-	if (tag == NULL) {
+	LootTag tag = party->lootTags[lootTag];
+	if (!tag.Valid()) {
 		g_Logs.simulator->warn("[%v] Loot tag missing %v", sim->InternalID, lootTag);
 		return QueryErrorMsg::INVALIDITEM;
 	}
 	ActiveLootContainer *loot =
-			&aInst->lootsys.creatureList[tag->mLootCreatureId];
-	if (tag == NULL) {
+			&aInst->lootsys.creatureList[tag.mLootCreatureId];
+	if (loot == NULL) {
 		g_Logs.simulator->warn("[%v] Loot container missing %v", sim->InternalID,
-				tag->mLootCreatureId);
+				tag.mLootCreatureId);
 		return QueryErrorMsg::INVALIDITEM;
 	}
 	g_Logs.simulator->info("[%v] %v is choosing on %v (%v / %v)", sim->InternalID,
-			creatureInstance->CreatureID, lootTag, tag->mItemId, tag->mCreatureId,
-			tag->mLootCreatureId);
-	if (loot->HasAnyDecided(tag->mItemId, creatureInstance->CreatureID)) {
+			creatureInstance->CreatureID, lootTag, tag.mItemId, tag.mCreatureId,
+			tag.mLootCreatureId);
+	if (loot->HasAnyDecided(tag.mItemId, creatureInstance->CreatureID)) {
 		g_Logs.simulator->warn("[%v] %v has already made loot decision on %v",
-				sim->InternalID, creatureInstance->CreatureID, tag->mItemId);
+				sim->InternalID, creatureInstance->CreatureID, tag.mItemId);
 		return QueryErrorMsg::LOOTDENIED;
 	}
-	if (tag->mCreatureId != creatureInstance->CreatureID) {
+	if (tag.mCreatureId != creatureInstance->CreatureID) {
 		g_Logs.simulator->warn(
 				"[%d] Loot tag %d is for a different creature. The tag said %d, but this player is %d.",
-				sim->InternalID, lootTag, tag->mCreatureId,
+				sim->InternalID, lootTag, tag.mCreatureId,
 				creatureInstance->CreatureID);
 		return QueryErrorMsg::LOOTDENIED;
 	}
 
 	const char *command = query->args[0].c_str();
 	if (strcmp(command, "loot.need") == 0) {
-		loot->Need(tag->mItemId, tag->mCreatureId);
+		loot->Need(tag.mItemId, tag.mCreatureId);
 	} else if (strcmp(command, "loot.greed") == 0) {
-		loot->Greed(tag->mItemId, tag->mCreatureId);
+		loot->Greed(tag.mItemId, tag.mCreatureId);
 	} else if (strcmp(command, "loot.pass") == 0) {
-		loot->Pass(tag->mItemId, tag->mCreatureId);
+		loot->Pass(tag.mItemId, tag.mCreatureId);
 	}
 	sim->CheckIfLootReadyToDistribute(loot, tag);
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");

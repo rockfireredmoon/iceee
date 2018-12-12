@@ -12,16 +12,29 @@ PartyManager g_PartyManager;
 static int lootSeq = 0;
 typedef std::map<int, LootTag*>::iterator it_type;
 
-bool PartyMember :: IsOnlineAndValid() {
-	return mSocket != SocketClass::Invalid_Socket && mCreaturePtr != NULL && mCreaturePtr->simulatorPtr != NULL;
+bool PartyMember::IsOnlineAndValid() {
+	return mSocket != SocketClass::Invalid_Socket && mCreaturePtr != NULL
+			&& mCreaturePtr->simulatorPtr != NULL;
 }
-bool PartyMember :: IsOnline() {
+bool PartyMember::IsOnline() {
 	return mSocket != SocketClass::Invalid_Socket;
 }
 
-LootTag :: LootTag(int itemId, int creatureId, int lootCreatureId)
-{
-	lootTag = ++lootSeq;
+LootTag::LootTag() {
+	Clear();
+}
+
+LootTag::LootTag(const LootTag *tag) {
+	lootTag = tag->lootTag;
+	mCreatureId = tag->mCreatureId;
+	mItemId = tag->mItemId;
+	mLootCreatureId = tag->mLootCreatureId;
+	mSlotIndex = tag->mSlotIndex;
+	needed = tag->needed;
+}
+
+LootTag::LootTag(int tag, int itemId, int creatureId, int lootCreatureId) {
+	lootTag = tag;
 	mCreatureId = creatureId;
 	mItemId = itemId;
 	mLootCreatureId = lootCreatureId;
@@ -29,9 +42,21 @@ LootTag :: LootTag(int itemId, int creatureId, int lootCreatureId)
 	needed = false;
 }
 
-void ActiveParty :: AddMember(CreatureInstance* member)
-{
-	if(HasMember(member->CreatureDefID) == true)
+bool LootTag::Valid(void) {
+	return lootTag > 0;
+}
+
+void LootTag::Clear() {
+	lootTag = 0;
+	mCreatureId = 0;
+	mItemId = 0;
+	mLootCreatureId = 0;
+	mSlotIndex = 0;
+	needed = false;
+}
+
+void ActiveParty::AddMember(CreatureInstance* member) {
+	if (HasMember(member->CreatureDefID) == true)
 		return;
 
 	PartyMember newMember;
@@ -45,41 +70,41 @@ void ActiveParty :: AddMember(CreatureInstance* member)
 	member->PartyID = mPartyID;
 
 	// If the party member is in an instance that has an active PVP game, update the teams
-	if(member->actInst->pvpGame != NULL && mPVPTeam != PVP::PVPTeams::NONE) {
+	if (member->actInst->pvpGame != NULL && mPVPTeam != PVP::PVPTeams::NONE) {
 
 		char buf[64];
-		int wpos = PrepExt_PVPTeamAdd(buf, member->actInst->pvpGame, member->css.display_name, member->CreatureID, mPVPTeam);
+		int wpos = PrepExt_PVPTeamAdd(buf, member->actInst->pvpGame,
+				member->css.display_name, member->CreatureID, mPVPTeam);
 		member->actInst->LSendToAllSimulator(buf, wpos, -1);
 
 //
 	}
 }
 
-bool ActiveParty :: HasMember(int memberDefID)
-{
-	for(size_t i = 0; i < mMemberList.size(); i++)
-		if(mMemberList[i].mCreatureDefID == memberDefID)
+bool ActiveParty::HasMember(int memberDefID) {
+	for (size_t i = 0; i < mMemberList.size(); i++)
+		if (mMemberList[i].mCreatureDefID == memberDefID)
 			return true;
 	return false;
 }
 
-void ActiveParty :: RemoveMember(int memberDefID)
-{
+void ActiveParty::RemoveMember(int memberDefID) {
 	// TODO need to clear up loot tags too
 
-	for(size_t i = 0; i < mMemberList.size(); i++)
-	{
-		if(mMemberList[i].mCreatureDefID == memberDefID)
-		{
-			if(mMemberList[i].mCreaturePtr != NULL)
-			{
+	for (size_t i = 0; i < mMemberList.size(); i++) {
+		if (mMemberList[i].mCreatureDefID == memberDefID) {
+			if (mMemberList[i].mCreaturePtr != NULL) {
 
 				// If the party member is in an instance that has an active PVP game, update the teams
-				if(mMemberList[i].mCreaturePtr->actInst->pvpGame != NULL && mPVPTeam != PVP::PVPTeams::NONE) {
+				if (mMemberList[i].mCreaturePtr->actInst->pvpGame != NULL
+						&& mPVPTeam != PVP::PVPTeams::NONE) {
 
 					char buf[64];
-					int wpos = PrepExt_PVPTeamRemove(buf, mMemberList[i].mCreaturePtr->actInst->pvpGame, mMemberList[i].mCreaturePtr->CreatureID);
-					mMemberList[i].mCreaturePtr->actInst->LSendToAllSimulator(buf, wpos, -1);
+					int wpos = PrepExt_PVPTeamRemove(buf,
+							mMemberList[i].mCreaturePtr->actInst->pvpGame,
+							mMemberList[i].mCreaturePtr->CreatureID);
+					mMemberList[i].mCreaturePtr->actInst->LSendToAllSimulator(
+							buf, wpos, -1);
 				}
 
 				mMemberList[i].mCreaturePtr->PartyID = 0;
@@ -91,14 +116,13 @@ void ActiveParty :: RemoveMember(int memberDefID)
 	}
 }
 
-bool ActiveParty :: UpdateLeaderDropped(int memberID)
-{
+bool ActiveParty::UpdateLeaderDropped(int memberID) {
 	//Check if the given member is the leader.  If so, find a new leader
 	//from the member list.  The leader must have already been removed from
 	//the list.
-	if(memberID != mLeaderID)
+	if (memberID != mLeaderID)
 		return false;
-	if(mMemberList.size() == 0)
+	if (mMemberList.size() == 0)
 		return false;
 	mLeaderDefID = mMemberList[0].mCreatureDefID;
 	mLeaderID = mMemberList[0].mCreatureID;
@@ -106,18 +130,15 @@ bool ActiveParty :: UpdateLeaderDropped(int memberID)
 	return true;
 }
 
-bool ActiveParty :: SetLeader(int newLeaderDefID)
-{
+bool ActiveParty::SetLeader(int newLeaderDefID) {
 	int fi = -1;
-	for(size_t i = 0; i < mMemberList.size(); i++)
-	{
-		if(mMemberList[i].mCreatureDefID == newLeaderDefID)
-		{
+	for (size_t i = 0; i < mMemberList.size(); i++) {
+		if (mMemberList[i].mCreatureDefID == newLeaderDefID) {
 			fi = i;
 			break;
 		}
 	}
-	if(fi == -1)
+	if (fi == -1)
 		return false;
 	mLeaderDefID = mMemberList[fi].mCreatureDefID;
 	mLeaderID = mMemberList[fi].mCreatureID;
@@ -125,49 +146,45 @@ bool ActiveParty :: SetLeader(int newLeaderDefID)
 	return true;
 }
 
-PartyMember* ActiveParty :: GetMemberByID(int memberID)
-{
-	for(size_t i = 0; i < mMemberList.size(); i++)
-		if(mMemberList[i].mCreatureID == memberID)
+PartyMember* ActiveParty::GetMemberByID(int memberID) {
+	for (size_t i = 0; i < mMemberList.size(); i++)
+		if (mMemberList[i].mCreatureID == memberID)
 			return &mMemberList[i];
 	return NULL;
 }
 
-PartyMember* ActiveParty :: GetNextLooter()
-{
-	for(size_t i = 0 ; i < mMemberList.size(); i++) {
-		if(mNextToGetLoot >= mMemberList.size()) {
+PartyMember* ActiveParty::GetNextLooter() {
+	for (size_t i = 0; i < mMemberList.size(); i++) {
+		if (mNextToGetLoot >= mMemberList.size()) {
 			mNextToGetLoot = 0;
 		}
-		if(mNextToGetLoot >= mMemberList.size()) {
+		if (mNextToGetLoot >= mMemberList.size()) {
 			return NULL;
 		}
 		mNextToGetLoot++;
 		PartyMember* m = &mMemberList[mNextToGetLoot - 1];
-		if(m->IsOnlineAndValid())
+		if (m->IsOnlineAndValid())
 			return m;
-		g_Logs.server->info("%v (%v) is next in round robin, but they no longer have a simulator", m->mCreatureID, m->mDisplayName);
+		g_Logs.server->info(
+				"%v (%v) is next in round robin, but they no longer have a simulator",
+				m->mCreatureID, m->mDisplayName);
 	}
 	return NULL;
 }
 
-PartyMember* ActiveParty :: GetMemberByDefID(int memberDefID)
-{
-	for(size_t i = 0; i < mMemberList.size(); i++)
-		if(mMemberList[i].mCreatureDefID == memberDefID)
+PartyMember* ActiveParty::GetMemberByDefID(int memberDefID) {
+	for (size_t i = 0; i < mMemberList.size(); i++)
+		if (mMemberList[i].mCreatureDefID == memberDefID)
 			return &mMemberList[i];
 	return NULL;
 }
 
-bool ActiveParty :: UpdatePlayerReferences(CreatureInstance* member)
-{
-	if(mLeaderDefID == member->CreatureDefID)
+bool ActiveParty::UpdatePlayerReferences(CreatureInstance* member) {
+	if (mLeaderDefID == member->CreatureDefID)
 		mLeaderID = member->CreatureID;
-	
-	for(size_t i = 0; i < mMemberList.size(); i++)
-	{
-		if(mMemberList[i].mCreatureDefID == member->CreatureDefID)
-		{
+
+	for (size_t i = 0; i < mMemberList.size(); i++) {
+		if (mMemberList[i].mCreatureDefID == member->CreatureDefID) {
 			mMemberList[i].mCreatureID = member->CreatureID;
 			mMemberList[i].mCreaturePtr = member;
 			mMemberList[i].mSocket = member->simulatorPtr->sc.ClientSocket;
@@ -177,16 +194,13 @@ bool ActiveParty :: UpdatePlayerReferences(CreatureInstance* member)
 	return false;
 }
 
-bool ActiveParty :: RemovePlayerReferences(int memberDefID, bool disconnect)
-{
+bool ActiveParty::RemovePlayerReferences(int memberDefID, bool disconnect) {
 	RemoveCreatureTags(-1, memberDefID);
 
-	for(size_t i = 0; i < mMemberList.size(); i++)
-	{
-		if(mMemberList[i].mCreatureDefID == memberDefID)
-		{
+	for (size_t i = 0; i < mMemberList.size(); i++) {
+		if (mMemberList[i].mCreatureDefID == memberDefID) {
 			mMemberList[i].mCreaturePtr = NULL;
-			if(disconnect == true)
+			if (disconnect == true)
 				mMemberList[i].mSocket = SocketClass::Invalid_Socket;
 			return true;
 		}
@@ -194,109 +208,98 @@ bool ActiveParty :: RemovePlayerReferences(int memberDefID, bool disconnect)
 	return false;
 }
 
-void ActiveParty :: RebroadCastMemberList(char *buffer)
-{
-	for(size_t i = 0; i < mMemberList.size(); i++)
-	{
-		if(!mMemberList[i].IsOnlineAndValid())
+void ActiveParty::RebroadCastMemberList(char *buffer) {
+	for (size_t i = 0; i < mMemberList.size(); i++) {
+		if (!mMemberList[i].IsOnlineAndValid())
 			continue;
-		int wpos = PartyManager::WriteMemberList(buffer, this, mMemberList[i].mCreatureID);
+		int wpos = PartyManager::WriteMemberList(buffer, this,
+				mMemberList[i].mCreatureID);
 		g_PacketManager.ExternalAddPacket(mMemberList[i].mSocket, buffer, wpos);
 	}
 }
 
-void ActiveParty :: DebugDestroyParty(const char *buffer, int length)
-{
-	for(size_t i = 0; i < mMemberList.size(); i++)
-	{
-		if(mMemberList[i].IsOnline())
-			g_PacketManager.ExternalAddPacket(mMemberList[i].mSocket, buffer, length);
-		if(mMemberList[i].mCreaturePtr != NULL)
+void ActiveParty::DebugDestroyParty(const char *buffer, int length) {
+	for (size_t i = 0; i < mMemberList.size(); i++) {
+		if (mMemberList[i].IsOnline())
+			g_PacketManager.ExternalAddPacket(mMemberList[i].mSocket, buffer,
+					length);
+		if (mMemberList[i].mCreaturePtr != NULL)
 			mMemberList[i].mCreaturePtr->PartyID = 0;
 	}
 	mMemberList.clear();
 }
 
-void ActiveParty :: Disband(char *buffer)
-{
-	if(mMemberList.size() == 0)
+void ActiveParty::Disband(char *buffer) {
+	if (mMemberList.size() == 0)
 		return;
 	int wpos = PartyManager::WriteLeftParty(buffer);
-	for(size_t i = 0; i < mMemberList.size(); i++)
-	{
-		if(mMemberList[i].mCreaturePtr != NULL)
+	for (size_t i = 0; i < mMemberList.size(); i++) {
+		if (mMemberList[i].mCreaturePtr != NULL)
 			mMemberList[i].mCreaturePtr->PartyID = 0;
 	}
 	BroadCast(buffer, wpos);
 	mMemberList.clear();
 }
 
-int ActiveParty :: GetMaxPlayerLevel(void)
-{
-	if(mMemberList.size() == 0)
+int ActiveParty::GetMaxPlayerLevel(void) {
+	if (mMemberList.size() == 0)
 		return 0;
 	int highest = 0;
-	for(size_t i = 0; i < mMemberList.size(); i++)
-	{
-		if(mMemberList[i].mCreaturePtr != NULL)
-		{
+	for (size_t i = 0; i < mMemberList.size(); i++) {
+		if (mMemberList[i].mCreaturePtr != NULL) {
 			int level = mMemberList[i].mCreaturePtr->css.level;
-			if(level > highest)
+			if (level > highest)
 				highest = level;
 		}
 	}
 	return highest;
 }
 
-void ActiveParty:: BroadcastInfoMessageToAllMembers(const char *buffer)
-{
+void ActiveParty::BroadcastInfoMessageToAllMembers(const char *buffer) {
 	int wpos = 0;
 	char SendBuf[24576];     //Holds data that is being prepared for sending
 	wpos += PrepExt_SendInfoMessage(&SendBuf[wpos], buffer, INFOMSG_INFO);
 	BroadCast(SendBuf, wpos);
 }
 
-void ActiveParty :: BroadCast(const char *buffer, int length)
-{
-	for(size_t i = 0; i < mMemberList.size(); i++)
-		if(mMemberList[i].IsOnline())
-			g_PacketManager.ExternalAddPacket(mMemberList[i].mSocket, buffer, length);
+void ActiveParty::BroadCast(const char *buffer, int length) {
+	for (size_t i = 0; i < mMemberList.size(); i++)
+		if (mMemberList[i].IsOnline())
+			g_PacketManager.ExternalAddPacket(mMemberList[i].mSocket, buffer,
+					length);
 }
 
-void ActiveParty :: BroadCastExcept(const char *buffer, int length, int excludeDefID)
-{
-	for(size_t i = 0; i < mMemberList.size(); i++)
-		if(mMemberList[i].mCreatureDefID != excludeDefID)
-			if(mMemberList[i].IsOnline())
-				g_PacketManager.ExternalAddPacket(mMemberList[i].mSocket, buffer, length);
+void ActiveParty::BroadCastExcept(const char *buffer, int length,
+		int excludeDefID) {
+	for (size_t i = 0; i < mMemberList.size(); i++)
+		if (mMemberList[i].mCreatureDefID != excludeDefID)
+			if (mMemberList[i].IsOnline())
+				g_PacketManager.ExternalAddPacket(mMemberList[i].mSocket,
+						buffer, length);
 }
 
-void ActiveParty :: BroadCastTo(const char *buffer, int length, int creatureDefID)
-{
-	for(size_t i = 0; i < mMemberList.size(); i++)
-	{
-		if(mMemberList[i].mCreatureDefID == creatureDefID)
-		{
-			if(mMemberList[i].IsOnline())
-			{
-				g_PacketManager.ExternalAddPacket(mMemberList[i].mSocket, buffer, length);
+void ActiveParty::BroadCastTo(const char *buffer, int length,
+		int creatureDefID) {
+	for (size_t i = 0; i < mMemberList.size(); i++) {
+		if (mMemberList[i].mCreatureDefID == creatureDefID) {
+			if (mMemberList[i].IsOnline()) {
+				g_PacketManager.ExternalAddPacket(mMemberList[i].mSocket,
+						buffer, length);
 				return;
 			}
 		}
 	}
 }
 
-PartyManager :: PartyManager()
-{
+PartyManager::PartyManager() {
 	nextPartyID = 1;
 }
 
-int PartyManager :: GetNextPartyID(void)
-{
+int PartyManager::GetNextPartyID(void) {
 	return nextPartyID++;
 }
 
-ActiveParty :: ActiveParty() {
+ActiveParty::ActiveParty() {
 	mPVPDeaths = 0;
 	mPVPKills = 0;
 	mPVPGoals = 0;
@@ -311,94 +314,75 @@ ActiveParty :: ActiveParty() {
 	lootTags.clear();
 }
 
-ActiveParty :: ~ActiveParty() {
-	for(it_type iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator) {
-		LootTag * t;
-		t = iterator->second;
-		if(t == NULL) {
-			g_Logs.server->warn("PartyDestruct HUH!!!! NULL value in loot tags map for %d", iterator->first);
-		}
-		else {
-			delete iterator->second;
-		}
-	}
+ActiveParty::~ActiveParty() {
 	lootTags.clear();
 }
 
-ActiveParty* PartyManager :: GetPartyByLeader(int leaderDefID)
-{
-	for(size_t i = 0; i < mPartyList.size(); i++)
-		if(mPartyList[i].mLeaderDefID == leaderDefID)
+ActiveParty* PartyManager::GetPartyByLeader(int leaderDefID) {
+	for (size_t i = 0; i < mPartyList.size(); i++)
+		if (mPartyList[i].mLeaderDefID == leaderDefID)
 			return &mPartyList[i];
 	return NULL;
 }
 
-ActiveParty* PartyManager :: GetPartyByID(int partyID)
-{
-	for(size_t i = 0; i < mPartyList.size(); i++)
-		if(mPartyList[i].mPartyID == partyID)
+ActiveParty* PartyManager::GetPartyByID(int partyID) {
+	for (size_t i = 0; i < mPartyList.size(); i++)
+		if (mPartyList[i].mPartyID == partyID)
 			return &mPartyList[i];
 	return NULL;
 }
 
-ActiveParty* PartyManager :: GetPartyWithMember(int memberDefID)
-{
-	for(size_t i = 0; i < mPartyList.size(); i++)
-		if(mPartyList[i].HasMember(memberDefID) == true)
+ActiveParty* PartyManager::GetPartyWithMember(int memberDefID) {
+	for (size_t i = 0; i < mPartyList.size(); i++)
+		if (mPartyList[i].HasMember(memberDefID) == true)
 			return &mPartyList[i];
 	return NULL;
 }
 
-ActiveParty* PartyManager :: CreateParty(CreatureInstance* leader)
-{
+ActiveParty* PartyManager::CreateParty(CreatureInstance* leader) {
 	ActiveParty newParty;
 	newParty.mLeaderDefID = leader->CreatureDefID;
 	newParty.mLeaderID = leader->CreatureID;
 	newParty.mLeaderName = leader->css.display_name;
 	mPartyList.push_back(newParty);
-	if(mPartyList.size() > 0)
+	if (mPartyList.size() > 0)
 		return &mPartyList.back();
 	return NULL;
 }
 
-int PartyManager :: AcceptInvite(CreatureInstance* member, CreatureInstance* leader)
-{
+int PartyManager::AcceptInvite(CreatureInstance* member,
+		CreatureInstance* leader) {
 	ActiveParty *party = GetPartyByLeader(leader->CreatureDefID);
-	if(party == NULL)
-	{
+	if (party == NULL) {
 		party = CreateParty(leader);
-		if(party != NULL)
-		{
+		if (party != NULL) {
 			party->mPartyID = GetNextPartyID();  //leader->CreatureDefID;
 			party->AddMember(leader);
 			party->AddMember(member);
 			party->RebroadCastMemberList(WriteBuf);
 			return 1;
 		}
-	}
-	else
-	{
+	} else {
 		party->AddMember(member);
 		return 2;
 	}
 	return 0;
 
 	/*
-	//A player has accepted a party invitation.
-	ActiveParty *party = GetPartyByLeader(leader->CreatureDefID);
-	if(party == NULL)
-		return 0;
-	party->AddMember(member);
-	return party->mPartyID;
-	*/
+	 //A player has accepted a party invitation.
+	 ActiveParty *party = GetPartyByLeader(leader->CreatureDefID);
+	 if(party == NULL)
+	 return 0;
+	 party->AddMember(member);
+	 return party->mPartyID;
+	 */
 }
 
-void PartyManager :: BroadcastAddMember(CreatureInstance* member)
-{
+void PartyManager::BroadcastAddMember(CreatureInstance* member) {
 	//Generates a packet for a new member notification and broadcasts it to
 	//all other players in the party.
 	ActiveParty *party = GetPartyByID(member->PartyID);
-	if(party == NULL)
+	if (party == NULL)
 		return;
 
 	int wpos = 0;
@@ -412,49 +396,46 @@ void PartyManager :: BroadcastAddMember(CreatureInstance* member)
 	party->BroadCastExcept(WriteBuf, wpos, member->CreatureDefID);
 }
 
-bool PartyManager :: DoDisband(int PartyID)
-{
+bool PartyManager::DoDisband(int PartyID) {
 
 	ActiveParty *party = GetPartyByID(PartyID);
-	if(party == NULL)
+	if (party == NULL)
 		return false;
 
 	// Quit all the members first
 	std::vector<PartyMember> tempMemberList;
-	tempMemberList.assign(party->mMemberList.begin(),party->mMemberList.end());
+	tempMemberList.assign(party->mMemberList.begin(), party->mMemberList.end());
 
-	for(std::vector<PartyMember>::iterator it = tempMemberList.begin(); it != tempMemberList.end(); ++it) {
+	for (std::vector<PartyMember>::iterator it = tempMemberList.begin();
+			it != tempMemberList.end(); ++it) {
 		PartyMember p = *it;
-		if(p.mCreatureID != party->mLeaderID) {
+		if (p.mCreatureID != party->mLeaderID) {
 			party->RemoveMember(p.mCreatureDefID);
 			int wpos = WriteRemoveMember(WriteBuf, p.mCreatureID);
 			party->BroadCast(WriteBuf, wpos);
-			if(party->UpdateLeaderDropped(p.mCreatureID) == true)
-			{
+			if (party->UpdateLeaderDropped(p.mCreatureID) == true) {
 				wpos = PartyManager::WriteInCharge(WriteBuf, party);
 				party->BroadCast(WriteBuf, wpos);
 			}
 		}
 	}
-	if(party->mMemberList.size() == 0)
+	if (party->mMemberList.size() == 0)
 		DeletePartyByID(PartyID);
 	return true;
 }
 
-bool PartyManager :: DoQuit(CreatureInstance* member)
-{
+bool PartyManager::DoQuit(CreatureInstance* member) {
 	//Save the ID locally and remove the party just in case the other stuff fails.
 	int PartyID = member->PartyID;
 	member->PartyID = 0;
 
 	ActiveParty *party = GetPartyByID(PartyID);
-	if(party == NULL)
+	if (party == NULL)
 		return false;
 
 	party->RemoveMember(member->CreatureDefID);
 
-	if(party->mMemberList.size() <= 1)
-	{
+	if (party->mMemberList.size() <= 1) {
 		party->Disband(WriteBuf);
 		DeletePartyByID(PartyID);
 		return true;
@@ -463,64 +444,59 @@ bool PartyManager :: DoQuit(CreatureInstance* member)
 	int wpos = WriteRemoveMember(WriteBuf, member->CreatureID);
 	party->BroadCast(WriteBuf, wpos);
 
-	if(party->UpdateLeaderDropped(member->CreatureID) == true)
-	{
+	if (party->UpdateLeaderDropped(member->CreatureID) == true) {
 		wpos = PartyManager::WriteInCharge(WriteBuf, party);
 		party->BroadCast(WriteBuf, wpos);
 	}
 
-	if(party->mMemberList.size() == 0)
+	if (party->mMemberList.size() == 0)
 		DeletePartyByID(PartyID);
 
 	return true;
 }
 
-void PartyManager :: DoRejectInvite(int leaderDefID, const char* nameDenied)
-{
+void PartyManager::DoRejectInvite(int leaderDefID, const char* nameDenied) {
 	/*
-	ActiveParty *party = GetPartyByLeader(leaderDefID);
-	if(party == NULL)
-		return;
-	
-	int wpos = WriteRejectInvite(WriteBuf, nameDenied);
-	party->BroadCastTo(WriteBuf, wpos, leaderDefID);
-	*/
+	 ActiveParty *party = GetPartyByLeader(leaderDefID);
+	 if(party == NULL)
+	 return;
+
+	 int wpos = WriteRejectInvite(WriteBuf, nameDenied);
+	 party->BroadCastTo(WriteBuf, wpos, leaderDefID);
+	 */
 }
 
-void PartyManager :: DoSetLeader(CreatureInstance *callMember, int newLeaderID)
-{
+void PartyManager::DoSetLeader(CreatureInstance *callMember, int newLeaderID) {
 	ActiveParty *party = GetPartyByID(callMember->PartyID);
-	if(party == NULL)
+	if (party == NULL)
 		return;
-	if(party->mLeaderID != callMember->CreatureID)
+	if (party->mLeaderID != callMember->CreatureID)
 		return;
 
 	PartyMember* member = party->GetMemberByID(newLeaderID);
-	if(member == NULL)
+	if (member == NULL)
 		return;
 
-	if(party->SetLeader(member->mCreatureDefID) == true)
-	{
+	if (party->SetLeader(member->mCreatureDefID) == true) {
 		int wpos = WriteInCharge(WriteBuf, party);
 		party->BroadCast(WriteBuf, wpos);
 	}
 }
 
-void PartyManager :: DoKick(CreatureInstance *caller, int memberID)
-{
+void PartyManager::DoKick(CreatureInstance *caller, int memberID) {
 	int PartyID = caller->PartyID;
 
 	ActiveParty *party = GetPartyByID(PartyID);
-	if(party == NULL)
+	if (party == NULL)
 		return;
-	if(party->mLeaderID != caller->CreatureID)
+	if (party->mLeaderID != caller->CreatureID)
 		return;
 
 	// Note: players may be offline so a server lookup may not find them.
 	// Need to resolve the member DefID from within the party data itself.
 
 	PartyMember* member = party->GetMemberByID(memberID);
-	if(member == NULL)
+	if (member == NULL)
 		return;
 
 	int wpos = WriteRemoveMember(WriteBuf, member->mCreatureID);
@@ -531,39 +507,34 @@ void PartyManager :: DoKick(CreatureInstance *caller, int memberID)
 
 	party->RemoveMember(member->mCreatureDefID);
 
-	if(party->mMemberList.size() <= 1)
-	{
+	if (party->mMemberList.size() <= 1) {
 		party->Disband(WriteBuf);
 		DeletePartyByID(PartyID);
 		return;
 	}
 
-	if(party->UpdateLeaderDropped(member->mCreatureID) == true)
-	{
+	if (party->UpdateLeaderDropped(member->mCreatureID) == true) {
 		wpos = WriteInCharge(WriteBuf, party);
 		party->BroadCast(WriteBuf, wpos);
 	}
 
-	if(party->mMemberList.size() == 0)
+	if (party->mMemberList.size() == 0)
 		DeletePartyByID(PartyID);
 }
 
-void PartyManager :: DoQuestInvite(CreatureInstance *caller, const char *questName, int questID)
-{
+void PartyManager::DoQuestInvite(CreatureInstance *caller,
+		const char *questName, int questID) {
 	ActiveParty *party = GetPartyByID(caller->PartyID);
-	if(party == NULL)
+	if (party == NULL)
 		return;
 	int wpos = WriteQuestInvite(WriteBuf, questName, questID);
 	party->BroadCastExcept(WriteBuf, wpos, caller->CreatureDefID);
 }
 
-void PartyManager :: DeletePartyByID(int partyID)
-{
+void PartyManager::DeletePartyByID(int partyID) {
 	// Remove any PVP team for this party too
-	for(size_t i = 0; i < mPartyList.size(); i++)
-	{
-		if(mPartyList[i].mPartyID == partyID)
-		{
+	for (size_t i = 0; i < mPartyList.size(); i++) {
+		if (mPartyList[i].mPartyID == partyID) {
 			g_Logs.server->info("Deleting party: %v", partyID);
 			mPartyList.erase(mPartyList.begin() + i);
 			return;
@@ -571,43 +542,37 @@ void PartyManager :: DeletePartyByID(int partyID)
 	}
 }
 
-void PartyManager :: UpdatePlayerReferences(CreatureInstance* member)
-{
+void PartyManager::UpdatePlayerReferences(CreatureInstance* member) {
 	//Called whenever the player's zone is changed, or a player logs in.
 	//Search all parties for any player matching the CreatureDefID.
 	//Update the pointer, socket, and CreatureID to match.
-	for(size_t i = 0; i < mPartyList.size(); i++)
-	{
-		if(mPartyList[i].UpdatePlayerReferences(member) == true)
-		{
+	for (size_t i = 0; i < mPartyList.size(); i++) {
+		if (mPartyList[i].UpdatePlayerReferences(member) == true) {
 			member->PartyID = mPartyList[i].mPartyID;
 			return;
 		}
 	}
 }
 
-void PartyManager :: RemovePlayerReferences(int memberDefID, bool disconnect)
-{
+void PartyManager::RemovePlayerReferences(int memberDefID, bool disconnect) {
 
-	for(size_t i = 0; i < mPartyList.size(); i++)
-		if(mPartyList[i].RemovePlayerReferences(memberDefID, disconnect) == true)
+	for (size_t i = 0; i < mPartyList.size(); i++)
+		if (mPartyList[i].RemovePlayerReferences(memberDefID, disconnect)
+				== true)
 			return;
 }
 
-void PartyManager :: BroadCastPacket(int partyID, int callDefID, const char *buffer, int buflen)
-{
+void PartyManager::BroadCastPacket(int partyID, int callDefID,
+		const char *buffer, int buflen) {
 	ActiveParty* party = GetPartyByID(partyID);
-	if(party == NULL)
+	if (party == NULL)
 		return;
 	party->BroadCast(buffer, buflen);
 }
 
-void PartyManager :: CheckMemberLogin(CreatureInstance* member)
-{
-	for(size_t i = 0; i < mPartyList.size(); i++)
-	{
-		if(mPartyList[i].UpdatePlayerReferences(member) == true)
-		{
+void PartyManager::CheckMemberLogin(CreatureInstance* member) {
+	for (size_t i = 0; i < mPartyList.size(); i++) {
+		if (mPartyList[i].UpdatePlayerReferences(member) == true) {
 			member->PartyID = mPartyList[i].mPartyID;
 			mPartyList[i].RebroadCastMemberList(WriteBuf);
 			return;
@@ -615,17 +580,14 @@ void PartyManager :: CheckMemberLogin(CreatureInstance* member)
 	}
 }
 
-void PartyManager :: DebugForceRemove(CreatureInstance *caller)
-{
+void PartyManager::DebugForceRemove(CreatureInstance *caller) {
 	caller->PartyID = 0;
-	for(size_t i = 0; i < mPartyList.size(); i++)
-	{
-		if(mPartyList[i].HasMember(caller->CreatureDefID) == false)
-		{
+	for (size_t i = 0; i < mPartyList.size(); i++) {
+		if (mPartyList[i].HasMember(caller->CreatureDefID) == false) {
 			//For debugging purposes
-			if(mPartyList[i].mLeaderDefID == caller->CreatureDefID)
-			{
-				g_Logs.server->info("[PARTY] Empty party was removed for (%v)", caller->CreatureDefID);
+			if (mPartyList[i].mLeaderDefID == caller->CreatureDefID) {
+				g_Logs.server->info("[PARTY] Empty party was removed for (%v)",
+						caller->CreatureDefID);
 				mPartyList[i].Disband(WriteBuf);
 				mPartyList.erase(mPartyList.begin() + i);
 				return;
@@ -635,34 +597,30 @@ void PartyManager :: DebugForceRemove(CreatureInstance *caller)
 		}
 
 		mPartyList[i].RemoveMember(caller->CreatureDefID);
-		if(mPartyList[i].mMemberList.size() <= 1)
-		{
+		if (mPartyList[i].mMemberList.size() <= 1) {
 			mPartyList[i].Disband(WriteBuf);
 			mPartyList.erase(mPartyList.begin() + i);
 			return;
 		}
-	}		
+	}
 }
 
-int PartyManager :: PrepMemberList(char *outbuf, int partyID, int memberID)
-{
+int PartyManager::PrepMemberList(char *outbuf, int partyID, int memberID) {
 	ActiveParty *party = GetPartyByID(partyID);
-	if(party == NULL)
+	if (party == NULL)
 		return 0;
 	return WriteMemberList(outbuf, party, memberID);
 }
 
-void PartyManager :: DebugDestroyParties(void)
-{
+void PartyManager::DebugDestroyParties(void) {
 	int wpos = WriteLeftParty(WriteBuf);
-	for(size_t i = 0; i < mPartyList.size(); i++)
+	for (size_t i = 0; i < mPartyList.size(); i++)
 		mPartyList[i].DebugDestroyParty(WriteBuf, wpos);
 
 	mPartyList.clear();
 }
 
-int PartyManager :: StrategyChange(char *outbuf, LootMode newLootMode)
-{
+int PartyManager::StrategyChange(char *outbuf, LootMode newLootMode) {
 	int wpos = 0;
 	wpos += PutByte(&outbuf[wpos], 6);     //_handlePartyUpdateMsg
 	wpos += PutShort(&outbuf[wpos], 0);
@@ -674,8 +632,7 @@ int PartyManager :: StrategyChange(char *outbuf, LootMode newLootMode)
 	return wpos;
 }
 
-int PartyManager :: StrategyFlagsChange(char *outbuf, int newFlags)
-{
+int PartyManager::StrategyFlagsChange(char *outbuf, int newFlags) {
 	int wpos = 0;
 	wpos += PutByte(&outbuf[wpos], 6);     //_handlePartyUpdateMsg
 	wpos += PutShort(&outbuf[wpos], 0);
@@ -687,24 +644,24 @@ int PartyManager :: StrategyFlagsChange(char *outbuf, int newFlags)
 	return wpos;
 }
 
-
-int PartyManager :: OfferLoot(char *outbuf, int itemDefID, const char *lootTag, bool needed)
-{
+int PartyManager::OfferLoot(char *outbuf, int itemDefID, const char *lootTag,
+		bool needed) {
 	int wpos = 0;
 	wpos += PutByte(&outbuf[wpos], 6);     //_handlePartyUpdateMsg
 	wpos += PutShort(&outbuf[wpos], 0);
 
 	wpos += PutByte(&outbuf[wpos], PartyUpdateOpTypes::OFFER_LOOT);
 	wpos += PutStringUTF(&outbuf[wpos], lootTag);
-	wpos += PutInteger(&outbuf[wpos], itemDefID);;
+	wpos += PutInteger(&outbuf[wpos], itemDefID);
+	;
 	wpos += PutByte(&outbuf[wpos], needed ? 1 : 0);
 
 	PutShort(&outbuf[1], wpos - 3);       //Set message size
 	return wpos;
 }
 
-int PartyManager :: WriteLootRoll(char *outbuf, const char *itemDefName, char roll, const char *bidder)
-{
+int PartyManager::WriteLootRoll(char *outbuf, const char *itemDefName,
+		char roll, const char *bidder) {
 	int wpos = 0;
 	wpos += PutByte(&outbuf[wpos], 6);     //_handlePartyUpdateMsg
 	wpos += PutShort(&outbuf[wpos], 0);
@@ -717,95 +674,73 @@ int PartyManager :: WriteLootRoll(char *outbuf, const char *itemDefName, char ro
 	return wpos;
 }
 
-
-
-LootTag * ActiveParty :: GetTag(int itemId, int creatureId)
-{
-	for(it_type iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator) {
-		LootTag * t;
-		t = iterator->second;
-		if(t == NULL) {
-			g_Logs.server->warn("NULL value in loot tags map for %v in creature %v, item %v", iterator->first, creatureId, itemId);
-		}
-		else {
-			if((*iterator->second).mItemId == itemId && (*iterator->second).mCreatureId == creatureId) {
-				return iterator->second;
-			}
+LootTag ActiveParty::GetTag(int itemId, int creatureId) {
+	for (std::map<int, LootTag>::iterator iterator = lootTags.begin();
+			iterator != lootTags.end(); ++iterator) {
+		LootTag t = iterator->second;
+		if (t.mItemId == itemId && t.mCreatureId == creatureId) {
+			return t;
 		}
 	}
-	return NULL;
+	return LootTag();
 }
 
-void ActiveParty :: RemoveTagsForLootCreatureId(int lootCreatureId, int itemId, int creatureId)
-{
-	std::map<int, LootTag*>::iterator itr = lootTags.begin();
+void ActiveParty::RemoveTagsForLootCreatureId(int lootCreatureId, int itemId,
+		int creatureId) {
+	g_Logs.simulator->debug(
+			"Removing loot tags for loot creature ID %v, item ID %v and creature %v",
+			lootCreatureId, itemId, creatureId);
+	std::map<int, LootTag>::iterator itr = lootTags.begin();
 	while (itr != lootTags.end()) {
-		LootTag * t;
-		t = itr->second;
-		if(t == NULL) {
+		LootTag t = itr->second;
+		if (t.mLootCreatureId == lootCreatureId
+				&& (itemId == 0 || t.mItemId == itemId)
+				&& (creatureId == 0 || t.mCreatureId == creatureId)) {
+			lootTags.erase(itr++);
+		} else
 			++itr;
-		}
-		else {
-			if ((*itr->second).mLootCreatureId == lootCreatureId && (itemId == 0 || (*itr->second).mItemId == itemId)
-					&& (creatureId == 0 || (*itr->second).mCreatureId == creatureId)) {
-				delete itr->second;
-				lootTags.erase(itr++);
-			}
-			else
-				++itr;
-		}
 	}
 }
 
-bool ActiveParty:: HasTags(int lootCreatureID, int itemId)
-{
-	typedef std::map<int, LootTag*>::iterator it_type;
-	for(it_type iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator) {
-		LootTag * t;
-		t = iterator->second;
-		if(t == NULL) {
-			g_Logs.server->warn("NULL value in loot tags map for %v in loot creature %v, item %v", iterator->first, lootCreatureID, itemId);
-		}
-		else {
-			if((*iterator->second).mLootCreatureId == lootCreatureID && (*iterator->second).mItemId == itemId) {
-				return true;
-			}
+bool ActiveParty::HasTags(int lootCreatureID, int itemId) {
+	for (std::map<int, LootTag>::iterator iterator = lootTags.begin();
+			iterator != lootTags.end(); ++iterator) {
+		LootTag t = iterator->second;
+		if (t.mLootCreatureId == lootCreatureID && t.mItemId == itemId) {
+			return true;
 		}
 	}
 	return false;
 }
 
-void ActiveParty :: RemoveCreatureTags(int itemId, int creatureId)
-{
-	g_Logs.server->debug("RemoveCreatureTags in creature %v, item %v", creatureId, itemId);
-	std::map<int, LootTag*>::iterator itr = lootTags.begin();
+void ActiveParty::RemoveCreatureTags(int itemId, int creatureId) {
+	g_Logs.simulator->debug("RemoveCreatureTags in creature %v, item %v",
+			creatureId, itemId);
+	std::map<int, LootTag>::iterator itr = lootTags.begin();
 	while (itr != lootTags.end()) {
-		LootTag * t;
-		t = itr->second;
-		if(t == NULL) {
-			g_Logs.server->warn("NULL value in loot tags map for %d in creature %d, item %d", itr->first, creatureId, itemId);
+		LootTag t = itr->second;
+		if ((itemId == -1 || t.mItemId == itemId)
+				&& t.mCreatureId == creatureId) {
+			lootTags.erase(itr++);
+		} else
 			++itr;
-		}
-		else {
-			if ((itemId == -1 || (*itr->second).mItemId == itemId ) && (*itr->second).mCreatureId == creatureId) {
-				delete itr->second;
-				lootTags.erase(itr++);
-			} else
-				++itr;
-		}
 	}
 }
 
-LootTag * ActiveParty :: TagItem(int itemId, int creatureId, int lootCreatureId)
-{
-	LootTag *tag = new LootTag(itemId, creatureId, lootCreatureId);
-	lootTags[tag->lootTag] = tag;
-	g_Logs.server->debug("Tagged item %v for loot creature %v to creature %v. Tag is %v", tag->mItemId, tag->mLootCreatureId, tag->mCreatureId, tag->lootTag);
+LootTag ActiveParty::TagItem(int itemId, int creatureId, int lootCreatureId,
+		int slot) {
+	LootTag tag = LootTag(++lootSeq, itemId, creatureId, lootCreatureId);
+	tag.mSlotIndex = slot;
+	lootTags[tag.lootTag] = tag;
+	g_Logs.simulator->debug(
+			"Tagged item %v for loot creature %v to creature %v. Tag is %v",
+			tag.mItemId, tag.mLootCreatureId, tag.mCreatureId, tag.lootTag);
 	return tag;
 }
 
-int PartyManager :: WriteLootWin(char *outbuf, const char *lootTag, const char *originalTag, const char *winner, int creatureId, int slotIndex)
-{
+int PartyManager::WriteLootWin(char *outbuf, const char *lootTag,
+		const char *originalTag, const char *winner, int creatureId,
+		int slotIndex) {
 	int wpos = 0;
 	wpos += PutByte(&outbuf[wpos], 6);     //_handlePartyUpdateMsg
 	wpos += PutShort(&outbuf[wpos], 0);
@@ -821,14 +756,14 @@ int PartyManager :: WriteLootWin(char *outbuf, const char *lootTag, const char *
 	return wpos;
 }
 
-int PartyManager :: WriteInvite(char *outbuf, int leaderId, const char *leaderName)
-{
+int PartyManager::WriteInvite(char *outbuf, int leaderId,
+		const char *leaderName) {
 	int wpos = 0;
 	wpos += PutByte(&outbuf[wpos], 6);     //_handlePartyUpdateMsg
 	wpos += PutShort(&outbuf[wpos], 0);
 
 	wpos += PutByte(&outbuf[wpos], PartyUpdateOpTypes::INVITE);
-	
+
 	wpos += PutInteger(&outbuf[wpos], leaderId);
 	wpos += PutStringUTF(&outbuf[wpos], leaderName);
 
@@ -836,14 +771,14 @@ int PartyManager :: WriteInvite(char *outbuf, int leaderId, const char *leaderNa
 	return wpos;
 }
 
-int PartyManager :: WriteProposeInvite(char *outbuf, int proposeeId, const char *proposeeName, int proposerId, const char *proposerName)
-{
+int PartyManager::WriteProposeInvite(char *outbuf, int proposeeId,
+		const char *proposeeName, int proposerId, const char *proposerName) {
 	int wpos = 0;
 	wpos += PutByte(&outbuf[wpos], 6);     //_handlePartyUpdateMsg
 	wpos += PutShort(&outbuf[wpos], 0);
 
 	wpos += PutByte(&outbuf[wpos], PartyUpdateOpTypes::PROPOSE_INVITE);
-	
+
 	wpos += PutInteger(&outbuf[wpos], proposeeId);
 	wpos += PutStringUTF(&outbuf[wpos], proposeeName);
 
@@ -854,8 +789,8 @@ int PartyManager :: WriteProposeInvite(char *outbuf, int proposeeId, const char 
 	return wpos;
 }
 
-int PartyManager :: WriteMemberList(char *outbuf, ActiveParty *party, int memberID)
-{
+int PartyManager::WriteMemberList(char *outbuf, ActiveParty *party,
+		int memberID) {
 	//memberID is the creature ID that is requesting the list.
 	//The client needs this to determine if it's leading the party.
 	int wpos = 0;
@@ -871,12 +806,12 @@ int PartyManager :: WriteMemberList(char *outbuf, ActiveParty *party, int member
 	wpos += PutInteger(&outbuf[wpos], memberID);  //memberId
 
 	int count = 0;
-	for(size_t i = 0; i < party->mMemberList.size(); i++)
-	{
-		if(party->mMemberList[i].mCreatureID != memberID)
-		{
-			wpos += PutInteger(&outbuf[wpos], party->mMemberList[i].mCreatureID);
-			wpos += PutStringUTF(&outbuf[wpos], party->mMemberList[i].mDisplayName.c_str());
+	for (size_t i = 0; i < party->mMemberList.size(); i++) {
+		if (party->mMemberList[i].mCreatureID != memberID) {
+			wpos += PutInteger(&outbuf[wpos],
+					party->mMemberList[i].mCreatureID);
+			wpos += PutStringUTF(&outbuf[wpos],
+					party->mMemberList[i].mDisplayName.c_str());
 			count++;
 		}
 	}
@@ -885,8 +820,7 @@ int PartyManager :: WriteMemberList(char *outbuf, ActiveParty *party, int member
 	return wpos;
 }
 
-int PartyManager :: WriteLeftParty(char *outbuf)
-{
+int PartyManager::WriteLeftParty(char *outbuf) {
 	int wpos = 0;
 	wpos += PutByte(&outbuf[wpos], 6);     //_handlePartyUpdateMsg
 	wpos += PutShort(&outbuf[wpos], 0);
@@ -895,8 +829,7 @@ int PartyManager :: WriteLeftParty(char *outbuf)
 	return wpos;
 }
 
-int PartyManager :: WriteRemoveMember(char *outbuf, int memberID)
-{
+int PartyManager::WriteRemoveMember(char *outbuf, int memberID) {
 	int wpos = 0;
 	wpos += PutByte(&outbuf[wpos], 6);     //_handlePartyUpdateMsg
 	wpos += PutShort(&outbuf[wpos], 0);
@@ -906,8 +839,7 @@ int PartyManager :: WriteRemoveMember(char *outbuf, int memberID)
 	return wpos;
 }
 
-int PartyManager :: WriteInCharge(char *outbuf, ActiveParty *party)
-{
+int PartyManager::WriteInCharge(char *outbuf, ActiveParty *party) {
 	int wpos = 0;
 	wpos += PutByte(&outbuf[wpos], 6);     //_handlePartyUpdateMsg
 	wpos += PutShort(&outbuf[wpos], 0);
@@ -918,8 +850,8 @@ int PartyManager :: WriteInCharge(char *outbuf, ActiveParty *party)
 	return wpos;
 }
 
-int PartyManager :: WriteQuestInvite(char *outbuf, const char* questName, int questID)
-{
+int PartyManager::WriteQuestInvite(char *outbuf, const char* questName,
+		int questID) {
 	int wpos = 0;
 	wpos += PutByte(&outbuf[wpos], 6);     //_handlePartyUpdateMsg
 	wpos += PutShort(&outbuf[wpos], 0);
@@ -930,8 +862,7 @@ int PartyManager :: WriteQuestInvite(char *outbuf, const char* questName, int qu
 	return wpos;
 }
 
-int PartyManager :: WriteRejectInvite(char *outbuf, const char *memberDenied)
-{
+int PartyManager::WriteRejectInvite(char *outbuf, const char *memberDenied) {
 	int wpos = 0;
 	wpos += PutByte(&outbuf[wpos], 6);     //_handlePartyUpdateMsg
 	wpos += PutShort(&outbuf[wpos], 0);
@@ -940,4 +871,4 @@ int PartyManager :: WriteRejectInvite(char *outbuf, const char *memberDenied)
 	PutShort(&outbuf[1], wpos - 3);       //Set message size
 	return wpos;
 }
-	
+
