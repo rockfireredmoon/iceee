@@ -51,6 +51,7 @@ PermissionInfo PermissionDef[] = {
 		{ Perm_Account, 0, Permission_TrollChat, "trollchat" },
 		{ Perm_Account, 0, Permission_Builder, "builder" },
 		{ Perm_Account, 0, Permission_Veteran, "veteran" },
+		{Perm_Account, 0, Permission_Developer, "developer" },
 		{ Perm_Account, 0, Permission_FullSet, "fullset" } };
 const int MaxPermissionDef = sizeof(PermissionDef) / sizeof(PermissionInfo);
 
