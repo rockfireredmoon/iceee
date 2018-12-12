@@ -662,7 +662,7 @@ void ItemDef :: ProcessParams(void)
 				case STAT::BASE_HEALING: formatStr = "+%g%% Healing Specialization", value /= 10.0F; break;
 				case STAT::CASTING_SETBACK_CHANCE: formatStr = "%g%% Casting Setback Chance", value /= 10.0F; break;
 				case STAT::CHANNELING_BREAK_CHANCE: formatStr = "%g%% Channel Break Chance", value /= 10.0F; break;
-				case STAT::MOD_HEALTH_REGEN: formatStr = "+%g Hitpoint Regeneration", value;  break;  //INT
+				case STAT::MOD_HEALTH_REGEN: formatStr = "+%g Hitpoint Regeneration";  break;  //INT
 				}
 				if(formatStr != NULL)
 				{
