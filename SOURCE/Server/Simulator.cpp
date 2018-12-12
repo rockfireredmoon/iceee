@@ -901,7 +901,7 @@ int SimulatorThread::ItemMorph(bool command) {
 	wpos += RemoveItemUpdate(&SendBuf[wpos], Aux3, newPtr);
 	pld.charPtr->inventory.RemItem(newLook);
 	pld.charPtr->pendingChanges++;
-	if (unstack) {
+	if (reagentDef != NULL) {
 		Util::SafeFormat(Aux3, sizeof(Aux3), "You have used 1 %s.",
 				reagentDef->mDisplayName.c_str());
 		wpos += PrepExt_SendInfoMessage(&SendBuf[wpos], Aux3, INFOMSG_INFO);
