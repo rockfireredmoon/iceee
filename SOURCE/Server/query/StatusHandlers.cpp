@@ -123,6 +123,78 @@ int AdminCheckHandler::handleQuery(SimulatorThread *sim,
 
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
+
+//
+// ClientPermsHandler
+//
+int ClientPermsHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	/* Query: clientperms.list
+	 Args : none
+	 Response: Return an array of permissions the client has.
+	 */
+
+	STRINGLIST l;
+
+	if(sim->CheckPermissionSimple(Perm_Account, Permission_Admin)) {
+		l.push_back("dev");
+		l.push_back("tweakScreens");
+		l.push_back("scriptTest");
+		l.push_back("importAbilities");
+		l.push_back("worldBuild");
+		l.push_back("groveBuild");
+		l.push_back("debug");
+		l.push_back("compositor");
+		l.push_back("setappearance");
+		l.push_back("playSound");
+		l.push_back("reassemble");
+		l.push_back("version");
+		l.push_back("auditlog");
+		l.push_back("sage");
+	}
+	else {
+
+		if(sim->CheckPermissionSimple(Perm_Account, Permission_TweakOther) == true ||
+				sim->CheckPermissionSimple(Perm_Account, Permission_TweakSelf) == true ||
+				sim->CheckPermissionSimple(Perm_Account, Permission_TweakNPC) == true ||
+				sim->CheckPermissionSimple(Perm_Account, Permission_TweakClient) == true) {
+			l.push_back("tweakScreens");
+		}
+
+		if(sim->CheckPermissionSimple(Perm_Account, Permission_Developer) == true) {
+			l.push_back("dev");
+			l.push_back("scriptTest");
+			l.push_back("importAbilities");
+			l.push_back("playSound");
+			l.push_back("compositor");
+			l.push_back("reassemble");
+			l.push_back("auditlog");
+		}
+
+		if(sim->CheckPermissionSimple(Perm_Account, Permission_Developer) == true ||
+		   sim->CheckPermissionSimple(Perm_Account, Permission_Builder) == true) {
+			l.push_back("worldBuild");
+		}
+
+		if(sim->CheckPermissionSimple(Perm_Account, Permission_Developer) == true ||
+		   sim->CheckPermissionSimple(Perm_Account, Permission_Sage) == true) {
+			l.push_back("setappearance");
+			l.push_back("sage");
+		}
+
+		if(sim->CheckPermissionSimple(Perm_Account, Permission_Debug) == true) {
+			l.push_back("debug");
+		}
+
+		l.push_back("groveBuild");
+		l.push_back("playSound");
+		l.push_back("version");
+	}
+	l.push_back("build");
+	return PrepExt_QueryResponseStringList(sim->SendBuf, query->ID, l);
+}
 //
 // PingSimHandler
 //

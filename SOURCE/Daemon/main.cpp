@@ -677,6 +677,7 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["util.pingsim"] = new PingSimHandler();
 	g_QueryManager.queryHandlers["util.pingrouter"] = new PingRouterHandler();
 	g_QueryManager.queryHandlers["admin.check"] = new AdminCheckHandler();
+	g_QueryManager.queryHandlers["clientperms.list"] = new ClientPermsHandler();
 	g_QueryManager.queryHandlers["persona.gm"] = new PersonaGMHandler();
 	g_QueryManager.queryHandlers["util.version"] = new VersionHandler();
 

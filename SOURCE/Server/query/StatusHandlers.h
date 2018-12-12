@@ -38,6 +38,12 @@ public:
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class ClientPermsHandler : public QueryHandler {
+public:
+	~ClientPermsHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
 class PingSimHandler : public QueryHandler {
 public:
 	~PingSimHandler() {};

@@ -371,6 +371,7 @@ enum PermissionFlagEnum
 	Permission_PasswordReset  = 0x20000000,     //The password can be reset on this account.c
 	Permission_Builder        = 0x30000000,     //Can build anywhere.
 	Permission_Veteran        = 0x40000000,     //Not actually used, but signals the player has been around since the previous major version.
+	Permission_Developer      = 0x80000000,     //Developer (opens terrain editing).
 
 	//Full permissions for all flags of a given set
 	Permission_FullSet    = 0xFFFFFFFF     //Full permissions for all flags of this set
