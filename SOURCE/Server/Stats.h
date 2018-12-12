@@ -213,6 +213,7 @@ struct CharacterStatSet
 	short drop_gain_rate;
 	std::string tags;
 	short max_health_pc;
+	short min_health_pc;
 
 	CharacterStatSet();
 	void CopyFrom(CharacterStatSet *source);
@@ -445,6 +446,7 @@ namespace STAT
 	DROP_GAIN_RATE      	 = 163,
 	TAGS			      	 = 164,
 	MAX_HEALTH_PC      	 	 = 165,
+	MIN_HEALTH_PC      	 	 = 166,
 	};
 }
 
@@ -616,8 +618,8 @@ extern const int MAX_LEVEL;
 extern short LevelBaseStats[71][3];
 extern short ProfBaseStats[6][5];
 
-const int NumStats = 131;
-extern StatDefinition StatList[131];
+const int NumStats = 132;
+extern StatDefinition StatList[132];
 
 int GetStatIndex(short StatID);
 int GetStatIndexByName(const std::string &name);
