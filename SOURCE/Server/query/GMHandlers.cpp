@@ -58,42 +58,45 @@ int AddFundsHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 		}
 
 		g_AccountManager.cs.Enter("AddFundsHandler::handleQuery");
-		AccountData *ad = g_AccountManager.FetchIndividualAccount(
-				cd->AccountID);
 
 		if (cd == NULL) {
 			err = "Cannot find character.";
-		} else if (ad == NULL) {
-			err = "Cannot find account.";
 		} else {
-			if (css != NULL) {
-				if (query->args[0].compare("COPPER") == 0) {
-					css->copper += amount;
-					if (css->copper < 0)
-						css->copper = 0;
-					if (creatureInstance != NULL)
-						creatureInstance->SendStatUpdate(STAT::COPPER);
-					cd->pendingChanges++;
-				} else {
-					if (g_Config.AccountCredits)
-						css->credits = ad->Credits;
-					css->credits += amount;
-					if (css->credits < 0)
-						css->credits = 0;
-					if (g_Config.AccountCredits) {
-						ad->Credits = css->credits;
-						ad->PendingMinorUpdates++;
-					} else
-						cd->pendingChanges++;
-					if (creatureInstance != NULL)
-						creatureInstance->SendStatUpdate(STAT::CREDITS);
-				}
-
-				g_Logs.event->info("[SAGE] %v gave %v %v copper because '%v'",
-						pld->charPtr->cdef.css.display_name, css->display_name,
-						amount, query->args[2].c_str());
+			AccountData *ad = g_AccountManager.FetchIndividualAccount(
+					cd->AccountID);
+			if (ad == NULL) {
+				err = "Cannot find account.";
 			} else {
-				err = "Cannot find player.";
+				if (css != NULL) {
+					if (query->args[0].compare("COPPER") == 0) {
+						css->copper += amount;
+						if (css->copper < 0)
+							css->copper = 0;
+						if (creatureInstance != NULL)
+							creatureInstance->SendStatUpdate(STAT::COPPER);
+						cd->pendingChanges++;
+					} else {
+						if (g_Config.AccountCredits)
+							css->credits = ad->Credits;
+						css->credits += amount;
+						if (css->credits < 0)
+							css->credits = 0;
+						if (g_Config.AccountCredits) {
+							ad->Credits = css->credits;
+							ad->PendingMinorUpdates++;
+						} else
+							cd->pendingChanges++;
+						if (creatureInstance != NULL)
+							creatureInstance->SendStatUpdate(STAT::CREDITS);
+					}
+
+					g_Logs.event->info(
+							"[SAGE] %v gave %v %v copper because '%v'",
+							pld->charPtr->cdef.css.display_name,
+							css->display_name, amount, query->args[2].c_str());
+				} else {
+					err = "Cannot find player.";
+				}
 			}
 		}
 		g_AccountManager.cs.Leave();
@@ -363,72 +366,86 @@ int UpdateContentHandler::handleQuery(SimulatorThread *sim,
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
-
 //
 //SummonHandler
 //
 
-int SummonHandler::handleQuery(SimulatorThread *sim,
-		CharacterServerData *pld, SimulatorQuery *query,
-		CreatureInstance *creatureInstance) {
+int SummonHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
+		SimulatorQuery *query, CreatureInstance *creatureInstance) {
 
-	if(!sim->CheckPermissionSimple(Perm_Account, Permission_Sage) && !sim->CheckPermissionSimple(Perm_Account, Permission_Admin))
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Permission denied.");
+	if (!sim->CheckPermissionSimple(Perm_Account, Permission_Sage)
+			&& !sim->CheckPermissionSimple(Perm_Account, Permission_Admin))
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Permission denied.");
 
 	std::string op = query->GetString(0);
 	std::string data = query->GetString(1);
 
-	if(op.compare("player") == 0) {
+	if (op.compare("player") == 0) {
 
 		SimulatorThread *sim = GetSimulatorByCharacterName(data.c_str());
-		if(sim == NULL) {
-			return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Unknown player.");
+		if (sim == NULL) {
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"Unknown player.");
 		}
-		if(creatureInstance != sim->creatureInst) {
-			sim->pld.SetPortalRequestDest(creatureInstance->css.display_name, 1);
-			sim->AttemptSend(sim->Aux1, PrepExt_CreatureEventPortalRequest(sim->Aux1, sim->creatureInst->CreatureID, creatureInstance->css.display_name, creatureInstance->css.display_name));
+		if (creatureInstance != sim->creatureInst) {
+			sim->pld.SetPortalRequestDest(creatureInstance->css.display_name,
+					1);
+			sim->AttemptSend(sim->Aux1,
+					PrepExt_CreatureEventPortalRequest(sim->Aux1,
+							sim->creatureInst->CreatureID,
+							creatureInstance->css.display_name,
+							creatureInstance->css.display_name));
 		}
-	}
-	else if(op.compare("zone") == 0) {
+	} else if (op.compare("zone") == 0) {
 		int zId;
-		if(data.length() == 0) {
+		if (data.length() == 0) {
 			zId = creatureInstance->actInst->mZone;
-		}
-		else {
-			ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByPartialWarpName(data);
-			if(zd == NULL) {
-				return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Unknown zone.");
+		} else {
+			ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByPartialWarpName(
+					data);
+			if (zd == NULL) {
+				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+						"Unknown zone.");
 			}
 			zId = zd->mID;
 		}
 
 		SIMULATOR_IT it;
-		for(it = Simulator.begin(); it != Simulator.end(); ++it)
-		{
-			if(it->isConnected == false)
+		for (it = Simulator.begin(); it != Simulator.end(); ++it) {
+			if (it->isConnected == false)
 				continue;
-			if(it->LoadStage != SimulatorThread::LOADSTAGE_GAMEPLAY)
+			if (it->LoadStage != SimulatorThread::LOADSTAGE_GAMEPLAY)
 				continue;
 
-			if(creatureInstance != it->creatureInst && zId == it->creatureInst->actInst->mZone) {
-				it->pld.SetPortalRequestDest(creatureInstance->css.display_name, 1);
-				it->AttemptSend(sim->Aux1, PrepExt_CreatureEventPortalRequest(sim->Aux1, it->creatureInst->CreatureID, creatureInstance->css.display_name, creatureInstance->css.display_name));
+			if (creatureInstance != it->creatureInst
+					&& zId == it->creatureInst->actInst->mZone) {
+				it->pld.SetPortalRequestDest(creatureInstance->css.display_name,
+						1);
+				it->AttemptSend(sim->Aux1,
+						PrepExt_CreatureEventPortalRequest(sim->Aux1,
+								it->creatureInst->CreatureID,
+								creatureInstance->css.display_name,
+								creatureInstance->css.display_name));
 			}
 		}
-	}
-	else if(op.compare("world") == 0) {
+	} else if (op.compare("world") == 0) {
 		SIMULATOR_IT it;
-		for(it = Simulator.begin(); it != Simulator.end(); ++it)
-		{
-			if(it->isConnected == false)
+		for (it = Simulator.begin(); it != Simulator.end(); ++it) {
+			if (it->isConnected == false)
 				continue;
 
-			if(it->LoadStage != SimulatorThread::LOADSTAGE_GAMEPLAY)
+			if (it->LoadStage != SimulatorThread::LOADSTAGE_GAMEPLAY)
 				continue;
 
-			if(creatureInstance != it->creatureInst) {
-				it->pld.SetPortalRequestDest(creatureInstance->css.display_name, 1);
-				it->AttemptSend(sim->Aux1, PrepExt_CreatureEventPortalRequest(sim->Aux1, it->creatureInst->CreatureID, creatureInstance->css.display_name, creatureInstance->css.display_name));
+			if (creatureInstance != it->creatureInst) {
+				it->pld.SetPortalRequestDest(creatureInstance->css.display_name,
+						1);
+				it->AttemptSend(sim->Aux1,
+						PrepExt_CreatureEventPortalRequest(sim->Aux1,
+								it->creatureInst->CreatureID,
+								creatureInstance->css.display_name,
+								creatureInstance->css.display_name));
 			}
 		}
 	}
