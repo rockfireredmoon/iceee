@@ -32,6 +32,7 @@ public:
 	static const int TYPE_HENGE = 2;
 	static const int TYPE_LOCATIONRETURN = 3;
 	static const int TYPE_SCRIPT = 4;
+	static const int TYPE_SCALEPOINT = 5;
 
 	static const int DEFAULT_USE_TIME = 2000;
 

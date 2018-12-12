@@ -51,12 +51,11 @@ void InteractObject :: SetName(char *str)
 	strncpy(internalName, str, len);
 }
 
-void InteractObject :: SetType(char *str)
-{
-	static const int TypeID[5] = {TYPE_NONE, TYPE_WARP, TYPE_HENGE, TYPE_LOCATIONRETURN, TYPE_SCRIPT};
-	static const char *TypeName[5] = {"none", "warp", "henge", "locationreturn", "script"};
+void InteractObject :: SetType(char *str) {
+	static const int TypeID[6] = {TYPE_NONE, TYPE_WARP, TYPE_HENGE, TYPE_LOCATIONRETURN, TYPE_SCRIPT, TYPE_SCALEPOINT};
+	static const char *TypeName[6] = {"none", "warp", "henge", "locationreturn", "script", "scalepoint"};
 	opType = TYPE_NONE;
-	for(size_t i = 0; i < 5; i++)
+	for(size_t i = 0; i < 6; i++)
 	{
 		if(strcmp(str, TypeName[i]) == 0)
 		{

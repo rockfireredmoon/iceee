@@ -114,11 +114,12 @@ void WorldMarkerContainer::Clear() {
 }
 
 void WorldMarkerContainer::Save() {
-	if(mZoneID != -1) {
+	if (mZoneID != -1) {
 		/* Remove all the existing markers for this zone */
-		std::string markerKey = StringUtil::Format("%s:%d", LISTPREFIX_WORLD_MARKERS.c_str(), mZoneID);
+		std::string markerKey = StringUtil::Format("%s:%d",
+				LISTPREFIX_WORLD_MARKERS.c_str(), mZoneID);
 		STRINGLIST keys = g_ClusterManager.GetList(markerKey);
-		for(auto it = keys.begin() ; it != keys.end(); ++it) {
+		for (auto it = keys.begin(); it != keys.end(); ++it) {
 			WorldMarker m;
 			m.Name = *it;
 			g_ClusterManager.RemoveEntity(&m);
@@ -126,13 +127,13 @@ void WorldMarkerContainer::Save() {
 		g_ClusterManager.RemoveKey(markerKey, true);
 
 		/* Add them all back and the index */
-		for (auto it = WorldMarkerList.begin(); it != WorldMarkerList.end(); ++it) {
-			if(g_ClusterManager.WriteEntity(&(*it))) {
+		for (auto it = WorldMarkerList.begin(); it != WorldMarkerList.end();
+				++it) {
+			if (g_ClusterManager.WriteEntity(&(*it))) {
 				g_ClusterManager.ListAdd(markerKey, (*it).Name);
 			}
 		}
-	}
-	else {
+	} else {
 
 		std::string dir = Platform::Dirname(mFilename);
 		if (!Platform::DirExists(dir)) {
@@ -155,7 +156,8 @@ void WorldMarkerContainer::Save() {
 			Util::ReplaceAll(r, "\r\n", "\\r\\n");
 			Util::ReplaceAll(r, "\n", "\\n");
 			fprintf(output, "Comment=%s\r\n", r.c_str());
-			fprintf(output, "Position=%1.1f,%1.1f,%1.1f\r\n", it->X, it->Y, it->Z);
+			fprintf(output, "Position=%1.1f,%1.1f,%1.1f\r\n", it->X, it->Y,
+					it->Z);
 			fprintf(output, "\r\n");
 		}
 
@@ -166,21 +168,21 @@ void WorldMarkerContainer::Save() {
 
 void WorldMarkerContainer::Reload() {
 	Clear();
-	if(mZoneID != 0) {
+	if (mZoneID != 0) {
 		/* Load from cluster - Grove zone */
-		STRINGLIST markers = g_ClusterManager.GetList(StringUtil::Format("%s:%d", LISTPREFIX_WORLD_MARKERS.c_str(), mZoneID));
-		for(auto it = markers.begin() ; it != markers.end(); ++it) {
+		STRINGLIST markers = g_ClusterManager.GetList(
+				StringUtil::Format("%s:%d", LISTPREFIX_WORLD_MARKERS.c_str(),
+						mZoneID));
+		for (auto it = markers.begin(); it != markers.end(); ++it) {
 			WorldMarker m;
 			m.Name = *it;
-			if(g_ClusterManager.ReadEntity(&m)) {
+			if (g_ClusterManager.ReadEntity(&m)) {
 				WorldMarkerList.push_back(m);
-			}
-			else {
+			} else {
 				g_Logs.data->warn("Failed to load world marker item %v", *it);
 			}
 		}
-	}
-	else {
+	} else {
 		/* Load from file - Official zone */
 		FileReader lfr;
 		if (lfr.OpenText(mFilename.c_str()) != Err_OK) {
@@ -214,12 +216,15 @@ void WorldMarkerContainer::Reload() {
 								"WorldMarker:%v has incomplete Position string (%v)",
 								newItem.Name, str);
 					} else {
-						newItem.X = static_cast<float>(strtof(locData[0].c_str(),
-						NULL));
-						newItem.Y = static_cast<float>(strtof(locData[1].c_str(),
-						NULL));
-						newItem.Z = static_cast<float>(strtof(locData[2].c_str(),
-						NULL));
+						newItem.X = static_cast<float>(strtof(
+								locData[0].c_str(),
+								NULL));
+						newItem.Y = static_cast<float>(strtof(
+								locData[1].c_str(),
+								NULL));
+						newItem.Z = static_cast<float>(strtof(
+								locData[2].c_str(),
+								NULL));
 					}
 				} else if (strcmp(lfr.SecBuffer, "COMMENT") == 0) {
 					string r = lfr.BlockToStringC(1, 0);
@@ -2462,8 +2467,10 @@ void ActiveInstance::InitializeData(void) {
 	spawnsys.SetInstancePointer(this);
 
 	//Load the new script system
-	if(!mZoneDefPtr->mGrove) {
-		std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(mZoneDefPtr->mID, false);
+	if (!mZoneDefPtr->mGrove) {
+		std::string path =
+				InstanceScript::InstanceNutDef::GetInstanceScriptPath(
+						mZoneDefPtr->mID, false);
 		if (Util::HasEnding(path, ".nut")) {
 			nutScriptDef.Initialize(path.c_str());
 			nutScriptPlayer = new InstanceScript::InstanceNutPlayer();
@@ -3608,9 +3615,10 @@ bool ActiveInstance::RunScript(std::string &errors) {
 		delete nutScriptPlayer;
 
 	//Load the new script system
-	if(!mZoneDefPtr->mGrove) {
-		std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(
-				mZoneDefPtr->mID, false);
+	if (!mZoneDefPtr->mGrove) {
+		std::string path =
+				InstanceScript::InstanceNutDef::GetInstanceScriptPath(
+						mZoneDefPtr->mID, false);
 		if (Util::HasEnding(path, ".nut")) {
 			g_Logs.script->info("Running Squirrel script %v", path.c_str());
 			nutScriptDef.Initialize(path.c_str());
@@ -3715,6 +3723,10 @@ void ActiveInstance::RunObjectInteraction(SimulatorThread *simPtr, int CID) {
 				simPtr->MainCallSetZone(intObj->WarpID, 0, false);
 				simPtr->SetPosition(intObj->WarpX, intObj->WarpY, intObj->WarpZ,
 						1);
+			} else if (intObj->opType == InteractObject::TYPE_SCALEPOINT) {
+				int wpos = PrepExt_SendUICommand(simPtr->SendBuf, "show",
+						"DngScale");
+				simPtr->AttemptSend(simPtr->SendBuf, wpos);
 			} else if (intObj->opType == InteractObject::TYPE_LOCATIONRETURN) {
 				int x = simPtr->pld.charPtr->groveReturnPoint[0];
 				int y = simPtr->pld.charPtr->groveReturnPoint[1];

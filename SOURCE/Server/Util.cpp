@@ -455,6 +455,17 @@ int PrepExt_SendBookOpen(char *buffer, int bookID, int page, int op) {
 	return wpos;
 }
 
+
+int PrepExt_SendUICommand(char *buffer, const char *op, const char *window) {
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 89);              //_handleUI
+	wpos += PutShort(&buffer[wpos], 0);             //Placeholder for message size
+	wpos += PutStringUTF(&buffer[wpos], op); 				// show or hide
+	wpos += PutStringUTF(&buffer[wpos], window);
+	PutShort(&buffer[1], wpos - 3);                 //Message size
+	return wpos;
+}
+
 int PrepExt_Refashion(char *buffer) {
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 53);              //_handleRefashion
