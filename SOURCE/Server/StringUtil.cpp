@@ -45,6 +45,14 @@ std::string FormatTimeHHMMSS(unsigned long ms) {
 	return Format("%02d:%02d:%02d", hh, mm, ss);
 }
 
+std::string FormatTimeHHMMSSmm(unsigned long ms) {
+	unsigned int hh = ms / HOUR_MS;
+	unsigned int mm = (ms - (hh * HOUR_MS)) / MINUTE_MS;
+	unsigned int ss = (ms - ((hh * HOUR_MS) + (mm * MINUTE_MS))) / SECOND_MS;
+	unsigned int mms = (ms - ((hh * HOUR_MS) + (mm * MINUTE_MS) + (ss * SECOND_MS)));
+	return Format("%02d:%02d:%02d:%02d", hh, mm, ss, mms);
+}
+
 unsigned long ParseTimeHHMM(const std::string& timeString) {
 	std::tm t = { };
 	std::istringstream ss(timeString);

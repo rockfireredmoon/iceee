@@ -161,7 +161,54 @@ int main(int argc, char *argv[]) {
 			Json::StyledWriter writer;
 			printf("%s\n", writer.write(str).c_str());
 		}
-	}else if (command == "roles") {
+	} else if (command == "groves") {
+		/* Groves */
+		if (options.size() < 1) {
+			g_Logs.data->error(
+					"'groves' requires 1 argument. <userName>.");
+			return 1;
+		}
+		std::string username = options[0].c_str();
+		options.erase(options.begin());
+		AccountQuickData aqd = g_AccountManager.GetAccountQuickDataByUsername(
+				username);
+		AccountData *accPtr = g_AccountManager.FetchIndividualAccount(aqd.mID);
+		if (accPtr == NULL) {
+			g_Logs.data->error("Could not find account %v [%v]", username,
+					aqd.mID);
+		} else {
+			std::vector<int> ids;
+			g_ZoneDefManager.EnumerateGroveIds(accPtr->ID, 0, ids);
+			Json::Value str;
+			for (auto it = ids.begin(); it != ids.end(); ++it) {
+				ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByID(*it);
+				if(zd == NULL)
+					g_Logs.data->error("No such zone %v", *it);
+				else {
+					Json::Value zstr;
+					zd->WriteToJSON(zstr);
+					str.append(zstr);
+				}
+			}
+			Json::StyledWriter writer;
+			printf("%s\n", writer.write(str).c_str());
+		}
+	}  else if (command == "remove-grove") {
+		/* Groves */
+		if (options.size() < 1) {
+			g_Logs.data->error(
+					"'remove-grove' requires 1 arguments. <groveId>.");
+			return 1;
+		}
+		int gid  = std::stoi(options[0].c_str());
+		ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByID(gid);
+		if (zd == NULL) {
+			g_Logs.data->error("Could not find zone %v", gid);
+		} else {
+			if(!g_ZoneDefManager.DeleteZone(gid))
+				g_Logs.data->error("Failed to remove zone %v", gid);
+		}
+	} else if (command == "roles") {
 		/* Roles */
 		if (options.size() < 2) {
 			g_Logs.data->error(

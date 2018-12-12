@@ -320,8 +320,8 @@ bool ZoneDefInfo::ReadEntity(AbstractEntityReader *reader) {
 	mWarpName = reader->Value("WarpName");
 	mMode = reader->ValueInt("Mode", PVP::GameMode::PVE_ONLY);
 	mPageSize = reader->ValueInt("PageSize", DEFAULT_PAGESIZE);
-	mMaxAggroRange = reader->ValueInt("MaxAggroRange",DEFAULT_MAXAGGRORANGE);
-	mMaxLeashRange = reader->ValueInt("MaxLeashRange",DEFAULT_MAXLEASHRANGE);
+	mMaxAggroRange = reader->ValueInt("MaxAggroRange", DEFAULT_MAXAGGRORANGE);
+	mMaxLeashRange = reader->ValueInt("MaxLeashRange", DEFAULT_MAXLEASHRANGE);
 	mMinLevel = reader->ValueInt("MinLevel");
 	mMaxLevel = reader->ValueInt("MaxLevel", 9999);
 	STRINGLIST defloc = reader->ListValue("DefLoc", ",");
@@ -339,7 +339,8 @@ bool ZoneDefInfo::ReadEntity(AbstractEntityReader *reader) {
 	mAudit = reader->ValueBool("Audit");
 	SetDropRateProfile(reader->Value("DropRateProfile"));
 	mEnvironmentCycle = reader->ValueBool("EnvironmentCycle");
-	mPlayerFilterType = reader->ValueInt("PlayerFilterType",FILTER_PLAYER_NONE);
+	mPlayerFilterType = reader->ValueInt("PlayerFilterType",
+			FILTER_PLAYER_NONE);
 	STRINGLIST filterIds = reader->ListValue("PlayerFilterID", ",");
 	for (auto a = filterIds.begin(); a != filterIds.end(); ++a)
 		AddPlayerFilterID(atoi((*a).c_str()), true);
@@ -412,11 +413,11 @@ bool ZoneDefInfo::WriteEntity(AbstractEntityWriter *writer) {
 	if (mPageSize != ZoneDefInfo::DEFAULT_PAGESIZE)
 		writer->Value("PageSize", mPageSize);
 	if (mMaxAggroRange != ZoneDefInfo::DEFAULT_MAXAGGRORANGE)
-		writer->Value("MaxAggroRange",mMaxAggroRange);
+		writer->Value("MaxAggroRange", mMaxAggroRange);
 	if (mMaxLeashRange != ZoneDefInfo::DEFAULT_MAXLEASHRANGE)
 		writer->Value("MaxLeashRange", mMaxLeashRange);
 	if (mPlayerFilterType != 0)
-		writer->Value("PlayerFilterType",mPlayerFilterType);
+		writer->Value("PlayerFilterType", mPlayerFilterType);
 	STRINGLIST l;
 	for (auto a = mPlayerFilterID.begin(); a != mPlayerFilterID.end(); ++a) {
 		l.push_back(StringUtil::Format("%d", *a));
@@ -525,7 +526,8 @@ void ZoneDefInfo::SetDropRateProfile(std::string profile) {
 }
 
 int ZoneDefInfo::GetNextPropID() {
-	return g_ClusterManager.NextValue(StringUtil::Format("%s:%d", ID_NEXT_SCENERY.c_str(),  mID));
+	return g_ClusterManager.NextValue(
+			StringUtil::Format("%s:%d", ID_NEXT_SCENERY.c_str(), mID));
 }
 
 std::string ZoneDefInfo::GetTileEnvironment(int x, int y) {
@@ -1046,8 +1048,9 @@ void ZoneDefManager::LoadData(void) {
 
 	g_Logs.server->info("Loaded %v ZoneDef.", mZoneList.size());
 
-	if(!g_ClusterManager.HasKey(ID_NEXT_ZONE_ID)) {
-		g_ClusterManager.SetKey(ID_NEXT_ZONE_ID, StringUtil::Format("%d", GROVE_ZONE_ID_DEFAULT));
+	if (!g_ClusterManager.HasKey(ID_NEXT_ZONE_ID)) {
+		g_ClusterManager.SetKey(ID_NEXT_ZONE_ID,
+				StringUtil::Format("%d", GROVE_ZONE_ID_DEFAULT));
 	}
 }
 
@@ -1070,13 +1073,16 @@ ZoneDefInfo * ZoneDefManager::GetPointerByID(int ID) {
 	return retptr;
 }
 
-ZoneDefInfo * ZoneDefManager::GetPointerByPartialWarpName(const std::string &name) {
+ZoneDefInfo * ZoneDefManager::GetPointerByPartialWarpName(
+		const std::string &name) {
 	ZoneDefInfo *retptr = NULL;
 
 	STRINGLIST l;
 	g_ClusterManager.Scan([this, &l](const std::string &match) {
 		l.push_back(match);
-	}, StringUtil::Format("%s:*%s*", KEYPREFIX_WARP_NAME_TO_ZONE_ID.c_str(), name.c_str()), 1);
+	},
+			StringUtil::Format("%s:*%s*",
+					KEYPREFIX_WARP_NAME_TO_ZONE_ID.c_str(), name.c_str()), 1);
 
 	int zoneID = -1;
 	if (l.size() > 0)
@@ -1089,7 +1095,7 @@ ZoneDefInfo * ZoneDefManager::GetPointerByPartialWarpName(const std::string &nam
 	if (zoneID != -1) {
 		retptr = ResolveZoneDef(zoneID);
 	}
-	if(retptr == NULL) {
+	if (retptr == NULL) {
 		for (auto it = mZoneList.begin(); it != mZoneList.end(); ++it)
 			if (it->second.mWarpName.find(name) != string::npos) {
 				retptr = &it->second;
@@ -1124,13 +1130,14 @@ ZoneDefInfo * ZoneDefManager::GetPointerByExactWarpName(const char *name) {
 	ZoneDefInfo *retptr = NULL;
 
 	std::string zoneIdStr = g_ClusterManager.GetKey(
-			StringUtil::Format("%s:%s", KEYPREFIX_WARP_NAME_TO_ZONE_ID.c_str(), name));
+			StringUtil::Format("%s:%s", KEYPREFIX_WARP_NAME_TO_ZONE_ID.c_str(),
+					name));
 	if (zoneIdStr.length() > 0) {
 		retptr = ResolveZoneDef(atoi(zoneIdStr.c_str()));
 	}
 
 	cs.Enter("ZoneDefManager::GetPointerByExactWarpName");
-	if(retptr == NULL) {
+	if (retptr == NULL) {
 		for (auto it = mZoneList.begin(); it != mZoneList.end(); ++it)
 			if (it->second.mWarpName.compare(name) == 0) {
 				retptr = &it->second;
@@ -1146,7 +1153,8 @@ ZoneDefInfo * ZoneDefManager::GetPointerByGroveName(const char *name) {
 	ZoneDefInfo *retptr = NULL;
 
 	std::vector<std::string> zoneIdStrs = g_ClusterManager.GetList(
-			StringUtil::Format("%s:%s", LISTPREFIX_GROVE_NAME_TO_ZONE_ID.c_str(), name));
+			StringUtil::Format("%s:%s",
+					LISTPREFIX_GROVE_NAME_TO_ZONE_ID.c_str(), name));
 	if (zoneIdStrs.size() > 0) {
 		retptr = ResolveZoneDef(atoi(zoneIdStrs[0].c_str()));
 	}
@@ -1217,18 +1225,29 @@ void ZoneDefManager::InsertZone(const ZoneDefInfo& newZone, bool createIndex) {
 
 	//Create the index entry.
 	if (createIndex == true) {
-		g_ClusterManager.SetKey(StringUtil::Format("%s:%s", KEYPREFIX_WARP_NAME_TO_ZONE_ID.c_str(), newZone.mWarpName.c_str()), StringUtil::Format("%d", newZone.mID), false);
-		g_ClusterManager.ListAdd(StringUtil::Format("%s:%s", LISTPREFIX_GROVE_NAME_TO_ZONE_ID.c_str(), newZone.mGroveName.c_str()), StringUtil::Format("%d", newZone.mID), false);
-		g_ClusterManager.ListAdd(StringUtil::Format("%s:%d", LISTPREFIX_ACCOUNT_ID_TO_ZONE_ID.c_str(), newZone.mAccountID), StringUtil::Format("%d", newZone.mID), false);
+		g_ClusterManager.SetKey(
+				StringUtil::Format("%s:%s",
+						KEYPREFIX_WARP_NAME_TO_ZONE_ID.c_str(),
+						newZone.mWarpName.c_str()),
+				StringUtil::Format("%d", newZone.mID), false);
+		g_ClusterManager.ListAdd(
+				StringUtil::Format("%s:%s",
+						LISTPREFIX_GROVE_NAME_TO_ZONE_ID.c_str(),
+						newZone.mGroveName.c_str()),
+				StringUtil::Format("%d", newZone.mID), false);
+		g_ClusterManager.ListAdd(
+				StringUtil::Format("%s:%d",
+						LISTPREFIX_ACCOUNT_ID_TO_ZONE_ID.c_str(),
+						newZone.mAccountID),
+				StringUtil::Format("%d", newZone.mID), false);
 	}
 }
 
 bool ZoneDefManager::DeleteZone(int id) {
-	if(id < GROVE_ZONE_ID_DEFAULT) {
+	if (id < GROVE_ZONE_ID_DEFAULT) {
 		g_Logs.data->warn("Request to delete non-grove zone %v, ignoring", id);
 		return false;
 	}
-
 
 	ZoneDefInfo *def = GetPointerByID(id);
 	if (def != NULL) {
@@ -1244,9 +1263,18 @@ bool ZoneDefManager::DeleteZone(int id) {
 }
 
 void ZoneDefManager::RemoveZoneFromIndexes(ZoneDefInfo *def) {
-	g_ClusterManager.RemoveKey(StringUtil::Format("%s:%s", KEYPREFIX_WARP_NAME_TO_ZONE_ID.c_str(), def->mWarpName.c_str()), false);
-	g_ClusterManager.ListRemove(StringUtil::Format("%s:%s", LISTPREFIX_GROVE_NAME_TO_ZONE_ID.c_str(), def->mGroveName.c_str()), StringUtil::Format("%d", def->mID), false);
-	g_ClusterManager.ListRemove(StringUtil::Format("%s:%d", LISTPREFIX_ACCOUNT_ID_TO_ZONE_ID.c_str(), def->mAccountID), StringUtil::Format("%d", def->mID), false);
+	g_ClusterManager.RemoveKey(
+			StringUtil::Format("%s:%s", KEYPREFIX_WARP_NAME_TO_ZONE_ID.c_str(),
+					def->mWarpName.c_str()), false);
+	g_ClusterManager.ListRemove(
+			StringUtil::Format("%s:%s",
+					LISTPREFIX_GROVE_NAME_TO_ZONE_ID.c_str(),
+					def->mGroveName.c_str()),
+			StringUtil::Format("%d", def->mID), false);
+	g_ClusterManager.ListRemove(
+			StringUtil::Format("%s:%d",
+					LISTPREFIX_ACCOUNT_ID_TO_ZONE_ID.c_str(), def->mAccountID),
+			StringUtil::Format("%d", def->mID), false);
 
 }
 
@@ -1275,8 +1303,10 @@ int ZoneDefManager::EnumerateGroveIds(int searchAccountID, int characterDefId,
 			characterDefId == 0 ?
 					NULL : g_CharacterManager.GetPointerByID(characterDefId);
 
-	STRINGLIST accountGroves = g_ClusterManager.GetList(StringUtil::Format("%s:%d", LISTPREFIX_ACCOUNT_ID_TO_ZONE_ID.c_str(), searchAccountID));
-	for(auto a = accountGroves.begin(); a != accountGroves.end(); ++a) {
+	STRINGLIST accountGroves = g_ClusterManager.GetList(
+			StringUtil::Format("%s:%d",
+					LISTPREFIX_ACCOUNT_ID_TO_ZONE_ID.c_str(), searchAccountID));
+	for (auto a = accountGroves.begin(); a != accountGroves.end(); ++a) {
 		groveIdList.push_back(atoi((*a).c_str()));
 	}
 	if (cdata != NULL) {
@@ -1286,8 +1316,7 @@ int ZoneDefManager::EnumerateGroveIds(int searchAccountID, int characterDefId,
 			GuildDefinition *gDef = g_GuildManager.GetGuildDefinition(
 					guildDefID);
 			if (gDef == NULL) {
-				g_Logs.server->error(
-						"Guild definition %v does not exist",
+				g_Logs.server->error("Guild definition %v does not exist",
 						guildDefID);
 			} else {
 				groveIdList.push_back(gDef->guildHallZone);
@@ -1306,10 +1335,12 @@ int ZoneDefManager::EnumerateGroves(int searchAccountID, int characterDefId,
 			characterDefId == 0 ?
 					NULL : g_CharacterManager.GetPointerByID(characterDefId);
 
-	STRINGLIST accountGroves = g_ClusterManager.GetList(StringUtil::Format("%s:%d", LISTPREFIX_ACCOUNT_ID_TO_ZONE_ID.c_str(), searchAccountID));
-	for(auto a = accountGroves.begin(); a != accountGroves.end(); ++a) {
+	STRINGLIST accountGroves = g_ClusterManager.GetList(
+			StringUtil::Format("%s:%d",
+					LISTPREFIX_ACCOUNT_ID_TO_ZONE_ID.c_str(), searchAccountID));
+	for (auto a = accountGroves.begin(); a != accountGroves.end(); ++a) {
 		ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByID(atoi((*a).c_str()));
-		if(zd != NULL)
+		if (zd != NULL)
 			groveList.push_back(zd->mWarpName);
 	}
 	if (cdata != NULL) {
@@ -1319,12 +1350,12 @@ int ZoneDefManager::EnumerateGroves(int searchAccountID, int characterDefId,
 			GuildDefinition *gDef = g_GuildManager.GetGuildDefinition(
 					guildDefID);
 			if (gDef == NULL) {
-				g_Logs.server->error(
-						"Guild definition %v does not exist",
+				g_Logs.server->error("Guild definition %v does not exist",
 						guildDefID);
 			} else {
-				ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByID(gDef->guildHallZone);
-				if(zd != NULL)
+				ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByID(
+						gDef->guildHallZone);
+				if (zd != NULL)
 					groveList.push_back(zd->mWarpName);
 			}
 		}
@@ -1678,6 +1709,34 @@ void GroveTemplate::Clear(void) {
 	mDefX = 0;
 	mDefY = 0;
 	mDefZ = 0;
+}
+
+bool GroveTemplate::HasProps() const {
+	return Platform::DirExists(Platform::JoinPath(g_Config.ResolveStaticDataPath(), Platform::JoinPath("GroveTemplates", mShortName)));
+}
+
+void GroveTemplate::GetProps(std::vector<SceneryObject> &objects) const {
+	std::string fileName = Platform::JoinPath(g_Config.ResolveStaticDataPath(),Platform::JoinPath("GroveTemplates", mShortName));
+
+	Platform_DirectoryReader r;
+	std::string dir = r.GetDirectory();
+	r.SetDirectory(fileName);
+	r.ReadFiles();
+	r.SetDirectory(dir.c_str());
+
+	std::vector<std::string>::iterator it;
+	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
+		std::string p = *it;
+		if (Util::HasEnding(p, ".txt")) {
+			SceneryPage page;
+			page.LoadSceneryFromFile(Platform::JoinPath(fileName, p.c_str()));
+			for (std::map<int, SceneryObject>::iterator mit =
+					page.mSceneryList.begin(); mit != page.mSceneryList.end();
+					++mit) {
+				objects.push_back((*mit).second);
+			}
+		}
+	}
 }
 
 GroveTemplateManager::GroveTemplateManager() {

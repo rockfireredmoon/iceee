@@ -2,6 +2,7 @@
 #include "Components.h"
 #include "Config.h"
 #include "util/Log.h"
+#include "StringUtil.h"
 
 #define MAX_TASKS_PER_CYCLE 5
 #define POOL_SIZE 5
@@ -75,7 +76,7 @@ void Scheduler::RunProcessingCycle() {
 		if(now > mNextRun) {
 			ScheduledTimerTask t = scheduled[0];
 			scheduled.erase(scheduled.begin());
-			g_Logs.server->info("Scheduled task running");
+			g_Logs.server->info("Scheduled task running %v", t.mTaskId);
 			mMutex.unlock();
 			t.mTask();
 			mMutex.lock();
@@ -83,7 +84,7 @@ void Scheduler::RunProcessingCycle() {
 			// Update next run time
 			if(scheduled.size() > 0) {
 				mNextRun = scheduled[0].mWhen;
-				g_Logs.server->info("Next scheduler task will run at %v", mNextRun);
+				g_Logs.server->info("Next scheduler task will run in %v", StringUtil::FormatTimeHHMMSSmm(mNextRun - g_ServerTime));
 			}
 			else {
 				mNextRun = 0;
@@ -110,13 +111,13 @@ int Scheduler::Schedule(const TaskType& task, unsigned long when) {
 		when = g_ServerTime + g_MainSleep;
 	}
 	ScheduledTimerTask taskWrapper(task, when);
-	g_Logs.server->info("This scheduler task will run at %v", when);
+	g_Logs.server->info("This scheduler task will run in %v", StringUtil::FormatTimeHHMMSSmm(when - g_ServerTime));
 	mMutex.lock();
 	taskWrapper.mTaskId = mNextTaskId++;
 	scheduled.push_back(taskWrapper);
 	sort(scheduled.begin(), scheduled.end(), ScheduledTaskSort);
 	mNextRun = scheduled[0].mWhen;
-	g_Logs.server->info("Next scheduler task will run at %v", mNextRun);
+	g_Logs.server->info("Next scheduler task will run in %v", StringUtil::FormatTimeHHMMSSmm(mNextRun - g_ServerTime));
 	mMutex.unlock();
 	return taskWrapper.mTaskId;
 }

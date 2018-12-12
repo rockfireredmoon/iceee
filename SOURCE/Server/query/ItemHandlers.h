@@ -28,6 +28,10 @@ int UseItem(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance, unsigned int CCSID);
 
+int UsePropItem(SimulatorThread *sim, CharacterServerData *pld,
+		CreatureInstance *creatureInstance,
+		ItemDef *itemDef);
+
 
 class ItemUseHandler : public QueryHandler {
 public:

@@ -16,6 +16,8 @@ namespace StringUtil
 
 	std::string FormatTimeHHMMSS(unsigned long ms);
 
+	std::string FormatTimeHHMMSSmm(unsigned long ms);
+
 	unsigned long ParseTimeHHMM(const std::string& timeString);
 
 	unsigned long ParseTimeHHMMSS(const std::string& timeString);

@@ -445,6 +445,8 @@ public:
 
 	GroveTemplate();
 	void Clear();
+	bool HasProps() const;
+	void GetProps(std::vector<SceneryObject> &objects) const;
 };
 
 class GroveTemplateManager

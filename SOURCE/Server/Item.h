@@ -249,7 +249,8 @@ struct ItemType
 		BASIC       = 7,
 		SPECIAL     = 8,
 		QUEST       = 9,
-		RECIPE      = 10
+		RECIPE      = 10,
+		PROP 		= 11
 	};
 };
 

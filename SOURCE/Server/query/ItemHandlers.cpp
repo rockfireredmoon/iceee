@@ -47,6 +47,61 @@ void AddPet(SimulatorThread *sim, CharacterServerData *pld,
 	}
 }
 
+
+int UsePropItem(SimulatorThread *sim, CharacterServerData *pld,
+		CreatureInstance *creatureInstance,
+		ItemDef *itemDef) {
+	SceneryObject prop;
+	prop.ID = pld->zoneDef->GetNextPropID();
+	g_Logs.simulator->debug("[%v] Prop item created: %v", sim->InternalID,
+			prop.ID);
+
+	prop.Asset = itemDef->mSv1;
+	prop.LocationX = creatureInstance->CurrentX;
+	prop.LocationY = creatureInstance->CurrentY;
+	prop.LocationZ = creatureInstance->CurrentZ;
+
+	if (prop.Asset.length() == 0)
+		return QueryErrorMsg::PROPASSETNULL;
+
+	//The client makes changes internally without waiting for confirmation.
+	//If the prop edit fails, we need to send back the old prop data to force
+	//the client to revert to its prior state.
+
+	//if(pld.accPtr->CheckBuildPermissionAdv(pld.zoneDef->mID, pld.zoneDef->mPageSize, prop.LocationX, prop.LocationZ) == false)
+	if (sim->HasPropEditPermission(&prop) == false) {
+		return QueryErrorMsg::PROPLOCATION;
+	}
+
+	//Check valid asset
+	if (g_SceneryManager.VerifyATS(prop) == false) {
+		return QueryErrorMsg::PROPATS;
+	}
+
+	//Prop is good to add.
+	g_SceneryManager.GetThread(
+			"SimulatorThread::protected_helper_query_scenery_edit");
+
+	bool isSpawnPoint = prop.IsSpawnPoint();
+
+	SceneryObject *retProp = g_SceneryManager.AddProp(pld->zoneDef->mID, prop);
+
+	// The spawn system needs to reference a stable prop location.  If it tries to
+	// reference this prop, it will crash after this local instance is destructed.
+	// So we use retProp instead, which returns with a valid pointer if AddProp()
+	// or ReplaceProp() was successful.
+	if (isSpawnPoint == true && retProp != NULL)
+		creatureInstance->actInst->spawnsys.UpdateSpawnPoint(retProp);
+
+	g_SceneryManager.ReleaseThread();
+
+	int opType = SceneryAudit::OP_NEW;
+	pld->zoneDef->AuditScenery(creatureInstance->css.display_name,
+			pld->CurrentZoneID, &prop, opType);
+
+	return PrepExt_UpdateScenery(sim->SendBuf, &prop);
+}
+
 int UseItem(SimulatorThread *sim, CharacterServerData *pld,
 		SimulatorQuery *query, CreatureInstance *creatureInstance,
 		unsigned int CCSID) {
@@ -77,13 +132,22 @@ int UseItem(SimulatorThread *sim, CharacterServerData *pld,
 	}
 
 	if (itemDef->mType != ItemType::CONSUMABLE
-			&& itemDef->mType != ItemType::SPECIAL)
+		&& itemDef->mType != ItemType::SPECIAL
+		&& itemDef->mType != ItemType::PROP)
 		return -1;
 
 	// The AddSidekick() function has its own thread guard, so we don't
 	// need one here.
 	bool removeOnUse = true;
-	if (itemDef->mUseAbilityId != 0) {
+	int wpos = 0;
+	if(itemDef->mType == ItemType::PROP) {
+		int r = UsePropItem(sim, pld, creatureInstance, itemDef);
+		if(r > 0)
+			wpos += r;
+		else
+			return r;
+	}
+	else if (itemDef->mUseAbilityId != 0) {
 		ConfigString cfg(itemDef->Params);
 		//AddMessage((long)creatureInst, itemDef->mUseAbilityId, BCM_AbilityRequest);
 		int r = creatureInstance->RequestAbilityActivation(
@@ -232,13 +296,13 @@ int UseItem(SimulatorThread *sim, CharacterServerData *pld,
 	 */
 
 	if (removeOnUse == false)  //No need for the rest, leave early.
-		return 0;
+		return wpos;
 
 	//If it's stackable, need to remove an object from the stack,
 	//and delete the item if there are no more.
 	sim->DecrementStack(slot);
 
-	return 0;
+	return wpos;
 }
 
 //
