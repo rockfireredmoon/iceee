@@ -107,6 +107,7 @@ public:
 	PartyMember* GetMemberByID(int memberID);
 	PartyMember* GetMemberByDefID(int memberDefID);
 	bool UpdatePlayerReferences(CreatureInstance* member);
+	int GetOnlineMemberCount(void);
 	bool RemovePlayerReferences(int memberDefID, bool disconnect);
 	void RebroadCastMemberList(char *buffer);
 	void DebugDestroyParty(const char *buffer, int length);

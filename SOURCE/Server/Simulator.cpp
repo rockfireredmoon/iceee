@@ -4132,10 +4132,10 @@ void SimulatorThread::CheckIfLootReadyToDistribute(ActiveLootContainer *loot,
 	// How many decisions do we expect to process the roll. This will depend
 	// on if this is the secondary roll when round robin or loot master is in use
 	// has been processed or not
-	unsigned int requiredDecisions = party->mMemberList.size();
+	unsigned int requiredDecisions = party->GetOnlineMemberCount();
 	if ((party->mLootMode == ROUND_ROBIN || party->mLootMode == LOOT_MASTER)) {
 		if (loot->IsStage2(lootTag.mItemId)) {
-			requiredDecisions = party->mMemberList.size() - 1;
+			requiredDecisions = party->GetOnlineMemberCount() - 1;
 		} else {
 			requiredDecisions = 1;
 		}
