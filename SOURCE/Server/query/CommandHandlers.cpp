@@ -112,9 +112,7 @@ AdjustExpHandler::AdjustExpHandler() :
 		AbstractCommandHandler(
 				"Usage: /adjustexp <amount> - Where <amount> is a POSITIVE number",
 				1) {
-	mAllowedPermissions.push_back(Permission_Sage);
-	mAllowedPermissions.push_back(Permission_Admin);
-	mAllowedPermissions.push_back(Permission_Developer);
+	mAllowedPermissions.push_back(Permission_Sage | Permission_Admin | Permission_Developer) ;
 }
 
 int AdjustExpHandler::handleCommand(SimulatorThread *sim,
@@ -244,9 +242,7 @@ int EsayHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 //
 HealthHandler::HealthHandler() :
 		AbstractCommandHandler("Usage: /health <hitPoints>", 1) {
-	mAllowedPermissions.push_back(Permission_Debug);
-	mAllowedPermissions.push_back(Permission_Admin);
-	mAllowedPermissions.push_back(Permission_Developer);
+	mAllowedPermissions.push_back(Permission_Debug | Permission_Admin | Permission_Developer) ;
 }
 
 int HealthHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -273,9 +269,7 @@ int HealthHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 //
 SpeedHandler::SpeedHandler() :
 		AbstractCommandHandler("Usage: /speed <bonusAmount>", 1) {
-	mAllowedPermissions.push_back(Permission_Debug);
-	mAllowedPermissions.push_back(Permission_Admin);
-	mAllowedPermissions.push_back(Permission_Developer);
+	mAllowedPermissions.push_back(Permission_Debug | Permission_Admin | Permission_Developer) ;
 }
 
 int SpeedHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -300,7 +294,7 @@ int SpeedHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 //
 ForceAbilityHandler::ForceAbilityHandler() :
 		AbstractCommandHandler("Usage: /fa <ability>", 1) {
-	mAllowedPermissions.push_back(Permission_Debug);
+	mAllowedPermissions.push_back(Permission_Debug | Permission_Admin | Permission_Developer) ;
 }
 
 int ForceAbilityHandler::handleCommand(SimulatorThread *sim,
@@ -480,7 +474,7 @@ int WhoHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 //
 GMWhoHandler::GMWhoHandler() :
 		AbstractCommandHandler("Usage: /gmwho", 0) {
-	mAllowedPermissions.push_back(Permission_Sage);
+	mAllowedPermissions.push_back(Permission_Sage | Permission_Admin | Permission_Developer) ;
 }
 
 int GMWhoHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -588,7 +582,7 @@ int ListShardsHandler::handleCommand(SimulatorThread *sim,
 //
 GiveHandler::GiveHandler() :
 		AbstractCommandHandler("Usage: /give \"<itemName>\"", 1) {
-	mAllowedPermissions.push_back(Permission_ItemGive);
+	mAllowedPermissions.push_back(Permission_ItemGive | Permission_Admin | Permission_Developer | Permission_Sage) ;
 }
 
 int GiveHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -639,9 +633,7 @@ int GiveHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 //
 GiveIDHandler::GiveIDHandler() :
 		AbstractCommandHandler("Usage: /giveid <itemId> [<count>]", 1) {
-	mAllowedPermissions.push_back(Permission_ItemGive);
-	mAllowedPermissions.push_back(Permission_Admin);
-	mAllowedPermissions.push_back(Permission_Developer);
+	mAllowedPermissions.push_back(Permission_ItemGive | Permission_Admin | Permission_Developer) ;
 }
 
 int GiveIDHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -695,7 +687,7 @@ int GiveIDHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 //
 GiveAllHandler::GiveAllHandler() :
 		AbstractCommandHandler("Usage: /giveall \"<searchName>\"", 1) {
-	mAllowedPermissions.push_back(Permission_ItemGive);
+	mAllowedPermissions.push_back(Permission_ItemGive | Permission_Admin | Permission_Developer | Permission_Sage) ;
 }
 
 int GiveAllHandler::handleCommand(SimulatorThread *sim,
@@ -753,7 +745,7 @@ int GiveAllHandler::handleCommand(SimulatorThread *sim,
 GiveAppHandler::GiveAppHandler() :
 		AbstractCommandHandler("Usage: /giveapp <equipType> \"<searchName>\"",
 				2) {
-	mAllowedPermissions.push_back(Permission_ItemGive);
+	mAllowedPermissions.push_back(Permission_ItemGive | Permission_Admin | Permission_Developer | Permission_Sage) ;
 }
 
 int GiveAppHandler::handleCommand(SimulatorThread *sim,
@@ -816,7 +808,7 @@ int GiveAppHandler::handleCommand(SimulatorThread *sim,
 //
 DeleteAllHandler::DeleteAllHandler() :
 		AbstractCommandHandler("Usage: /deleteall", 0) {
-	mAllowedPermissions.push_back(Permission_ItemGive);
+	mAllowedPermissions.push_back(Permission_ItemGive | Permission_Admin | Permission_Developer | Permission_Sage) ;
 }
 
 int DeleteAllHandler::handleCommand(SimulatorThread *sim,
@@ -854,7 +846,7 @@ int DeleteAllHandler::handleCommand(SimulatorThread *sim,
 //
 DeleteAboveHandler::DeleteAboveHandler() :
 		AbstractCommandHandler("Usage: /deleteabove <slotNumber>", 1) {
-	mAllowedPermissions.push_back(Permission_ItemGive);
+	mAllowedPermissions.push_back(Permission_ItemGive | Permission_Admin | Permission_Developer) ;
 }
 
 int DeleteAboveHandler::handleCommand(SimulatorThread *sim,
@@ -1004,7 +996,7 @@ int PVPHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 //
 CompleteHandler::CompleteHandler() :
 		AbstractCommandHandler("Usage: /complete", 0) {
-	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Admin | Permission_Developer) ;
 }
 
 int CompleteHandler::handleCommand(SimulatorThread *sim,
@@ -1064,8 +1056,7 @@ int HelpHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 //
 RefashionHandler::RefashionHandler() :
 		AbstractCommandHandler("Usage: /refashion", 0) {
-	mAllowedPermissions.push_back(Permission_Sage);
-	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Sage | Permission_Admin | Permission_Developer) ;
 }
 
 int RefashionHandler::handleCommand(SimulatorThread *sim,
@@ -1171,9 +1162,7 @@ int RefashionHandler::handleCommand(SimulatorThread *sim,
 //
 BackupHandler::BackupHandler() :
 		AbstractCommandHandler("Usage: /backup", 0) {
-	mAllowedPermissions.push_back(Permission_Debug);
-	mAllowedPermissions.push_back(Permission_Admin);
-	mAllowedPermissions.push_back(Permission_Developer);
+	mAllowedPermissions.push_back(Permission_Debug | Permission_Admin | Permission_Developer) ;
 }
 
 int BackupHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -1229,9 +1218,7 @@ int RestoreHandler::handleCommand(SimulatorThread *sim,
 //
 GodHandler::GodHandler() :
 		AbstractCommandHandler("Usage: /god [<0|1>]", 0) {
-	mAllowedPermissions.push_back(Permission_Debug);
-	mAllowedPermissions.push_back(Permission_Admin);
-	mAllowedPermissions.push_back(Permission_Developer);
+	mAllowedPermissions.push_back(Permission_Debug | Permission_Admin | Permission_Developer) ;
 }
 
 int GodHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -1263,7 +1250,7 @@ SetStatHandler::SetStatHandler() :
 		AbstractCommandHandler(
 				"Usage: /setstat <statName> <newValue> - NOTE, Select target first.",
 				2) {
-	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Debug | Permission_Admin | Permission_Developer) ;
 }
 
 int SetStatHandler::handleCommand(SimulatorThread *sim,
@@ -1388,9 +1375,7 @@ int ScaleHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 //
 PartyAllHandler::PartyAllHandler() :
 		AbstractCommandHandler("Usage: /partyall", 0) {
-	mAllowedPermissions.push_back(Permission_Debug);
-	mAllowedPermissions.push_back(Permission_Admin);
-	mAllowedPermissions.push_back(Permission_Developer);
+	mAllowedPermissions.push_back(Permission_Debug | Permission_Admin | Permission_Developer) ;
 }
 
 int PartyAllHandler::handleCommand(SimulatorThread *sim,
@@ -1412,7 +1397,7 @@ int PartyAllHandler::handleCommand(SimulatorThread *sim,
 //
 PartyQuitHandler::PartyQuitHandler() :
 		AbstractCommandHandler("Usage: /partyquit", 0) {
-	mAllowedPermissions.push_back(Permission_Debug);
+	mAllowedPermissions.push_back(Permission_Debug | Permission_Admin | Permission_Developer) ;
 }
 
 int PartyQuitHandler::handleCommand(SimulatorThread *sim,
@@ -1441,9 +1426,7 @@ int PartyQuitHandler::handleCommand(SimulatorThread *sim,
 //
 CCCHandler::CCCHandler() :
 		AbstractCommandHandler("Usage: /ccc [<category>]", 0) {
-	mAllowedPermissions.push_back(Permission_Debug);
-	mAllowedPermissions.push_back(Permission_Admin);
-	mAllowedPermissions.push_back(Permission_Developer);
+	mAllowedPermissions.push_back(Permission_Debug | Permission_Admin | Permission_Developer) ;
 }
 
 int CCCHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -1481,7 +1464,7 @@ int CCCHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 //
 BanHandler::BanHandler() :
 		AbstractCommandHandler("Usage: /ban \"<category>\" <duration>", 2) {
-	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Sage | Permission_Admin) ;
 }
 
 int BanHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -1537,7 +1520,7 @@ int BanHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 //
 UnbanHandler::UnbanHandler() :
 		AbstractCommandHandler("Usage: /unban \"<AccountName>\"", 1) {
-	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Sage | Permission_Admin) ;
 }
 
 int UnbanHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -1602,8 +1585,7 @@ SetBuildPermissionHandler::SetBuildPermissionHandler() :
 		AbstractCommandHandler(
 				"Usage: /setbuildpermissions <accountName> <instanceId> [<x1>,<y1>,<x2>,<y2>]",
 				2) {
-	mAllowedPermissions.push_back(Permission_Admin);
-	mAllowedPermissions.push_back(Permission_Sage);
+	mAllowedPermissions.push_back(Permission_Sage | Permission_Admin | Permission_Developer) ;
 }
 
 int SetBuildPermissionHandler::handleCommand(SimulatorThread *sim,
@@ -1697,7 +1679,7 @@ int SetBuildPermissionHandler::handleCommand(SimulatorThread *sim,
 SetPermissionCHandler::SetPermissionCHandler() :
 		AbstractCommandHandler(
 				"Usage: /setpermissionc <name> <value> <permission>", 3) {
-	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Admin | Permission_Developer) ;
 }
 
 int SetPermissionCHandler::handleCommand(SimulatorThread *sim,
@@ -1764,7 +1746,7 @@ int SetBehaviorHandler::handleCommand(SimulatorThread *sim,
 //
 DeriveSetHandler::DeriveSetHandler() :
 		AbstractCommandHandler("Usage: /deriveset", 0) {
-	mAllowedPermissions.push_back(Permission_Sage);
+	mAllowedPermissions.push_back(Permission_Sage | Permission_Admin | Permission_Developer) ;
 }
 
 int DeriveSetHandler::handleCommand(SimulatorThread *sim,
@@ -1854,7 +1836,7 @@ int DeriveSetHandler::handleCommand(SimulatorThread *sim,
 //
 IGStatusHandler::IGStatusHandler() :
 		AbstractCommandHandler("Usage: /igstatus <status> <value> [target]", 2) {
-	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Admin | Permission_Developer) ;
 }
 
 int IGStatusHandler::handleCommand(SimulatorThread *sim,
@@ -1887,7 +1869,7 @@ int IGStatusHandler::handleCommand(SimulatorThread *sim,
 //
 PartyZapHandler::PartyZapHandler() :
 		AbstractCommandHandler("Usage: /partyzap", 0) {
-	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Admin | Permission_Developer) ;
 }
 
 int PartyZapHandler::handleCommand(SimulatorThread *sim,
@@ -2409,7 +2391,6 @@ int SpingHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 //
 InfoHandler::InfoHandler() :
 		AbstractCommandHandler("Usage: /info <spawntile|scenerytile>", 1) {
-	mAllowedPermissions.push_back(Permission_Admin);
 }
 
 int InfoHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -2614,7 +2595,7 @@ int PathLinksHandler::handleCommand(SimulatorThread *sim,
 //
 TargHandler::TargHandler() :
 		AbstractCommandHandler("Usage: /pathlinks [<radius>]", 0) {
-	mAllowedPermissions.push_back(Permission_Debug);
+	mAllowedPermissions.push_back(Permission_Debug | Permission_Admin | Permission_Developer) ;
 }
 
 int TargHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -2669,9 +2650,7 @@ int UnstickHandler::handleCommand(SimulatorThread *sim,
 //
 ElevHandler::ElevHandler() :
 		AbstractCommandHandler("Usage: /elev <y>", 0) {
-	mAllowedPermissions.push_back(Permission_Debug);
-	mAllowedPermissions.push_back(Permission_Admin);
-	mAllowedPermissions.push_back(Permission_Developer);
+	mAllowedPermissions.push_back(Permission_Debug | Permission_Admin | Permission_Developer) ;
 }
 
 int ElevHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -2685,9 +2664,7 @@ int ElevHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 //
 CycleHandler::CycleHandler() :
 		AbstractCommandHandler("Usage: /cycle", 0) {
-	mAllowedPermissions.push_back(Permission_Debug);
-	mAllowedPermissions.push_back(Permission_Admin);
-	mAllowedPermissions.push_back(Permission_Developer);
+	mAllowedPermissions.push_back(Permission_Admin | Permission_Developer) ;
 }
 
 int CycleHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -2720,7 +2697,7 @@ int TimeHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 //
 SearSizeHandler::SearSizeHandler() :
 		AbstractCommandHandler("Usage: /searsize [<size>]", 0) {
-	mAllowedPermissions.push_back(Permission_Sage);
+	mAllowedPermissions.push_back(Permission_Sage | Permission_Admin | Permission_Developer) ;
 }
 
 int SearSizeHandler::handleCommand(SimulatorThread *sim,
@@ -2752,7 +2729,7 @@ int SearSizeHandler::handleCommand(SimulatorThread *sim,
 //
 StailSizeHandler::StailSizeHandler() :
 		AbstractCommandHandler("Usage: /stailsize [<size>]", 0) {
-	mAllowedPermissions.push_back(Permission_Debug);
+	mAllowedPermissions.push_back(Permission_Sage | Permission_Admin | Permission_Developer) ;
 }
 
 int StailSizeHandler::handleCommand(SimulatorThread *sim,
@@ -2782,9 +2759,7 @@ int StailSizeHandler::handleCommand(SimulatorThread *sim,
 //
 DailyHandler::DailyHandler() :
 		AbstractCommandHandler("Usage: /daily [<days> <level>]", 0) {
-	mAllowedPermissions.push_back(Permission_Debug);
-	mAllowedPermissions.push_back(Permission_Admin);
-	mAllowedPermissions.push_back(Permission_Developer);
+	mAllowedPermissions.push_back(Permission_Debug | Permission_Admin | Permission_Developer) ;
 }
 
 int DailyHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -3040,9 +3015,7 @@ int WarpTileHandler::handleCommand(SimulatorThread *sim,
 
 WarpPullHandler::WarpPullHandler() :
 		AbstractCommandHandler("Usage: /warpp", 0) {
-	mAllowedPermissions.push_back(Permission_Sage);
-	mAllowedPermissions.push_back(Permission_Developer);
-	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Sage | Permission_Admin) ;
 }
 
 int WarpPullHandler::handleCommand(SimulatorThread *sim,
@@ -3120,7 +3093,7 @@ WarpExternalOfflineHandler::WarpExternalOfflineHandler() :
 		AbstractCommandHandler(
 				"Usage: /warpextoffline \"<characterName>\" <zoneID> [<x> <z> [y]]",
 				2) {
-	mAllowedPermissions.push_back(Permission_Sage);
+	mAllowedPermissions.push_back(Permission_Sage | Permission_Admin | Permission_Debug);
 }
 int WarpExternalOfflineHandler::handleCommand(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
@@ -3191,7 +3164,7 @@ int WarpExternalOfflineHandler::handleCommand(SimulatorThread *sim,
 WarpExternalHandler::WarpExternalHandler() :
 		AbstractCommandHandler("Usage: /warpext \"<characterName>\" <zoneID>",
 				2) {
-	mAllowedPermissions.push_back(Permission_Sage);
+	mAllowedPermissions.push_back(Permission_Sage | Permission_Admin | Permission_Debug);
 }
 
 int WarpExternalHandler::handleCommand(SimulatorThread *sim,
@@ -3269,8 +3242,7 @@ int ScriptExecHandler::handleCommand(SimulatorThread *sim,
 
 ScriptTimeHandler::ScriptTimeHandler() :
 		AbstractCommandHandler("Usage: /script.time", 0) {
-	mAllowedPermissions.push_back(Permission_Sage);
-	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Sage | Permission_Admin | Permission_Debug);
 }
 
 int ScriptTimeHandler::handleCommand(SimulatorThread *sim,
@@ -3324,8 +3296,7 @@ int ScriptTimeHandler::handleCommand(SimulatorThread *sim,
 
 ScriptWakeVMHandler::ScriptWakeVMHandler() :
 		AbstractCommandHandler("Usage: /script.wakevm", 0) {
-	mAllowedPermissions.push_back(Permission_Sage);
-	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Admin | Permission_Debug);
 }
 
 int ScriptWakeVMHandler::handleCommand(SimulatorThread *sim,
@@ -3358,8 +3329,7 @@ int ScriptWakeVMHandler::handleCommand(SimulatorThread *sim,
 
 ScriptGCHandler::ScriptGCHandler() :
 		AbstractCommandHandler("Usage: /script.gc", 0) {
-	mAllowedPermissions.push_back(Permission_Sage);
-	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Admin | Permission_Debug);
 }
 
 int ScriptGCHandler::handleCommand(SimulatorThread *sim,
@@ -3390,8 +3360,7 @@ int ScriptGCHandler::handleCommand(SimulatorThread *sim,
 
 ScriptClearQueueHandler::ScriptClearQueueHandler() :
 		AbstractCommandHandler("Usage: /script.clearqueue", 0) {
-	mAllowedPermissions.push_back(Permission_Sage);
-	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Admin | Permission_Debug);
 }
 
 int ScriptClearQueueHandler::handleCommand(SimulatorThread *sim,
@@ -3684,8 +3653,7 @@ int InstanceHandler::handleCommand(SimulatorThread *sim,
 //
 UserAuthResetHandler::UserAuthResetHandler() :
 		AbstractCommandHandler("Usage: /user.auth.reset", 0) {
-	mAllowedPermissions.push_back(Permission_Sage);
-	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Sage | Permission_Admin | Permission_Debug);
 }
 
 int UserAuthResetHandler::handleCommand(SimulatorThread *sim,

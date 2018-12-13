@@ -2322,13 +2322,13 @@ int SimulatorThread::CheckValidWarpZone(int ZoneID) {
 	}
 
 	//For administrative access
-	if (CheckPermissionSimple(Perm_Account, Permission_Admin | Permission_Developer) == true)
+	if (CheckPermissionSimple(Perm_Account, Permission_Admin | Permission_Developer | Permission_Sage) == true)
 		return ERROR_NONE;
 
 	//For regular players
 	if (zonePtr->mGrove == false && zonePtr->mArena == false
 			&& zonePtr->mGuildHall == false)
-		if (CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer) == false)
+		if (CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Sage | Permission_Admin | Permission_Developer) == false)
 			return ERROR_WARPGROVEONLY;
 
 	//For guild hall
