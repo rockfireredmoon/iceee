@@ -2322,7 +2322,7 @@ int SimulatorThread::CheckValidWarpZone(int ZoneID) {
 	}
 
 	//For administrative access
-	if (CheckPermissionSimple(Perm_Account, Permission_Admin) == true)
+	if (CheckPermissionSimple(Perm_Account, Permission_Admin | Permission_Developer) == true)
 		return ERROR_NONE;
 
 	//For regular players
@@ -2664,7 +2664,7 @@ bool SimulatorThread::HasPropEditPermission(SceneryObject *prop, float x,
 		checkZ = prop->LocationZ;
 	}
 
-	if (CheckPermissionSimple(Perm_Account, Permission_Admin)
+	if (CheckPermissionSimple(Perm_Account, Permission_Admin | Permission_Developer)
 			|| pld.accPtr->CheckBuildPermissionAdv(pld.zoneDef->mID,
 					pld.zoneDef->mPageSize, checkX, checkZ) == true)
 		return true;

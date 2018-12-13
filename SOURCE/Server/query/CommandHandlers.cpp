@@ -114,6 +114,7 @@ AdjustExpHandler::AdjustExpHandler() :
 				1) {
 	mAllowedPermissions.push_back(Permission_Sage);
 	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Developer);
 }
 
 int AdjustExpHandler::handleCommand(SimulatorThread *sim,
@@ -311,8 +312,7 @@ int ForceAbilityHandler::handleCommand(SimulatorThread *sim,
 	abID = atoi(query->args[0].c_str());
 
 	if (abID >= 26000 && abID <= 26100) {
-		if (sim->CheckPermissionSimple(Perm_Account, Permission_Admin)
-				== false) {
+		if (!sim->CheckPermissionSimple(Perm_Account, Permission_Admin | Permission_Developer)) {
 			sim->SendInfoMessage("Thou art not a deity.", INFOMSG_ERROR);
 			abID = 0;
 		}
@@ -636,6 +636,8 @@ int GiveHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 GiveIDHandler::GiveIDHandler() :
 		AbstractCommandHandler("Usage: /giveid <itemId> [<count>]", 1) {
 	mAllowedPermissions.push_back(Permission_ItemGive);
+	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Developer);
 }
 
 int GiveIDHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -2094,6 +2096,7 @@ int ZoneNameHandler::handleCommand(SimulatorThread *sim,
 DtrigHandler::DtrigHandler() :
 		AbstractCommandHandler("Usage: /dtrig <op> [<arg1> ..]", 1) {
 	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Developer);
 }
 
 int DtrigHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -3212,7 +3215,7 @@ ScriptExecHandler::ScriptExecHandler() :
 int ScriptExecHandler::handleCommand(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
-	bool ok = sim->CheckPermissionSimple(Perm_Account, Permission_Admin);
+	bool ok = sim->CheckPermissionSimple(Perm_Account, Permission_Admin | Permission_Developer);
 	if (!ok) {
 		if (pld->zoneDef->mGrove == true
 				&& pld->zoneDef->mAccountID != pld->accPtr->ID)
@@ -3742,7 +3745,7 @@ int AchievementsHandler::handleCommand(SimulatorThread *sim,
 		CreatureInstance *creatureInstance) {
 
 	if (query->argCount >= 1) {
-		if (sim->CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+		if (!sim->CheckPermissionSimple(Perm_Account, Permission_Admin | Permission_Developer))
 			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 					"Permission denied.");
 

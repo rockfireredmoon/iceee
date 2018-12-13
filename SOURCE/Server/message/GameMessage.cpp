@@ -289,9 +289,8 @@ int UpdateVelocityMessage::handleMessage(SimulatorThread *sim, CharacterServerDa
 		//There are tons of weird cases where verification fails on legit movement, so it may be necessary
 		//to just disable it entirely.
 
-		if ((g_Config.VerifyMovement == true)
-				&& (sim->CheckPermissionSimple(Perm_Account, Permission_Admin)
-						== false)) {
+		if(g_Config.VerifyMovement == true && !sim->CheckPermissionSimple(Perm_Account, Permission_Admin | Permission_Developer))
+				{
 			int expectedSpeed = 100 + creatureInstance->css.base_movement
 					+ creatureInstance->css.mod_movement;
 

@@ -96,7 +96,7 @@ int SetEnvironmentHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Invalid query.");
 
-	if(sim->CheckPermissionSimple(Perm_Account, Permission_Admin) == false && sim->CheckPermissionSimple(Perm_Account, Permission_Sage) == false) {
+	if(!sim->CheckPermissionSimple(Perm_Account, Permission_Admin | Permission_Developer | Permission_Sage)) {
 		if (pld->zoneDef->mGrove == false)
 			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 					"You are not in a grove.");
