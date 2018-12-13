@@ -1551,7 +1551,7 @@ int ModCraftHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	else {
 		int wpos = 0;
 		if (outputMsg.size() > 0)
-			wpos = PrepExt_SendInfoMessage(sim->SendBuf, "Succesful craft!",
+			wpos = PrepExt_SendInfoMessage(sim->SendBuf, "Successful craft!",
 					INFOMSG_INFO);
 		for (size_t i = 0; i < outputMsg.size(); i++)
 			wpos += PrepExt_SendInfoMessage(&sim->SendBuf[wpos],

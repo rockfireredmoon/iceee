@@ -136,6 +136,16 @@ short AINutPlayer::GetWillCharge() {
 	return attachedCreature->css.will_charges;
 }
 
+short AINutPlayer::AddWillCharge(int charges) {
+	attachedCreature->AddWillCharge(charges);
+	return attachedCreature->css.will_charges;
+}
+
+short AINutPlayer::AddMightCharge(int charges) {
+	attachedCreature->AddMightCharge(charges);
+	return attachedCreature->css.might_charges;
+}
+
 short AINutPlayer::GetMight() {
 	return attachedCreature->css.might;
 }
@@ -249,6 +259,13 @@ int AINutPlayer::GetSelf() {
 
 int AINutPlayer::GetSelfDefID() {
 	return attachedCreature->CreatureDefID;
+}
+
+
+void AINutPlayer::SelectTarget(int targetCID) {
+	CreatureInstance *target = actInst->GetInstanceByCID(targetCID);
+	if(target != NULL)
+		attachedCreature->SelectTarget(target);
 }
 
 void AINutPlayer::SetOtherTarget(int CID, int targetCID) {
@@ -374,6 +391,8 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 	clazz->Func(_SC("use_once"), &AINutPlayer::UseNoRetry);
 	clazz->Func(_SC("use_highest"), &AINutPlayer::UseHighest);
 	clazz->Func(_SC("use_highest_once"), &AINutPlayer::UseHighestNoRetry);
+	clazz->Func(_SC("add_will_chage"), &AINutPlayer::AddWillCharge);
+	clazz->Func(_SC("add_might_chage"), &AINutPlayer::AddMightCharge);
 	clazz->Func(_SC("get_will"), &AINutPlayer::GetWill);
 	clazz->Func(_SC("get_will_charge"), &AINutPlayer::GetWillCharge);
 	clazz->Func(_SC("get_might"), &AINutPlayer::GetMight);
@@ -394,6 +413,7 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 	clazz->Func(_SC("get_target"), &AINutPlayer::GetTarget);
 	clazz->Func(_SC("get_self"), &AINutPlayer::GetSelf);
 	clazz->Func(_SC("get_self_def_id"), &AINutPlayer::GetSelfDefID);
+	clazz->Func(_SC("select_target"), &AINutPlayer::SelectTarget);
 	clazz->Func(_SC("set_other_target"), &AINutPlayer::SetOtherTarget);
 	clazz->Func(_SC("is_target_enemy"), &AINutPlayer::IsTargetEnemy);
 	clazz->Func(_SC("is_target_friendly"), &AINutPlayer::IsTargetFriendly);

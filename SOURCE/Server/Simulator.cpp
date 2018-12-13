@@ -1552,7 +1552,7 @@ bool SimulatorThread::MainCallSetZone(int newZoneID, int newInstanceID,
 	}
 
 	//The party needs to be checked before placing into a zone.
-	if (LoadStage == LOADSTAGE_UNLOADED) {
+	if(LoadStage == LOADSTAGE_UNLOADED || LoadStage == LOADSTAGE_GAMEPLAY) {
 		ActiveParty *party = g_PartyManager.GetPartyWithMember(
 				pld.CreatureDefID);
 		if (party != NULL) {
@@ -1857,11 +1857,17 @@ void SimulatorThread::CheckMapUpdate(bool force) {
 				WeatherState *ws = g_WeatherManager.GetWeather(
 						MapDef.mMapList[pld.CurrentMapInt].Name,
 						pld.CurrentInstanceID);
-				if (ws != NULL) {
-					AttemptSend(SendBuf,
-							PrepExt_SetWeather(SendBuf, ws->mWeatherType,
-									ws->mWeatherWeight));
-				}
+				if(ws != NULL)
+					AttemptSend(SendBuf, PrepExt_SetWeather(SendBuf, ws->mWeatherType, ws->mWeatherWeight));
+				else
+					AttemptSend(SendBuf, PrepExt_SetWeather(SendBuf, "", 0));
+			}
+			else if(force) {
+				WeatherState *ws = g_WeatherManager.GetWeather(MapDef.mMapList[pld.CurrentMapInt].Name, pld.CurrentInstanceID);
+				if(ws != NULL)
+					AttemptSend(SendBuf, PrepExt_SetWeather(SendBuf, ws->mWeatherType, ws->mWeatherWeight));
+				else
+					AttemptSend(SendBuf, PrepExt_SetWeather(SendBuf, "", 0));
 			}
 		} else {
 			//Most instances and smaller maps don't have specific regions, so reset the
@@ -3421,7 +3427,7 @@ int SimulatorThread::OfferLoot(int mode, ActiveLootContainer *loot,
 		g_Logs.simulator->info("[%v] Offer Loot Master", InternalID);
 		// Offer to the leader first
 		PartyMember *member = party->GetMemberByID(party->mLeaderID);
-		int idx = 0;
+		unsigned int idx = 0;
 		while ((member == NULL || !member->IsOnlineAndValid())
 				&& idx < party->mMemberList.size()) {
 			member = &party->mMemberList[idx++];

@@ -49,6 +49,8 @@ public:
 	short GetMight();
 	short GetMightCharge();
 	short GetLevel();
+	short AddWillCharge(int charges);
+	short AddMightCharge(int charges);
 	bool IsOnCooldown(const char *category);
 	bool IsBusy();
 
@@ -65,6 +67,7 @@ public:
 	int GetSelf();
 	int GetSelfDefID();
 	void SetOtherTarget(int CID, int targetCID);
+	void SelectTarget(int targetCID);
 	bool IsTargetEnemy();
 	bool IsTargetFriendly();
 	void SetSpeed(int speed);

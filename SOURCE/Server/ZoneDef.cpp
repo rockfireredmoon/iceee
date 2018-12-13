@@ -1712,11 +1712,14 @@ void GroveTemplate::Clear(void) {
 }
 
 bool GroveTemplate::HasProps() const {
-	return Platform::DirExists(Platform::JoinPath(g_Config.ResolveStaticDataPath(), Platform::JoinPath("GroveTemplates", mShortName)));
+	return Platform::DirExists(
+			Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+					Platform::JoinPath("GroveTemplates", mShortName)));
 }
 
 void GroveTemplate::GetProps(std::vector<SceneryObject> &objects) const {
-	std::string fileName = Platform::JoinPath(g_Config.ResolveStaticDataPath(),Platform::JoinPath("GroveTemplates", mShortName));
+	std::string fileName = Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+			Platform::JoinPath("GroveTemplates", mShortName));
 
 	Platform_DirectoryReader r;
 	std::string dir = r.GetDirectory();
@@ -2050,17 +2053,21 @@ bool WeatherState::PickNewWeather() {
 			mEscalateState = WeatherState::ESCALATING;
 		}
 	} else {
-		/* Weather is stopping */
-		mThunder = false;
-		mNextThunder = 0;
-		mNextStateChange = RandomFutureTime(mDefinition.mFineMin,
-				mDefinition.mFineMax);
-		mWeatherType = "";
-		mWeatherWeight = WeatherState::LIGHT;
-		mEscalateState = WeatherState::ONE_OFF;
+		StopWeather();
 	}
 
 	return true;
+}
+
+void WeatherState::StopWeather() {
+	/* Weather is stopping */
+	mThunder = false;
+	mNextThunder = 0;
+	mNextStateChange = RandomFutureTime(mDefinition.mFineMin,
+			mDefinition.mFineMax);
+	mWeatherType = "";
+	mWeatherWeight = WeatherState::LIGHT;
+	mEscalateState = WeatherState::ONE_OFF;
 }
 
 bool WeatherManager::MaybeAddWeatherDef(int instanceID,
@@ -2189,25 +2196,28 @@ WeatherState* WeatherManager::GetWeather(std::string mapName, int instanceId) {
 	return mWeather[k];
 }
 
-void WeatherManager::Deregister(std::vector<WeatherState*> states) {
+
+void WeatherManager :: Deregister(std::vector<WeatherState*> *states) {
 
 	/* Set up a weather state for all the map locations in this instance that have a weather def */
 	int s;
-	for (std::vector<WeatherState*>::iterator it = states.begin();
-			it != states.end(); ++it) {
-		s = 0;
-		for (std::vector<std::string>::iterator it2 = (*it)->mMapNames.begin();
-				it2 != (*it)->mMapNames.end(); ++it2) {
+	for(std::vector<WeatherState*>::iterator it = states->begin(); it != states->end(); ++it) {
+		WeatherState *ws = *it;
+		if(g_Config.DebugVerbose)
+			g_Logs.simulator->info("Clearing up weather for %v (%v)", ws->mInstanceId, ws->mDefinition.mMapName.c_str());
+		for(std::vector<std::string>::iterator it2 = ws->mMapNames.begin(); it2 != ws->mMapNames.end(); ++it2) {
+			if(g_Config.DebugVerbose)
+				g_Logs.simulator->info("    Map (%v)", (*it2).c_str());
 			WeatherKey k;
-			k.instance = (*it)->mInstanceId;
+			k.instance = ws->mInstanceId;
 			k.mapName = *it2;
-			if (s == 0)
-				/* Only delete the state in the first key, as the other keys have a copy */
-				delete mWeather[k];
 			mWeather.erase(k);
-			s++;
 		}
+
+		delete ws;
 	}
+
+	states->clear();
 }
 
 int WeatherManager::LoadFromFile(std::string fileName) {

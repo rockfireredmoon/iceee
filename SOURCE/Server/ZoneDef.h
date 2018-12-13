@@ -175,6 +175,7 @@ public:
 	void SendWeatherUpdate(ActiveInstance *instance, bool sendToCluster); // send the weather update message to everyone in this instance/area
 	void SendThunder(ActiveInstance *instance, bool sendToCluser); // send the thunder message to everyone in this instance/area
 	bool PickNewWeather();
+	void StopWeather();
 
 private:
 	void RollThunder(); // send the thunder message to everyone in this instance/area
@@ -387,7 +388,7 @@ public:
 	std::map<WeatherKey, WeatherState*> mWeather; // all currently maintained weather
 	std::map<std::string, WeatherDef> mWeatherDefinitions; // all weather definitions
 	std::vector<WeatherState*> RegisterInstance(ActiveInstance *instance); // when an instance loads, we find all of it's weather regions (i.e. map names) and start maintaining them if there is a weather definition
-	void Deregister(std::vector<WeatherState*> states); // when an instance dies, we stop maintaining its weather regions (i.e. map names)
+	void Deregister(std::vector<WeatherState*> *states); // when an instance dies, we stop maintaining its weather regions (i.e. map names)
 	int LoadFromFile(std::string filename);
 	WeatherState* GetWeather(std::string mapName, int instanceId);
 	void ZoneThunder(int zoneId, std::string mapName);

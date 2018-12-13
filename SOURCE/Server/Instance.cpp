@@ -611,9 +611,7 @@ ActiveInstance::~ActiveInstance() {
 }
 
 void ActiveInstance::Clear(void) {
-	g_WeatherManager.Deregister(mWeather);
-
-	mWeather.clear();
+	g_WeatherManager.Deregister(&mWeather);
 	mZone = 0;
 	mMode = PVP::GameMode::PVE_ONLY;
 	mZoneDefPtr = NULL;
@@ -4090,6 +4088,22 @@ PlayerInstancePlacementData::PlayerInstancePlacementData() {
 	Clear();
 }
 
+PlayerInstancePlacementData :: PlayerInstancePlacementData(const PlayerInstancePlacementData *data) {
+	in_cInst = data->in_cInst;
+	in_simPtr = data->in_simPtr;
+	in_instanceID = data->in_instanceID;
+	in_partyID = data->in_partyID;
+	in_creatureDefID = data->in_creatureDefID;
+	in_zoneID = data->in_zoneID;
+	in_serverSessionID = data->in_serverSessionID;
+	in_playerLevel = data->in_playerLevel;
+	in_scaleProfile = data->in_scaleProfile;
+	out_cInst = data->out_cInst;
+	out_zoneDef = data->out_zoneDef;
+	out_instanceID = data->out_instanceID;
+	mPartyLeaderDefID = data->mPartyLeaderDefID;
+}
+
 void PlayerInstancePlacementData::Clear(void) {
 	memset(this, 0, sizeof(PlayerInstancePlacementData));
 }
@@ -4128,15 +4142,12 @@ const InstanceScaleProfile* PlayerInstancePlacementData::GetPartyLeaderInstanceS
 	if (member == NULL)
 		return NULL;
 
+	CharacterData *charDat = member->mCharPtr;
+	if(charDat == NULL)
+		return NULL;
 	CreatureInstance *creature = member->mCreaturePtr;
-	if (creature == NULL)
-		return NULL;
 
-	if (!(creature->serverFlags & ServerFlags::IsPlayer))
-		return NULL;
-
-	CharacterData *charDat = creature->charPtr;
-	if (charDat == NULL)
+	if(creature != NULL && !(creature->serverFlags & ServerFlags::IsPlayer))
 		return NULL;
 
 	//g_Log.AddMessageFormat("Returning party leader %s [%d] scaler %s", creature->css.display_name, party->mLeaderDefID, charDat->InstanceScaler.c_str());
