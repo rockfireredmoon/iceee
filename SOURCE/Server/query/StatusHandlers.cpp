@@ -106,6 +106,8 @@ int ClientLoadingHandler::handleQuery(SimulatorThread *sim, CharacterServerData 
 //
 // AdminCheckHandler
 //
+//
+/* TODO Remove this, its not used any more (ClientPermsHandler) */
 int AdminCheckHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
@@ -117,7 +119,7 @@ int AdminCheckHandler::handleQuery(SimulatorThread *sim,
 	 This is used to unlock some debug features in the client.
 	 */
 
-	if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if (!sim->CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer))
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Permission denied.");
 
@@ -184,7 +186,7 @@ int ClientPermsHandler::handleQuery(SimulatorThread *sim,
 			l.push_back("sage");
 		}
 
-		if(sim->CheckPermissionSimple(Perm_Account, Permission_Debug) == true) {
+		if(sim->CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Developer) == true) {
 			l.push_back("debug");
 		}
 

@@ -245,6 +245,8 @@ int EsayHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 HealthHandler::HealthHandler() :
 		AbstractCommandHandler("Usage: /health <hitPoints>", 1) {
 	mAllowedPermissions.push_back(Permission_Debug);
+	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Developer);
 }
 
 int HealthHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -272,6 +274,8 @@ int HealthHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 SpeedHandler::SpeedHandler() :
 		AbstractCommandHandler("Usage: /speed <bonusAmount>", 1) {
 	mAllowedPermissions.push_back(Permission_Debug);
+	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Developer);
 }
 
 int SpeedHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -397,7 +401,7 @@ int WhoHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 
 	int WritePos = 0;
 
-	bool debug = sim->CheckPermissionSimple(Perm_Account, Permission_Debug);
+	bool debug = sim->CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer);
 	SYNCHRONIZED(g_ClusterManager.mMutex) {
 		for (std::map<int, ShardPlayer>::iterator it =
 				g_ClusterManager.mActivePlayers.begin();
@@ -1168,6 +1172,8 @@ int RefashionHandler::handleCommand(SimulatorThread *sim,
 BackupHandler::BackupHandler() :
 		AbstractCommandHandler("Usage: /backup", 0) {
 	mAllowedPermissions.push_back(Permission_Debug);
+	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Developer);
 }
 
 int BackupHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -1224,6 +1230,8 @@ int RestoreHandler::handleCommand(SimulatorThread *sim,
 GodHandler::GodHandler() :
 		AbstractCommandHandler("Usage: /god [<0|1>]", 0) {
 	mAllowedPermissions.push_back(Permission_Debug);
+	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Developer);
 }
 
 int GodHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -1381,6 +1389,8 @@ int ScaleHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 PartyAllHandler::PartyAllHandler() :
 		AbstractCommandHandler("Usage: /partyall", 0) {
 	mAllowedPermissions.push_back(Permission_Debug);
+	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Developer);
 }
 
 int PartyAllHandler::handleCommand(SimulatorThread *sim,
@@ -1432,6 +1442,8 @@ int PartyQuitHandler::handleCommand(SimulatorThread *sim,
 CCCHandler::CCCHandler() :
 		AbstractCommandHandler("Usage: /ccc [<category>]", 0) {
 	mAllowedPermissions.push_back(Permission_Debug);
+	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Developer);
 }
 
 int CCCHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -2658,6 +2670,8 @@ int UnstickHandler::handleCommand(SimulatorThread *sim,
 ElevHandler::ElevHandler() :
 		AbstractCommandHandler("Usage: /elev <y>", 0) {
 	mAllowedPermissions.push_back(Permission_Debug);
+	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Developer);
 }
 
 int ElevHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -2672,6 +2686,8 @@ int ElevHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 CycleHandler::CycleHandler() :
 		AbstractCommandHandler("Usage: /cycle", 0) {
 	mAllowedPermissions.push_back(Permission_Debug);
+	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Developer);
 }
 
 int CycleHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -2767,6 +2783,8 @@ int StailSizeHandler::handleCommand(SimulatorThread *sim,
 DailyHandler::DailyHandler() :
 		AbstractCommandHandler("Usage: /daily [<days> <level>]", 0) {
 	mAllowedPermissions.push_back(Permission_Debug);
+	mAllowedPermissions.push_back(Permission_Admin);
+	mAllowedPermissions.push_back(Permission_Developer);
 }
 
 int DailyHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
@@ -2812,7 +2830,7 @@ int WarpHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 	 */
 
 	if (pld->zoneDef->mGrove == false)
-		if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+		if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer) == false)
 			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 					"Permission denied.");
 
@@ -2919,7 +2937,7 @@ int WarpInstanceHandler::handleCommand(SimulatorThread *sim,
 	 */
 
 	if (pld->zoneDef->mGrove == false)
-		if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+		if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer) == false)
 			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 					"Permission denied.");
 
@@ -3000,7 +3018,7 @@ int WarpTileHandler::handleCommand(SimulatorThread *sim,
 	 */
 
 	if (pld->zoneDef->mGrove == false)
-		if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+		if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer) == false)
 			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 					"Permission denied.");
 
@@ -3023,6 +3041,8 @@ int WarpTileHandler::handleCommand(SimulatorThread *sim,
 WarpPullHandler::WarpPullHandler() :
 		AbstractCommandHandler("Usage: /warpp", 0) {
 	mAllowedPermissions.push_back(Permission_Sage);
+	mAllowedPermissions.push_back(Permission_Developer);
+	mAllowedPermissions.push_back(Permission_Admin);
 }
 
 int WarpPullHandler::handleCommand(SimulatorThread *sim,
@@ -3618,7 +3638,7 @@ int InstanceHandler::handleCommand(SimulatorThread *sim,
 		sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 
 		if (inst->mZoneDefPtr->IsDungeon() == true
-				|| sim->CheckPermissionSimple(Perm_Account, Permission_Debug)
+				|| sim->CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Developer | Permission_Admin)
 						== true) {
 			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
 					"Drop rate bonus: %gx", inst->mDropRateBonusMultiplier);
@@ -3648,7 +3668,7 @@ int InstanceHandler::handleCommand(SimulatorThread *sim,
 			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 		}
 
-		if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug)
+		if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer)
 				== true) {
 			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
 					"Drop rate profile: %s",

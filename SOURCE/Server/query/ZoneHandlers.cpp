@@ -39,7 +39,7 @@ int GoHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	// [0], [1], [2] = x, y, z coordinates, respectively.
 
 	if (pld->zoneDef->mGrove == false)
-		if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+		if (!sim->CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer))
 			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 					"Permission denied.");
 

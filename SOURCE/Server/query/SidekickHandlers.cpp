@@ -52,9 +52,7 @@ int SidekickAddHandler::handleQuery(SimulatorThread *sim,
 	 Args : 0 or 1, [0] = CreatureDefID
 	 */
 
-	if (sim->CheckPermissionSimple(Perm_Account, Permission_Admin) == false
-			&& sim->CheckPermissionSimple(Perm_Account, Permission_Sage)
-					== false)
+	if (sim->CheckPermissionSimple(Perm_Account, Permission_Sage | Permission_Admin | Permission_Developer) == false)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Permission denied.");
 

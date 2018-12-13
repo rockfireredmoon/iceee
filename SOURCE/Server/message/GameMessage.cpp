@@ -205,7 +205,7 @@ int UpdateVelocityMessage::handleMessage(SimulatorThread *sim, CharacterServerDa
 
 	if (g_Config.HasAdministrativeBehaviorFlag(ADMIN_BEHAVIOR_VERIFYSPEED)
 			== true) {
-		if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug) == false) {
+		if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer) == false) {
 			int xlen = abs(x - (creatureInstance->CurrentX & 0xFFFF));
 			int zlen = abs(z - (creatureInstance->CurrentZ & 0xFFFF));
 			if (xlen < SimulatorThread::OverflowThreshold && zlen < SimulatorThread::OverflowThreshold) {
@@ -673,7 +673,7 @@ int AbilityActiveMessage::handleMessage(SimulatorThread *sim, CharacterServerDat
 			sim->AddMessage(pld->CreatureID, 0, BCM_ActorJump);
 	} else {
 		bool allow = false;
-		if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug) == true)
+		if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer) == true)
 			allow = true;
 		else if (pld->charPtr->abilityList.GetAbilityIndex(aID) >= 0)
 			allow = true;
