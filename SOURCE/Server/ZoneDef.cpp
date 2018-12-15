@@ -1249,17 +1249,18 @@ bool ZoneDefManager::DeleteZone(int id) {
 		return false;
 	}
 
+	bool ok = false;
 	ZoneDefInfo *def = GetPointerByID(id);
 	if (def != NULL) {
-		mZoneList.erase(mZoneList.find(id));
 		if (g_ClusterManager.RemoveEntity(def)) {
 			g_Logs.data->info("Removed zone %v", id);
 			g_ZoneDefManager.RemoveZoneFromIndexes(def);
 			g_SceneryManager.DeleteZone(id);
-			return true;
+			ok = true;
 		}
+		mZoneList.erase(mZoneList.find(id));
 	}
-	return false;
+	return ok;
 }
 
 void ZoneDefManager::RemoveZoneFromIndexes(ZoneDefInfo *def) {
@@ -1970,17 +1971,18 @@ void WeatherState::SendWeatherUpdate(ActiveInstance *instance,
 			it != instance->RegSim.end(); ++it) {
 		for (std::vector<std::string>::iterator it2 = mMapNames.begin();
 				it2 != mMapNames.end(); it2++) {
-			if ((*it)->pld.CurrentMapInt == -1
-					|| MapDef.mMapList[(*it)->pld.CurrentMapInt].Name.compare(
+			SimulatorThread* sim = *it;
+			if (sim->pld.CurrentMapInt == -1
+					|| MapDef.mMapList[sim->pld.CurrentMapInt].Name.compare(
 							*it2) == 0) {
-				(*it)->AttemptSend((*it)->Aux1,
-						PrepExt_SetWeather((*it)->Aux1, mWeatherType,
+				sim->AttemptSend(sim->Aux1,
+						PrepExt_SetWeather(sim->Aux1, mWeatherType,
 								mWeatherWeight));
 				if (g_ClusterManager.IsMaster()
 						&& instance->mZoneDefPtr->IsOverworld()) {
 					/* If this is an overworld zone, notify all remote players of thunder */
 					g_ClusterManager.Weather(instance->mZone,
-							MapDef.mMapList[(*it)->pld.CurrentMapInt].Name,
+							MapDef.mMapList[sim->pld.CurrentMapInt].Name,
 							mWeatherType, mWeatherWeight);
 				}
 				break;
@@ -1991,18 +1993,19 @@ void WeatherState::SendWeatherUpdate(ActiveInstance *instance,
 void WeatherState::SendThunder(ActiveInstance *instance, bool sendToCluster) {
 	for (std::vector<SimulatorThread*>::iterator it = instance->RegSim.begin();
 			it != instance->RegSim.end(); ++it) {
+		SimulatorThread* sim = *it;
 		for (std::vector<std::string>::iterator it2 = mMapNames.begin();
 				it2 != mMapNames.end(); it2++) {
-			if ((*it)->pld.CurrentMapInt == -1
-					|| MapDef.mMapList[(*it)->pld.CurrentMapInt].Name.compare(
+			if (sim->pld.CurrentMapInt == -1
+					|| MapDef.mMapList[sim->pld.CurrentMapInt].Name.compare(
 							*it2) == 0) {
-				(*it)->AttemptSend((*it)->Aux1,
-						PrepExt_Thunder((*it)->Aux1, mWeatherWeight));
+				sim->AttemptSend(sim->Aux1,
+						PrepExt_Thunder(sim->Aux1, mWeatherWeight));
 				if (g_ClusterManager.IsMaster()
 						&& instance->mZoneDefPtr->IsOverworld()) {
 					/* If this is an overworld zone, notify all remote players of thunder */
 					g_ClusterManager.Thunder(instance->mZone,
-							MapDef.mMapList[(*it)->pld.CurrentMapInt].Name);
+							MapDef.mMapList[sim->pld.CurrentMapInt].Name);
 				}
 				break;
 			}
@@ -2196,17 +2199,18 @@ WeatherState* WeatherManager::GetWeather(std::string mapName, int instanceId) {
 	return mWeather[k];
 }
 
-
-void WeatherManager :: Deregister(std::vector<WeatherState*> *states) {
+void WeatherManager::Deregister(std::vector<WeatherState*> *states) {
 
 	/* Set up a weather state for all the map locations in this instance that have a weather def */
-	int s;
-	for(std::vector<WeatherState*>::iterator it = states->begin(); it != states->end(); ++it) {
+	for (std::vector<WeatherState*>::iterator it = states->begin();
+			it != states->end(); ++it) {
 		WeatherState *ws = *it;
-		if(g_Config.DebugVerbose)
-			g_Logs.simulator->info("Clearing up weather for %v (%v)", ws->mInstanceId, ws->mDefinition.mMapName.c_str());
-		for(std::vector<std::string>::iterator it2 = ws->mMapNames.begin(); it2 != ws->mMapNames.end(); ++it2) {
-			if(g_Config.DebugVerbose)
+		if (g_Config.DebugVerbose)
+			g_Logs.simulator->info("Clearing up weather for %v (%v)",
+					ws->mInstanceId, ws->mDefinition.mMapName.c_str());
+		for (std::vector<std::string>::iterator it2 = ws->mMapNames.begin();
+				it2 != ws->mMapNames.end(); ++it2) {
+			if (g_Config.DebugVerbose)
 				g_Logs.simulator->info("    Map (%v)", (*it2).c_str());
 			WeatherKey k;
 			k.instance = ws->mInstanceId;

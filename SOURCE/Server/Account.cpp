@@ -1001,6 +1001,7 @@ AccountQuickData AccountManager::GetAccountQuickDataByUsername(
 		const std::string &username) {
 	AccountQuickData qd;
 	qd.mLoginName = username;
+	g_Logs.data->info("Retrieving account quick data for %v.", username);
 	g_ClusterManager.ReadEntity(&qd);
 	return qd;
 }
@@ -1013,6 +1014,7 @@ AccountData * AccountManager::GetValidLogin(const char *loginName,
 	AccountQuickData aqd = GetAccountQuickDataByUsername(loginName);
 	if (aqd.mID != 0 && aqd.mLoginAuth.compare(loginAuth) == 0)
 		return FetchIndividualAccount(aqd.mID);
+	g_Logs.data->info("Account %v not found or authentication failed.", loginName);
 	return NULL;
 }
 
@@ -1719,6 +1721,7 @@ AccountData * AccountManager::FetchIndividualAccount(int accountID) {
 AccountData * AccountManager::LoadAccountID(int accountID) {
 	AccountData accData;
 	accData.ID = accountID;
+	g_Logs.data->info("Loading account %v.", accountID);
 	if (g_ClusterManager.ReadEntity(&accData)) {
 		g_Logs.data->info("Account %v was loaded from the cluster OK.",
 				accountID);

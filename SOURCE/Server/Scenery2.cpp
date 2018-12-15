@@ -358,10 +358,11 @@ void SceneryObject::WriteToJSON(Json::Value &value) {
 			Json::Value links;
 			int i = 0;
 			for(auto a = extraData.link.begin(); a != extraData.link.end(); ++a) {
-				if((*a).propID != 0) {
+				ExtraDataLink def = *a;
+				if(def.propID != 0) {
 					Json::Value link;
-					link["prop"] = (*a).propID;
-					link["type"] = (*a).type;
+					link["prop"] = def.propID;
+					link["type"] = def.type;
 					links[i++] = link;
 				}
 			}
@@ -993,6 +994,7 @@ void SceneryPage::LoadSceneryFromCluster()
 void SceneryPage::LoadSceneryFromFile(std::string fileName)
 {
 	FileReader3 fr;
+	g_Logs.data->info("Loading scenery for %v (%vx%v) from the local file %v", mZone, mTileX, mTileY, fileName);
 	if(fr.OpenFile(fileName.c_str()) != FileReader3::SUCCESS)
 	{
 		g_Logs.data->debug("Could not open file to load scenery: [%v]", fileName);
@@ -1620,13 +1622,10 @@ void SceneryManager::SendPageRequest(const SceneryPageRequest& request, std::lis
 	char idBuf[32];
 
 	GetThread("SceneryManager::HandlePageRequests[page]");
-
 	SceneryPage *page = GetOrCreatePage(request.zone, request.x, request.y);
 
 	if(page == NULL)
 	{
-		g_Logs.server->error("SendPageRequest retrieved NULL page");
-		
 		wpos = PrepExt_QueryResponseNull(prepBuf, request.queryID);
 		data.Assign(prepBuf, wpos);
 		outgoingPackets.push_back(PacketManager::PACKET_PAIR(request.socket, data));

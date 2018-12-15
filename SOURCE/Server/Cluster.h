@@ -135,6 +135,7 @@ public:
 class ClusterManager {
 public:
 	ClusterManager();
+	bool mNoEvents;
 	std::string mShardName;
 	std::string mFullName;
 	std::map<int, ShardPlayer> mActivePlayers;
@@ -157,6 +158,7 @@ public:
 	void Auction(int auctionItemId, const std::string &sellerName);
 	void AuctionItemRemoved(int auctionItemId, int auctioneerCDefID);
 	void AuctionItemUpdated(int auctionItemId);
+	void PropUpdated(int propId);
 	void Weather(int zoneId, const std::string &mapType, const std::string &type, int weight);
 	PendingShardPlayer FindToken(const std::string &token);
 	ShardPlayer GetActivePlayer(int CDefId);
@@ -205,6 +207,7 @@ private:
 	void OtherShardAuction(int auctionItemId, const string &sellerName);
 	void OtherShardAuctionItemRemoved(int auctionItemId, int auctioneerCDefID);
 	void OtherShardAuctionItemUpdated(int auctionItemId);
+	void OtherShardPropUpdated(int propId);
 	cpp_redis::subscriber mSub;
 	cpp_redis::client mClient;
 	std::map<std::string, Shard> mActiveShards;

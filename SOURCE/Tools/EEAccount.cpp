@@ -73,6 +73,7 @@ int main(int argc, char *argv[]) {
 			Platform::JoinPath(g_Config.ResolveLocalConfigurationPath(),
 					"ServerConfig.txt"));
 
+	g_ClusterManager.mNoEvents = true;
 	if (g_ClusterManager.Init(
 			Platform::JoinPath(g_Config.ResolveLocalConfigurationPath(),
 					"Cluster.txt")) < 0) {
@@ -205,8 +206,12 @@ int main(int argc, char *argv[]) {
 		if (zd == NULL) {
 			g_Logs.data->error("Could not find zone %v", gid);
 		} else {
-			if(!g_ZoneDefManager.DeleteZone(gid))
-				g_Logs.data->error("Failed to remove zone %v", gid);
+			if(zd->mGrove) {
+				if(!g_ZoneDefManager.DeleteZone(gid))
+					g_Logs.data->error("Failed to remove zone %v", gid);
+			}
+			else
+				g_Logs.data->error("Zone %v (%v) is not a grove", gid, zd->mName);
 		}
 	} else if (command == "roles") {
 		/* Roles */

@@ -1372,7 +1372,7 @@ void SimulatorThread::SetPersona(int personaIndex) {
 		}
 	}
 	ShardPlayer sp = g_ClusterManager.GetActivePlayer(CDefID);
-	if (sp.mID > 0 && sp.mShard.compare(g_ClusterManager.mShardName) != 0) {
+	if (sp.mID != 0 && sp.mShard.compare(g_ClusterManager.mShardName) != 0) {
 		ForceErrorMessage(
 				StringUtil::Format(
 						"That character is already logged in on shard %s.",
@@ -1416,21 +1416,37 @@ void SimulatorThread::SetPersona(int personaIndex) {
 
 	ChangeProtocol(1);
 
+	bool zoneSet = false;
+	int InstanceID = 0;
 	int ZoneID = pld.charPtr->activeData.CurZone;
-	if (ZoneID <= 0) {
-		//No zone has been set, maybe missing data in the character file.
-		//Set default zone and position.
+	if(ZoneID > 0) {
+		/* Try current zone */
+		zoneSet= ProtectedSetZone(ZoneID, InstanceID);
+	}
+
+	if(!zoneSet && ZoneID != pld.charPtr->bindReturnPoint[3] && pld.charPtr->bindReturnPoint[3] > 0) {
+		/* Try bind return point */
+		ZoneID = pld.charPtr->bindReturnPoint[3];
+		pld.charPtr->activeData.CurZone = ZoneID;
+		pld.charPtr->activeData.CurX = pld.charPtr->bindReturnPoint[0];
+		pld.charPtr->activeData.CurY = pld.charPtr->bindReturnPoint[1];
+		pld.charPtr->activeData.CurZ = pld.charPtr->bindReturnPoint[2];
+		pld.charPtr->activeData.CurRotation = g_InfoManager.GetStartRotation();
+		zoneSet = ProtectedSetZone(ZoneID, InstanceID);
+	}
+
+	if(!zoneSet && ZoneID != g_InfoManager.GetStartZone()) {
+		/* Try default start zone */
 		ZoneID = g_InfoManager.GetStartZone();
-		pld.charPtr->activeData.CurZone = g_InfoManager.GetStartZone();
+		pld.charPtr->activeData.CurZone = ZoneID;
 		pld.charPtr->activeData.CurX = g_InfoManager.GetStartX();
 		pld.charPtr->activeData.CurY = g_InfoManager.GetStartY();
 		pld.charPtr->activeData.CurZ = g_InfoManager.GetStartZ();
 		pld.charPtr->activeData.CurRotation = g_InfoManager.GetStartRotation();
+		zoneSet = ProtectedSetZone(ZoneID, InstanceID);
 	}
-	//int InstanceID = pld.charPtr->activeData.CurInstance;
-	int InstanceID = 0;
 
-	if (ProtectedSetZone(ZoneID, InstanceID) == false) {
+	if(!zoneSet) {
 		ForceErrorMessage("SetPersona: critical error setting zone.",
 				INFOMSG_ERROR);
 		g_Logs.server->error("SetPersona: critical error setting zone: %v\n",
@@ -1552,7 +1568,7 @@ bool SimulatorThread::MainCallSetZone(int newZoneID, int newInstanceID,
 	}
 
 	//The party needs to be checked before placing into a zone.
-	if(LoadStage == LOADSTAGE_UNLOADED || LoadStage == LOADSTAGE_GAMEPLAY) {
+	if (LoadStage == LOADSTAGE_UNLOADED || LoadStage == LOADSTAGE_GAMEPLAY) {
 		ActiveParty *party = g_PartyManager.GetPartyWithMember(
 				pld.CreatureDefID);
 		if (party != NULL) {
@@ -1595,7 +1611,7 @@ bool SimulatorThread::MainCallSetZone(int newZoneID, int newInstanceID,
 
 	CheckMapUpdate(true);
 
-	g_ClusterManager.JoinedShard(ThreadID, pld.zoneDef->mID, pld.charPtr);
+	g_ClusterManager.JoinedShard(InternalID, pld.zoneDef->mID, pld.charPtr);
 	BroadcastShardChanged();  //Let friends know we changed shards.
 
 	int r = pld.charPtr->questJournal.CheckTravelLocations(
@@ -1857,15 +1873,20 @@ void SimulatorThread::CheckMapUpdate(bool force) {
 				WeatherState *ws = g_WeatherManager.GetWeather(
 						MapDef.mMapList[pld.CurrentMapInt].Name,
 						pld.CurrentInstanceID);
-				if(ws != NULL)
-					AttemptSend(SendBuf, PrepExt_SetWeather(SendBuf, ws->mWeatherType, ws->mWeatherWeight));
+				if (ws != NULL)
+					AttemptSend(SendBuf,
+							PrepExt_SetWeather(SendBuf, ws->mWeatherType,
+									ws->mWeatherWeight));
 				else
 					AttemptSend(SendBuf, PrepExt_SetWeather(SendBuf, "", 0));
-			}
-			else if(force) {
-				WeatherState *ws = g_WeatherManager.GetWeather(MapDef.mMapList[pld.CurrentMapInt].Name, pld.CurrentInstanceID);
-				if(ws != NULL)
-					AttemptSend(SendBuf, PrepExt_SetWeather(SendBuf, ws->mWeatherType, ws->mWeatherWeight));
+			} else if (force) {
+				WeatherState *ws = g_WeatherManager.GetWeather(
+						MapDef.mMapList[pld.CurrentMapInt].Name,
+						pld.CurrentInstanceID);
+				if (ws != NULL)
+					AttemptSend(SendBuf,
+							PrepExt_SetWeather(SendBuf, ws->mWeatherType,
+									ws->mWeatherWeight));
 				else
 					AttemptSend(SendBuf, PrepExt_SetWeather(SendBuf, "", 0));
 			}
@@ -2101,7 +2122,7 @@ void SimulatorThread::SetLoadingStatus(bool status, bool shutdown) {
 	if (shutdown == true) {
 		if (LoadStage == LOADSTAGE_LOADING)
 			g_Logs.simulator->info(
-					"[%d] SetLoadingStatus() LOADSTAGE_LOADING when shutting down.",
+					"[%v] SetLoadingStatus() LOADSTAGE_LOADING when shutting down.",
 					InternalID);
 
 		LoadStage = LOADSTAGE_UNLOADED;
@@ -3244,9 +3265,10 @@ void SimulatorThread::SetZoneMode(int mode) {
 		for (std::vector<CreatureInstance*>::iterator it =
 				creatureInst->actInst->PlayerListPtr.begin();
 				it != creatureInst->actInst->PlayerListPtr.end(); ++it) {
-			if ((*it)->charPtr->Mode == PVP::GameMode::PVP
-					&& (*it)->_HasStatusList(StatusEffects::PVPABLE) == -1)
-				(*it)->_AddStatusList(StatusEffects::PVPABLE, -1);
+			CreatureInstance *c = *it;
+			if (c->charPtr->Mode == PVP::GameMode::PVP &&
+				c->_HasStatusList(StatusEffects::PVPABLE) == -1)
+				c->_AddStatusList(StatusEffects::PVPABLE, -1);
 		}
 		Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a PVP zone",
 				creatureInst->actInst->mZoneDefPtr->mName.c_str());
@@ -3255,8 +3277,9 @@ void SimulatorThread::SetZoneMode(int mode) {
 		for (std::vector<CreatureInstance*>::iterator it =
 				creatureInst->actInst->PlayerListPtr.begin();
 				it != creatureInst->actInst->PlayerListPtr.end(); ++it) {
-			if ((*it)->_HasStatusList(StatusEffects::PVPABLE) == -1)
-				(*it)->_AddStatusList(StatusEffects::PVPABLE, -1);
+			CreatureInstance *c = *it;
+			if (c->_HasStatusList(StatusEffects::PVPABLE) == -1)
+				c->_AddStatusList(StatusEffects::PVPABLE, -1);
 		}
 		Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a PVP only zone",
 				creatureInst->actInst->mZoneDefPtr->mName.c_str());
@@ -3265,8 +3288,9 @@ void SimulatorThread::SetZoneMode(int mode) {
 		for (std::vector<CreatureInstance*>::iterator it =
 				creatureInst->actInst->PlayerListPtr.begin();
 				it != creatureInst->actInst->PlayerListPtr.end(); ++it) {
-			if ((*it)->_HasStatusList(StatusEffects::PVPABLE) != -1)
-				(*it)->_RemoveStatusList(StatusEffects::PVPABLE);
+			CreatureInstance *c = *it;
+			if (c->_HasStatusList(StatusEffects::PVPABLE) != -1)
+				c->_RemoveStatusList(StatusEffects::PVPABLE);
 		}
 		Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a PVE only zone",
 				creatureInst->actInst->mZoneDefPtr->mName.c_str());
@@ -3275,8 +3299,9 @@ void SimulatorThread::SetZoneMode(int mode) {
 		for (std::vector<CreatureInstance*>::iterator it =
 				creatureInst->actInst->PlayerListPtr.begin();
 				it != creatureInst->actInst->PlayerListPtr.end(); ++it) {
-			if ((*it)->_HasStatusList(StatusEffects::PVPABLE) == -1)
-				(*it)->_AddStatusList(StatusEffects::PVPABLE, -1);
+			CreatureInstance *c = *it;
+			if (c->_HasStatusList(StatusEffects::PVPABLE) == -1)
+				c->_AddStatusList(StatusEffects::PVPABLE, -1);
 		}
 		Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a special event zone!",
 				creatureInst->actInst->mZoneDefPtr->mName.c_str());
@@ -3285,9 +3310,10 @@ void SimulatorThread::SetZoneMode(int mode) {
 		for (std::vector<CreatureInstance*>::iterator it =
 				creatureInst->actInst->PlayerListPtr.begin();
 				it != creatureInst->actInst->PlayerListPtr.end(); ++it) {
-			if ((*it)->charPtr->Mode == PVP::GameMode::PVE
-					&& (*it)->_HasStatusList(StatusEffects::PVPABLE) != -1)
-				(*it)->_RemoveStatusList(StatusEffects::PVPABLE);
+			CreatureInstance *c = *it;
+			if (c->charPtr->Mode == PVP::GameMode::PVE &&
+				c->_HasStatusList(StatusEffects::PVPABLE) != -1)
+				c->_RemoveStatusList(StatusEffects::PVPABLE);
 		}
 		Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a PVE zone",
 				creatureInst->actInst->mZoneDefPtr->mName.c_str());

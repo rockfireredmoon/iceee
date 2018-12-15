@@ -20,6 +20,7 @@ pthread_dep = meson.get_compiler('c').find_library('pthread', required: false)
 
 #Compiler arguments 
 add_global_arguments('-DELPP_THREAD_SAFE=1', language: ['cpp','c'])
+add_global_arguments('-DELPP_NO_GLOBAL_LOCK=1', language: ['cpp','c'])
 add_global_arguments('-DLOCALCONFIGDIR="' + get_option('localconfigdir') + '"', language: ['cpp','c'])
 if not openssl_dep.found() or not get_option('ssl')
 	add_global_arguments('-DNO_SSL=1', language: ['cpp','c'])
@@ -227,7 +228,6 @@ server_lib = library('server',[
 	'SOURCE/Server/query/PlayerHandlers.cpp',
 	'SOURCE/Server/util/base64.cpp',
 	'SOURCE/Server/util/JsonHelpers.cpp',
-	'SOURCE/Server/util/easylogging++.cc',
 	'SOURCE/Server/util/SquirrelObjects.cpp',
 	'SOURCE/Server/util/Log.cpp'], 
 	include_directories : [squirrel_inc, sqstdlib_lib_inc, cppredis_inc, tacopie_inc],

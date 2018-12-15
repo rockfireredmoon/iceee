@@ -405,13 +405,15 @@ int WhoHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 			ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByID(sp.mZoneID);
 			if (cd != NULL && zd != NULL) {
 				if (debug == true
-						&& sp.mShard.compare(g_ClusterManager.mShardName)) {
+						&& sp.mShard.compare(g_ClusterManager.mShardName) == 0) {
 					SimulatorThread *psim = g_SimulatorManager.GetPtrByID(
 							sp.mSimID);
-					if (psim == NULL)
+					if (psim == NULL) {
 						g_Logs.server->warn(
-								"Unknown simulator ID found in player list. %v for %v",
-								sp.mSimID, sp.mID);
+								"Unknown simulator ID found in player list. %v for %v (on %v)",
+								sp.mSimID, sp.mID, sp.mShard);
+						continue;
+					}
 					else
 						Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
 								"%s (%s.%d) %s (%s) [%d, %d]",
