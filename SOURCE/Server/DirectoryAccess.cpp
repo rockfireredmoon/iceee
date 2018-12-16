@@ -310,6 +310,24 @@ void Platform::MakeDirectory(std::string path)
 #endif
 }
 
+void Platform::MakeDirectories(std::string path) {
+	STRINGLIST v;
+	const std::string p = path;
+	const std::string d(1, PLATFORM_FOLDERVALID);
+	Util::Split(p, d.c_str(), v);
+	std::string dir;
+	for(STRINGLIST::iterator it = v.begin(); it != v.end(); ++it) {
+		std::string el =  *it;
+		if(dir.length() == 0 && el.length() == 0)
+			el = "/";
+		else if(dir.length() > 0)
+			dir.append("/");
+		dir.append(el);
+		if(!FileExists(dir))
+			MakeDirectory(dir);
+	}
+}
+
 std::string Platform::JoinPath(std::string folder, std::string path)
 {
 	if(folder.length() == 0 || folder.compare(".") == 0)

@@ -19,6 +19,7 @@
 #include "DirectoryAccess.h"
 #include "FileReader.h"
 #include "Simulator.h"
+#include "StringUtil.h"
 
 #include "Util.h"
 #include "Config.h"
@@ -182,12 +183,12 @@ namespace ScriptCore
 	}
 
 	std::string NutDef :: GetBytecodeLocation() {
+		std::string base = Platform::Basename(mSourceFile);
+		std::string dir = Platform::Dirname(mSourceFile);
 		if(fromCluster) {
-			return Platform::JoinPath(g_Config.ResolveTmpDataPath(), mSourceFile);
+			return Platform::JoinPath(g_Config.ResolveTmpDataPath(), Platform::JoinPath(dir, StringUtil::Format("%s.cnut", base.c_str())));
 		}
 		else {
-			std::string base = Platform::Basename(mSourceFile.c_str());
-			std::string dir = Platform::Dirname(mSourceFile);
 			STRINGLIST v;
 			const std::string d(1, PLATFORM_FOLDERVALID);
 			std::string cnut;
@@ -557,8 +558,8 @@ namespace ScriptCore
 		}
 		else {
 			if(cnutMod != def->mLastModified) {
-				g_Logs.script->info("Writing Squirrel script bytecode for '%v' to '%v'", def->mSourceFile.c_str(), cnut.c_str());
-				Platform::MakeDirectory(Platform::Dirname(cnut));
+				g_Logs.script->info("Writing Squirrel script bytecode for '%v' to '%v' (in %v)", def->mSourceFile.c_str(), cnut.c_str(), Platform::GetDirectory());
+				Platform::MakeDirectories(Platform::Dirname(cnut));
 				try {
 					script.WriteCompiledFile(cnut);
 				}

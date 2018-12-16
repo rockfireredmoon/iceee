@@ -67,6 +67,7 @@ namespace Platform
 	void SetDirectory(std::string path);
 	std::string FixPaths(std::string pathName);
 	void MakeDirectory(std::string path);
+	void MakeDirectories(std::string path);
 	int FileCopy(std::string sourceFile, std::string destFile);
 	bool Delete(std::string path);
     bool FileExists(std::string sourceFile);
