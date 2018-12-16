@@ -364,6 +364,7 @@ public:
 	void GetNPCInstancesByCDefID(int CDefID, vector<int> *cids);
 	CreatureInstance * GetNPCInstanceByCDefID(int CDefID);
 	void ResolveCreatureDef(int CreatureInstanceID, int *responsePtr);
+	void GetProps(float x, float z, vector<SceneryObject> *props);
 
 	void RebuildPlayerList(void);
 	void RebuildNPCList(void);

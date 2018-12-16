@@ -26,6 +26,7 @@
 
 extern unsigned long g_ServerTime;
 
+static std::string KEYPREFIX_SCRIPT = "Script";
 
 void PrintFunc(HSQUIRRELVM v, const SQChar *s, ...) {
 	va_list vl;
@@ -116,10 +117,49 @@ namespace ScriptCore
 		queueExternalJumps = false;
 		mScriptIdleSpeed = 1;
 		mScriptSpeed = 10;
+		mLastModified = 0;
+		fromCluster = false;
+		mScriptContent = "";
 	}
 
 	NutDef::~NutDef() {
 
+	}
+
+	bool NutDef::EntityKeys(AbstractEntityReader *reader) {
+		reader->Key(KEYPREFIX_SCRIPT, mSourceFile);
+		return true;
+	}
+
+	bool NutDef::ReadEntity(AbstractEntityReader *reader) {
+		fromCluster = true;
+		if (!reader->Exists())
+			return false;
+
+		scriptName = reader->Value("Name");
+		mLastModified = reader->ValueULong("LastModified");
+		mScriptContent = reader->Value("Content");
+
+		return true;
+	}
+
+	bool NutDef::WriteEntity(AbstractEntityWriter *writer) {
+		writer->Key(KEYPREFIX_SCRIPT, mSourceFile);
+		writer->Value("Name", scriptName);
+		writer->Value("LastModified", mLastModified);
+		writer->Value("Content", mScriptContent);
+		return true;
+	}
+
+
+	void NutDef::SetLastModified(unsigned long lastModified) {
+		mLastModified = lastModified;
+		if(fromCluster) {
+			g_Logs.script->info("Saving script %v to cluster", mSourceFile);
+			g_ClusterManager.WriteEntity(this, false);
+		}
+		else
+			Platform::SetLastModified(mSourceFile, mLastModified);
 	}
 
 	void NutDef::ClearBase(void) {
@@ -141,10 +181,48 @@ namespace ScriptCore
 		return ((mFlags & flag) != 0);
 	}
 
-	void NutDef::Initialize(std::string sourceFile) {
-		g_Logs.script->info("Initializing Squirrel script '%v'", sourceFile);
+	std::string NutDef :: GetBytecodeLocation() {
+		if(fromCluster) {
+			return Platform::JoinPath(g_Config.ResolveTmpDataPath(), mSourceFile);
+		}
+		else {
+			std::string base = Platform::Basename(mSourceFile.c_str());
+			std::string dir = Platform::Dirname(mSourceFile);
+			STRINGLIST v;
+			const std::string d(1, PLATFORM_FOLDERVALID);
+			std::string cnut;
+			v.push_back(dir);
+			v.push_back(base);
+			Util::Join(v, d.c_str(), cnut);
+			cnut.append(".cnut");
+			return cnut;
+		}
+	}
+
+	void NutDef::LoadFromLocalFile(std::string sourceFile) {
+		g_Logs.script->info("Initializing Squirrel script from local file '%v'", sourceFile);
 		mSourceFile = sourceFile;
 		scriptName = Platform::Basename(mSourceFile);
+		mLastModified = Platform::GetLastModified(mSourceFile);
+		fromCluster = false;
+
+		FileReader lfr;
+		if (Platform::FileExists(mSourceFile)) {
+			if (lfr.OpenText(mSourceFile.c_str()) != Err_OK) {
+				/* Error */
+				mScriptContent = "#!/bin/sq\n#\n# Failed to load script content.\n";
+				return;
+			}
+
+			mScriptContent = "";
+			while (lfr.FileOpen() == true) {
+				lfr.ReadLine();
+				mScriptContent.append(lfr.DataBuffer);
+			}
+		}
+		else {
+			mScriptContent = "#!/bin/sq\n";
+		}
 	}
 
 	//
@@ -459,23 +537,14 @@ namespace ScriptCore
 		 * time is the same as the .nut file. If it isn't (or the .cnut doesn't exist at all),
 		 * then compile AND write the bytecode
 		 */
-		std::string base = Platform::Basename(def->mSourceFile.c_str());
-		std::string dir = Platform::Dirname(def->mSourceFile);
-		STRINGLIST v;
-		const std::string d(1, PLATFORM_FOLDERVALID);
-		std::string cnut;
-		v.push_back(dir);
-		v.push_back(base);
-		Util::Join(v, d.c_str(), cnut);
-		cnut.append(".cnut");
+		std::string cnut = def->GetBytecodeLocation();
 		unsigned long cnutMod = Platform::GetLastModified(cnut);
-		unsigned long nutMod = Platform::GetLastModified(def->mSourceFile);
 
 		Sqrat::Script script(vm);
 
-		if(cnutMod != nutMod) {
+		if(cnutMod != def->mLastModified) {
 			g_Logs.script->info("Recompiling Squirrel script '%v'", def->mSourceFile.c_str());
-			script.CompileFile(_SC(def->mSourceFile), errors);
+			script.CompileString(def->mScriptContent, errors, def->scriptName);
 		}
 		else {
 			g_Logs.script->info("Loading existing Squirrel script bytecode for '%v'", cnut.c_str());
@@ -487,15 +556,16 @@ namespace ScriptCore
 			g_Logs.script->error("Squirrel script %v failed to compile. %v", def->mSourceFile.c_str(), Sqrat::Error::Message(vm).c_str());
 		}
 		else {
-			if(cnutMod != nutMod) {
+			if(cnutMod != def->mLastModified) {
 				g_Logs.script->info("Writing Squirrel script bytecode for '%v' to '%v'", def->mSourceFile.c_str(), cnut.c_str());
+				Platform::MakeDirectory(Platform::Dirname(cnut));
 				try {
 					script.WriteCompiledFile(cnut);
 				}
 				catch(int e) {
 					g_Logs.script->error("Failed to write Squirrel script bytecode for '%v' to '%v'. Err %v", def->mSourceFile.c_str(), cnut.c_str(), e);
 				}
-				Platform::SetLastModified(cnut, nutMod);
+				Platform::SetLastModified(cnut, def->mLastModified);
 			}
 			mActive = true;
 			mRunning = true;
@@ -530,6 +600,8 @@ namespace ScriptCore
 				if(!vmSize.IsNull()) {
 					def->mVMSize = vmSize.Cast<int>();
 				}
+				else
+					def->mVMSize = 0;
 				Sqrat::Object speed = infoObject.GetSlot("speed");
 				if(!speed.IsNull()) {
 					def->mScriptSpeed = Util::ClipInt(speed.Cast<int>(), 1, 100);
@@ -587,14 +659,15 @@ namespace ScriptCore
 		}
 	}
 
-	void NutPlayer::Exec(Sqrat::Function function) {
+	long NutPlayer::Exec(Sqrat::Function function) {
 		if(def == NULL) {
 			g_Logs.script->error("Exec when there is no script def!");
+			return -1;
 		}
 		else {
 			unsigned long spd = g_Config.SquirrelQueueSpeed / def->mScriptSpeed;
 			g_Logs.script->debug("Queueing call (exec) in %v in %v", def->scriptName.c_str(), spd);
-			QueueAdd(new ScriptCore::NutScriptEvent(
+			return QueueAdd(new ScriptCore::NutScriptEvent(
 						new ScriptCore::TimeCondition(spd),
 						new ScriptCore::SquirrelFunctionCallback(this, function)));
 		}
@@ -654,6 +727,8 @@ namespace ScriptCore
 		vector3Class.Var("x", &Squirrel::Vector3I::mX);
 		vector3Class.Var("y", &Squirrel::Vector3I::mY);
 		vector3Class.Var("z", &Squirrel::Vector3I::mZ);
+		vector3Class.Func("dist", &Squirrel::Vector3I::Distance);
+		vector3Class.Func("dist_plane", &Squirrel::Vector3I::DistanceOnPlane);
 
 		// Vector3F Object, floating point X/Y/Z location
 		Sqrat::Class<Squirrel::Vector3> vector3FClass(vm, "Vector3", true);
@@ -663,6 +738,8 @@ namespace ScriptCore
 		vector3FClass.Var("x", &Squirrel::Vector3::mX);
 		vector3FClass.Var("y", &Squirrel::Vector3::mY);
 		vector3FClass.Var("z", &Squirrel::Vector3::mZ);
+		vector3FClass.Func("dist", &Squirrel::Vector3::Distance);
+		vector3FClass.Func("dist_plane", &Squirrel::Vector3::DistanceOnPlane);
 
 		clazz->Func(_SC("exec"), &NutPlayer::Exec);
 		clazz->Func(_SC("cancel"), &NutPlayer::Cancel);

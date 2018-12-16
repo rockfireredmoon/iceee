@@ -12,6 +12,7 @@
 #include <squirrel.h>
 #include "sqrat.h"
 #include "util/SquirrelObjects.h"
+#include "Entities.h"
 
 const int USE_FAIL_DELAY = 250; //Milliseconds to wait before retrying a failed script "use" command.
 
@@ -356,7 +357,7 @@ public:
 	NutCompiler();
 };
 
-class NutDef {
+class NutDef : public AbstractEntity {
 	friend class NutPlayer;
 
 public:
@@ -365,15 +366,22 @@ public:
 	std::string mSourceFile;
 	std::string mAuthor;
 	std::string mDescription;
+	std::string mScriptContent;
 	bool mQueueEvents;
 	int mScriptIdleSpeed;
 	unsigned long mVMSize;
+	unsigned long mLastModified;
 
 	NutDef();
 	virtual ~NutDef();
 	void ClearBase(void); //Initialize all data to their reset state.  It will call ClearDerived()
-	void Initialize(std::string source);
+	bool WriteEntity(AbstractEntityWriter *writer);
+	bool ReadEntity(AbstractEntityReader *reader);
+	bool EntityKeys(AbstractEntityReader *reader);
+	void LoadFromLocalFile(std::string source);
 	bool CanIdle();
+	std::string GetBytecodeLocation();
+	void SetLastModified(unsigned long lastModified);
 	virtual void ClearDerived();
 	bool HasFlag(unsigned int flag);
 
@@ -382,6 +390,7 @@ private:
 	bool queueExternalJumps;
 	int queueCallStyle;
 	unsigned int mFlags;
+	bool fromCluster;
 
 	static const int DEFAULT_INSTRUCTIONS_PER_CYCLE = 1;
 	static const int DEFAULT_INSTRUCTIONS_PER_IDLE_CYCLE = 0;
@@ -544,7 +553,7 @@ public:
 	long QueueAdd(NutScriptEvent *evt);
 	long QueueInsert(NutScriptEvent *evt);
 	bool Cancel(long id);
-	void Exec(Sqrat::Function function);
+	long Exec(Sqrat::Function function);
 	long Queue(Sqrat::Function function, int fireDelay);
 //	void DoQueue(Sqrat::Function function, int fireDelay);
 	bool ExecQueue(void);

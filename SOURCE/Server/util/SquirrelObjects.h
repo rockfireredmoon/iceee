@@ -22,6 +22,7 @@
 #include "../sqrat.h"
 #include "../json/json.h"
 #include <string>
+#include <math.h>
 
 namespace Squirrel {
 
@@ -121,6 +122,23 @@ public:
 		mY = y;
 		mZ = z;
 	}
+
+	int Distance(Vector3I other) {
+		int xlen = abs(mX - other.mX);
+		int zlen = abs(mZ - other.mZ);
+		int ylen = abs(mY - other.mY);
+		double dist = sqrt((double) ((xlen * xlen) + (zlen * zlen)));
+		int tdist = (int) dist;
+		dist = sqrt((double) ((ylen * ylen) + (tdist * tdist)));
+		return (int) dist;
+	}
+
+	int DistanceOnPlane(Vector3I other) {
+		int xlen = abs(mX - other.mX);
+		int zlen = abs(mZ - other.mZ);
+		double dist = sqrt((double) ((xlen * xlen) + (zlen * zlen)));
+		return (int) dist;
+	}
 };
 
 /**
@@ -148,6 +166,21 @@ public:
 		mX = x;
 		mY = y;
 		mZ = z;
+	}
+
+	float Distance(Vector3 other) {
+		float xlen = abs(mX - other.mX);
+		float zlen = abs(mZ - other.mZ);
+		float ylen = abs(mY - other.mY);
+		double dist = sqrt((double) ((xlen * xlen) + (zlen * zlen)));
+		int tdist = (int) dist;
+		return sqrt((double) ((ylen * ylen) + (tdist * tdist)));
+	}
+
+	float DistanceOnPlane(Vector3 other) {
+		int xlen = abs(mX - other.mX);
+		int zlen = abs(mZ - other.mZ);
+		return sqrt((double) ((xlen * xlen) + (zlen * zlen)));
 	}
 };
 

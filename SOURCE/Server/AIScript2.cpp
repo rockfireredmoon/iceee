@@ -477,7 +477,7 @@ int AINutManager::LoadScripts(void) {
 			// TODO delete this when finished with
 			AINutDef *def = new AINutDef();
 			aiDef.push_back(def);
-			def->Initialize(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "AIScript"), p));
+			def->LoadFromLocalFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "AIScript"), p));
 		}
 	}
 

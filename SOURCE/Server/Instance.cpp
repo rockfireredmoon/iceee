@@ -1831,6 +1831,18 @@ void ActiveInstance::ResolveCreatureDef(int CreatureInstanceID,
 #endif
 }
 
+void ActiveInstance::GetProps(float x, float z, vector<SceneryObject> *props) {
+	SceneryPage *page = g_SceneryManager.GetOrCreatePage(mZone,
+			(int) (x / mZoneDefPtr->mPageSize),
+			(int) (z / mZoneDefPtr->mPageSize));
+	SceneryPage::SCENERY_IT it;
+	for (it = page->mSceneryList.begin(); it != page->mSceneryList.end();
+			++it) {
+		SceneryObject so = it->second;
+		props->push_back(so);
+	}
+}
+
 /*
  int ActiveInstance :: LoadNPC(void)
  {
@@ -2464,13 +2476,25 @@ void ActiveInstance::InitializeData(void) {
 	//Important, need to set base pointer for the spawning system trackbacks.
 	spawnsys.SetInstancePointer(this);
 
-	//Load the new script system
-	if (!mZoneDefPtr->mGrove) {
-		std::string path =
-				InstanceScript::InstanceNutDef::GetInstanceScriptPath(
-						mZoneDefPtr->mID, false);
+	if (mZoneDefPtr->mGrove) {
+		if(nutScriptDef.LoadFromCluster(mZoneDefPtr->mID)) {
+			g_Logs.server->info("Loaded script for grove zone %v from cluster", mZoneDefPtr->mID);
+			nutScriptPlayer = new InstanceScript::InstanceNutPlayer();
+			nutScriptPlayer->SetInstancePointer(this);
+			std::string errors;
+			nutScriptPlayer->Initialize(&nutScriptDef, errors);
+			if (errors.length() > 0)
+				g_Logs.server->error("Failed to compile. %v", errors.c_str());
+		}
+		else {
+			g_Logs.server->info("No grove zone script %v in cluster.", mZoneDefPtr->mID);
+		}
+	}
+	else {
+		std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(
+			mZoneDefPtr->mID, false);
 		if (Util::HasEnding(path, ".nut")) {
-			nutScriptDef.Initialize(path.c_str());
+			nutScriptDef.LoadFromLocalFile(path.c_str());
 			nutScriptPlayer = new InstanceScript::InstanceNutPlayer();
 			nutScriptPlayer->SetInstancePointer(this);
 			std::string errors;
@@ -3613,13 +3637,24 @@ bool ActiveInstance::RunScript(std::string &errors) {
 		delete nutScriptPlayer;
 
 	//Load the new script system
-	if (!mZoneDefPtr->mGrove) {
-		std::string path =
-				InstanceScript::InstanceNutDef::GetInstanceScriptPath(
-						mZoneDefPtr->mID, false);
+	if(mZoneDefPtr->mGrove) {
+		if(nutScriptDef.LoadFromCluster(mZoneDefPtr->mID)) {
+			g_Logs.script->info("Running Squirrel script %v from the cluster", mZoneDefPtr->mID);
+			nutScriptPlayer = new InstanceScript::InstanceNutPlayer();
+			nutScriptPlayer->SetInstancePointer(this);
+			nutScriptPlayer->Initialize(&nutScriptDef, errors);
+		}
+		else {
+			g_Logs.script->info("No script for instance %v", mZone);
+			return false;
+		}
+	}
+	else {
+		std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(
+				mZoneDefPtr->mID, false);
 		if (Util::HasEnding(path, ".nut")) {
 			g_Logs.script->info("Running Squirrel script %v", path.c_str());
-			nutScriptDef.Initialize(path.c_str());
+			nutScriptDef.LoadFromLocalFile(path.c_str());
 			nutScriptPlayer = new InstanceScript::InstanceNutPlayer();
 			nutScriptPlayer->SetInstancePointer(this);
 			nutScriptPlayer->Initialize(&nutScriptDef, errors);
@@ -3634,9 +3669,8 @@ bool ActiveInstance::RunScript(std::string &errors) {
 			g_Logs.script->info("No script for instance %v", mZone);
 			return false;
 		}
-		return true;
 	}
-	return false;
+	return true;
 }
 
 void ActiveInstance::ClearScriptObjects() {
@@ -4088,7 +4122,8 @@ PlayerInstancePlacementData::PlayerInstancePlacementData() {
 	Clear();
 }
 
-PlayerInstancePlacementData :: PlayerInstancePlacementData(const PlayerInstancePlacementData *data) {
+PlayerInstancePlacementData::PlayerInstancePlacementData(
+		const PlayerInstancePlacementData *data) {
 	in_cInst = data->in_cInst;
 	in_simPtr = data->in_simPtr;
 	in_instanceID = data->in_instanceID;
@@ -4143,11 +4178,11 @@ const InstanceScaleProfile* PlayerInstancePlacementData::GetPartyLeaderInstanceS
 		return NULL;
 
 	CharacterData *charDat = member->mCharPtr;
-	if(charDat == NULL)
+	if (charDat == NULL)
 		return NULL;
 	CreatureInstance *creature = member->mCreaturePtr;
 
-	if(creature != NULL && !(creature->serverFlags & ServerFlags::IsPlayer))
+	if (creature != NULL && !(creature->serverFlags & ServerFlags::IsPlayer))
 		return NULL;
 
 	//g_Log.AddMessageFormat("Returning party leader %s [%d] scaler %s", creature->css.display_name, party->mLeaderDefID, charDat->InstanceScaler.c_str());

@@ -263,6 +263,7 @@ public:
 	std::string ShutdownHandlerScript;
 	std::string StaticDataPath;			// Location of static data (not editable in game).
 	std::string VariableDataPath;		// Location of variable data (editable in game).
+	std::string TmpDataPath;		// Location of temporary data (editable in game).
 	std::string LogPath;				// Location of logs other than Easylogging output (Civet for example)
 
 	unsigned long debugAdministrativeBehaviorFlags;
@@ -270,6 +271,7 @@ public:
 	bool HasAdministrativeBehaviorFlag(unsigned long bitValue);
 	std::string ResolveStaticDataPath();
 	std::string ResolveVariableDataPath();
+	std::string ResolveTmpDataPath();
 	std::string ResolveHTTPBasePath();
 	std::string ResolveHTTPCARPath();
 	std::string ResolveLocalConfigurationPath();

@@ -981,7 +981,7 @@ void SceneryPage::LoadSceneryFromCluster()
 		o.Zone = mZone;
 		o.ID = atoi((*a).c_str());
 		if(g_ClusterManager.ReadEntity(&o)) {
-			g_Logs.data->debug("Loaded scenery object ", o.ID);
+			g_Logs.data->debug("Loaded scenery object %v", o.ID);
 			AddProp(o, false);
 		}
 		else {

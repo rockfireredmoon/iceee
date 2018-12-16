@@ -103,6 +103,12 @@ std::string InstanceNutDef::GetInstanceScriptPath(int zoneID,
 	return p;
 }
 
+bool InstanceNutDef::LoadFromCluster(int zoneID) {
+	mSourceFile = StringUtil::Format("Grove/%d.nut", zoneID);
+	scriptName = StringUtil::Format("%d", zoneID);
+	return g_ClusterManager.ReadEntity(this);
+}
+
 ActiveInteraction::ActiveInteraction(CreatureInstance *creature,
 		ScriptCore::NutScriptEvent *event) {
 	mCreature = creature;
@@ -128,6 +134,25 @@ void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(
 		NutPlayer *instance,
 		Sqrat::DerivedClass<AbstractInstanceNutPlayer, NutPlayer> *instanceClass) {
 
+	// Vector3F Object, floating point X/Y/Z location
+	Sqrat::Class<SceneryObject> sceneryObjectClass(vm, "SceneryObject", true);
+	Sqrat::RootTable(vm).Bind(_SC("SceneryObject"), sceneryObjectClass);
+	sceneryObjectClass.Var("x", &SceneryObject::LocationX);
+	sceneryObjectClass.Var("y", &SceneryObject::LocationY);
+	sceneryObjectClass.Var("z", &SceneryObject::LocationZ);
+	sceneryObjectClass.Var("id", &SceneryObject::ID);
+	sceneryObjectClass.Var("asset", &SceneryObject::Asset);
+	sceneryObjectClass.Var("name", &SceneryObject::Name);
+	sceneryObjectClass.Var("layer", &SceneryObject::Layer);
+	sceneryObjectClass.Var("sx", &SceneryObject::ScaleX);
+	sceneryObjectClass.Var("sy", &SceneryObject::ScaleY);
+	sceneryObjectClass.Var("sz", &SceneryObject::ScaleZ);
+	sceneryObjectClass.Var("qx", &SceneryObject::QuatX);
+	sceneryObjectClass.Var("qy", &SceneryObject::QuatY);
+	sceneryObjectClass.Var("qz", &SceneryObject::QuatZ);
+	sceneryObjectClass.Var("qw", &SceneryObject::QuatW);
+	sceneryObjectClass.Func(_SC("is_spawn_point"), &SceneryObject::IsSpawnPoint);
+
 	// Functions that return arrays or tables have to be dealt with differently
 	instanceClass->SquirrelFunc(_SC("cids"), &InstanceNutPlayer::CIDs);
 	instanceClass->SquirrelFunc(_SC("all_cids"), &InstanceNutPlayer::AllCIDs);
@@ -135,6 +160,7 @@ void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(
 			&InstanceNutPlayer::AllPlayers);
 
 	// Common instance functions (TODO register in abstract class somehow)
+	instanceClass->Func(_SC("props"), &InstanceNutPlayer::Props);
 	instanceClass->Func(_SC("get_creature_distance"),
 			&AbstractInstanceNutPlayer::GetCreatureDistance);
 	instanceClass->Func(_SC("creature_spawn_prop"),
@@ -198,6 +224,12 @@ void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(
 	Sqrat::ConstTable(vm).Const(_SC("SPAWN_TILE_RANGE"),
 			SpawnTile::SPAWN_TILE_RANGE);
 
+	Sqrat::ConstTable(vm).Const(_SC("INFOMSG_INFO"), INFOMSG_INFO);
+	Sqrat::ConstTable(vm).Const(_SC("INFOMSG_ERROR"), INFOMSG_ERROR);
+	Sqrat::ConstTable(vm).Const(_SC("INFOMSG_SYSNOTIFY"), INFOMSG_SYSNOTIFY);
+	Sqrat::ConstTable(vm).Const(_SC("INFOMSG_SHARD"), INFOMSG_SHARD);
+	Sqrat::ConstTable(vm).Const(_SC("INFOMSG_MAPNAME"), INFOMSG_MAPNAME);
+
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_WALK_SPEED"),
 			CREATURE_WALK_SPEED);
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_JOG_SPEED"), CREATURE_JOG_SPEED);
@@ -212,7 +244,7 @@ void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(
 	Sqrat::ConstTable(vm).Const(_SC("TS_ALIVE"), TargetStatus::Alive);
 	Sqrat::ConstTable(vm).Const(_SC("TS_DEAD"), TargetStatus::Dead);
 	Sqrat::ConstTable(vm).Const(_SC("TS_ENEMY"), TargetStatus::Enemy);
-	Sqrat::ConstTable(vm).Const(_SC("TS_ALIVE"), TargetStatus::Enemy_Alive);
+	Sqrat::ConstTable(vm).Const(_SC("TS_ENEMY_ALIVE"), TargetStatus::Enemy_Alive);
 	Sqrat::ConstTable(vm).Const(_SC("TS_FRIEND"), TargetStatus::Friend);
 	Sqrat::ConstTable(vm).Const(_SC("TS_FRIEND_ALIVE"),
 			TargetStatus::Friend_Alive);
@@ -272,6 +304,38 @@ void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(
 	Sqrat::ConstTable(vm).Const(_SC("SF_TAUNTED"), ServerFlags::Taunted);
 	Sqrat::ConstTable(vm).Const(_SC("SF_SCRIPT_MOVEMENT"),
 			ServerFlags::ScriptMovement);
+
+
+	Sqrat::ConstTable(vm).Const(_SC("FLAG_FRIENDLY"),
+			SpawnPackageDef::FLAG_FRIENDLY);
+	Sqrat::ConstTable(vm).Const(_SC("FLAG_HIDEMAP"),
+			SpawnPackageDef::FLAG_HIDEMAP);
+	Sqrat::ConstTable(vm).Const(_SC("FLAG_NEUTRAL"),
+			SpawnPackageDef::FLAG_NEUTRAL);
+	Sqrat::ConstTable(vm).Const(_SC("FLAG_FRIENDLY_ATTACK"),
+			SpawnPackageDef::FLAG_FRIENDLY_ATTACK);
+	Sqrat::ConstTable(vm).Const(_SC("FLAG_ENEMY"),
+			SpawnPackageDef::FLAG_ENEMY);
+	Sqrat::ConstTable(vm).Const(_SC("FLAG_VISWEAPON_MELEE"),
+			SpawnPackageDef::FLAG_VISWEAPON_MELEE);
+	Sqrat::ConstTable(vm).Const(_SC("FLAG_VISWEAPON_RANGED"),
+			SpawnPackageDef::FLAG_VISWEAPON_RANGED);
+	Sqrat::ConstTable(vm).Const(_SC("FLAG_ALLBITS"),
+			SpawnPackageDef::FLAG_ALLBITS);
+	Sqrat::ConstTable(vm).Const(_SC("FLAG_VISWEAPON_MELEE"),
+			SpawnPackageDef::FLAG_VISWEAPON_MELEE);
+	Sqrat::ConstTable(vm).Const(_SC("FLAG_USABLE"),
+			SpawnPackageDef::FLAG_USABLE);
+	Sqrat::ConstTable(vm).Const(_SC("FLAG_USABLE_BY_COMBATANT"),
+			SpawnPackageDef::FLAG_USABLE_BY_COMBATANT);
+	Sqrat::ConstTable(vm).Const(_SC("FLAG_VISWEAPON_MELEE"),
+			SpawnPackageDef::FLAG_VISWEAPON_MELEE);
+	Sqrat::ConstTable(vm).Const(_SC("FLAG_HIDE_NAMEBOARD"),
+			SpawnPackageDef::FLAG_HIDE_NAMEBOARD);
+	Sqrat::ConstTable(vm).Const(_SC("FLAG_HIDE_NAMEBOARD"),
+			SpawnPackageDef::FLAG_HIDE_NAMEBOARD);
+	Sqrat::ConstTable(vm).Const(_SC("FLAG_KILLABLE"),
+			SpawnPackageDef::FLAG_KILLABLE);
 }
 
 void AbstractInstanceNutPlayer::ClearAIQueue(int CID) {
@@ -557,15 +621,16 @@ void AbstractInstanceNutPlayer::PlayerLeft(CreatureInstance *creature) {
 	bool contain;
 	for (std::vector<InstanceScript::MonitorArea>::iterator it =
 			monitorAreas.begin(); it != monitorAreas.end(); ++it) {
-		contain = (*it).Contains(creature->CreatureID);
+		InstanceScript::MonitorArea mon = *it;
+		contain = mon.Contains(creature->CreatureID);
 		if (contain) {
 			// Player leaves monitored area
-			(*it).Remove(creature->CreatureID);
+			mon.Remove(creature->CreatureID);
 			std::vector<ScriptCore::ScriptParam> p;
 			p.push_back(ScriptCore::ScriptParam(creature->CreatureID));
 			char ConvBuf[256];
 			Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_player_exit_%s",
-					(*it).name.c_str());
+					mon.name.c_str());
 			RunFunction(ConvBuf, p, false);
 		}
 	}
@@ -575,28 +640,29 @@ void AbstractInstanceNutPlayer::PlayerMovement(CreatureInstance *creature) {
 	bool inside;
 	bool contain;
 
-	for (std::vector<InstanceScript::MonitorArea>::iterator it =
-			monitorAreas.begin(); it != monitorAreas.end(); ++it) {
-
-		inside = (*it).area.Inside(creature->CurrentX, creature->CurrentZ);
-		contain = (*it).Contains(creature->CreatureID);
+	for (size_t i = 0 ; i < monitorAreas.size(); i++) {
+		InstanceScript::MonitorArea area = monitorAreas[i];
+		inside = area.area.Inside(creature->CurrentX, creature->CurrentZ);
+		contain = area.Contains(creature->CreatureID);
 		if (inside && !contain) {
-			(*it).creatureIds.push_back(creature->CreatureID);
+			area.creatureIds.push_back(creature->CreatureID);
+			monitorAreas[i] = area;
 			// Player enters monitored area
 			std::vector<ScriptCore::ScriptParam> p;
+			p.push_back(ScriptCore::ScriptParam(area.name));
 			p.push_back(ScriptCore::ScriptParam(creature->CreatureID));
 			char ConvBuf[256];
-			Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_player_enter_%s",
-					(*it).name.c_str());
+			Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_player_enter");
 			JumpToLabel(ConvBuf, p);
 		} else if (!inside && contain) {
 			// Player leaves monitored area
-			(*it).Remove(creature->CreatureID);
+			area.Remove(creature->CreatureID);
+			monitorAreas[i] = area;
 			std::vector<ScriptCore::ScriptParam> p;
+			p.push_back(ScriptCore::ScriptParam(area.name));
 			p.push_back(ScriptCore::ScriptParam(creature->CreatureID));
 			char ConvBuf[256];
-			Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_player_exit_%s",
-					(*it).name.c_str());
+			Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_player_exit");
 			JumpToLabel(ConvBuf, p);
 		}
 	}
@@ -790,6 +856,18 @@ SQInteger AbstractInstanceNutPlayer::AllPlayers(HSQUIRRELVM v) {
 	return sq_throwerror(v, _SC("wrong number of parameters"));
 }
 
+Sqrat::Object AbstractInstanceNutPlayer::Props(Squirrel::Vector3I location) {
+
+	std::vector<SceneryObject> vv;
+	Sqrat::Array arr(vm);
+	actInst->GetProps(location.mX, location.mZ, &vv);
+	for(std::vector<SceneryObject>::iterator it = vv.begin(); it != vv.end(); it++) {
+		arr.Append(*it);
+	}
+
+	return arr;
+}
+
 SQInteger AbstractInstanceNutPlayer::CIDs(HSQUIRRELVM v) {
 	if (sq_gettop(v) == 2) {
 		Sqrat::Var<InstanceNutPlayer&> left(v, 1);
@@ -864,6 +942,13 @@ void InstanceNutPlayer::HaltDerivedExecution() {
 			actInst->spawnsys.Despawn(*it);
 	}
 	spawned.clear();
+
+	for (it = genericSpawned.begin(); it != genericSpawned.end(); ++it) {
+		CreatureInstance *source = actInst->GetInstanceByCID(*it);
+		if (source != NULL)
+			actInst->spawnsys.Despawn(*it);
+	}
+	genericSpawned.clear();
 
 	std::map<int, int>::iterator it2;
 	char buf[32];

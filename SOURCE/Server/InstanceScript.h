@@ -50,6 +50,7 @@ class InstanceNutDef: public ScriptCore::NutDef {
 public:
 	virtual ~InstanceNutDef();
 
+	bool LoadFromCluster(int zoneID);
 	static std::string GetInstanceNutScriptPath(int zoneID);
 	static std::string GetInstanceScriptPath(int zoneID, bool pathIfNotExists);
 
@@ -77,6 +78,9 @@ public:
 	static SQInteger AllCIDs(HSQUIRRELVM v);
 	static SQInteger GetHated(HSQUIRRELVM v);
 	static SQInteger AllPlayers(HSQUIRRELVM v);
+
+	Sqrat::Object Props(Squirrel::Vector3I location);
+
 	int GetNPCID(int CDefID);
 	void MonitorArea(std::string name, Squirrel::Area area);
 	void UnmonitorArea(std::string name);

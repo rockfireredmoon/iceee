@@ -413,6 +413,8 @@ void LoadConfig(std::string filename) {
 				g_Config.StaticDataPath = lfr.BlockToStringC(1, 0);
 			else if (strcmp(NameBlock, "VariableDataPath") == 0)
 				g_Config.VariableDataPath = lfr.BlockToStringC(1, 0);
+			else if (strcmp(NameBlock, "TmpDataPath") == 0)
+				g_Config.TmpDataPath = lfr.BlockToStringC(1, 0);
 			else if (strcmp(NameBlock, "LogPath") == 0)
 				g_Config.LogPath = lfr.BlockToStringC(1, 0);
 			else {
@@ -637,6 +639,7 @@ GlobalConfigData::GlobalConfigData() {
 
 	StaticDataPath = "Static";
 	VariableDataPath = "Variable";
+	TmpDataPath = "Tmp";
 	LogPath = "Logs";
 	LocalConfigurationPath = LOCALCONFIGDIR;
 }
@@ -662,6 +665,10 @@ std::string GlobalConfigData::ResolveHTTPCARPath() {
 
 std::string GlobalConfigData::ResolveVariableDataPath() {
 	return ResolvePath(VariableDataPath);
+}
+
+std::string GlobalConfigData::ResolveTmpDataPath() {
+	return ResolvePath(TmpDataPath);
 }
 
 std::string GlobalConfigData::ResolveLogPath() {
