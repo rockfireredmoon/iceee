@@ -16,6 +16,7 @@ tacopie_inc = include_directories('SOURCE/LibCPPRedis/tacopie/includes')
 thread_dep = dependency('threads')
 curl_dep = dependency('libcurl')
 openssl_dep = dependency('openssl', required: false)
+pthread_dep = meson.get_compiler('c').find_library('pthread', required: false)
 
 #Compiler arguments 
 add_global_arguments('-DELPP_THREAD_SAFE=1', language: ['cpp','c'])
@@ -24,17 +25,9 @@ add_global_arguments('-DLOCALCONFIGDIR="' + get_option('localconfigdir') + '"', 
 if not openssl_dep.found() or not get_option('ssl')
 	add_global_arguments('-DNO_SSL=1', language: ['cpp','c'])
 endif
-
-#
-# TODO: disabling this temporarily as find_library is not available on the
-# version of Meson available by default for snapcraft (0.29). For now just
-# assume POSIX threads are in use. If on Windows, comment this out.
-#
-
-#pthread_dep = meson.get_compiler('c').find_library('pthread', required: false)
-#if pthread_dep.found()
+if pthread_dep.found()
 add_global_arguments('-DHAS_PTHREAD=1', language: ['cpp','c'])
-#endif
+endif
 
 #Squirrel
 squirrel_lib = library('squirrel',[
@@ -279,6 +272,7 @@ serverconfig_target = custom_target('ServerConfig',
     		'HTTPBaseFolder=Web','HTTPBaseFolder=' + get_option('prefix') + '/share/tawd/Web',
     		'HTTPCARFolder=../sparkplayer-eartheternal/bin/assets','HTTPCARFolder=' + get_option('prefix') + '/share/tawd/Release',
     		'StaticDataPath=../iceee-data/Static','StaticDataPath=' + get_option('prefix') + '/share/tawd/Static',
+    		'TmpDataPath=../iceee-data/Static','TmpDataPath=' + get_option('tmpdir'),
     		'VariableDataPath=../iceee-data/Variable','VariableDataPath=' + get_option('localstatedir') + '/lib/tawd/Variable',
     		'LogPath=Logs','LogPath=' + logpath],
   	install : true,
