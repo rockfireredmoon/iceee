@@ -5217,10 +5217,10 @@ void CreatureInstance::CheckPathLocation(void) {
 	vector<int> openNode;
 	for (auto a = so->extraData.link.begin(); a != so->extraData.link.end();
 			++a) {
-		if ((*a).type == SceneryObject::LINK_TYPE_PATH
-				&& (*a).propID != previousPathNode) {
-			openNode.push_back((*a).propID);
-			//g_Log.AddMessageFormat("Found %d off %d", so->extraData->link[i].propID, nextPathNode);
+		ExtraDataLink l = *a;
+		if (l.type == SceneryObject::LINK_TYPE_PATH
+				&& l.propID != previousPathNode) {
+			openNode.push_back(l.propID);
 		}
 	}
 
