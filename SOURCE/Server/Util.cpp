@@ -7,7 +7,7 @@
 #include "DebugTracer.h"
 #include "ByteBuffer.h"
 #include "Forms.h"
-#include <math.h>
+#include <cmath>
 #include <stdlib.h>
 #include <iostream>
 #include <sstream>

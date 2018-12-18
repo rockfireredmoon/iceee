@@ -28,7 +28,7 @@ unsigned long INSTANCE_DELETE_RECHECK = 60000; //Recheck delay between scanning 
 
 unsigned long CREATURE_DELETE_RECHECK = 60000; //Delay between rescanning for dead creatures and deleting them from the instance.
 
-#include <math.h>
+#include <cmath>
 #include <algorithm>
 
 #include "Instance.h"

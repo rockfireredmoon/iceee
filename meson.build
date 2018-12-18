@@ -1,6 +1,7 @@
 project('tawd', ['cpp','c'], default_options : [
 	'cpp_std=c++11',
 	'prefix=/usr',
+	'tmpdir=/tmp',
 	'sysconfdir=/etc',
 	'localstatedir=/var'])
 
@@ -90,7 +91,7 @@ cppredis_lib = library('cpp_redis',[
 	'SOURCE/LibCPPRedis/sources/network/tcp_client.cpp',
 	'SOURCE/LibCPPRedis/sources/network/redis_connection.cpp'], 
 	dependencies: [thread_dep],
-	include_directories : [cppredis_inc],
+	include_directories : [cppredis_inc,tacopie_inc],
 	link_with: [tacopie_lib])
 
 #Server library

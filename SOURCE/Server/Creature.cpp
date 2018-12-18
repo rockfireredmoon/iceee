@@ -1,4 +1,4 @@
-#include <math.h>   //For atan2()
+#include <cmath>
 #include <algorithm>  //For STL sort
 #include <limits>
 

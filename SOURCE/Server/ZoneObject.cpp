@@ -2,7 +2,7 @@
 #include "FileReader.h"
 
 #include <string.h>
-#include <math.h>
+#include <cmath>
 #include "util/Log.h"
 
 ZoneMarkerDataManager g_ZoneMarkerDataManager;

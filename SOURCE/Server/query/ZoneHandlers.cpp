@@ -26,7 +26,7 @@
 #include "../ZoneObject.h"
 #include "../StringUtil.h"
 #include "../util/Log.h"
-#include <math.h>
+#include <cmath>
 
 //
 //GoHandler

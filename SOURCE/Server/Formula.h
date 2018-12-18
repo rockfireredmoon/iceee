@@ -2,7 +2,7 @@
 #include "CommonTypes.h"
 
 #include "util/Log.h"
-#include <math.h>
+#include <cmath>
 
 enum OperatorType
 {

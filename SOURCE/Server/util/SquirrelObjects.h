@@ -22,7 +22,7 @@
 #include "../sqrat.h"
 #include "../json/json.h"
 #include <string>
-#include <math.h>
+#include <cmath>
 
 namespace Squirrel {
 

@@ -25,7 +25,7 @@
 #include <cpp_redis/misc/error.hpp>
 #include <cpp_redis/network/tcp_client_iface.hpp>
 
-#include <tacopie/tacopie>
+#include <tacopie/tacopie.hpp>
 
 namespace cpp_redis {
 

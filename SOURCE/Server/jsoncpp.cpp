@@ -2420,7 +2420,7 @@ ValueIterator& ValueIterator::operator=(const SelfType& other) {
 #include <json/value.h>
 #include <json/writer.h>
 #endif // if !defined(JSON_IS_AMALGAMATION)
-#include <math.h>
+#include <cmath>
 #include <sstream>
 #include <utility>
 #include <cstring>

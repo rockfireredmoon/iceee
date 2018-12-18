@@ -4,7 +4,7 @@
 #include "Scenery2.h"
 #include "FileReader.h"
 #include "Util.h"
-#include <math.h>
+#include <cmath>
 #include <algorithm>
 #include "Globals.h"
 #include "EliteMob.h"
