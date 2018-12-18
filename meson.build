@@ -241,19 +241,19 @@ if get_option('service') and build_machine.system() == 'windows'
 	server_lib_cppargs += '-DWINDOWS_SERVICE=1'
 endif
 executable('tawd', 'SOURCE/Daemon/main.cpp', 
-	include_directories : [server_inc, squirrel_inc, sqstdlib_lib_inc], 
+	include_directories : [server_inc, squirrel_inc, sqstdlib_lib_inc, cppredis_inc, tacopie_inc], 
 	dependencies: [thread_dep, curl_dep, openssl_dep],
 	link_with: [server_lib], install: true, cpp_args: server_lib_cppargs)
 	
 #Pre-TAWD text file user data to TAWD Redis database
 executable('text2redis', 'SOURCE/Tools/TextToRedis.cpp', 
-	include_directories : [server_inc, squirrel_inc, sqstdlib_lib_inc], 
+	include_directories : [server_inc, squirrel_inc, sqstdlib_lib_inc, cppredis_inc, tacopie_inc], 
 	dependencies: [thread_dep, curl_dep, openssl_dep],
 	link_with: [server_lib], install: true)
 	
 #Pre-TAWD text file user data to TAWD Redis database
 executable('eeaccount', 'SOURCE/Tools/EEAccount.cpp', 
-	include_directories : [server_inc, squirrel_inc, sqstdlib_lib_inc], 
+	include_directories : [server_inc, squirrel_inc, sqstdlib_lib_inc, cppredis_inc, tacopie_inc], 
 	dependencies: [thread_dep, curl_dep, openssl_dep],
 	link_with: [server_lib], install: true)
 	
