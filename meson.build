@@ -265,7 +265,7 @@ logpath = get_option('localstatedir') + '/log/tawd'
 # Create actual configuration files from samples, changing the default
 # locations where appropraite 
 srchrepl_prog = find_program('Meson/srchrepl.py') 
-copy_prog = find_program('Meson/copy.py')
+copy_prog = find_program('Meson/filecopy.py')
 serverconfig_target = custom_target('ServerConfig',
     input : 'Local/ServerConfig.txt.sample',
     output : 'ServerConfig.txt',
