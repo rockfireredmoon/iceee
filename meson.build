@@ -251,7 +251,7 @@ executable('text2redis', 'SOURCE/Tools/TextToRedis.cpp',
 	dependencies: [thread_dep, curl_dep, openssl_dep],
 	link_with: [server_lib], install: true)
 	
-#Pre-TAWD text file user data to TAWD Redis database
+#Account management command
 executable('eeaccount', 'SOURCE/Tools/EEAccount.cpp', 
 	include_directories : [server_inc, squirrel_inc, sqstdlib_lib_inc, cppredis_inc, tacopie_inc], 
 	dependencies: [thread_dep, curl_dep, openssl_dep],
