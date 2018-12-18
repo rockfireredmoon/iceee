@@ -260,7 +260,51 @@ executable('eeaccount', 'SOURCE/Tools/EEAccount.cpp',
 #Other Installation
 datadir = get_option('serverdatadir')
 confdir = get_option('localconfigdir')
-logpath = get_option('localstatedir') + '/log/tawd'
+
+# Logs
+if get_option('logdir') == ''
+	logpath = get_option('localstatedir') + '/log/tawd'
+else
+	logpath = get_option('logdir')
+endif
+	
+# Variable Data (Scenery, Instance Data, Creature Edits)
+if get_option('variabledatadir') == ''
+	variabledatapath = get_option('localstatedir') + '/lib/tawd/Variable'
+else
+	variabledatapath = get_option('variabledatadir')
+endif
+	
+# Static Data (Creature Definitions, Items, Loot Tables and lots more)
+if get_option('variabledatadir') == ''
+	staticdatapath = get_option('prefix') + '/share/tawd/Static'
+else
+	staticdatapath = get_option('staticdatadir')
+endif
+
+# Temporary data (compiled scripts)
+tmpdir = get_option('tmpdir')
+
+# Base path (default path for web resources)
+if get_option('basedir') == ''
+	basepath = get_option('basedir') + '/share/tawd/Web'
+else
+	basepath = get_option('basedir')
+endif
+
+# CAR path (default path for client CAR files)
+if get_option('cardir') == ''
+	carpath = get_option('prefix') + '/share/tawd/Release'
+else
+	carpath = get_option('cardir')
+endif
+
+# Documentation
+if get_option('docdir') == ''
+	docpath = 'share/doc/tawd'
+else
+	docpath = get_option('docdir')
+endif
 
 # Create actual configuration files from samples, changing the default
 # locations where appropraite 
@@ -270,11 +314,11 @@ serverconfig_target = custom_target('ServerConfig',
     input : 'Local/ServerConfig.txt.sample',
     output : 'ServerConfig.txt',
     command : [srchrepl_prog, '@INPUT@', '@OUTPUT@',
-    		'HTTPBaseFolder=Web','HTTPBaseFolder=' + get_option('prefix') + '/share/tawd/Web',
-    		'HTTPCARFolder=../sparkplayer-eartheternal/bin/assets','HTTPCARFolder=' + get_option('prefix') + '/share/tawd/Release',
-    		'StaticDataPath=../iceee-data/Static','StaticDataPath=' + get_option('prefix') + '/share/tawd/Static',
-    		'TmpDataPath=Tmp','TmpDataPath=' + get_option('tmpdir'),
-    		'VariableDataPath=../iceee-data/Variable','VariableDataPath=' + get_option('localstatedir') + '/lib/tawd/Variable',
+    		'HTTPBaseFolder=Web','HTTPBaseFolder=' + basepath,
+    		'HTTPCARFolder=../sparkplayer-eartheternal/bin/assets','HTTPCARFolder=' + carpath,
+    		'StaticDataPath=../iceee-data/Static','StaticDataPath=' + staticdatapath,
+    		'TmpDataPath=Tmp','TmpDataPath=' + tmpdir,
+    		'VariableDataPath=../iceee-data/Variable','VariableDataPath=' + variabledatapath,
     		'LogPath=Logs','LogPath=' + logpath],
   	install : true,
   	install_dir : confdir)
@@ -308,7 +352,7 @@ if get_option('service') and build_machine.system() == 'linux'
 	endif
 endif
 
-install_data(sources: ['Local/ServerConfig.txt.sample','Local/LogConfig.txt.sample','Local/Cluster.txt.sample','Local/URL.txt.sample'], install_dir : 'share/doc/tawd')
-install_data(sources: ['README.md','LICENSE'], install_dir : 'share/doc/tawd')
-install_subdir('Web', install_dir : 'share/tawd')
-
+install_data(sources: ['Local/ServerConfig.txt.sample','Local/LogConfig.txt.sample','Local/Cluster.txt.sample','Local/URL.txt.sample'], install_dir : docpath)
+install_data(sources: ['README.md','LICENSE'], install_dir : docpath)
+install_data(sources: ['Web/Errors/404.html'], install_dir : basepath + '/Errors')
+install_data(sources: ['Web/Pages/Account.html','Web/Pages/RemoteServerTools.html','Web/Pages/ResetPassword.html'], install_dir : basepath + '/Pages')

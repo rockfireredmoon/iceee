@@ -1,6 +1,12 @@
 # -*- mode: meson -*-
 # TAWD Meson Build Options
 
+option('variabledatadir', type: 'string', value: '', description: 'Path for variable data. Defaults to localconfigdir/lib/tawd/Variable.')
+option('staticdatadir', type: 'string', value: '', description: 'Path for static data. Defaults to localconfigdir/lib/tawd/Variable.')
+option('logdir', type: 'string', value: '', description: 'Path for logs. Defaults to localstatedir/log/tawd.')
+option('docdir', type: 'string', value: '', description: 'Path for documentations. Defaults to prefix/share/doc/tawd.')
+option('basedir', type: 'string', value: '', description: 'Path for web resource. Defaults to prefix/share/tawd/Web.')
+option('cardir', type: 'string', value: '', description: 'Path for CAR resources. Defaults to prefix/share/tawd/Release.')
 option('localconfigdir', type: 'string', value: 'Local', description: 'Default path to local configuration files (default to Local).')
 option('serverdatadir', type: 'string', value: '..', description: 'Path to other server data (WebPages and asset folders, defaults to project root).')
 option('tmpdir', type: 'string', value: '/tmp', description: 'Path to temporary data.')
