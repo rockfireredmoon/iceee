@@ -276,7 +276,7 @@ else
 endif
 	
 # Static Data (Creature Definitions, Items, Loot Tables and lots more)
-if get_option('variabledatadir') == ''
+if get_option('staticdatadir') == ''
 	staticdatapath = get_option('prefix') + '/share/tawd/Static'
 else
 	staticdatapath = get_option('staticdatadir')
