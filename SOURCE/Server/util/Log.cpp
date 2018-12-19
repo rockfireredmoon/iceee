@@ -157,7 +157,7 @@ Logger * LogManager::ConfigureLogger(Logger *logger) {
 	return logger;
 }
 
-void LogManager::Init(el::Level level, bool outputToConsole) {
+void LogManager::Init(el::Level level, bool outputToConsole, std::string configFilename) {
 	mLevel = level;
 	mOutputToConsole = outputToConsole;
 
@@ -166,14 +166,14 @@ void LogManager::Init(el::Level level, bool outputToConsole) {
 	for (std::vector<std::string>::iterator it = paths.begin();
 			it != paths.end(); ++it) {
 		std::string dir = *it;
-		std::string filename = Platform::JoinPath(dir, "LogConfig.txt");
+		std::string filename = Platform::JoinPath(dir, configFilename);
 		if (Platform::FileExists(filename))
 			logConfig = filename;
 	}
 	if (logConfig.size() == 0)
 		el::Loggers::configureFromGlobal(
 				Platform::JoinPath(g_Config.ResolveLocalConfigurationPath()[0],
-						"LogConfig.txt").c_str());
+						configFilename).c_str());
 	else
 		el::Loggers::configureFromGlobal(logConfig.c_str());
 

@@ -465,7 +465,7 @@ int InitServerMain(int argc, char *argv[]) {
 		}
 	}
 
-	g_Logs.Init(lvl, consoleOut);
+	g_Logs.Init(lvl, consoleOut , "LogConfig.txt");
 	curl_global_init(CURL_GLOBAL_DEFAULT);
 	bcm.mlog.reserve(100);
 

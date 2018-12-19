@@ -296,7 +296,7 @@ int InitServerMain(int argc, char *argv[]) {
 		}
 	}
 
-	g_Logs.Init(lvl, consoleOut);
+	g_Logs.Init(lvl, consoleOut, "LogConfig.txt");
 
 	std::vector<std::string> paths = g_Config.ResolveLocalConfigurationPath();
 	for (std::vector<std::string>::iterator it = paths.begin();

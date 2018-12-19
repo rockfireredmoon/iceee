@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	g_Logs.Init(lvl, true);
+	g_Logs.Init(lvl, true, "LogConfig.txt");
 	g_Logs.data->info("EEAccount");
 
 	curl_global_init(CURL_GLOBAL_DEFAULT);

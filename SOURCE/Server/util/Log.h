@@ -27,7 +27,7 @@ class LogManager {
 public:
 	LogManager();
 	~LogManager();
-	void Init(el::Level level, bool outputToConsole);
+	void Init(el::Level level, bool outputToConsole, std::string configFilename);
 	void FlushAll();
 	void CloseAll();
 	Logger *server;
