@@ -1,17 +1,19 @@
 # -*- mode: meson -*-
 # TAWD Meson Build Options
 
-option('variabledatadir', type: 'string', value: '', description: 'Path for variable data. Defaults to localconfigdir/lib/tawd/Variable.')
-option('staticdatadir', type: 'string', value: '', description: 'Path for static data. Defaults to localconfigdir/lib/tawd/Variable.')
-option('logdir', type: 'string', value: '', description: 'Path for logs. Defaults to localstatedir/log/tawd.')
+# Options for various paths in ServerConfig.txt and LogConfig.txt
+option('cfg_LogPath', type: 'string', value: '', description: 'Path for logs. Defaults to localstatedir/log/tawd.')
+option('cfg_VariableDataPath', type: 'string', value: '', description: 'Path for variable data. Defaults to localstatedir/lib/tawd/Variable.')
+option('cfg_StaticDataPath', type: 'string', value: '', description: 'Path for static data. Defaults to prefix/share/tawd/Static.')
+option('cfg_HTTPCARFolder', type: 'string', value: '', description: 'Path for CAR resources. Defaults to prefix/share/tawd/Release.')
+option('cfg_BasePath', type: 'string', value: '', description: 'Path for web resource. Defaults to webdior.')
+option('cfg_TmpDir', type: 'string', value: '/tmp', description: 'Path to temporary data. Defaults to /tmp')
+
+# Build paths
 option('docdir', type: 'string', value: '', description: 'Path for documentations. Defaults to prefix/share/doc/tawd.')
-option('basedir', type: 'string', value: '', description: 'Path for web resource. Defaults to prefix/share/tawd/Web.')
-option('cardir', type: 'string', value: '', description: 'Path for CAR resources. Defaults to prefix/share/tawd/Release.')
-option('defaultconfigdirs', type: 'string', value: '', description: 'List of configuration directories to be compiled into the executables.')
-option('localconfigdir', type: 'string', value: 'Local', description: 'Default path to local configuration files (default to Local).')
+option('webdir', type: 'string', value: '', description: 'Path for web resource. Defaults to prefix/share/tawd/Web.')
 option('configdirs', type: 'string', value: 'Local', description: 'List of directories for executables to look for configuration files (default to localconfigdir).')
 option('serverdatadir', type: 'string', value: '..', description: 'Path to other server data (WebPages and asset folders, defaults to project root).')
-option('tmpdir', type: 'string', value: '/tmp', description: 'Path to temporary data.')
 option('ssl', type: 'boolean', value: false, description: 'Build HTTP server with HTTPS support.')
 option('service', type: 'boolean', value: false, description: 'Configure support for building and installing as a server (e.g. SystemD on Linux, Windows Service etc).')
 option('systemdservicedir', type: 'string', value: '/lib/systemd/system', description: 'Location to install SystemD service files.')
