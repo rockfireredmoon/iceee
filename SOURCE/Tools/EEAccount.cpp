@@ -42,10 +42,15 @@ int main(int argc, char *argv[]) {
 	std::vector<std::string> options;
 	std::vector<std::string> switches;
 	std::string command;
+	bool configSet = false;
 	for (int i = 1; i < argc; i++) {
 		if (command == "") {
 			if (strcmp(argv[i], "-c") == 0) {
-				g_Config.LocalConfigurationPath = argv[++i];
+				if(!configSet) {
+					configSet = true;
+					g_Config.LocalConfigurationPath.clear();
+				}
+				g_Config.LocalConfigurationPath.push_back(argv[++i]);
 			} else if (strcmp(argv[i], "-d") == 0) {
 				lvl = el::Level::Debug;
 			} else if (strcmp(argv[i], "-i") == 0) {
@@ -69,17 +74,22 @@ int main(int argc, char *argv[]) {
 	curl_global_init(CURL_GLOBAL_DEFAULT);
 	g_PlatformTime.Init();
 
-	LoadConfig(
-			Platform::JoinPath(g_Config.ResolveLocalConfigurationPath(),
-					"ServerConfig.txt"));
+	std::vector<std::string> paths = g_Config.ResolveLocalConfigurationPath();
+	for (std::vector<std::string>::iterator it = paths.begin();
+			it != paths.end(); ++it) {
+		std::string dir = *it;
+		LoadConfig(Platform::JoinPath(*it, "ServerConfig.txt"));
+	}
 
 	g_ClusterManager.mNoEvents = true;
-	if (g_ClusterManager.Init(
-			Platform::JoinPath(g_Config.ResolveLocalConfigurationPath(),
-					"Cluster.txt")) < 0) {
-		g_Logs.data->error("Failed to connect to cluster.");
-		return 1;
+	for (std::vector<std::string>::iterator it = paths.begin();
+			it != paths.end(); ++it) {
+		std::string dir = *it;
+		g_ClusterManager.LoadConfiguration(Platform::JoinPath(*it, "Cluster.txt"));
 	}
+
+	if(!g_ClusterManager.Init())
+		return 1;
 
 	if (command == "create") {
 		/* Create account */

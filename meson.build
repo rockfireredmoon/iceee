@@ -19,15 +19,69 @@ curl_dep = dependency('libcurl')
 openssl_dep = dependency('openssl', required: false)
 pthread_dep = meson.get_compiler('c').find_library('pthread', required: false)
 
+#Other Installation
+datadir = get_option('serverdatadir')
+confdir = get_option('localconfigdir')
+if get_option('configdirs') == ''
+	confdirs = confdir
+else
+	confdirs = get_option('configdirs')
+endif
+
+# Logs
+if get_option('logdir') == ''
+	logpath = get_option('localstatedir') + '/log/tawd'
+else
+	logpath = get_option('logdir')
+endif
+	
+# Variable Data (Scenery, Instance Data, Creature Edits)
+if get_option('variabledatadir') == ''
+	variabledatapath = get_option('localstatedir') + '/lib/tawd/Variable'
+else
+	variabledatapath = get_option('variabledatadir')
+endif
+	
+# Static Data (Creature Definitions, Items, Loot Tables and lots more)
+if get_option('staticdatadir') == ''
+	staticdatapath = get_option('prefix') + '/share/tawd/Static'
+else
+	staticdatapath = get_option('staticdatadir')
+endif
+
+# Temporary data (compiled scripts)
+tmpdir = get_option('tmpdir')
+
+# Base path (default path for web resources)
+if get_option('basedir') == ''
+	basepath = get_option('basedir') + '/share/tawd/Web'
+else
+	basepath = get_option('basedir')
+endif
+
+# CAR path (default path for client CAR files)
+if get_option('cardir') == ''
+	carpath = get_option('prefix') + '/share/tawd/Release'
+else
+	carpath = get_option('cardir')
+endif
+
+# Documentation
+if get_option('docdir') == ''
+	docpath = 'share/doc/tawd'
+else
+	docpath = get_option('docdir')
+endif
+
 #Compiler arguments 
 add_global_arguments('-DELPP_THREAD_SAFE=1', language: ['cpp','c'])
 add_global_arguments('-DELPP_NO_GLOBAL_LOCK=1', language: ['cpp','c'])
-add_global_arguments('-DLOCALCONFIGDIR="' + get_option('localconfigdir') + '"', language: ['cpp','c'])
+add_global_arguments('-DLOCALCONFIGDIR="' + confdirs + '"', language: ['cpp','c'])
 if not openssl_dep.found() or not get_option('ssl')
 	add_global_arguments('-DNO_SSL=1', language: ['cpp','c'])
 endif
 if pthread_dep.found()
-add_global_arguments('-DHAS_PTHREAD=1', language: ['cpp','c'])
+	add_global_arguments('-DHAS_PTHREAD=1', language: ['cpp','c'])
 endif
 
 #Squirrel
@@ -257,54 +311,6 @@ executable('eeaccount', 'SOURCE/Tools/EEAccount.cpp',
 	dependencies: [thread_dep, curl_dep, openssl_dep],
 	link_with: [server_lib], install: true)
 	
-#Other Installation
-datadir = get_option('serverdatadir')
-confdir = get_option('localconfigdir')
-
-# Logs
-if get_option('logdir') == ''
-	logpath = get_option('localstatedir') + '/log/tawd'
-else
-	logpath = get_option('logdir')
-endif
-	
-# Variable Data (Scenery, Instance Data, Creature Edits)
-if get_option('variabledatadir') == ''
-	variabledatapath = get_option('localstatedir') + '/lib/tawd/Variable'
-else
-	variabledatapath = get_option('variabledatadir')
-endif
-	
-# Static Data (Creature Definitions, Items, Loot Tables and lots more)
-if get_option('staticdatadir') == ''
-	staticdatapath = get_option('prefix') + '/share/tawd/Static'
-else
-	staticdatapath = get_option('staticdatadir')
-endif
-
-# Temporary data (compiled scripts)
-tmpdir = get_option('tmpdir')
-
-# Base path (default path for web resources)
-if get_option('basedir') == ''
-	basepath = get_option('basedir') + '/share/tawd/Web'
-else
-	basepath = get_option('basedir')
-endif
-
-# CAR path (default path for client CAR files)
-if get_option('cardir') == ''
-	carpath = get_option('prefix') + '/share/tawd/Release'
-else
-	carpath = get_option('cardir')
-endif
-
-# Documentation
-if get_option('docdir') == ''
-	docpath = 'share/doc/tawd'
-else
-	docpath = get_option('docdir')
-endif
 
 # Create actual configuration files from samples, changing the default
 # locations where appropraite 

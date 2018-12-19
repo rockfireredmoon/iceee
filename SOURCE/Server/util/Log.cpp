@@ -35,73 +35,124 @@ Logger * LogManager::ConfigureLogger(Logger *logger) {
 	 *
 	 * The level of Level::Unknown will turn off all logging.
 	 */
-	switch(mLevel) {
+	switch (mLevel) {
 	case el::Level::Info:
-		logger->configurations()->set(el::Level::Debug, el::ConfigurationType::Enabled, "FALSE");
-		logger->configurations()->set(el::Level::Error, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Fatal, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Info, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Trace, el::ConfigurationType::Enabled, "FALSE");
-		logger->configurations()->set(el::Level::Unknown, el::ConfigurationType::Enabled, "FALSE");
-		logger->configurations()->set(el::Level::Verbose, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Warning, el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Debug,
+				el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Error,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Fatal,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Info,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Trace,
+				el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Unknown,
+				el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Verbose,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Warning,
+				el::ConfigurationType::Enabled, "TRUE");
 		break;
 	case el::Level::Error:
-		logger->configurations()->set(el::Level::Debug, el::ConfigurationType::Enabled, "FALSE");
-		logger->configurations()->set(el::Level::Error, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Fatal, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Info, el::ConfigurationType::Enabled, "FALSE");
-		logger->configurations()->set(el::Level::Trace, el::ConfigurationType::Enabled, "FALSE");
-		logger->configurations()->set(el::Level::Unknown, el::ConfigurationType::Enabled, "FALSE");
-		logger->configurations()->set(el::Level::Verbose, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Warning, el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Debug,
+				el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Error,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Fatal,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Info,
+				el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Trace,
+				el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Unknown,
+				el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Verbose,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Warning,
+				el::ConfigurationType::Enabled, "FALSE");
 		break;
 	case el::Level::Fatal:
-		logger->configurations()->set(el::Level::Debug, el::ConfigurationType::Enabled, "FALSE");
-		logger->configurations()->set(el::Level::Error, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Fatal, el::ConfigurationType::Enabled, "FALSE");
-		logger->configurations()->set(el::Level::Info, el::ConfigurationType::Enabled, "FALSE");
-		logger->configurations()->set(el::Level::Trace, el::ConfigurationType::Enabled, "FALSE");
-		logger->configurations()->set(el::Level::Unknown, el::ConfigurationType::Enabled, "FALSE");
-		logger->configurations()->set(el::Level::Verbose, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Warning, el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Debug,
+				el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Error,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Fatal,
+				el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Info,
+				el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Trace,
+				el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Unknown,
+				el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Verbose,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Warning,
+				el::ConfigurationType::Enabled, "FALSE");
 		break;
 	case el::Level::Debug:
-		logger->configurations()->set(el::Level::Debug, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Error, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Fatal, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Info, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Trace, el::ConfigurationType::Enabled, "FALSE");
-		logger->configurations()->set(el::Level::Unknown, el::ConfigurationType::Enabled, "FALSE");
-		logger->configurations()->set(el::Level::Verbose, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Warning, el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Debug,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Error,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Fatal,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Info,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Trace,
+				el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Unknown,
+				el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Verbose,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Warning,
+				el::ConfigurationType::Enabled, "TRUE");
 		break;
 	case el::Level::Trace:
-		logger->configurations()->set(el::Level::Debug, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Error, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Fatal, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Info, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Trace, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Unknown, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Verbose, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Warning, el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Debug,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Error,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Fatal,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Info,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Trace,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Unknown,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Verbose,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Warning,
+				el::ConfigurationType::Enabled, "TRUE");
 		break;
 	case el::Level::Unknown:
-		logger->configurations()->set(el::Level::Global, el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Global,
+				el::ConfigurationType::Enabled, "FALSE");
 		break;
 	default:
 		/* Default is like Warning. All levels have verbose exception Unknown (quiet) */
-		logger->configurations()->set(el::Level::Debug, el::ConfigurationType::Enabled, "FALSE");
-		logger->configurations()->set(el::Level::Error, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Fatal, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Info, el::ConfigurationType::Enabled, "FALSE");
-		logger->configurations()->set(el::Level::Trace, el::ConfigurationType::Enabled, "FALSE");
-		logger->configurations()->set(el::Level::Unknown, el::ConfigurationType::Enabled, "FALSE");
-		logger->configurations()->set(el::Level::Verbose, el::ConfigurationType::Enabled, "TRUE");
-		logger->configurations()->set(el::Level::Warning, el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Debug,
+				el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Error,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Fatal,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Info,
+				el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Trace,
+				el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Unknown,
+				el::ConfigurationType::Enabled, "FALSE");
+		logger->configurations()->set(el::Level::Verbose,
+				el::ConfigurationType::Enabled, "TRUE");
+		logger->configurations()->set(el::Level::Warning,
+				el::ConfigurationType::Enabled, "TRUE");
 		break;
 	}
-	logger->configurations()->set(el::Level::Global, el::ConfigurationType::ToStandardOutput, mOutputToConsole ? "TRUE" : "FALSE");
+	logger->configurations()->set(el::Level::Global,
+			el::ConfigurationType::ToStandardOutput,
+			mOutputToConsole ? "TRUE" : "FALSE");
 	logger->reconfigure();
 	return logger;
 }
@@ -109,7 +160,22 @@ Logger * LogManager::ConfigureLogger(Logger *logger) {
 void LogManager::Init(el::Level level, bool outputToConsole) {
 	mLevel = level;
 	mOutputToConsole = outputToConsole;
-	el::Loggers::configureFromGlobal(Platform::JoinPath(g_Config.ResolveLocalConfigurationPath(), "LogConfig.txt").c_str());
+
+	std::string logConfig;
+	std::vector<std::string> paths = g_Config.ResolveLocalConfigurationPath();
+	for (std::vector<std::string>::iterator it = paths.begin();
+			it != paths.end(); ++it) {
+		std::string dir = *it;
+		std::string filename = Platform::JoinPath(dir, "LogConfig.txt");
+		if (Platform::FileExists(filename))
+			logConfig = filename;
+	}
+	if (logConfig.size() == 0)
+		el::Loggers::configureFromGlobal(
+				Platform::JoinPath(g_Config.ResolveLocalConfigurationPath()[0],
+						"LogConfig.txt").c_str());
+	else
+		el::Loggers::configureFromGlobal(logConfig.c_str());
 
 	el::Loggers::addFlag(el::LoggingFlag::NewLineForContainer);
 	el::Loggers::addFlag(el::LoggingFlag::DisableApplicationAbortOnFatalLog);
@@ -128,7 +194,6 @@ void LogManager::Init(el::Level level, bool outputToConsole) {
 	script = ConfigureLogger(Loggers::getLogger("script", true));
 	cs = ConfigureLogger(Loggers::getLogger("cs", true));
 	cluster = ConfigureLogger(Loggers::getLogger("cluster", true));
-
 
 }
 

@@ -391,16 +391,11 @@ int InitServerMain(int argc, char *argv[]) {
 		return 0;
 	}
 
-	for(int i = 0 ; i < argc ; i++) {
-		if(strcmp(argv[i], "-c") == 0) {
-			g_Config.LocalConfigurationPath = argv[++i];
-		}
-	}
-
 	bool daemonize = false;
 	std::string pidfile = "";
 	el::Level lvl = el::Level::Warning;
 	bool consoleOut = false;
+	bool configSet = false;
 
 	for(int i = 0 ; i < argc ; i++) {
 		if(i == 0) {
@@ -415,7 +410,11 @@ int InitServerMain(int argc, char *argv[]) {
 			pidfile = argv[++i];
 		}
 		else if(strcmp(argv[i], "-c") == 0) {
-			g_Config.LocalConfigurationPath = argv[++i];
+			if(!configSet) {
+				configSet = true;
+				g_Config.LocalConfigurationPath.clear();
+			}
+			g_Config.LocalConfigurationPath.push_back(argv[++i]);
 		}
 		else if(strcmp(argv[i], "-C") == 0) {
 			consoleOut = true;
@@ -466,7 +465,12 @@ int InitServerMain(int argc, char *argv[]) {
 	//Init the time.  When the environment config is set during the load phase, it needs
 	//to know the present time to initialize the first time cycle.
 
-	LoadConfig(Platform::JoinPath(g_Config.ResolveLocalConfigurationPath(), "ServerConfig.txt"));
+	std::vector<std::string> paths = g_Config.ResolveLocalConfigurationPath();
+	for (std::vector<std::string>::iterator it = paths.begin();
+			it != paths.end(); ++it) {
+		std::string dir = *it;
+		LoadConfig(Platform::JoinPath(dir, "ServerConfig.txt"));
+	}
 	g_Logs.server->info("Working directory %v.", g_WorkingDirectory);
 
 	// Initialise time
@@ -804,8 +808,16 @@ int InitServerMain(int argc, char *argv[]) {
 //		handle_query_pref_setA();
 //	else if(query.name.compare("pref.set") == 0)
 //		handle_query_pref_set();
-	if(g_ClusterManager.Init(Platform::JoinPath(g_Config.ResolveLocalConfigurationPath(), "Cluster.txt")) < 0)
+
+	for (std::vector<std::string>::iterator it = paths.begin();
+			it != paths.end(); ++it) {
+		std::string dir = *it;
+		g_ClusterManager.LoadConfiguration(Platform::JoinPath(dir, "Cluster.txt"));
+	}
+
+	if(!g_ClusterManager.Init()) {
 		return 0;
+	}
 
 	g_Logs.data->info("Loaded %v checksums.", g_FileChecksum.mChecksumData.size());
 

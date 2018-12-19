@@ -249,7 +249,7 @@ public:
 	std::string APIAuthentication;		// Username:Password to allow API authentication
 	std::string SiteServiceUsername;
 	std::string SiteServicePassword;
-	std::string LocalConfigurationPath;
+	std::vector<std::string> LocalConfigurationPath;
 
 	unsigned int ClanCost;
 	bool Clans;
@@ -274,7 +274,7 @@ public:
 	std::string ResolveTmpDataPath();
 	std::string ResolveHTTPBasePath();
 	std::string ResolveHTTPCARPath();
-	std::string ResolveLocalConfigurationPath();
+	std::vector<std::string> ResolveLocalConfigurationPath();
 	std::string ResolveLogPath();
 
 private:

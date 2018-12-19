@@ -101,7 +101,7 @@ void AppendString(std::string &dest, char *appendStr) {
  */
 
 void LoadConfig(std::string filename) {
-	g_Config.OAuth2Clients.clear();
+	bool oauthSet = false;
 
 	//Loads the configuration options from the target file.  These are core options
 	//required for the server to operate.
@@ -381,6 +381,10 @@ void LoadConfig(std::string filename) {
 			else if (strcmp(NameBlock, "APIAuthentication") == 0)
 				g_Config.APIAuthentication = lfr.BlockToStringC(1, 0);
 			else if (strcmp(NameBlock, "OAuth2Client") == 0) {
+				if(!oauthSet) {
+					oauthSet = true;
+					g_Config.OAuth2Clients.clear();
+				}
 				STRINGLIST output;
 				Util::Split(lfr.BlockToString(1), "|", output);
 				if (output.size() == 3) {
@@ -641,7 +645,7 @@ GlobalConfigData::GlobalConfigData() {
 	VariableDataPath = "Variable";
 	TmpDataPath = "Tmp";
 	LogPath = "Logs";
-	LocalConfigurationPath = LOCALCONFIGDIR;
+	Util::Split(LOCALCONFIGDIR, ":", LocalConfigurationPath);
 }
 
 GlobalConfigData::~GlobalConfigData() {
@@ -651,8 +655,8 @@ std::string GlobalConfigData::ResolveStaticDataPath() {
 	return ResolvePath(StaticDataPath);
 }
 
-std::string GlobalConfigData::ResolveLocalConfigurationPath() {
-	return ResolvePath(LocalConfigurationPath);
+std::vector<std::string> GlobalConfigData::ResolveLocalConfigurationPath() {
+	return LocalConfigurationPath;
 }
 
 std::string GlobalConfigData::ResolveHTTPBasePath() {

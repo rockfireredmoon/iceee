@@ -444,6 +444,9 @@ ClusterManager::ClusterManager() {
 	mMaster = false;
 	mClusterable = false;
 	mNoEvents = false;
+	mHost = "127.0.0.1";
+	mPort = 6379;
+	mPassword = "";
 }
 
 string ClusterManager::GetMaster() {
@@ -1332,7 +1335,7 @@ bool ClusterManager::ReadEntity(AbstractEntity *entity) {
 	return false;
 }
 
-int ClusterManager::Init(const string &filename) {
+int ClusterManager::LoadConfiguration(const string &filename) {
 	FileReader lfr;
 	if (lfr.OpenText(filename.c_str()) != Err_OK) {
 		g_Logs.cluster->error(
@@ -1341,10 +1344,6 @@ int ClusterManager::Init(const string &filename) {
 		return -1;
 	}
 	lfr.CommentStyle = Comment_Semi;
-
-	string host = "127.0.0.1";
-	int port = 6379;
-	string password;
 
 	while (lfr.FileOpen() == true) {
 		int r = lfr.ReadLine();
@@ -1357,18 +1356,28 @@ int ClusterManager::Init(const string &filename) {
 			} else if (strcmp(NameBlock, "FullName") == 0) {
 				mFullName = lfr.BlockToString(1);
 			} else if (strcmp(NameBlock, "Host") == 0) {
-				host = lfr.BlockToString(1);
+				mHost = lfr.BlockToString(1);
 			} else if (strcmp(NameBlock, "Port") == 0) {
-				port = lfr.BlockToInt(1);
+				mPort = lfr.BlockToInt(1);
 			} else if (strcmp(NameBlock, "Password") == 0) {
-				password = lfr.BlockToString(1);
+				mPassword = lfr.BlockToString(1);
 			} else
 				g_Logs.cluster->error("Unknown identifier [%v] in file [%v]",
 						NameBlock, filename);
 		}
 	}
 	lfr.CloseCurrent();
-	g_Logs.cluster->info("Loaded cluster configuration file.");
+	g_Logs.cluster->info("Loaded cluster configuration file %v.", filename);
+	return 0;
+}
+
+bool ClusterManager::Init() {
+	if(mHost.length() == 0) {
+		g_Logs.cluster->error(
+				"No Redis host specified in any cluster configuration file. Check all Cluster.txt configuration files.");
+		return false;
+	}
+
 
 	//! High availablity requires at least 2 io service workers
 	cpp_redis::network::set_default_nb_workers(10);
@@ -1396,7 +1405,7 @@ int ClusterManager::Init(const string &filename) {
 	mActiveShards[mShardName] = shard;
 	FindMasterShard();
 
-	mClient.connect(host, port,
+	mClient.connect(mHost, mPort,
 			[](const string& host, size_t port, cpp_redis::client::connect_state status) {
 				if (status == cpp_redis::client::connect_state::dropped) {
 					g_Logs.cluster->error("Redis client disconnected from %v:%v",
@@ -1410,7 +1419,7 @@ int ClusterManager::Init(const string &filename) {
 	 * Subscribe to channel to listen for other shards coming online
 	 */
 	if (mClusterable && !mNoEvents) {
-		mSub.connect(host, port,
+		mSub.connect(mHost, mPort,
 				[](const string& host, size_t port, cpp_redis::subscriber::connect_state status) {
 					if (status == cpp_redis::subscriber::connect_state::dropped)
 					g_Logs.cluster->error("Redis event channel disconnected from %v:%v", host, port);
@@ -1447,7 +1456,7 @@ int ClusterManager::Init(const string &filename) {
 		}
 	}
 
-	return 0;
+	return true;
 }
 
 void ClusterManager::RunProcessingCycle() {

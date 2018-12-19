@@ -139,7 +139,8 @@ public:
 	std::string mShardName;
 	std::string mFullName;
 	std::map<int, ShardPlayer> mActivePlayers;
-	int Init(const std::string &configPath);
+	int LoadConfiguration(const std::string &configPath);
+	bool Init();
 	void Ready();
 	void Shutdown(bool wait = false);
 	bool IsMaster();
@@ -182,6 +183,10 @@ public:
 	int Scan(const ScanCallback& task, const std::string &pattern, size_t max = 0);
 	int64_t NextValue(const std::string &key, int incr = 1);
 private:
+
+	std::string mHost;
+	int mPort;
+	std::string mPassword;
 	std::vector<PendingShardPlayer> mPending;
 	std::string mMasterShard;
 	bool mClusterable;
