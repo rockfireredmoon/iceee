@@ -1639,7 +1639,7 @@ void EnvironmentCycleManager::RescheduleUpdate() {
 
 }
 
-void EnvironmentCycleManager::ApplyConfig(const char *str) {
+void EnvironmentCycleManager::ApplyConfig(const std::string str) {
 	//Config expects a list of time ranges
 	//Ex: Sunrise=05:30,Day=08:30,Sunset=18:00,Night=20:30
 

@@ -18,16 +18,12 @@
 #include "HTTPService.h"
 
 #include "CivetServer.h"
-#include "CAR.h"
-#include "GameInfo.h"
-#include "TAWApi.h"
-#include "OAuth2.h"
-#include "LegacyAccounts.h"
-#include "WebControlPanel.h"
 
 #include "../Config.h"
 #include "../Util.h"
+#include "../DirectoryAccess.h"
 #include "../StringUtil.h"
+#include "../util/Log.h"
 
 #include "../FileReader.h"
 #include <stdio.h>
@@ -124,6 +120,10 @@ bool HTTPService::Shutdown() {
 	return false;
 }
 
+void HTTPService::RegisterHandler(std::string name, CivetHandler *handler) {
+	handlers[name] = handler;
+}
+
 bool HTTPService::Start() {
 
 	const char * zzOptions[32];
@@ -205,59 +205,9 @@ bool HTTPService::Start() {
 				return false;
 			}
 
-			// CAR files
-			civetServer->addHandler("**.car$", new CARHandler());
-
-			// Info
-			civetServer->addHandler("/info/*", new GameInfoHandler());
-
-			// API
-			if(g_Config.PublicAPI) {
-				civetServer->addHandler("/api/up", new UpHandler());
-				civetServer->addHandler("/api/who", new WhoHandler());
-				civetServer->addHandler("/api/chat", new ChatHandler());
-				civetServer->addHandler("/api/user/*", new UserHandler());
-				civetServer->addHandler("/api/character/*", new CharacterHandler());
-				civetServer->addHandler("/api/user/*/groves", new UserGrovesHandler());
-				civetServer->addHandler("/api/zone/*", new ZoneHandler());
-				civetServer->addHandler("/api/scenery/*", new SceneryHandler());
-				HTTPD::LeaderboardHandler* leaderboardHandler =
-						new LeaderboardHandler();
-				civetServer->addHandler("/api/leaderboard", leaderboardHandler);
-				civetServer->addHandler("/api/leaderboard/*", leaderboardHandler);
-				HTTPD::CreditShopHandler* creditShopHandler =
-						new CreditShopHandler();
-				civetServer->addHandler("/api/cs", creditShopHandler);
-				civetServer->addHandler("/api/cs/*", creditShopHandler);
-				HTTPD::ClanHandler* clanHandler = new ClanHandler();
-				civetServer->addHandler("/api/clans", clanHandler);
-				civetServer->addHandler("/api/clan/*", clanHandler);
-				HTTPD::GuildHandler* guildHandler = new GuildHandler();
-				civetServer->addHandler("/api/guilds", guildHandler);
-				civetServer->addHandler("/api/guild/*", guildHandler);
-				civetServer->addHandler("/api/item/*", new ItemHandler());
-				HTTPD::AuctionHandler* auctionHandler = new AuctionHandler();
-				civetServer->addHandler("/api/auction", auctionHandler);
-				civetServer->addHandler("/api/auction/*", auctionHandler);
+			for(std::map<std::string, CivetHandler*>::iterator it = handlers.begin(); it != handlers.end(); ++it) {
+				civetServer->addHandler((*it).first, (*it).second);
 			}
-
-			// OAuth - Used to authenticate external services
-			if(g_Config.OAuth2Clients.size() > 0) {
-				civetServer->addHandler("/oauth/authorize", new AuthorizeHandler());
-				civetServer->addHandler("/oauth/login", new LoginHandler());
-				civetServer->addHandler("/oauth/token", new TokenHandler());
-				civetServer->addHandler("/oauth/self", new SelfHandler());
-			}
-
-			// Legacy account maintenannce
-			if(g_Config.LegacyAccounts) {
-				civetServer->addHandler("/newaccount", new NewAccountHandler());
-				civetServer->addHandler("/resetpassword", new ResetPasswordHandler());
-				civetServer->addHandler("/accountrecover", new AccountRecoverHandler());
-			}
-
-			// Legacy web control panel
-			civetServer->addHandler("/remoteaction", new RemoteActionHandler());
 
 			return true;
 		}

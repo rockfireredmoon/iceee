@@ -289,7 +289,9 @@ int main(int argc, char *argv[]) {
 	for (std::vector<std::string>::iterator it = paths.begin();
 			it != paths.end(); ++it) {
 		std::string dir = *it;
-		LoadConfig(Platform::JoinPath(*it, "ServerConfig.txt"));
+		std::string filename = Platform::JoinPath(dir, "ServerConfig.txt");
+		if(!LoadConfig(filename) && it == paths.begin())
+			g_Logs.data->error("Could not open server configuration file: %v", filename);
 	}
 
 	if(userDataPath.length() == 0)

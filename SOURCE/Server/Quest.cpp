@@ -1060,7 +1060,7 @@ void QuestDefinitionContainer::LoadFromFile(std::string filename) {
 				int index = lfr.BlockToIntC(1);
 				if (LimitIndex(index, MAXOBJECTIVES - 1) == true)
 					g_Logs.data->warn(
-							"Quest data Obj index is limited to 0-2 (line %d)",
+							"Quest data Obj index is limited to 0-2 (line %v)",
 							lfr.LineNumber);
 				lfr.BlockToStringC(2, Case_Upper);
 				if (strcmp(lfr.SecBuffer, "TYPE") == 0) {

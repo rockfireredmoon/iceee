@@ -4,9 +4,9 @@
 #include "FileReader.h"
 #include "Scenery2.h"  //for g_SceneryVars
 #include "DirectoryAccess.h"
-#include "ZoneDef.h"
 #include "Stats.h"
 #include "util/Log.h"
+#include "Util.h"
 
 GlobalConfigData g_Config;
 
@@ -100,7 +100,7 @@ void AppendString(std::string &dest, char *appendStr) {
  }
  */
 
-void LoadConfig(std::string filename) {
+bool LoadConfig(std::string filename) {
 	bool oauthSet = false;
 
 	//Loads the configuration options from the target file.  These are core options
@@ -108,8 +108,7 @@ void LoadConfig(std::string filename) {
 
 	FileReader lfr;
 	if (lfr.OpenText(filename.c_str()) != Err_OK) {
-		g_Logs.data->error("Could not open configuration file: %v", filename);
-		return;
+		return false;
 	}
 	static char Delimiter[] = { '=', 13, 10 };
 	lfr.Delimiter = Delimiter;
@@ -213,7 +212,7 @@ void LoadConfig(std::string filename) {
 			else if (strcmp(NameBlock, "IdleCheckDistanceTolerance") == 0)
 				g_Config.IdleCheckDistanceTolerance = lfr.BlockToIntC(1);
 			else if (strcmp(NameBlock, "EnvironmentCycle") == 0)
-				g_EnvironmentCycleManager.ApplyConfig(lfr.BlockToStringC(1, 0));
+				g_Config.EnvironmentCycle = lfr.BlockToString(1);
 			else if (strcmp(NameBlock, "SendLobbyHeartbeat") == 0)
 				g_Config.SendLobbyHeartbeat = lfr.BlockToBoolC(1);
 			else if (strcmp(NameBlock, "CapExperienceLevel") == 0)
@@ -372,6 +371,8 @@ void LoadConfig(std::string filename) {
 				g_Config.DirectoryListing = lfr.BlockToBool(1);
 			else if (strcmp(NameBlock, "HTTPKeepAlive") == 0)
 				g_Config.HTTPKeepAlive = lfr.BlockToBool(1);
+			else if (strcmp(NameBlock, "HTTPServeAssets") == 0)
+				g_Config.HTTPServeAssets = lfr.BlockToBool(1);
 			else if (strcmp(NameBlock, "LegacyServer") == 0)
 				g_Config.LegacyServer = lfr.BlockToStringC(1, 0);
 			else if (strcmp(NameBlock, "SiteServiceUsername") == 0)
@@ -428,6 +429,7 @@ void LoadConfig(std::string filename) {
 		}
 	}
 	lfr.CloseCurrent();
+	return true;
 }
 
 void LoadFileIntoString(std::string &dest, std::string filename) {
@@ -625,6 +627,7 @@ GlobalConfigData::GlobalConfigData() {
 	MaintenanceMessage = "";
 
 	HTTPKeepAlive = 0;
+	HTTPServeAssets = true;
 	DirectoryListing = false;
 
 	SiteServiceUsername = "";

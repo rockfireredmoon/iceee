@@ -421,7 +421,7 @@ public:
 	~EnvironmentCycleManager();
 	void RescheduleUpdate();
 	void Init();
-	void ApplyConfig(const char *str);
+	void ApplyConfig(const std::string str);
 	EnvironmentCycle GetCurrentCycle(void);
 private:
 	int mChangeTaskID;

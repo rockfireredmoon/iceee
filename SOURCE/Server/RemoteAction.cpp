@@ -132,7 +132,14 @@ int RunRemoteAction(ReportBuffer &report, MULTISTRING &header,
 		g_FileChecksum.LoadFromFile();
 		return REMOTE_COMPLETE;
 	} else if (strcmp(action, "reloadconfig") == 0) {
-		LoadConfig("ServerConfig.txt");
+		std::vector<std::string> paths = g_Config.ResolveLocalConfigurationPath();
+		for (std::vector<std::string>::iterator it = paths.begin();
+				it != paths.end(); ++it) {
+			std::string dir = *it;
+			std::string filename = Platform::JoinPath(dir, "ServerConfig.txt");
+			if(!LoadConfig(filename) && it == paths.begin())
+				g_Logs.data->error("Could not open server configuration file: %v", filename);
+		}
 		return REMOTE_COMPLETE;
 	} else if (strcmp(action, "reloadability") == 0) {
 		g_AbilityManager.LoadData();

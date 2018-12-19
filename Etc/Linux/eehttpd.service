@@ -1,0 +1,11 @@
+[Unit]
+Description=Earth Eternal - Asset Server
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/eehttpd.pid
+ExecStart=/usr/bin/eehttpd -d -p /var/run/eehttpd.pid -c /etc/tawd
+ExecStop=/usr/bin/kill -SIGTERM $MAINPID
+
+[Install]

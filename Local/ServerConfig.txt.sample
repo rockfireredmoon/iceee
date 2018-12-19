@@ -26,8 +26,9 @@ AuthKey=key                ; Salt to the client's password hash. Will break exis
 
 RouterPort=4242            ; Port to listen to router connections (login screen connect)
 SimulatorPort=4300         ; Port to listen for simulator connections
-HTTPListenPort=8080        ; Port to listen to HTTP requests.  Set as zero to disable.
+HTTPListenPort=8080        ; Port to listen to HTTP requests (API and CAR requests).  Set as zero to disable.
 
+HTTPServeAssets=1		   ;Whether or not to server CAR assets
 ThreadSleep=1              ;Sleep time for simulator and router threads
 MainSleep=1                ;Sleep time for the main window thread
 ErrorSleep=5000            ;Sleep time for some thread errors

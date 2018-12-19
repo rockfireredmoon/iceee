@@ -306,6 +306,11 @@ executable('tawd', 'SOURCE/Daemon/main.cpp',
 	dependencies: [thread_dep, curl_dep, openssl_dep],
 	link_with: [server_lib], install: true, cpp_args: server_lib_cppargs)
 	
+executable('eehttpd', 'SOURCE/EEHTTP/main.cpp', 
+	include_directories : [server_inc, squirrel_inc, sqstdlib_lib_inc, cppredis_inc, tacopie_inc], 
+	dependencies: [thread_dep, curl_dep, openssl_dep],
+	link_with: [server_lib], install: true, cpp_args: server_lib_cppargs)
+	
 #Pre-TAWD text file user data to TAWD Redis database
 executable('text2redis', 'SOURCE/Tools/TextToRedis.cpp', 
 	include_directories : [server_inc, squirrel_inc, sqstdlib_lib_inc, cppredis_inc, tacopie_inc], 
@@ -317,7 +322,6 @@ executable('eeaccount', 'SOURCE/Tools/EEAccount.cpp',
 	include_directories : [server_inc, squirrel_inc, sqstdlib_lib_inc, cppredis_inc, tacopie_inc], 
 	dependencies: [thread_dep, curl_dep, openssl_dep],
 	link_with: [server_lib], install: true)
-	
 
 # Create actual configuration files from samples, changing the default
 # locations where appropraite 
@@ -332,6 +336,15 @@ serverconfig_target = custom_target('ServerConfig',
     		'StaticDataPath=../iceee-data/Static','StaticDataPath=' + staticdatapath,
     		'TmpDataPath=Tmp','TmpDataPath=' + tmpdir,
     		'VariableDataPath=../iceee-data/Variable','VariableDataPath=' + variabledatapath,
+    		'LogPath=Logs','LogPath=' + logpath],
+  	install : true,
+  	install_dir : confdir)
+httpconfig_target = custom_target('HTTPConfig',
+    input : 'Local/HTTPConfig.txt.sample',
+    output : 'HTTPConfig.txt',
+    command : [srchrepl_prog, '@INPUT@', '@OUTPUT@',
+    		'HTTPBaseFolder=Web','HTTPBaseFolder=' + basepath,
+    		'HTTPCARFolder=../sparkplayer-eartheternal/bin/assets','HTTPCARFolder=' + carpath,
     		'LogPath=Logs','LogPath=' + logpath],
   	install : true,
   	install_dir : confdir)
@@ -360,12 +373,14 @@ if get_option('service') and build_machine.system() == 'linux'
 	systemd_dep = dependency('systemd')
 	if systemd_dep.found()
 		install_data(sources: 'Etc/Linux/tawd.service', install_dir : get_option('systemdservicedir'))
+		install_data(sources: 'Etc/Linux/eehttpd.service', install_dir : get_option('systemdservicedir'))
 	else
 		install_data(sources: 'Etc/Linux/tawd', install_dir : get_option('sysconfdir') + '/etc/init.d')
+		install_data(sources: 'Etc/Linux/eehttpd', install_dir : get_option('sysconfdir') + '/etc/init.d')
 	endif
 endif
 
-install_data(sources: ['Local/ServerConfig.txt.sample','Local/LogConfig.txt.sample','Local/Cluster.txt.sample','Local/URL.txt.sample'], install_dir : docpath)
+install_data(sources: ['Local/ServerConfig.txt.sample','Local/LogConfig.txt.sample','Local/Cluster.txt.sample','Local/URL.txt.sample', 'Local/HTTPConfig.txt'], install_dir : docpath)
 install_data(sources: ['README.md','LICENSE'], install_dir : docpath)
 install_data(sources: ['Web/Errors/404.html'], install_dir : webpath + '/Errors')
 install_data(sources: ['Web/Pages/Account.html','Web/Pages/RemoteServerTools.html','Web/Pages/ResetPassword.html'], install_dir : webpath + '/Pages')

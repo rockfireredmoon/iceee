@@ -17,17 +17,16 @@
 
 //Enable to include memory leak detection using CRT runtimes (Windows only)
 //#define _CRTDEBUGGING
-
 #include <CompilerEnvironment.h>
 
 #ifdef _CRTDEBUGGING
- #define _CRTDBG_MAP_ALLOC
+#define _CRTDBG_MAP_ALLOC
 #endif
 
 #include <stdlib.h>
 
 #ifdef _CRTDEBUGGING
- #include <crtdbg.h>
+#include <crtdbg.h>
 #endif
 #include <DebugTracer.h>
 #include <util/Log.h>
@@ -111,6 +110,13 @@
 #include <query/PlayerHandlers.h>
 #include <query/FormHandlers.h>
 #include <curl/curl.h>
+#include <http/TAWApi.h>
+#include <http/GameInfo.h>
+#include <http/LegacyAccounts.h>
+#include <http/WebControlPanel.h>
+#include <http/OAuth2.h>
+#include <http/CAR.h>
+
 #ifdef OUTPUT_TO_CONSOLE
 #define DAEMON_NO_CLOSE 1
 #else
@@ -118,10 +124,10 @@
 #endif
 #ifdef WINDOWS_SERVICE
 #include <windows.h>
-void  ServiceMain(int argc, char** argv);
+void ServiceMain(int argc, char** argv);
 SERVICE_STATUS ServiceStatus;
 SERVICE_STATUS_HANDLE hStatus;
-void  ControlHandler(DWORD request);
+void ControlHandler(DWORD request);
 int InitService();
 #else
 #include <unistd.h>
@@ -134,7 +140,7 @@ ChangeData g_AutoSaveTimer;
 int InitServerMain(int argc, char *argv[]);
 void RunServerMain(void);
 void SendHeartbeatMessages(void);
-void RunPendingMessages(void);  //Runs all pending messages in the BroadCastMessage class.
+void RunPendingMessages(void); //Runs all pending messages in the BroadCastMessage class.
 void SendDebugPings();
 void ShutDown(void);
 void UnloadResources(void);
@@ -164,8 +170,7 @@ void SystemLoop_Console(void);
 #include <signal.h>
 #include <execinfo.h>
 
-void segfault_sigaction(int signum, siginfo_t *si, void *arg)
-{
+void segfault_sigaction(int signum, siginfo_t *si, void *arg) {
 	crashing = true;
 
 	/* Uninstall signal handlers so if any happen while processing
@@ -182,15 +187,24 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 
 	bool ok = signum == SIGTERM || signum == SIGINT;
 
-	if(!ok) {
+	if (!ok) {
 		g_Logs.server->fatal("Signal encountered: %v", signum);
-		switch(signum)
-		{
-		case SIGABRT: g_Logs.server->fatal("Caught: SIGABRT"); break;
-		case SIGINT: g_Logs.server->fatal("Caught: SIGINT"); break;
-		case SIGSEGV: g_Logs.server->fatal("Caught: SIGSEGV"); break;
-		case SIGPIPE: g_Logs.server->fatal("Caught: SIGPIPE"); break;
-		default: g_Logs.server->fatal("Caught signal: %v", signum); break;
+		switch (signum) {
+		case SIGABRT:
+			g_Logs.server->fatal("Caught: SIGABRT");
+			break;
+		case SIGINT:
+			g_Logs.server->fatal("Caught: SIGINT");
+			break;
+		case SIGSEGV:
+			g_Logs.server->fatal("Caught: SIGSEGV");
+			break;
+		case SIGPIPE:
+			g_Logs.server->fatal("Caught: SIGPIPE");
+			break;
+		default:
+			g_Logs.server->fatal("Caught signal: %v", signum);
+			break;
 		}
 		void *ptrBuf[256];
 
@@ -198,16 +212,16 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 		g_Logs.server->fatal("Number of poXinters: %v", numPtr);
 		char **result = backtrace_symbols(ptrBuf, numPtr);
 		g_Logs.server->fatal("Stack trace:");
-		if(result != NULL)
-		{
-			for(int a = 0; a < numPtr; a++) {
+		if (result != NULL) {
+			for (int a = 0; a < numPtr; a++) {
 				std::string line = "UNKNOWN";
 				std::vector<std::string> parts;
 				Util::Split(result[a], " ", parts);
-				if(parts.size() > 0) {
+				if (parts.size() > 0) {
 					std::string addr = parts[parts.size() - 1];
 					char cmd[512];
-					Util::SafeFormat(cmd, sizeof(cmd), "addr2line -e %s -a %s", g_Executable, addr.c_str());
+					Util::SafeFormat(cmd, sizeof(cmd), "addr2line -e %s -a %s",
+							g_Executable, addr.c_str());
 					line = Util::CaptureCommand(cmd);
 				}
 				g_Logs.server->fatal("  %v %v", result[a], line);
@@ -218,7 +232,7 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 		g_Logs.server->fatal("Stack trace finished");
 	}
 
-	if(!ok) {
+	if (!ok) {
 		g_Logs.server->fatal("Debug::LastAbility: %v", Debug::LastAbility);
 		g_Logs.server->fatal("Debug::CreatureDefID: %v", Debug::CreatureDefID);
 		g_Logs.server->fatal("Debug::LastName: %v", Debug::LastName);
@@ -228,24 +242,34 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 		g_Logs.server->fatal("Debug::LastTileZone: %v", Debug::LastTileZone);
 		g_Logs.server->fatal("Debug::LastTileX: %v", Debug::LastTileX);
 		g_Logs.server->fatal("Debug::LastTileY: %v", Debug::LastTileY);
-		g_Logs.server->fatal("Debug::LastTilePropID: %v", Debug::LastTilePropID);
+		g_Logs.server->fatal("Debug::LastTilePropID: %v",
+				Debug::LastTilePropID);
 		g_Logs.server->fatal("Debug::LastTilePtr: %v", Debug::LastTilePtr);
-		g_Logs.server->fatal("Debug::LastTilePackage: %v", Debug::LastTilePackage);
+		g_Logs.server->fatal("Debug::LastTilePackage: %v",
+				Debug::LastTilePackage);
 
-		g_Logs.server->fatal("Debug::LastFlushSimulatorID: %v", Debug::LastFlushSimulatorID);
+		g_Logs.server->fatal("Debug::LastFlushSimulatorID: %v",
+				Debug::LastFlushSimulatorID);
 
-		g_Logs.server->fatal("Debug::ActivateAbility_cInst: %v", Debug::ActivateAbility_cInst);
-		g_Logs.server->fatal("Debug::ActivateAbility_ability: %v", Debug::ActivateAbility_ability);
-		g_Logs.server->fatal("Debug::ActivateAbility_ActionType: %v", Debug::ActivateAbility_ActionType);
-		g_Logs.server->fatal("Debug::ActivateAbility_abTargetCount: %v", Debug::ActivateAbility_abTargetCount);
+		g_Logs.server->fatal("Debug::ActivateAbility_cInst: %v",
+				Debug::ActivateAbility_cInst);
+		g_Logs.server->fatal("Debug::ActivateAbility_ability: %v",
+				Debug::ActivateAbility_ability);
+		g_Logs.server->fatal("Debug::ActivateAbility_ActionType: %v",
+				Debug::ActivateAbility_ActionType);
+		g_Logs.server->fatal("Debug::ActivateAbility_abTargetCount: %v",
+				Debug::ActivateAbility_abTargetCount);
 		g_Logs.server->fatal("Debug::ActivateAbility_abTargetList: ");
-		for(size_t i = 0; i < MAXTARGET; i++)
-			g_Logs.server->fatal("  [%v]=%v", i, Debug::ActivateAbility_abTargetList[i]);
+		for (size_t i = 0; i < MAXTARGET; i++)
+			g_Logs.server->fatal("  [%v]=%v", i,
+					Debug::ActivateAbility_abTargetList[i]);
 
-		g_Logs.server->fatal("Debug::LastSimulatorID: %v", Debug::LastSimulatorID);
+		g_Logs.server->fatal("Debug::LastSimulatorID: %v",
+				Debug::LastSimulatorID);
 		SIMULATOR_IT it;
-		for(it = Simulator.begin(); it != Simulator.end(); ++it)
-			g_Logs.server->fatal("Sim:%v %v = %v", it->InternalID, &*it, it->pld.CreatureDefID);
+		for (it = Simulator.begin(); it != Simulator.end(); ++it)
+			g_Logs.server->fatal("Sim:%v %v = %v", it->InternalID, &*it,
+					it->pld.CreatureDefID);
 
 		g_Logs.server->fatal("Finished running messages");
 		Debug_FullDump();
@@ -254,12 +278,14 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 	UnloadResources();
 
 	if (!ok) {
-		if(g_Config.ServiceAuthURL.size() > 0 && g_Config.SiteServiceUsername.size() > 0) {
+		if (g_Config.ServiceAuthURL.size() > 0
+				&& g_Config.SiteServiceUsername.size() > 0) {
 			g_Logs.server->fatal("Posting forum report");
 			SiteClient siteClient(g_Config.ServiceAuthURL);
 			HTTPD::SiteSession siteSession;
 			siteClient.refreshXCSRF(&siteSession);
-			siteClient.login(&siteSession, g_Config.SiteServiceUsername, g_Config.SiteServicePassword);
+			siteClient.login(&siteSession, g_Config.SiteServiceUsername,
+					g_Config.SiteServicePassword);
 			if (siteClient.postCrashReport(&siteSession, signum) == 0) {
 				g_Logs.server->fatal("Posted forum report");
 			} else {
@@ -267,14 +293,16 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 			}
 		}
 
-		if(g_Config.ShutdownHandlerScript.size() > 0) {
+		if (g_Config.ShutdownHandlerScript.size() > 0) {
 			char scriptCall[g_Config.ShutdownHandlerScript.size() + 64];
-			g_Logs.server->fatal("Calling shutdown handler script %v", g_Config.ShutdownHandlerScript);
+			g_Logs.server->fatal("Calling shutdown handler script %v",
+					g_Config.ShutdownHandlerScript);
 			Util::SafeFormat(scriptCall, sizeof(scriptCall), "%s %d",
-					g_Config.ShutdownHandlerScript.c_str(),
-					signum);
+					g_Config.ShutdownHandlerScript.c_str(), signum);
 
-			g_Logs.server->fatal("Shutdown handler script %v completed with status %v", g_Config.ShutdownHandlerScript, system(scriptCall));
+			g_Logs.server->fatal(
+					"Shutdown handler script %v completed with status %v",
+					g_Config.ShutdownHandlerScript, system(scriptCall));
 		}
 	}
 
@@ -283,8 +311,7 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 	return;
 }
 
-void InstallSignalHandler(void)
-{
+void InstallSignalHandler(void) {
 	//signal(SIGPIPE, SIG_IGN);
 
 	struct sigaction sa;
@@ -322,20 +349,19 @@ int main(int argc, char *argv[]) {
 #ifdef WINDOWS_SERVICE
 
 	/* By default the working directory will be the \Windows\System32. This is no good for us,
-		 * we need to be wherever the exectuable is	 *
-		 */
+	 * we need to be wherever the exectuable is	 *
+	 */
 	char buffer[MAX_PATH];
 	GetModuleFileName(NULL, buffer, MAX_PATH);
 	std::string dn = Platform::Dirname(buffer);
 	PLATFORM_CHDIR(dn.c_str());
-
 
 	SERVICE_TABLE_ENTRY ServiceTable[2];
 	ServiceTable[0].lpServiceName = "TAWD";
 	ServiceTable[0].lpServiceProc = (LPSERVICE_MAIN_FUNCTION)ServiceMain;
 	ServiceTable[1].lpServiceName = NULL;
 	ServiceTable[1].lpServiceProc = NULL;
-    StartServiceCtrlDispatcher(ServiceTable);
+	StartServiceCtrlDispatcher(ServiceTable);
 #else
 #ifdef WINDOWS_GUI
 	return InitServerMain(0, 0);
@@ -345,28 +371,27 @@ int main(int argc, char *argv[]) {
 #endif
 }
 
-
 #ifdef WINDOWS_SERVICE
 void ServiceMain(int argc, char** argv) {
 
-    int error;
-    ServiceStatus.dwServiceType        = SERVICE_WIN32;
-    ServiceStatus.dwCurrentState       = SERVICE_START_PENDING;
-    ServiceStatus.dwControlsAccepted   = SERVICE_ACCEPT_STOP | SERVICE_ACCEPT_SHUTDOWN;
-    ServiceStatus.dwWin32ExitCode      = 0;
-    ServiceStatus.dwServiceSpecificExitCode = 0;
-    ServiceStatus.dwCheckPoint         = 0;
-    ServiceStatus.dwWaitHint           = 0;
+	int error;
+	ServiceStatus.dwServiceType = SERVICE_WIN32;
+	ServiceStatus.dwCurrentState = SERVICE_START_PENDING;
+	ServiceStatus.dwControlsAccepted = SERVICE_ACCEPT_STOP | SERVICE_ACCEPT_SHUTDOWN;
+	ServiceStatus.dwWin32ExitCode = 0;
+	ServiceStatus.dwServiceSpecificExitCode = 0;
+	ServiceStatus.dwCheckPoint = 0;
+	ServiceStatus.dwWaitHint = 0;
 
-    SetServiceStatus (hStatus, &ServiceStatus);
+	SetServiceStatus (hStatus, &ServiceStatus);
 
-    hStatus = RegisterServiceCtrlHandler(
-		"TAWD",
-		(LPHANDLER_FUNCTION)ControlHandler);
+	hStatus = RegisterServiceCtrlHandler(
+			"TAWD",
+			(LPHANDLER_FUNCTION)ControlHandler);
 
-    if (hStatus == (SERVICE_STATUS_HANDLE)0) {
-        return;
-    }
+	if (hStatus == (SERVICE_STATUS_HANDLE)0) {
+		return;
+	}
 
 //	std::string cwd = Platform::GetDirectory();
 //	std::string exe = argv[0];
@@ -379,14 +404,14 @@ void ServiceMain(int argc, char** argv) {
 //
 //	Platform::SetDirectory(cwd);
 
-    InitServerMain();
+	InitServerMain();
 }
 #endif
 
 int InitServerMain(int argc, char *argv[]) {
 	TRACE_INIT(250);
 
-	if(PLATFORM_GETCWD(g_WorkingDirectory, 256) == NULL) {
+	if (PLATFORM_GETCWD(g_WorkingDirectory, 256) == NULL) {
 		printf("Failed to get current working directory.");
 		return 0;
 	}
@@ -397,52 +422,43 @@ int InitServerMain(int argc, char *argv[]) {
 	bool consoleOut = false;
 	bool configSet = false;
 
-	for(int i = 0 ; i < argc ; i++) {
-		if(i == 0) {
-			if(Util::HasBeginning(argv[i], "/"))
+	for (int i = 0; i < argc; i++) {
+		if (i == 0) {
+			if (Util::HasBeginning(argv[i], "/"))
 				strcpy(g_Executable, argv[i]);
 			else
-				Util::SafeFormat(g_Executable, 512, "%s/%s", g_WorkingDirectory, argv[i]);
-		}
-		else if(strcmp(argv[i], "-d") == 0)
+				Util::SafeFormat(g_Executable, 512, "%s/%s", g_WorkingDirectory,
+						argv[i]);
+		} else if (strcmp(argv[i], "-d") == 0)
 			daemonize = true;
-		else if(strcmp(argv[i], "-p") == 0) {
+		else if (strcmp(argv[i], "-p") == 0) {
 			pidfile = argv[++i];
-		}
-		else if(strcmp(argv[i], "-c") == 0) {
-			if(!configSet) {
+		} else if (strcmp(argv[i], "-c") == 0) {
+			if (!configSet) {
 				configSet = true;
 				g_Config.LocalConfigurationPath.clear();
 			}
 			g_Config.LocalConfigurationPath.push_back(argv[++i]);
-		}
-		else if(strcmp(argv[i], "-C") == 0) {
+		} else if (strcmp(argv[i], "-C") == 0) {
 			consoleOut = true;
-		}
-		else if(strcmp(argv[i], "-I") == 0) {
+		} else if (strcmp(argv[i], "-I") == 0) {
 			el::Loggers::addFlag(el::LoggingFlag::ImmediateFlush);
-		}
-		else if(strcmp(argv[i], "-L") == 0) {
+		} else if (strcmp(argv[i], "-L") == 0) {
 			i++;
-			if(i < argc) {
+			if (i < argc) {
 				std::string str = argv[i];
 				Util::ToLowerCase(str);
-				if(str.compare("info") == 0) {
+				if (str.compare("info") == 0) {
 					lvl = el::Level::Info;
-				}
-				else if(str.compare("debug") == 0) {
+				} else if (str.compare("debug") == 0) {
 					lvl = el::Level::Debug;
-				}
-				else if(str.compare("error") == 0) {
+				} else if (str.compare("error") == 0) {
 					lvl = el::Level::Error;
-				}
-				else if(str.compare("fatal") == 0) {
+				} else if (str.compare("fatal") == 0) {
 					lvl = el::Level::Fatal;
-				}
-				else if(str.compare("trace") == 0) {
+				} else if (str.compare("trace") == 0) {
 					lvl = el::Level::Trace;
-				}
-				else if(str.compare("warning") == 0) {
+				} else if (str.compare("warning") == 0) {
 					lvl = el::Level::Warning;
 				}
 			}
@@ -469,7 +485,9 @@ int InitServerMain(int argc, char *argv[]) {
 	for (std::vector<std::string>::iterator it = paths.begin();
 			it != paths.end(); ++it) {
 		std::string dir = *it;
-		LoadConfig(Platform::JoinPath(dir, "ServerConfig.txt"));
+		std::string filename = Platform::JoinPath(dir, "ServerConfig.txt");
+		if(!LoadConfig(filename) && it == paths.begin())
+			g_Logs.data->error("Could not open server configuration file: %v", filename);
 	}
 	g_Logs.server->info("Working directory %v.", g_WorkingDirectory);
 
@@ -480,7 +498,8 @@ int InitServerMain(int argc, char *argv[]) {
 	g_Logs.server->info("Loading data files...");
 
 	// Lobby Message Handlers
-	g_MessageManager.lobbyMessageHandlers[20] = new AcknowledgeHeartbeatMessage();
+	g_MessageManager.lobbyMessageHandlers[20] =
+			new AcknowledgeHeartbeatMessage();
 	g_MessageManager.lobbyMessageHandlers[1] = new LobbyAuthenticateMessage();
 	g_MessageManager.lobbyMessageHandlers[4] = new InspectItemDefMessage();
 	g_MessageManager.lobbyMessageHandlers[2] = new SelectPersonaMessage();
@@ -501,19 +520,25 @@ int InitServerMain(int argc, char *argv[]) {
 	g_MessageManager.messageHandlers[21] = new MouseClickMessage();
 
 	// Lobby Query Handlers
-	g_QueryManager.lobbyQueryHandlers["account.tracking"] = new AccountTrackingHandler();
-	g_QueryManager.lobbyQueryHandlers["persona.list"] = new PersonaListHandler();
-	g_QueryManager.lobbyQueryHandlers["persona.create"] = new PersonaCreateHandler();
-	g_QueryManager.lobbyQueryHandlers["persona.delete"] = new PersonaDeleteHandler();
+	g_QueryManager.lobbyQueryHandlers["account.tracking"] =
+			new AccountTrackingHandler();
+	g_QueryManager.lobbyQueryHandlers["persona.list"] =
+			new PersonaListHandler();
+	g_QueryManager.lobbyQueryHandlers["persona.create"] =
+			new PersonaCreateHandler();
+	g_QueryManager.lobbyQueryHandlers["persona.delete"] =
+			new PersonaDeleteHandler();
 	g_QueryManager.lobbyQueryHandlers["mod.getURL"] = new ModGetURLHandler();
-	g_QueryManager.lobbyQueryHandlers["game.abilities"] = new AbilitiesHandler();
+	g_QueryManager.lobbyQueryHandlers["game.abilities"] =
+			new AbilitiesHandler();
 
 	// Game Query Handlers
 	g_QueryManager.queryHandlers["clan.disband"] = new ClanDisbandHandler();
 	g_QueryManager.queryHandlers["clan.create"] = new ClanCreateHandler();
 	g_QueryManager.queryHandlers["clan.info"] = new ClanInfoHandler();
 	g_QueryManager.queryHandlers["clan.invite"] = new ClanInviteHandler();
-	g_QueryManager.queryHandlers["clan.invite.accept"] = new ClanInviteAcceptHandler();
+	g_QueryManager.queryHandlers["clan.invite.accept"] =
+			new ClanInviteAcceptHandler();
 	g_QueryManager.queryHandlers["clan.leave"] = new ClanLeaveHandler();
 	g_QueryManager.queryHandlers["clan.remove"] = new ClanRemoveHandler();
 	g_QueryManager.queryHandlers["clan.motd"] = new ClanMotdHandler();
@@ -521,22 +546,27 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["clan.rank"] = new ClanRankHandler();
 	g_QueryManager.queryHandlers["pref.get"] = new PrefGetHandler();
 	g_QueryManager.queryHandlers["pref.set"] = new PrefSetHandler();
-	g_QueryManager.queryHandlers["item.market.buy"] = new CreditShopBuyHandler();
-	g_QueryManager.queryHandlers["item.market.list"] = new CreditShopListHandler();
-	g_QueryManager.queryHandlers["item.market.edit"] = new CreditShopEditHandler();
-	g_QueryManager.queryHandlers["item.market.purchase.name"] = new CreditShopPurchaseNameHandler();
-
+	g_QueryManager.queryHandlers["item.market.buy"] =
+			new CreditShopBuyHandler();
+	g_QueryManager.queryHandlers["item.market.list"] =
+			new CreditShopListHandler();
+	g_QueryManager.queryHandlers["item.market.edit"] =
+			new CreditShopEditHandler();
+	g_QueryManager.queryHandlers["item.market.purchase.name"] =
+			new CreditShopPurchaseNameHandler();
 
 	g_QueryManager.queryHandlers["util.addFunds"] = new AddFundsHandler();
 	g_QueryManager.queryHandlers["zone.mode"] = new PVPZoneModeHandler();
 	g_QueryManager.queryHandlers["updateContent"] = new UpdateContentHandler();
-	g_QueryManager.queryHandlers["statuseffect.set"] = new StatusEffectSetHandler();
+	g_QueryManager.queryHandlers["statuseffect.set"] =
+			new StatusEffectSetHandler();
 	g_QueryManager.queryHandlers["gm.spawn"] = new GMSpawnHandler();
 	g_QueryManager.queryHandlers["gm.summon"] = new SummonHandler();
 
 	g_QueryManager.queryHandlers["skadd"] = new SidekickAddHandler();
 	g_QueryManager.queryHandlers["skremove"] = new SidekickRemoveHandler();
-	g_QueryManager.queryHandlers["skremoveall"] = new SidekickRemoveAllHandler();
+	g_QueryManager.queryHandlers["skremoveall"] =
+			new SidekickRemoveAllHandler();
 	g_QueryManager.queryHandlers["skattack"] = new SidekickAttackHandler();
 	g_QueryManager.queryHandlers["skdefend"] = new SidekickDefendHandler();
 	g_QueryManager.queryHandlers["skcall"] = new SidekickCallHandler();
@@ -544,13 +574,16 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["sklow"] = new SidekickLowHandler();
 	g_QueryManager.queryHandlers["skparty"] = new SidekickPartyHandler();
 	g_QueryManager.queryHandlers["skscatter"] = new SidekickScatterHandler();
-	g_QueryManager.queryHandlers["sidekick.notifyex"] = new SidekickNotifyExpHandler();
+	g_QueryManager.queryHandlers["sidekick.notifyex"] =
+			new SidekickNotifyExpHandler();
 
 	g_QueryManager.queryHandlers["vault.size"] = new VaultSizeHandler();
 	g_QueryManager.queryHandlers["vault.send"] = new VaultSendHandler();
 	g_QueryManager.queryHandlers["vault.expand"] = new VaultExpandHandler();
-	g_QueryManager.queryHandlers["ah.contents"] = new AuctionHouseContentsHandler();
-	g_QueryManager.queryHandlers["ah.auction"] = new AuctionHouseAuctionHandler();
+	g_QueryManager.queryHandlers["ah.contents"] =
+			new AuctionHouseContentsHandler();
+	g_QueryManager.queryHandlers["ah.auction"] =
+			new AuctionHouseAuctionHandler();
 	g_QueryManager.queryHandlers["ah.bid"] = new AuctionHouseBidHandler();
 	g_QueryManager.queryHandlers["ah.buy"] = new AuctionHouseBuyHandler();
 
@@ -565,28 +598,42 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["marker.edit"] = new MarkerEditHandler();
 	g_QueryManager.queryHandlers["marker.del"] = new MarkerDelHandler();
 
-	g_QueryManager.queryHandlers["quest.indicator"] = new QuestIndicatorHandler();
-	g_QueryManager.queryHandlers["quest.getquestoffer"] = new QuestGetOfferHandler();
-	g_QueryManager.queryHandlers["quest.genericdata"] = new QuestGenericDataHandler();
+	g_QueryManager.queryHandlers["quest.indicator"] =
+			new QuestIndicatorHandler();
+	g_QueryManager.queryHandlers["quest.getquestoffer"] =
+			new QuestGetOfferHandler();
+	g_QueryManager.queryHandlers["quest.genericdata"] =
+			new QuestGenericDataHandler();
 	g_QueryManager.queryHandlers["quest.join"] = new QuestJoinHandler();
 	g_QueryManager.queryHandlers["quest.list"] = new QuestListHandler();
 	g_QueryManager.queryHandlers["quest.data"] = new QuestDataHandler();
-	g_QueryManager.queryHandlers["quest.getcompletequest"] = new QuestGetCompleteHandler();
+	g_QueryManager.queryHandlers["quest.getcompletequest"] =
+			new QuestGetCompleteHandler();
 	g_QueryManager.queryHandlers["quest.complete"] = new QuestCompleteHandler();
 	g_QueryManager.queryHandlers["quest.leave"] = new QuestLeaveHandler();
 	g_QueryManager.queryHandlers["quest.hack"] = new QuestHackHandler();
 	g_QueryManager.queryHandlers["quest.share"] = new QuestShareHandler();
 
-	g_QueryManager.queryHandlers["mod.igforum.getcategory"] = new IGFGetCategoryHandler();
-	g_QueryManager.queryHandlers["mod.igforum.opencategory"] = new IGFOpenCategoryHandler();
-	g_QueryManager.queryHandlers["mod.igforum.openthread"] = new IGFOpenThreadHandler();
-	g_QueryManager.queryHandlers["mod.igforum.sendpost"] = new IGFSendPostHandler();
-	g_QueryManager.queryHandlers["mod.igforum.deletepost"] = new IGFDeletePostHandler();
-	g_QueryManager.queryHandlers["mod.igforum.setlockstatus"] = new IGFSetLockStatusHandler();
-	g_QueryManager.queryHandlers["mod.igforum.setstickystatus"] = new IGFSetStickyStatusHandler();
-	g_QueryManager.queryHandlers["mod.igforum.editobject"] = new IGFEditObjectHandler();
-	g_QueryManager.queryHandlers["mod.igforum.deleteobject"] = new IGFDeleteObjectHandler();
-	g_QueryManager.queryHandlers["mod.igforum.runaction"] = new IGFRunActionHandler();
+	g_QueryManager.queryHandlers["mod.igforum.getcategory"] =
+			new IGFGetCategoryHandler();
+	g_QueryManager.queryHandlers["mod.igforum.opencategory"] =
+			new IGFOpenCategoryHandler();
+	g_QueryManager.queryHandlers["mod.igforum.openthread"] =
+			new IGFOpenThreadHandler();
+	g_QueryManager.queryHandlers["mod.igforum.sendpost"] =
+			new IGFSendPostHandler();
+	g_QueryManager.queryHandlers["mod.igforum.deletepost"] =
+			new IGFDeletePostHandler();
+	g_QueryManager.queryHandlers["mod.igforum.setlockstatus"] =
+			new IGFSetLockStatusHandler();
+	g_QueryManager.queryHandlers["mod.igforum.setstickystatus"] =
+			new IGFSetStickyStatusHandler();
+	g_QueryManager.queryHandlers["mod.igforum.editobject"] =
+			new IGFEditObjectHandler();
+	g_QueryManager.queryHandlers["mod.igforum.deleteobject"] =
+			new IGFDeleteObjectHandler();
+	g_QueryManager.queryHandlers["mod.igforum.runaction"] =
+			new IGFRunActionHandler();
 	g_QueryManager.queryHandlers["mod.igforum.move"] = new IGFMoveHandler();
 
 	g_QueryManager.queryHandlers["trade.shop"] = new TradeShopHandler();
@@ -601,14 +648,16 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["scenery.list"] = new SceneryListHandler();
 	g_QueryManager.queryHandlers["scenery.edit"] = new SceneryEditHandler();
 	g_QueryManager.queryHandlers["scenery.delete"] = new SceneryDeleteHandler();
-	g_QueryManager.queryHandlers["scenery.link.add"] = new SceneryLinkAddHandler();
-	g_QueryManager.queryHandlers["scenery.link.del"] = new SceneryLinkDelHandler();
-
+	g_QueryManager.queryHandlers["scenery.link.add"] =
+			new SceneryLinkAddHandler();
+	g_QueryManager.queryHandlers["scenery.link.del"] =
+			new SceneryLinkDelHandler();
 
 	g_QueryManager.queryHandlers["bug.report"] = new BugReportHandler();
 	g_QueryManager.queryHandlers["petition.send"] = new PetitionSendHandler();
 	g_QueryManager.queryHandlers["petition.list"] = new PetitionListHandler();
-	g_QueryManager.queryHandlers["petition.doaction"] = new PetitionDoActionHandler();
+	g_QueryManager.queryHandlers["petition.doaction"] =
+			new PetitionDoActionHandler();
 
 	g_QueryManager.queryHandlers["book.list"] = new BookListHandler();
 	g_QueryManager.queryHandlers["book.get"] = new BookGetHandler();
@@ -621,11 +670,13 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["item.split"] = new ItemSplitHandler();
 	g_QueryManager.queryHandlers["item.delete"] = new ItemDeleteHandler();
 	g_QueryManager.queryHandlers["item.create"] = new ItemCreateHandler();
-	g_QueryManager.queryHandlers["itemdef.contents"] = new ItemDefContentsHandler();
+	g_QueryManager.queryHandlers["itemdef.contents"] =
+			new ItemDefContentsHandler();
 	g_QueryManager.queryHandlers["itemdef.delete"] = new ItemDefDeleteHandler();
 	g_QueryManager.queryHandlers["item.morph"] = new ItemMorphHandler();
 	g_QueryManager.queryHandlers["shop.contents"] = new ShopContentsHandler();
-	g_QueryManager.queryHandlers["essenceShop.contents"] = new EssenceShopContentsHandler();
+	g_QueryManager.queryHandlers["essenceShop.contents"] =
+			new EssenceShopContentsHandler();
 	g_QueryManager.queryHandlers["mod.itempreview"] = new ItemPreviewHandler();
 	g_QueryManager.queryHandlers["craft.create"] = new CraftCreateHandler();
 	g_QueryManager.queryHandlers["mod.craft"] = new ModCraftHandler();
@@ -638,19 +689,26 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["friends.list"] = new ListFriendsHandler();
 	g_QueryManager.queryHandlers["friends.remove"] = new RemoveFriendHandler();
 	g_QueryManager.queryHandlers["friends.status"] = new FriendStatusHandler();
-	g_QueryManager.queryHandlers["friends.getstatus"] = new GetFriendStatusHandler();
+	g_QueryManager.queryHandlers["friends.getstatus"] =
+			new GetFriendStatusHandler();
 
-	g_QueryManager.queryHandlers["ab.remainingcooldowns"] = new AbilityRemainingCooldownsHandler();
-	g_QueryManager.queryHandlers["ab.ownage.list"] = new AbilityOwnageListHandler();
+	g_QueryManager.queryHandlers["ab.remainingcooldowns"] =
+			new AbilityRemainingCooldownsHandler();
+	g_QueryManager.queryHandlers["ab.ownage.list"] =
+			new AbilityOwnageListHandler();
 	g_QueryManager.queryHandlers["ab.buy"] = new AbilityBuyHandler();
 	g_QueryManager.queryHandlers["ab.respec"] = new AbilityRespecHandler();
-	g_QueryManager.queryHandlers["ab.respec.price"] = new AbilityRespecPriceHandler();
+	g_QueryManager.queryHandlers["ab.respec.price"] =
+			new AbilityRespecPriceHandler();
 	g_QueryManager.queryHandlers["buff.remove"] = new BuffRemoveHandler();
 
-	g_QueryManager.queryHandlers["creature.isusable"] = new CreatureIsUsableHandler();
-	g_QueryManager.queryHandlers["creature.def.edit"] = new CreatureDefEditHandler();
+	g_QueryManager.queryHandlers["creature.isusable"] =
+			new CreatureIsUsableHandler();
+	g_QueryManager.queryHandlers["creature.def.edit"] =
+			new CreatureDefEditHandler();
 	g_QueryManager.queryHandlers["creature.use"] = new CreatureUseHandler();
-	g_QueryManager.queryHandlers["creature.delete"] = new CreatureDeleteHandler();
+	g_QueryManager.queryHandlers["creature.delete"] =
+			new CreatureDeleteHandler();
 
 	g_QueryManager.queryHandlers["mod.pet.list"] = new PetListHandler();
 	g_QueryManager.queryHandlers["mod.pet.purchase"] = new PetPurchaseHandler();
@@ -663,17 +721,23 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["spawn.emitters"] = new SpawnEmittersHandler();
 
 	g_QueryManager.queryHandlers["go"] = new GoHandler();
-	g_QueryManager.queryHandlers["mod.grove.togglecycle"] = new GroveEnvironmentCycleToggleHandler();
-	g_QueryManager.queryHandlers["mod.setenvironment"] = new SetEnvironmentHandler();
+	g_QueryManager.queryHandlers["mod.grove.togglecycle"] =
+			new GroveEnvironmentCycleToggleHandler();
+	g_QueryManager.queryHandlers["mod.setenvironment"] =
+			new SetEnvironmentHandler();
 	g_QueryManager.queryHandlers["shard.list"] = new ShardListHandler();
 	g_QueryManager.queryHandlers["world.list"] = new WorldListHandler();
 	g_QueryManager.queryHandlers["shard.set"] = new ShardSetHandler();
 	g_QueryManager.queryHandlers["henge.setDest"] = new HengeSetDestHandler();
 	g_QueryManager.queryHandlers["map.marker"] = new MapMarkerHandler();
-	g_QueryManager.queryHandlers["mod.setgrovestart"] = new SetGroveStartHandler();
-	g_QueryManager.queryHandlers["portal.acceptRequest"] = new PortalAcceptRequestHandler();
-	g_QueryManager.queryHandlers["build.template.list"] = new BuildTemplateListHandler();
-	g_QueryManager.queryHandlers["mod.getdungeonprofiles"] = new GetDungeonProfilesHandler();
+	g_QueryManager.queryHandlers["mod.setgrovestart"] =
+			new SetGroveStartHandler();
+	g_QueryManager.queryHandlers["portal.acceptRequest"] =
+			new PortalAcceptRequestHandler();
+	g_QueryManager.queryHandlers["build.template.list"] =
+			new BuildTemplateListHandler();
+	g_QueryManager.queryHandlers["mod.getdungeonprofiles"] =
+			new GetDungeonProfilesHandler();
 	g_QueryManager.queryHandlers["mod.setats"] = new SetATSHandler();
 
 	g_QueryManager.queryHandlers["mod.morestats"] = new MoreStatsHandler();
@@ -685,11 +749,14 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["persona.gm"] = new PersonaGMHandler();
 	g_QueryManager.queryHandlers["util.version"] = new VersionHandler();
 
-	g_QueryManager.queryHandlers["mod.restoreappearance"] = new RestoreAppearanceHandler();
+	g_QueryManager.queryHandlers["mod.restoreappearance"] =
+			new RestoreAppearanceHandler();
 	g_QueryManager.queryHandlers["account.info"] = new AccountInfoHandler();
-	g_QueryManager.queryHandlers["account.fulfill"] = new AccountFulfillHandler();
+	g_QueryManager.queryHandlers["account.fulfill"] =
+			new AccountFulfillHandler();
 	g_QueryManager.queryHandlers["mod.emote"] = new EmoteHandler();
-	g_QueryManager.queryHandlers["mod.emotecontrol"] = new EmoteControlHandler();
+	g_QueryManager.queryHandlers["mod.emotecontrol"] =
+			new EmoteControlHandler();
 	g_QueryManager.queryHandlers["persona.resCost"] = new ResCostHandler();
 	g_QueryManager.queryHandlers["guild.info"] = new GuildInfoHandler();
 	g_QueryManager.queryHandlers["guild.leave"] = new GuildLeaveHandler();
@@ -699,8 +766,10 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["party.ismember"] = new PartyIsMemberHandler();
 	g_QueryManager.queryHandlers["ps.join"] = new PrivateChannelJoinHandler();
 	g_QueryManager.queryHandlers["ps.leave"] = new PrivateChannelLeaveHandler();
-	g_QueryManager.queryHandlers["player.achievements"] = new PlayerAchievementsHandler();
-	g_QueryManager.queryHandlers["achievement.def"] = new AchievementDefHandler();
+	g_QueryManager.queryHandlers["player.achievements"] =
+			new PlayerAchievementsHandler();
+	g_QueryManager.queryHandlers["achievement.def"] =
+			new AchievementDefHandler();
 
 	// Commands
 	g_QueryManager.queryHandlers["team"] = new PVPTeamHandler();
@@ -717,7 +786,8 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["partylowest"] = new PartyLowestHandler();
 	g_QueryManager.queryHandlers["who"] = new WhoHandler();
 	g_QueryManager.queryHandlers["gmwho"] = new GMWhoHandler();
-	g_QueryManager.queryHandlers["chwho"] = new CHWhoHandler();;
+	g_QueryManager.queryHandlers["chwho"] = new CHWhoHandler();
+	;
 	g_QueryManager.queryHandlers["listshards"] = new ListShardsHandler();
 	g_QueryManager.queryHandlers["time"] = new TimeHandler();
 	g_QueryManager.queryHandlers["give"] = new GiveHandler();
@@ -741,8 +811,10 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["ban"] = new BanHandler();
 	g_QueryManager.queryHandlers["unban"] = new UnbanHandler();
 	g_QueryManager.queryHandlers["setpermission"] = new SetPermissionHandler();
-	g_QueryManager.queryHandlers["setbuildpermission"] = new SetBuildPermissionHandler();
-	g_QueryManager.queryHandlers["setpermissionc"] = new SetPermissionCHandler();
+	g_QueryManager.queryHandlers["setbuildpermission"] =
+			new SetBuildPermissionHandler();
+	g_QueryManager.queryHandlers["setpermissionc"] =
+			new SetPermissionCHandler();
 	g_QueryManager.queryHandlers["setbehavior"] = new SetBehaviorHandler();
 	g_QueryManager.queryHandlers["deriveset"] = new DeriveSetHandler();
 	g_QueryManager.queryHandlers["igstatus"] = new IGStatusHandler();
@@ -757,7 +829,8 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["sping"] = new SpingHandler();
 	g_QueryManager.queryHandlers["info"] = new InfoHandler();
 	g_QueryManager.queryHandlers["grovesetting"] = new GroveSettingHandler();
-	g_QueryManager.queryHandlers["grovepermission"] = new GrovePermissionsHandler();
+	g_QueryManager.queryHandlers["grovepermission"] =
+			new GrovePermissionsHandler();
 	g_QueryManager.queryHandlers["dngscale"] = new DngScaleHandler();
 	g_QueryManager.queryHandlers["pathlinks"] = new PathLinksHandler();
 	g_QueryManager.queryHandlers["targ"] = new TargHandler();
@@ -772,20 +845,24 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["warpg"] = new WarpPullHandler();
 	g_QueryManager.queryHandlers["warpt"] = new WarpTileHandler();
 	g_QueryManager.queryHandlers["warpg"] = new WarpGroveHandler();
-	g_QueryManager.queryHandlers["warpextoff"] = new WarpExternalOfflineHandler();
+	g_QueryManager.queryHandlers["warpextoff"] =
+			new WarpExternalOfflineHandler();
 	g_QueryManager.queryHandlers["warpext"] = new WarpExternalHandler();
 	g_QueryManager.queryHandlers["instance"] = new InstanceHandler();
 	g_QueryManager.queryHandlers["script.exec"] = new ScriptExecHandler();
 	g_QueryManager.queryHandlers["script.time"] = new ScriptTimeHandler();
 	g_QueryManager.queryHandlers["script.gc"] = new ScriptGCHandler();
 	g_QueryManager.queryHandlers["script.wakevm"] = new ScriptWakeVMHandler();
-	g_QueryManager.queryHandlers["script.clearqueue"] = new ScriptClearQueueHandler();
-	g_QueryManager.queryHandlers["user.auth.reset"] = new UserAuthResetHandler();
+	g_QueryManager.queryHandlers["script.clearqueue"] =
+			new ScriptClearQueueHandler();
+	g_QueryManager.queryHandlers["user.auth.reset"] =
+			new UserAuthResetHandler();
 	g_QueryManager.queryHandlers["maintain"] = new MaintainHandler();
 	g_QueryManager.queryHandlers["achievements"] = new AchievementsHandler();
 
 	// Some are shared
-	LootNeedGreedPassHandler *lootNeedGreedPassHandler = new LootNeedGreedPassHandler();
+	LootNeedGreedPassHandler *lootNeedGreedPassHandler =
+			new LootNeedGreedPassHandler();
 	g_QueryManager.queryHandlers["loot.need"] = lootNeedGreedPassHandler;
 	g_QueryManager.queryHandlers["loot.greed"] = lootNeedGreedPassHandler;
 	g_QueryManager.queryHandlers["loot.pass"] = lootNeedGreedPassHandler;
@@ -812,42 +889,72 @@ int InitServerMain(int argc, char *argv[]) {
 	for (std::vector<std::string>::iterator it = paths.begin();
 			it != paths.end(); ++it) {
 		std::string dir = *it;
-		g_ClusterManager.LoadConfiguration(Platform::JoinPath(dir, "Cluster.txt"));
+		g_ClusterManager.LoadConfiguration(
+				Platform::JoinPath(dir, "Cluster.txt"));
 	}
 
-	if(!g_ClusterManager.Init()) {
+	if (!g_ClusterManager.Init()) {
 		return 0;
 	}
 
-	g_Logs.data->info("Loaded %v checksums.", g_FileChecksum.mChecksumData.size());
-
 	g_EnvironmentCycleManager.Init();
+	g_EnvironmentCycleManager.ApplyConfig(g_Config.EnvironmentCycle);
+
 	g_CharacterManager.CreateDefaultCharacter();
 	g_ItemManager.LoadData();
 	g_ItemSetManager.LoadData();
 	g_AchievementsManager.LoadItems();
-	g_Logs.data->info("Loaded %v Achievements.", g_AchievementsManager.mDefs.size());
-	g_ModManager.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "ItemMod"), "ModTables.txt"));
+	g_Logs.data->info("Loaded %v Achievements.",
+			g_AchievementsManager.mDefs.size());
+	g_ModManager.LoadFromFile(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"ItemMod"), "ModTables.txt"));
 	g_Logs.data->info("Loaded %v ModTables.", g_ModManager.modTable.size());
-	g_ModTemplateManager.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "ItemMod"), "ModTemplates.txt"));
-	g_Logs.data->info("Loaded %v ModTemplates.", g_ModTemplateManager.equipTemplate.size());
-	g_EquipAppearance.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "ItemMod"), "Appearances.txt"));
-	g_Logs.data->info("Loaded %v EquipAppearance.", g_EquipAppearance.dataEntry.size());
-	g_EquipIconAppearance.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "ItemMod"), "Icons.txt"));
-	g_Logs.data->info("Loaded %v EquipIconAppearance.", g_EquipIconAppearance.dataEntry.size());
-	g_EquipTable.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "ItemMod"), "EquipTable.txt"));
+	g_ModTemplateManager.LoadFromFile(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"ItemMod"), "ModTemplates.txt"));
+	g_Logs.data->info("Loaded %v ModTemplates.",
+			g_ModTemplateManager.equipTemplate.size());
+	g_EquipAppearance.LoadFromFile(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"ItemMod"), "Appearances.txt"));
+	g_Logs.data->info("Loaded %v EquipAppearance.",
+			g_EquipAppearance.dataEntry.size());
+	g_EquipIconAppearance.LoadFromFile(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"ItemMod"), "Icons.txt"));
+	g_Logs.data->info("Loaded %v EquipIconAppearance.",
+			g_EquipIconAppearance.dataEntry.size());
+	g_EquipTable.LoadFromFile(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"ItemMod"), "EquipTable.txt"));
 	g_Logs.data->info("Loaded %v EquipTable.", g_EquipTable.equipList.size());
-	g_NameTemplateManager.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "ItemMod"), "Names.txt"));
-	g_Logs.data->info("Loaded %v Name Templates.", g_NameTemplateManager.nameTemplate.size());
-	g_NameModManager.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "ItemMod"), "NameMod.txt"));
+	g_NameTemplateManager.LoadFromFile(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"ItemMod"), "Names.txt"));
+	g_Logs.data->info("Loaded %v Name Templates.",
+			g_NameTemplateManager.nameTemplate.size());
+	g_NameModManager.LoadFromFile(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"ItemMod"), "NameMod.txt"));
 	g_Logs.data->info("Loaded %v NameMods", g_NameModManager.mModList.size());
-	g_NameWeightManager.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "ItemMod"), "NameWeight.txt"));
-	g_Logs.data->info("Loaded %v NameWeight", g_NameWeightManager.mWeightList.size());
+	g_NameWeightManager.LoadFromFile(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"ItemMod"), "NameWeight.txt"));
+	g_Logs.data->info("Loaded %v NameWeight",
+			g_NameWeightManager.mWeightList.size());
 	g_VirtualItemModSystem.LoadSettings();
 	g_DropTableManager.LoadData();
 
 	g_AbilityManager.LoadData();
-
 
 	//g_VirtualItemModSystem.Debug_RunDropDiagnostic(20);
 
@@ -857,20 +964,33 @@ int InitServerMain(int argc, char *argv[]) {
 
 	//g_EquipAppearance.Debug_CheckForNames();
 
-
-	CreatureDef.LoadPackages(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Packages"), "CreaturePack.txt"));
+	CreatureDef.LoadPackages(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"Packages"), "CreaturePack.txt"));
 	g_Logs.data->info("Loaded %v CreatureDefs.", CreatureDef.NPC.size());
 
-	g_PetDefManager.LoadFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "Pets.txt"));
+	g_PetDefManager.LoadFile(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"Data"), "Pets.txt"));
 	g_Logs.data->info("Loaded %v PetDefs.", g_PetDefManager.GetStandardCount());
 
 	g_AccountManager.LoadAllData();
 
-	g_GambleManager.LoadFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "Gamble.txt"));
-	g_Logs.data->info("Loaded %v Gamble definitions.", g_GambleManager.GetStandardCount());
+	g_GambleManager.LoadFile(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"Data"), "Gamble.txt"));
+	g_Logs.data->info("Loaded %v Gamble definitions.",
+			g_GambleManager.GetStandardCount());
 
-	g_GuildManager.LoadFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "GuildDef.txt"));
-	g_Logs.data->info("Loaded %v Guild definitions.", g_GuildManager.GetStandardCount());
+	g_GuildManager.LoadFile(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"Data"), "GuildDef.txt"));
+	g_Logs.data->info("Loaded %v Guild definitions.",
+			g_GuildManager.GetStandardCount());
 
 	g_BookManager.Init();
 	g_Logs.data->info("Loaded %v Books.", g_BookManager.books.size());
@@ -879,55 +999,92 @@ int InitServerMain(int argc, char *argv[]) {
 	g_AuctionHouseManager.ConnectToSite();
 
 	g_NPCDialogManager.LoadItems();
-	g_Logs.data->info("Loaded %v NPC Dialog items.", g_NPCDialogManager.mItems.size());
+	g_Logs.data->info("Loaded %v NPC Dialog items.",
+			g_NPCDialogManager.mItems.size());
 
 	g_ZoneDefManager.LoadData();
 	g_GroveTemplateManager.LoadData();
 
-	g_ZoneBarrierManager.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "MapBarrier.txt"));
-	g_Logs.data->info("Loaded %v MapBarrier.", g_ZoneBarrierManager.GetLoadedCount());
+	g_ZoneBarrierManager.LoadFromFile(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"Data"), "MapBarrier.txt"));
+	g_Logs.data->info("Loaded %v MapBarrier.",
+			g_ZoneBarrierManager.GetLoadedCount());
 
-	g_ZoneMarkerDataManager.LoadFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "ZoneMarkers.txt"));
-	g_Logs.data->info("Loaded %v zones with marker data.", g_ZoneMarkerDataManager.zoneList.size());
+	g_ZoneMarkerDataManager.LoadFile(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"Data"), "ZoneMarkers.txt"));
+	g_Logs.data->info("Loaded %v zones with marker data.",
+			g_ZoneMarkerDataManager.zoneList.size());
 
-	MapDef.LoadFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "MapDef.txt"));
+	MapDef.LoadFile(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"Data"), "MapDef.txt"));
 	g_Logs.data->info("Loaded %v MapDef.", MapDef.mMapList.size());
 
-	MapLocation.LoadFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "MapLocations.txt"));
-	g_Logs.data->info("Loaded %v MapLocation zones.", MapLocation.mLocationSet.size());
+	MapLocation.LoadFile(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"Data"), "MapLocations.txt"));
+	g_Logs.data->info("Loaded %v MapLocation zones.",
+			MapLocation.mLocationSet.size());
 
-	g_WeatherManager.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "Weather.txt"));
-	g_Logs.data->info("Loaded %v weather definitions.", g_WeatherManager.mWeatherDefinitions.size());
+	g_WeatherManager.LoadFromFile(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"Data"), "Weather.txt"));
+	g_Logs.data->info("Loaded %v weather definitions.",
+			g_WeatherManager.mWeatherDefinitions.size());
 
-	if(!g_InfoManager.Init()) {
+	if (!g_InfoManager.Init()) {
 		return 0;
 	}
 	g_Logs.data->info("Loaded %v Tips.", g_InfoManager.GetTips().size());
 
 	g_SceneryManager.LoadData();
 
-	g_SpawnPackageManager.LoadFromFile(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "SpawnPackages"), "SpawnPackageList.txt");
-	g_Logs.data->info("Loaded %v Spawn Package lists.", g_SpawnPackageManager.packageList.size());
+	g_SpawnPackageManager.LoadFromFile(
+			Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+					"SpawnPackages"), "SpawnPackageList.txt");
+	g_Logs.data->info("Loaded %v Spawn Package lists.",
+			g_SpawnPackageManager.packageList.size());
 
-	QuestDef.LoadQuestPackages(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Packages"), "QuestPack.txt"));
+	QuestDef.LoadQuestPackages(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"Packages"), "QuestPack.txt"));
 	g_Logs.data->info("Loaded %v Quests.", QuestDef.mQuests.size());
-	QuestScript::LoadQuestScripts(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "QuestScript.txt"));
+	QuestScript::LoadQuestScripts(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"Data"), "QuestScript.txt"));
 	QuestDef.ResolveQuestMarkers();
 
-	g_InteractObjectContainer.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "InteractDef.txt"));
-	g_Logs.data->info("Loaded %v InteractDef.", g_InteractObjectContainer.objList.size());
+	g_InteractObjectContainer.LoadFromFile(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"Data"), "InteractDef.txt"));
+	g_Logs.data->info("Loaded %v InteractDef.",
+			g_InteractObjectContainer.objList.size());
 
 	g_CraftManager.LoadData();
 
 	g_EliteManager.LoadData();
 
-	Global::LoadResCostTable(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "ResCost.txt"));
+	Global::LoadResCostTable(
+			Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"Data"), "ResCost.txt"));
 
 	g_InstanceScaleManager.LoadData();
 	g_DropRateProfileManager.LoadData();
 
 	g_DailyProfileManager.LoadData();
-	g_Logs.data->info("Loaded %v Daily Profiles.", g_DailyProfileManager.GetNumberOfProfiles());
+	g_Logs.data->info("Loaded %v Daily Profiles.",
+			g_DailyProfileManager.GetNumberOfProfiles());
 
 	aiScriptManager.LoadScripts();
 	aiNutManager.LoadScripts();
@@ -938,12 +1095,10 @@ int InitServerMain(int argc, char *argv[]) {
 	WSAData wsaData;
 	int res = WSAStartup(MAKEWORD(2, 2), &wsaData);
 	if(res != 0)
-		LogMessage("WSAStartup failed: %d\n", res);
+	LogMessage("WSAStartup failed: %d\n", res);
 #endif
 
-
-	if(g_Config.Upgrade == 0)
-	{
+	if (g_Config.Upgrade == 0) {
 		Router.SetBindAddress(g_BindAddress);
 		SimulatorBase.SetBindAddress(g_BindAddress);
 	}
@@ -955,26 +1110,26 @@ int InitServerMain(int argc, char *argv[]) {
 //	}
 
 	g_FileChecksum.LoadFromFile();
+	g_Logs.data->info("Loaded %v checksums.",
+			g_FileChecksum.mChecksumData.size());
 
-	if(daemonize) {
+	if (daemonize) {
 		int ret = daemon(1, DAEMON_NO_CLOSE);
-		if(ret == 0) {
+		if (ret == 0) {
 			g_Logs.server->info("Daemonized!\n");
 			FILE *output = fopen(pidfile.c_str(), "wb");
-			if(output != NULL) {
+			if (output != NULL) {
 				fprintf(output, "%d\n", getpid());
 				fclose(output);
 			}
-		}
-		else {
+		} else {
 			g_Logs.FlushAll();
 			g_Logs.server->fatal("Failed to daemonize. %v\n", ret);
 			exit(1);
 		}
 	}
 
-	if(g_RouterPort != 0 && g_Config.Upgrade == 0)
-	{
+	if (g_RouterPort != 0 && g_Config.Upgrade == 0) {
 		Router.SetHomePort(g_RouterPort);
 		Router.SetTargetPort(g_SimulatorPort);
 		Router.InitThread(0, g_GlobalThreadID++);
@@ -982,7 +1137,6 @@ int InitServerMain(int argc, char *argv[]) {
 
 	SimulatorBase.SetHomePort(g_SimulatorPort);
 	SimulatorBase.InitThread(0, g_GlobalThreadID++);
-
 
 	g_PacketManager.LaunchThread();
 	g_SceneryManager.LaunchThread();
@@ -993,12 +1147,70 @@ int InitServerMain(int argc, char *argv[]) {
 
 	g_Logs.data->info("Server data has finished loading.");
 
+	// Info
+	if(g_Config.HTTPServeAssets)
+		g_HTTPService.RegisterHandler("**.car$", new HTTPD::CARHandler());
+
+	g_HTTPService.RegisterHandler("/info/*", new HTTPD::GameInfoHandler());
+
+	// API
+	if (g_Config.PublicAPI) {
+		g_HTTPService.RegisterHandler("/api/up", new HTTPD::UpHandler());
+		g_HTTPService.RegisterHandler("/api/who", new HTTPD::WhoHandler());
+		g_HTTPService.RegisterHandler("/api/chat", new HTTPD::ChatHandler());
+		g_HTTPService.RegisterHandler("/api/user/*", new HTTPD::UserHandler());
+		g_HTTPService.RegisterHandler("/api/character/*",
+				new HTTPD::CharacterHandler());
+		g_HTTPService.RegisterHandler("/api/user/*/groves",
+				new HTTPD::UserGrovesHandler());
+		g_HTTPService.RegisterHandler("/api/zone/*", new HTTPD::ZoneHandler());
+		g_HTTPService.RegisterHandler("/api/scenery/*", new HTTPD::SceneryHandler());
+		HTTPD::LeaderboardHandler* leaderboardHandler =
+				new HTTPD::LeaderboardHandler();
+		g_HTTPService.RegisterHandler("/api/leaderboard", leaderboardHandler);
+		g_HTTPService.RegisterHandler("/api/leaderboard/*",
+				leaderboardHandler);
+		HTTPD::CreditShopHandler* creditShopHandler = new HTTPD::CreditShopHandler();
+		g_HTTPService.RegisterHandler("/api/cs", creditShopHandler);
+		g_HTTPService.RegisterHandler("/api/cs/*", creditShopHandler);
+		HTTPD::ClanHandler* clanHandler = new HTTPD::ClanHandler();
+		g_HTTPService.RegisterHandler("/api/clans", clanHandler);
+		g_HTTPService.RegisterHandler("/api/clan/*", clanHandler);
+		HTTPD::GuildHandler* guildHandler = new HTTPD::GuildHandler();
+		g_HTTPService.RegisterHandler("/api/guilds", guildHandler);
+		g_HTTPService.RegisterHandler("/api/guild/*", guildHandler);
+		g_HTTPService.RegisterHandler("/api/item/*", new HTTPD::ItemHandler());
+		HTTPD::AuctionHandler* auctionHandler = new HTTPD::AuctionHandler();
+		g_HTTPService.RegisterHandler("/api/auction", auctionHandler);
+		g_HTTPService.RegisterHandler("/api/auction/*", auctionHandler);
+	}
+
+	// OAuth - Used to authenticate external services
+	if (g_Config.OAuth2Clients.size() > 0) {
+		g_HTTPService.RegisterHandler("/oauth/authorize",
+				new HTTPD::AuthorizeHandler());
+		g_HTTPService.RegisterHandler("/oauth/login", new HTTPD::LoginHandler());
+		g_HTTPService.RegisterHandler("/oauth/token", new HTTPD::TokenHandler());
+		g_HTTPService.RegisterHandler("/oauth/self", new HTTPD::SelfHandler());
+	}
+
+	// Legacy account maintenannce
+	if (g_Config.LegacyAccounts) {
+		g_HTTPService.RegisterHandler("/newaccount", new HTTPD::NewAccountHandler());
+		g_HTTPService.RegisterHandler("/resetpassword",
+				new HTTPD::ResetPasswordHandler());
+		g_HTTPService.RegisterHandler("/accountrecover",
+				new HTTPD::AccountRecoverHandler());
+	}
+
+	// Legacy web control panel
+	g_HTTPService.RegisterHandler("/remoteaction", new HTTPD::RemoteActionHandler());
 	g_HTTPService.Start();
 
 	srand(g_ServerLaunchTime & Platform::MAX_UINT);
 
 	g_ServerStatus = SERVER_STATUS_RUNNING;
-	if(VerifyOperation() == false)
+	if (VerifyOperation() == false)
 		g_ServerStatus = SERVER_STATUS_STOPPED;
 
 	RunUpgradeCheck();
@@ -1009,8 +1221,8 @@ int InitServerMain(int argc, char *argv[]) {
 	g_Logs.server->verbose(0, "The server is ready");
 
 #ifdef WINDOWS_SERVICE
-    ServiceStatus.dwCurrentState = SERVICE_RUNNING;
-    SetServiceStatus (hStatus, &ServiceStatus);
+	ServiceStatus.dwCurrentState = SERVICE_RUNNING;
+	SetServiceStatus (hStatus, &ServiceStatus);
 #endif
 
 	SystemLoop_Console();
@@ -1018,9 +1230,9 @@ int InitServerMain(int argc, char *argv[]) {
 	ShutDown();
 
 #ifdef WINDOWS_SERVICE
-    ServiceStatus.dwWin32ExitCode = 0;
-    ServiceStatus.dwCurrentState  = SERVICE_STOPPED;
-    SetServiceStatus (hStatus, &ServiceStatus);
+	ServiceStatus.dwWin32ExitCode = 0;
+	ServiceStatus.dwCurrentState = SERVICE_STOPPED;
+	SetServiceStatus (hStatus, &ServiceStatus);
 #endif
 
 	UnloadResources();
@@ -1035,39 +1247,38 @@ int InitServerMain(int argc, char *argv[]) {
 
 // Service initialization
 int InitService() {
-    int result;
-    //result = g_Log.AddmeWriteToLog("Monitoring started.");
-    return(result);
+	int result;
+	//result = g_Log.AddmeWriteToLog("Monitoring started.");
+	return(result);
 }
 
 // Control handler function
 void ControlHandler(DWORD request) {
 	// TODO proper cleanup
-    switch(request) {
+	switch(request) {
 
-        case SERVICE_CONTROL_STOP:
-            //WriteToLog("Monitoring stopped.");
+		case SERVICE_CONTROL_STOP:
+		//WriteToLog("Monitoring stopped.");
 
-            ServiceStatus.dwWin32ExitCode = 0;
-            ServiceStatus.dwCurrentState  = SERVICE_STOPPED;
-            SetServiceStatus (hStatus, &ServiceStatus);
-            return;
-        case SERVICE_CONTROL_SHUTDOWN:
-            //WriteToLog("Monitoring stopped.");
-            ServiceStatus.dwWin32ExitCode = 0;
-            ServiceStatus.dwCurrentState  = SERVICE_STOPPED;
-            SetServiceStatus (hStatus, &ServiceStatus);
-            return;
-        default:
-            break;
-    }
+		ServiceStatus.dwWin32ExitCode = 0;
+		ServiceStatus.dwCurrentState = SERVICE_STOPPED;
+		SetServiceStatus (hStatus, &ServiceStatus);
+		return;
+		case SERVICE_CONTROL_SHUTDOWN:
+		//WriteToLog("Monitoring stopped.");
+		ServiceStatus.dwWin32ExitCode = 0;
+		ServiceStatus.dwCurrentState = SERVICE_STOPPED;
+		SetServiceStatus (hStatus, &ServiceStatus);
+		return;
+		default:
+		break;
+	}
 
-    // Report current status
-    SetServiceStatus (hStatus,  &ServiceStatus);
-    return;
+	// Report current status
+	SetServiceStatus (hStatus, &ServiceStatus);
+	return;
 }
 #endif
-
 
 #ifdef WINDOWS_PLATFORM
 void SystemLoop_Windows(void)
@@ -1077,24 +1288,24 @@ void SystemLoop_Windows(void)
 
 	BEGINTRY
 	{
-	while(g_ServerStatus == SERVER_STATUS_RUNNING)
-	{
-		if(PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE) != 0)
+		while(g_ServerStatus == SERVER_STATUS_RUNNING)
 		{
-			if(GetMessage(&msg, NULL, 0, 0) != 0)
+			if(PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE) != 0)
 			{
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
+				if(GetMessage(&msg, NULL, 0, 0) != 0)
+				{
+					TranslateMessage(&msg);
+					DispatchMessage(&msg);
+					msg.message = 0;
+				}
+			}
+			else
+			{
 				msg.message = 0;
+				RunServerMain();
+				PLATFORM_SLEEP(g_MainSleep);
 			}
 		}
-		else
-		{
-			msg.message = 0;
-			RunServerMain();
-			PLATFORM_SLEEP(g_MainSleep);
-		}
-	}
 	} //End try
 	BEGINCATCH
 	{
@@ -1109,19 +1320,17 @@ void SystemLoop_Windows(void)
 }
 #endif //#ifdef WINDOWS_PLATFORM
 
-void SystemLoop_Console(void)
-{
+void SystemLoop_Console(void) {
 	BEGINTRY
 	{
-		while(g_ServerStatus == SERVER_STATUS_RUNNING)
-		{
+		while (g_ServerStatus == SERVER_STATUS_RUNNING) {
 			RunServerMain();
 			PLATFORM_SLEEP(g_MainSleep);
 		}
 	} //End try
 	BEGINCATCH
 	{
-		if(crashing) {
+		if (crashing) {
 			g_Logs.server->fatal("Exception occurred while handling a crash.");
 		} else {
 			Debug_FullDump();
@@ -1129,8 +1338,7 @@ void SystemLoop_Console(void)
 	}
 }
 
-bool VerifyOperation(void)
-{
+bool VerifyOperation(void) {
 	// Return true if the server appears to have loaded (all required
 	// listening ports are established).
 
@@ -1146,8 +1354,7 @@ bool VerifyOperation(void)
 	PLATFORM_SLEEP(2000);
 
 	int errorCount = 0;
-	while(true)
-	{
+	while (true) {
 //		if(g_HTTPListenPort > 0)
 //		{
 //			if(HTTPBaseServer.Status != Status_Wait)
@@ -1156,30 +1363,27 @@ bool VerifyOperation(void)
 //				errorCount++;
 //			}
 //		}
-		if(g_RouterPort > 0)
-		{
-			if(Router.Status != Status_Wait)
-			{
-				printf("The Router server is not operational. (Status: %s)\n", StatusPhaseStrings[Router.Status]);
+		if (g_RouterPort > 0) {
+			if (Router.Status != Status_Wait) {
+				printf("The Router server is not operational. (Status: %s)\n",
+						StatusPhaseStrings[Router.Status]);
 				errorCount++;
 			}
 		}
-		if(SimulatorBase.Status != Status_Wait)
-		{
-			printf("The Simulator base server is not operational. (Status: %s)\n", StatusPhaseStrings[SimulatorBase.Status]);
+		if (SimulatorBase.Status != Status_Wait) {
+			printf(
+					"The Simulator base server is not operational. (Status: %s)\n",
+					StatusPhaseStrings[SimulatorBase.Status]);
 			errorCount++;
 		}
 
-		if(errorCount == 0)
+		if (errorCount == 0)
 			return true;
 
-		if(errorCount < 10)
-		{
+		if (errorCount < 10) {
 			printf("\nWaiting 2 seconds...\n");
 			PLATFORM_SLEEP(2000);
-		}
-		else
-		{
+		} else {
 			printf("Failed too many attempts, shutting down.");
 			return false;
 		}
@@ -1187,8 +1391,7 @@ bool VerifyOperation(void)
 	return false;
 }
 
-void ShutDown(void)
-{
+void ShutDown(void) {
 	g_ClusterManager.Shutdown();
 
 	g_Logs.FlushAll();
@@ -1218,10 +1421,8 @@ void ShutDown(void)
 	g_Logs.server->info("Shutting down HTTP");
 	g_HTTPService.Shutdown();
 
-	if(g_RouterPort != 0)
-	{
-		if(Router.isExist == true)
-		{
+	if (g_RouterPort != 0) {
+		if (Router.isExist == true) {
 			g_Logs.server->info("Shutting down Router");
 			Router.isActive = false;
 			Router.sc.ShutdownServer();
@@ -1236,29 +1437,24 @@ void ShutDown(void)
 	g_Logs.server->info("Threads shut down, disconnecting all clients...");
 
 	SIMULATOR_IT it;
-	for(it = Simulator.begin(); it != Simulator.end(); ++it)
-	{
+	for (it = Simulator.begin(); it != Simulator.end(); ++it) {
 		it->isThreadActive = false;
 		it->sc.DisconnectClient();
 	}
 
 	//If any of the simulators are waiting 
 	long waitCount = 0;
-	if(ActiveComponents > 0) {
+	if (ActiveComponents > 0) {
 		g_Logs.server->info("Running any pending actions.");
 	}
-	while(ActiveComponents > 0)
-	{
+	while (ActiveComponents > 0) {
 		g_SimulatorManager.RunPendingActions();
 		waitCount++;
 		PLATFORM_SLEEP(5);
-		if(((waitCount + 1) % 2000) == 0)
-		{
+		if (((waitCount + 1) % 2000) == 0) {
 			SIMULATOR_IT it;
-			for(it = Simulator.begin(); it != Simulator.end(); ++it)
-			{
-				if(it->isThreadExist == true && it->isThreadActive)
-				{
+			for (it = Simulator.begin(); it != Simulator.end(); ++it) {
+				if (it->isThreadExist == true && it->isThreadActive) {
 					g_Logs.server->info("Forcing disconnect of clients.");
 					it->isThreadActive = false;
 					it->sc.DisconnectClient();
@@ -1267,15 +1463,14 @@ void ShutDown(void)
 		}
 	}
 
-	if(waitCount > 0)
+	if (waitCount > 0)
 		g_Logs.server->debug("Shutdown() waitcount: %v", waitCount);
 
 	//Characters can be unloaded only after the simulators have stopped using them.
 	g_CharacterManager.UnloadAllCharacters();
 }
 
-void UnloadResources(void)
-{
+void UnloadResources(void) {
 	g_Logs.server->info("Unloading server resources");
 
 	g_AccountManager.UnloadAllData();
@@ -1290,7 +1485,7 @@ void UnloadResources(void)
 
 	MapDef.FreeList();
 	g_ZoneDefManager.Free();
-	g_ActiveInstanceManager.Clear();  //Instances contain loot packages, which need to be freed before the Item system is destroyed.
+	g_ActiveInstanceManager.Clear(); //Instances contain loot packages, which need to be freed before the Item system is destroyed.
 	g_ItemManager.Free();
 	CreatureDef.Clear();
 	MapLocation.mLocationSet.clear();
@@ -1298,12 +1493,11 @@ void UnloadResources(void)
 	pendingOperations.Free();
 	g_SimulatorManager.Free();
 	g_Logs.FlushAll();
-		//Debugger.Destroy();
+	//Debugger.Destroy();
 	TRACE_FREE();
 }
 
-void RunServerMain(void)
-{
+void RunServerMain(void) {
 #ifdef DEBUG_TIME
 	Debug::TimeTrack("RunServerMain", 200);
 #endif
@@ -1315,16 +1509,16 @@ void RunServerMain(void)
 		int r = _heapchk();
 		switch(r)
 		{
-		case _HEAPBADBEGIN:
+			case _HEAPBADBEGIN:
 			g_Log.AddMessageFormatW(MSG_CRIT, "[CRITICAL] Initial header information is bad or cannot be found");
 			break;
-		case _HEAPBADNODE:
+			case _HEAPBADNODE:
 			g_Log.AddMessageFormatW(MSG_CRIT, "[CRITICAL] Bad node has been found or heap is damaged");
 			break;
-		case _HEAPBADPTR:
+			case _HEAPBADPTR:
 			g_Log.AddMessageFormatW(MSG_CRIT, "[CRITICAL] Pointer into heap is not valid");
 			break;
-		case _HEAPEMPTY:
+			case _HEAPEMPTY:
 			g_Log.AddMessageFormatW(MSG_CRIT, "[CRITICAL] Heap has not been initialized");
 			break;
 		}
@@ -1332,25 +1526,22 @@ void RunServerMain(void)
 #endif
 
 	static Timer simTimer;
-	if(simTimer.ReadyWithUpdate(2000))
-	{
+	if (simTimer.ReadyWithUpdate(2000)) {
 		SIMULATOR_IT it = Simulator.begin();
-		while(it != Simulator.end())
-		{
-			if(it->isThreadExist == false && it->isConnected == false && (g_ServerTime > it->LastUpdate + 2000))
-			{
+		while (it != Simulator.end()) {
+			if (it->isThreadExist == false && it->isConnected == false
+					&& (g_ServerTime > it->LastUpdate + 2000)) {
 				g_Logs.simulator->info("[%v] Erasing sim", it->InternalID);
 				g_SimulatorManager.baseByteSent += it->TotalSendBytes;
 				g_SimulatorManager.baseByteRec += it->TotalRecBytes;
 				Simulator.erase(it++);
-			}
-			else
+			} else
 				++it;
 		}
 	}
 
 	static Timer logTimer;
-	if(logTimer.ReadyWithUpdate(300000))
+	if (logTimer.ReadyWithUpdate(300000))
 		g_Logs.chat->flush();
 
 	g_SimulatorManager.RunPendingActions();
@@ -1359,33 +1550,28 @@ void RunServerMain(void)
 	g_ServerTime = g_PlatformTime.getMilliseconds();
 
 	SIMULATOR_IT it;
-	for(it = Simulator.begin(); it != Simulator.end(); ++it)
-	{
-		if(it->isConnected == false)
+	for (it = Simulator.begin(); it != Simulator.end(); ++it) {
+		if (it->isConnected == false)
 			continue;
-		if(it->ProtocolState != 1)
+		if (it->ProtocolState != 1)
 			continue;
 		//Most common gameplay state, listed first for fasted processing
-		if(it->LoadStage >= SimulatorThread::LOADSTAGE_LOADED)
-		{
-			if(it->IsGMInvisible() == true)
+		if (it->LoadStage >= SimulatorThread::LOADSTAGE_LOADED) {
+			if (it->IsGMInvisible() == true)
 				continue;
 			//Gameplay loop
-			if(it->pld.PendingMovement > 0)
-			{
-				if(it->creatureInst->Speed == 0)
-				{
-					if(g_ServerTime - it->pld.MovementTime >= (unsigned long)g_ForceUpdateTime)
-					{
+			if (it->pld.PendingMovement > 0) {
+				if (it->creatureInst->Speed == 0) {
+					if (g_ServerTime - it->pld.MovementTime
+							>= (unsigned long) g_ForceUpdateTime) {
 						it->pld.PendingMovement = 0;
 						it->pld.MovementTime = 0;
-						it->AddMessage((long)it->creatureInst, 0, BCM_UpdateFullPosition);
+						it->AddMessage((long) it->creatureInst, 0,
+								BCM_UpdateFullPosition);
 					}
 				}
-			}
-			else if(g_ServerTime - it->LastUpdate >= g_RebroadcastDelay)
-			{
-				it->AddMessage((long)it->creatureInst, 0, BCM_UpdatePosInc);
+			} else if (g_ServerTime - it->LastUpdate >= g_RebroadcastDelay) {
+				it->AddMessage((long) it->creatureInst, 0, BCM_UpdatePosInc);
 				it->LastUpdate = g_ServerTime;
 			}
 			BroadcastLocationToParty(*it);
@@ -1398,8 +1584,7 @@ void RunServerMain(void)
 	SendDebugPings();
 	g_SceneryManager.CheckAutosave(false);
 
-	if(g_AutoSaveTimer.IsLastChangeSince(5000) == true)
-	{
+	if (g_AutoSaveTimer.IsLastChangeSince(5000) == true) {
 		int r = 0;
 		r += g_ZoneDefManager.CheckAutoSave(false);
 		g_AutoSaveTimer.ClearPending();
@@ -1412,23 +1597,20 @@ void RunServerMain(void)
 	g_AccountManager.RunUpdateCycle(false);
 }
 
-void CheckCharacterAutosave(bool force)
-{
-	if(Simulator.size() == 0)
+void CheckCharacterAutosave(bool force) {
+	if (Simulator.size() == 0)
 		return;
 	static Timer characterAutoSave;
-	if(characterAutoSave.ReadyWithUpdate(300000) == true || (force == true))
-	{
+	if (characterAutoSave.ReadyWithUpdate(300000) == true || (force == true)) {
 		int count = 0;
 		SIMULATOR_IT it;
-		for(it = Simulator.begin(); it != Simulator.end(); ++it)
-		{
-			if(it->ProtocolState != 1)
+		for (it = Simulator.begin(); it != Simulator.end(); ++it) {
+			if (it->ProtocolState != 1)
 				continue;
 
-			if(it->pld.charPtr == NULL)
+			if (it->pld.charPtr == NULL)
 				continue;
-			
+
 			it->SaveCharacterStats();
 			g_CharacterManager.SaveCharacter(it->pld.CreatureDefID);
 			count++;
@@ -1437,33 +1619,32 @@ void CheckCharacterAutosave(bool force)
 	}
 }
 
-void SendHeartbeatMessages(void)
-{
+void SendHeartbeatMessages(void) {
 	static Timer heartbeatTimer;
 	int wpos = 0;
-	if(heartbeatTimer.ReadyWithUpdate(g_Config.HeartbeatIntervalMS) == false)
+	if (heartbeatTimer.ReadyWithUpdate(g_Config.HeartbeatIntervalMS) == false)
 		return;
 
 	SIMULATOR_IT it;
-	for(it = Simulator.begin(); it != Simulator.end(); ++it)
-	{
-		if(it->isConnected == false)
+	for (it = Simulator.begin(); it != Simulator.end(); ++it) {
+		if (it->isConnected == false)
 			continue;
 
-		if(it->ProtocolState == 0 && g_Config.SendLobbyHeartbeat == false)
+		if (it->ProtocolState == 0 && g_Config.SendLobbyHeartbeat == false)
 			continue;
 
 		//Don't send any message if they're actively sending data to the server.
-		if(g_ServerTime < (it->LastRecv + g_Config.HeartbeatIntervalMS))
+		if (g_ServerTime < (it->LastRecv + g_Config.HeartbeatIntervalMS))
 			continue;
 
 		//Receiving a heartbeat message during casts seems to interrupt animations.
-		if(it->creatureInst->ab[0].bPending == true)
+		if (it->creatureInst->ab[0].bPending == true)
 			continue;
 
-		if(wpos == 0) {  //Prep the buffer once, but only if we need it.
-			unsigned long elapsed = ( g_ServerTime - g_ServerLaunchTime);
-			wpos = PrepExt_SendHeartbeatMessage(GSendBuf, elapsed - it->LastHeartbeatSend);
+		if (wpos == 0) {  //Prep the buffer once, but only if we need it.
+			unsigned long elapsed = (g_ServerTime - g_ServerLaunchTime);
+			wpos = PrepExt_SendHeartbeatMessage(GSendBuf,
+					elapsed - it->LastHeartbeatSend);
 			it->LastHeartbeatSend = elapsed;
 		}
 
@@ -1472,10 +1653,8 @@ void SendHeartbeatMessages(void)
 	}
 }
 
-
-void RunActiveInstances(void)
-{
-	for(size_t i = 0; i < g_ActiveInstanceManager.instListPtr.size(); i++)
+void RunActiveInstances(void) {
+	for (size_t i = 0; i < g_ActiveInstanceManager.instListPtr.size(); i++)
 		g_ActiveInstanceManager.instListPtr[i]->RunProcessingCycle();
 
 	pendingOperations.UpdateList_Process();
@@ -1485,96 +1664,93 @@ void RunActiveInstances(void)
 	//they need to be deleted after a certain amount of time.
 	g_ActiveInstanceManager.CheckActiveInstances();
 
-	
-	if(g_ZoneDefManager.ZoneUnloadReady() == true)
-	{
+	if (g_ZoneDefManager.ZoneUnloadReady() == true) {
 		std::vector<int> activeList;
-		for(size_t i = 0; i < g_ActiveInstanceManager.instListPtr.size(); i++)
+		for (size_t i = 0; i < g_ActiveInstanceManager.instListPtr.size(); i++)
 			activeList.push_back(g_ActiveInstanceManager.instListPtr[i]->mZone);
 		g_ZoneDefManager.UnloadInactiveZones(activeList);
 	}
 
-	if(g_SceneryManager.IsGarbageCheckReady() == true)
-	{
+	if (g_SceneryManager.IsGarbageCheckReady() == true) {
 		ActiveLocation::CONTAINER activeList;
-		for(size_t i = 0; i < g_ActiveInstanceManager.instListPtr.size(); i++)
-		{
+		for (size_t i = 0; i < g_ActiveInstanceManager.instListPtr.size();
+				i++) {
 			ActiveInstance *inst = g_ActiveInstanceManager.instListPtr[i];
 			activeList.push_back(inst->mZone);
 			/*
-			for(size_t p = 0; p < inst->PlayerListPtr.size(); p++)
-			{
-				int zone = inst->mZone;
-				int tileX = inst->PlayerListPtr[p]->CurrentX / inst->mZoneDefPtr->mPageSize;
-				int tileY = inst->PlayerListPtr[p]->CurrentZ / inst->mZoneDefPtr->mPageSize;
-				activeList.push_back(ActiveLocation(zone, tileX, tileY));
-			}*/
+			 for(size_t p = 0; p < inst->PlayerListPtr.size(); p++)
+			 {
+			 int zone = inst->mZone;
+			 int tileX = inst->PlayerListPtr[p]->CurrentX / inst->mZoneDefPtr->mPageSize;
+			 int tileY = inst->PlayerListPtr[p]->CurrentZ / inst->mZoneDefPtr->mPageSize;
+			 activeList.push_back(ActiveLocation(zone, tileX, tileY));
+			 }*/
 		}
-		g_SceneryManager.GetThread("ActiveInstanceManager::CheckActiveInstances");
+		g_SceneryManager.GetThread(
+				"ActiveInstanceManager::CheckActiveInstances");
 		g_SceneryManager.TransferActiveLocations(activeList);
 		g_SceneryManager.ReleaseThread();
 	}
 }
 
-
-void RunPendingMessages(void)
-{
+void RunPendingMessages(void) {
 	//Get a quick size to see if operations are pending.
 	//If so, get the real size from within the critical section, since a mismatch
 	//might occur.  Process the messages in the order they were added.  Delete
 	//the list when done.
-	if(bcm.mlog.size() == 0)
+	if (bcm.mlog.size() == 0)
 		return;
 
 	bcm.EnterCS("RunPendingMessages");
-	for(size_t i = 0; i < bcm.mlog.size(); i++)
-	{
+	for (size_t i = 0; i < bcm.mlog.size(); i++) {
 #ifdef DEBUG_TIME
 		Debug::TimeTrack("RunPendingMessages", 100);
 #endif
 
 		MessageComponent *msg = &bcm.mlog[i];
 
-		if(msg->actInst != NULL)
+		if (msg->actInst != NULL)
 			msg->actInst->ProcessMessage(msg);
 		else
-			g_Logs.server->error("Invalid Active Instance [%v] message for Sim:%v", msg->actInst, msg->SimulatorID);
+			g_Logs.server->error(
+					"Invalid Active Instance [%v] message for Sim:%v",
+					msg->actInst, msg->SimulatorID);
 	}
 	bcm.mlog.clear();
 	bcm.LeaveCS();
 }
 
-void SendDebugPings(void)
-{
-	if(g_Config.DebugPingServer == false)
+void SendDebugPings(void) {
+	if (g_Config.DebugPingServer == false)
 		return;
 
 	static char sendBuf[256];
 	static Timer pingTimer;
-	if(pingTimer.ReadyWithUpdate(g_Config.DebugPingFrequency) == false)
+	if (pingTimer.ReadyWithUpdate(g_Config.DebugPingFrequency) == false)
 		return;
 
 	int wpos = 0;
 	SIMULATOR_IT it;
-	for(it = Simulator.begin(); it != Simulator.end(); ++it)
-	{
-		if(it->CheckStateGameplayActive() == false)
+	for (it = Simulator.begin(); it != Simulator.end(); ++it) {
+		if (it->CheckStateGameplayActive() == false)
 			continue;
 
-		if(wpos == 0) //Need to build packet
-		{
-			wpos += PutByte(&sendBuf[wpos], 119);             //Modded client: _handleDebugServerPing
+		if (wpos == 0) //Need to build packet
+				{
+			wpos += PutByte(&sendBuf[wpos], 119); //Modded client: _handleDebugServerPing
 			wpos += PutShort(&sendBuf[wpos], 0);
-			wpos += PutInteger(&sendBuf[wpos], g_Config.internalStatus_PingID++);     //Global ping ID
-			wpos += PutInteger(&sendBuf[wpos], g_ServerTime - g_ServerLaunchTime);    //Send time
+			wpos += PutInteger(&sendBuf[wpos],
+					g_Config.internalStatus_PingID++);     //Global ping ID
+			wpos += PutInteger(&sendBuf[wpos],
+					g_ServerTime - g_ServerLaunchTime);    //Send time
 			PutShort(&sendBuf[1], wpos - 3);
 
 			//If the time is right, request information from the client.
 			g_Config.internalStatus_PingCount++;
-			if(g_Config.internalStatus_PingCount >= g_Config.DebugPingClientPollInterval)
-			{
+			if (g_Config.internalStatus_PingCount
+					>= g_Config.DebugPingClientPollInterval) {
 				int mpos = wpos;
-				wpos += PutByte(&sendBuf[wpos], 100);   //_handleModMessage   REQUIRES MODDED CLIENT
+				wpos += PutByte(&sendBuf[wpos], 100); //_handleModMessage   REQUIRES MODDED CLIENT
 				wpos += PutShort(&sendBuf[wpos], 0);
 				wpos += PutByte(&sendBuf[wpos], MODMESSAGE_EVENT_PING_QUERY);
 				PutShort(&sendBuf[mpos + 1], wpos - mpos - 3);
@@ -1587,76 +1763,91 @@ void SendDebugPings(void)
 	}
 }
 
-void Debug_OutputCharacter(FILE *output, int index, CreatureInstance *cInst)
-{
+void Debug_OutputCharacter(FILE *output, int index, CreatureInstance *cInst) {
 	//Helper function for outputting creature data.
-	fprintf(output, "  [%02d] = %s (Ptr: %p) ID: %d, CDef: %d, Fact: %d\r\n", index, cInst->css.display_name, cInst, cInst->CreatureID, cInst->CreatureDefID, cInst->Faction);
-	fprintf(output, "    Pos: %d, %d, %d\r\n", cInst->CurrentX, cInst->CurrentY, cInst->CurrentZ);
-	if(cInst->aiScript != NULL)
-	{
-		fprintf(output, "    AI TLS Ptr: %p (%s) curInst: %d\r\n", cInst->aiScript, cInst->aiScript->def->scriptName.c_str(), cInst->aiScript->curInst);
+	fprintf(output, "  [%02d] = %s (Ptr: %p) ID: %d, CDef: %d, Fact: %d\r\n",
+			index, cInst->css.display_name, cInst, cInst->CreatureID,
+			cInst->CreatureDefID, cInst->Faction);
+	fprintf(output, "    Pos: %d, %d, %d\r\n", cInst->CurrentX, cInst->CurrentY,
+			cInst->CurrentZ);
+	if (cInst->aiScript != NULL) {
+		fprintf(output, "    AI TLS Ptr: %p (%s) curInst: %d\r\n",
+				cInst->aiScript, cInst->aiScript->def->scriptName.c_str(),
+				cInst->aiScript->curInst);
 	}
-	if(cInst->aiNut != NULL)
-	{
-		fprintf(output, "    AI Squirrel Ptr: %p (%s)\r\n", cInst->aiNut, cInst->aiNut->def->scriptName.c_str());
+	if (cInst->aiNut != NULL) {
+		fprintf(output, "    AI Squirrel Ptr: %p (%s)\r\n", cInst->aiNut,
+				cInst->aiNut->def->scriptName.c_str());
 	}
-	fprintf(output, "    Target: %s (Ptr: %p)\r\n", (cInst->CurrentTarget.targ != NULL) ? cInst->CurrentTarget.targ->css.display_name : "null", cInst->CurrentTarget.targ);
-	fprintf(output, "    Might: %d (%d), Will: %d (%d)\r\n", cInst->css.might, cInst->css.might_charges, cInst->css.will, cInst->css.will_charges);
-	if(cInst->serverFlags & ServerFlags::IsPlayer)
-	{
+	fprintf(output, "    Target: %s (Ptr: %p)\r\n",
+			(cInst->CurrentTarget.targ != NULL) ?
+					cInst->CurrentTarget.targ->css.display_name : "null",
+			cInst->CurrentTarget.targ);
+	fprintf(output, "    Might: %d (%d), Will: %d (%d)\r\n", cInst->css.might,
+			cInst->css.might_charges, cInst->css.will, cInst->css.will_charges);
+	if (cInst->serverFlags & ServerFlags::IsPlayer) {
 		QuestReferenceContainer act = cInst->charPtr->questJournal.activeQuests;
-		for(std::vector<QuestReference>::iterator it = act.itemList.begin(); it != act.itemList.end(); ++it) {
+		for (std::vector<QuestReference>::iterator it = act.itemList.begin();
+				it != act.itemList.end(); ++it) {
 			QuestReference ref = *it;
-			fprintf(output, "    Quest: %d (ACT %d)\r\n", ref.QuestID, ref.CurAct);
+			fprintf(output, "    Quest: %d (ACT %d)\r\n", ref.QuestID,
+					ref.CurAct);
 
 			g_QuestNutManager.cs.Enter("QuestNutManager::GetActiveScript");
-			QuestScript::QuestNutPlayer *questScript = g_QuestNutManager.GetActiveScript(cInst->CreatureID, ref.QuestID);
+			QuestScript::QuestNutPlayer *questScript =
+					g_QuestNutManager.GetActiveScript(cInst->CreatureID,
+							ref.QuestID);
 			g_QuestNutManager.cs.Leave();
 
-			if(questScript != NULL && questScript->def != NULL) {
-				fprintf(output, "    Quest Script: %s \r\n", questScript->def->scriptName.c_str());
+			if (questScript != NULL && questScript->def != NULL) {
+				fprintf(output, "    Quest Script: %s \r\n",
+						questScript->def->scriptName.c_str());
 			}
 		}
 	}
 	int abi;
-	for(abi = 0; abi <= 1; abi++)
-	{
-		if(cInst->ab[abi].bPending == true)
-		{
-			fprintf(output, "    ab[%d] abID: %d, %d targets\r\n", abi, cInst->ab[abi].abilityID, cInst->ab[abi].TargetCount);
+	for (abi = 0; abi <= 1; abi++) {
+		if (cInst->ab[abi].bPending == true) {
+			fprintf(output, "    ab[%d] abID: %d, %d targets\r\n", abi,
+					cInst->ab[abi].abilityID, cInst->ab[abi].TargetCount);
 			int b;
-			for(b = 0; b < cInst->ab[abi].TargetCount; b++)
-			{
+			for (b = 0; b < cInst->ab[abi].TargetCount; b++) {
 				CreatureInstance *targ = cInst->ab[abi].TargetList[b];
-				fprintf(output, "      [%d] = %s (Ptr: %p)\r\n", b, (targ != NULL) ? targ->css.display_name : "null", targ);
+				fprintf(output, "      [%d] = %s (Ptr: %p)\r\n", b,
+						(targ != NULL) ? targ->css.display_name : "null", targ);
 			}
 		}
-		if(cInst->ab[abi].x != 0.0F)
-			fprintf(output, "    ab[%d] target loc: %g, %g, %g\r\n", abi, cInst->ab[abi].x, cInst->ab[abi].y, cInst->ab[abi].z);
+		if (cInst->ab[abi].x != 0.0F)
+			fprintf(output, "    ab[%d] target loc: %g, %g, %g\r\n", abi,
+					cInst->ab[abi].x, cInst->ab[abi].y, cInst->ab[abi].z);
 	}
-	if(cInst->AnchorObject != NULL)
-		fprintf(output, "    Officer: %s (Ptr: %p)\r\n", cInst->AnchorObject->css.display_name, cInst->AnchorObject);
+	if (cInst->AnchorObject != NULL)
+		fprintf(output, "    Officer: %s (Ptr: %p)\r\n",
+				cInst->AnchorObject->css.display_name, cInst->AnchorObject);
 
-	if(cInst->HasStatus(StatusEffects::AUTO_ATTACK))
+	if (cInst->HasStatus(StatusEffects::AUTO_ATTACK))
 		fprintf(output, "    AUTO_ATTACK");
-	if(cInst->HasStatus(StatusEffects::AUTO_ATTACK_RANGED))
+	if (cInst->HasStatus(StatusEffects::AUTO_ATTACK_RANGED))
 		fprintf(output, "    AUTO_ATTACK_RANGED");
-	if(cInst->HasStatus(StatusEffects::DEAD))
+	if (cInst->HasStatus(StatusEffects::DEAD))
 		fprintf(output, "    DEAD");
 	fprintf(output, "\r\n");
 }
 
-void Debug_FullDump(void)
-{
+void Debug_FullDump(void) {
 	g_Logs.server->fatal("Writing crash dump.");
-	FILE *output = fopen(Platform::JoinPath(g_Config.ResolveLogPath(), "CrashDump.log").c_str(), "wb");
-	if(output == NULL)
+	FILE *output =
+			fopen(
+					Platform::JoinPath(g_Config.ResolveLogPath(),
+							"CrashDump.log").c_str(), "wb");
+	if (output == NULL)
 		return;
 
 	fprintf(output, "Account Data:\r\n");
 	g_AccountManager.cs.Enter("Debug_FullDump");
 	AccountManager::ACCOUNT_ITERATOR accit;
-	for(accit = g_AccountManager.AccList.begin(); accit != g_AccountManager.AccList.end(); ++accit)
+	for (accit = g_AccountManager.AccList.begin();
+			accit != g_AccountManager.AccList.end(); ++accit)
 		fprintf(output, "%s = %p\r\n", accit->Name.c_str(), &*accit);
 	g_AccountManager.cs.Leave();
 	fprintf(output, "\r\n\r\n");
@@ -1665,8 +1856,11 @@ void Debug_FullDump(void)
 	fprintf(output, "Character Data:\r\n");
 	g_CharacterManager.GetThread("Debug_FullDump");
 	CharacterManager::CHARACTER_MAP::iterator charit;
-	for(charit = g_CharacterManager.charList.begin(); charit != g_CharacterManager.charList.end(); ++charit)
-		fprintf(output, "[%d,%d] Name: %s, Ptr: %p\r\n", charit->first, charit->second.cdef.CreatureDefID, charit->second.cdef.css.display_name, &charit->second);
+	for (charit = g_CharacterManager.charList.begin();
+			charit != g_CharacterManager.charList.end(); ++charit)
+		fprintf(output, "[%d,%d] Name: %s, Ptr: %p\r\n", charit->first,
+				charit->second.cdef.CreatureDefID,
+				charit->second.cdef.css.display_name, &charit->second);
 	g_CharacterManager.ReleaseThread();
 	fprintf(output, "\r\n\r\n");
 	fflush(output);
@@ -1676,29 +1870,32 @@ void Debug_FullDump(void)
 	fprintf(output, "Simulator Report:\r\n");
 	fflush(output);
 
-	fprintf(output, "Active Instances: %lu\r\n", g_ActiveInstanceManager.instList.size());
+	fprintf(output, "Active Instances: %lu\r\n",
+			g_ActiveInstanceManager.instList.size());
 	list<ActiveInstance>::iterator aInst;
 	int a;
-	for(aInst = g_ActiveInstanceManager.instList.begin(); aInst != g_ActiveInstanceManager.instList.end(); ++aInst)
-	{
-		fprintf(output, "ZoneID: %d, Players: %d\r\n", aInst->mZone, aInst->mPlayers);
+	for (aInst = g_ActiveInstanceManager.instList.begin();
+			aInst != g_ActiveInstanceManager.instList.end(); ++aInst) {
+		fprintf(output, "ZoneID: %d, Players: %d\r\n", aInst->mZone,
+				aInst->mPlayers);
 		fprintf(output, "Players: %lu\r\n", aInst->PlayerListPtr.size());
-		for(a = 0; a < (int)aInst->PlayerListPtr.size(); a++)
+		for (a = 0; a < (int) aInst->PlayerListPtr.size(); a++)
 			Debug_OutputCharacter(output, a, aInst->PlayerListPtr[a]);
 
-		fprintf(output, "\r\nSidekicks: %lu\r\n", aInst->SidekickListPtr.size());
-		for(a = 0; a < (int)aInst->SidekickListPtr.size(); a++)
+		fprintf(output, "\r\nSidekicks: %lu\r\n",
+				aInst->SidekickListPtr.size());
+		for (a = 0; a < (int) aInst->SidekickListPtr.size(); a++)
 			Debug_OutputCharacter(output, a, aInst->SidekickListPtr[a]);
 		fprintf(output, "\r\n\r\n");
 
 #ifndef CREATUREMAP
 		fprintf(output, "\r\nNPCs: %d\r\n", aInst->NPCListPtr.size());
 		for(a = 0; a < (int)aInst->NPCListPtr.size(); a++)
-			Debug_OutputCharacter(output, a, aInst->NPCListPtr[a]);
+		Debug_OutputCharacter(output, a, aInst->NPCListPtr[a]);
 		fprintf(output, "\r\n\r\n");
 #else
 		ActiveInstance::CREATURE_IT it;
-		for(it = aInst->NPCList.begin(); it != aInst->NPCList.end(); ++it)
+		for (it = aInst->NPCList.begin(); it != aInst->NPCList.end(); ++it)
 			Debug_OutputCharacter(output, a, &it->second);
 		fprintf(output, "\r\n\r\n");
 #endif
@@ -1706,45 +1903,43 @@ void Debug_FullDump(void)
 	fclose(output);
 }
 
-void RunUpgradeCheck(void)
-{
-	if(g_Config.Upgrade <= 0)
+void RunUpgradeCheck(void) {
+	if (g_Config.Upgrade <= 0)
 		return;
 
 	g_Logs.server->info("g_Config: Server upgraded, shutting down.");
 	g_ServerStatus = SERVER_STATUS_STOPPED;
 }
 
-void BroadcastLocationToParty(SimulatorThread &player)
-{
-	if(player.creatureInst->PartyID == 0)
+void BroadcastLocationToParty(SimulatorThread &player) {
+	if (player.creatureInst->PartyID == 0)
 		return;
 
-	if(g_ServerTime < player.pld.NextPartyLocationBroadcastTime)
+	if (g_ServerTime < player.pld.NextPartyLocationBroadcastTime)
 		return;
 
-	player.pld.NextPartyLocationBroadcastTime = g_ServerTime + g_Config.PartyPositionSendInterval;
+	player.pld.NextPartyLocationBroadcastTime = g_ServerTime
+			+ g_Config.PartyPositionSendInterval;
 
 	int size = 0;
 
 	SIMULATOR_IT it;
-	for(it = Simulator.begin(); it != Simulator.end(); ++it)
-	{
-		if(it->InternalID == player.InternalID)
+	for (it = Simulator.begin(); it != Simulator.end(); ++it) {
+		if (it->InternalID == player.InternalID)
 			continue;
-		if(it->isConnected == false)
+		if (it->isConnected == false)
 			continue;
-		if(it->ProtocolState != 1)
+		if (it->ProtocolState != 1)
 			continue;
-		if(it->creatureInst->PartyID != player.creatureInst->PartyID)
+		if (it->creatureInst->PartyID != player.creatureInst->PartyID)
 			continue;
 		//if(it->pld.CurrentInstanceID != player.pld.CurrentInstanceID)
 		//	continue;
 
-		int dist = ActiveInstance::GetPlaneRange(player.creatureInst, it->creatureInst, DISTANCE_FAILED);
-		if(dist > g_CreatureListenRange)
-		{
-			if(size == 0)
+		int dist = ActiveInstance::GetPlaneRange(player.creatureInst,
+				it->creatureInst, DISTANCE_FAILED);
+		if (dist > g_CreatureListenRange) {
+			if (size == 0)
 				size = PrepExt_CreaturePos(GSendBuf, player.creatureInst);
 			it->AttemptSend(GSendBuf, size);
 		}

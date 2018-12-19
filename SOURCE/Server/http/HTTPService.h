@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <ctime>
 #include <string>
+#include <map>
 #include "HTTP.h"
 
 namespace HTTPD {
@@ -41,8 +42,10 @@ public:
 	~HTTPService();
 	bool Start();
 	bool Shutdown();
+	void RegisterHandler(std::string name, CivetHandler *handler);
 private:
 	CivetServer *civetServer;
+	std::map<std::string, CivetHandler*> handlers;
 };
 
 }

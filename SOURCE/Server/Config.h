@@ -244,12 +244,14 @@ public:
 	bool PublicAPI;
 	bool DirectoryListing;
 	bool HTTPKeepAlive;
+	bool HTTPServeAssets;
 
 	std::string LegacyServer;			// URL of server to transfer groves from
 	std::string APIAuthentication;		// Username:Password to allow API authentication
 	std::string SiteServiceUsername;
 	std::string SiteServicePassword;
 	std::vector<std::string> LocalConfigurationPath;
+	std::string EnvironmentCycle;
 
 	unsigned int ClanCost;
 	bool Clans;
@@ -284,7 +286,7 @@ private:
 extern GlobalConfigData g_Config;
 
 void AppendString(std::string &dest, char *appendStr);
-void LoadConfig(std::string filename);
+bool LoadConfig(std::string filename);
 void LoadFileIntoString(std::string &dest, std::string filename);
 int SaveSession(std::string filename);
 int LoadStringsFile(std::string filename, vector<string> &list);
