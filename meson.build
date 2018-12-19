@@ -29,41 +29,48 @@ else
 endif
 
 # Logs
-if get_option('logdir') == ''
+if get_option('cfg_LogPath') == ''
 	logpath = get_option('localstatedir') + '/log/tawd'
 else
-	logpath = get_option('logdir')
+	logpath = get_option('cfg_LogPath')
 endif
 	
 # Variable Data (Scenery, Instance Data, Creature Edits)
-if get_option('variabledatadir') == ''
+if get_option('cfg_VariableDataPath') == ''
 	variabledatapath = get_option('localstatedir') + '/lib/tawd/Variable'
 else
-	variabledatapath = get_option('variabledatadir')
+	variabledatapath = get_option('cfg_VariableDataPath')
 endif
 	
 # Static Data (Creature Definitions, Items, Loot Tables and lots more)
-if get_option('staticdatadir') == ''
+if get_option('cfg_StaticDataPath') == ''
 	staticdatapath = get_option('prefix') + '/share/tawd/Static'
 else
-	staticdatapath = get_option('staticdatadir')
+	staticdatapath = get_option('cfg_StaticDataPath')
 endif
 
 # Temporary data (compiled scripts)
-tmpdir = get_option('tmpdir')
+tmpdir = get_option('cfg_TmpDir')
+
+# Wed directory (default path for web resources)
+if get_option('webdir') == ''
+	webpath = get_option('webdir') + '/share/tawd/Web'
+else
+	webpath = get_option('webdir')
+endif
 
 # Base path (default path for web resources)
-if get_option('basedir') == ''
+if get_option('cfg_BasePath') == ''
 	basepath = get_option('basedir') + '/share/tawd/Web'
 else
-	basepath = get_option('basedir')
+	basepath = get_option('cfg_BasePath')
 endif
 
 # CAR path (default path for client CAR files)
-if get_option('cardir') == ''
+if get_option('cfg_HTTPCARFolder') == ''
 	carpath = get_option('prefix') + '/share/tawd/Release'
 else
-	carpath = get_option('cardir')
+	carpath = get_option('cfg_HTTPCARFolder')
 endif
 
 # Documentation
@@ -360,5 +367,5 @@ endif
 
 install_data(sources: ['Local/ServerConfig.txt.sample','Local/LogConfig.txt.sample','Local/Cluster.txt.sample','Local/URL.txt.sample'], install_dir : docpath)
 install_data(sources: ['README.md','LICENSE'], install_dir : docpath)
-install_data(sources: ['Web/Errors/404.html'], install_dir : basepath + '/Errors')
-install_data(sources: ['Web/Pages/Account.html','Web/Pages/RemoteServerTools.html','Web/Pages/ResetPassword.html'], install_dir : basepath + '/Pages')
+install_data(sources: ['Web/Errors/404.html'], install_dir : webpath + '/Errors')
+install_data(sources: ['Web/Pages/Account.html','Web/Pages/RemoteServerTools.html','Web/Pages/ResetPassword.html'], install_dir : webpath + '/Pages')
