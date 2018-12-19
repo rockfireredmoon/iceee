@@ -10,6 +10,7 @@ option('cfg_BasePath', type: 'string', value: '', description: 'Path for web res
 option('cfg_TmpDir', type: 'string', value: '/tmp', description: 'Path to temporary data. Defaults to /tmp')
 
 # Build paths
+option('localconfigdir', type: 'string', value: 'Local', description: 'Default path to local configuration files (default to Local).')
 option('docdir', type: 'string', value: '', description: 'Path for documentations. Defaults to prefix/share/doc/tawd.')
 option('webdir', type: 'string', value: '', description: 'Path for web resource. Defaults to prefix/share/tawd/Web.')
 option('configdirs', type: 'string', value: 'Local', description: 'List of directories for executables to look for configuration files (default to localconfigdir).')
