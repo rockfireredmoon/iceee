@@ -1,11 +1,42 @@
 [ENTRY]
+ID=1000144
+Asset=CL-Holiday#CL-Holiday-WinterDawning-Lights1
+Name=
+Pos=11116.7,388.734,62682.8
+Orient=0,-0.734548,0,0.678557
+Scale=1,1,1
+
+[ENTRY]
+ID=1000146
+Asset=CL-Holiday-WinterDawning-Lights1
+Name=
+Pos=11115.2,388.734,62823.4
+Orient=0,0.734548,0,0.678557
+Scale=1,1,1
+
+[ENTRY]
+ID=1000149
+Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Banner
+Name=
+Pos=11150.4,298.025,62701.7
+Orient=0,-0.720831,0,0.693111
+Scale=2,2,2
+
+[ENTRY]
+ID=1000150
+Asset=Prop-Holiday-WinterDawning_Banner
+Name=
+Pos=11150.4,295.919,62810.3
+Orient=0,-0.744643,0,0.667463
+Scale=2,2,2
+
+[ENTRY]
 ID=10000080
 Asset=Manipulator-SpawnPoint
 Pos=10563,365,62569
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=167
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Heartwood_Arbormuse_990
 
 [ENTRY]
@@ -15,7 +46,6 @@ Pos=11181,214,62798
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=55
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Heartwood_Arbormuse_990
 
 [ENTRY]
@@ -25,7 +55,6 @@ Pos=11189,217,62719
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=65
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Heartwood_Arbormuse_990
 
 [ENTRY]
@@ -35,7 +64,6 @@ Pos=10745,226,62748
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=37
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Heartwood_Arbormuse_990
 
 [ENTRY]
@@ -45,7 +73,6 @@ Pos=10885,228,62611
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=246
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Heartwood_Arbormuse_990
 
 [ENTRY]
@@ -55,7 +82,6 @@ Pos=10785,232,62608
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=33
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Heartwood_Oakfist_988
 
 [ENTRY]
@@ -65,7 +91,6 @@ Pos=10953,225,62885
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=157
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Heartwood_Arbormuse_990
 
 [ENTRY]
@@ -75,7 +100,6 @@ Pos=10860,225,62972
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=125
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Heartwood_Oakfist_988
 
 [ENTRY]

@@ -144,6 +144,7 @@ public:
 
 	int PendingHeartbeatResponse;             //Should equalize to zero if communications are operating normally.
 	AppearanceModifier *creatureTweakModifier;
+	InteractObject *intObj;
 
 	//FUNCTIONS
 	void RunMainLoop(void);

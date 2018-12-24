@@ -2891,35 +2891,35 @@ Name=HOLIDAY_turkatriceKing_k_35
 ; DISABLED WHEN EVENT IS NOT ACTIVE
 [ENTRY]
 Name=HOLIDAY_wf09_snowmen_32_33
-;Spawn=2893,25  ;Chillkin (32)
-;Spawn=2894,25  ;Chillkin (33)
-;Spawn=2895,25  ;Chillkin (32)
-;Spawn=2896,25  ;Chillkin (33)
+Spawn=2893,25  ;Chillkin (32)
+Spawn=2894,25  ;Chillkin (33)
+Spawn=2895,25  ;Chillkin (32)
+Spawn=2896,25  ;Chillkin (33)
 
 ; DISABLED WHEN EVENT IS NOT ACTIVE
 [ENTRY]
 Name=HOLIDAY_wf09_snowmanKing_35
-;Spawn=2900,100  ;Chill Lord (35)
+Spawn=2900,100  ;Chill Lord (35)
 
 ; DISABLED WHEN EVENT IS NOT ACTIVE
 [ENTRY]
 Name=HOLIDAY_wf09_snowmen_26_27
-;Spawn=2889,25  ;Chillkin (26)
-;Spawn=2890,25  ;Chillkin (27)
-;Spawn=2891,25  ;Chillkin (26)
-;Spawn=2892,25  ;Chillkin (27)
+Spawn=2889,25  ;Chillkin (26)
+Spawn=2890,25  ;Chillkin (27)
+Spawn=2891,25  ;Chillkin (26)
+Spawn=2892,25  ;Chillkin (27)
 
 ; DISABLED WHEN EVENT IS NOT ACTIVE
 [ENTRY]
 Name=HOLIDAY_wf09_snowmanKing_30
-;Spawn=2899,100  ;Chill Lord (30)
+Spawn=2899,100  ;Chill Lord (30)
 
 ; DISABLED WHEN EVENT IS NOT ACTIVE
 [ENTRY]
 Name=HOLIDAY_wf09_gifts_return
 Shares=20
-;Spawn=2922,10 ; Gift(1)
-;Spawn=2923,10 ; Gift(1)
+Spawn=2922,10 ; Gift(1)
+Spawn=2923,10 ; Gift(1)
 
 
 ; NOTE: Although this says stepup, there's no indication from official gameplay

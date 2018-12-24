@@ -1,0 +1,11 @@
+[ENTRY]
+Name=HOLIDAY_wf09_grinch_20
+Spawn=2905,100  ;Grinch (20)
+
+[ENTRY]
+Name=HOLIDAY_wf09_grinch_30
+Spawn=2906,100  ;Grinch (30)
+
+[ENTRY]
+Name=HOLIDAY_wf09_grinch_35
+Spawn=2907,100  ;Grinch (35)

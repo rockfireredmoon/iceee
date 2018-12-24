@@ -9009,6 +9009,8 @@ int SimulatorThread :: handle_query_creature_use(void)
 				questNutScript->QueueAdd(questNutScript->activateEvent);
 
 			}
+
+			intObj = g_InteractObjectContainer.GetObjectByID(CDef, pld.CurrentZoneID);
 		}
 	}
 	else

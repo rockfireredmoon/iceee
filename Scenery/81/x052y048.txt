@@ -1,11 +1,18 @@
 [ENTRY]
+ID=1000100
+Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Tree
+Name=
+Pos=52820.1,205.675,48972
+Orient=0,0,0,1
+Scale=0.75,0.75,0.75
+
+[ENTRY]
 ID=10000170
 Asset=Manipulator-SpawnPoint
 Pos=52866,183,48894
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=45
-sceneryName=generated_Master_Sergeant_Illius
 spawnPackage=#197
 
 [ENTRY]
@@ -136,7 +143,7 @@ Pos=52450.9,173.031,48384
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_guineafowl/chomperCamp01_trees
-outerRadius=1
+loyaltyRadius=1
 
 [ENTRY]
 ID=1358961547
@@ -147,7 +154,7 @@ Scale=0.95,0.95,0.95
 links_count=1
 link=1358961548,1
 spawnPackage=1a_guineafowl/chomperCamp01_trees
-outerRadius=10
+loyaltyRadius=10
 
 [ENTRY]
 ID=1358961548

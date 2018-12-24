@@ -39,6 +39,14 @@ Orient=0,0.843391,0,-0.5373
 Scale=1.1,1.1,1.1
 
 [ENTRY]
+ID=1030386
+Asset=Prop-Holiday-WinterDawning_Lights2
+Name=
+Pos=56584.9,418.556,66895.8
+Orient=0,0.758102,0,0.652136
+Scale=1.25,1.25,1.25
+
+[ENTRY]
 ID=10000026
 Asset=Manipulator-SpawnPoint
 Name=Untitled

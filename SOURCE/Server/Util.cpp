@@ -635,17 +635,23 @@ int randint_32bit(int min, int max)
 	*/
 
 	// RAND_MAX (as defined with a value of 0x7fff) is only 15 bits wide.
+	if(min == max)
+		return min;
 	unsigned long rand_build = (rand() << 15) | rand();
 	//unsigned long rand_build = ((rand() & 0xFF) << 24) | ((rand() & 0xFF) << 16) | ((rand() & 0xFF) << 8) | ((rand() & 0xFF));
 	return min + (rand_build % (max - min + 1));
 }
 
 int randmod(int max) {
+	if(max == 0)
+		return 0;
 	// Max is exclusive, e.g, max of 10 would give numbers between 0 and 9
 	return rand()%max;
 }
 
 int randmodrng(int min, int max) {
+	if(min == max)
+		return min;
 	// Min is inclusive, max is exclusive, e.g, min of 3, max of 10 would give numbers between 3 and 9
 	return(rand()%(max-min)+min);
 }

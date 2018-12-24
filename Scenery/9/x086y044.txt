@@ -1,11 +1,34 @@
 [ENTRY]
+ID=1000198
+Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Lights1
+Name=
+Pos=64983.9,542.022,33103.8
+Orient=0,-0.904412,0,0.42666
+Scale=2,2,2
+
+[ENTRY]
+ID=1000199
+Asset=Prop-Holiday-WinterDawning_Lights1
+Name=
+Pos=64882.6,503.264,33517.4
+Orient=0,-0.891929,0,-0.452176
+Scale=1,1,1
+
+[ENTRY]
+ID=1000200
+Asset=Prop-Holiday-WinterDawning_Lights1
+Name=
+Pos=65123,538.788,33209.1
+Orient=0,-0.904412,0,0.42666
+Scale=2,2,2
+
+[ENTRY]
 ID=10000154
 Asset=Manipulator-SpawnPoint
 Pos=64919,458,33566
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=61
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Milo_Overton_480
 
 [ENTRY]
@@ -15,7 +38,6 @@ Pos=64863,453,33392
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=57
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Tac_Morgan_2398
 
 [ENTRY]
@@ -25,7 +47,6 @@ Pos=64870,453,33355
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=61
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Rumpus_2397
 
 [ENTRY]
@@ -35,7 +56,6 @@ Pos=64875,453,33319
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=60
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Gus_Thea_2396
 
 [ENTRY]

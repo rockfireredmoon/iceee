@@ -1,11 +1,34 @@
 [ENTRY]
+ID=1000078
+Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Banner
+Name=
+Pos=38753.1,323.293,54446.4
+Orient=0,-0.237703,0,0.971338
+Scale=1,1,1
+
+[ENTRY]
+ID=1000079
+Asset=Prop-Holiday-WinterDawning_Banner
+Name=
+Pos=38861.8,331.167,54471.9
+Orient=0,-0.237703,0,0.971338
+Scale=1,1,1
+
+[ENTRY]
+ID=1000080
+Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Lights1
+Name=
+Pos=38944.4,353.843,54238.5
+Orient=0.00692643,-0.425892,-0.0133044,0.90465
+Scale=1.35,1.35,1.35
+
+[ENTRY]
 ID=10000173
 Asset=Manipulator-SpawnPoint
 Pos=38969,301,54204
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=4
-sceneryName=generated_Master_Sargeant_Wright
 spawnPackage=#192
 
 [ENTRY]
@@ -44,7 +67,7 @@ Pos=38227.2,194.693,54244
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_rockBearCamp03_general
-outerRadius=1
+loyaltyRadius=1
 
 [ENTRY]
 ID=1358964867

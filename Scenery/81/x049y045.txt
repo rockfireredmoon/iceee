@@ -1,4 +1,12 @@
 [ENTRY]
+ID=1000184
+Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Wreath
+Name=
+Pos=49131.4,237.766,45539.4
+Orient=0,0.164252,0,0.986418
+Scale=1,1,1
+
+[ENTRY]
 ID=1358957288
 Asset=Prop-Containers1#Prop-Crate2
 Pos=49109.6,214.65,45570
@@ -99,7 +107,7 @@ Pos=49454.2,198.12,45684
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_guineafowl/chomperCamp01_trees
-outerRadius=1
+loyaltyRadius=1
 
 [ENTRY]
 ID=1358960689
@@ -111,7 +119,7 @@ links_count=2
 link=1358960690,1
 link=1358960692,1
 spawnPackage=1a_guineafowl/chomperCamp01_trees
-outerRadius=10
+loyaltyRadius=10
 
 [ENTRY]
 ID=1358960690
@@ -150,7 +158,7 @@ Pos=49752.4,233.789,45316
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_guineafowl/chomperCamp01_trees
-outerRadius=1
+loyaltyRadius=1
 
 [ENTRY]
 ID=1358961483
@@ -162,7 +170,7 @@ links_count=2
 link=1358961484,1
 link=1358961507,1
 spawnPackage=1a_guineafowl/chomperCamp01_trees
-outerRadius=10
+loyaltyRadius=10
 
 [ENTRY]
 ID=1358961484

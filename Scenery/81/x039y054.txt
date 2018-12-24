@@ -1,11 +1,58 @@
 [ENTRY]
+ID=1000081
+Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Wreath
+Name=
+Pos=39460.3,337.886,54034.1
+Orient=0,0.0499792,0,0.99875
+Scale=1,1,1
+
+[ENTRY]
+ID=1000083
+Asset=CL-Holiday#CL-Holiday-WinterDawning-Lights3
+Name=
+Pos=39374.9,348.261,54212
+Orient=0,0.911367,0,-0.411595
+Scale=1,1,1
+
+[ENTRY]
+ID=1000084
+Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Tree
+Name=
+Pos=39031,313.401,54087.7
+Orient=0,0,0,1
+Scale=0.5,0.5,0.5
+
+[ENTRY]
+ID=1000085
+Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Huge
+Name=
+Pos=39038.1,311.98,54085.4
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1000086
+Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Large
+Name=
+Pos=39034.1,313.097,54093.7
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1000087
+Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Med
+Name=
+Pos=39026.1,313.094,54082.5
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
 ID=10000005
 Asset=Manipulator-SpawnPoint
 Pos=39044,302,54285
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=194
-sceneryName=generated_Bounty_Chest__Bath
 spawnPackage=#2863
 
 [ENTRY]
@@ -15,7 +62,6 @@ Pos=39067,302,54278
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=132
-sceneryName=generated_Bounty_Board
 spawnPackage=#2799
 
 [ENTRY]
@@ -25,7 +71,6 @@ Pos=39459,310,54012
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=245
-sceneryName=generated_Taylor_Rose
 spawnPackage=#1955
 
 [ENTRY]
@@ -35,7 +80,6 @@ Pos=39426,306,54027
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=203
-sceneryName=generated_Apprentice_Greenwell
 spawnPackage=#189
 
 [ENTRY]
@@ -45,7 +89,6 @@ Pos=39376,308,54005
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=219
-sceneryName=generated_Lieutenant_Rhames
 spawnPackage=#187
 
 [ENTRY]
@@ -403,7 +446,7 @@ Pos=39592.2,447.547,54802
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_fireChomperCamp01_general
-outerRadius=1
+loyaltyRadius=1
 
 [ENTRY]
 ID=1358959937

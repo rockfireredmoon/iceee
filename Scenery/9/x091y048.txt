@@ -1,7 +1,14 @@
 [ENTRY]
+ID=1000155
+Asset=CL-Holiday#CL-Holiday-WinterDawning-Lights3
+Name=
+Pos=68414.3,465.871,36583.2
+Orient=0,0.0149994,0,0.999888
+Scale=1,1,1
+
+[ENTRY]
 ID=150999523
 Asset=Prop-Garden-Raised_Bed1#Prop-Garden-Raised_Bed1
-Name=Untitled
 Pos=68968,423.81,36284
 Orient=0,0,0,1
 Scale=1.5,1.5,1.5
@@ -10,7 +17,6 @@ Flags=1
 [ENTRY]
 ID=150999602
 Asset=Prop-Couch2
-Name=Untitled
 Pos=68488,423.618,36249
 Orient=0,0.568762,0,0.822502
 Scale=1,1,1
@@ -19,7 +25,6 @@ Flags=1
 [ENTRY]
 ID=150999603
 Asset=Prop-Lamp_Post2
-Name=Untitled
 Pos=68486,424.143,36264
 Orient=0,0.967462,0,0.253016
 Scale=1,1,1
@@ -28,7 +33,6 @@ Flags=1
 [ENTRY]
 ID=150999681
 Asset=Bldg-Bremen1?ATS=ATS-Bremen
-Name=Untitled
 Pos=68718,422.129,36491
 Orient=0,-0.999574,0,-0.0291993
 Scale=1,1,1
@@ -37,7 +41,6 @@ Flags=1
 [ENTRY]
 ID=150999684
 Asset=CL-Bremen_Arch3
-Name=Untitled
 Pos=68446.3,424.125,36578.9
 Orient=0,-0.688921,0,0.724836
 Scale=1,1,1
@@ -46,7 +49,6 @@ Flags=1
 [ENTRY]
 ID=151000204
 Asset=Effects#Par-Falling_Leaves1-Emitter
-Name=Untitled
 Pos=68397,515.194,36264
 Orient=0,0,0,1
 Scale=1,1,1
@@ -55,7 +57,6 @@ Flags=1
 [ENTRY]
 ID=151000205
 Asset=Effects#Par-Falling_Leaves1-Emitter
-Name=Untitled
 Pos=68613,517.31,36222
 Orient=0,0,0,1
 Scale=1,1,1
@@ -64,7 +65,6 @@ Flags=1
 [ENTRY]
 ID=151000210
 Asset=CL-Riverside1#CL-Riverside1
-Name=Untitled
 Pos=68369,420.106,36021.7
 Orient=0,0.193767,0,0.981048
 Scale=2,2,2
@@ -73,7 +73,6 @@ Flags=1
 [ENTRY]
 ID=151000211
 Asset=CL-Riverside2#CL-Riverside2
-Name=Untitled
 Pos=68284,420.14,36003
 Orient=0,-0.324043,0,0.946042
 Scale=1,1,1
@@ -82,7 +81,6 @@ Flags=1
 [ENTRY]
 ID=151000213
 Asset=Prop-Boulder5
-Name=Untitled
 Pos=68313,416.969,36037
 Orient=0,0,0,1
 Scale=1,1,1
@@ -91,7 +89,6 @@ Flags=1
 [ENTRY]
 ID=151000215
 Asset=Prop-Boulder2
-Name=Untitled
 Pos=68338,419.544,36035
 Orient=0,0,0,1
 Scale=1,1,1
@@ -100,7 +97,6 @@ Flags=1
 [ENTRY]
 ID=151000221
 Asset=Prop-Bush-Med3
-Name=Untitled
 Pos=68282,461.395,36193
 Orient=0,0,0,1
 Scale=1,1,1
@@ -109,7 +105,6 @@ Flags=1
 [ENTRY]
 ID=151000222
 Asset=Prop-Bush-Large1#Prop-Bush-Large1
-Name=Untitled
 Pos=68266,466.524,36203
 Orient=0,0,0,1
 Scale=1,1,1
@@ -118,7 +113,6 @@ Flags=1
 [ENTRY]
 ID=151000343
 Asset=Bldg-BremenM?ATS=ATS-Bremen
-Name=Untitled
 Pos=68854,420.74,36079
 Orient=0,-0.697278,0,-0.716801
 Scale=1,1,1
@@ -127,7 +121,6 @@ Flags=1
 [ENTRY]
 ID=151000653
 Asset=CL-Roadside3#CL-Roadside3
-Name=Untitled
 Pos=68804,424.204,36316
 Orient=0,0.703279,0,0.710914
 Scale=1,1,1
@@ -136,7 +129,6 @@ Flags=1
 [ENTRY]
 ID=151000654
 Asset=Prop-Fences#Prop-Fence_Piece2
-Name=Untitled
 Pos=68804,424.086,36359
 Orient=0,0.720831,0,0.693111
 Scale=1,1,1
@@ -145,7 +137,6 @@ Flags=1
 [ENTRY]
 ID=151000655
 Asset=Prop-Fence_Piece1
-Name=Untitled
 Pos=68804,424.093,36400
 Orient=-0.101134,0.71369,-0.124635,0.681824
 Scale=1,1,1
@@ -154,7 +145,6 @@ Flags=1
 [ENTRY]
 ID=151000656
 Asset=Prop-Fence_Piece1
-Name=Untitled
 Pos=68805,424.337,36254
 Orient=0.0161929,0.728636,0.0416606,-0.683441
 Scale=1,1,1
@@ -163,7 +153,6 @@ Flags=1
 [ENTRY]
 ID=151000657
 Asset=Prop-Fence_Piece2
-Name=Untitled
 Pos=68804,424.297,36275
 Orient=0,0.697278,0,-0.716801
 Scale=1,1,1
@@ -172,7 +161,6 @@ Flags=1
 [ENTRY]
 ID=151000658
 Asset=Prop-Fence_Piece2
-Name=Untitled
 Pos=68803,424.345,36233
 Orient=0,0.664327,0,-0.747442
 Scale=1,1,1
@@ -181,7 +169,6 @@ Flags=1
 [ENTRY]
 ID=151000659
 Asset=Prop-Fences#Prop-Fence_Post
-Name=Untitled
 Pos=68803,424.085,36378
 Orient=-0.118277,-0.0184812,0.15327,0.980906
 Scale=1,1,1
@@ -190,7 +177,6 @@ Flags=1
 [ENTRY]
 ID=151000660
 Asset=Prop-Bush-Med2#Prop-Bush-Med2
-Name=Untitled
 Pos=68794,424.298,36276
 Orient=0,0,0,1
 Scale=1,1,1
@@ -199,7 +185,6 @@ Flags=1
 [ENTRY]
 ID=151000661
 Asset=Prop-Bush-Large2#Prop-Bush-Large2
-Name=Untitled
 Pos=68788,424.353,36256
 Orient=0,0,0,1
 Scale=1,1,1
@@ -208,7 +193,6 @@ Flags=1
 [ENTRY]
 ID=151000662
 Asset=Prop-Bush-Med1
-Name=Untitled
 Pos=68966,427.831,36275
 Orient=0,0,0,1
 Scale=1,1,1
@@ -217,7 +201,6 @@ Flags=1
 [ENTRY]
 ID=151000663
 Asset=Prop-Bush-Large2
-Name=Untitled
 Pos=68970,427.831,36293
 Orient=0,0.659385,0,0.751806
 Scale=1,1,1
@@ -226,7 +209,6 @@ Flags=1
 [ENTRY]
 ID=151000664
 Asset=Prop-GlassBottle1#Prop-GlassBottle1
-Name=Untitled
 Pos=68974,426.158,36263
 Orient=-0.15808,-0.0446021,-0.267859,0.949354
 Scale=1,1,1
@@ -235,7 +217,6 @@ Flags=1
 [ENTRY]
 ID=151000704
 Asset=Light-Large?GROUP=2
-Name=Untitled
 Pos=68618,478.217,36745
 Orient=0,0,0,1
 Scale=1,1,1
@@ -244,7 +225,6 @@ Flags=1
 [ENTRY]
 ID=151000707
 Asset=Light-Large?GROUP=2
-Name=Untitled
 Pos=68965,498.607,36456
 Orient=0,0,0,1
 Scale=1,1,1
@@ -253,7 +233,6 @@ Flags=1
 [ENTRY]
 ID=151000710
 Asset=Light-Large?GROUP=2
-Name=Untitled
 Pos=68475,464.623,36266
 Orient=0,0,0,1
 Scale=1,1,1
@@ -262,7 +241,6 @@ Flags=1
 [ENTRY]
 ID=151011159
 Asset=Environment-Marker?type=Bremen
-Name=Untitled
 Pos=68886,416.716,36507
 Orient=0,0,0,1
 Scale=8.25,8.25,8.25
@@ -271,7 +249,6 @@ Flags=1
 [ENTRY]
 ID=151011430
 Asset=Sound?SOUND=Sound-Ambient-Citywindgust.ogg&GAIN=0.7
-Name=Untitled
 Pos=68487,497.002,36124
 Orient=0,0.685289,0,0.728271
 Scale=1,1,1
@@ -279,7 +256,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151011445
 Asset=Sound?SOUND=Sound-Ambient-Citywindgust.ogg&GAIN=0.6
-Name=Untitled
 Pos=68774,522.523,36336
 Orient=0,0,0,1
 Scale=1,1,1
@@ -287,7 +263,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151057859
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=68537,424.564,36701
 Orient=0,0,0,1
 Scale=1,1,1
@@ -298,7 +273,6 @@ link=151057860,1
 [ENTRY]
 ID=151057860
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=68417,425.23,36699
 Orient=0,0,0,1
 Scale=1,1,1
@@ -309,7 +283,6 @@ link=151057861,1
 [ENTRY]
 ID=151057863
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=68485,424.125,36559.9
 Orient=0,0.744643,0,0.667463
 Scale=1,1,1
@@ -318,7 +291,6 @@ spawnPackage=2a_npc_guard
 [ENTRY]
 ID=151057864
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=68409,424.29,36599
 Orient=0,-0.703279,0,0.710914
 Scale=1,1,1
@@ -327,18 +299,16 @@ spawnPackage=2a_npc_guard
 [ENTRY]
 ID=151057866
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=68423.1,424.283,36565.5
 Orient=0,0.710353,0,0.703845
 Scale=1,1,1
-spawnPackage=2a_npc_guard
 links_count=1
 link=151057867,1
+spawnPackage=2a_npc_guard
 
 [ENTRY]
 ID=151057867
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=68445,424.351,36386
 Orient=0,0,0,1
 Scale=1,1,1
@@ -349,7 +319,6 @@ link=151057868,1
 [ENTRY]
 ID=151057868
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=68447,424.781,36299
 Orient=0,0,0,1
 Scale=1,1,1
@@ -360,7 +329,6 @@ link=151057869,1
 [ENTRY]
 ID=151057869
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=68462,424.868,36205
 Orient=0,0,0,1
 Scale=1,1,1
@@ -371,7 +339,6 @@ link=151057870,1
 [ENTRY]
 ID=151057870
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=68511,424.991,36194
 Orient=0,0,0,1
 Scale=1,1,1
@@ -382,7 +349,6 @@ link=151057871,1
 [ENTRY]
 ID=151057871
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=68535,426.923,36153
 Orient=0,0,0,1
 Scale=1,1,1
@@ -393,7 +359,6 @@ link=151057872,1
 [ENTRY]
 ID=151057872
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=68561,442.122,36033
 Orient=0,0,0,1
 Scale=1,1,1
@@ -404,7 +369,6 @@ link=151057873,1
 [ENTRY]
 ID=151057876
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=68555.8,425.002,36160.5
 Orient=0,-0.997248,0,-0.0741356
 Scale=1,1,1
@@ -413,7 +377,6 @@ spawnPackage=2a_npc_guard
 [ENTRY]
 ID=151057877
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=68418,423.122,36011
 Orient=0,0.966185,0,0.25785
 Scale=1,1,1
@@ -422,18 +385,16 @@ spawnPackage=2a_npc_guard
 [ENTRY]
 ID=151057893
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=68838,424.733,36532
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=2a_npc_guard
 links_count=1
 link=151057894,1
+spawnPackage=2a_npc_guard
 
 [ENTRY]
 ID=151057894
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=68889,422.605,36555
 Orient=0,0,0,1
 Scale=1,1,1
@@ -444,7 +405,6 @@ link=151057895,1
 [ENTRY]
 ID=151057895
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=68950,423.52,36496
 Orient=0,0,0,1
 Scale=1,1,1
@@ -455,7 +415,6 @@ link=151057896,1
 [ENTRY]
 ID=151057896
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=68961,424.591,36369
 Orient=0,0,0,1
 Scale=1,1,1
@@ -466,7 +425,6 @@ link=151057897,1
 [ENTRY]
 ID=151057897
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=68798,423.904,36367
 Orient=0,0,0,1
 Scale=1,1,1
@@ -477,7 +435,6 @@ link=151057898,1
 [ENTRY]
 ID=151057898
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=68764,423.904,36346
 Orient=0,0,0,1
 Scale=1,1,1
@@ -488,7 +445,6 @@ link=151057899,1
 [ENTRY]
 ID=151057899
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=68698,423.904,36338
 Orient=0,0,0,1
 Scale=1,1,1
@@ -499,7 +455,6 @@ link=151057900,1
 [ENTRY]
 ID=151057900
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=68643,424.133,36300
 Orient=0,0,0,1
 Scale=1,1,1
@@ -510,7 +465,6 @@ link=151057901,1
 [ENTRY]
 ID=151057901
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=68573,424.133,36325
 Orient=0,0,0,1
 Scale=1,1,1
@@ -521,7 +475,6 @@ link=151057902,1
 [ENTRY]
 ID=151057902
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=68482,424.438,36288
 Orient=0,0,0,1
 Scale=1,1,1
@@ -531,18 +484,16 @@ link=151057901,1
 [ENTRY]
 ID=151057903
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=68664,424.124,36747
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=2a_npc_guard
 links_count=1
 link=151057904,1
+spawnPackage=2a_npc_guard
 
 [ENTRY]
 ID=151057904
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=68767,420.978,36718
 Orient=0,0,0,1
 Scale=1,1,1
@@ -554,7 +505,6 @@ link=151057914,1
 [ENTRY]
 ID=151057905
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=68989,423.627,36491
 Orient=0,0,0,1
 Scale=1,1,1
@@ -565,7 +515,6 @@ link=151057906,1
 [ENTRY]
 ID=151057924
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=68710,424.812,36614
 Orient=0,-0.699716,0,0.714421
 Scale=1,1,1
@@ -574,19 +523,17 @@ spawnPackage=2a_npc_guard
 [ENTRY]
 ID=151057928
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=68921,424.811,36343
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=2a_npc_guard
 links_count=2
 link=151057929,1
 link=151057931,1
+spawnPackage=2a_npc_guard
 
 [ENTRY]
 ID=151057931
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=68914,424.352,36132
 Orient=0,0,0,1
 Scale=1,1,1
@@ -597,7 +544,6 @@ link=151057930,1
 [ENTRY]
 ID=151057933
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=68967,424.811,36245
 Orient=0,-0.731146,0,0.682221
 Scale=1,1,1
@@ -606,7 +552,6 @@ spawnPackage=2a_npc_guard
 [ENTRY]
 ID=151057934
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=68893,424.353,36064
 Orient=0,0.114747,0,0.993395
 Scale=1,1,1
@@ -615,7 +560,6 @@ spawnPackage=2a_npc_guard
 [ENTRY]
 ID=151058632
 Asset=CL-Bremen2
-Name=Untitled
 Pos=68474.9,430.49,36610.4
 Orient=0,0.999667,0,-0.0258076
 Scale=1,1,1
@@ -623,7 +567,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151059014
 Asset=CL-Bremen3
-Name=Untitled
 Pos=68376.1,424.835,36094.5
 Orient=0,-0.614375,0,-0.789014
 Scale=1,1,1
@@ -631,7 +574,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151061973
 Asset=Prop-Banner_Post2
-Name=Untitled
 Pos=68825.3,409.253,36712.2
 Orient=0,0.514136,0,0.857709
 Scale=0.925,0.925,0.925
@@ -639,7 +581,6 @@ Scale=0.925,0.925,0.925
 [ENTRY]
 ID=151061974
 Asset=CL-Market_Sign-Direction
-Name=Untitled
 Pos=68833,475.678,36698.8
 Orient=0,0.526943,0,0.8499
 Scale=1,1,1
@@ -647,7 +588,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151062269
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=68363,421.492,36051
 Orient=0,0,0,1
 Scale=1,1,1
@@ -656,7 +596,6 @@ spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 [ENTRY]
 ID=151062270
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=68762.4,423.895,36383.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -665,7 +604,6 @@ spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 [ENTRY]
 ID=151062277
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=68946.8,424.405,36041
 Orient=0,0,0,1
 Scale=1,1,1
@@ -674,7 +612,6 @@ spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 [ENTRY]
 ID=151062292
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=68532.2,424.51,36566.2
 Orient=0,0,0,1
 Scale=1,1,1

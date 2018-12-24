@@ -433,3 +433,13 @@ Name=New Badari - VonGruber Manor
 Comment=In front of the VonGruber Manor entrance.
 Position=70226.0,624.0,32255.0
 
+[ENTRY]
+Name=Great Forest - Dark Depths
+Comment=[Comment here]
+Position=19151.0,169.0,55411.0
+
+[ENTRY]
+Name=Great Forest - Far Reach
+Comment=[Comment here]
+Position=11289.0,213.0,62758.0
+

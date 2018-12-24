@@ -107,9 +107,6 @@ epic_Timeshift	4	0	6101,6102,3454,3194,6097,3706,6100,3613,6098,143622,6099,3674
 epic_Pious_Apostle	4	0	6104,6110,6107,6108,6109,6103,6111,6113,6112,6106,6105,143623  	6104:Pious Apostle Armwraps, 6110:Pious Apostle Collar, 6107:Pious Apostle Gloves, 6108:Pious Apostle Hood, 6109:Pious Apostle Leggings, 6103:Pious Apostle Necklace, 6111:Pious Apostle Ring, 6113:Pious Apostle Sash, 6112:Pious Apostle Shouldercaps, 6106:Pious Apostle Slippers, 6105:Pious Apostle Smock, 143623:Pious Apostle Totem	47
 epic_Ghastly_Specter	4	0	6114,6115,6124,6117,6119,6121,6118,6120,6122,6123,143624,6116  	6114:Ghastly Specter Amulet, 6115:Ghastly Specter Arms, 6124:Ghastly Specter Belt, 6117:Ghastly Specter Boots, 6119:Ghastly Specter Cap, 6121:Ghastly Specter Collar, 6118:Ghastly Specter Gloves, 6120:Ghastly Specter Legwraps, 6122:Ghastly Specter Ring, 6123:Ghastly Specter Shoulders, 143624:Ghastly Specter Totem, 6116:Ghastly Specter Tunic	49
 HOLIDAY_snowball	0	250	40058	40058:Snowball!	
-HOLIDAY_CamelotWintry	0	100	800635,800636,800637,800638  	800635:Armor Plan: Camelot Wintry Vestment, 800636:Armor Plan: Camelot Wintry Jerkin, 800637:Armor Plan: Camelot Wintry Tunic, 800638:Armor Plan: Camelot Wintry Chest	
-HOLIDAY_BremenWintry	0	100	800639,800640,800641,800642  	800639:Armor Plan: Bremen Wintry Vestment, 800640:Armor Plan: Bremen Wintry Jerkin, 800641:Armor Plan: Bremen Wintry Tunic, 800642:Armor Plan: Bremen Wintry Chestplate	
-HOLIDAY_HeartwoodWintry	0	100	800643,800644,800645,800646  	800643:Armor Plan: Heartwood Wintry Vestment, 800644:Armor Plan: Heartwood Wintry Jerkin, 800645:Armor Plan: Heartwood Wintry Tunic, 800646:Armor Plan: Heartwood Wintry Chestplate	
 HOLIDAY_HighpointCornCobPipe	0	25	21355	21355:Highpoint Corn Cob Pipe	
 HOLIDAY_BremenCornCobPipe	0	25	21356	21356:Bremen Corn Cob Pipe	
 HOLIDAY_CamelotCornCobPipe	0	25	21357	21357:Camelot Corn Cob Pipe	

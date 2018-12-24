@@ -65356,19 +65356,22 @@ ID=2903
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Male-Fancy1",["colors"]=["2b2d33","7f0000","bfa10a","ffffff","e2e7e9","d885b9","f5d29d"]},["chest"]={["type"]="Armor-Cloth-Male-Fancy1",["colors"]=["2b2d33","7f0000","ffffff","ffffff","ffffff","ffffff","ffffff"]},["leggings"]={["type"]="Armor-Cloth-Male-Fancy1",["colors"]=["2b2d33","7f0000","202dff","ffffff","e2e7e9","d885b9","f5d29d"]},["belt"]={["type"]="Armor-Cloth-Male-Fancy1",["colors"]=[]},["collar"]={["type"]="Armor-Cloth-Male-Fancy1",["colors"]=["2b2d33","7f0000","7f0000","005505","ffd70d","ffffff","ffd70d"]},["arms"]={["type"]="Armor-Cloth-Male-Fancy1",["colors"]=[]}},["b"]="n",["sk"]={["chest_ankles"]="805a30",["spots"]="9b8e61",["beak"]="e48828",["beard"]="a29058",["nails"]="745f56",["mask"]="ad6e2c",["base"]="9b6d3a",["eye_lid"]="8a7b4b",["neck_belly"]="817650",["eye"]="007f07",["eye_brows"]="a97b4e",["head_top"]="c94125",["hands"]="b44d38"},["g"]="m",["r"]="n",["sz"]="1.0"}
 level=45
 display_name=Forden Jallows
-sub_name=Decorating Committee
+sub_name=Festival Marshal
 profession=1
 creature_category=Mortal
 rarity=2
 ai_package=example
 
+
 [ENTRY]
 defHints=48
 ID=2904
-appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=["2b2d33","7f0000","bfa10a","ffffff","e2e7e9","d885b9","f5d29d"]},["chest"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=["940000","1a5512","ffffff","ffffff","ffffff","ffffff","ffffff","36454a"]},["arms"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=["0a550f","9f5147","74756d","19551d","634930","989960","fcfefb","36454a"]},["leggings"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=["2b2d33","7f0000","ff0000","ffffff","e2e7e9","d885b9","f5d29d","36454a"]},["collar"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=["2b2d33","7f0000","7f0000","005505","ffd70d","ffffff","ffd70d"]},["belt"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=[]},["gloves"]={["type"]="Armor-Holiday_Winterfest",["colors"]=[]}},["b"]="n",["sk"]={["ear"]="d4b68a",["lower_jaw"]="c0a47b",["nails"]="0e0e0e",["horns"]="a23b3b",["stripes"]="e9c50c",["eye"]="606394",["base"]="943208",["diamonds"]="d0905d"},["g"]="m",["r"]="l",["sz"]="1.0"}
+will_regen=1
+might_regen=1
+appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=["2b2d33","7f0000","bfa10a","ffffff","e2e7e9","d885b9","f5d29d"]},["leggings"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=["2b2d33","7f0000","202dff","ffffff","e2e7e9","d885b9","f5d29d"]},["collar"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=["2b2d33","7f0000","7f0000","005505","ffd70d","ffffff","ffd70d"]},["chest"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=["2b2d33","7f0000","ffffff","ffffff","ffffff","ffffff","ffffff"]}},["b"]="n",["sk"]={["ear"]="D4B68A",["lower_jaw"]="C0A47B",["nails"]="0E0E0E",["horns"]="A23B3B",["stripes"]="E9C50C",["eye"]="606394",["base"]="943208",["diamonds"]="D0905D"},["g"]="m",["r"]="l"}
 level=45
 display_name=Haslo Norgun
-sub_name=Stable Master
+sub_name=Festival Marshal
 profession=1
 creature_category=Mortal
 rarity=2

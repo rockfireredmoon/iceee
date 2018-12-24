@@ -1,11 +1,26 @@
 [ENTRY]
+ID=1000099
+Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Banner
+Name=
+Pos=52635.7,271.841,49710.5
+Orient=0,0.369441,0,-0.929254
+Scale=2,2,2
+
+[ENTRY]
+ID=1000102
+Asset=Prop-Holiday-WinterDawning_Wreath
+Name=
+Pos=52897.4,210.21,49138.2
+Orient=0,0.285952,0,0.958244
+Scale=1,1,1
+
+[ENTRY]
 ID=10000016
 Asset=Manipulator-SpawnPoint
 Pos=52973,179,49066
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=40
-sceneryName=generated_Bounty_Chest__Nottingham
 spawnPackage=#2866
 
 [ENTRY]
@@ -15,7 +30,6 @@ Pos=52959,179,49052
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=95
-sceneryName=generated_Bounty_Board
 spawnPackage=#2804
 
 [ENTRY]

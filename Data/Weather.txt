@@ -37,15 +37,22 @@ MediumChance=60
 HeavyChance=10
 WeatherMin=120
 WeatherMax=700
-WeatherType=Rain
-ThunderChance=33
-ThunderGapMin=30
-ThunderGapMax=60
+WeatherType=Snow
+ThunderChance=0
 Escalate=50
 
 [ENTRY]
 Name=Camelot
-Use=Anglorum
+FineMin=0
+FineMax=1
+LightChance=100
+MediumChance=0
+HeavyChance=0
+WeatherMin=99999
+WeatherMax=99999
+WeatherType=Snow
+ThunderChance=0
+Escalate=100
 
 [ENTRY]
 Name=Ironstone
@@ -90,7 +97,16 @@ Escalate=40
 
 [ENTRY]
 Name=Great Forest
-Use=Midlands
+FineMin=300
+FineMax=2000
+LightChance=100
+MediumChance=50
+HeavyChance=10
+WeatherMin=120
+WeatherMax=600
+WeatherType=Snow
+ThunderChance=0
+Escalate=40
 
 [ENTRY]
 Name=New Badari
@@ -101,7 +117,7 @@ MediumChance=20
 HeavyChance=3
 WeatherMin=60
 WeatherMax=80
-WeatherType=Rain
+WeatherType=Snow
 ThunderChance=66
 ThunderGapMin=30
 ThunderGapMax=120

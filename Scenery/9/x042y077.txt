@@ -20,7 +20,7 @@ Pos=32034.9,177.371,57838
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=4_obji_hwc_04_festeringSasparillaPlant
-outerRadius=1
+loyaltyRadius=1
 
 [ENTRY]
 ID=151013410
@@ -44,7 +44,7 @@ Pos=31969.3,287.418,58158
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=4_hwo_shroomieCampSouth_32_33
-outerRadius=10
+loyaltyRadius=10
 
 [ENTRY]
 ID=151020006
@@ -83,7 +83,7 @@ Pos=31593,306.653,58483
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=4_hwo_shroomieCampNorth_32_33
-outerRadius=10
+loyaltyRadius=10
 
 [ENTRY]
 ID=151022909
@@ -134,7 +134,7 @@ links_count=2
 link=151023559,1
 link=151023564,1
 spawnPackage=4_hwo_shroomieCampNorth_32_33
-outerRadius=1
+loyaltyRadius=1
 
 [ENTRY]
 ID=151023577
@@ -143,5 +143,5 @@ Pos=31884,178.141,57883
 Orient=0,0.509841,0,0.860269
 Scale=1,1,1
 spawnPackage=4_hwo_shroomieCampNorth_32_33
-outerRadius=1
+loyaltyRadius=1
 
