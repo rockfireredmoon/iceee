@@ -5,15 +5,19 @@
 ; 2878=54875,146,63245,0   ;Harvest-Master's Chest
 ; 2860=55280.3,158.092,63240.3,0  ;Harvest Table
 
+
+
 ; WINTER DAWNING EVENT
-2909=54886,145,63317,64,3  ;Chillkin Hunt Reward Chest
-2902=54887,146,63335,64,3  ;Wendel Ostran
-2928=54881,144,63258,64,3  ;Kaleen Ulmon
-2932=54878,146,63235,0,3   ;Holiday Gift Chest
-2913=56141,429,64266,0,3   ;Vargan's Book of Lore  NOT IMPLEMENTED
+; 2909=54886,145,63317,64  ;Chillkin Hunt Reward Chest
+; 2902=54887,146,63335,64  ;Wendel Ostran
+; 2928=54881,144,63258,64  ;Kaleen Ulmon
+; 2932=54878,146,63235,0   ;Holiday Gift Chest
+; 2913=56141,429,64266,0   ;Vargan's Book of Lore  NOT IMPLEMENTED
 
 ; WINTER DAWNING EVENT (CUSTOM FOR PLANET FOREVER)
-10000=54895,147,63363,64,3  ;Taiga Wolf
+; 10000=54895,147,63363,64  ;Taiga Wolf
+
+
 
 ; PLAYER-MADE SETS
 ;10001=54895,147,63363,64  ;Taiga Wolf (vendor version)

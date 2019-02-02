@@ -1199,14 +1199,26 @@ DefID	Explicit	PackageList	Name
 2890	0	HOLIDAY_BremenCornCobPipe	;Chillkin
 2891	0	HOLIDAY_BremenCornCobPipe	;Chillkin
 2892	0	HOLIDAY_BremenCornCobPipe	;Chillkin
+2899	0	HOLIDAY_BremenWintry	;Chill Lord
+2899	0	HOLIDAY_BremenWintry	;Chill Lord
+2899	0	HOLIDAY_BremenWintry	;Chill Lord
+2899	0	HOLIDAY_BremenWintry	;Chill Lord
 2885	0	HOLIDAY_CamelotCornCobPipe	;Chillkin
 2886	0	HOLIDAY_CamelotCornCobPipe	;Chillkin
 2887	0	HOLIDAY_CamelotCornCobPipe	;Chillkin
 2888	0	HOLIDAY_CamelotCornCobPipe	;Chillkin
+2898	0	HOLIDAY_CamelotWintry	;Chill Lord
+2898	0	HOLIDAY_CamelotWintry	;Chill Lord
+2898	0	HOLIDAY_CamelotWintry	;Chill Lord
+2898	0	HOLIDAY_CamelotWintry	;Chill Lord
 2893	0	HOLIDAY_HeartwoodCornCobPipe	;Chillkin
 2894	0	HOLIDAY_HeartwoodCornCobPipe	;Chillkin
 2895	0	HOLIDAY_HeartwoodCornCobPipe	;Chillkin
 2896	0	HOLIDAY_HeartwoodCornCobPipe	;Chillkin
+2900	0	HOLIDAY_HeartwoodWintry	;Chill Lord
+2900	0	HOLIDAY_HeartwoodWintry	;Chill Lord
+2900	0	HOLIDAY_HeartwoodWintry	;Chill Lord
+2900	0	HOLIDAY_HeartwoodWintry	;Chill Lord
 2881	0	HOLIDAY_HighpointCornCobPipe	;Chillkin
 2882	0	HOLIDAY_HighpointCornCobPipe	;Chillkin
 2883	0	HOLIDAY_HighpointCornCobPipe	;Chillkin

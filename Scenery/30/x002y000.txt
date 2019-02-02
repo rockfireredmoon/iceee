@@ -1,24 +1,8 @@
 [ENTRY]
-ID=1156362
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Large
-Name=
-Pos=3965.23,170,1388.86
-Orient=0,-0.375559,0,0.926798
-Scale=1,1,1
-
-[ENTRY]
-ID=1156363
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Huge
-Name=
-Pos=3977.18,170,957.596
-Orient=0,0.213347,0,0.976976
-Scale=1,1,1
-
-[ENTRY]
 ID=503316484
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Temple
 Pos=4155,170,960
-Orient=0,2.98023e-08,0,-1
+Orient=0,2.98023e-008,0,-1
 Scale=1,1,1
 Flags=1
 
@@ -26,7 +10,7 @@ Flags=1
 ID=503316487
 Asset=Dng-Hall_T2?ATS=ATS-Dungeon_Temple
 Pos=3975,170,1510
-Orient=0,1,0,4.56956e-08
+Orient=0,1,0,4.56956e-008
 Scale=1,1,1
 Flags=1
 
@@ -50,7 +34,7 @@ Flags=1
 ID=503316503
 Asset=Dng-Hall_Straight1?ATS=ATS-Dungeon_Temple
 Pos=3975,170,1330
-Orient=0,2.98023e-08,0,1
+Orient=0,2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -58,7 +42,7 @@ Flags=1
 ID=503316508
 Asset=Dng-Room_Corner_1Door?ATS=ATS-Dungeon_Temple
 Pos=3975,170,780
-Orient=0,1,0,-2.98023e-08
+Orient=0,1,0,-2.98023e-008
 Scale=1,1,1
 Flags=1
 
@@ -66,7 +50,7 @@ Flags=1
 ID=503316516
 Asset=Dng-Hall_Straight1?ATS=ATS-Dungeon_Temple
 Pos=3975,170,1150
-Orient=0,2.98023e-08,0,1
+Orient=0,2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -82,7 +66,7 @@ Flags=1
 ID=503316563
 Asset=Dng-Hall_Straight1?ATS=ATS-Dungeon_Temple
 Pos=3975,170,1870
-Orient=0,2.98023e-08,0,1
+Orient=0,2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -90,7 +74,7 @@ Flags=1
 ID=503316570
 Asset=Dng-Hall_Straight1?ATS=ATS-Dungeon_Temple
 Pos=3975,170,1690
-Orient=0,2.98023e-08,0,1
+Orient=0,2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -187,7 +171,7 @@ link=503318936,1
 ID=503318922
 Asset=Manipulator-SpawnPoint
 Pos=3862.23,170,1483.6
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 spawnPackage=1_dng_am_monks_k_17
 
@@ -324,7 +308,7 @@ link=503318950,1
 ID=503318949
 Asset=Manipulator-SpawnPoint
 Pos=4184.5,170,771.029
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 links_count=1
 link=503318946,1
@@ -389,7 +373,7 @@ spawnPackage=1_dng_am_full_mix_16_17
 ID=503318957
 Asset=Manipulator-SpawnPoint
 Pos=4023.96,170,1270.09
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 spawnPackage=1_dng_am_full_mix_16_17
 
@@ -405,7 +389,7 @@ spawnPackage=1_dng_am_full_mix_16_17
 ID=503318960
 Asset=Manipulator-SpawnPoint
 Pos=4021.44,170,1810.14
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 spawnPackage=1_dng_am_full_mix_16_17
 
@@ -413,7 +397,7 @@ spawnPackage=1_dng_am_full_mix_16_17
 ID=503319017
 Asset=Manipulator-SpawnPoint
 Pos=3849.75,170,1869.54
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 spawnPackage=1_dng_am_monks_k_17
 
@@ -424,5 +408,5 @@ Pos=3844.13,170,1814.29
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1_obji_bth_05_rareBook
-loyaltyRadius=5
+outerRadius=5
 

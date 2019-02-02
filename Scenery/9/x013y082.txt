@@ -1,12 +1,4 @@
 [ENTRY]
-ID=1000152
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Lights1
-Name=
-Pos=9888.27,327.974,62024.9
-Orient=0,0.237703,0,0.971338
-Scale=0.75,0.75,0.75
-
-[ENTRY]
 ID=151009915
 Asset=Bldg-Heartwood_SmallF#Bldg-Heartwood_SmallF?ATS=ATS-Wooden
 Pos=10382.3,525.587,61731
@@ -764,5 +756,5 @@ Pos=10032.8,270.315,62220
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=Chicken
-loyaltyRadius=100
+outerRadius=100
 

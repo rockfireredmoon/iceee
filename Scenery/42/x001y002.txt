@@ -1,12 +1,4 @@
 [ENTRY]
-ID=1156383
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Large
-Name=
-Pos=1843.61,100,2979.94
-Orient=0,0.266731,0,0.963771
-Scale=1.25,1.25,1.25
-
-[ENTRY]
 ID=704643141
 Asset=Dng-Room_Narrow_DoorA?ATS=ATS-Dungeon
 Pos=1860,100,2875
@@ -307,7 +299,7 @@ spawnPackage=2_dbc_front_25_26
 ID=704644528
 Asset=Manipulator-SpawnPoint
 Pos=1790,100,2740
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 spawnPackage=2_dbc_front_25_26
 

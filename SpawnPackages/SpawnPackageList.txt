@@ -63,7 +63,6 @@
 72_RottedMaze.txt
 65_RolsburgMine.txt
 60_Chunnel.txt
-86_94_95_GrindlesLair.txt
 
 ; 0.8.7+
 92_Bastion.txt

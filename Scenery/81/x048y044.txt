@@ -1,34 +1,11 @@
 [ENTRY]
-ID=1000183
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Lights1
-Name=
-Pos=48901.1,214.538,44983.2
-Orient=0,-0.281157,0,0.959662
-Scale=1,1,1
-
-[ENTRY]
-ID=1000185
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Wreath
-Name=
-Pos=48568.9,202.232,44269.3
-Orient=0,-0.624897,0,0.780707
-Scale=1,1,1
-
-[ENTRY]
-ID=1000186
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Lights2
-Name=
-Pos=48553.2,231.593,44248.1
-Orient=0,0.786425,0,0.617686
-Scale=1.5,1.5,1.5
-
-[ENTRY]
 ID=10000001
 Asset=Manipulator-SpawnPoint
 Pos=48427,172,44638
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=121
+sceneryName=generated_Bounty_Board
 spawnPackage=#2805
 
 [ENTRY]
@@ -38,6 +15,7 @@ Pos=48450,172,44643
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=173
+sceneryName=generated_Bounty_Chest__South_Shield
 spawnPackage=#2868
 
 [ENTRY]
@@ -47,6 +25,7 @@ Pos=48289,221,44414
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=77
+sceneryName=generated_Robin_s_Chest
 spawnPackage=#2615
 
 [ENTRY]
@@ -56,6 +35,7 @@ Pos=48281,220,44433
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=32
+sceneryName=generated_Robin_Hood
 spawnPackage=#207
 
 [ENTRY]
@@ -65,6 +45,7 @@ Pos=48309,221,44411
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=6
+sceneryName=generated_Little_Jon
 spawnPackage=#200
 
 [ENTRY]
@@ -74,6 +55,7 @@ Pos=48502,172,44670
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=118
+sceneryName=generated_Friar_Tuck
 spawnPackage=#201
 
 [ENTRY]

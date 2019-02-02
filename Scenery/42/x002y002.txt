@@ -1,26 +1,11 @@
 [ENTRY]
-ID=1156384
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Med
-Name=
-Pos=2145.91,100,2709.12
-Orient=0,0.227978,0,0.973666
-Scale=3,3,3
-
-[ENTRY]
-ID=1156385
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Large
-Name=
-Pos=2409.3,100,2700.54
-Orient=0,0.227978,0,0.973666
-Scale=1.5,1.5,1.5
-
-[ENTRY]
 ID=10000024
 Asset=Manipulator-SpawnPoint
 Pos=2419,100,2228
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=190
+sceneryName=generated_spawn
 spawnPackage=z42_bc_gen_Exit_to_New_Badari_2354
 
 [ENTRY]
@@ -30,6 +15,7 @@ Pos=2222,105,2769
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=35
+sceneryName=generated_spawn
 spawnPackage=z42_bc_gen_Dunklehimer_Keg_596
 
 [ENTRY]
@@ -84,7 +70,7 @@ Flags=1
 ID=704643107
 Asset=Dng-Room_Narrow_DoorA?ATS=ATS-Dungeon
 Pos=2240,100,2695
-Orient=0,1,0,-5.96046e-08
+Orient=0,1,0,-5.96046e-008
 Scale=1,1,1
 Flags=1
 
@@ -92,7 +78,7 @@ Flags=1
 ID=704643108
 Asset=Dng-Room_Narrow_DoorA?ATS=ATS-Dungeon
 Pos=2600,100,2695
-Orient=0,1.58933e-08,0,-1
+Orient=0,1.58933e-008,0,-1
 Scale=1,1,1
 Flags=1
 
@@ -100,7 +86,7 @@ Flags=1
 ID=704643109
 Asset=Dng-Hall_Straight1?ATS=ATS-Dungeon
 Pos=2420,100,2505
-Orient=0,5.96046e-08,0,1
+Orient=0,5.96046e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -1078,7 +1064,7 @@ spawnPackage=2_dbc_front_25_26
 ID=704644510
 Asset=Manipulator-SpawnPoint
 Pos=2375,100,2900
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 spawnPackage=2_dbc_front_25_26
 
@@ -1273,7 +1259,7 @@ spawnPackage=2_dbc_front_25_26
 ID=704644595
 Asset=Manipulator-SpawnPoint
 Pos=2885,100,2695
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 links_count=1
 link=704644323,1
@@ -1291,7 +1277,7 @@ spawnPackage=2_dbc_front_25_26
 ID=704644597
 Asset=Manipulator-SpawnPoint
 Pos=2915,100,2785
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 spawnPackage=2_dbc_front_25_26
 

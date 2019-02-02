@@ -1,120 +1,8 @@
 [ENTRY]
-ID=1156341
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Med
-Name=
-Pos=2188.79,170,2417.88
-Orient=0,0.227978,0,0.973666
-Scale=3,3,3
-
-[ENTRY]
-ID=1156343
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Large
-Name=
-Pos=2063.11,170,2209.58
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
-ID=1156344
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Large
-Name=
-Pos=2058.5,170,2216.76
-Orient=0,0.488177,0,0.872745
-Scale=1,1,1
-
-[ENTRY]
-ID=1156347
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Med
-Name=
-Pos=2248.65,170.531,2921.68
-Orient=0,0.309816,0,0.950796
-Scale=2.5,2.5,2.5
-
-[ENTRY]
-ID=1156348
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Small
-Name=
-Pos=2548.01,170,2951.37
-Orient=0,-0.0948572,0,0.995491
-Scale=2,2,2
-
-[ENTRY]
-ID=1156349
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Med
-Name=
-Pos=2833.69,170,3159.89
-Orient=0,0.324043,0,0.946042
-Scale=1,1,1
-
-[ENTRY]
-ID=1156350
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Med
-Name=
-Pos=3136.89,170,3021.98
-Orient=0,0.237703,0,0.971338
-Scale=1.5,1.5,1.5
-
-[ENTRY]
-ID=1156351
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Large
-Name=
-Pos=3143.5,170,3009.48
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
-ID=1156352
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Huge
-Name=
-Pos=3400.77,170,2942.13
-Orient=0,0.21823,0,0.975898
-Scale=1,1,1
-
-[ENTRY]
-ID=1156353
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Small
-Name=
-Pos=3671.99,170,3102.36
-Orient=0,0.242556,0,0.970137
-Scale=1.5,1.5,1.5
-
-[ENTRY]
-ID=1156356
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Med
-Name=
-Pos=3483.09,170,2379.85
-Orient=0,0,0,1
-Scale=2.5,2.5,2.5
-
-[ENTRY]
-ID=1156358
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Large
-Name=
-Pos=3401.18,170,2163.8
-Orient=0,-0.227978,0,0.973666
-Scale=1,1,1
-
-[ENTRY]
-ID=1156359
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Small
-Name=
-Pos=3745.44,170,1968.58
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
-ID=1156360
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Med
-Name=
-Pos=3749.6,170,1970.96
-Orient=0,0.227978,0,0.973666
-Scale=1,1,1
-
-[ENTRY]
 ID=503316556
 Asset=Dng-Room_Corner_1Door?ATS=ATS-Dungeon_Temple
 Pos=3785,170,2050
-Orient=0,1.053e-07,0,1
+Orient=0,1.053e-007,0,1
 Scale=1,1,1
 Flags=1
 
@@ -138,7 +26,7 @@ Flags=1
 ID=503316560
 Asset=Dng-Hall_Straight1?ATS=ATS-Dungeon_Temple
 Pos=3415,170,2050
-Orient=0,2.98023e-08,0,1
+Orient=0,2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -146,7 +34,7 @@ Flags=1
 ID=503316567
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Temple
 Pos=3225,170,2050
-Orient=0,2.98023e-08,0,-1
+Orient=0,2.98023e-008,0,-1
 Scale=1,1,1
 Flags=1
 
@@ -154,7 +42,7 @@ Flags=1
 ID=503316571
 Asset=Dng-Hall_T2?ATS=ATS-Dungeon_Temple
 Pos=2855,170,2050
-Orient=0,2.98023e-08,0,1
+Orient=0,2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -170,7 +58,7 @@ Flags=1
 ID=503316606
 Asset=Dng-Room_Corner_1Door?ATS=ATS-Dungeon_Temple
 Pos=3785,170,2590
-Orient=0,1.053e-07,0,1
+Orient=0,1.053e-007,0,1
 Scale=1,1,1
 Flags=1
 
@@ -194,7 +82,7 @@ Flags=1
 ID=503316610
 Asset=Dng-Hall_Straight1?ATS=ATS-Dungeon_Temple
 Pos=3415,170,2590
-Orient=0,2.98023e-08,0,1
+Orient=0,2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -202,7 +90,7 @@ Flags=1
 ID=503316611
 Asset=Dng-Hall_Straight1?ATS=ATS-Dungeon_Temple
 Pos=2855,170,2410
-Orient=0,2.98023e-08,0,1
+Orient=0,2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -210,7 +98,7 @@ Flags=1
 ID=503316612
 Asset=Dng-Hall_X2?ATS=ATS-Dungeon_Temple
 Pos=3415,170,2410
-Orient=0,2.98023e-08,0,1
+Orient=0,2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -218,7 +106,7 @@ Flags=1
 ID=503316614
 Asset=Dng-Hall_Straight1?ATS=ATS-Dungeon_Temple
 Pos=3415,170,2230
-Orient=0,2.98023e-08,0,1
+Orient=0,2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -226,7 +114,7 @@ Flags=1
 ID=503316615
 Asset=Dng-Room_Corner2?ATS=ATS-Dungeon_Temple
 Pos=3045,170,2410
-Orient=0,1,0,2.98023e-08
+Orient=0,1,0,2.98023e-008
 Scale=1,1,1
 Flags=1
 
@@ -242,7 +130,7 @@ Flags=1
 ID=503316617
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Temple
 Pos=3225,170,2590
-Orient=0,2.98023e-08,0,-1
+Orient=0,2.98023e-008,0,-1
 Scale=1,1,1
 Flags=1
 
@@ -250,7 +138,7 @@ Flags=1
 ID=503316618
 Asset=Dng-Room_Corner_1Door?ATS=ATS-Dungeon_Temple
 Pos=3605,170,2410
-Orient=0,1,0,-2.98023e-08
+Orient=0,1,0,-2.98023e-008
 Scale=1,1,1
 Flags=1
 
@@ -301,7 +189,7 @@ Flags=1
 ID=503316661
 Asset=Dng-Hall_Short1?ATS=ATS-Dungeon_Temple
 Pos=2475,170,3265
-Orient=0,-1,0,1.053e-07
+Orient=0,-1,0,1.053e-007
 Scale=1,1,1
 Flags=1
 
@@ -309,7 +197,7 @@ Flags=1
 ID=503316662
 Asset=Dng-Hall_X2?ATS=ATS-Dungeon_Temple
 Pos=3415,170,2950
-Orient=0,2.98023e-08,0,1
+Orient=0,2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -317,7 +205,7 @@ Flags=1
 ID=503316664
 Asset=Dng-Hall_Straight1?ATS=ATS-Dungeon_Temple
 Pos=3415,170,2770
-Orient=0,2.98023e-08,0,1
+Orient=0,2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -325,7 +213,7 @@ Flags=1
 ID=503316665
 Asset=Dng-Room_Corner2?ATS=ATS-Dungeon_Temple
 Pos=3045,170,2950
-Orient=0,1,0,2.98023e-08
+Orient=0,1,0,2.98023e-008
 Scale=1,1,1
 Flags=1
 
@@ -333,7 +221,7 @@ Flags=1
 ID=503316666
 Asset=Dng-Room_Divider?ATS=ATS-Dungeon_Temple
 Pos=2390,170.001,2950
-Orient=0,1,0,-2.98023e-08
+Orient=0,1,0,-2.98023e-008
 Scale=1,1,1
 Flags=1
 
@@ -341,7 +229,7 @@ Flags=1
 ID=503316667
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Temple
 Pos=3225,170,3130
-Orient=0,2.98023e-08,0,-1
+Orient=0,2.98023e-008,0,-1
 Scale=1,1,1
 Flags=1
 
@@ -349,7 +237,7 @@ Flags=1
 ID=503316668
 Asset=Dng-Room_Corner_1Door?ATS=ATS-Dungeon_Temple
 Pos=3605,170,2950
-Orient=0,1,0,-2.98023e-08
+Orient=0,1,0,-2.98023e-008
 Scale=1,1,1
 Flags=1
 
@@ -404,7 +292,7 @@ Scale=1.475,1.475,1.475
 ID=503316705
 Asset=Dng-Hall_Straight1?ATS=ATS-Dungeon_Temple
 Pos=2855,170,2770
-Orient=0,2.98023e-08,0,1
+Orient=0,2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -412,7 +300,7 @@ Flags=1
 ID=503316706
 Asset=Dng-Hall_Short1?ATS=ATS-Dungeon_Temple
 Pos=3415,170,3255
-Orient=0,2.98023e-08,0,1
+Orient=0,2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -420,7 +308,7 @@ Flags=1
 ID=503316707
 Asset=Dng-Hall_Straight1?ATS=ATS-Dungeon_Temple
 Pos=3415,170,3130
-Orient=0,2.98023e-08,0,1
+Orient=0,2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -460,7 +348,7 @@ Flags=1
 ID=503316716
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Temple
 Pos=2875,170,3390
-Orient=0,1,0,2.98023e-08
+Orient=0,1,0,2.98023e-008
 Scale=1,1,1
 Flags=1
 
@@ -508,7 +396,7 @@ Flags=1
 ID=503316724
 Asset=Dng-Room_Half_Pit?ATS=ATS-Dungeon_Temple
 Pos=3055,170,3750
-Orient=0,-2.98023e-08,0,1
+Orient=0,-2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -524,7 +412,7 @@ Flags=1
 ID=503316728
 Asset=Dng-Room_1Sided?ATS=ATS-Dungeon_Temple
 Pos=2875,170,3750
-Orient=0,1,0,2.98023e-08
+Orient=0,1,0,2.98023e-008
 Scale=1,1,1
 Flags=1
 
@@ -532,7 +420,7 @@ Flags=1
 ID=503316729
 Asset=Dng-Pillar?ATS=ATS-Dungeon_Temple
 Pos=2875,170,3750
-Orient=0,1,0,2.98023e-08
+Orient=0,1,0,2.98023e-008
 Scale=1,1,1
 Flags=1
 
@@ -556,7 +444,7 @@ Flags=1
 ID=503316788
 Asset=Dng-Room_Half_Pit?ATS=ATS-Dungeon_Temple
 Pos=3775,170,3750
-Orient=0,1,0,1.053e-07
+Orient=0,1,0,1.053e-007
 Scale=1,1,1
 Flags=1
 
@@ -564,7 +452,7 @@ Flags=1
 ID=503316793
 Asset=Dng-Room_Corner_Pit?ATS=ATS-Dungeon_Temple
 Pos=3775,170,3570
-Orient=0,1,0,2.98023e-08
+Orient=0,1,0,2.98023e-008
 Scale=1,1,1
 Flags=1
 
@@ -572,7 +460,7 @@ Flags=1
 ID=503316794
 Asset=Dng-Room_1Sided?ATS=ATS-Dungeon_Temple
 Pos=2875,170,3570
-Orient=0,1,0,2.98023e-08
+Orient=0,1,0,2.98023e-008
 Scale=1,1,1
 Flags=1
 
@@ -596,7 +484,7 @@ Flags=1
 ID=503316800
 Asset=Dng-Room_Corner_1DoorB?ATS=ATS-Dungeon_Temple
 Pos=2205,170,2300
-Orient=0,-2.98023e-08,0,1
+Orient=0,-2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -604,7 +492,7 @@ Flags=1
 ID=503316801
 Asset=Dng-Room_1Sided_Door?ATS=ATS-Dungeon_Temple
 Pos=2665,170,2950
-Orient=0,2.98023e-08,0,1
+Orient=0,2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -628,7 +516,7 @@ Flags=1
 ID=503316805
 Asset=Dng-Room_Full_Rise?ATS=ATS-Dungeon_Temple
 Pos=2575.14,120.761,2950
-Orient=0,1,0,4.56956e-08
+Orient=0,1,0,4.56956e-008
 Scale=1.1,1.1,1.1
 Flags=1
 
@@ -636,7 +524,7 @@ Flags=1
 ID=503316806
 Asset=Dng-Room_Round_Corner2?ATS=ATS-Dungeon_Temple
 Pos=2115,170,2950
-Orient=0,5.36442e-07,0,1
+Orient=0,5.36442e-007,0,1
 Scale=1,1,1
 Flags=1
 
@@ -684,7 +572,7 @@ Flags=1
 ID=503316814
 Asset=Dng-Hall_T2?ATS=ATS-Dungeon_Temple
 Pos=2855,170,2590
-Orient=0,2.98023e-08,0,1
+Orient=0,2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -692,7 +580,7 @@ Flags=1
 ID=503316815
 Asset=Dng-Hall_Straight1?ATS=ATS-Dungeon_Temple
 Pos=2855,170,2230
-Orient=0,2.98023e-08,0,1
+Orient=0,2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -700,7 +588,7 @@ Flags=1
 ID=503316816
 Asset=Dng-Room_Corner_1DoorB?ATS=ATS-Dungeon_Temple
 Pos=2665,170,3130
-Orient=0,-2.98023e-08,0,1
+Orient=0,-2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -708,7 +596,7 @@ Flags=1
 ID=503316817
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Temple
 Pos=2485,170,2770
-Orient=0,-1,0,2.98023e-08
+Orient=0,-1,0,2.98023e-008
 Scale=1,1,1
 Flags=1
 
@@ -716,7 +604,7 @@ Flags=1
 ID=503316818
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Temple
 Pos=2455,170,2120
-Orient=0,-1,0,2.98023e-08
+Orient=0,-1,0,2.98023e-008
 Scale=1,1,1
 Flags=1
 
@@ -732,7 +620,7 @@ Flags=1
 ID=503316820
 Asset=Dng-Room_Corner_1DoorB?ATS=ATS-Dungeon_Temple
 Pos=2635,170,2300
-Orient=0,-2.98023e-08,0,1
+Orient=0,-2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -740,7 +628,7 @@ Flags=1
 ID=503316821
 Asset=Dng-Hall_L2?ATS=ATS-Dungeon_Temple
 Pos=2635,170,2490
-Orient=0,-1,0,-2.98023e-08
+Orient=0,-1,0,-2.98023e-008
 Scale=1,1,1
 Flags=1
 
@@ -820,7 +708,7 @@ Flags=1
 ID=503316837
 Asset=Dng-Room_Round_Corner1?ATS=ATS-Dungeon_Temple
 Pos=2475,170,3580
-Orient=0,-2.98023e-08,0,1
+Orient=0,-2.98023e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -828,7 +716,7 @@ Flags=1
 ID=503316838
 Asset=Dng-Hall_T2?ATS=ATS-Dungeon_Temple
 Pos=2855,170,2950
-Orient=0,-1,0,1.053e-07
+Orient=0,-1,0,1.053e-007
 Scale=1,1,1
 Flags=1
 
@@ -924,7 +812,7 @@ Flags=1
 ID=503316855
 Asset=Dng-Room_Corner_1Door?ATS=ATS-Dungeon_Temple
 Pos=3785,170,3130
-Orient=0,1.053e-07,0,1
+Orient=0,1.053e-007,0,1
 Scale=1,1,1
 Flags=1
 
@@ -948,7 +836,7 @@ Flags=1
 ID=503316958
 Asset=Dng-Hall_Straight_Long1?ATS=ATS-Dungeon_Temple
 Pos=2665,170,3410
-Orient=0,-1,0,2.98023e-08
+Orient=0,-1,0,2.98023e-008
 Scale=1,1,1
 Flags=1
 
@@ -956,7 +844,7 @@ Flags=1
 ID=503316959
 Asset=Dng-Hall_Straight_Long1?ATS=ATS-Dungeon_Temple
 Pos=2665,170,3770
-Orient=0,-1,0,2.98023e-08
+Orient=0,-1,0,2.98023e-008
 Scale=1,1,1
 Flags=1
 
@@ -964,7 +852,7 @@ Flags=1
 ID=503316965
 Asset=CL-Quarters1#CL-Quarters1
 Pos=3239.9,170,2663.49
-Orient=0,1,0,7.54979e-08
+Orient=0,1,0,7.54979e-008
 Scale=1,1,1
 
 [ENTRY]
@@ -999,7 +887,7 @@ Scale=1,1,1
 ID=503316970
 Asset=CL-Quarters1
 Pos=3119.52,170,2663.49
-Orient=0,1,0,7.54979e-08
+Orient=0,1,0,7.54979e-008
 Scale=1,1,1
 
 [ENTRY]
@@ -1013,14 +901,14 @@ Scale=1,1,1
 ID=503316972
 Asset=Prop-Cot2#Prop-Cot2
 Pos=3192.8,180.92,2336.66
-Orient=0,1,0,7.54979e-08
+Orient=0,1,0,7.54979e-008
 Scale=1,1,1
 
 [ENTRY]
 ID=503316973
 Asset=Prop-Cot2
 Pos=3192.8,170,2336.66
-Orient=0,1,0,7.54979e-08
+Orient=0,1,0,7.54979e-008
 Scale=1,1,1
 
 [ENTRY]
@@ -1034,7 +922,7 @@ Scale=1.425,1.425,1.425
 ID=503316975
 Asset=Prop-Crypt_Statue1#Prop-Crypt_Statue1
 Pos=2974.81,179.307,2410.55
-Orient=0,1,0,7.54979e-08
+Orient=0,1,0,7.54979e-008
 Scale=1.1,1.1,1.1
 
 [ENTRY]
@@ -1091,7 +979,7 @@ Scale=1.7,1.7,1.7
 ID=503317052
 Asset=CL-Quarters1
 Pos=3237.46,170,2124.56
-Orient=0,1,0,7.54979e-08
+Orient=0,1,0,7.54979e-008
 Scale=1,1,1
 
 [ENTRY]
@@ -1112,7 +1000,7 @@ Scale=1,1,1
 ID=503317057
 Asset=CL-Quarters1
 Pos=3117.46,170,2124.56
-Orient=0,1,0,7.54979e-08
+Orient=0,1,0,7.54979e-008
 Scale=1,1,1
 
 [ENTRY]
@@ -1505,7 +1393,7 @@ Scale=1.8,1.8,1.8
 ID=503317546
 Asset=Prop-Table4
 Pos=2152.75,168,3241.71
-Orient=0,2.98023e-08,0,1
+Orient=0,2.98023e-008,0,1
 Scale=1.8,1.8,1.8
 
 [ENTRY]
@@ -1710,7 +1598,7 @@ Flags=1
 ID=503317597
 Asset=CL-Storage_Wall#CL-Storage_Wall
 Pos=2069.57,170,2375.8
-Orient=0,1,0,7.54979e-08
+Orient=0,1,0,7.54979e-008
 Scale=1.2,1.2,1.2
 
 [ENTRY]
@@ -1825,7 +1713,7 @@ Flags=1
 ID=503317624
 Asset=Prop-Shelf#Prop-Shelf
 Pos=2381.65,183.918,2177.89
-Orient=0,0,1,7.54979e-08
+Orient=0,0,1,7.54979e-008
 Scale=1.75,1.75,1.75
 
 [ENTRY]
@@ -1860,7 +1748,7 @@ Scale=1.35,1.35,1.35
 ID=503317630
 Asset=Prop-Shelf
 Pos=2382.06,183.918,2134.34
-Orient=0,0,1,7.54979e-08
+Orient=0,0,1,7.54979e-008
 Scale=1.75,1.75,1.75
 
 [ENTRY]
@@ -1902,7 +1790,7 @@ Scale=1.35,1.35,1.35
 ID=503317637
 Asset=Prop-Shelf
 Pos=2407.62,183.918,2178.18
-Orient=0,0,1,7.54979e-08
+Orient=0,0,1,7.54979e-008
 Scale=1.75,1.75,1.75
 
 [ENTRY]
@@ -1923,7 +1811,7 @@ Scale=1.175,1.175,1.175
 ID=503317644
 Asset=Prop-Shelf
 Pos=2384.44,184,2268.55
-Orient=0,0,1,7.54979e-08
+Orient=0,0,1,7.54979e-008
 Scale=1.75,1.75,1.75
 
 [ENTRY]
@@ -2170,7 +2058,7 @@ Scale=1.675,1.675,1.675
 ID=503317687
 Asset=Prop-Shelf
 Pos=2006.42,184,2964.91
-Orient=0,0,1,7.54979e-08
+Orient=0,0,1,7.54979e-008
 Scale=1.75,1.75,1.75
 
 [ENTRY]
@@ -2212,7 +2100,7 @@ Scale=1.35,1.35,1.35
 ID=503317694
 Asset=Prop-Shelf
 Pos=2006.37,184,3004.06
-Orient=0,0,1,7.54979e-08
+Orient=0,0,1,7.54979e-008
 Scale=1.75,1.75,1.75
 
 [ENTRY]
@@ -2318,7 +2206,7 @@ Scale=1.775,1.775,1.775
 ID=503317712
 Asset=Dng-Room_Center?ATS=ATS-Dungeon_Temple
 Pos=2485,170,2950
-Orient=0,1,0,4.56956e-08
+Orient=0,1,0,4.56956e-008
 Scale=1,1,1
 Flags=1
 
@@ -2333,7 +2221,7 @@ Scale=1,1,1
 ID=503317714
 Asset=Prop-Dungeon_Chain1
 Pos=2680.64,309.882,3043.78
-Orient=0,1,0,7.54979e-08
+Orient=0,1,0,7.54979e-008
 Scale=1,1,1
 
 [ENTRY]
@@ -2685,14 +2573,14 @@ Scale=2.4,2.4,2.4
 ID=503317860
 Asset=CL-HallDeco1#CL-HallDeco1
 Pos=3414.47,283.286,2946.38
-Orient=0,1,0,7.54979e-08
+Orient=0,1,0,7.54979e-008
 Scale=1,1,1
 
 [ENTRY]
 ID=503317867
 Asset=CL-HallDeco1
 Pos=3415.71,283.286,2413.23
-Orient=0,1,0,7.54979e-08
+Orient=0,1,0,7.54979e-008
 Scale=1,1,1
 
 [ENTRY]
@@ -2709,7 +2597,7 @@ Pos=3372.5,175,3546.54
 Orient=0,0.636537,0,0.771246
 Scale=1,1,1
 spawnPackage=1_dng_am_full_mix_16_17
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=503317885
@@ -2720,7 +2608,7 @@ Scale=1,1,1
 links_count=1
 link=503318321,1
 spawnPackage=1_dng_am_full_mix_16_17
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=503317886
@@ -2729,7 +2617,7 @@ Pos=3033.5,175,3734
 Orient=0,-0.990794,0,0.135379
 Scale=1,1,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=503317887
@@ -2738,7 +2626,7 @@ Pos=3785.52,175,3773.53
 Orient=0,-0.797662,0,-0.603105
 Scale=1,1,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=503317904
@@ -3162,7 +3050,7 @@ Scale=1,1,1
 links_count=1
 link=503318320,1
 spawnPackage=1_dng_am_full_mix_16_17
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=503318368
@@ -3173,7 +3061,7 @@ Scale=1,1,1
 links_count=1
 link=503318319,1
 spawnPackage=1_dng_am_full_mix_16_17
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=503318369
@@ -3184,7 +3072,7 @@ Scale=1,1,1
 links_count=1
 link=503318328,1
 spawnPackage=1_dng_am_full_mix_16_17
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=503318370
@@ -3195,7 +3083,7 @@ Scale=1,1,1
 links_count=1
 link=503318329,1
 spawnPackage=1_dng_am_full_mix_16_17
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=503318374
@@ -3206,7 +3094,7 @@ Scale=1,1,1
 links_count=1
 link=503318334,1
 spawnPackage=1_dng_am_full_mix_16_17
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=503318383
@@ -3215,7 +3103,7 @@ Pos=3034.6,175,3766.41
 Orient=0,0.849481,0,0.52762
 Scale=1,1,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=503318384
@@ -3226,7 +3114,7 @@ Scale=1,1,1
 links_count=1
 link=503318331,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=503318385
@@ -3237,7 +3125,7 @@ Scale=1,1,1
 links_count=1
 link=503318330,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=503318386
@@ -3248,7 +3136,7 @@ Scale=1,1,1
 links_count=1
 link=503318355,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=503318387
@@ -3257,7 +3145,7 @@ Pos=3787.67,175,3725.78
 Orient=0,-0.681639,0,0.731689
 Scale=1,1,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=503318389
@@ -3268,7 +3156,7 @@ Scale=1,1,1
 links_count=1
 link=503318336,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=503318390
@@ -3279,7 +3167,7 @@ Scale=1,1,1
 links_count=1
 link=503318365,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=503318395
@@ -3288,7 +3176,7 @@ Pos=3456.68,175,3545.13
 Orient=0,0.703279,0,0.710914
 Scale=1,1,1
 spawnPackage=1_dng_am_full_mix_16_17
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=503318396
@@ -3299,7 +3187,7 @@ Scale=1,1,1
 links_count=1
 link=503319416,1
 spawnPackage=1_dng_am_full_mix_16_17
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=503318397
@@ -3308,7 +3196,7 @@ Pos=3283.42,175,3544.97
 Orient=0,0.677972,0,0.735088
 Scale=1,1,1
 spawnPackage=1_dng_am_full_mix_16_17
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=503318398
@@ -3317,7 +3205,7 @@ Pos=3545.25,175,3545.36
 Orient=0,0.80162,0,0.597834
 Scale=1,1,1
 spawnPackage=1_dng_am_full_mix_16_17
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=503318399
@@ -4534,7 +4422,7 @@ spawnPackage=1_dng_am_monks_k_17
 ID=503319039
 Asset=Manipulator-SpawnPoint
 Pos=3463.6,170,2290.27
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 spawnPackage=1_dng_am_monks_k_17
 
@@ -4569,7 +4457,7 @@ link=503319041,1
 ID=503319043
 Asset=Manipulator-SpawnPoint
 Pos=3532.43,170,2410.79
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 spawnPackage=1_dng_am_wyrms_16
 
@@ -4726,7 +4614,7 @@ link=503319064,1
 ID=503319066
 Asset=Manipulator-SpawnPoint
 Pos=3175,170,2350
-Orient=0,-1,0,-5.36442e-07
+Orient=0,-1,0,-5.36442e-007
 Scale=1,1,1
 spawnPackage=1_dng_am_monks_k_17
 
@@ -4824,7 +4712,7 @@ link=503319074,1
 ID=503319076
 Asset=Manipulator-SpawnPoint
 Pos=3264.33,170,2371.57
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 links_count=1
 link=503319068,1
@@ -4844,7 +4732,7 @@ spawnPackage=1_dng_am_monks_k_17
 ID=503319078
 Asset=Manipulator-SpawnPoint
 Pos=3300.07,170,2531.1
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 links_count=1
 link=503319079,1
@@ -4873,7 +4761,7 @@ spawnPackage=1_dng_am_monks_k_17
 ID=503319103
 Asset=Manipulator-SpawnPoint
 Pos=2931.58,170,2076.67
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 spawnPackage=1_dng_am_monks_k_17
 
@@ -4917,7 +4805,7 @@ link=503319114,1
 ID=503319116
 Asset=Manipulator-SpawnPoint
 Pos=2901.44,170,2349.73
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 spawnPackage=1_dng_am_full_mix_16_17
 
@@ -5203,7 +5091,7 @@ spawnPackage=1_dng_am_monks_k_17
 ID=503319174
 Asset=Manipulator-SpawnPoint
 Pos=3302.34,170,3039.83
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 spawnPackage=1_dng_am_monks_k_17
 
@@ -5337,7 +5225,7 @@ link=503319190,1
 ID=503319189
 Asset=Manipulator-SpawnPoint
 Pos=2373.51,170,3280.21
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 spawnPackage=1a_dng_am_RavingCenobiteRND_h17
 
@@ -5354,7 +5242,7 @@ link=503319188,1
 ID=503319191
 Asset=Manipulator-SpawnPoint
 Pos=2242.13,170,3240.74
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 spawnPackage=1a_dng_am_RavingCenobiteRND_h17
 
@@ -6172,7 +6060,7 @@ spawnPackage=1a_dng_am_monks_k_17
 ID=503319343
 Asset=Manipulator-SpawnPoint
 Pos=2119.82,170,2120.4
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 links_count=1
 link=503319342,1
@@ -6427,7 +6315,7 @@ Pos=3178.44,170,2112.64
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1_obji_bth_05_rareBook
-loyaltyRadius=5
+outerRadius=5
 
 [ENTRY]
 ID=503319421
@@ -6436,7 +6324,7 @@ Pos=2978.16,170,2466.1
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1_obji_bth_05_rareBook
-loyaltyRadius=5
+outerRadius=5
 
 [ENTRY]
 ID=503319422
@@ -6445,7 +6333,7 @@ Pos=3753.79,170,2337.62
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1_obji_bth_05_rareBook
-loyaltyRadius=5
+outerRadius=5
 
 [ENTRY]
 ID=503319423
@@ -6454,7 +6342,7 @@ Pos=3538.18,170,3119.38
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1_obji_bth_05_rareBook
-loyaltyRadius=5
+outerRadius=5
 
 [ENTRY]
 ID=503319424
@@ -6463,7 +6351,7 @@ Pos=3213.47,170,3195.54
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1_obji_bth_05_rareBook
-loyaltyRadius=5
+outerRadius=5
 
 [ENTRY]
 ID=503319425
@@ -6472,5 +6360,5 @@ Pos=3447.99,170,3268.69
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1_obji_bth_05_rareBook
-loyaltyRadius=5
+outerRadius=5
 

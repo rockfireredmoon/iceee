@@ -1,14 +1,7 @@
 [ENTRY]
-ID=1000166
-Asset=Prop-Bremen-Scratching_Post#Prop-Bremen-Scratching_Post
-Name=
-Pos=68474.5,424.919,36775.5
-Orient=0,0,0,1
-Scale=2,2,2
-
-[ENTRY]
 ID=1130332
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68966.9,468.808,37203.8
 Orient=0,0,0.731146,0.682221
 Scale=0.5,0.5,0.5
@@ -16,6 +9,7 @@ Scale=0.5,0.5,0.5
 [ENTRY]
 ID=1130333
 Asset=Prop-Desk_Set#Prop-Paper
+Name=
 Pos=68957.5,468.808,37206.2
 Orient=0,0,0,1
 Scale=0.5,0.5,0.5
@@ -23,6 +17,7 @@ Scale=0.5,0.5,0.5
 [ENTRY]
 ID=1130334
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68911.4,466.606,37236.5
 Orient=0.00703833,0.0284066,0.709785,0.70381
 Scale=1,1,1
@@ -30,6 +25,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130335
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68944.4,466.34,37236.6
 Orient=0,0,0.706825,0.707388
 Scale=1,1,1
@@ -37,6 +33,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130336
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68881.2,446.674,37238.1
 Orient=0,0,0,1
 Scale=1.3,1.3,1.3
@@ -44,6 +41,7 @@ Scale=1.3,1.3,1.3
 [ENTRY]
 ID=1130337
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68826.8,497.014,37233.3
 Orient=0,0,-0.713864,0.700285
 Scale=1,1,1
@@ -51,6 +49,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130338
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68885.5,496.49,37238.3
 Orient=0,0,0.717356,0.696707
 Scale=1,1,1
@@ -58,6 +57,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130339
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68824.1,494.402,37234.2
 Orient=0,0,0,1
 Scale=1,1,1
@@ -65,6 +65,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130340
 Asset=Prop-Containers1#Prop-Barrel3
+Name=
 Pos=68889.3,467.453,37235.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -72,6 +73,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130341
 Asset=Prop-Containers1#Prop-Crate3
+Name=
 Pos=68830.4,497.32,37233.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -79,6 +81,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130342
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68822.4,526.231,37234.5
 Orient=0,0,0.706825,0.707388
 Scale=1,1,1
@@ -86,6 +89,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130343
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68755,526.628,37232.8
 Orient=0,0,-0.710353,0.703845
 Scale=1,1,1
@@ -93,6 +97,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130345
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68741.6,526.6,37196.1
 Orient=0,0,-0.685289,0.728272
 Scale=0.5,0.5,0.5
@@ -100,6 +105,7 @@ Scale=0.5,0.5,0.5
 [ENTRY]
 ID=1130346
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68727.7,525.551,37210.9
 Orient=0,0,0.674288,0.738469
 Scale=0.5,0.5,0.5
@@ -107,6 +113,7 @@ Scale=0.5,0.5,0.5
 [ENTRY]
 ID=1130352
 Asset=Par-Light_Beam-Emitter
+Name=
 Pos=68753.4,580.76,37222.4
 Orient=0,0,0,1
 Scale=1,1,1
@@ -114,6 +121,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130354
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68729.7,527.633,37237.4
 Orient=0,0,0.706825,0.707388
 Scale=1,1,1
@@ -121,6 +129,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130355
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68696.2,527.74,37237
 Orient=0,0,0.713864,0.700285
 Scale=1,1,1
@@ -128,6 +137,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130356
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68681.2,525.001,37237.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -135,6 +145,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130357
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68563.4,586.471,37235.7
 Orient=0,0,-0.706825,0.707388
 Scale=1,1,1
@@ -142,6 +153,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130358
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68620.7,586.816,37237.1
 Orient=0,0,0.706825,0.707388
 Scale=1,1,1
@@ -149,6 +161,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130359
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68620.7,555.299,37235.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -156,6 +169,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130362
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68678.7,556.651,37236.5
 Orient=0,0,0.710353,0.703845
 Scale=1,1,1
@@ -163,6 +177,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130363
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68618.1,556.55,37236.4
 Orient=0,0,-0.699716,0.714421
 Scale=1,1,1
@@ -170,6 +185,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130364
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68545.6,590.886,37208.6
 Orient=-0.431481,0.513686,-0.541828,0.506333
 Scale=0.5,0.5,0.5
@@ -177,6 +193,7 @@ Scale=0.5,0.5,0.5
 [ENTRY]
 ID=1130365
 Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
 Pos=68524.5,597.934,37197.9
 Orient=0,0,0.713864,0.700285
 Scale=0.5,0.5,0.5
@@ -184,6 +201,7 @@ Scale=0.5,0.5,0.5
 [ENTRY]
 ID=1130366
 Asset=Prop-Wooden_Furniture#Prop-Ladder1
+Name=
 Pos=68695.5,531.809,37236.5
 Orient=0,0,0.389418,0.921061
 Scale=1,1,1
@@ -191,6 +209,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130367
 Asset=Prop-Containers1#Prop-Barrel2
+Name=
 Pos=68638.5,561.987,37236.9
 Orient=-0.710353,0,0,0.703845
 Scale=1,1,1
@@ -198,6 +217,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130368
 Asset=Prop-Containers1#Prop-Barrel2
+Name=
 Pos=68630.9,558.754,37234
 Orient=0,0,0,1
 Scale=1,1,1
@@ -205,6 +225,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130369
 Asset=Prop-Containers1#Prop-Barrel2
+Name=
 Pos=68630.5,567.301,37234.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -212,6 +233,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1130370
 Asset=Prop-Pine_Forest_Accessories#Prop-Pine_Sticks1
+Name=
 Pos=68545.9,591.138,37204.8
 Orient=0,0,0,1
 Scale=0.5,0.5,0.5
@@ -219,6 +241,7 @@ Scale=0.5,0.5,0.5
 [ENTRY]
 ID=1130371
 Asset=Prop-Pine_Forest_Accessories#Prop-Pine_Sticks2
+Name=
 Pos=68516.3,599.399,37196.3
 Orient=0,0,0,1
 Scale=0.5,0.5,0.5
@@ -226,6 +249,7 @@ Scale=0.5,0.5,0.5
 [ENTRY]
 ID=1130372
 Asset=Prop-Loot1#Prop-Loot-Boss_Chest1
+Name=
 Pos=68340.1,602.221,37244
 Orient=0,0.999991,0,-0.00420368
 Scale=1,1,1
@@ -233,6 +257,7 @@ Scale=1,1,1
 [ENTRY]
 ID=150999432
 Asset=Bldg-Bremen3?ATS=ATS-Bremen
+Name=Untitled
 Pos=68336,420.18,37229
 Orient=0,0.717356,0,0.696707
 Scale=1,1,1
@@ -241,6 +266,7 @@ Flags=1
 [ENTRY]
 ID=150999448
 Asset=Bldg-BremenR?ATS=ATS-Bremen
+Name=Untitled
 Pos=68878,340.795,37119
 Orient=0,-0.0499789,0,0.99875
 Scale=1,1,1
@@ -249,6 +275,7 @@ Flags=1
 [ENTRY]
 ID=150999483
 Asset=Bldg-WallRamp?ATS=ATS-Castle
+Name=Untitled
 Pos=68957,288.808,37238
 Orient=0,-0.624898,0,0.780707
 Scale=1,1,1
@@ -257,6 +284,7 @@ Flags=1
 [ENTRY]
 ID=150999515
 Asset=Bldg-Wall_Slope?ATS=ATS-Castle
+Name=Untitled
 Pos=68747,348.255,37231
 Orient=0,-0.717356,0,0.696707
 Scale=1,1,1
@@ -265,6 +293,7 @@ Flags=1
 [ENTRY]
 ID=150999633
 Asset=Bldg-Wall_Slope?ATS=ATS-Castle
+Name=Untitled
 Pos=68544,408.46,37235
 Orient=0,-0.710353,0,0.703845
 Scale=1,1,1
@@ -273,14 +302,25 @@ Flags=1
 [ENTRY]
 ID=151000341
 Asset=Prop-Tree2
+Name=Untitled
 Pos=68600,422.964,36898
 Orient=0,0,0,1
 Scale=1.525,1.525,1.525
 Flags=1
 
 [ENTRY]
+ID=151000675
+Asset=Prop-Bremen-Scratching_Post#Prop-Bremen-Scratching_Post
+Name=Untitled
+Pos=68474,424.527,36773
+Orient=0,-0.0699428,0,0.997551
+Scale=2,2,2
+Flags=1
+
+[ENTRY]
 ID=151000676
 Asset=Prop-Bush-Med2#Prop-Bush-Med2
+Name=Untitled
 Pos=68678,421.178,36798
 Orient=0,0,0,1
 Scale=1,1,1
@@ -289,6 +329,7 @@ Flags=1
 [ENTRY]
 ID=151000698
 Asset=Light-Large?GROUP=2
+Name=Untitled
 Pos=68335,478.891,36849
 Orient=0,0,0,1
 Scale=1,1,1
@@ -297,6 +338,7 @@ Flags=1
 [ENTRY]
 ID=151011738
 Asset=Environment-Marker?type=Bremen
+Name=Untitled
 Pos=68661,421.704,36798
 Orient=0,0,0,1
 Scale=8,8,8
@@ -305,6 +347,7 @@ Flags=1
 [ENTRY]
 ID=151057857
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=68495,424.811,36850
 Orient=0,0,0,1
 Scale=1,1,1
@@ -315,6 +358,7 @@ link=151057858,1
 [ENTRY]
 ID=151057858
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=68536,424.811,36788
 Orient=0,0,0,1
 Scale=1,1,1
@@ -325,6 +369,7 @@ link=151057859,1
 [ENTRY]
 ID=151057861
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=68404,424.726,36852
 Orient=0,0,0,1
 Scale=1,1,1
@@ -335,6 +380,7 @@ link=151057860,1
 [ENTRY]
 ID=151057862
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=68475,424.951,36762
 Orient=0,0.677972,0,0.735088
 Scale=1,1,1
@@ -343,6 +389,7 @@ spawnPackage=2a_npc_guard
 [ENTRY]
 ID=151057913
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=68954,363.699,36950
 Orient=0,0,0,1
 Scale=1,1,1
@@ -353,6 +400,7 @@ link=151057914,1
 [ENTRY]
 ID=151057914
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=68903,374.592,36901
 Orient=0,0,0,1
 Scale=1,1,1
@@ -363,6 +411,7 @@ link=151057913,1
 [ENTRY]
 ID=151057923
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=68991,468.808,37230
 Orient=0,0,0,1
 Scale=1,1,1
@@ -372,6 +421,7 @@ link=151057922,1
 [ENTRY]
 ID=151057926
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=68807,361.868,37040
 Orient=0,0.688921,0,0.724836
 Scale=1,1,1
@@ -380,6 +430,7 @@ spawnPackage=2a_npc_guard
 [ENTRY]
 ID=151057927
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=68260,424.811,36960
 Orient=0,0.724287,0,0.689498
 Scale=1,1,1
@@ -388,6 +439,7 @@ spawnPackage=2a_npc_guard
 [ENTRY]
 ID=151058602
 Asset=Prop-Chunks#Prop-Chunks2
+Name=Untitled
 Pos=68717.6,359.6,37169.9
 Orient=0,0.66687,0,0.745174
 Scale=1.775,1.775,1.775
@@ -395,6 +447,7 @@ Scale=1.775,1.775,1.775
 [ENTRY]
 ID=151058603
 Asset=Prop-Containers1#Prop-Barrel_Broken
+Name=Untitled
 Pos=68752.2,368.264,37171
 Orient=-0.213347,0,0,0.976976
 Scale=1.375,1.375,1.375
@@ -402,6 +455,7 @@ Scale=1.375,1.375,1.375
 [ENTRY]
 ID=151058604
 Asset=Prop-Containers1#Prop-Crate_Broken
+Name=Untitled
 Pos=68698.3,363.142,37152.4
 Orient=0,0,0.164252,0.986418
 Scale=1.5,1.5,1.5
@@ -409,6 +463,7 @@ Scale=1.5,1.5,1.5
 [ENTRY]
 ID=151058631
 Asset=CL-Bremen1
+Name=Untitled
 Pos=68571.4,419.89,36893.7
 Orient=0,0.95055,0,0.310573
 Scale=1,1,1
@@ -416,6 +471,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151060261
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=68326.1,418.534,37461.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -424,6 +480,7 @@ spawnPackage=HOLIDAY_turkatrice_26_27
 [ENTRY]
 ID=151060267
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=68938,320.081,37487
 Orient=0,0,0,1
 Scale=1,1,1
@@ -432,6 +489,7 @@ spawnPackage=HOLIDAY_turkatrice_26_27
 [ENTRY]
 ID=151060433
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=68340,432.531,37325
 Orient=0,0,0,1
 Scale=1,1,1
@@ -442,6 +500,7 @@ link=151060435,1
 [ENTRY]
 ID=151060435
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=68595,429.915,37320
 Orient=0,0,0,1
 Scale=1,1,1
@@ -452,6 +511,7 @@ link=151060436,1
 [ENTRY]
 ID=151060436
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=68815,358.075,37380
 Orient=0,0,0,1
 Scale=1,1,1
@@ -462,6 +522,7 @@ link=151060437,1
 [ENTRY]
 ID=151062288
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=68759.7,373.842,37197.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -470,6 +531,7 @@ spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 [ENTRY]
 ID=151062289
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=68556,421.832,37184.6
 Orient=0,0,0,1
 Scale=1,1,1
@@ -478,6 +540,7 @@ spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 [ENTRY]
 ID=151062290
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=68339,424.6,36993.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -486,6 +549,7 @@ spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 [ENTRY]
 ID=151062291
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=68607,424.773,36878
 Orient=0,0,0,1
 Scale=1,1,1

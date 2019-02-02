@@ -1,34 +1,11 @@
 [ENTRY]
-ID=1000063
-Asset=CL-Holiday#CL-Holiday-WinterDawning-Lights4
-Name=
-Pos=43508.6,229.111,66001.3
-Orient=0,-0.37092,0,0.928665
-Scale=1,1,1
-
-[ENTRY]
-ID=1000074
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Banner
-Name=
-Pos=43918.6,218.224,66664.9
-Orient=0,0.488177,0,0.872745
-Scale=1,1,1
-
-[ENTRY]
-ID=1000075
-Asset=Prop-Holiday-WinterDawning_Banner
-Name=
-Pos=43393.6,224.655,66251.6
-Orient=0,0.636537,0,0.771246
-Scale=1,1,1
-
-[ENTRY]
 ID=10000164
 Asset=Manipulator-SpawnPoint
 Pos=43653,187,66018
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=115
+sceneryName=generated_Master_Sergeant_Whitehoof
 spawnPackage=#157
 
 [ENTRY]
@@ -126,7 +103,7 @@ links_count=2
 link=1358959884,1
 link=1358959889,1
 spawnPackage=1a_chomperCamp01_general
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=1358959884
@@ -165,7 +142,7 @@ Pos=43913.3,250.217,66994
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_hog/rocCamp01_rocs
-loyaltyRadius=10
+outerRadius=10
 
 [ENTRY]
 ID=1358960157

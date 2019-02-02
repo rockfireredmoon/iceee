@@ -1,18 +1,11 @@
 [ENTRY]
-ID=1000190
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Wreath
-Name=
-Pos=41261.8,287.253,59785.8
-Orient=0,-0.281157,0,0.959662
-Scale=1,1,1
-
-[ENTRY]
 ID=10000146
 Asset=Manipulator-SpawnPoint
 Pos=41255,274,59794
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=236
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Volker_Stump_437
 
 [ENTRY]
@@ -22,6 +15,7 @@ Pos=41978,369,59932
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=108
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Granger_Strongbark_2204
 
 [ENTRY]
@@ -31,6 +25,7 @@ Pos=41855,341,59620
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=245
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Rondo_Tinheart_2205
 
 [ENTRY]
@@ -40,6 +35,7 @@ Pos=41403,265,59987
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=104
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Penelope_Two_Gear_2206
 
 [ENTRY]

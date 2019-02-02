@@ -14,4 +14,4 @@ Data\QuestICEEE.txt
 
 ; Data\QuestEventSummer.txt
 ; Data\QuestEventHarvestFest.txt
-Data\QuestEventWinterDawning.txt
+; Data\QuestEventWinterDawning.txt

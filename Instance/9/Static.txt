@@ -22,14 +22,14 @@
 
 ; WINTER DAWNING NPCS - BREMEN
 ; Facing them, from left to right:
-2903=68964,424,35668,128,3   ; Forden Jallows
-2910=68932,424,35666,128,3   ; Chillkin Hunt Reward Chest
-2929=68908,424,35668,128,3   ; Brenna Nalision
-2933=68878,424,35670,64,3    ; Holiday Gift Chest  Note: prop has a different facing
+;2903=68964,424,35668,128   ; Forden Jallows
+;2910=68932,424,35666,128   ; Chillkin Hunt Reward Chest
+;2929=68908,424,35668,128   ; Brenna Nalision
+;2933=68878,424,35670,64    ; Holiday Gift Chest  Note: prop has a different facing
 
 ; WINTER DAWNING NPCS - HEARTWOOD
 ; Facing them, from left to right:
-2904=28930,508,62789,210,3  ; Haslo Norgun
-2911=28942,508,62813,210,3  ; Chillkin Hunt Reward Chest
-2930=28952,508,62832,210,3  ; Aris Redbark
-2934=28962,508,62852,146,3  ; Holiday Gift Chest
+;2904=28930,508,62789,210  ; Haslo Norgun
+;2911=28942,508,62813,210  ; Chillkin Hunt Reward Chest
+;2930=28952,508,62832,210  ; Aris Redbark
+;2934=28962,508,62852,146  ; Holiday Gift Chest

@@ -1,24 +1,8 @@
 [ENTRY]
-ID=1156369
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Med
-Name=
-Pos=3371.13,160,2286.28
-Orient=0,0.352274,0,0.935897
-Scale=1.5,1.5,1.5
-
-[ENTRY]
-ID=1156370
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Small
-Name=
-Pos=3730.76,160,2058.95
-Orient=0,0,0,1
-Scale=3,3,3
-
-[ENTRY]
 ID=805306390
 Asset=Dng-Room_Round_Corner1?ATS=ATS-Dungeon_Crypt
 Pos=3115,100,2010
-Orient=0,-5.96046e-08,0,1
+Orient=0,-5.96046e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -50,7 +34,7 @@ Flags=1
 ID=805306462
 Asset=Dng-Room_Round_Corner2?ATS=ATS-Dungeon_Crypt
 Pos=3305,100,2740
-Orient=0,-1,0,-5.96046e-08
+Orient=0,-1,0,-5.96046e-008
 Scale=1,1,1
 Flags=1
 
@@ -74,7 +58,7 @@ Flags=1
 ID=805306468
 Asset=Dng-Hall_Straight_Long1?ATS=ATS-Dungeon_Crypt
 Pos=3945,100,2380
-Orient=0,1,0,-5.96046e-08
+Orient=0,1,0,-5.96046e-008
 Scale=1,1,1
 Flags=1
 
@@ -82,7 +66,7 @@ Flags=1
 ID=805306471
 Asset=Dng-Hall_L2?ATS=ATS-Dungeon_Crypt
 Pos=3565,160,2280
-Orient=0,1,0,-1.35102e-07
+Orient=0,1,0,-1.35102e-007
 Scale=1,1,1
 Flags=1
 
@@ -98,7 +82,7 @@ Flags=1
 ID=805306475
 Asset=Dng-Hall_L1?ATS=ATS-Dungeon_Crypt
 Pos=3945,100,2740
-Orient=0,1,0,-5.96046e-08
+Orient=0,1,0,-5.96046e-008
 Scale=1,1,1
 Flags=1
 
@@ -122,7 +106,7 @@ Flags=1
 ID=805306479
 Asset=Dng-Hall_L2?ATS=ATS-Dungeon_Crypt
 Pos=3565,160,2100
-Orient=0,-5.96046e-08,0,-1
+Orient=0,-5.96046e-008,0,-1
 Scale=1,1,1
 Flags=1
 
@@ -138,7 +122,7 @@ Flags=1
 ID=805306481
 Asset=Dng-Hall_Stair1?ATS=ATS-Dungeon_Crypt
 Pos=3295,160,2130
-Orient=0,-1.35102e-07,0,-1
+Orient=0,-1.35102e-007,0,-1
 Scale=1,1,1
 Flags=1
 
@@ -1600,7 +1584,7 @@ spawnPackage=4_dd_Excavators
 ID=805308241
 Asset=Manipulator-SpawnPoint
 Pos=3612.53,160,2220
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 spawnPackage=4_dd_cultistsHallway_front
 
@@ -1743,7 +1727,7 @@ spawnPackage=4_dd_Excavators
 ID=805308257
 Asset=Manipulator-SpawnPoint
 Pos=3435,160,2280
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 links_count=1
 link=805308258,1

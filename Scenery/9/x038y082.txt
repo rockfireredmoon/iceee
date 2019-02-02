@@ -15,16 +15,9 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
-ID=1000106
-Asset=Prop-Holiday-WinterDawning_Lights1
-Name=
-Pos=29201.9,409.98,61507.8
-Orient=0,0.457338,0,0.889293
-Scale=1.5,1.5,1.5
-
-[ENTRY]
 ID=10000064
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=29128,770,62209
 Orient=0,0,0,1
 Scale=1,1,1
@@ -34,6 +27,7 @@ spawnPackage=z9_eur_gen_Heartwood_Oakfist_988
 [ENTRY]
 ID=10000066
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=28554,770,61728
 Orient=0,0,0,1
 Scale=1,1,1
@@ -43,6 +37,7 @@ spawnPackage=z9_eur_gen_Heartwood_Oakfist_988
 [ENTRY]
 ID=10000072
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=28665,304,62164
 Orient=0,0,0,1
 Scale=1,1,1
@@ -52,6 +47,7 @@ spawnPackage=z9_eur_gen_Councilor_Honeymaple_669
 [ENTRY]
 ID=10000173
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=29235,770,62100
 Orient=0,0,0,1
 Scale=1,1,1
@@ -61,6 +57,7 @@ spawnPackage=z9_eur_gen_Regaran_Vrinesse_2939
 [ENTRY]
 ID=10000230
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=28552,770,61945
 Orient=0,0,0,1
 Scale=1,1,1
@@ -70,6 +67,7 @@ spawnPackage=z9_eur_gen_Councilor_Ashbone_665
 [ENTRY]
 ID=10000297
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=29174,320,61770
 Orient=0,0,0,1
 Scale=1,1,1
@@ -79,6 +77,7 @@ spawnPackage=z9_eur_gen_Bounty_Board_2818
 [ENTRY]
 ID=10000313
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=29171,320,61791
 Orient=0,0,0,1
 Scale=1,1,1
@@ -88,6 +87,7 @@ spawnPackage=z9_eur_gen_Bounty_Chest__Heartwood_2877
 [ENTRY]
 ID=151003165
 Asset=Bldg-Heartwood_SmallG?ATS=ATS-Camelot
+Name=Untitled
 Pos=28624.5,770.175,61973
 Orient=0,0.899405,0,-0.437116
 Scale=1,1,1
@@ -96,6 +96,7 @@ Flags=1
 [ENTRY]
 ID=151003170
 Asset=Bldg-Heartwood_SmallC?ATS=ATS-Camelot
+Name=Untitled
 Pos=28505.9,770.175,61705
 Orient=0,0.174108,0,0.984727
 Scale=1,1,1
@@ -104,6 +105,7 @@ Flags=1
 [ENTRY]
 ID=151003218
 Asset=Prop-Henge-SarsenStone#Prop-Henge-SarsenStone_Post2
+Name=Untitled
 Pos=28663,304.723,62026
 Orient=0,-0.792563,0,0.60979
 Scale=1,1,1
@@ -112,6 +114,7 @@ Flags=1
 [ENTRY]
 ID=151003220
 Asset=Prop-Henge-SarsenStone#Prop-Henge-BlueStone
+Name=Untitled
 Pos=28630.3,304.106,62151
 Orient=0,0,0,1
 Scale=1,1,1
@@ -120,6 +123,7 @@ Flags=1
 [ENTRY]
 ID=151003223
 Asset=CL-Henge-SarsenStone1#CL-Henge-SarsenStone1
+Name=Untitled
 Pos=28527,301.159,62164
 Orient=0,0.998152,0,0.0607589
 Scale=1,1,1
@@ -128,6 +132,7 @@ Flags=1
 [ENTRY]
 ID=151003224
 Asset=Prop-Henge-SarsenStone_Post
+Name=Untitled
 Pos=28596,301.666,62033
 Orient=0.0443934,-0.600501,-0.0328028,0.797717
 Scale=1,1,1
@@ -136,6 +141,7 @@ Flags=1
 [ENTRY]
 ID=151003226
 Asset=CL-Henge-SarsenStone1
+Name=Untitled
 Pos=28747.4,303.971,62164
 Orient=0,0,0,1
 Scale=1,1,1
@@ -144,6 +150,7 @@ Flags=1
 [ENTRY]
 ID=151003271
 Asset=CL-Heartwood_Garden4
+Name=Untitled
 Pos=28510.5,770.114,61868
 Orient=0,0,0,1
 Scale=1,1,1
@@ -152,6 +159,7 @@ Flags=1
 [ENTRY]
 ID=151003506
 Asset=Prop-Sapling2
+Name=Untitled
 Pos=29210.1,317.331,61926
 Orient=0,-0.380188,0,0.924909
 Scale=1.875,1.875,1.875
@@ -160,6 +168,7 @@ Flags=1
 [ENTRY]
 ID=151003512
 Asset=Prop-Low_Boxes#Prop-Garden_Box3
+Name=Untitled
 Pos=28722.3,767.828,61822
 Orient=0,0,0,1
 Scale=1.775,1.775,1.775
@@ -168,6 +177,7 @@ Flags=1
 [ENTRY]
 ID=151003514
 Asset=Prop-Tree1
+Name=Untitled
 Pos=28722.5,779.67,61823
 Orient=0,0,0,1
 Scale=1,1,1
@@ -176,6 +186,7 @@ Flags=1
 [ENTRY]
 ID=151003516
 Asset=Prop-Couch2
+Name=Untitled
 Pos=28700.4,770.114,61793
 Orient=0,0.945784,0,0.324796
 Scale=1.075,1.075,1.075
@@ -184,6 +195,7 @@ Flags=1
 [ENTRY]
 ID=151003517
 Asset=Prop-Books#Prop-Book3
+Name=Untitled
 Pos=28707.1,775.336,61796
 Orient=0,0.556361,0,0.830941
 Scale=0.575,0.575,0.575
@@ -192,6 +204,7 @@ Flags=1
 [ENTRY]
 ID=151003518
 Asset=Prop-Cooking-WineRack_Bottle1#Prop-Cooking-WineRack_Bottle1
+Name=Untitled
 Pos=28708.5,770.114,61803
 Orient=0,0,0,1
 Scale=1,1,1
@@ -200,6 +213,7 @@ Flags=1
 [ENTRY]
 ID=151003716
 Asset=Prop-Mats#Prop-Mat1
+Name=Untitled
 Pos=29225.1,770.464,62038
 Orient=0,0.993303,0,0.115538
 Scale=1.475,1.475,1.475
@@ -208,6 +222,7 @@ Flags=1
 [ENTRY]
 ID=151003780
 Asset=Prop-Tree3
+Name=Untitled
 Pos=28819.1,336.977,61729
 Orient=0,0,0,1
 Scale=1.325,1.325,1.325
@@ -216,6 +231,7 @@ Flags=1
 [ENTRY]
 ID=151003950
 Asset=Light-Medium
+Name=Untitled
 Pos=28709.4,806.67,61933
 Orient=0,0,0,1
 Scale=1,1,1
@@ -223,6 +239,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151003958
 Asset=Light-Medium
+Name=Untitled
 Pos=28620.9,795.705,61768
 Orient=0,0,0,1
 Scale=1,1,1
@@ -230,6 +247,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151003963
 Asset=Prop-Bench1
+Name=Untitled
 Pos=29166,430.751,61523
 Orient=0,0.0249974,0,0.999687
 Scale=1,1,1
@@ -238,6 +256,7 @@ Flags=1
 [ENTRY]
 ID=151003964
 Asset=Prop-Bench1
+Name=Untitled
 Pos=29095.8,430.751,61528
 Orient=0,0,0,1
 Scale=1,1,1
@@ -246,6 +265,7 @@ Flags=1
 [ENTRY]
 ID=151003965
 Asset=Prop-Couch2#Prop-Couch2
+Name=Untitled
 Pos=29133.2,430.751,61525
 Orient=0,0.0399893,0,0.9992
 Scale=1,1,1
@@ -254,6 +274,7 @@ Flags=1
 [ENTRY]
 ID=151003978
 Asset=Light-Large
+Name=Untitled
 Pos=29167.3,876.642,62177
 Orient=0,0,0,1
 Scale=1,1,1
@@ -261,6 +282,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151023005
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=29078.8,303.415,62124
 Orient=0,0,0,1
 Scale=1,1,1
@@ -271,6 +293,7 @@ link=151023006,1
 [ENTRY]
 ID=151023006
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=28976.5,306.857,62177
 Orient=0,0,0,1
 Scale=1,1,1
@@ -281,6 +304,7 @@ link=151023007,1
 [ENTRY]
 ID=151023007
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=28808.9,302.464,62185
 Orient=0,0,0,1
 Scale=1,1,1
@@ -291,6 +315,7 @@ link=151023008,1
 [ENTRY]
 ID=151023011
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=28551.5,302.94,62159
 Orient=0,0,0,1
 Scale=1,1,1
@@ -302,6 +327,7 @@ link=151023012,1
 [ENTRY]
 ID=151023012
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=28563.3,303.739,62079
 Orient=0,0,0,1
 Scale=1,1,1
@@ -312,6 +338,7 @@ link=151023013,1
 [ENTRY]
 ID=151023013
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=28654.1,304.711,62057
 Orient=0,0,0,1
 Scale=1,1,1
@@ -322,6 +349,7 @@ link=151023014,1
 [ENTRY]
 ID=151023014
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=28769.8,304.646,62096
 Orient=0,0,0,1
 Scale=1,1,1
@@ -332,6 +360,7 @@ link=151023015,1
 [ENTRY]
 ID=151023015
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=28777.9,303.495,62164
 Orient=0,0,0,1
 Scale=0.975,0.975,0.975
@@ -342,6 +371,7 @@ link=151023196,1
 [ENTRY]
 ID=151023196
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=28953.4,304.725,62152
 Orient=0,0,-0.0399893,0.9992
 Scale=0.975,0.975,0.975
@@ -352,6 +382,7 @@ link=151023197,1
 [ENTRY]
 ID=151023197
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=29045.6,304.672,62092
 Orient=0,0,0,1
 Scale=1,1,1
@@ -362,6 +393,7 @@ link=151023196,1
 [ENTRY]
 ID=151023218
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=28637.9,770.038,61746
 Orient=0,-0.0799147,0,0.996802
 Scale=1,1,1
@@ -372,16 +404,18 @@ link=151023219,1
 [ENTRY]
 ID=151023228
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=28602.7,770.114,61773
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=4_npc_gfo_wanderguards
 links_count=1
 link=151023229,1
-spawnPackage=4_npc_gfo_wanderguards
 
 [ENTRY]
 ID=151023229
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=28522.5,770.114,61815
 Orient=0,0,0,1
 Scale=1,1,1
@@ -393,6 +427,7 @@ link=151023238,1
 [ENTRY]
 ID=151023235
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=28564.4,770.115,61908
 Orient=0,0,0,1
 Scale=1,1,1
@@ -403,6 +438,7 @@ link=151023236,1
 [ENTRY]
 ID=151023236
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=28689.8,770.115,61899
 Orient=0,0,0,1
 Scale=1,1,1
@@ -413,6 +449,7 @@ link=151023237,1
 [ENTRY]
 ID=151023237
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=28600,770.114,61797
 Orient=0,0,0,1
 Scale=1,1,1
@@ -423,6 +460,7 @@ link=151023236,1
 [ENTRY]
 ID=151026621
 Asset=Prop-Low_Boxes#Prop-Lamp_Post_GF_Planter
+Name=Untitled
 Pos=29126.5,770.386,62075
 Orient=0,0,0,1
 Scale=1.1,1.1,1.1
@@ -431,6 +469,7 @@ Flags=1
 [ENTRY]
 ID=151026622
 Asset=CL-Lamp_Post_GF2
+Name=Untitled
 Pos=29126.7,775.787,62076
 Orient=0,0.617059,0,0.786917
 Scale=1,1,1
@@ -439,6 +478,7 @@ Flags=1
 [ENTRY]
 ID=151040848
 Asset=Effects#Par-FireFlies1
+Name=Untitled
 Pos=28857,390.615,61554
 Orient=0,0,0,1
 Scale=2,2,2
@@ -446,6 +486,7 @@ Scale=2,2,2
 [ENTRY]
 ID=151040852
 Asset=Par-FireFlies1
+Name=Untitled
 Pos=28624.5,356.722,62153
 Orient=0,0,0,1
 Scale=2,2,2
@@ -453,6 +494,7 @@ Scale=2,2,2
 [ENTRY]
 ID=151049620
 Asset=Par-FireFlies1
+Name=Untitled
 Pos=29031.1,358.265,62145
 Orient=0,0,0,1
 Scale=1,1,1
@@ -460,6 +502,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151062300
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=28622.2,304.054,62149.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -468,6 +511,7 @@ spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 [ENTRY]
 ID=151062301
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=28514.6,301.415,62119.2
 Orient=0,0,0,1
 Scale=1,1,1
@@ -476,6 +520,7 @@ spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 [ENTRY]
 ID=151062315
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=29185.1,770.386,62139.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -484,6 +529,7 @@ spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 [ENTRY]
 ID=151062336
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=28596.3,770.115,61945.5
 Orient=0,-0.232843,0,0.972514
 Scale=1,1,1
@@ -492,6 +538,7 @@ spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 [ENTRY]
 ID=151062354
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=28695.6,305.104,61964.8
 Orient=0,0,0,1
 Scale=1,1,1

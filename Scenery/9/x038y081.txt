@@ -1,32 +1,11 @@
 [ENTRY]
-ID=1000105
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Lights1
-Name=
-Pos=28991.5,410.099,61462.1
-Orient=0,-0.352274,0,0.935897
-Scale=1.5,1.5,1.5
-
-[ENTRY]
-ID=1030362
-Asset=CL-Holiday-WinterDawning-Lights3
-Pos=28990.2,421.695,61051.6
-Orient=0,0.710353,0,0.703845
-Scale=1,1,1
-
-[ENTRY]
-ID=1030363
-Asset=CL-Holiday-WinterDawning-Lights3
-Pos=28973,422.095,60924.5
-Orient=0,0.969109,0,-0.246632
-Scale=1,1,1
-
-[ENTRY]
 ID=10000065
 Asset=Manipulator-SpawnPoint
 Pos=28932,615,61299
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=210
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Heartwood_Arbormuse_990
 
 [ENTRY]
@@ -36,6 +15,7 @@ Pos=28941,430,61060
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=189
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Heartwood_Oakfist_988
 
 [ENTRY]
@@ -45,6 +25,7 @@ Pos=29150,318,61175
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=57
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Huntress_Diandra_777
 
 [ENTRY]

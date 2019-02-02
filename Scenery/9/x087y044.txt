@@ -1,12 +1,4 @@
 [ENTRY]
-ID=1000201
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Wreath
-Name=
-Pos=65492.5,504.55,33055
-Orient=0,-0.21823,0,0.975898
-Scale=1,1,1
-
-[ENTRY]
 ID=151004171
 Asset=Prop-Bridge_a#Prop-Bridge2
 Pos=65863,324.825,33469

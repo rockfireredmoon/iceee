@@ -1,42 +1,11 @@
 [ENTRY]
-ID=1000179
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Wreath
-Name=
-Pos=42592.4,211.054,43825.9
-Orient=0,0.703279,0,0.710914
-Scale=1,1,1
-
-[ENTRY]
-ID=1000180
-Asset=CL-WinterDawning_Tree
-Name=
-Pos=42532,168.914,43456.4
-Orient=0,0,0,1
-Scale=0.75,0.75,0.75
-
-[ENTRY]
-ID=1000181
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Lights1
-Name=
-Pos=42240,233.428,43442.2
-Orient=0,-0.390885,0,-0.92044
-Scale=1,1,1
-
-[ENTRY]
-ID=1000182
-Asset=Prop-Holiday-WinterDawning_Lights1
-Name=
-Pos=42280.3,233.428,43489.8
-Orient=0,-0.915437,0,-0.402461
-Scale=1,1,1
-
-[ENTRY]
 ID=10000000
 Asset=Manipulator-SpawnPoint
 Pos=42990,196,43867
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=212
+sceneryName=generated_Bounty_Board
 spawnPackage=#2808
 
 [ENTRY]
@@ -46,6 +15,7 @@ Pos=42690,178,43484
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=177
+sceneryName=generated_Bounty_Board
 spawnPackage=#2807
 
 [ENTRY]
@@ -55,6 +25,7 @@ Pos=42999,196,43886
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=18
+sceneryName=generated_Bounty_Chest__South_Shield
 spawnPackage=#2868
 
 [ENTRY]
@@ -64,6 +35,7 @@ Pos=42680,180,43504
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=224
+sceneryName=generated_Bounty_Chest__South_Shield
 spawnPackage=#2868
 
 [ENTRY]
@@ -73,6 +45,7 @@ Pos=42332,187,43578
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=58
+sceneryName=generated_Garreth_Silverton
 spawnPackage=#3328
 
 [ENTRY]
@@ -82,6 +55,7 @@ Pos=42479,163,43318
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=35
+sceneryName=generated_Camaroon_Quid
 spawnPackage=#2164
 
 [ENTRY]
@@ -91,6 +65,7 @@ Pos=42528,161,43272
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=54
+sceneryName=generated_Adrim_Maxeo
 spawnPackage=#1968
 
 [ENTRY]
@@ -100,6 +75,7 @@ Pos=42520,162,43305
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=34
+sceneryName=generated_Christos_Holteth
 spawnPackage=#1970
 
 [ENTRY]

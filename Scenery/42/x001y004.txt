@@ -1,58 +1,11 @@
 [ENTRY]
-ID=1000173
-Asset=Manipulator#Manipulator-SpawnPoint
-Pos=1333.46,100,4484.16
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#2916
-
-[ENTRY]
-ID=1156375
-Asset=CL-Strange_Device#CL-Strange_Device
-Name=
-Pos=1335.66,100,4483.75
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
-ID=1156376
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Huge
-Name=
-Pos=1341.28,100,4459.99
-Orient=0,0.285952,0,0.958244
-Scale=1,1,1
-
-[ENTRY]
-ID=1156377
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Large
-Name=
-Pos=1347.82,100,4470.92
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
-ID=1156378
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Med
-Name=
-Pos=1511.7,100,4425.78
-Orient=0,0,0,1
-Scale=2,2,2
-
-[ENTRY]
-ID=1156379
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Small
-Name=
-Pos=1739.14,100,4466.92
-Orient=0,0.193767,0,0.981048
-Scale=2,2,2
-
-[ENTRY]
 ID=10000010
 Asset=Manipulator-SpawnPoint
 Pos=1340,105,4328
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=35
+sceneryName=generated_spawn
 spawnPackage=z42_bc_gen_Dunklehimer_Keg_596
 
 [ENTRY]
@@ -62,6 +15,7 @@ Pos=1470,105,4490
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=35
+sceneryName=generated_spawn
 spawnPackage=z42_bc_gen_Dunklehimer_Keg_596
 
 [ENTRY]
@@ -71,13 +25,14 @@ Pos=1609,105,4296
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=35
+sceneryName=generated_spawn
 spawnPackage=z42_bc_gen_Dunklehimer_Keg_596
 
 [ENTRY]
 ID=704643084
 Asset=Dng-Hall_L1?ATS=ATS-Dungeon
 Pos=1860,100,4455
-Orient=0,1,0,1.58933e-08
+Orient=0,1,0,1.58933e-008
 Scale=1,1,1
 Flags=1
 
@@ -93,7 +48,7 @@ Flags=1
 ID=704643089
 Asset=Dng-Room_Corner_2Door?ATS=ATS-Dungeon
 Pos=1580,100,4455
-Orient=0,5.96046e-08,0,1
+Orient=0,5.96046e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -109,7 +64,7 @@ Flags=1
 ID=704643091
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon
 Pos=1400,100,4275
-Orient=0,1,0,5.96046e-08
+Orient=0,1,0,5.96046e-008
 Scale=1,1,1
 Flags=1
 
@@ -117,7 +72,7 @@ Flags=1
 ID=704643092
 Asset=Dng-Hall_Straight_Long1?ATS=ATS-Dungeon
 Pos=1860,100,4095
-Orient=0,5.96046e-08,0,1
+Orient=0,5.96046e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -125,7 +80,7 @@ Flags=1
 ID=704643199
 Asset=Dng-Hall_Straight_Long1?ATS=ATS-Dungeon
 Pos=1580,100,4735
-Orient=0,5.96046e-08,0,1
+Orient=0,5.96046e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -133,7 +88,7 @@ Flags=1
 ID=704643200
 Asset=Dng-Hall_Short1?ATS=ATS-Dungeon
 Pos=1580,100,4960
-Orient=0,5.96046e-08,0,1
+Orient=0,5.96046e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -141,7 +96,7 @@ Flags=1
 ID=704643202
 Asset=Dng-Hall_Short2?ATS=ATS-Dungeon
 Pos=1580,100,4920
-Orient=0,5.96046e-08,0,1
+Orient=0,5.96046e-008,0,1
 Scale=1,1,1
 Flags=1
 
@@ -205,7 +160,7 @@ Flags=1
 ID=704643485
 Asset=Prop-Crate
 Pos=1818.57,100,4096.95
-Orient=0,4.47035e-07,0,1
+Orient=0,4.47035e-007,0,1
 Scale=1.825,1.825,1.825
 Flags=1
 
@@ -997,7 +952,7 @@ spawnPackage=2_dbc_back_25_26
 ID=704644787
 Asset=Manipulator-SpawnPoint
 Pos=1825,100,4290
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 spawnPackage=2_dbc_back_25_26
 
@@ -1015,7 +970,7 @@ spawnPackage=2_dbc_back_25_26
 ID=704644789
 Asset=Manipulator-SpawnPoint
 Pos=1825,100,4150
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 spawnPackage=2_dbc_back_25_26
 
@@ -1264,7 +1219,7 @@ link=704644820,1
 ID=704644822
 Asset=Manipulator-SpawnPoint
 Pos=1660,100,4330
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 spawnPackage=2_dbc_back_25_26
 

@@ -966,23 +966,23 @@ Name=HOLIDAY_turkatriceKing_k_20
 ; DISABLED WHEN EVENT IS NOT ACTIVE
 [ENTRY]
 Name=HOLIDAY_wf09_snowmen_15_16
-Spawn=2885,25  ;Chillkin (15)
-Spawn=2886,25  ;Chillkin (16)
-Spawn=2887,25  ;Chillkin (15)
-Spawn=2888,25  ;Chillkin (16)
+;Spawn=2885,25  ;Chillkin (15)
+;Spawn=2886,25  ;Chillkin (16)
+;Spawn=2887,25  ;Chillkin (15)
+;Spawn=2888,25  ;Chillkin (16)
 
 ; DISABLED WHEN EVENT IS NOT ACTIVE
 [ENTRY]
 Name=HOLIDAY_wf09_snowmanKing_20
-Spawn=2898,100  ;Chill Lord (20)
+;Spawn=2898,100  ;Chill Lord (20)
 
 ; DISABLED WHEN EVENT IS NOT ACTIVE
 [ENTRY]
 Name=HOLIDAY_wf09_gifts
 Shares=20
-Spawn=2922,10 ; Gift(1)
-Divide=63277,2,10
-Spawn=2923,10 ; Gift(1)
+;Spawn=2922,10 ; Gift(1)
+;Divide=63277,2,10
+;Spawn=2923,10 ; Gift(1)
 
 
 

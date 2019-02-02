@@ -39,12 +39,28 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
-ID=1030388
-Asset=Prop-Holiday-WinterDawning_Lights2
-Name=
-Pos=53753.1,316.839,66918.5
-Orient=0,-0.655617,0,0.755093
-Scale=1.25,1.25,1.25
+ID=1126825
+Asset=Prop-Iron_Fence
+Name=Untitled
+Pos=53929.9,251.912,66080.8
+Orient=0,0,0,1
+Scale=0.95,0.95,0.95
+
+[ENTRY]
+ID=1126826
+Asset=Prop-Iron_Fence
+Name=Untitled
+Pos=53936.5,252.493,66088.6
+Orient=0,0.688921,0,0.724836
+Scale=0.95,0.95,0.95
+
+[ENTRY]
+ID=1126827
+Asset=Prop-Iron_Fence
+Name=Untitled
+Pos=53936.4,252.529,66103.1
+Orient=0,0.720831,0,0.693111
+Scale=1,1,1
 
 [ENTRY]
 ID=1126828
@@ -576,5 +592,4 @@ Name=Untitled
 Pos=53947.5,215.935,66546.6
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=HOLIDAY_Easter_Egg
 

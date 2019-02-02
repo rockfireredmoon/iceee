@@ -1,18 +1,11 @@
 [ENTRY]
-ID=1000177
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Banner
-Name=
-Pos=43128,220.936,44337
-Orient=0,0.389418,0,0.921061
-Scale=1,1,1
-
-[ENTRY]
 ID=10000149
 Asset=Manipulator-SpawnPoint
 Pos=43195,186,44299
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=213
+sceneryName=generated_Hampton_Pursepinch
 spawnPackage=#212
 
 [ENTRY]
@@ -69,7 +62,7 @@ Pos=43481,186.371,44179
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_rockBear/StagCamp01_general
-loyaltyRadius=1
+outerRadius=1
 
 [ENTRY]
 ID=1358958203
@@ -78,7 +71,7 @@ Pos=43860.5,286.721,44693
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_rockBear/StagCamp01_general
-loyaltyRadius=1
+outerRadius=1
 
 [ENTRY]
 ID=1358958207
@@ -87,7 +80,7 @@ Pos=43550.4,240.763,44645
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_rockBear/StagCamp01_general
-loyaltyRadius=1
+outerRadius=1
 
 [ENTRY]
 ID=1358958208
@@ -96,7 +89,7 @@ Pos=43688.7,229.062,44441
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_rockBear/StagCamp01_general
-loyaltyRadius=1
+outerRadius=1
 
 [ENTRY]
 ID=1358958209
@@ -105,7 +98,7 @@ Pos=43561.9,237.405,44967
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_rockBear/StagCamp01_general
-loyaltyRadius=1
+outerRadius=1
 
 [ENTRY]
 ID=1358958213
@@ -114,7 +107,7 @@ Pos=43822.3,187.812,44167
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_rockBear/StagCamp01_general
-loyaltyRadius=1
+outerRadius=1
 
 [ENTRY]
 ID=1358961325
@@ -123,7 +116,7 @@ Pos=43007.1,325.295,44972
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_thumperCamp02_general
-loyaltyRadius=1
+outerRadius=1
 
 [ENTRY]
 ID=1358963537

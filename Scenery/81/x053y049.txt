@@ -5,6 +5,7 @@ Pos=53289,150,49068
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=159
+sceneryName=generated_Wilford_Mercia
 spawnPackage=#1979
 
 [ENTRY]
@@ -14,6 +15,7 @@ Pos=53287,150,49026
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=211
+sceneryName=generated_Salisbury_Bridgford
 spawnPackage=#1982
 
 [ENTRY]
@@ -23,6 +25,7 @@ Pos=53315,151,49002
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=157
+sceneryName=generated_Oliver_Wendel
 spawnPackage=#198
 
 [ENTRY]

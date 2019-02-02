@@ -1,101 +1,11 @@
 [ENTRY]
-ID=1000131
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Tree
-Pos=10134.7,252.057,62835.9
-Orient=0,0,0,1
-Scale=0.65,0.65,0.65
-
-[ENTRY]
-ID=1000132
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Huge
-Pos=10131,251.606,62821.4
-Orient=0,-0.352274,0,0.935897
-Scale=1,1,1
-
-[ENTRY]
-ID=1000133
-Asset=Prop-Holiday-WinterDrawing_Present_Huge
-Pos=10145.8,251.742,62828.1
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
-ID=1000134
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Med
-Pos=10118.2,252.37,62834.7
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
-ID=1000135
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Small
-Pos=10121.1,251.794,62825.2
-Orient=0,0.17903,0,0.983844
-Scale=1,1,1
-
-[ENTRY]
-ID=1000136
-Asset=Prop-Holiday-WinterDrawing_Present_Med
-Pos=10117.3,252.117,62829.6
-Orient=0,0.29552,0,0.955337
-Scale=1,1,1
-
-[ENTRY]
-ID=1000137
-Asset=Prop-Holiday-WinterDrawing_Present_Small
-Pos=10122.1,252.547,62839.7
-Orient=0,-0.518418,0,0.855127
-Scale=1,1,1
-
-[ENTRY]
-ID=1000138
-Asset=Prop-Holiday-WinterDrawing_Present_Huge
-Pos=10121.2,253.328,62849.4
-Orient=0,-0.352274,0,0.935897
-Scale=1,1,1
-
-[ENTRY]
-ID=1000139
-Asset=Prop-Holiday-WinterDrawing_Present_Med
-Pos=10143,252.515,62844.7
-Orient=0,0.29552,0,0.955337
-Scale=1,1,1
-
-[ENTRY]
-ID=1000140
-Asset=Prop-Holiday-WinterDrawing_Present_Med
-Pos=10131.3,252.922,62851.1
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
-ID=1000141
-Asset=Prop-Holiday-WinterDrawing_Present_Small
-Pos=10137.8,252.712,62849.5
-Orient=0,-0.518418,0,0.855127
-Scale=1,1,1
-
-[ENTRY]
-ID=1000142
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDawning_Wreath
-Pos=10137.9,305.221,62415.3
-Orient=0,-0.21823,0,0.975898
-Scale=1,1,1
-
-[ENTRY]
-ID=1000147
-Asset=Prop-Holiday-WinterDawning_Wreath
-Pos=9889.86,279.219,62751.7
-Orient=0,-0.475032,0,0.879969
-Scale=1,1,1
-
-[ENTRY]
 ID=10000049
 Asset=Manipulator-SpawnPoint
 Pos=10313,276,62306
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=191
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Dander_Onetooth_682
 
 [ENTRY]
@@ -105,6 +15,7 @@ Pos=10016,252,62607
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=53
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Oakhand_680
 
 [ENTRY]
@@ -114,6 +25,7 @@ Pos=10076,272,62378
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=223
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Grumps_Surefoot_681
 
 [ENTRY]
@@ -123,6 +35,7 @@ Pos=10227,252,62837
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=242
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Arianna_Perez_1044
 
 [ENTRY]
@@ -132,6 +45,7 @@ Pos=10064,255,62940
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=94
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Nicholai_Stutterfail_1042
 
 [ENTRY]
@@ -141,6 +55,7 @@ Pos=10271,251,62858
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=233
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Pepper_Longstockings_1045
 
 [ENTRY]
@@ -150,6 +65,7 @@ Pos=10226,252,62790
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=208
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Anton_Starque_1038
 
 [ENTRY]
@@ -159,6 +75,7 @@ Pos=10116,255,62975
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=107
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Ellyen_Brahr_1041
 
 [ENTRY]
@@ -168,6 +85,7 @@ Pos=9991,262,62899
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=90
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Morpheus_Silvertongue_1103
 
 [ENTRY]
@@ -177,6 +95,7 @@ Pos=9882,256,62701
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=86
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Pieter_Deadeye_1100
 
 [ENTRY]
@@ -186,6 +105,7 @@ Pos=10088,271,62389
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=153
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Surefoot_s_Chest_2629
 
 [ENTRY]

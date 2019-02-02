@@ -1,25 +1,18 @@
 [ENTRY]
-ID=1156373
-Asset=Prop-WinterDawning1#Prop-Holiday-WinterDrawing_Present_Large
-Name=
-Pos=4329.7,219.94,1490.8
-Orient=0,0.375559,0,0.926798
-Scale=1.75,1.75,1.75
-
-[ENTRY]
 ID=10000001
 Asset=Manipulator-SpawnPoint
 Pos=4689,221,1460
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=125
+sceneryName=generated_spawn
 spawnPackage=z48_dd_gen_Exit_to_Great_Forest_1012
 
 [ENTRY]
 ID=805306382
 Asset=Cav-Room_Narrow_DoorA?ATS=ATS-Cave_Moss
 Pos=4585,220,1460
-Orient=0,-8.50358e-07,0,-1
+Orient=0,-8.50358e-007,0,-1
 Scale=1,1,1
 Flags=1
 
@@ -43,7 +36,7 @@ Flags=1
 ID=805306498
 Asset=Cav-Room_Round_Corner1?ATS=ATS-Cave_Moss
 Pos=4225,220,1280
-Orient=0,-1,0,7.7486e-07
+Orient=0,-1,0,7.7486e-007
 Scale=1,1,1
 Flags=1
 
@@ -59,7 +52,7 @@ Flags=1
 ID=805306500
 Asset=Cav-Room_Round_Corner3?ATS=ATS-Cave_Moss
 Pos=4405,220,1640
-Orient=0,6.55651e-07,0,1
+Orient=0,6.55651e-007,0,1
 Scale=1,1,1
 Flags=1
 
@@ -67,7 +60,7 @@ Flags=1
 ID=805306501
 Asset=Cav-Room_1Sided_LowerDoor?ATS=ATS-Cave_Moss
 Pos=4225,220,1460
-Orient=0,-1,0,7.7486e-07
+Orient=0,-1,0,7.7486e-007
 Scale=1,1,1
 Flags=1
 
@@ -75,7 +68,7 @@ Flags=1
 ID=805306502
 Asset=Cav-Room_Center?ATS=ATS-Cave_Moss
 Pos=4405,220,1460
-Orient=0,-1,0,7.7486e-07
+Orient=0,-1,0,7.7486e-007
 Scale=1,1,1
 Flags=1
 
@@ -83,7 +76,7 @@ Flags=1
 ID=805306503
 Asset=Cav-Corner_Patch?ATS=ATS-Cave_Moss
 Pos=4405,220,1460
-Orient=0,-1,0,7.15256e-07
+Orient=0,-1,0,7.15256e-007
 Scale=1,1,1
 Flags=1
 
@@ -541,7 +534,7 @@ link=805307499,0
 ID=805308096
 Asset=Cav-Ent_Up?ATS=ATS-Cave_Moss
 Pos=4585,220,1460
-Orient=0,-8.50358e-07,0,-1
+Orient=0,-8.50358e-007,0,-1
 Scale=1,1,1
 Flags=1
 

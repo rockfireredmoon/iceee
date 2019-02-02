@@ -3243,3 +3243,142 @@ Obj.1.myItemID=
 Obj.1.completeText=
 Obj.1.markerLocations=23937.0,122.856,33492.0,105;
 
+[ENTRY]
+ID=947
+Title=Wild Reindeer
+BodyText=Well, howdy!  You like my Reindeer? Aren't they such beautiful creatures? True gifts from Gaia to those of us here in the northern reaches.  Truth be told, they contribute so much to us here in Chillville.
+They pull sleighs to carry supplies and gifts to everyone in the World!
+
+I don't know what's been happening recently, though. Lately the Reindeer have either gone mad or I've just lost my mojo. Whatever the case, I can't seem to tame any of those Wild Reindeer!
+
+Maybe you could go out and give it a shot! I need 6 more Reindeer for my order. Do this for me and I'll give you a cut of my payment!
+CompleteText=Nice work!! Maybe I'm too old for this game... Oh well, here's your payment as promised.
+Level=15,56
+Suggested=20
+Exp=5000
+PartySize=1
+NumRewards=0
+Coin=4200
+Heroism=50
+Unabandon=0
+QuestGiverID=2904
+QuestEnderID=2904
+Repeat=0
+sGiver=24948.0,122.649,32560.0,105
+sEnder=24948.0,122.649,32560.0,105
+[ACT]
+Act.BodyText=Defeat 6 Wild Reindeer
+Obj.0.type=kill
+Obj.0.data1=18011
+Obj.0.data2=6
+Obj.0.description=Defeat 6 Wild Reindeer
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 6
+Obj.0.markerLocations=22201.0,286.606,35483.0,105;
+
+[ENTRY]
+ID=948
+Title=Holiday Lights
+BodyText=With the Winter Dawning Festival I need way way way more lights! *you offer a sarcastic solution*  Why don't I just make more???!!! Because I need color crystals for them to light up!!
+There is a massive crystal field behind my house where I usually gather the crystals I need. Unfortunately, it's recently become infested with Ancient Walkers! If you're so tough, why don't you go collect me a few crystals of each color so the Festival isn't ruined!!!
+CompleteText=Alright alright, so you're a tough one eh? You did good, thanks a million. Would be a pretty sad Winter Dawning with no lights now wouldn't it? Here take this as payment!
+Level=15,56
+Suggested=20
+Exp=5000
+PartySize=1
+NumRewards=0
+Coin=4567
+Heroism=50
+Unabandon=0
+QuestGiverID=2903
+QuestEnderID=2903
+Repeat=0
+sGiver=24031.0,216.233,35881.0,105
+sEnder=24031.0,216.233,35881.0,105
+[ACT]
+Act.BodyText=Defeat 6 Ancient Walker and 6 Glacial Walkers
+Obj.0.type=kill
+Obj.0.data1=18008
+Obj.0.data2=6
+Obj.0.description=Kill 6 Glacial Walkers
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 6
+Obj.0.markerLocations=25597.0,195.692,36000.0,105;
+Obj.1.type=kill
+Obj.1.data1=18009
+Obj.1.data2=6
+Obj.1.description=Kill 6 Ancient Walkers
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=0 of 6
+Obj.1.markerLocations=25950.0,191.841,35965.0,105;
+[ACT]
+Act.BodyText=Collect 10 Color Crystals
+Obj.0.type=gather
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Gather 10 Color Crystals
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 10
+Obj.0.markerLocations=
+
+[ENTRY]
+ID=949
+Title=Vargan's Book of Lore
+BodyText=Hello friend! Welcome to the Winter Dawning Festival. While this is normally a joyous occasion, this year's festival has been marred with troubles. Many of the gifts left by the festival tree have been disappearing. We thought at first it was a mere thief come in the night but late last night we saw the abomination - Grindle! Yes, it would seem Grindle is more than a childhood monster used to keep younglings well behaved. You have not heard the story of Grindle? Hmmm...then you should travel to the Great Chillville Library and do some research. Seek out Vargan's Book of Lore, it will have any known information about Grindle's story. Ultimately we need to find where Grindle is taking the gifts and return them to the festival tree! We could surely use your help - would you aid us?
+CompleteText=*You pick up the heavy tome and dust it off. You open Vargan's Book of Lore and begin to search its contents.*
+Level=15,56
+Suggested=15
+Exp=2500
+PartySize=1
+NumRewards=0
+Coin=3042
+Heroism=20
+Unabandon=0
+QuestGiverID=2902
+QuestEnderID=2913
+Repeat=0
+sGiver=25069.0,122.869,32524.0,105
+sEnder=25069.0,122.869,32524.0,105
+[ACT]
+Act.BodyText=Seek out Vargan's Book of Lore
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Seek out Vargan's Book of Lore
+Obj.0.myCreatureDefID=2913
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=24219.0,132.966,32740.0,105;
+
+[ENTRY]
+ID=950
+Title=The Legend of Grindle
+BodyText=Vargan's Book of Lore is a large and aged tome. You search the pages and find several entries about the story of Grindle. It is said Grindle was once a young and handsome beast, beloved by all and feared by none. Then came the horrors of the Bleakness. In the darkest depths of that time, Grindle's love Heraldine was taken by the Vampires. Grindle was grief stricken and set out to rescue her. He was no knight, but he claimed he would save her or die trying. He was never seen again. While unclear how, the legend tells that he made a deal with Abidan to save his love from the Vampires. Abidan transformed him into a hideous Revenant - this gave him the power he needed to attempt his rescue. The legend goes on to say that he fought fiercely in his transformed body and did, in fact, save Heraldine. There was, however, no happy ending. Heraldine had no idea how she was rescued or what happened to her love Grindle. She assumed he was lost trying to rescue her. Then came the Winter Dawning Festival. Heraldine sat on the cliffs overlooking the sea. A sound startled her and a hideous creature approached. She screamed, but the beast spoke to her. To her disbelief it claimed to be her lost love Grindle, but she could not reckon it. She went mad. Heraldine, so distraught at the hideous appearance of her lover, threw herself off a cliff. It is here that the tale of Grindle is born. Mothers use the specter of Grindle to scare their children. Grindle is always watching! If children misbehave then Grindle will come, at Winter Dawning, and steal their presents from under the festival tree! Most dismiss any truth to these legends and claim they are just scary stories, but, over the years supposed sightings of Grindle have been made at various locations. Three locations seem to stand out. In Anglorum, more sightings than any other location are in and around the Abandoned Monastery. In New Badari, there are tales of something strange living in the Dunklehimer Brewery cellar that resembles Grindle. Finally, in the Heartwood, many Grindle sightings were noted around the Dark Depths.  Some say he's in all three spots. That he uses his dark magic to infiltrate Europe and Anglorum, steal the presents and joy and bring them back to his lair in Winterland.
+CompleteText=Okay I may have exaggerated on the whole Great Library of Chillville thing, but you got it! You have found Vargan's Book of Lore. I am glad to see you have returned. What news do you bring?
+Level=15,56
+Suggested=20
+Exp=2500
+PartySize=1
+NumRewards=0
+Coin=3445
+Heroism=20
+Unabandon=0
+QuestGiverID=2913
+QuestEnderID=2902
+Repeat=0
+sGiver=24219.0,132.966,32740.0,105
+sEnder=24948.0,123.863,32588.0,105
+[ACT]
+Act.BodyText=Report your findings to Wendel Ostran
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Report to Wendel Ostran
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=24985.0,123.863,32588.0,105;
