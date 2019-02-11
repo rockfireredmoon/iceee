@@ -6,8 +6,3 @@ Spawn=2417,100  ;Exit to Midlands (1) at 0
 Name=z60_ch_gen_Exit_to_Anglorum__2418
 Spawn=2418,100  ;Exit to Anglorum. (1) at 0
 
-; Custom quest NPC by Dekker.
-[ENTRY]
-Name=custom_Sonny_the_Snail
-Spawn=3627,100  ; Sonny "The Snail"
-

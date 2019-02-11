@@ -1208,24 +1208,6 @@ Type=locationreturn
 ObjectID=3510
 Message=Leaving the Arena...
 
-
-
-[ENTRY]
-Name=greatforest_to_shadowvoid
-Type=warp
-ObjectID=3634
-WarpTo=5609,8,2522,112
-Facing=191
-Message=Entering the Shadow Void...
-Quest=805
-[ENTRY]
-Name=shadowvoid_to_greatforest
-Type=warp
-ObjectID=3635
-WarpTo=8255,278,60829,9
-Facing=136
-Message=Leaving the Shadow Void...
-
 [ENTRY]
 Name=dustshore_to_kerakuraslair
 Type=warp

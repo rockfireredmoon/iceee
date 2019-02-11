@@ -7,15 +7,6 @@ Orient=0.615114,-0.419903,0.493755,-0.448912
 Scale=0.5,0.5,0.5
 
 [ENTRY]
-ID=1030440
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=8257.88,281.828,60844.6
-Orient=0,0.707107,0,0.707107
-Scale=1,1,1
-spawnPackage=z9_custom_To_The_Void
-
-[ENTRY]
 ID=151006465
 Asset=Bldg-Ruins2?ATS=ATS-Burned
 Name=Untitled

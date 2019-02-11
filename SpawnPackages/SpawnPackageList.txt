@@ -76,8 +76,5 @@
 75_FolkirkManor.txt
 85_KerakurasLair.txt
 
-; CUSTOM CONTENT
-112_ShadowVoid.txt
-
 ; ICEE Specific, will get moved
 XXX_ICEEE.txt

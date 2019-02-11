@@ -1052,12 +1052,3 @@ spawnDelay=1800
 Name=custom_henge_Hadrians_Wall
 Spawn=880,100  ; Hadrian's Wall
 
-
-; Custom quest NPC by Dekker.
-[ENTRY]
-Name=custom_Mike_Zean
-Spawn=3626,100  ; Mike Zean
-
-
-
-

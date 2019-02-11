@@ -1,13 +1,4 @@
 [ENTRY]
-ID=1030419
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=7285.25,269.853,60835.7
-Orient=0,0.129634,0,0.991562
-Scale=1,1,1
-spawnPackage=z9_custom_Hell_Twelve
-
-[ENTRY]
 ID=151014229
 Asset=Manipulator-SpawnPoint
 Name=Untitled

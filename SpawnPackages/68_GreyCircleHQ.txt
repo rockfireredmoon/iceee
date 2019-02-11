@@ -23,9 +23,3 @@ Spawn=479,100  ;Nefritari (45) at 0
 [ENTRY]
 Name=z68_gchq_gen_Nefritari_s_Ash_Chest_2622
 Spawn=2622,100  ;Nefritari's Ash Chest (1) at 0
-
-
-; Custom quest NPC by Dekker.
-[ENTRY]
-Name=z68_gchq_custom_Sigil
-Spawn=3629,100  ; Sigil
