@@ -1,4 +1,9 @@
 [ENTRY]
-Flags=3
+Name=HOLIDAY_Easter_Egg
+Spawn=3133,100 ; Emerald Egg
+Flags=2051
+
+[ENTRY]
 Name=guildquest_01_wreakage
 Spawn=7780,100  ;Ship wreakage
+Flags=3

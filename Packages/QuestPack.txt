@@ -11,6 +11,7 @@ Data\QuestEuropeExt.txt
 Data\QuestGrunesTalSwineland.txt
 ;Data\QuestNewCorsica.txt
 Data\QuestICEEE.txt
+Data\QuestEventBoundersDay.txt
 
 ; Data\QuestEventSummer.txt
 ; Data\QuestEventHarvestFest.txt
