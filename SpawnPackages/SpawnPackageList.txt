@@ -79,6 +79,3 @@ XXX_ICEEE.txt
 50_IronMaw.txt
 75_FolkirkManor.txt
 85_KerakurasLair.txt
-
-; ICEE Specific, will get moved
-XXX_ICEEE.txt

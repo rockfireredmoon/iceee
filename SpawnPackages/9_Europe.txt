@@ -2969,9 +2969,10 @@ wanderRadius=80
 Spawn=637,50  ;Woodland Grazer (30) at 0
 Spawn=638,50  ;Woodland Grazer (31) at 0
 
-; TODO: no appropriate spawns
 [ENTRY]
-Name=Europe_HOLIDAY_Easter_Egg
+Name=Europe_Europe_HOLIDAY_Easter_Egg
+Spawn=3133,100 ; Emerald Egg
+Flags=2051
 
 [ENTRY]
 Name=Europe_overlandboss_thara_SP

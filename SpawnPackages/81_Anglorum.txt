@@ -1039,9 +1039,9 @@ Flags=3
 Name=1a_obji_cri05_petrifiedTwig
 Spawn=2137,100  ;Petrified Twig (1) at 0
 
-; TODO: need entry
-[ENTRY]
 Name=HOLIDAY_Easter_Egg
+Spawn=3133,100 ; Emerald Egg
+Flags=2051
 
 [ENTRY]
 Name=Anglorum_overlandboss_kilvath_sp
