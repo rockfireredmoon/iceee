@@ -287,7 +287,7 @@ RewardItem.0=7523,1,1
 [ENTRY]
 ID=648
 Title=The Golden Egg!
-BodyText=As the rumors have claimed, you have found the well-hidden Golden Egg in Camelot. As you reach down to pick it up, you see that the egg has a small note attached to it: "Take me back to Ambassador Hopps."
+BodyText=As the rumors have claimed, you have found the well-hidden Golden Egg in Camelot. As you reach down to pick it up, you see that the egg has a small note attached to it: "Take me back to Ambassador Buckley."
 CompleteText=What... but how did you...!?!
 
 *sigh* I guess I must be losing my touch at hiding things. Here is your reward, you deserve it!   
@@ -299,17 +299,17 @@ Coin=1
 AccountQuest=1
 Unabandon=0
 QuestGiverID=4503
-QuestEnderID=4500
+QuestEnderID=4507
 sGiver=54900.4,147.374,63375.1,81
 sEnder=54900.4,147.374,63375.1,81
 [ACT]
-Act.BodyText=You have found the well-hidden Golden Egg! Take it to Ambassador Hopps as instructed in the note.
+Act.BodyText=You have found the well-hidden Golden Egg! Take it to Minister Buckley as instructed in the note.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
-Obj.0.description=Take the Golden Egg to Ambassador Hopps.
+Obj.0.description=Take the Golden Egg to Minister Buckley.
 Obj.0.complete=0
-Obj.0.myCreatureDefID=4500
+Obj.0.myCreatureDefID=4507
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=54900.4,147.374,63375.1,81
