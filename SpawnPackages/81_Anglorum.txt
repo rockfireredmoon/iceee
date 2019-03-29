@@ -1039,6 +1039,7 @@ Flags=3
 Name=1a_obji_cri05_petrifiedTwig
 Spawn=2137,100  ;Petrified Twig (1) at 0
 
+[ENTRY]
 Name=HOLIDAY_Easter_Egg
 Spawn=3133,100 ; Emerald Egg
 Flags=6145
