@@ -1,0 +1,20 @@
+[ENTRY]
+MinInterval=20000
+MaxInterval=30000
+Sequence=0
+
+[PARAGRAPH]
+Type=0
+Value=Go fourth adventurer! We need not stop you. The mighty Kilvath L'vithian devours all...
+[PARAGRAPH]
+Type=0
+Value=All will fall before the power of Kilvath L'vithian
+[PARAGRAPH]
+Type=0
+Value=There is no hope for you adventurer just turn back
+[PARAGRAPH]
+Type=0
+Value=Another group of foolish travelers I have to watch this...
+[PARAGRAPH]
+Type=1
+Value=Laugh

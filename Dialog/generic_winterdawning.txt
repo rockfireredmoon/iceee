@@ -1,0 +1,23 @@
+[ENTRY]
+MinInterval=20000
+MaxInterval=30000
+Sequence=0
+
+[PARAGRAPH]
+Type=0
+Value=Greetings one and all!! Welcome to Chillville and the Winter Dawning Festival!!
+[PARAGRAPH]
+Type=0
+Value=It's Winterlands biggest celebration of the year !!!
+[PARAGRAPH]
+Type=0
+Value=This years Festival will the be the greatest one yet!!!
+[PARAGRAPH]
+Type=1
+Value=Wave
+[PARAGRAPH]
+Type=1
+Value=Applaud
+[PARAGRAPH]
+Type=0
+Value=Have a look around!! Winterland is beautiful this time of year
