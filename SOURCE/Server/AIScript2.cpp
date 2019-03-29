@@ -59,17 +59,38 @@ bool AINutPlayer::HasBuff(int tier, int buffType) {
 	return attachedCreature->buffManager.HasBuff(tier, buffType);
 }
 
+int AINutPlayer::GetBestAbility(int abilityID) {
+	const Ability2::AbilityEntry2* abptr =
+			g_AbilityManager.GetBestAbilityPtrByID(abilityID, attachedCreature->css.level);
+	return abptr == NULL ? 0 : abptr->mAbilityID;
+}
+
 bool AINutPlayer::Use(int abilityID) {
-	return DoUse(abilityID, true);
+	return DoUse(abilityID, true, false);
+}
+
+bool AINutPlayer::UseHighest(int abilityID) {
+	return DoUse(abilityID, true, true);
+}
+
+bool AINutPlayer::UseHighestNoRetry(int abilityID) {
+	return DoUse(abilityID, true, false);
 }
 
 bool AINutPlayer::UseNoRetry(int abilityID) {
-	return DoUse(abilityID, false);
+	return DoUse(abilityID, false, false);
 }
 
-bool AINutPlayer::DoUse(int abilityID, bool retry) {
+bool AINutPlayer::DoUse(int abilityID, bool retry, bool highest) {
 
 	if (attachedCreature->ab[0].bPending == false) {
+		if(highest) {
+			const Ability2::AbilityEntry2* abptr =
+					g_AbilityManager.GetBestAbilityPtrByID(abilityID, attachedCreature->css.level);
+			if(abptr != NULL)
+				abilityID = abptr->mAbilityID;
+		}
+
 		//DEBUG OUTPUT
 		if (g_Config.DebugLogAIScriptUse == true) {
 			const Ability2::AbilityEntry2* abptr =
@@ -105,12 +126,24 @@ bool AINutPlayer::DoUse(int abilityID, bool retry) {
 	return false;
 }
 
+
+
 short AINutPlayer::GetWill() {
 	return attachedCreature->css.will;
 }
 
 short AINutPlayer::GetWillCharge() {
 	return attachedCreature->css.will_charges;
+}
+
+short AINutPlayer::AddWillCharge(int charges) {
+	attachedCreature->AddWillCharge(charges);
+	return attachedCreature->css.will_charges;
+}
+
+short AINutPlayer::AddMightCharge(int charges) {
+	attachedCreature->AddMightCharge(charges);
+	return attachedCreature->css.might_charges;
 }
 
 short AINutPlayer::GetMight() {
@@ -227,6 +260,13 @@ int AINutPlayer::GetSelf() {
 int AINutPlayer::GetSelfDefID() {
 	return attachedCreature->CreatureDefID;
 }
+
+void AINutPlayer::SelectTarget(int targetCID) {
+	CreatureInstance *target = actInst->GetInstanceByCID(targetCID);
+	if(target != NULL)
+		attachedCreature->SelectTarget(target);
+}
+
 
 void AINutPlayer::SetOtherTarget(int CID, int targetCID) {
 	attachedCreature->AIOtherSetTarget(CID, targetCID);
@@ -347,7 +387,12 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 	clazz->Func(_SC("has_target"), &AINutPlayer::HasTarget);
 	clazz->Func(_SC("has_buff"), &AINutPlayer::HasBuff);
 	clazz->Func(_SC("use"), &AINutPlayer::Use);
+	clazz->Func(_SC("get_best_ab"), &AINutPlayer::GetBestAbility);
 	clazz->Func(_SC("use_once"), &AINutPlayer::UseNoRetry);
+	clazz->Func(_SC("use_highest"), &AINutPlayer::UseHighest);
+	clazz->Func(_SC("use_highest_once"), &AINutPlayer::UseHighestNoRetry);
+	clazz->Func(_SC("add_will_chage"), &AINutPlayer::AddWillCharge);
+	clazz->Func(_SC("add_might_chage"), &AINutPlayer::AddMightCharge);
 	clazz->Func(_SC("get_will"), &AINutPlayer::GetWill);
 	clazz->Func(_SC("get_will_charge"), &AINutPlayer::GetWillCharge);
 	clazz->Func(_SC("get_might"), &AINutPlayer::GetMight);
@@ -368,6 +413,7 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 	clazz->Func(_SC("get_target"), &AINutPlayer::GetTarget);
 	clazz->Func(_SC("get_self"), &AINutPlayer::GetSelf);
 	clazz->Func(_SC("get_self_def_id"), &AINutPlayer::GetSelfDefID);
+	clazz->Func(_SC("select_target"), &AINutPlayer::SetOtherTarget);
 	clazz->Func(_SC("set_other_target"), &AINutPlayer::SetOtherTarget);
 	clazz->Func(_SC("is_target_enemy"), &AINutPlayer::IsTargetEnemy);
 	clazz->Func(_SC("is_target_friendly"), &AINutPlayer::IsTargetFriendly);

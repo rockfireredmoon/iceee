@@ -2035,7 +2035,7 @@ bool SimulatorThread :: MainCallSetZone(int newZoneID, int newInstanceID, bool s
 	}
 
 	//The party needs to be checked before placing into a zone.
-	if(LoadStage == LOADSTAGE_UNLOADED)
+	if(LoadStage == LOADSTAGE_UNLOADED || LoadStage == LOADSTAGE_GAMEPLAY)
 	{
 		ActiveParty *party = g_PartyManager.GetPartyWithMember(pld.CreatureDefID);
 		if(party != NULL)
@@ -2285,6 +2285,10 @@ void SimulatorThread :: MainCallHelperInstanceRegister(int ZoneID, int InstanceI
 
 	PlayerInstancePlacementData pd;
 	FillPlayerInstancePlacementData(pd, ZoneID, InstanceID);
+	if(pd.in_scaleProfile == NULL)
+		g_Log.AddMessageFormat("Creating new instance for zone: %d with default profile", pd.in_zoneID);
+	else
+		g_Log.AddMessageFormat("Creating new instance for zone: %d using profile %s", pd.in_zoneID, pd.in_scaleProfile->mDifficultyName.c_str());
 
 	if(g_ActiveInstanceManager.AddSimulator_Ex(pd) == -1)
 	{
@@ -2347,9 +2351,17 @@ void SimulatorThread :: CheckMapUpdate(bool force)
 				SendInfoMessage(MapDef.mMapList[pld.CurrentMapInt].image.c_str(), INFOMSG_MAPNAME);
 
 				WeatherState *ws = g_WeatherManager.GetWeather(MapDef.mMapList[pld.CurrentMapInt].Name, pld.CurrentInstanceID);
-				if(ws != NULL) {
+				if(ws != NULL)
 					AttemptSend(SendBuf, PrepExt_SetWeather(SendBuf, ws->mWeatherType, ws->mWeatherWeight));
-				}
+				else
+					AttemptSend(SendBuf, PrepExt_SetWeather(SendBuf, "", 0));
+			}
+			else if(force) {
+				WeatherState *ws = g_WeatherManager.GetWeather(MapDef.mMapList[pld.CurrentMapInt].Name, pld.CurrentInstanceID);
+				if(ws != NULL)
+					AttemptSend(SendBuf, PrepExt_SetWeather(SendBuf, ws->mWeatherType, ws->mWeatherWeight));
+				else
+					AttemptSend(SendBuf, PrepExt_SetWeather(SendBuf, "", 0));
 			}
 		}
 		else
@@ -2362,9 +2374,10 @@ void SimulatorThread :: CheckMapUpdate(bool force)
 			SendInfoMessage(pld.zoneDef->mShardName.c_str(), INFOMSG_SHARD);
 
 			WeatherState *ws = g_WeatherManager.GetWeather(pld.zoneDef->mName, pld.CurrentInstanceID);
-			if(ws != NULL) {
+			if(ws != NULL)
 				AttemptSend(SendBuf, PrepExt_SetWeather(SendBuf, ws->mWeatherType, ws->mWeatherWeight));
-			}
+			else
+				AttemptSend(SendBuf, PrepExt_SetWeather(SendBuf, "", 0));
 		}
 
 //		// EM - Added this for tile specific environments, the message always gets sent,
@@ -3002,7 +3015,7 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 	else if(query.name.compare("targ") == 0)
 	{
 		int wpos = 0;
-		if(creatureInst->CurrentTarget.targ != NULL && CheckPermissionSimple(Perm_Account, Permission_Debug) == true)
+		if(creatureInst->CurrentTarget.targ != NULL && CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == true)
 		{
 			int dist = ActiveInstance::GetPlaneRange(creatureInst, creatureInst->CurrentTarget.targ, 99999);
 			sprintf(Aux1, "Name: %s (%d), ID: %d, CDef: %d (%d) (D:%d) PVPable: %s", creatureInst->CurrentTarget.targ->css.display_name, creatureInst->CurrentTarget.targ->css.level, creatureInst->CurrentTarget.targ->CreatureID, creatureInst->CurrentTarget.targ->CreatureDefID, creatureInst->CurrentTarget.targ->css.health, dist, creatureInst->CanPVPTarget(creatureInst->CurrentTarget.targ) ? "yes" : "no");
@@ -3013,7 +3026,7 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 	}
 	else if(query.name.compare("elev") == 0)
 	{
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == true && query.argCount > 0)
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == true && query.argCount > 0)
 		{
 			creatureInst->CurrentY = query.GetInteger(0);
 			creatureInst->BroadcastUpdateElevationSelf();
@@ -3022,7 +3035,7 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 	}
 	else if(query.name.compare("cycle") == 0)
 	{
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == true)
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == true)
 			g_EnvironmentCycleManager.EndCurrentCycle();
 		g_Log.AddMessageFormat("Cycle is now: %u (%s)", g_EnvironmentCycleManager.mCurrentCycleIndex, g_EnvironmentCycleManager.GetCurrentTimeOfDay().c_str());
 		PendingData = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
@@ -3055,12 +3068,21 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 	}
 	else if(query.name.compare("weather") == 0)
 	{
-		WeatherState *ws = g_WeatherManager.GetWeather(MapDef.mMapList[pld.CurrentMapInt].Name, pld.CurrentInstanceID);
+		string mapName;
+		if(pld.CurrentMapInt == -1)
+			mapName = pld.zoneDef->mName;
+		else
+			mapName = MapDef.mMapList[pld.CurrentMapInt].Name;
+		WeatherState *ws = g_WeatherManager.GetWeather(mapName, pld.CurrentInstanceID);
 		if(ws != NULL) {
-			if(!CheckPermissionSimple(Perm_Account, Permission_Sage))
+			if(!CheckPermissionSimple(Perm_Account, Permission_Sage | Permission_Admin | Permission_Developer))
 				PendingData = PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 			else {
-				ws->PickNewWeather();
+				if(query.argCount > 0 && query.GetStringObject(0).compare("stop"))
+					ws->StopWeather();
+				else
+					ws->PickNewWeather();
+				ws->SendWeatherUpdate(creatureInst->actInst);
 				PendingData += PrepExt_QueryResponseString(&SendBuf[PendingData], query.ID, "OK");
 			}
 		}
@@ -3587,7 +3609,7 @@ int SimulatorThread :: handle_query_clientperms_list(void)
 			l.push_back("sage");
 		}
 
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == true) {
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == true) {
 			l.push_back("debug");
 		}
 
@@ -3610,7 +3632,7 @@ int SimulatorThread :: handle_query_admin_check(void)
 	   This is used to unlock some debug features in the client.
 	*/
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
@@ -4064,7 +4086,7 @@ void SimulatorThread :: handle_updateVelocity(void)
 
 	if(g_Config.HasAdministrativeBehaviorFlag(ADMIN_BEHAVIOR_VERIFYSPEED) == true)
 	{
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		{
 			int xlen = abs(x - (creatureInst->CurrentX & 0xFFFF));
 			int zlen = abs(z - (creatureInst->CurrentZ & 0xFFFF));
@@ -4154,7 +4176,7 @@ void SimulatorThread :: handle_updateVelocity(void)
 		//There are tons of weird cases where verification fails on legit movement, so it may be necessary
 		//to just disable it entirely.
 				
-		if((g_Config.VerifyMovement == true) && (CheckPermissionSimple(Perm_Account, Permission_Admin) == false))
+		if(g_Config.VerifyMovement == true && CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Developer) == false)
 		{
 			int expectedSpeed = 100 + creatureInst->css.base_movement + creatureInst->css.mod_movement;
 			
@@ -4316,7 +4338,7 @@ void SimulatorThread :: handle_abilityActivate(void)
 	else
 	{
 		bool allow = false;
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == true)
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == true)
 			allow = true;
 		else if(pld.charPtr->abilityList.GetAbilityIndex(aID) >= 0)
 			allow = true;
@@ -5107,12 +5129,12 @@ int SimulatorThread :: CheckValidWarpZone(int ZoneID)
 	}
 
 	//For administrative access
-	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == true)
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin | Permission_Developer | Permission_Sage) == true )
 		return ERROR_NONE;
 
 	//For regular players
 	if(zonePtr->mGrove == false && zonePtr->mArena == false && zonePtr ->mGuildHall == false)
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+		if(CheckPermissionSimple(Perm_Account, Permission_Sage | Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 			return ERROR_WARPGROVEONLY;
 
 	//For guild hall
@@ -5147,7 +5169,7 @@ int SimulatorThread :: handle_command_warp(void)
     */
 
 	if(pld.zoneDef->mGrove == false)
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+		if(CheckPermissionSimple(Perm_Account, Permission_Sage | Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 1)
@@ -5279,7 +5301,7 @@ int SimulatorThread :: handle_command_warpi(void)
     */
 
 	if(pld.zoneDef->mGrove == false)
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 1)
@@ -5323,7 +5345,7 @@ int SimulatorThread :: handle_command_warpt(void)
     */
 
 	if(pld.zoneDef->mGrove == false)
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 2)
@@ -5496,7 +5518,7 @@ int SimulatorThread :: handle_command_health(void)
 		Args : [0] = Hit Points to assign.
     */
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 1)
@@ -5535,7 +5557,7 @@ int SimulatorThread :: handle_command_speed(void)
 		Args : [0] = Base Speed.
     */
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 1)
@@ -5559,7 +5581,7 @@ int SimulatorThread :: handle_command_fa(void)
 		Args : [0] = ID of the ability to use.
     */
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(HasQueryArgs(1) == false)
@@ -5571,7 +5593,7 @@ int SimulatorThread :: handle_command_fa(void)
 
 	if(abID >= 26000 && abID <= 26100)
 	{
-		if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+		if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Developer) == false)
 		{
 			SendInfoMessage("Thou art not a deity.", INFOMSG_ERROR);
 			abID = 0;
@@ -5613,7 +5635,7 @@ int SimulatorThread :: handle_command_skadd(void)
 		Args : 0 or 1, [0] = CreatureDefID
     */
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	int CDefID = 0;
@@ -5841,7 +5863,7 @@ int SimulatorThread :: handle_command_who(void)
 
 	WritePos = 0;
 
-	bool debug = CheckPermissionSimple(Perm_Account, Permission_Debug);
+	bool debug = CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer );
 	SIMULATOR_IT it;
 	for(it = Simulator.begin(); it != Simulator.end(); ++it)
 	{
@@ -5945,7 +5967,7 @@ int SimulatorThread :: handle_command_give(void)
 		Args : [0] = name of object to search for.
     */
 
-	if(CheckPermissionSimple(Perm_Account, Permission_ItemGive) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_ItemGive | Permission_Admin | Permission_Developer | Permission_Sage) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 1)
@@ -5990,7 +6012,7 @@ int SimulatorThread :: handle_command_giveid(void)
 		will be invalidated.
 		Args : [0] = ID of object to give.
     */
-	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Developer) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount == 0)
@@ -6037,7 +6059,7 @@ int SimulatorThread :: handle_command_giveall(void)
 		Args : [0] = name of object to search for.
     */
 
-	if(CheckPermissionSimple(Perm_Account, Permission_ItemGive) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_ItemGive | Permission_Admin | Permission_Developer | Permission_Sage) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 1)
@@ -6095,7 +6117,7 @@ int SimulatorThread :: handle_command_daily(void)
 		       [1] = partial appearance string to match
     */
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	pld.accPtr->DueDailyRewards = true;
@@ -6123,7 +6145,7 @@ int SimulatorThread :: handle_command_giveapp(void)
 		       [1] = partial appearance string to match
     */
 
-	if(CheckPermissionSimple(Perm_Account, Permission_ItemGive) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_ItemGive | Permission_Admin | Permission_Developer | Permission_Sage) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 2)
@@ -6186,7 +6208,7 @@ int SimulatorThread :: handle_command_deleteall(void)
 		Args : none
     */
 
-	if(CheckPermissionSimple(Perm_Account, Permission_ItemGive) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_ItemGive | Permission_Admin | Permission_Developer | Permission_Sage) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	int size = pld.charPtr->inventory.containerList[INV_CONTAINER].size();
@@ -6380,39 +6402,39 @@ int SimulatorThread :: protected_helper_query_loot_need_greed_pass(void)
 
 	ActiveInstance *aInst = creatureInst->actInst;
 	int lootTag = atoi(query.args[1].c_str());
-	LootTag *tag = party->lootTags[lootTag];
-	if(tag == NULL)
+	LootTag tag = party->lootTags[lootTag];
+	if(!tag.Valid())
 	{
 		LogMessageL(MSG_SHOW, "loot tag missing %d", lootTag);
 		return QueryErrorMsg::INVALIDITEM;
 	}
-	ActiveLootContainer *loot = &aInst->lootsys.creatureList[tag->mLootCreatureId];
-	if(tag == NULL)
+	ActiveLootContainer *loot = &aInst->lootsys.creatureList[tag.mLootCreatureId];
+	if(loot == NULL)
 	{
-		LogMessageL(MSG_SHOW, "loot container missing %d", tag->mLootCreatureId);
+		LogMessageL(MSG_SHOW, "loot container missing %d", tag.mLootCreatureId);
 		return QueryErrorMsg::INVALIDITEM;
 	}
-	LogMessageL(MSG_SHOW, "%d is choosing on %d (%d / %d)", creatureInst->CreatureID, lootTag, tag->mItemId, tag->mCreatureId, tag->mLootCreatureId);
-	if(loot->HasAnyDecided(tag->mItemId, creatureInst->CreatureID))
+	LogMessageL(MSG_SHOW, "%d is choosing on %d (%d / %d)", creatureInst->CreatureID, lootTag, tag.mItemId, tag.mCreatureId, tag.mLootCreatureId);
+	if(loot->HasAnyDecided(tag.mItemId, creatureInst->CreatureID))
 	{
-		LogMessageL(MSG_SHOW, "%d has already made loot decision on %d", creatureInst->CreatureID, tag->mItemId);
+		LogMessageL(MSG_SHOW, "%d has already made loot decision on %d", creatureInst->CreatureID, tag.mItemId);
 		return QueryErrorMsg::LOOTDENIED;
 	}
-	if(tag->mCreatureId != creatureInst->CreatureID)
+	if(tag.mCreatureId != creatureInst->CreatureID)
 	{
-		LogMessageL(MSG_SHOW, "Loot tag %d is for a different creature. The tag said %d, but this player is %d.", lootTag, tag->mCreatureId, creatureInst->CreatureID);
+		LogMessageL(MSG_SHOW, "Loot tag %d is for a different creature. The tag said %d, but this player is %d.", lootTag, tag.mCreatureId, creatureInst->CreatureID);
 		return QueryErrorMsg::LOOTDENIED;
 	}
 
 	const char *command = query.args[0].c_str();
 	if(strcmp(command, "loot.need") == 0)	{
-		loot->Need(tag->mItemId, tag->mCreatureId);
+		loot->Need(tag.mItemId, tag.mCreatureId);
 	}
 	else if(strcmp(command, "loot.greed") == 0)	{
-		loot->Greed(tag->mItemId, tag->mCreatureId);
+		loot->Greed(tag.mItemId, tag.mCreatureId);
 	}
 	else if(strcmp(command, "loot.pass") == 0)	{
-		loot->Pass(tag->mItemId, tag->mCreatureId);
+		loot->Pass(tag.mItemId, tag.mCreatureId);
 	}
 	CheckIfLootReadyToDistribute(loot, tag);
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
@@ -6699,7 +6721,7 @@ bool SimulatorThread :: HasPropEditPermission(SceneryObject *prop, float x, floa
 		checkZ = prop->LocationZ;
 	}
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Admin) || pld.accPtr->CheckBuildPermissionAdv(pld.zoneDef->mID, pld.zoneDef->mPageSize, checkX, checkZ) == true)
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) || CheckPermissionSimple(Perm_Account, Permission_Developer) || pld.accPtr->CheckBuildPermissionAdv(pld.zoneDef->mID, pld.zoneDef->mPageSize, checkX, checkZ) == true)
 		return true;
 
 	if(pld.zoneDef->HasEditPermission(pld.accPtr->ID, pld.CreatureDefID, creatureInst->css.display_name, checkX, checkZ) == true)
@@ -8987,6 +9009,8 @@ int SimulatorThread :: handle_query_creature_use(void)
 				questNutScript->QueueAdd(questNutScript->activateEvent);
 
 			}
+
+			intObj = g_InteractObjectContainer.GetObjectByID(CDef, pld.CurrentZoneID);
 		}
 	}
 	else
@@ -10393,7 +10417,7 @@ int SimulatorThread :: protected_helper_checkdistance(int creatureID)
 
 int SimulatorThread :: handle_command_backup(void)
 {
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	pld.charPtr->originalAppearance = creatureInst->css.appearance;
@@ -10433,7 +10457,7 @@ int SimulatorThread :: handle_command_god(void)
 	    Cheat to enable or disable auto aggro hostility between players and mobs.
 		Args : [0] zero or nonzero
 	*/
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	int wpos = 0;
@@ -10494,7 +10518,7 @@ int SimulatorThread :: handle_command_adjustexp(void)
 		Args : [0] amount
 	*/
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Developer) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 1)
@@ -10785,7 +10809,7 @@ int SimulatorThread :: handle_query_spawn_create(void)
 		      [1] = CreatureDef ID.
 	*/
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 2)
@@ -11395,7 +11419,7 @@ int SimulatorThread :: handle_command_partyall(void)
 		Args: [none]
 	*/
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	int wpos = creatureInst->actInst->PartyAll(creatureInst, SendBuf);
@@ -11534,7 +11558,7 @@ int SimulatorThread :: handle_command_ccc(void)
 		Args: [none]
 	*/
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	const char *category = NULL;
@@ -13614,10 +13638,10 @@ int SimulatorThread :: OfferLoot(int mode, ActiveLootContainer *loot, ActivePart
 		loot->robinID = robin->mCreatureID;
 
 		// Offer to the robin first
-		LootTag * tag = party->TagItem(ItemID, robin->mCreaturePtr->CreatureID, CID);
+		LootTag tag = party->TagItem(ItemID, robin->mCreaturePtr->CreatureID, CID, 0);
 //		int slot = robin->mCreaturePtr->charPtr->inventory.GetFreeSlot(INV_CONTAINER);
 //		tag->mSlotIndex = slot;
-		Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag->lootTag);
+		Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag.lootTag);
 		WriteIdx = PartyManager::OfferLoot(SendBuf, ItemID, Aux3, false);
 		if(receivingCreature->CreatureID == robin->mCreaturePtr->CreatureID) {
 			LogMessageL(MSG_SHOW, "Sending Offer Loot Round Robin to looter, so returning with this response");
@@ -13637,20 +13661,27 @@ int SimulatorThread :: OfferLoot(int mode, ActiveLootContainer *loot, ActivePart
 	if(mode == LOOT_MASTER) {
 		LogMessageL(MSG_SHOW, "Offer Loot Master");
 		// Offer to the leader first
-		PartyMember *leader = party->GetMemberByID(party->mLeaderID);
-		LootTag * tag = party->TagItem(ItemID, leader->mCreaturePtr->CreatureID, CID);
-		int slot = leader->mCreaturePtr->charPtr->inventory.GetFreeSlot(INV_CONTAINER);
-		tag->mSlotIndex = slot;
-		Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag->lootTag);
+		PartyMember *member = party->GetMemberByID(party->mLeaderID);
+		int idx = 0;
+		while((member == NULL|| !member->IsOnlineAndValid()) && idx < party->mMemberList.size()) {
+			member = &party->mMemberList[idx++];
+		}
+		if(member == NULL || !member->IsOnlineAndValid()) {
+			/* Nobody left! */
+			return QueryErrorMsg::GENERIC;
+		}
+		int slot = member->mCreaturePtr->charPtr->inventory.GetFreeSlot(INV_CONTAINER);
+		LootTag tag = party->TagItem(ItemID, member->mCreaturePtr->CreatureID, CID, slot);
+		Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag.lootTag);
 		WriteIdx = PartyManager::OfferLoot(SendBuf, ItemID, Aux3, false);
 
-		if(receivingCreature->CreatureID == leader->mCreaturePtr->CreatureID) {
+		if(receivingCreature->CreatureID == member->mCreaturePtr->CreatureID) {
 			LogMessageL(MSG_SHOW, "Sending Offer Loot Master to looter, so returning with this response");
 			return WriteIdx;
 		}
 		else {
 			LogMessageL(MSG_SHOW, "Sending Offer Loot Master to someone other than looter, so returning on its simulator");
-			leader->mCreaturePtr->actInst->LSendToOneSimulator(SendBuf, WriteIdx, leader->mCreaturePtr->simulatorPtr);
+			member->mCreaturePtr->actInst->LSendToOneSimulator(SendBuf, WriteIdx, member->mCreaturePtr->simulatorPtr);
 			return QueryErrorMsg::NONE;
 		}
 	}
@@ -13671,8 +13702,8 @@ int SimulatorThread :: OfferLoot(int mode, ActiveLootContainer *loot, ActivePart
 			int distCheck = protected_CheckDistanceBetweenCreaturesFor(party->mMemberList[i].mCreaturePtr, CID, PARTY_LOOT_RANGE);
 			if(distCheck == 0)
 			{
-				LootTag * tag = party->TagItem(ItemID, party->mMemberList[i].mCreaturePtr->CreatureID, CID);
-				Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag->lootTag);
+				LootTag tag = party->TagItem(ItemID, party->mMemberList[i].mCreaturePtr->CreatureID, CID, 0);
+				Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag.lootTag);
 				g_Log.AddMessageFormat("[LOOT] Sending offer of %d to %d using tag %s", ItemID, party->mMemberList[i].mCreatureID, Aux3);
 				WriteIdx = PartyManager::OfferLoot(SendBuf, ItemID, Aux3, needOrGreed);
 				party->mMemberList[i].mCreaturePtr->actInst->LSendToOneSimulator(SendBuf, WriteIdx, party->mMemberList[i].mCreaturePtr->simulatorPtr);
@@ -13689,9 +13720,8 @@ int SimulatorThread :: OfferLoot(int mode, ActiveLootContainer *loot, ActivePart
 	if(mode > -1 && receivingCreature != NULL)
 	{
 		LogMessageL(MSG_SHOW, "Offering loot to looter");
-		LootTag * tag = party->TagItem(ItemID, receivingCreature->CreatureID, CID);
 		int slot = receivingCreature->charPtr->inventory.GetFreeSlot(INV_CONTAINER);
-		tag->mSlotIndex = slot;
+		LootTag tag = party->TagItem(ItemID, receivingCreature->CreatureID, CID, slot);
 		offers++;
 
 //		STRINGLIST qresponse;
@@ -13699,7 +13729,7 @@ int SimulatorThread :: OfferLoot(int mode, ActiveLootContainer *loot, ActivePart
 //		sprintf(Aux3, "%d", conIndex);
 //		qresponse.push_back(Aux3);
 //		WriteIdx= PrepExt_QueryResponseStringList(&SendBuf[WriteIdx], query.ID, qresponse);
-		Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag->lootTag);
+		Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag.lootTag);
 		g_Log.AddMessageFormat("[LOOT] Sending offer of %d to original looter (%d) using tag %s", ItemID, receivingCreature->CreatureID, Aux3);
 		return PartyManager::OfferLoot(SendBuf, ItemID, Aux3, needOrGreed);
 	}
@@ -13936,7 +13966,7 @@ int SimulatorThread :: handle_query_mod_setenvironment(void)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
 
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Sage) == false) {
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Sage) == false && CheckPermissionSimple(Perm_Account, Permission_Developer) == false) {
 		if(pld.zoneDef->mGrove == false)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "You are not in a grove.");
 		if(pld.zoneDef->mAccountID != pld.accPtr->ID)
@@ -14497,7 +14527,7 @@ int SimulatorThread :: handle_command_forumlock(void)
 
 int SimulatorThread :: handle_command_dtrig(void)
 {
-	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Developer) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	int action = 0;
@@ -15267,7 +15297,7 @@ int SimulatorThread :: handle_query_mod_craft(void)
 	{
 		int wpos = 0;
 		if(outputMsg.size() > 0)
-			wpos = PrepExt_SendInfoMessage(SendBuf, "Succesful craft!", INFOMSG_INFO);
+			wpos = PrepExt_SendInfoMessage(SendBuf, "Successful craft!", INFOMSG_INFO);
 		for(size_t i = 0; i < outputMsg.size(); i++)
 			wpos += PrepExt_SendInfoMessage(&SendBuf[wpos], outputMsg[i].c_str(), INFOMSG_INFO);
 		AttemptSend(SendBuf, wpos);
@@ -15470,7 +15500,7 @@ int SimulatorThread :: handle_command_achievements(void)
 {
 	if(query.argCount >= 1)
 	{
-		if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+		if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Developer) == false)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 
@@ -15776,7 +15806,7 @@ int SimulatorThread :: handle_query_instance(void)
 		Util::SafeFormat(Aux1, sizeof(Aux1), "Total mobs killed: %d", inst->mKillCount);
 		SendInfoMessage(Aux1, INFOMSG_INFO);
 
-		if(inst->mZoneDefPtr->IsDungeon() == true || CheckPermissionSimple(Perm_Account, Permission_Debug) == true)
+		if(inst->mZoneDefPtr->IsDungeon() == true || CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == true)
 		{
 			Util::SafeFormat(Aux1, sizeof(Aux1), "Drop rate bonus: %gx", inst->mDropRateBonusMultiplier);
 			SendInfoMessage(Aux1, INFOMSG_INFO);
@@ -15806,7 +15836,7 @@ int SimulatorThread :: handle_query_instance(void)
 			SendInfoMessage(Aux1, INFOMSG_INFO);
 		}
 
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == true)
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == true)
 		{
 			Util::SafeFormat(Aux1, sizeof(Aux1), "Drop rate profile: %s", inst->mZoneDefPtr->GetDropRateProfile().c_str());
 			SendInfoMessage(Aux1, INFOMSG_INFO);
@@ -16143,7 +16173,7 @@ int SimulatorThread :: handle_query_zone_mode(void)
 
 int SimulatorThread :: handle_query_script_exec(void)
 {
-	bool ok = CheckPermissionSimple(Perm_Account, Permission_Admin);
+	bool ok = CheckPermissionSimple(Perm_Account, Permission_Admin) || CheckPermissionSimple(Perm_Account, Permission_Developer);
 	if(!ok) {
 		if(pld.zoneDef->mGrove == true && pld.zoneDef->mAccountID != pld.accPtr->ID)
 			ok = true;
@@ -16227,7 +16257,7 @@ int SimulatorThread :: handle_query_go(void)
 	// [0], [1], [2] = x, y, z coordinates, respectively.
 
 	if(pld.zoneDef->mGrove == false)
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer ) == false)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	int x = creatureInst->CurrentX;
@@ -16391,7 +16421,7 @@ bool SimulatorThread :: ActivateActionAbilities(InventorySlot *slot)
 	}
 }
 
-void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, LootTag *lootTag)
+void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, LootTag lootTag)
 {
 	ActiveParty *party = g_PartyManager.GetPartyByID(creatureInst->PartyID);
 	bool needOrGreed =(  party->mLootFlags & NEED_B4_GREED ) > 0;
@@ -16399,21 +16429,21 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 	// How many decisions do we expect to process the roll. This will depend
 	// on if this is the secondary roll when round robin or loot master is in use
 	// has been processed or not
-	uint requiredDecisions = party->mMemberList.size();
+	uint requiredDecisions = party->GetOnlineMemberCount();
 	if((party->mLootMode == ROUND_ROBIN || party->mLootMode == LOOT_MASTER)) {
-		if(loot->IsStage2(lootTag->mItemId)) {
-			requiredDecisions = party->mMemberList.size() - 1;
+		if(loot->IsStage2(lootTag.mItemId)) {
+			requiredDecisions = party->GetOnlineMemberCount() - 1;
 		}
 		else {
 			requiredDecisions = 1;
 		}
 	}
-	uint decisions = (uint)loot->CountDecisions(lootTag->mItemId);
+	uint decisions = (uint)loot->CountDecisions(lootTag.mItemId);
 	LogMessageL(MSG_SHOW, "Loot requires %d decisions, we have %d", requiredDecisions, decisions);
 
 	if(decisions >= requiredDecisions)
 	{
-		LogMessageL(MSG_SHOW, "Loot %d is ready to distribute", lootTag->mItemId);
+		LogMessageL(MSG_SHOW, "Loot %d is ready to distribute", lootTag.mItemId);
 
 		CreatureInstance *receivingCreature = NULL;
 
@@ -16422,17 +16452,17 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 		 * either give them the item, or offer again to the rest of the party depending
 		 * on whether they needed or not
 		 */
-		if(!loot->IsStage2(lootTag->mItemId) && party->mLootMode == LOOT_MASTER && party->mLeaderID == creatureInst->CreatureID) {
-			LogMessageL(MSG_SHOW, "Got loot roll from party leader %d for %d", party->mLeaderID, lootTag->mItemId);
-			if(loot->IsNeeded(lootTag->mItemId, creatureInst->CreatureID) || loot->IsGreeded(lootTag->mItemId, creatureInst->CreatureID)) {
-				LogMessageL(MSG_SHOW, "Leader %d needed for %d", party->mLeaderID, lootTag->mItemId);
+		if(!loot->IsStage2(lootTag.mItemId) && party->mLootMode == LOOT_MASTER && party->mLeaderID == creatureInst->CreatureID) {
+			LogMessageL(MSG_SHOW, "Got loot roll from party leader %d for %d", party->mLeaderID, lootTag.mItemId);
+			if(loot->IsNeeded(lootTag.mItemId, creatureInst->CreatureID) || loot->IsGreeded(lootTag.mItemId, creatureInst->CreatureID)) {
+				LogMessageL(MSG_SHOW, "Leader %d needed for %d", party->mLeaderID, lootTag.mItemId);
 				receivingCreature = creatureInst;
 			}
 			else {
 				// Offer again to the rest of the party
-				int iid = lootTag->mItemId;
-				int cid = lootTag->mCreatureId;
-				int lcid = lootTag->mLootCreatureId;
+				int iid = lootTag.mItemId;
+				int cid = lootTag.mCreatureId;
+				int lcid = lootTag.mLootCreatureId;
 				LogMessageL(MSG_SHOW, "Offering %d to rest of party", iid);
 				loot->SetStage2(iid, true);
 				loot->RemoveCreatureRolls(iid, cid);
@@ -16451,17 +16481,17 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 		 * either give them the item, or offer again to the rest of the party depending
 		 * on whether they needed or not
 		 */
-		if(!loot->IsStage2(lootTag->mItemId) && party->mLootMode == ROUND_ROBIN && loot->robinID == creatureInst->CreatureID) {
-			LogMessageL(MSG_SHOW, "Got loot roll from robin %d for %d", loot->robinID, lootTag->mItemId);
-			if(loot->IsNeeded(lootTag->mItemId, creatureInst->CreatureID) || loot->IsGreeded(lootTag->mItemId, creatureInst->CreatureID)) {
-				LogMessageL(MSG_SHOW, "Robin %d needed or greeded for %d", loot->robinID, lootTag->mItemId);
+		if(!loot->IsStage2(lootTag.mItemId) && party->mLootMode == ROUND_ROBIN && loot->robinID == creatureInst->CreatureID) {
+			LogMessageL(MSG_SHOW, "Got loot roll from robin %d for %d", loot->robinID, lootTag.mItemId);
+			if(loot->IsNeeded(lootTag.mItemId, creatureInst->CreatureID) || loot->IsGreeded(lootTag.mItemId, creatureInst->CreatureID)) {
+				LogMessageL(MSG_SHOW, "Robin %d needed or greeded for %d", loot->robinID, lootTag.mItemId);
 				receivingCreature = creatureInst;
 			}
 			else {
 				// Offer again to the rest of the party
-				int iid = lootTag->mItemId;
-				int cid = lootTag->mCreatureId;
-				int lcid = lootTag->mLootCreatureId;
+				int iid = lootTag.mItemId;
+				int cid = lootTag.mCreatureId;
+				int lcid = lootTag.mLootCreatureId;
 				LogMessageL(MSG_SHOW, "Robin passed, offering %d to rest of party", iid);
 				loot->SetStage2(iid, true);
 				loot->RemoveCreatureRolls(iid, cid);
@@ -16479,62 +16509,64 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 
 		if(receivingCreature == NULL) {
 			// No specific creature, first pick one of the needers if any
-			set<int> needers = loot->needed[lootTag->mItemId];
+			set<int> needers = loot->needed[lootTag.mItemId];
 			if(needers.size() > 0) {
 				LogMessageL(MSG_SHOW, "Rolling for %d needers", needers.size());
-				receivingCreature = RollForPartyLoot(party, needers, "Need", lootTag->mItemId)->mCreaturePtr;
+				receivingCreature = RollForPartyLoot(party, needers, "Need", lootTag.mItemId)->mCreaturePtr;
 			}
 			else {
-				set<int> greeders = loot->greeded[lootTag->mItemId];
+				set<int> greeders = loot->greeded[lootTag.mItemId];
 				if(greeders.size() > 0) {
 					LogMessageL(MSG_SHOW, "Rolling for %d greeders", greeders.size());
-					receivingCreature = RollForPartyLoot(party, greeders, "Greed", lootTag->mItemId)->mCreaturePtr;
+					receivingCreature = RollForPartyLoot(party, greeders, "Greed", lootTag.mItemId)->mCreaturePtr;
 				}
 			}
 		}
 
 		if(receivingCreature == NULL) {
-			LogMessageL(MSG_WARN, "Everybody passed on loot %d", lootTag->mItemId);
+			LogMessageL(MSG_WARN, "Everybody passed on loot %d", lootTag.mItemId);
 			// Send a winner with a tag of '0'. This will close the window
 			for(uint i = 0 ; i < party->mMemberList.size(); i++) {
 				// Skip the loot master or robin
 
-				LootTag *tag = party->mMemberList[i].IsOnlineAndValid() ? party->GetTag(lootTag->mItemId, party->mMemberList[i].mCreaturePtr->CreatureID) : NULL;
-				if(tag != NULL)
+				LootTag tag;
+				if(party->mMemberList[i].IsOnlineAndValid())
+					tag = party->GetTag(lootTag.mItemId, party->mMemberList[i].mCreaturePtr->CreatureID);
+				if(tag.Valid())
 				{
-					Util::SafeFormat(Aux2, sizeof(Aux2), "%d:%d", tag->mCreatureId, tag->mSlotIndex);
+					Util::SafeFormat(Aux2, sizeof(Aux2), "%d:%d", tag.mCreatureId, tag.mSlotIndex);
 					Util::SafeFormat(Aux3, sizeof(Aux3), "%d", 0);
-					WritePos = PartyManager::WriteLootWin(SendBuf, Aux2, "0", "Nobody", lootTag->mCreatureId, 999);
+					WritePos = PartyManager::WriteLootWin(SendBuf, Aux2, "0", "Nobody", lootTag.mCreatureId, 999);
 				}
 			}
-			ResetLoot(party, loot, lootTag->mItemId);
+			ResetLoot(party, loot, lootTag.mItemId);
 			return;
 		}
 
 		InventorySlot *newItem = NULL;
 
 		// Send the actual winner to all of the party that have a tag
-		LootTag *winnerTag = party->GetTag(lootTag->mItemId, receivingCreature->CreatureID);
+		LootTag winnerTag = party->GetTag(lootTag.mItemId, receivingCreature->CreatureID);
 		for(uint i = 0 ; i < party->mMemberList.size(); i++)
 		{
 			if(!party->mMemberList[i].IsOnlineAndValid()) {
 				g_Log.AddMessageFormat("[%d] Skipping informing %d of the winner (%d) as they have no simulator", InternalID, party->mMemberList[i].mCreatureID,
-						lootTag->mCreatureId);
+						lootTag.mCreatureId);
 				continue;
 			}
 
-			LogMessageL(MSG_WARN, "Informing %d of the winner (%d)", party->mMemberList[i].mCreaturePtr->CreatureID, lootTag->mCreatureId);
-			LootTag *tag = party->GetTag(lootTag->mItemId, party->mMemberList[i].mCreaturePtr->CreatureID);
-			if(tag != NULL)
+			LogMessageL(MSG_WARN, "Informing %d of the winner (%d)", party->mMemberList[i].mCreaturePtr->CreatureID, lootTag.mCreatureId);
+			LootTag tag = party->GetTag(lootTag.mItemId, party->mMemberList[i].mCreaturePtr->CreatureID);
+			if(tag.Valid())
 			{
-				Util::SafeFormat(Aux2, sizeof(Aux2), "%d:%d", tag->mCreatureId, tag->mSlotIndex);
-				Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag->lootTag);
-				WritePos = PartyManager::WriteLootWin(SendBuf, Aux2, Aux3, receivingCreature->css.display_name, lootTag->mCreatureId, 999);
+				Util::SafeFormat(Aux2, sizeof(Aux2), "%d:%d", tag.mCreatureId, tag.mSlotIndex);
+				Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag.lootTag);
+				WritePos = PartyManager::WriteLootWin(SendBuf, Aux2, Aux3, receivingCreature->css.display_name, lootTag.mCreatureId, 999);
 				party->mMemberList[i].mCreaturePtr->actInst->LSendToOneSimulator(SendBuf, WritePos, party->mMemberList[i].mCreaturePtr->simulatorPtr);
 			}
 			else
 			{
-				LogMessageL(MSG_WARN, "No tag for item %d for a player %d to be informed", lootTag->mItemId, party->mMemberList[i].mCreaturePtr->CreatureID);
+				LogMessageL(MSG_WARN, "No tag for item %d for a player %d to be informed", lootTag.mItemId, party->mMemberList[i].mCreaturePtr->CreatureID);
 			}
 		}
 
@@ -16547,25 +16579,25 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 			Util::SafeFormat(Aux3, sizeof(Aux3), "%s doesn't have enough space. Starting bidding again", receivingCreature->css.display_name);
 			party->BroadcastInfoMessageToAllMembers(Aux3);
 			LogMessageL(MSG_WARN, "Receive (%d) has no slots.", receivingCreature->CreatureID);
-			ResetLoot(party, loot, lootTag->mItemId);
+			ResetLoot(party, loot, lootTag.mItemId);
 			return;
 		}
 		else
 		{
-			newItem = charData->inventory.AddItem_Ex(INV_CONTAINER, winnerTag->mItemId, 1);
+			newItem = charData->inventory.AddItem_Ex(INV_CONTAINER, winnerTag.mItemId, 1);
 			if(newItem == NULL)
 			{
-				LogMessageL(MSG_WARN, "Item to loot (%d) has disappeared.", winnerTag->mItemId);
-				ResetLoot(party, loot, lootTag->mItemId);
+				LogMessageL(MSG_WARN, "Item to loot (%d) has disappeared.", winnerTag.mItemId);
+				ResetLoot(party, loot, lootTag.mItemId);
 				return;
 			}
 			ActivateActionAbilities(newItem);
 		}
 
-		int conIndex = loot->HasItem(lootTag->mItemId);
+		int conIndex = loot->HasItem(lootTag.mItemId);
 		if(conIndex == -1)
 		{
-			LogMessageL(MSG_WARN, "Item to loot (%d) missing.", lootTag->mItemId);
+			LogMessageL(MSG_WARN, "Item to loot (%d) missing.", lootTag.mItemId);
 		}
 		else
 		{
@@ -16578,8 +16610,8 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 			 * NOTE: Be careful not to use the lootTag object after this point as it may have been
 			 * deleted.
 			 */
-			int lootCreatureID = lootTag->mLootCreatureId;
-			ResetLoot(party, loot, lootTag->mItemId);
+			int lootCreatureID = lootTag.mLootCreatureId;
+			ResetLoot(party, loot, lootTag.mItemId);
 
 			if(loot->itemList.size() == 0)
 			{
@@ -16610,7 +16642,7 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 		}
 	}
 	else {
-		LogMessageL(MSG_SHOW, "Loot %d not ready yet to distribute", lootTag->mItemId);
+		LogMessageL(MSG_SHOW, "Loot %d not ready yet to distribute", lootTag.mItemId);
 	}
 }
 

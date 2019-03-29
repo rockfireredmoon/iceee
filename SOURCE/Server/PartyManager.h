@@ -12,6 +12,7 @@ public:
 	int mCreatureID;
 	std::string mDisplayName;
 	CreatureInstance *mCreaturePtr;
+	CharacterData *mCharPtr;
 	int mSocket;
 
 	// PVP scores (a team is a party)
@@ -61,7 +62,11 @@ public:
 	int mSlotIndex;
 	bool needed;
 
-	LootTag(int itemId, int creatureId, int lootCreatureId);
+	LootTag();
+	LootTag(const LootTag *tag);
+	LootTag(int tag, int itemId, int creatureId, int lootCreatureId);
+
+	bool Valid(void);
 	void Clear(void);
 };
 
@@ -78,7 +83,7 @@ public:
 	uint mNextToGetLoot;
 	std::string mLeaderName;
 	std::vector<PartyMember> mMemberList;
-	std::map<int, LootTag*> lootTags;
+	std::map<int, LootTag> lootTags;
 
 	// PVP scores (a team is a party)
 	int mPVPTeam;
@@ -88,10 +93,10 @@ public:
 
 	ActiveParty();
 	~ActiveParty();
-	LootTag * GetTag(int itemId, int creatureId);
+	LootTag GetTag(int itemId, int creatureId);
 	void RemoveTagsForLootCreatureId(int lootCreatureId, int itemId, int creatureId);
 	void RemoveCreatureTags(int itemId, int creatureId);
-	LootTag * TagItem(int itemId, int creatureId, int lootCreatureId);
+	LootTag TagItem(int itemId, int creatureId, int lootCreatureId, int slot);
 	bool HasTags(int lootCreatureId, int itemId);
 	void Dump();
 	void AddMember(CreatureInstance* member);
@@ -108,6 +113,7 @@ public:
 	void DebugDestroyParty(const char *buffer, int length);
 	void Disband(char *buffer);
 	int GetMaxPlayerLevel(void);
+	int GetOnlineMemberCount(void);
 	void BroadcastInfoMessageToAllMembers(const char *buffer);
 
 	void BroadCast(const char *buffer, int length);

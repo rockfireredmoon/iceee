@@ -45,6 +45,7 @@ PermissionInfo PermissionDef[] = {
 	{Perm_Account, 0, Permission_SelfDiag,       "selfdiag" },
 	{Perm_Account, 0, Permission_Troll,          "troll" },
 	{Perm_Account, 0, Permission_TrollChat,      "trollchat" },
+	{Perm_Account, 0, Permission_Developer,      "developer" },
 	{Perm_Account, 0, Permission_FullSet,        "fullset" }
 };
 const int MaxPermissionDef = sizeof(PermissionDef) / sizeof(PermissionInfo);

@@ -1039,9 +1039,10 @@ Flags=3
 Name=1a_obji_cri05_petrifiedTwig
 Spawn=2137,100  ;Petrified Twig (1) at 0
 
-; TODO: need entry
 [ENTRY]
 Name=HOLIDAY_Easter_Egg
+Spawn=3133,100 ; Emerald Egg
+Flags=6145
 
 [ENTRY]
 Name=Anglorum_overlandboss_kilvath_sp
@@ -1051,13 +1052,4 @@ spawnDelay=1800
 [ENTRY]
 Name=custom_henge_Hadrians_Wall
 Spawn=880,100  ; Hadrian's Wall
-
-
-; Custom quest NPC by Dekker.
-[ENTRY]
-Name=custom_Mike_Zean
-Spawn=3626,100  ; Mike Zean
-
-
-
 

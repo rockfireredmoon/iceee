@@ -1,0 +1,110 @@
+[ENTRY]
+ID=4500
+defHints=48
+will_regen=1
+might_regen=1
+appearance=c2:{["a"]=[{["type"]="Armor-Cloth-High3-Helmet",["node"]="helmet",["colors"]=["00FFDC","CEA35B","00FFFF","D49053"]},{["type"]="Armor-Cloth-Low1-Left_Pauldron",["node"]="left_shoulder",["colors"]=["06BF89","CEA35B"]},{["type"]="Armor-Cloth-Low1-Right_Pauldron",["node"]="right_shoulder",["colors"]=["06BF89","CEA35B"]},{["type"]="Item-Bucket",["node"]="left_hand"}],["c"]={["boots"]={["type"]="Armor-Cloth-Male-Casual1",["colors"]=["00ffff","d49053","000000","07e9a7","bf784e","f6f6ec"]},["chest"]={["type"]="Armor-Cloth-Male-Casual1",["colors"]=["00d4d4","efad57","8c744e","6e3420","bf784e","f6f6ec"]},["leggings"]={["type"]="Armor-Cloth-Male-Casual1",["colors"]=["515534","efad57","00e9e9","fffe53","e99f5b","f6f6ec"]},["belt"]={["type"]="Armor-Cloth-Male-Casual1",["colors"]=["515534","efad57","8c744e","07e9a7","bf784e","f6f6ec"]},["collar"]={["type"]="Armor-Cloth-Male-Casual1",["colors"]=["515534","efad57","00e9e9","fffe53","e99f5b","f6f6ec"]},["arms"]={["type"]="Armor-Cloth-Male-Casual1",["colors"]=["000000","000000","00d4d4","ffd761","06bf89","f6f6ec"]}},["b"]="n",["sk"]={["feet"]="BFA085",["eye_lid"]="C6AC92",["ear_tips"]="53362E",["base"]="D4D4D4",["inner_ear"]="B59A7F",["eye"]="6C3D26",["eye_white"]="FFEAD5",["nose"]="7F4F42",["chest"]="AA8E76",["tail"]="AA8E76"},["sz"]="1",["h"]=0,["g"]="f",["r"]="b"}
+level=45
+display_name=Ambassador Hopps
+profession=1
+creature_category=Mortal
+rarity=3
+ai_package=example
+
+[ENTRY]
+ID=4501
+defHints=48
+will_regen=1
+might_regen=1
+appearance=c2:{["a"]=[{["type"]="Armor-Cloth-High1-Left_Pauldron",["node"]="left_shoulder",["colors"]=["00E9E9","07E9A7","D42EB3"]},{["type"]="Armor-Cloth-High1-Right_Pauldron",["node"]="right_shoulder",["colors"]=["17FFFF","07D498","E94CE9"]},{["type"]="Item-Bucket",["node"]="left_hand",["colors"]=["06BF89","CEA35B"]},{["type"]="Armor-Exotic-Crystal-Hat",["node"]="hat",["colors"]=["00E9E9","00FFFF","07E9A7"]}],["c"]={["boots"]={["type"]="Armor-Cloth-Epic1",["colors"]=["00ffff","d4d345","06bf89","f7a72a","979c90","e933c5"]},["chest"]={["type"]="Armor-Cloth-Epic1",["colors"]=["00ffff","d4d345","06bf89","f7a72a","979c90","e933c5"]},["arms"]={["type"]="Armor-Cloth-Epic1",["colors"]=["00ffff","e933c5","06bf89","07e9a7","979c90","e933c5"]},["leggings"]={["type"]="Armor-Cloth-Epic1",["colors"]=["00ffff","d4d345","06bf89","f7a72a","979c90","e933c5"]},["collar"]={["type"]="Armor-Cloth-Female-Fancy2",["colors"]=["e933c5","e933c5","e933c5","e933c5","e933c5","e933c5","e933c5","ff37d7"]},["belt"]={["type"]="Armor-Cloth-High3",["colors"]=["00ffff","d4d345","06bf89","f7a72a","ffd761","e933c5"]},["gloves"]={["type"]="Armor-Cloth-Silly1",["colors"]=["e933c5","d4d345","06bf89","f7a72a","00e9c9","e933c5"]}},["b"]="m",["sk"]={["hands_feet"]="AC735A",["eye_white"]="FFE6DB",["snout"]="006A6A",["ear_tips"]="00D4D4",["base"]="FFFFFF",["hair_ears"]="00E9E9",["eye_lid"]="534741",["eye"]="00ADEF",["inner_ear"]="D493B2",["nose"]="7C7873",["chest"]="FFD6B1",["tail"]="AA8E76"},["sz"]="1.3",["h"]=1,["g"]="m",["r"]="b"}
+level=45
+display_name=Ambassador Lightfoot
+profession=1
+creature_category=Mortal
+rarity=3
+ai_package=example
+
+[ENTRY]
+ID=4502
+defHints=48
+will_regen=1
+might_regen=1
+appearance=c2:{["a"]=[{["type"]="Item-Bucket",["node"]="left_hand"},{["type"]="Armor-Heavy-Mid1-Left_Pauldron",["node"]="left_shoulder",["colors"]=["00E9E9","08FFB7"]},{["type"]="Armor-Heavy-Mid1-Right_Pauldron",["node"]="right_shoulder",["colors"]=["00E9E9","07D498"]},{["type"]="Armor-Cloth-Female-Casual2-Hat",["node"]="hat",["colors"]=["07E9A7","00FFFF"]}],["c"]={["boots"]={["type"]="Armor-Light-Epic1",["colors"]=["00e9e9","000000","e9c559","0de984","000000"]},["chest"]={["type"]="Armor-CC-Clothing4",["colors"]=["00e9e9","e9c559","ffffff","ffffff","e900e8","07d498"]},["leggings"]={["type"]="Armor-Light-Low7",["colors"]=["00e9e9","00e9e9","ffaf3e","cfae71","000000","000000","000000"]},["collar"]={["type"]="Armor-Cloth-Epic2",["colors"]=["000000","000000","ffad64","07d498","cdbe80","2a416d"]},["arms"]={["type"]="Armor-Medium-Mid2",["colors"]=["07e9a7","000000","e99f5b","ffffff","00d4d4","e9c559","000000"]},["gloves"]={["type"]="Armor-Light-Epic1",["colors"]=["ffad64","00e9e9","07d498","e99f5b","e99f5b"]}},["b"]="m",["sk"]={["hands_feet"]="FFFFFF",["eye_white"]="FFE6DB",["snout"]="FFFFFF",["ear_tips"]="D58F70",["base"]="FFD6B1",["hair_ears"]="FF7373",["eye_lid"]="534741",["eye"]="00ADEF",["inner_ear"]="FF86AA",["nose"]="FFB1D6",["chest"]="534741",["tail"]="AA8E76"},["sz"]="1.3",["h"]=1,["g"]="m",["r"]="b"}
+level=45
+display_name=Ambassador Cottentail
+profession=1
+creature_category=Mortal
+rarity=3
+ai_package=example
+
+[ENTRY]
+ID=4503
+defHints=48
+will_regen=1
+might_regen=1
+appearance=n4:{["sk"]={["third"]="FFFE53",["first"]="FFFE7E",["second"]="D4D300",["fourth"]="FFFD00",["fifth"]="FFFE53"},["c"]="Horde-Easter_Egg",["sz"]=".2"}
+level=1
+display_name=The Golden Egg
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+
+; Camelot
+
+[ENTRY]
+defHints=8
+ID=4504
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Loot-Gold_Chest1"}
+level=1
+display_name=Bounders Day Chest of Gold
+profession=1
+creature_category=Inanimate
+rarity=1
+ai_package=nothing
+
+; Bremen
+
+[ENTRY]
+defHints=8
+ID=4505
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Loot-Gold_Chest1"}
+level=1
+display_name=Bounders Day Chest of Gold
+profession=1
+creature_category=Inanimate
+rarity=1
+ai_package=nothing
+
+; Heartwood
+
+[ENTRY]
+defHints=8
+ID=4506
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Loot-Gold_Chest1"}
+level=1
+display_name=Bounders Day Chest of Gold
+profession=1
+creature_category=Inanimate
+rarity=1
+ai_package=nothing
+
+;
+
+[ENTRY]
+ID=4507
+defHints=48
+will_regen=1
+might_regen=1
+appearance=c2:{["a"]=[{["type"]="Armor-Heavy-Mid1-Left_Pauldron",["node"]="left_shoulder",["colors"]=["FFFFFF","FFFFFF"]},{["type"]="Armor-Heavy-Mid1-Right_Pauldron",["node"]="right_shoulder",["colors"]=["FFFFFF","FFFFFF"]},{["type"]="Armor-Cloth-Female-Casual2-Hat",["node"]="hat",["colors"]=["FFFFFF","FFFFFF"]}],["c"]={["boots"]={["type"]="Armor-Light-Epic1",["colors"]=["ffffff","000000","ffffff","ffffff","000000"]},["chest"]={["type"]="Armor-CC-Clothing4",["colors"]=["ffffff","e9c559","ffffff","ffffff","e900e8","d4d4d4"]},["leggings"]={["type"]="Armor-Light-Low7",["colors"]=["ffffff","ffffff","ffaf3e","cfae71","000000","000000","000000"]},["collar"]={["type"]="Armor-Cloth-Epic2",["colors"]=["000000","000000","ffad64","ffffff","cdbe80","2a416d"]},["arms"]={["type"]="Armor-Medium-Mid2",["colors"]=["ffffff","000000","e99f5b","ffffff","ffffff","e9c559","000000"]},["gloves"]={["type"]="Armor-Light-Epic1",["colors"]=["ffad64","ffffff","ffffff","e99f5b","e99f5b"]}},["b"]="m",["sk"]={["hands_feet"]="FFFFFF",["eye_white"]="FFE6DB",["snout"]="FFFFFF",["ear_tips"]="2A2A2A",["base"]="3F3F3F",["hair_ears"]="FFFFFF",["eye_lid"]="534741",["eye"]="00E90E",["inner_ear"]="7F7F7F",["nose"]="3F3F3F",["chest"]="534741"},["sz"]="1.5",["h"]=1,["es"]="1",["g"]="m",["r"]="b",["ts"]="1.5"}
+level=45
+display_name=Minister Buckley
+profession=1
+creature_category=Mortal
+rarity=3
+ai_package=example

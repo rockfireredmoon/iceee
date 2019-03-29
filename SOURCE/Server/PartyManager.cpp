@@ -18,12 +18,42 @@ bool PartyMember :: IsOnline() {
 	return mSocket != SocketClass::Invalid_Socket;
 }
 
-LootTag :: LootTag(int itemId, int creatureId, int lootCreatureId)
+LootTag :: LootTag()
 {
-	lootTag = ++lootSeq;
+	Clear();
+}
+
+LootTag :: LootTag(const LootTag *tag)
+{
+	lootTag = tag->lootTag;
+	mCreatureId = tag->mCreatureId;
+	mItemId = tag->mItemId;
+	mLootCreatureId = tag->mLootCreatureId;
+	mSlotIndex = tag->mSlotIndex;
+	needed = tag->needed;
+}
+
+LootTag :: LootTag(int tag, int itemId, int creatureId, int lootCreatureId)
+{
+	lootTag = tag;
 	mCreatureId = creatureId;
 	mItemId = itemId;
 	mLootCreatureId = lootCreatureId;
+	mSlotIndex = 0;
+	needed = false;
+}
+
+bool LootTag :: Valid(void)
+{
+	return lootTag > 0;
+}
+
+void LootTag :: Clear()
+{
+	lootTag = 0;
+	mCreatureId = 0;
+	mItemId = 0;
+	mLootCreatureId = 0;
 	mSlotIndex = 0;
 	needed = false;
 }
@@ -38,6 +68,7 @@ void ActiveParty :: AddMember(CreatureInstance* member)
 	newMember.mCreatureID = member->CreatureID;
 	newMember.mDisplayName = member->css.display_name;
 	newMember.mCreaturePtr = member;
+	newMember.mCharPtr = member->charPtr;
 	newMember.mSocket = member->simulatorPtr->sc.ClientSocket;
 	mMemberList.push_back(newMember);
 
@@ -170,11 +201,22 @@ bool ActiveParty :: UpdatePlayerReferences(CreatureInstance* member)
 		{
 			mMemberList[i].mCreatureID = member->CreatureID;
 			mMemberList[i].mCreaturePtr = member;
+			mMemberList[i].mCharPtr = member->charPtr;
 			mMemberList[i].mSocket = member->simulatorPtr->sc.ClientSocket;
 			return true;
 		}
 	}
 	return false;
+}
+
+
+int ActiveParty :: GetOnlineMemberCount(void)
+{
+	int c = 0;
+	for(size_t i = 0; i < mMemberList.size(); i++)
+		if(mMemberList[i].IsOnlineAndValid())
+			c++;
+	return c;
 }
 
 bool ActiveParty :: RemovePlayerReferences(int memberDefID, bool disconnect)
@@ -186,8 +228,10 @@ bool ActiveParty :: RemovePlayerReferences(int memberDefID, bool disconnect)
 		if(mMemberList[i].mCreatureDefID == memberDefID)
 		{
 			mMemberList[i].mCreaturePtr = NULL;
-			if(disconnect == true)
+			if(disconnect == true) {
+				mMemberList[i].mCharPtr = NULL;
 				mMemberList[i].mSocket = SocketClass::Invalid_Socket;
+			}
 			return true;
 		}
 	}
@@ -312,16 +356,6 @@ ActiveParty :: ActiveParty() {
 }
 
 ActiveParty :: ~ActiveParty() {
-	for(it_type iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator) {
-		LootTag * t;
-		t = iterator->second;
-		if(t == NULL) {
-			g_Log.AddMessageFormat("PartyDestruct HUH!!!! NULL value in loot tags map for %d", iterator->first);
-		}
-		else {
-			delete iterator->second;
-		}
-	}
 	lootTags.clear();
 }
 
@@ -721,60 +755,38 @@ int PartyManager :: WriteLootRoll(char *outbuf, const char *itemDefName, char ro
 
 
 
-LootTag * ActiveParty :: GetTag(int itemId, int creatureId)
+LootTag ActiveParty :: GetTag(int itemId, int creatureId)
 {
-	for(it_type iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator) {
-		LootTag * t;
-		t = iterator->second;
-		if(t == NULL) {
-			g_Log.AddMessageFormat("GetTag HUH!!!! NULL value in loot tags map for %d in creature %d, item %d", iterator->first, creatureId, itemId);
-		}
-		else {
-			if((*iterator->second).mItemId == itemId && (*iterator->second).mCreatureId == creatureId) {
-				return iterator->second;
-			}
+	for(std::map<int, LootTag>::iterator iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator) {
+		LootTag t = iterator->second;
+		if(t.mItemId == itemId && t.mCreatureId == creatureId) {
+			return t;
 		}
 	}
-	return NULL;
+	return LootTag();
 }
 
 void ActiveParty :: RemoveTagsForLootCreatureId(int lootCreatureId, int itemId, int creatureId)
 {
 	g_Log.AddMessageFormat("Removing loot tags for loot creature ID %d, item ID %d and creature %d", lootCreatureId, itemId, creatureId);
-	std::map<int, LootTag*>::iterator itr = lootTags.begin();
+	std::map<int, LootTag>::iterator itr = lootTags.begin();
 	while (itr != lootTags.end()) {
-		LootTag * t;
-		t = itr->second;
-		if(t == NULL) {
-			g_Log.AddMessageFormat("  ---> !!!!NULL loot tags for %d", itr->first);
+		LootTag t = itr->second;
+		if (t.mLootCreatureId == lootCreatureId && (itemId == 0 || t.mItemId == itemId)
+				&& (creatureId == 0 || t.mCreatureId == creatureId)) {
+			lootTags.erase(itr++);
+		}
+		else
 			++itr;
-		}
-		else { g_Log.AddMessageFormat("  ---> remove %d - %d ?", (*itr->second).lootTag, (*itr->second).mCreatureId,  (*itr->second).mItemId);
-			if ((*itr->second).mLootCreatureId == lootCreatureId && (itemId == 0 || (*itr->second).mItemId == itemId)
-					&& (creatureId == 0 || (*itr->second).mCreatureId == creatureId)) {
-				delete itr->second;
-				lootTags.erase(itr++);
-				g_Log.AddMessageFormat("  ---> yes!");
-			}
-			else
-				++itr;
-		}
 	}
 }
 
 bool ActiveParty:: HasTags(int lootCreatureID, int itemId)
 {
-	typedef std::map<int, LootTag*>::iterator it_type;
-	for(it_type iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator) {
-		LootTag * t;
-		t = iterator->second;
-		if(t == NULL) {
-			g_Log.AddMessageFormat("HasTags HUH!!!! NULL value in loot tags map for %d in loot creature %d, item %d", iterator->first, lootCreatureID, itemId);
-		}
-		else {
-			if((*iterator->second).mLootCreatureId == lootCreatureID && (*iterator->second).mItemId == itemId) {
-				return true;
-			}
+	for(std::map<int, LootTag>::iterator iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator) {
+		LootTag t = iterator->second;
+		if(t.mLootCreatureId == lootCreatureID && t.mItemId == itemId) {
+			return true;
 		}
 	}
 	return false;
@@ -783,29 +795,22 @@ bool ActiveParty:: HasTags(int lootCreatureID, int itemId)
 void ActiveParty :: RemoveCreatureTags(int itemId, int creatureId)
 {
 	g_Log.AddMessageFormat("RemoveCreatureTags in creature %d, item %d", creatureId, itemId);
-	std::map<int, LootTag*>::iterator itr = lootTags.begin();
+	std::map<int, LootTag>::iterator itr = lootTags.begin();
 	while (itr != lootTags.end()) {
-		LootTag * t;
-		t = itr->second;
-		if(t == NULL) {
-			g_Log.AddMessageFormat("RemoveCreatureTags HUH!!!! NULL value in loot tags map for %d in creature %d, item %d", itr->first, creatureId, itemId);
+		LootTag t = itr->second;
+		if ((itemId == -1 || t.mItemId == itemId ) && t.mCreatureId == creatureId) {
+			lootTags.erase(itr++);
+		} else
 			++itr;
-		}
-		else {
-			if ((itemId == -1 || (*itr->second).mItemId == itemId ) && (*itr->second).mCreatureId == creatureId) {
-				delete itr->second;
-				lootTags.erase(itr++);
-			} else
-				++itr;
-		}
 	}
 }
 
-LootTag * ActiveParty :: TagItem(int itemId, int creatureId, int lootCreatureId)
+LootTag ActiveParty :: TagItem(int itemId, int creatureId, int lootCreatureId, int slot)
 {
-	LootTag *tag = new LootTag(itemId, creatureId, lootCreatureId);
-	lootTags[tag->lootTag] = tag;
-	g_Log.AddMessageFormat("Tagged item %d for loot creature %d to creature %d. Tag is %d", tag->mItemId, tag->mLootCreatureId, tag->mCreatureId, tag->lootTag);
+	LootTag tag = LootTag(++lootSeq, itemId, creatureId, lootCreatureId);
+	tag.mSlotIndex = slot;
+	lootTags[tag.lootTag] = tag;
+	g_Log.AddMessageFormat("Tagged item %d for loot creature %d to creature %d. Tag is %d", tag.mItemId, tag.mLootCreatureId, tag.mCreatureId, tag.lootTag);
 	return tag;
 }
 

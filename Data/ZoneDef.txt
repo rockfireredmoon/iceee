@@ -115,7 +115,7 @@ ID=1070
 NAME=Winterland
 TERRAINCONFIG=Terrain-Winterland#Terrain-Winterland.cfg
 ENVIRONMENTTYPE=HappyWinter
-ShardName=Winterland
+ShardName=Winterland (Low)
 WarpName=WLP
 MAPNAME=Maps-Winterland
 DefLoc=2958,260,3821
@@ -126,7 +126,7 @@ ID=1071
 NAME=Winterland
 TERRAINCONFIG=Terrain-Winterland#Terrain-Winterland.cfg
 ENVIRONMENTTYPE=HappyWinter
-ShardName=Winterland
+ShardName=Winterland (Med)
 WarpName=WLP2
 MAPNAME=Maps-Winterland
 DefLoc=2958,260,3821
@@ -137,7 +137,7 @@ ID=1072
 NAME=Winterland
 TERRAINCONFIG=Terrain-Winterland#Terrain-Winterland.cfg
 ENVIRONMENTTYPE=HappyWinter
-ShardName=Winterland
+ShardName=Winterland (High)
 WarpName=WLP3
 MAPNAME=Maps-Winterland
 DefLoc=2958,260,3821
@@ -186,7 +186,7 @@ DefLoc=1420,1107,1836
 [ENTRY]
 ID=105
 NAME=Winterland
-TERRAINCONFIG=Terrain-NewBremen#Terrain-NewBremen.cfg
+TERRAINCONFIG=Terrain-NewBremen#Terrain-NewBremenWinter.cfg
 ENVIRONMENTTYPE=HappyWinter
 ShardName=Winter Land
 WarpName=Winterland
@@ -1094,17 +1094,6 @@ WarpName=The Cavern
 Arena=1
 EnvironmentCycle=1
 DefLoc=2686,312,4786
-
-[ENTRY]
-ID=112
-NAME=Shadow Void
-ENVIRONMENTTYPE=Dungeon1
-ShardName=Europe 1
-WarpName=Shadow Void
-DefLoc=5616,8,2523
-PageSize=1000
-Instance=1
-MaxLeashRange=1000
 
 [ENTRY]
 ID=200

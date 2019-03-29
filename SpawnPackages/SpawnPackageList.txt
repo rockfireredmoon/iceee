@@ -6,6 +6,10 @@
 ; to keep it somewhat modular, allowing easy management of
 ; arbitrary regions, instances, or subdivisions of them.
 
+
+; ICEE Specific, will get moved
+XXX_ICEEE.txt
+
 ; Delete this.
 0_TrashTest.txt
 
@@ -75,9 +79,3 @@
 50_IronMaw.txt
 75_FolkirkManor.txt
 85_KerakurasLair.txt
-
-; CUSTOM CONTENT
-112_ShadowVoid.txt
-
-; ICEE Specific, will get moved
-XXX_ICEEE.txt

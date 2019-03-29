@@ -2732,7 +2732,7 @@ ID=607
 Title=Ritual of the Mist
 BodyText=Greetings. Eastbridge could use your aid traveler. To the east is an old ruin. It is filled with mist and within the mist lurk deadly spiders. Long ago a local druid built three altars in the ruins. When the spiders begin to spill out of the mist and encroach on the town we must go and cleanse the altars in the blood of a giant spider. That time has come again. Would you aid us?
 That task is simple but dangerous. There is a giant spider in the ruins known as Lurrk. You must first kill it. Once it is dead you must take some of it's blood to each of the three altars. Once this is done the ritual should keep the spiders at bay for at least another season. Be wary though! Lurrk is very powerful and deadly - bring friends with you if you truly wish to succeed!
-CompleteText=You are a true friend to Eastbridge! Please take one of these rewards and our heartfelt thanks.
+CompleteText=You are a true friend to Eastbridge! Please take this reward and our heartfelt thanks.
 Level=27
 Suggested=28
 Exp=4271

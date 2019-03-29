@@ -144,6 +144,7 @@ public:
 
 	int PendingHeartbeatResponse;             //Should equalize to zero if communications are operating normally.
 	AppearanceModifier *creatureTweakModifier;
+	InteractObject *intObj;
 
 	//FUNCTIONS
 	void RunMainLoop(void);
@@ -193,7 +194,7 @@ public:
 
 	int OfferLoot(int mode, ActiveLootContainer *loot, ActiveParty *party, CreatureInstance *receivingCreature, int ItemID, bool needOrGreed, int CID, int conIndex);
 
-	void CheckIfLootReadyToDistribute(ActiveLootContainer *loot, LootTag *lootTag);
+	void CheckIfLootReadyToDistribute(ActiveLootContainer *loot, LootTag lootTag);
 	PartyMember * RollForPartyLoot(ActiveParty *party, std::set<int> creatureIds, const char *rollType, int itemId);
 
 	bool ActivateActionAbilities(InventorySlot *slot);

@@ -1,11 +1,3 @@
-[ENTRY]
-ID=1030419
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=998,158,691
-Orient=0,-0.509841,0,0.860269
-Scale=1,1,1
-spawnPackage=z68_gchq_custom_Sigil
 
 [ENTRY]
 ID=10000002

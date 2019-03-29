@@ -63,15 +63,6 @@ Orient=0,0.203567,0,0.979061
 Scale=1,1,1
 
 [ENTRY]
-ID=151056425
-Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=61209.6,188.198,47079.1
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=4_ewd_shadowsworn_k_35
-
-[ENTRY]
 ID=151056426
 Asset=Manipulator-SpawnPoint
 Name=Untitled

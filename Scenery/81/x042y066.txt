@@ -1,11 +1,3 @@
-[ENTRY]
-ID=1030418
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=42310,737.331,66784
-Orient=0,-0.501213,0,0.865324
-Scale=1,1,1
-spawnPackage=custom_Mike_Zean
 
 [ENTRY]
 ID=1358954799

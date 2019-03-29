@@ -196,11 +196,11 @@ std::string AchievementsManager::GetPath(std::string name) {
 	return buf;
 }
 
-int AchievementsManager::GetTotalAchievements(void) {
+int AchievementsManager::GetTotalAchievements() {
 	return mDefs.size();
 }
 
-int AchievementsManager::GetTotalObjectives(void) {
+int AchievementsManager::GetTotalObjectives() {
 	return mTotalObjectives;
 }
 

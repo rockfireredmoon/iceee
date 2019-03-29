@@ -136,7 +136,7 @@ Position=68515.0,797.0,48005.0
 [ENTRY]
 Name=Swineland - Valkal's Blood Keep
 Comment=In front of Valkal's Blood Keep.
-Position=57007.0,902.0,60763.0
+Position=79298.0,1301.0,52854.0
 
 [ENTRY]
 Name=Swineland - Nook Town

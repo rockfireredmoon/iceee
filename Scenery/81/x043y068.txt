@@ -5,7 +5,6 @@ Pos=43645,64,68386
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=231
-sceneryName=generated_Dungeon_Loot
 spawnPackage=#2696
 
 [ENTRY]
@@ -15,7 +14,6 @@ Pos=43582,59,68340
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=195
-sceneryName=generated_Underhenge
 spawnPackage=#1555
 
 [ENTRY]
@@ -39,8 +37,8 @@ Asset=Manipulator-SpawnPoint
 Pos=43259.6,101.948,68575
 Orient=0,0,0,1
 Scale=1,1,1
+loyaltyRadius=10
 spawnPackage=1a_thornbringerCamps01_general
-outerRadius=10
 
 [ENTRY]
 ID=1358960618
@@ -57,8 +55,8 @@ Asset=Manipulator-SpawnPoint
 Pos=43515.5,65.2155,68519
 Orient=0,0,0,1
 Scale=1,1,1
+loyaltyRadius=10
 spawnPackage=1a_thornbringerCamps01_general
-outerRadius=10
 
 [ENTRY]
 ID=1358960623
@@ -127,10 +125,10 @@ Asset=Manipulator-SpawnPoint
 Pos=43880.8,200.387,68665
 Orient=0,-0.830497,0,0.557023
 Scale=1,1,1
+loyaltyRadius=10
 links_count=1
 link=1358960629,1
 spawnPackage=1a_thornbringerCamps01_general
-outerRadius=10
 
 [ENTRY]
 ID=1358963008

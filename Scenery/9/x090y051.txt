@@ -431,7 +431,7 @@ Pos=68206,468.945,38875
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=2a_rhl_dunkelhimerBrewery_outside
-outerRadius=1
+loyaltyRadius=1
 
 [ENTRY]
 ID=151055177
@@ -645,7 +645,7 @@ Pos=67703,425.417,38861
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=2a_rhl_sectionA8_trees
-outerRadius=30
+loyaltyRadius=30
 
 [ENTRY]
 ID=151056575

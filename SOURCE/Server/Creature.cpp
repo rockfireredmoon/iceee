@@ -1242,6 +1242,9 @@ bool CreatureInstance :: RegisterHostility(CreatureInstance *attacker, int hosti
 		return false;
 	}
 
+	if(g_Config.DebugVerbose)
+		g_Log.AddMessageFormat("RegisterHostility attacker %s %d", attacker->css.display_name, hostility);
+
 	if(hostility < 1)
 		return false;
 
@@ -1302,11 +1305,23 @@ bool CreatureInstance :: RegisterHostility(CreatureInstance *attacker, int hosti
 
 void CreatureInstance :: SetCombatStatus(void)
 {
+	if(g_Config.DebugVerbose)
+		g_Log.AddMessageFormat("SetCombatStatus %s", css.display_name);
+
 	if(HasStatus(StatusEffects::DEAD) == true)
 		return;
 
 	if(serverFlags & ServerFlags::Noncombatant)
 		return;
+
+	if(!HasStatus(StatusEffects::IN_COMBAT) && aiNut != NULL) {
+		std::vector<ScriptCore::ScriptParam> p;
+
+		/* This MUST run immediately (and not be queued) as the script probably wants to clear out
+		 * the queue entirely, which might need to re-activated by on_target_acquired.
+		 */
+		aiNut->RunFunction("on_combat_ready", p, false);
+	}
 
 	Status(StatusEffects::IN_COMBAT, 5);
 	Status(StatusEffects::IN_COMBAT_STAND, 5);
@@ -5891,6 +5906,7 @@ void CreatureInstance :: SelectTarget(CreatureInstance *newTarget)
 					}
 				}
 			}
+
 			UpdateAggroPlayers(1);
 		}
 		else
