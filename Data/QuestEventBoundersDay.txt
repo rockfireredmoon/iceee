@@ -21,7 +21,7 @@ Repeat=0
 RepeatDelay=1D
 sGiver=54900.4,147.374,63375.1,81
 sEnder=54900.4,147.374,63375.1,81
-//ScriptAcceptCondition=below_level 27
+ScriptAcceptCondition=below_level 27
 [ACT]
 Act.BodyText=Gather 7 Emerald Eggs.
 Obj.0.type=gather
@@ -115,7 +115,7 @@ QuestEnderID=4501
 Repeat=0
 sGiver=68932.1,424.353,35597.3,9;
 sEnder=68932.1,424.353,35597.3,9;
-//ScriptAcceptCondition=below_level 33
+ScriptAcceptCondition=below_level 33
 [ACT]
 Act.BodyText=Gather 7 Emerald Eggs.
 Obj.0.type=gather
