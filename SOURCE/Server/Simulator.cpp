@@ -8427,7 +8427,7 @@ int SimulatorThread :: handle_query_trade_essence(void)
 		else if(err == InventoryManager::ERROR_SPACE)
 			return PrepExt_QueryResponseString(SendBuf, query.ID, "You do not have any free inventory space.");
 		else if(err == InventoryManager::ERROR_LIMIT)
-			return PrepExt_QueryResponseString(SendBuf, query.ID, "You already the maximum amount of these items.");
+			return PrepExt_QueryResponseString(SendBuf, query.ID, "You already have the maximum amount of these items.");
 		else
 			return PrepExt_QueryResponseString(SendBuf, query.ID, "Server error: undefined error.");
 	}
@@ -13095,7 +13095,7 @@ int SimulatorThread :: handle_query_item_market_buy(void)
 			else if(err == InventoryManager::ERROR_SPACE)
 				return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have any free inventory space.");
 			else if(err == InventoryManager::ERROR_LIMIT)
-				return PrepExt_QueryResponseError(SendBuf, query.ID, "You already the maximum amount of these items.");
+				return PrepExt_QueryResponseError(SendBuf, query.ID, "You already have the maximum amount of these items.");
 			else
 				return PrepExt_QueryResponseError(SendBuf, query.ID, "Server error: undefined error.");
 		}
