@@ -30922,26 +30922,24 @@ appearance=n4:{["a"]=[{["type"]="Item-Shovel",["node"]="right_hand",["colors"]=[
 ID=1329
 strength=6
 dexterity=6
-constitution=4
+constitution=3
 psyche=4
 spirit=4
-base_damage_melee=3
 damage_resist_melee=31
 damage_resist_fire=31
 damage_resist_frost=31
 damage_resist_mystic=31
 damage_resist_death=31
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-CC-Clothing8",["colors"]=[]},["arms"]={["type"]="Armor-Light-Low1",["colors"]=[]},["leggings"]={["type"]="Armor-Cloth-Male-Underwear",["colors"]=["3f3f35"]},["collar"]={["type"]="Armor-Light-Low1",["colors"]=[]},["belt"]={["type"]="Armor-Light-Low1",["colors"]=[]},["gloves"]={["type"]="Armor-Light-Low1",["colors"]=[]}},["b"]="n",["sk"]={["hands_feet"]="907B6C",["eye_white"]="DDD7D2",["snout"]="907B6C",["teeth"]="B0998F",["tail"]="95635B",["base"]="91776D",["eye_lid"]="A28B7B",["nails"]="4A3A2F",["eye"]="8B5E55",["inner_ear"]="B3796D",["nose"]="78524A",["chest"]="A58E7E"},["r"]="o",["g"]="m",["sz"]="1.3"}
 level=1
 display_name=Captive
 profession=3
 creature_category=Mortal
+base_damage_melee=3
 ai_package=example
-appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-CC-Clothing8",["colors"]=[]},["arms"]={["type"]="Armor-Light-Low1",["colors"]=[]},["leggings"]={["type"]="Armor-Cloth-Male-Underwear",["colors"]=["3f3f35"]},["collar"]={["type"]="Armor-Light-Low1",["colors"]=[]},["belt"]={["type"]="Armor-Light-Low1",["colors"]=[]},["gloves"]={["type"]="Armor-Light-Low1",["colors"]=[]}},["b"]="n",["sk"]={["hands_feet"]="907B6C",["eye_white"]="DDD7D2",["snout"]="907B6C",["teeth"]="B0998F",["tail"]="95635B",["base"]="91776D",["eye_lid"]="A28B7B",["nails"]="4A3A2F",["eye"]="8B5E55",["inner_ear"]="B3796D",["nose"]="78524A",["chest"]="A58E7E"},["r"]="o",["g"]="m",["sz"]="1.3"}
 
 [ENTRY]
 ID=1330
@@ -45744,17 +45742,14 @@ ai_package=melee_creature_brave_6
 ID=1993
 strength=9
 dexterity=9
-constitution=14
+constitution=11
 psyche=11
 spirit=14
-base_damage_melee=9
 damage_resist_melee=147
 damage_resist_fire=147
 damage_resist_frost=147
 damage_resist_mystic=147
 damage_resist_death=147
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -45763,23 +45758,21 @@ level=5
 display_name=Madvine
 profession=5
 creature_category=Magical
+base_damage_melee=9
 ai_package=melee_creature_brave_6
 
 [ENTRY]
 ID=1994
 strength=9
 dexterity=11
-constitution=9
+constitution=7
 psyche=14
 spirit=14
-base_damage_melee=9
 damage_resist_melee=147
 damage_resist_fire=147
 damage_resist_frost=147
 damage_resist_mystic=147
 damage_resist_death=147
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -45788,25 +45781,21 @@ level=5
 display_name=Madvine
 profession=4
 creature_category=Magical
+base_damage_melee=9
 ai_package=frost_creature_brave_6
 
 [ENTRY]
-
 ID=1995
-ExtraData=namedmob=1
 strength=9
 dexterity=11
-constitution=18
+constitution=14
 psyche=14
 spirit=14
-base_damage_melee=9
 damage_resist_melee=147
 damage_resist_fire=147
 damage_resist_frost=147
 damage_resist_mystic=147
 damage_resist_death=147
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -45815,6 +45804,8 @@ level=5
 display_name=Anglor Dren
 profession=4
 creature_category=Mortal
+base_damage_melee=9
+ExtraData=namedmob=
 ai_package=mage_fire_brave_6
 
 [ENTRY]
@@ -45869,17 +45860,14 @@ ai_package=mage_fire_brave_1
 ID=1998
 strength=12
 dexterity=10
-constitution=12
+constitution=9
 psyche=9
 spirit=9
-base_damage_melee=8
 damage_resist_melee=143
 damage_resist_fire=143
 damage_resist_frost=143
 damage_resist_mystic=143
 damage_resist_death=143
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -45888,13 +45876,14 @@ level=6
 display_name=Cave Crawler
 profession=2
 creature_category=Animal
+base_damage_melee=8
 ai_package=melee_creature_brave_6
 
 [ENTRY]
 ID=1999
 strength=10
 dexterity=10
-constitution=7
+constitution=5
 psyche=7
 spirit=7
 damage_resist_melee=143
@@ -47466,17 +47455,14 @@ total_size=75
 ID=2065
 strength=13
 dexterity=11
-constitution=13
+constitution=10
 psyche=9
 spirit=9
-base_damage_melee=10
 damage_resist_melee=196
 damage_resist_fire=196
 damage_resist_frost=196
 damage_resist_mystic=196
 damage_resist_death=196
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -47486,23 +47472,21 @@ display_name=Swordmaster
 sub_name=Akhom's Legion
 profession=2
 creature_category=Mortal
+base_damage_melee=10
 ai_package=knight_brave_6
 
 [ENTRY]
 ID=2066
 strength=12
 dexterity=12
-constitution=10
+constitution=8
 psyche=9
 spirit=9
-base_damage_melee=9
 damage_resist_melee=172
 damage_resist_fire=172
 damage_resist_frost=172
 damage_resist_mystic=172
 damage_resist_death=172
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -47512,6 +47496,7 @@ display_name=Jackal
 sub_name=Akhom's Legion
 profession=3
 creature_category=Mortal
+base_damage_melee=9
 ai_package=rogue_brave_6
 
 [ENTRY]
@@ -47546,17 +47531,14 @@ ai_package=nothing
 ID=2068
 strength=9
 dexterity=9
-constitution=13
+constitution=10
 psyche=11
 spirit=13
-base_damage_melee=10
 damage_resist_melee=196
 damage_resist_fire=196
 damage_resist_frost=196
 damage_resist_mystic=196
 damage_resist_death=196
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -47566,23 +47548,21 @@ display_name=Seeress
 sub_name=Akhom's Legion
 profession=5
 creature_category=Mortal
+base_damage_melee=10
 ai_package=druid_death_brave_6
 
 [ENTRY]
 ID=2069
 strength=9
 dexterity=10
-constitution=9
+constitution=7
 psyche=12
 spirit=12
-base_damage_melee=9
 damage_resist_melee=172
 damage_resist_fire=172
 damage_resist_frost=172
 damage_resist_mystic=172
 damage_resist_death=172
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -47592,6 +47572,7 @@ display_name=Diviner
 sub_name=Akhom's Legion
 profession=4
 creature_category=Mortal
+base_damage_melee=9
 ai_package=mage_fire_brave_6
 
 [ENTRY]
@@ -47624,20 +47605,16 @@ ai_package=nothing
 
 [ENTRY]
 ID=2071
-ExtraData=namedmob=1
 strength=13
 dexterity=11
-constitution=13
+constitution=10
 psyche=9
 spirit=9
-base_damage_melee=10
 damage_resist_melee=196
 damage_resist_fire=196
 damage_resist_frost=196
 damage_resist_mystic=196
 damage_resist_death=196
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -47647,24 +47624,22 @@ display_name=Anubian Captain
 sub_name=Akhom's Legion
 profession=2
 creature_category=Mortal
+base_damage_melee=10
+ExtraData=namedmob=
 ai_package=knight_brave_6
 
 [ENTRY]
 ID=2072
-ExtraData=namedmob=1
 strength=13
 dexterity=13
-constitution=11
+constitution=8
 psyche=9
 spirit=9
-base_damage_melee=10
 damage_resist_melee=196
 damage_resist_fire=196
 damage_resist_frost=196
 damage_resist_mystic=196
 damage_resist_death=196
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -47674,24 +47649,22 @@ display_name=Anubian Captain
 sub_name=Akhom's Legion
 profession=3
 creature_category=Mortal
+base_damage_melee=10
+ExtraData=namedmob=
 ai_package=rogue_brave_6
 
 [ENTRY]
 ID=2073
-ExtraData=namedmob=1
 strength=9
 dexterity=9
-constitution=13
+constitution=10
 psyche=11
 spirit=13
-base_damage_melee=10
 damage_resist_melee=196
 damage_resist_fire=196
 damage_resist_frost=196
 damage_resist_mystic=196
 damage_resist_death=196
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -47701,24 +47674,22 @@ display_name=Anubian Captain
 sub_name=Akhom's Legion
 profession=5
 creature_category=Mortal
+base_damage_melee=10
+ExtraData=namedmob=
 ai_package=druid_death_brave_6
 
 [ENTRY]
 ID=2074
-ExtraData=namedmob=1
 strength=9
 dexterity=11
-constitution=9
+constitution=7
 psyche=13
 spirit=13
-base_damage_melee=10
 damage_resist_melee=196
 damage_resist_fire=196
 damage_resist_frost=196
 damage_resist_mystic=196
 damage_resist_death=196
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -47728,24 +47699,22 @@ display_name=Commander Zalika
 sub_name=Akhom's Legion
 profession=4
 creature_category=Mortal
+base_damage_melee=10
+ExtraData=namedmob=
 ai_package=mage_frost_brave_6
 
 [ENTRY]
 ID=2075
-ExtraData=namedmob=1
 strength=17
 dexterity=15
-constitution=17
+constitution=13
 psyche=12
 spirit=12
-base_damage_melee=14
 damage_resist_melee=261
 damage_resist_fire=261
 damage_resist_frost=261
 damage_resist_mystic=261
 damage_resist_death=261
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -47754,6 +47723,8 @@ level=10
 display_name=General Akhom
 profession=2
 creature_category=Mortal
+base_damage_melee=14
+ExtraData=namedmob=
 ai_package=knight_brave_6
 
 [ENTRY]
@@ -73838,18 +73809,14 @@ total_size=21
 ID=3402
 strength=21
 dexterity=17
-constitution=21
+constitution=16
 psyche=15
 spirit=15
-base_damage_melee=10
 damage_resist_melee=179
 damage_resist_fire=179
 damage_resist_frost=179
 damage_resist_mystic=179
 damage_resist_death=179
-base_health=231
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -73858,13 +73825,15 @@ level=6
 display_name=Sea Food
 profession=6
 creature_category=Mortal
+base_damage_melee=10
+base_health=231
 ai_package=knight_brave_6
 
 [ENTRY]
 ID=3403
 strength=15
 dexterity=13
-constitution=18
+constitution=14
 psyche=11
 spirit=11
 damage_resist_melee=180
