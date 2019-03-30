@@ -287,7 +287,7 @@ RewardItem.0=7523,1,1
 [ENTRY]
 ID=648
 Title=The Golden Egg!
-BodyText=As the rumors have claimed, you have found the well-hidden Golden Egg in Camelot. As you reach down to pick it up, you see that the egg has a small note attached to it: "Take me back to Ambassador Buckley."
+BodyText=As the rumors have claimed, you have found the well-hidden Golden Egg in Camelot. As you reach down to pick it up, you see that the egg has a small note attached to it: "Take me back to Minister Buckley."
 CompleteText=What... but how did you...!?!
 
 *sigh* I guess I must be losing my touch at hiding things. Here is your reward, you deserve it!   
