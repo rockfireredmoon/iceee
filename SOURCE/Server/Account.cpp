@@ -117,6 +117,14 @@ void AccountData::FillRegistrationKey(const char *key)
 	Util::SafeCopy(RegKey, key, sizeof(RegKey));
 }
 
+void AccountData :: QuestClear(int QuestID) {
+	std::vector<int>::iterator it = std::find(AccountQuests.begin(), AccountQuests.end(), QuestID);
+	if(it != AccountQuests.end()) {
+		AccountQuests.erase(it);
+		PendingMinorUpdates++;
+	}
+}
+
 bool AccountData :: MatchAuthData(const char *str)
 {
 	if(strcmp(AuthData, str) == 0)

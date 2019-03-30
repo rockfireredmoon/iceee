@@ -13618,6 +13618,7 @@ bool SimulatorThread :: QuestClear(int QuestID)
 	if(creatureInst == NULL || creatureInst->charPtr == NULL)
 		return false;
 	creatureInst->charPtr->questJournal.QuestClear(creatureInst->CreatureID, QuestID);
+	pld.accPtr->QuestClear(QuestID);
 	int wpos = PutByte(&Aux1[0], 7);  //_handleQuestEventMsg
 	wpos += PutShort(&Aux1[wpos], 0); //Size
 	wpos += PutInteger(&Aux1[wpos], QuestID); //Quest ID

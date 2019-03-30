@@ -150,6 +150,7 @@ public:
 	void CheckRecoveryRegistrationKey(const char *regkey);
 	int GetTotalAchievementObjectives();
 	int GetTotalCompletedAchievements();
+	void QuestClear(int QuestID);
 private:
 	short SessionLoginCount;   //Number of Simulators logged into this account.
 	unsigned long ExpireTime;  //The server time when the account will be ready for garbage deletion.
