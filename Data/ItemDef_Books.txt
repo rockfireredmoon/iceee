@@ -1691,3 +1691,64 @@ mMinUseLevel=25
 mQualityLevel=4
 mBindingType=1
 mIvType1=13
+
+[ENTRY]
+mID=1560008
+mType=8
+mDisplayName=History of Bounders Day
+mIcon=Icon-32-Scroll2.png|Icon-32-BG-Green.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=31
+mIvMax2=1
+mIvType1=12
+mIvType2=11
+
+[ENTRY]
+mID=1560009
+mType=8
+mDisplayName=History of Bounders Day
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=31
+mIvMax2=2
+mIvType1=12
+mIvType2=11
+
+[ENTRY]
+mID=1560010
+mType=8
+mDisplayName=History of Bounders Day
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=31
+mIvMax2=3
+mIvType1=12
+mIvType2=11
+
+[ENTRY]
+mID=1560011
+mType=8
+mDisplayName=History of Bounders Day
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=31
+mIvMax2=4
+mIvType1=12
+mIvType2=11
