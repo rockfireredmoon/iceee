@@ -1668,6 +1668,20 @@ mFlavorText=Double-click to open, or use /books
 mIvMax1=30
 mIvType1=12
 
+[ENTRY]
+mID=1550017
+mType=8
+mDisplayName=Bound History of Bounders Day
+mIcon=Icon-32-Book1.png|Icon-32-BG-Green.png
+mLevel=1
+mValue=4300
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=31
+mIvType1=12
+
 ;
 ; Binding Materials
 ;
