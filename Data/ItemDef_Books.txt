@@ -1376,6 +1376,70 @@ mIvMax2=4
 mIvType1=12
 mIvType2=11
 
+[ENTRY]
+mID=1500086
+mType=8
+mDisplayName=Green Leaf Page
+mIcon=Icon-32-Scroll2.png|Icon-32-BG-Green.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=31
+mIvMax2=1
+mIvType1=12
+mIvType2=11
+
+[ENTRY]
+mID=1500087
+mType=8
+mDisplayName=Green Leaf Page
+mIcon=Icon-32-Scroll2.png|Icon-32-BG-Green.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=31
+mIvMax2=2
+mIvType1=12
+mIvType2=11
+
+[ENTRY]
+mID=1500088
+mType=8
+mDisplayName=Green Leaf Page
+mIcon=Icon-32-Scroll2.png|Icon-32-BG-Green.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=31
+mIvMax2=3
+mIvType1=12
+mIvType2=11
+
+[ENTRY]
+mID=1500089
+mType=8
+mDisplayName=Green Leaf Page
+mIcon=Icon-32-Scroll2.png|Icon-32-BG-Green.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=31
+mIvMax2=4
+mIvType1=12
+mIvType2=11
+
 ;
 ; Bound Books
 ;

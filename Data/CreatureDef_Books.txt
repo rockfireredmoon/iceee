@@ -1000,7 +1000,7 @@ defHints=6144
 ID=16088
 appearance=p1:{["sz"]="1.0"}
 level=1
-display_name=null
+display_name=Leaf Green Page
 profession=4
 creature_category=Inanimate
 ExtraData=item=1560009
@@ -1011,7 +1011,7 @@ defHints=6144
 ID=16089
 appearance=p1:{["sz"]="1.0"}
 level=1
-display_name=null
+display_name=Leaf Green Page
 profession=4
 creature_category=Inanimate
 ExtraData=item=1560010
@@ -1022,8 +1022,9 @@ defHints=6144
 ID=16090
 appearance=p1:{["sz"]="1.0"}
 level=1
-display_name=null
+display_name=Leaf Green Page
 profession=4
 creature_category=Inanimate
 ExtraData=item=1560011
 ai_package=nothing
+
