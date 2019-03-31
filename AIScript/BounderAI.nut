@@ -40,6 +40,12 @@ phrases <- {
 		"Happy Bounders Day!",
 		"The Great Forest looks so lovely in Springtime!",
 		"Rumour is, one of us has hidden a Golden Egg somewhere in Camelot. Can you find it?"
+	],
+	// Buckley
+	creature_4507 = [
+		"Greetings on Bounders Day",
+		"Are you are interested in History? Do you want to know more?",
+		"Well .. I had a book, but the wind took it, sending pages flying across the city. If you can find them, you are welcome to them!"
 	]
 };
 
