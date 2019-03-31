@@ -992,7 +992,7 @@ level=1
 display_name=Leaf Green Page
 profession=4
 creature_category=Inanimate
-ExtraData=item=1560008
+ExtraData=item=1500086
 ai_package=nothing
 
 [ENTRY]
@@ -1003,7 +1003,7 @@ level=1
 display_name=Leaf Green Page
 profession=4
 creature_category=Inanimate
-ExtraData=item=1560009
+ExtraData=item=1500087
 ai_package=nothing
 
 [ENTRY]
@@ -1014,7 +1014,7 @@ level=1
 display_name=Leaf Green Page
 profession=4
 creature_category=Inanimate
-ExtraData=item=1560010
+ExtraData=item=1500088
 ai_package=nothing
 
 [ENTRY]
@@ -1025,6 +1025,6 @@ level=1
 display_name=Leaf Green Page
 profession=4
 creature_category=Inanimate
-ExtraData=item=1560011
+ExtraData=item=1500089
 ai_package=nothing
 

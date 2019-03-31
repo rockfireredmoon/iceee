@@ -52,8 +52,9 @@ phrases <- {
 /* The main function. This won't get called until it is queued once */
 
 function say_something() {
-	/* Say a random phrase for this creature */	
-	ai.speak(phrases["creature_" + ai.get_self_def_id()][randmodrng(0, phrases.len())]);
+	/* Say a random phrase for this creature */
+	local k = "creature_" + ai.get_self_def_id();	
+	ai.speak(phrases[k][randmodrng(0, phrases[k].len())]);
 	
 	/* Requeue this function for some random point between MIN_SECONDS and MAX_SECONDS */		
 	ai.queue(say_something, ( MIN_SECONDS + randmodrng(0, MAX_SECONDS - MIN_SECONDS) ) * 1000);
