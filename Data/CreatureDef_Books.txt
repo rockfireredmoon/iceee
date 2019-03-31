@@ -998,7 +998,7 @@ ai_package=nothing
 [ENTRY]
 defHints=6144
 ID=16088
-appearance=p1:{["sz"]="1.0"}
+appearance=p1:{["a"]="Prop-Scroll2",["sz"]="1.0"}
 level=1
 display_name=Leaf Green Page
 profession=4
@@ -1009,7 +1009,7 @@ ai_package=nothing
 [ENTRY]
 defHints=6144
 ID=16089
-appearance=p1:{["sz"]="1.0"}
+appearance=p1:{["a"]="Prop-Scroll2",["sz"]="1.0"}
 level=1
 display_name=Leaf Green Page
 profession=4
@@ -1020,7 +1020,7 @@ ai_package=nothing
 [ENTRY]
 defHints=6144
 ID=16090
-appearance=p1:{["sz"]="1.0"}
+appearance=p1:{["a"]="Prop-Scroll2",["sz"]="1.0"}
 level=1
 display_name=Leaf Green Page
 profession=4
