@@ -8913,7 +8913,7 @@ int SimulatorThread :: handle_query_creature_use(void)
 					else {
 						creatureInst->SelectTarget(target);
 						Util::SafeFormat(Aux1, sizeof(Aux1), "Taking %s", item->mDisplayName.c_str());
-						AttemptSend(GSendBuf, creatureInst->QuestInteractObject(GSendBuf, Aux1, 5000, false));
+						AttemptSend(GSendBuf, creatureInst->QuestInteractObject(GSendBuf, Aux1, 5000, true));
 						ok = true;
 					}
 
