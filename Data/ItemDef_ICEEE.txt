@@ -443,7 +443,7 @@ mBindingType=1
 mValue=1
 mFlavorText=Double click to open!
 mQualityLevel=3
-mMinUseLevel=17
+mMinUseLevel=10
 Params=credits=1000&abilitypoints=10
 
 [ENTRY]

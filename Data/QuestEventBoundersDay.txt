@@ -289,8 +289,8 @@ BodyText=As the rumors have claimed, you have found the well-hidden Golden Egg i
 CompleteText=What... but how did you...!?!
 
 *sigh* I guess I must be losing my touch at hiding things. Here is your reward, you deserve it!   
-Level=17
-Suggested=17
+Level=10
+Suggested=10
 Exp=1
 PartySize=1
 Coin=1
@@ -298,7 +298,7 @@ AccountQuest=1
 Unabandon=0
 QuestGiverID=4503
 QuestEnderID=4507
-sGiver=54900.4,147.374,63375.1,81
+sGiver=55359.6,499.169,67571.4,81
 sEnder=54900.4,147.374,63375.1,81
 [ACT]
 Act.BodyText=You have found the well-hidden Golden Egg! Take it to Minister Buckley as instructed in the note.
