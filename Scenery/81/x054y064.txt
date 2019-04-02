@@ -24,10 +24,10 @@ link=1128400,1
 [ENTRY]
 ID=1156390
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
 Pos=54790.5,537.751,64475.6
 Orient=0,0,0,1
 Scale=1,1,1
+despawnTime=30
 spawnPackage=#16090
 
 [ENTRY]
