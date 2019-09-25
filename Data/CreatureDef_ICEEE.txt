@@ -327,31 +327,27 @@ ai_package=nothing
 ID=7798
 level=50
 display_name=Anexima
-[ENTRY]
-ID=7798
+sub_name=The Dragon Lich
+creature_category=Unliving
+rarity=3
+appearance=n4:{["sk"]={["bone"]="92908c",["claw"]="676667",["horn"]="6e5747",["plate"]="a3a39e",["wing"]="5d3e32"},["c"]="Boss-Anexima",["sz"]="2.0"}
 strength=425
 dexterity=400
 constitution=550
 psyche=425
 spirit=400
+base_damage_melee=325
 damage_resist_melee=6500
 damage_resist_fire=6500
 damage_resist_frost=6500
 damage_resist_mystic=6500
 damage_resist_death=6500
-offhand_weapon_damage=500
-casting_setback_chance=500
-channeling_break_chance=500
-appearance=n4:{["sk"]={["bone"]="92908c",["claw"]="676667",["horn"]="6e5747",["plate"]="a3a39e",["wing"]="5d3e32"},["c"]="Boss-Anexima",["sz"]="2.0"}
-level=50
-display_name=Anexima
-sub_name=The Dragon Lich
 profession=2
-creature_category=Unliving
-rarity=3
-base_damage_melee=325
-base_health=20000
 ai_package=custom_heathendel_anexima
+
+[ENTRY]
+ID=7800
+level=50
 display_name=Valkalth
 sub_name=The Merciless
 creature_category=Unliving
