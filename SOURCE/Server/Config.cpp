@@ -402,6 +402,8 @@ void LoadConfig(const char *filename)
 				g_Config.ProgressiveDropRateBonusMultMax = lfr.BlockToFloatC(1);
 			else if(strcmp(NameBlock, "DropRateBonusMultMax") == 0)
 				g_Config.DropRateBonusMultMax = lfr.BlockToFloatC(1);
+			else if(strcmp(NameBlock, "XPMultiplier") == 0)
+				g_Config.XPMultiplier = lfr.BlockToFloatC(1);
 			else if(strcmp(NameBlock, "UseIntegerHealth") == 0)
 			{
 				g_Config.UseIntegerHealth = lfr.BlockToBool(1);
@@ -660,6 +662,7 @@ GlobalConfigData :: GlobalConfigData()
 	ProgressiveDropRateBonusMult[3] = 0.0200F;
 	ProgressiveDropRateBonusMultMax = 2.0F;
 	DropRateBonusMultMax = 200.0F;
+	XPMultiplier = 1.0F;
 
 	UseIntegerHealth = false;
 	UseMessageBox = false;

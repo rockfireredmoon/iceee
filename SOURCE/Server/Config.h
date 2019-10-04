@@ -179,6 +179,8 @@ public:
 	float ProgressiveDropRateBonusMultMax;   //The maximum instance drop rate bonus from additive kills.
 	float DropRateBonusMultMax;              //The maximum drop rate bonus multiplier that any kill may have.  This affects the absolute total after all drop rate calculations have been applied.
 
+	float XPMultiplier; 					 //Global XP multiplier
+
 	bool UseIntegerHealth;                   //If true, object health is represented as 4 bytes instead of 2.  Requires a modded client!  By default the client uses 2 bytes.  Server and client must match or protocol is broken.
 	bool UseMessageBox;                      //If true, send a message to the client that will appear in a popup box rather than a floating info message that disappears after a few seconds.  Requires a modded client.
 	bool UseStopSwim;                        //If true, send a custom "stop swimming" notification to the client when sending reposition updates, like warps.  Requires a modded client for the custom event handler.

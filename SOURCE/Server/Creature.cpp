@@ -6629,7 +6629,7 @@ int CreatureInstance :: GetKillExperience(int attackerLevel)
 		adjusted += Util::GetAdditiveFromIntegralPercent100(adjusted, css.experience_gain_rate);
 	if(adjusted < 1)
 		adjusted = 1;
-	adjusted = (int)((float)adjusted * rMult);
+	adjusted = (int)((float)adjusted * rMult * g_Config.XPMultiplier);
 	return adjusted;
 }
 void CreatureInstance :: AddValour(int GuildDefID, int amount)
