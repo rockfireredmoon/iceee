@@ -1,7 +1,6 @@
 [ENTRY]
 ID=1000004
 Asset=Prop-Hill_Tree5
-Name=Untitled
 Pos=54995,123.757,65670
 Orient=0,0.707107,0,0.707107
 Scale=1.1,1.1,1.1
@@ -9,7 +8,6 @@ Scale=1.1,1.1,1.1
 [ENTRY]
 ID=1128406
 Asset=Manipulator#Manipulator-PathNode
-Name=
 Pos=54175.3,119.127,65862.2
 Orient=0,0,0,1
 Scale=1,1,1
@@ -17,9 +15,17 @@ links_count=1
 link=1358955424,1
 
 [ENTRY]
+ID=1156389
+Asset=Manipulator#Manipulator-SpawnPoint
+Pos=54209.5,116.773,65742.7
+Orient=0,0,0,1
+Scale=1,1,1
+despawnTime=30
+spawnPackage=#16089
+
+[ENTRY]
 ID=10000191
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=54589,74,65507
 Orient=0,0,0,1
 Scale=1,1,1
@@ -29,7 +35,6 @@ spawnPackage=#F3445
 [ENTRY]
 ID=10000192
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=54573,99,65656
 Orient=0,0,0,1
 Scale=1,1,1
@@ -39,7 +44,6 @@ spawnPackage=#F3446
 [ENTRY]
 ID=1358955025
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=54297.7,181.926,65996
 Orient=0,0,0,1
 Scale=1,1,1
@@ -49,7 +53,6 @@ link=1358955028,1
 [ENTRY]
 ID=1358955028
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=54369.9,176.209,65906
 Orient=0,0,0,1
 Scale=1,1,1
@@ -60,7 +63,6 @@ link=1358955029,1
 [ENTRY]
 ID=1358955029
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=54427.9,178.68,65856
 Orient=0,0,0,1
 Scale=1,1,1
@@ -71,7 +73,6 @@ link=1358955034,1
 [ENTRY]
 ID=1358955030
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=54186.8,116.773,65805
 Orient=0,0,0,1
 Scale=1,1,1
@@ -81,7 +82,6 @@ link=1358955031,1
 [ENTRY]
 ID=1358955031
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=54232.6,137.876,65891
 Orient=0,0,0,1
 Scale=1,1,1
@@ -92,7 +92,6 @@ link=1358955030,1
 [ENTRY]
 ID=1358955032
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=54423.5,104.509,65730
 Orient=0,0,0,1
 Scale=1,1,1
@@ -103,7 +102,6 @@ link=1358955039,1
 [ENTRY]
 ID=1358955033
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=54350.8,109.639,65756
 Orient=0,0,0,1
 Scale=1,1,1
@@ -114,7 +112,6 @@ link=1358955035,1
 [ENTRY]
 ID=1358955034
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=54733.6,171.473,65833
 Orient=0,0,0,1
 Scale=1,1,1
@@ -125,7 +122,6 @@ link=1358955036,1
 [ENTRY]
 ID=1358955035
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=54271.4,115.227,65826
 Orient=0,0,0,1
 Scale=1,1,1
@@ -135,7 +131,6 @@ link=1358955033,1
 [ENTRY]
 ID=1358955036
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=54804.4,162.452,65791
 Orient=0,0,0,1
 Scale=1,1,1
@@ -146,7 +141,6 @@ link=1358955042,1
 [ENTRY]
 ID=1358955039
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=54671.6,110.277,65718
 Orient=0,0,0,1
 Scale=1,1,1
@@ -157,7 +151,6 @@ link=1358955040,1
 [ENTRY]
 ID=1358955040
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=54779.4,146.239,65733
 Orient=0,0,0,1
 Scale=1,1,1
@@ -168,7 +161,6 @@ link=1358955041,1
 [ENTRY]
 ID=1358955041
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=54833.9,154.609,65750
 Orient=0,0,0,1
 Scale=1,1,1
@@ -179,7 +171,6 @@ link=1358955042,1
 [ENTRY]
 ID=1358955042
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=54875.4,163.923,65787
 Orient=0,0,0,1
 Scale=1,1,1
@@ -191,7 +182,6 @@ link=1358955043,1
 [ENTRY]
 ID=1358955305
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=54019.1,124.227,65036.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -202,7 +192,6 @@ link=1358956200,1
 [ENTRY]
 ID=1358955424
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=54065.7,113.395,65061
 Orient=0,0,0,1
 Scale=1,1,1
@@ -214,7 +203,6 @@ link=1128406,1
 [ENTRY]
 ID=1358955514
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=54023.5,119.579,65102.2
 Orient=0,0.13459,0,0.990901
 Scale=1,1,1
@@ -223,7 +211,6 @@ spawnPackage=1a_npc_City_Watch
 [ENTRY]
 ID=1358955520
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=54097.1,121.934,65095
 Orient=0,-0.993868,0,0.11057
 Scale=1,1,1
@@ -232,29 +219,26 @@ spawnPackage=1a_npc_City_Watch
 [ENTRY]
 ID=1358956199
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=54116.9,116.234,65088.5
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=1a_npc_City_Watch
 links_count=1
 link=1358955424,1
+spawnPackage=1a_npc_City_Watch
 
 [ENTRY]
 ID=1358956200
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=54035.9,130.426,65054.3
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=1a_npc_City_Watch
 links_count=1
 link=1358955305,1
+spawnPackage=1a_npc_City_Watch
 
 [ENTRY]
 ID=1358962888
 Asset=Prop-Dock3
-Name=Untitled
 Pos=54479.8,20.5777,65553
 Orient=0,-0.609159,0,0.793048
 Scale=1,1,1
@@ -263,7 +247,6 @@ Flags=1
 [ENTRY]
 ID=1358963970
 Asset=Prop-Dvergar_Equipment#Prop-Dvergar_Contraption
-Name=Untitled
 Pos=54840.4,8.90267,65595
 Orient=0,0.232843,0,0.972514
 Scale=1.975,1.975,1.975
@@ -272,7 +255,6 @@ Flags=1
 [ENTRY]
 ID=1358963971
 Asset=Prop-Dvergar_Equipment#Prop-Dvergar_Scaffolding
-Name=Untitled
 Pos=54535.9,13.2174,65581
 Orient=0,0,0,1
 Scale=1,1,1
@@ -281,7 +263,6 @@ Flags=1
 [ENTRY]
 ID=1358964472
 Asset=Prop-Boat_Bobbing#Prop-Boat_Bobbing
-Name=Untitled
 Pos=54760,58.1091,65501
 Orient=0,0.564642,0,0.825336
 Scale=2,2,2
@@ -290,7 +271,6 @@ Flags=1
 [ENTRY]
 ID=1358964473
 Asset=Prop-Boat-Fishing#Prop-Boat-Fishing
-Name=Untitled
 Pos=54742.5,58.9197,65329
 Orient=0,-0.155953,0,-0.987765
 Scale=1.2,1.2,1.2
@@ -299,7 +279,6 @@ Flags=1
 [ENTRY]
 ID=1358964691
 Asset=Prop-Dock3
-Name=Untitled
 Pos=54594.8,22.6547,65496.9
 Orient=0,-0.727725,0,0.685869
 Scale=1,1,1
@@ -308,7 +287,6 @@ Flags=1
 [ENTRY]
 ID=1358964692
 Asset=Prop-Boat1#Prop-Boat1
-Name=Untitled
 Pos=54663.2,95.9204,65635
 Orient=0.8163,0.214259,0.533726,0.0537033
 Scale=2.25,2.25,2.25
@@ -317,7 +295,6 @@ Flags=1
 [ENTRY]
 ID=1358964693
 Asset=CL-Junk_Fishing#CL-Junk_Fishing
-Name=Untitled
 Pos=54449.4,71.8823,65441
 Orient=0,0,0,1
 Scale=1,1,1
@@ -326,7 +303,6 @@ Flags=1
 [ENTRY]
 ID=1358964694
 Asset=Prop-Boat-Fishing
-Name=Untitled
 Pos=54420.2,58.5872,65564
 Orient=0,0.726632,0,-0.687026
 Scale=1.2,1.2,1.2
@@ -335,7 +311,6 @@ Flags=1
 [ENTRY]
 ID=1358964695
 Asset=Prop-Rope_Coil#Prop-Rope_Coil
-Name=Untitled
 Pos=54698.7,78.371,65530
 Orient=0,0,0,1
 Scale=1,1,1
@@ -344,7 +319,6 @@ Flags=1
 [ENTRY]
 ID=1358965413
 Asset=Prop-Dock3
-Name=Untitled
 Pos=54453.3,19.3128,65427
 Orient=0,-0.585097,0,0.810964
 Scale=1,1,1
@@ -353,7 +327,6 @@ Flags=1
 [ENTRY]
 ID=1358965417
 Asset=Prop-Dock3
-Name=Untitled
 Pos=54704.2,26.3914,65496
 Orient=0,-0.659384,0,0.751806
 Scale=1,1,1
@@ -362,7 +335,6 @@ Flags=1
 [ENTRY]
 ID=1358965418
 Asset=Prop-Dock3
-Name=Untitled
 Pos=54471.1,19.0794,65489
 Orient=0,-0.659384,0,0.751806
 Scale=1,1,1
@@ -371,7 +343,6 @@ Flags=1
 [ENTRY]
 ID=1358965419
 Asset=Prop-Dock3
-Name=Untitled
 Pos=54592.6,22.6547,65559.9
 Orient=0,-0.659384,0,0.751806
 Scale=1,1,1
@@ -380,7 +351,6 @@ Flags=1
 [ENTRY]
 ID=1358968290
 Asset=Prop-Camelot_Bridge#Prop-Camelot_Bridge
-Name=Untitled
 Pos=54175.2,116.773,65759
 Orient=0,0.0848977,0,0.99639
 Scale=1,1,1
@@ -389,7 +359,6 @@ Flags=1
 [ENTRY]
 ID=1358968525
 Asset=Prop-Banner_Post2
-Name=Untitled
 Pos=54130.3,132.153,65022.4
 Orient=0,-0.991458,0,0.130423
 Scale=1,1,1
@@ -397,7 +366,6 @@ Scale=1,1,1
 [ENTRY]
 ID=1358968526
 Asset=Prop-Banner-Camelot4
-Name=Untitled
 Pos=54117,202.401,65026.8
 Orient=0,-0.992713,0,0.120503
 Scale=1,1,1
@@ -405,7 +373,6 @@ Scale=1,1,1
 [ENTRY]
 ID=1358968527
 Asset=Prop-Fence_Post
-Name=Untitled
 Pos=54277.4,133.943,65883.8
 Orient=0,0.159318,0,0.987227
 Scale=2.7,2.7,2.7
@@ -413,7 +380,6 @@ Scale=2.7,2.7,2.7
 [ENTRY]
 ID=1358968528
 Asset=Prop-Fence_Post
-Name=Untitled
 Pos=54123.2,138.118,65903.1
 Orient=0.0844028,0.155951,0.0217114,0.983913
 Scale=3.125,3.125,3.125
@@ -421,7 +387,6 @@ Scale=3.125,3.125,3.125
 [ENTRY]
 ID=1358968618
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=54842.1,181.278,65968.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -430,7 +395,6 @@ spawnPackage=HOLIDAY_Easter_Egg
 [ENTRY]
 ID=1358968620
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=54650.8,88.5475,65635.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -439,7 +403,6 @@ spawnPackage=HOLIDAY_Easter_Egg
 [ENTRY]
 ID=1358968621
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=54274.2,109.46,65756.5
 Orient=0,0,0,1
 Scale=1,1,1
