@@ -412,6 +412,20 @@ Shard::Shard() {
 	mLocalTime = 0;
 }
 
+void Shard::WriteToJSON(Json::Value &value) {
+	value["name"] = mName;
+	value["lastSeen"] = Json::UInt64(mLastSeen);
+	value["simulatorPort"] = mSimulatorPort;
+	value["simulatorAddress"] = mSimulatorAddress;
+	value["players"] = mPlayers;
+	value["fullName"] = mFullName;
+	value["serverTime"] = Json::UInt64(mServerTime);
+	value["startTime"] = Json::UInt64(mStartTime);
+	value["ping"] = mPing;
+	value["timeSet"] = Json::UInt64(mTimeSet);
+	value["localTime"] = Json::UInt64(mLocalTime);
+}
+
 bool Shard::IsMaster() {
 	return g_ClusterManager.GetMaster().compare(mName) == 0;
 }
@@ -848,6 +862,7 @@ void ClusterManager::ServerConfigurationReceived(const string &shardName,
 
 string ClusterManager::SimTransfer(int cdefId, const string &shardName,
 		int simID) {
+
 	/* Called from the sim that the player is currently on. We expect a CONFIRM_TRANSFER
 	 * message to come back when the receiving sim is ready.
 	 */
@@ -1114,6 +1129,11 @@ void ClusterManager::TransferFromOtherShard(int cdefId,
 		const std::string &shardName, string token, int simID) {
 	g_Logs.cluster->info("Expecting sim transfer for %v (using %v).", cdefId,
 			token);
+
+	/* Reload any data for this character now */
+	g_CharacterManager.ReloadCharacter(cdefId, false);
+	g_AccountManager.ReloadAccountID(g_CharacterManager.GetPointerByID(cdefId)->AccountID);
+
 	PendingShardPlayer p;
 	p.mID = cdefId;
 	p.mToken = token;

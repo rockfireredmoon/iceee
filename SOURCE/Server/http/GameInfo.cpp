@@ -22,7 +22,9 @@
 #include "HTTPService.h"
 
 #include "../Info.h"
+#include "../Cluster.h"
 #include "../util/Log.h"
+#include "../StringUtil.h"
 #include "../Config.h"
 
 using namespace HTTPD;
@@ -45,6 +47,8 @@ bool GameInfoHandler::handleGet(CivetServer *server,
 
 	int status = 404;
 	string content;
+	//string contentType = "application/octet-stream";
+	string contentType = "text/plain";
 
 	if (Util::HasEnding(ruri, "tips")) {
 		status = 200;
@@ -67,6 +71,18 @@ bool GameInfoHandler::handleGet(CivetServer *server,
 			Util::ReplaceAll(c, "\n", "<br/>");
 			content.append(c);
 		}
+	} else if (Util::HasEnding(ruri, "shards.json")) {
+		status = 200;
+		string contentType = "text/json";
+		Json::Value root;
+		for (std::map<std::string, Shard>::iterator it = g_ClusterManager.mActiveShards.begin(); it != g_ClusterManager.mActiveShards.end(); ++it) {
+			Shard s = (*it).second;
+			Json::Value c;
+			s.WriteToJSON(c);
+			root.append(c);
+		}
+		Json::StyledWriter writer;
+		content = writer.write(root);
 	}
 
 	mg_set_status(conn, status);
@@ -76,7 +92,7 @@ bool GameInfoHandler::handleGet(CivetServer *server,
 		g_Logs.http->info("Sending %v (%v bytes)", ruri.c_str(),
 				content.length());
 		mg_printf(conn, "HTTP/1.1 200 OK\r\n");
-		mg_printf(conn, "Content-Type: application/octet-stream\r\n");
+		mg_printf(conn, "Content-Type: %s\r\n", contentType.c_str());
 		mg_printf(conn, "Content-Length: %lu\r\n", content.length());
 		mg_printf(conn, "\r\n");
 		mg_printf(conn, "%s", content.c_str());
@@ -87,7 +103,6 @@ bool GameInfoHandler::handleGet(CivetServer *server,
 		g_Logs.http->info("Could not find %v", ruri.c_str());
 		sendStatusFile(conn, req_info, status, "Not Found", "File not found.");
 		mg_set_as_close(conn);
-		break;
 		break;
 	}
 	return true;

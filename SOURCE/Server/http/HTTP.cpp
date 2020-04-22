@@ -175,12 +175,12 @@ void AbstractCivetHandler::sendStatusFile(struct mg_connection *conn, const stru
 		mg_printf(conn, "Content-Length: %d\r\n\r\n",
 				(int) errfile.fileSize);
 		send_file_data(conn, &errfile);
+		fclose(errfile.fd);
 	}
 	else {
 		mg_printf(conn, "Content-Length: %lu\r\n\r\n", defaultMessage.size());
 		mg_printf(conn, "%s", defaultMessage.c_str());
 	}
-	fclose(errfile.fd);
 }
 
 int AbstractCivetHandler::openFile(const struct mg_request_info * req_info, FileResource *file) {

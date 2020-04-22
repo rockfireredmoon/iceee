@@ -106,6 +106,7 @@ public:
 	unsigned long GetServerTime();
 	void SetTimes(unsigned long localTime, unsigned long serverTimer);
 	bool IsMaster();
+	void WriteToJSON(Json::Value &value);
 private:
 	unsigned long mServerTime;
 	unsigned long mLocalTime;
@@ -139,6 +140,7 @@ public:
 	std::string mShardName;
 	std::string mFullName;
 	std::map<int, ShardPlayer> mActivePlayers;
+	std::map<std::string, Shard> mActiveShards;
 	int LoadConfiguration(const std::string &configPath);
 	bool Init();
 	void Ready();
@@ -164,7 +166,6 @@ public:
 	PendingShardPlayer FindToken(const std::string &token);
 	ShardPlayer GetActivePlayer(int CDefId);
 	std::string SimTransfer(int CDefID, const std::string &shardName, int simID);
-	void ConfirmTransfer(int cdefId, const string &shardName, const string &token, int simID);
 	bool IsPlayerOnOtherShard(const std::string &characterName);
 	std::string GetMaster();
 	std::recursive_mutex mMutex;
@@ -193,6 +194,7 @@ private:
 	bool mMaster;
 	unsigned long mPingSentTime;
 	unsigned long mNextPing;
+	void ConfirmTransfer(int cdefId, const string &shardName, const string &token, int simID);
 	void TransferFromOtherShard(int cdefId, const std::string &shardName, std::string token, int simID);
 	void ConfirmTransferToOtherShard(int cdefId, const std::string &shardName, std::string token, int simID);
 	void FindMasterShard();
@@ -215,7 +217,6 @@ private:
 	void OtherShardPropUpdated(int propId);
 	cpp_redis::subscriber mSub;
 	cpp_redis::client mClient;
-	std::map<std::string, Shard> mActiveShards;
 };
 
 extern ClusterManager g_ClusterManager;

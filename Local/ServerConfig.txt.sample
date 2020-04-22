@@ -184,3 +184,8 @@ TmpDataPath=Tmp
 ; logs, it mainly is used for locations of logs of 3rd party components such as 
 ; Civet web logs. 
 LogPath=Logs
+
+; API authentication. The secret to use for HTTP API requests. Please use a VERY strong
+; secret. The secret shoud be in the format username:password where either can be any
+; string with any characters except for ':'.
+APIAuthentication=apiuser:apisecret

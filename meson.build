@@ -54,16 +54,14 @@ tmpdir = get_option('cfg_TmpDir')
 
 # Wed directory (default path for web resources)
 if get_option('webdir') == ''
-	webpath = get_option('webdir') + '/share/tawd/Web'
+	webpath = get_option('prefix') + '/share/tawd/Web'
 else
 	webpath = get_option('webdir')
 endif
 
-# Base path (default path for web resources)
-if get_option('cfg_BasePath') == ''
-	basepath = get_option('basedir') + '/share/tawd/Web'
-else
-	basepath = get_option('cfg_BasePath')
+# CAR path (default path for client CAR files)
+if get_option('cfg_WebPath') != ''
+	webpath = get_option('cfg_WebPath')
 endif
 
 # CAR path (default path for client CAR files)
@@ -331,7 +329,7 @@ serverconfig_target = custom_target('ServerConfig',
     input : 'Local/ServerConfig.txt.sample',
     output : 'ServerConfig.txt',
     command : [srchrepl_prog, '@INPUT@', '@OUTPUT@',
-    		'HTTPBaseFolder=Web','HTTPBaseFolder=' + basepath,
+    		'HTTPBaseFolder=Web','HTTPBaseFolder=' + webpath,
     		'HTTPCARFolder=../sparkplayer-eartheternal/bin/assets','HTTPCARFolder=' + carpath,
     		'StaticDataPath=../iceee-data/Static','StaticDataPath=' + staticdatapath,
     		'TmpDataPath=Tmp','TmpDataPath=' + tmpdir,
@@ -343,7 +341,7 @@ httpconfig_target = custom_target('HTTPConfig',
     input : 'Local/HTTPConfig.txt.sample',
     output : 'HTTPConfig.txt',
     command : [srchrepl_prog, '@INPUT@', '@OUTPUT@',
-    		'HTTPBaseFolder=Web','HTTPBaseFolder=' + basepath,
+    		'HTTPBaseFolder=Web','HTTPBaseFolder=' + webpath,
     		'HTTPCARFolder=../sparkplayer-eartheternal/bin/assets','HTTPCARFolder=' + carpath,
     		'LogPath=Logs','LogPath=' + logpath + '/HTTP'],
   	install : true,

@@ -1718,6 +1718,23 @@ AccountData * AccountManager::FetchIndividualAccount(int accountID) {
 	return LoadAccountID(accountID);
 }
 
+void AccountManager::UnloadAccountID(int accountID) {
+	ACCOUNT_ITERATOR it;
+	for (it = AccList.begin(); it != AccList.end(); ++it) {
+		if (it->ID == accountID) {
+			AccList.erase(it);
+			g_Logs.data->info("Unloaded account %v.", accountID);
+			return;
+		}
+	}
+	g_Logs.data->info("Didn't unload account %v, it was not loaded.", accountID);
+}
+
+AccountData * AccountManager::ReloadAccountID(int accountID) {
+	UnloadAccountID(accountID);
+	return LoadAccountID(accountID);
+}
+
 AccountData * AccountManager::LoadAccountID(int accountID) {
 	AccountData accData;
 	accData.ID = accountID;
@@ -1750,8 +1767,8 @@ void AccountManager::UnloadAllData(void) {
 	AccList.clear();
 }
 
-void AccountManager::SaveIndividualAccount(AccountData *account) {
-	if (!g_ClusterManager.WriteEntity(account))
+void AccountManager::SaveIndividualAccount(AccountData *account, bool sync) {
+	if (!g_ClusterManager.WriteEntity(account, sync))
 		g_Logs.data->error("SaveAccountToStream could not save: %v",
 				account->ID);
 }
@@ -1765,7 +1782,7 @@ void AccountManager::RunUpdateCycle(bool force) {
 	it = AccList.begin();
 	while (it != AccList.end()) {
 		if (it->PendingMinorUpdates > 0) {
-			SaveIndividualAccount(&*it);
+			SaveIndividualAccount(&*it, false);
 			it->PendingMinorUpdates = 0;
 			g_Logs.data->info("Saved account: %v", it->ID);
 		}

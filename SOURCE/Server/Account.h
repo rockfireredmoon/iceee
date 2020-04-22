@@ -259,6 +259,8 @@ public:
 	AccountData * GetActiveAccountByID(int accountID);
 	AccountData * FetchIndividualAccount(int accountID);
 	AccountData * LoadAccountID(int accountID);
+	AccountData * ReloadAccountID(int accountID);
+	void UnloadAccountID(int accountID);
 
 	AccountData * GetValidLogin(const char *loginName, const char *loginAuth);
 	void ResolveCharacters(void);
@@ -277,7 +279,7 @@ public:
 	const char * GetErrorMessage(int message);
 	int CheckAutoSave(bool force);
 	int HasPendingMinorUpdates(void);
-	void SaveIndividualAccount(AccountData *account);
+	void SaveIndividualAccount(AccountData *account, bool sync);
 
 	//Placeholder character creation stuff.  Should probably be moved to
 	//the character system when that's redone.

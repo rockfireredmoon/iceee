@@ -3800,6 +3800,13 @@ std::string SimulatorThread::ShardSet(std::string shardName,
 				StringUtil::FormatTimeHHMMSS(warpAllowed - g_ServerTime).c_str());
 	}
 
+	/* Flush to characters and the account now so that the new Sim has most up-to-date data.
+	 * This must be a synchronous save */
+	SaveCharacterStats();
+	g_CharacterManager.SaveCharacter(pld.CreatureDefID, true);
+	g_AccountManager.SaveIndividualAccount(pld.accPtr, true);
+
+
 	if (charName.length() > 0) {
 //		SimulatorThread * sim == GetSimulatorByCharacterName(charName);
 //		if (sim == NULL) {

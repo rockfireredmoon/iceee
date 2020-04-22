@@ -6,7 +6,7 @@ option('cfg_LogPath', type: 'string', value: '', description: 'Path for logs. De
 option('cfg_VariableDataPath', type: 'string', value: '', description: 'Path for variable data. Defaults to localstatedir/lib/tawd/Variable.')
 option('cfg_StaticDataPath', type: 'string', value: '', description: 'Path for static data. Defaults to prefix/share/tawd/Static.')
 option('cfg_HTTPCARFolder', type: 'string', value: '', description: 'Path for CAR resources. Defaults to prefix/share/tawd/Release.')
-option('cfg_BasePath', type: 'string', value: '', description: 'Path for web resource. Defaults to webdior.')
+option('cfg_WebPath', type: 'string', value: '', description: 'Path for web resource. Defaults to webdir.')
 option('cfg_TmpDir', type: 'string', value: '/tmp', description: 'Path to temporary data. Defaults to /tmp')
 
 # Build paths

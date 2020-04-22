@@ -304,6 +304,7 @@ public:
 	void UnloadCharacter(int CDefID);
 
 	CHARACTER_MAP charList;
+	int ReloadCharacter(int CDefID, bool tempResource);
 	int LoadCharacter(int CDefID, bool tempResource);
 	CharacterData *GetPointerByID(int CDefID);
 	CharacterData *GetCharacterByName(const char *name);

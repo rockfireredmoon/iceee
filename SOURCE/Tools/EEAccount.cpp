@@ -126,7 +126,7 @@ int main(int argc, char *argv[]) {
 			} else {
 				accPtr->SetRoles(roles);
 			}
-			g_AccountManager.SaveIndividualAccount(accPtr);
+			g_AccountManager.SaveIndividualAccount(accPtr, true);
 			g_Logs.data->info("Created account %v", username);
 		} else {
 			g_Logs.data->error("Failed to create account %v [%v]. %v",
@@ -150,7 +150,7 @@ int main(int argc, char *argv[]) {
 					aqd.mID);
 		} else {
 			accPtr->SetNewPassword(username.c_str(), options[1].c_str());
-			g_AccountManager.SaveIndividualAccount(accPtr);
+			g_AccountManager.SaveIndividualAccount(accPtr, true);
 			g_AccountManager.AppendQuickData(accPtr, true);
 			g_Logs.data->info("Password changed for account %v", username);
 		}
@@ -242,7 +242,7 @@ int main(int argc, char *argv[]) {
 					aqd.mID);
 		} else {
 			accPtr->SetRoles(options);
-			g_AccountManager.SaveIndividualAccount(accPtr);
+			g_AccountManager.SaveIndividualAccount(accPtr, true);
 		}
 	} else if (command == "delete") {
 		/* Roles */
@@ -278,7 +278,7 @@ int main(int argc, char *argv[]) {
 					g_AccountManager.DeleteCharacter(i, accPtr);
 				}
 				/* Need to force actual save of account so the character keys are deleted */
-				g_AccountManager.SaveIndividualAccount(accPtr);
+				g_AccountManager.SaveIndividualAccount(accPtr, true);
 
 				g_ClusterManager.RemoveEntity(accPtr);
 				g_ClusterManager.RemoveKey(
