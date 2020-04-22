@@ -164,6 +164,7 @@ meson builddir --default-library=static
 Now compile the source :-
 
 ```bash
+cd builddir
 ninja compile
 ```
 
