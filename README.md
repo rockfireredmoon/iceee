@@ -231,7 +231,7 @@ use.
 cp Local/ServerConfig.txt.sample Local/ServerConfig.txt
 ```
 
-Then edit *Local/ServerConfig.txt with your favourite text editor. This file contains many options,
+Then edit *Local/ServerConfig.txt* with your favourite text editor. This file contains many options,
 most of which are commented. For a new installation, the ones that most likely need to be changed are :-
 
 ```
@@ -288,13 +288,25 @@ We currently have two different Game Server Data sets that will run on this serv
 
 Assuming you are starting from the server source directory, it is recommended you clone the game server data repository into the same parent folder as the server source. This way the default file locations in *ServerConfig.txt* are all ready setup as needed and ready to go.
 
+##### For Valkals Shadow on TAW Engine
+
+If you want to work on Valkal's Shadow (on TAW engine), then clone the *valkals_shadow* branch. 
+
+```
+cd ..
+git clone -b valkals_shadow https://git@github.com/rockfireredmoon/iceee-data.git
+cd iceee   
+```
+
+##### For The Anubian War on TAW Engine
+
 ```
 cd ..
 git clone https://git@github.com/rockfireredmoon/iceee-data.git
 cd iceee   
 ```
 
-This will go to the parent folder, clone the server data for the 'TAW' version of the game, and then change directory back into the server source folder (if you cloned the server source to somewhere other than 'iceee' folder, change accordingly).
+Both of these will go to the parent folder, clone the server data for the 'TAW' version of the game, and then change directory back into the server source folder (if you cloned the server source to somewhere other than 'iceee' folder, change accordingly).
 
 ##### Client Assets
 
@@ -332,7 +344,7 @@ cd ../iceee
 You now have everything you need to run the server. Assuming you are in the server source directory, run :-
 
 ```
-SOURCE/Daemon/tawd
+builddir/tawd -C
 ```
 
 The server will now start up with a default logging level of INFO output to the console.
@@ -345,19 +357,19 @@ First off, create an administrator account :-
  
 
 ```
-SOURCE/Tools/eeaccount -i create admin 'mysecret' admin --roles=administrator
+builddir/eeaccount -i create admin 'mysecret' admin --roles=administrator
 ```
 
 You can then create accounts for your Sages (GMs) :-
 
 ```
-SOURCE/Tools/eeaccount -i create sage1 'mysecret' sagegrove1 --roles=sage
+builddir/eeaccount -i create sage1 'mysecret' sagegrove1 --roles=sage
 ```
 
 And finally acccounts for ordinary players
 
 ```
-SOURCE/Tools/eeaccount -i create aplayer 'mysecret' playergrove1
+builddir/eeaccount -i create aplayer 'mysecret' playergrove1
 ```
 
 There are various other ways by which accounts by created, such as via HTTP calls. These are intended for integration with web sites. 
