@@ -879,6 +879,33 @@ void Join(std::vector<std::string> &src, const char *delim, std::string &dest) {
 	}
 }
 
+std::string StripLeadingTrailing(const std::string &source, const char *delim) {
+	std::string results = source;
+	while(HasBeginning(results, delim)) {
+		results = results.substr(1);
+	}
+	while(HasEnding(results, delim)) {
+		results = results.substr(0, results.size() - 1);
+	}
+	return results;
+}
+
+std::string Unescape(const std::string &source) {
+	bool escaped = false;
+	size_t fpos = 0;
+	std::string unescaped = "";
+	while (fpos < source.length()) {
+		if(source[fpos] == '\\' && !escaped) {
+			escaped = true;
+		}
+		else {
+			unescaped += source[fpos];
+			escaped = false;
+		}
+		fpos++;
+	}
+	return unescaped;
+}
 
 int SplitEscaped(const std::string &source, const char *delim,
 		std::vector<std::string> &dest) {

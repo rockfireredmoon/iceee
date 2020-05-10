@@ -193,7 +193,7 @@ int GMSpawnHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 					c->Rotation, flags);
 
 		} else {
-			// Random position around the players positions
+			// Random position around a props positions
 			int propID = atoi(data.c_str());
 			s = creatureInstance->actInst->SpawnAtProp(creatureID, propID,
 					99999, flags);

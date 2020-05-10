@@ -36,15 +36,11 @@ int RespondPrefGet(PreferenceContainer *prefSet, char *SendBuf,
 	WritePos += PutShort(&SendBuf[WritePos], query->argCount);
 
 	for (unsigned int i = 0; i < query->argCount; i++) {
-		const char * pref = prefSet->GetPrefValue(query->args[i].c_str());
+		std::string pref = prefSet->GetPrefValue(query->args[i]);
 
 		//One string for each preference result.
 		WritePos += PutByte(&SendBuf[WritePos], 1);
-		if (pref != NULL) {
-			WritePos += PutStringUTF(&SendBuf[WritePos], pref);
-		} else {
-			WritePos += PutStringUTF(&SendBuf[WritePos], "");
-		}
+		WritePos += PutStringUTF(&SendBuf[WritePos], pref.c_str());
 	}
 
 	PutShort(&SendBuf[1], WritePos - 3);

@@ -196,6 +196,12 @@ void AccountData::SetRoles(std::vector<std::string> &roles) {
 		PendingMinorUpdates++;
 	}
 
+	// Developers
+	if (developer != HasPermission(Perm_Account, Permission_Developer)) {
+		SetPermission(Perm_Account, "developer", developer);
+		PendingMinorUpdates++;
+	}
+
 	// Builders
 	bool needBuilder = builder || admin;
 	if (needBuilder != HasPermission(Perm_Account, Permission_Builder)) {

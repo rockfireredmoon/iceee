@@ -100,7 +100,7 @@ PreferenceContainer::~PreferenceContainer() {
 	PrefList.clear();
 }
 
-int PreferenceContainer::GetPrefIndex(const char *name) {
+int PreferenceContainer::GetPrefIndex(std::string name) {
 	for (size_t a = 0; a < PrefList.size(); a++)
 		if (PrefList[a].name.compare(name) == 0)
 			return a;
@@ -108,15 +108,15 @@ int PreferenceContainer::GetPrefIndex(const char *name) {
 	return -1;
 }
 
-const char * PreferenceContainer::GetPrefValue(const char *name) {
+std::string PreferenceContainer::GetPrefValue(std::string name) {
 	int r = GetPrefIndex(name);
 	if (r >= 0)
-		return PrefList[r].value.c_str();
+		return PrefList[r].value;
 
-	return NULL;
+	return "";
 }
 
-int PreferenceContainer::SetPref(const char *name, const char *value) {
+int PreferenceContainer::SetPref(std::string name, std::string value) {
 	int r = GetPrefIndex(name);
 	if (r >= 0) {
 		PrefList[r].value = value;

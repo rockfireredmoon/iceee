@@ -102,6 +102,9 @@ namespace Util
 	void WriteIntegerIfNot(FILE *output, const char *label, int value, int ignoreVal);
 	void WriteAutoSaveHeader(FILE *output);
 	FILE * OpenSaveFile(const char *filename);
+
+	std::string StripLeadingTrailing(const std::string &source, const char *delim);
+	std::string Unescape(const std::string &source);
 	int SplitEscaped(const std::string &source, const char *delim, std::vector<std::string> &dest);
 	int Split(const std::string &source, const char *delim, std::vector<std::string> &dest);
 	void Join(std::vector<std::string> &source, const char *delim, std::string &dest);

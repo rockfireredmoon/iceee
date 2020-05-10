@@ -20,6 +20,7 @@
 #include "DirectoryAccess.h"
 #include "QuestScript.h"
 #include "ZoneObject.h"
+#include "CreatureSpawner2.h"
 #include "PartyManager.h"
 #include "Config.h"
 #include "Quest.h"
@@ -8456,45 +8457,111 @@ int CreatureDefManager::LoadFile(std::string filename) {
 	return count;
 }
 
-int CreatureDefManager::GetSpawnList(const char *searchType,
-		const char *searchStr, vector<int> &resultList) {
+int CreatureDefManager::GetSpawnList(std::string  searchType,
+		std::string  searchStr, vector<CreatureSearchResult> &resultList) {
 	int filter = 0;
 
-	if (strcmp(searchType, "Creatures") == 0)
+	if (searchType ==  "Creatures")
 		filter = 1;
-	else if (strcmp(searchType, "Packages") == 0)
+	else if (searchType == "Packages")
 		filter = 2;
-	else if (strcmp(searchType, "NoAppearanceCreatures") == 0)
+	else if (searchType == "NoAppearanceCreatures")
 		filter = 3;
 
 	CREATURE_MAP::iterator it;
 	int count = 0;
-	for (it = NPC.begin(); it != NPC.end(); ++it) {
-		bool add = false;
-		switch (filter) {
-		case 0:
-			add = true;
-			break;
-		case 1:
-			if (it->second.css.appearance.size() != 0)
+	if(filter != 2) {
+		for (it = NPC.begin(); it != NPC.end(); ++it) {
+			bool add = false;
+			switch (filter) {
+			case 0:
 				add = true;
-			break;
-		case 2:
-			break;
-		case 3:
-			if (it->second.css.appearance.size() == 0)
-				add = true;
-			break;
-		}
-		if (add == true) {
-			if (strstr(it->second.css.display_name, searchStr) != NULL) {
-				resultList.push_back(it->second.CreatureDefID);
-				count++;
-				if (count >= MAX_SPAWNLIST)
-					break;
+				break;
+			case 1:
+				if (it->second.css.appearance.size() != 0)
+					add = true;
+				break;
+			case 2:
+				break;
+			case 3:
+				if (it->second.css.appearance.size() == 0)
+					add = true;
+				break;
+			}
+			if (add == true) {
+				if (searchStr.length() == 0 ||
+					Util::CaseInsensitiveStringFind(it->second.css.display_name, searchStr) ||
+					Util::CaseInsensitiveStringFind(it->second.css.sub_name, searchStr) ||
+					std::to_string(it->second.css.level).compare(searchStr) == 0) {
+					CreatureSearchResult cs;
+					cs.id= it->second.CreatureDefID;
+					cs.name = it->second.css.display_name;
+					cs.type = "C";
+					resultList.push_back(cs);
+					count++;
+					if (count >= MAX_SPAWNLIST)
+						break;
+				}
 			}
 		}
 	}
+
+
+//	sprintf(sim->Aux3, "%s (%d)", CreatureDef.NPC[resList[a].id].css.display_name,
+//			CreatureDef.NPC[resList[a].id].css.level);
+//	sprintf(sim->Aux3, "%d", CreatureDef.NPC[resList[a].id].CreatureDefID);
+
+	std::vector<SpawnPackageList>::iterator it2;
+	if(filter == 0 || filter == 2) {
+		for (it2 = g_SpawnPackageManager.packageList.begin(); it2 != g_SpawnPackageManager.packageList.end(); ++it2) {
+			SpawnPackageList spl = *(it2);
+			std::vector<SpawnPackageDef>::iterator it3;
+			for (it3 = spl.defList.begin(); it3 != spl.defList.end(); ++it3) {
+				SpawnPackageDef def = *(it3);
+
+				/* Does it match the package name itself*/
+				if (searchStr.length() == 0 ||
+					Util::CaseInsensitiveStringFind(def.packageName, searchStr)) {
+					CreatureSearchResult cs;
+					cs.id= 0;
+					cs.name = def.packageName;
+					cs.type = "P";
+					resultList.push_back(cs);
+					count++;
+				}
+				else {
+
+					/* Does it match the name of any creatures the package contains? */
+					for(int j = 0 ; j < def.spawnCount; j++) {
+						CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(def.spawnID[j]);
+						if(cdef != NULL) {
+							if (searchStr.length() == 0 ||
+								Util::CaseInsensitiveStringFind(cdef->css.display_name, searchStr) ||
+								Util::CaseInsensitiveStringFind(cdef->css.sub_name, searchStr) ||
+								std::to_string(cdef->css.level).compare(searchStr) == 0) {
+								CreatureSearchResult cs;
+								cs.id= 0;
+								cs.name = def.packageName;
+								cs.type = "P";
+								resultList.push_back(cs);
+								count++;
+								break;
+							}
+						}
+					}
+				}
+
+				if (count >= MAX_SPAWNLIST)
+					break;
+			}
+
+			if (count >= MAX_SPAWNLIST)
+				break;
+		}
+	}
+
+
+
 	return resultList.size();
 }
 

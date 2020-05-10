@@ -236,7 +236,7 @@ int SceneryEditHandler::protected_helper_query_scenery_edit(
 	creatureInstance->actInst->LSendToLocalSimulator(sim->SendBuf, wpos,
 			creatureInstance->CurrentX, creatureInstance->CurrentZ);
 
-	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, std::to_string(prop.ID).c_str());
 }
 //
 // SceneryDeleteHandler

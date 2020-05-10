@@ -227,9 +227,9 @@ int main(int argc, char *argv[]) {
 		}
 	} else if (command == "roles") {
 		/* Roles */
-		if (options.size() < 2) {
+		if (options.size() < 1) {
 			g_Logs.data->error(
-					"'roles' requires at least 2 arguments. <userName> <role1> [<role2> [<role3> ..]].");
+					"'roles' requires at least 1 argument. <userName> [<role1> [<role2> [<role3> ..]].");
 			return 1;
 		}
 		std::string username = options[0].c_str();
@@ -241,8 +241,16 @@ int main(int argc, char *argv[]) {
 			g_Logs.data->error("Could not find account %v [%v]", username,
 					aqd.mID);
 		} else {
-			accPtr->SetRoles(options);
-			g_AccountManager.SaveIndividualAccount(accPtr, true);
+			if(options.size() == 0 ) {
+				for (int a = 0; a < MaxPermissionDef; a++)
+					if ((accPtr->PermissionSet[PermissionDef[a].index] & PermissionDef[a].flag)
+							== PermissionDef[a].flag)
+						printf("%s\n", PermissionDef[a].name);
+			}
+			else {
+				accPtr->SetRoles(options);
+				g_AccountManager.SaveIndividualAccount(accPtr, true);
+			}
 		}
 	} else if (command == "delete") {
 		/* Roles */

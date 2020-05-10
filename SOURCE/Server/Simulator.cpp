@@ -1491,21 +1491,17 @@ void SimulatorThread::SetPersona(int personaIndex) {
 			pld.charPtr->cdef.css.display_name);
 
 	//Hack to reset an empty quickbar preference.
-	const char *value = pld.charPtr->preferenceList.GetPrefValue("quickbar.0");
+	std::string value = pld.charPtr->preferenceList.GetPrefValue("quickbar.0");
 	bool reset = false;
-	if (value == NULL)
+	if (value.size() < 3)
 		reset = true;
-	else {
-		if (strlen(value) < 3)
-			reset = true;
-	}
+
 	if (reset == true) {
 		g_Logs.simulator->warn("[%v] Have to reset [quickbar.0]=[%v]",
 				InternalID, value);
 		CharacterData *defChar = g_CharacterManager.GetDefaultCharacter();
-		const char *newValue = defChar->preferenceList.GetPrefValue(
-				"quickbar.0");
-		if (newValue != NULL)
+		std::string newValue = defChar->preferenceList.GetPrefValue("quickbar.0");
+		if (newValue.size() > 0)
 			pld.charPtr->preferenceList.SetPref("quickbar.0", newValue);
 	}
 

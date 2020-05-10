@@ -1250,9 +1250,10 @@ int SpawnPackageDef :: GetRandomSpawn(SceneryObject *spawnPoint)
 	//Run a spawn check.
 	
 	//First check the overrides, otherwise proceed to normal rolls.
-	for(int i = 0; i < numPointOverride; i++)
-		if(PointOverridePropID[i] == spawnPoint->ID)
-			return PointOverrideCDef[i];
+	if(spawnPoint != NULL)
+		for(int i = 0; i < numPointOverride; i++)
+			if(PointOverridePropID[i] == spawnPoint->ID)
+				return PointOverrideCDef[i];
 
 	/* Sample spawn table, if 100 max shares.  For efficiency they should
 	*  be sorted to have the most likely spawns first.

@@ -68,8 +68,8 @@ int AuctionHouseContentsHandler::handleQuery(SimulatorThread *sim,
 	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);
 
 	int rows = results.size();
-	if (rows > 512) {
-		rows = 512;
+	if (rows > 511) {
+		rows = 511;
 	}
 
 	wpos += PutShort(&sim->SendBuf[wpos], rows + 1);

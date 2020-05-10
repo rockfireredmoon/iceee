@@ -73,9 +73,9 @@ public:
 
 	std::vector<_PreferencePair> PrefList;
 
-	int GetPrefIndex(const char *name);
-	const char * GetPrefValue(const char *name);
-	int SetPref(const char *name, const char *value);
+	int GetPrefIndex(std::string name);
+	std::string GetPrefValue(std::string name);
+	int SetPref(std::string name, std::string value);
 };
 
 class FriendListObject

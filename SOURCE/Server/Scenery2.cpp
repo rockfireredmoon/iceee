@@ -398,11 +398,12 @@ bool SceneryObject :: WriteEntity(AbstractEntityWriter *writer) {
 		writer->Value("LeaseTime", extraData.leaseTime);
 		writer->Value("SpawnPackage", extraData.spawnPackage);
 		writer->Value("SpawnName", extraData.spawnName);
+		writer->Value("MaxActive", extraData.maxActive);
 		writer->Value("InnerRadius", extraData.innerRadius);
 		writer->Value("OuterRadius", extraData.outerRadius);
 		writer->Value("Dialog", extraData.dialog);
 		writer->Value("MobTotal", extraData.mobTotal);
-		if(extraData.maxActive != CreatureSpawnDef::DEFAULT_MAXACTIVE)
+		//if(extraData.maxActive != CreatureSpawnDef::DEFAULT_MAXACTIVE)
 			writer->Value("MaxActive", extraData.maxActive);
 		writer->Value("AIModule", extraData.aiModule);
 		if(extraData.maxLeash != CreatureSpawnDef::DEFAULT_MAXLEASH && extraData.maxLeash != 0)

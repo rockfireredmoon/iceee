@@ -76,6 +76,7 @@
 #include <Daily.h>
 #include <Books.h>
 #include <NPC.h>
+#include <Customiser.h>
 #include <Leaderboard.h>
 #include <http/HTTPService.h>
 #include <message/LobbyMessage.h>
@@ -109,6 +110,7 @@
 #include <query/StatusHandlers.h>
 #include <query/PlayerHandlers.h>
 #include <query/FormHandlers.h>
+#include <query/CustomiseHandlers.h>
 #include <curl/curl.h>
 #include <http/TAWApi.h>
 #include <http/GameInfo.h>
@@ -587,6 +589,9 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["ah.bid"] = new AuctionHouseBidHandler();
 	g_QueryManager.queryHandlers["ah.buy"] = new AuctionHouseBuyHandler();
 
+	g_QueryManager.queryHandlers["customise.props"] = new GetPropCategoriesHandler();
+	g_QueryManager.queryHandlers["customise.search"] = new SearchPropsHandler();
+
 	g_QueryManager.queryHandlers["script.run"] = new ScriptRunHandler();
 	g_QueryManager.queryHandlers["script.load"] = new ScriptLoadHandler();
 	g_QueryManager.queryHandlers["script.kill"] = new ScriptKillHandler();
@@ -1001,6 +1006,12 @@ int InitServerMain(int argc, char *argv[]) {
 	g_NPCDialogManager.LoadItems();
 	g_Logs.data->info("Loaded %v NPC Dialog items.",
 			g_NPCDialogManager.mItems.size());
+
+	g_PropManager.LoadFromFile(Platform::JoinPath(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"PropCatalogue"), "Props.txt"));
+	g_Logs.data->info("Loaded %v prop catalogue items.",
+			g_PropManager.Count());
 
 	g_ZoneDefManager.LoadData();
 	g_GroveTemplateManager.LoadData();

@@ -165,6 +165,13 @@ struct SelectedObject
 	bool hasTargetCDef(int CDefID);
 };
 
+struct CreatureSearchResult
+{
+	std::string type;
+	std::string name;
+	int id;
+};
+
 //This class contains all the visual appearance of a single creature.
 class CreatureDefinition
 {
@@ -817,7 +824,7 @@ public:
 	int LoadPackages(std::string listFile);
 	int LoadFile(std::string filename);
 
-	int GetSpawnList(const char *searchType, const char *searchStr, vector<int> &resultList);
+	int GetSpawnList(std::string searchType, std::string searchStr, vector<CreatureSearchResult> &resultList);
 
 	void Clear(void);                 //Clear all data
 private:
