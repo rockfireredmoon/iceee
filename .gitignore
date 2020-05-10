@@ -64,3 +64,4 @@ aclocal.m4
 /logs/
 /build/
 /Tmp/
+/HTTPLogs/
