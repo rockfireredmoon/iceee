@@ -433,3 +433,48 @@ Name=New Badari - VonGruber Manor
 Comment=In front of the VonGruber Manor entrance.
 Position=70226.0,624.0,32255.0
 
+[ENTRY]
+Name=Great Forest Henge
+Comment=The Henge in Great Forest
+Position=29605.0,216.0,65480.0
+
+[ENTRY]
+Name=New Badari - Sea Cave
+Comment=In front of the Sea Cave Entrance.
+Position=53758.0,60.0,40061.0
+
+[ENTRY]
+Name=New Badari - Sunken Flats - South
+Comment=Southern part of the 'Sunken Flats' in western New Badari. Quite frankly there isn't much 'sunken' about the entire area.
+Position=50682.0,197.0,40629.0
+
+[ENTRY]
+Name=New Badari - Sunken Flats - North
+Comment=Northern part of the 'Sunken Flats' in western New Badari. Quite frankly there isn't much 'sunken' about the entire area.
+Position=51952.0,286.0,38321.0
+
+[ENTRY]
+Name=New Badari - Lighthouse
+Comment=The Lighthouse in western New Badari. It is the home of Joseph Lightbearer.
+Position=53238.0,361.0,36131.0
+
+[ENTRY]
+Name=Midlands/New Badari Border - Sanctuary
+Comment=This Sanctuary is situated at the border of the Midlands and New Badari on the New Badari side.
+Position=55689.0,315.0,41493.0
+
+[ENTRY]
+Name=New Badari - Scallywag Camps - South
+Comment=The southern portion of the Scallywag Camps. Rogren Bluepaw, the Scallywag Leader is located here.
+Position=56591.0,65.0,33895.0
+
+[ENTRY]
+Name=New Badari - Scallywag Camps - North
+Comment=The northern portion of the Scallywag Camps.
+Position=58997.0,87.0,34101.0
+
+[ENTRY]
+Name=New Badari - Scallywag Camps - Central
+Comment=The central portion of the Scallywag Camps. Iron-bound Chests can be found here.
+Position=57651.0,106.0,34082.0
+

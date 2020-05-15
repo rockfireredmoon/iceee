@@ -1,11 +1,11 @@
 [ENTRY]
-Name=Lighthouse
-Comment=[Comment here]
+Name=Fort Stonehenge Lighthouse
+Comment=By the Lighthouse in Fort Stonehenge
 Position=44497.0,225.0,65168.0
 
 [ENTRY]
-Name=Monastery
-Comment=[Comment here]
+Name=Abandoned Monastery
+Comment=In the chapel of the Abandoned Monastery
 Position=32895.0,407.0,61117.0
 
 [ENTRY]
@@ -19,7 +19,7 @@ Comment=[Comment here]
 Position=43904.0,308.0,50272.0
 
 [ENTRY]
-Name=Southsheild
+Name=South Shield
 Comment=[Comment here]
 Position=42530.0,184.0,43591.0
 
@@ -30,12 +30,12 @@ Position=46837.0,212.0,46042.0
 
 [ENTRY]
 Name=Coldstorm Cavern
-Comment=Gloom Witches
+Comment=Hideout of the Gloom Witches of Coldstorm Coven
 Position=48069.0,97.0,47931.0
 
 [ENTRY]
 Name=Nottingham
-Comment=[Comment here]
+Comment=In front of the Merchants in the town
 Position=53298.0,161.0,48901.0
 
 [ENTRY]
@@ -44,14 +44,14 @@ Comment=[Comment here]
 Position=56893.0,213.0,57592.0
 
 [ENTRY]
-Name=Wilhelms Crypt
-Comment=on the hill by the Quest Giver NPC's
+Name=Camelot Graveyard
+Comment=On the hill by the Quest Giver NPCs near Wilhelm's Crypt
 Position=57626.0,363.0,61865.0
 
 [ENTRY]
-Name=Camelot
-Comment=it is only a model
-Position=54915.0,153.0,63149.0
+Name=Camelot - Druid Hall
+Comment=Sanctuary by Druid Hall, Big Ben and the North Gate
+Position=54905.0,153.0,63162.0
 
 [ENTRY]
 Name=Broken Tower
@@ -59,8 +59,8 @@ Comment=[Comment here]
 Position=55720.0,197.0,59774.0
 
 [ENTRY]
-Name=Alimat
-Comment=[Comment here]
+Name=Ruined Castle's Altar
+Comment=The Altar leading to Alimat's Summoning Chamber at the Ruined Castle in the Moors
 Position=48455.0,294.0,57181.0
 
 [ENTRY]
@@ -79,22 +79,22 @@ Comment=[Comment here]
 Position=36626.0,541.0,66819.0
 
 [ENTRY]
-Name=Grimfrost
-Comment=[Comment here]
+Name=Grimfrost's Lair
+Comment=On a hill near Grimfrost's Lair in Ironstone
 Position=27889.0,399.0,69643.0
 
 [ENTRY]
-Name=Robin Hood Camp
+Name=Robin Hood's Camp
 Comment=[Comment here]
 Position=48304.0,221.0,44446.0
 
 [ENTRY]
-Name=Treasure Map - Hand Grasping
-Comment=
-Position=30094.0,95.0,59655.0
+Name=Treasure Map Location 4
+Comment=The Hand Grasping From The Earth
+Position=30094.0,94.0,59655.0
 
 [ENTRY]
-Name=Avalonian Isle
+Name=Isle of Avalon
 Comment=[Comment here]
 Position=47594.0,83.0,62877.0
 
@@ -104,7 +104,177 @@ Comment=[Comment here]
 Position=43339.0,262.0,67738.0
 
 [ENTRY]
-Name=Anglorum/Midlands - Chunnel 1
+Name=Chunnel - Anglorum Side
 Comment=Chunnel exit on the Anglorum side.
 Position=59205.0,15.0,66961.0
+
+[ENTRY]
+Name=Camelot -  Farm Bridge
+Comment=Sanctuary next to the Bridge to Farmer Felps' Farm and Old Underground
+Position=54804.0,231.0,67410.0
+
+[ENTRY]
+Name=Camelot - Market
+Comment=Camelot's Market
+Position=56095.0,342.0,65941.0
+
+[ENTRY]
+Name=Camelot - West Gate
+Comment=The Western Gate of Camelot.
+Position=53920.0,143.0,64271.0
+
+[ENTRY]
+Name=Camelot - Castle
+Comment=Castle Camelot
+Position=55170.0,561.0,64503.0
+
+[ENTRY]
+Name=Nottingham Castle - Front
+Comment=In front of Nottingham Castle's entrance
+Position=51078.0,687.0,48804.0
+
+[ENTRY]
+Name=Nottingham Castle - Courtyard
+Comment=In the Courtyard of Nottingham Castle
+Position=51357.0,669.0,49362.0
+
+[ENTRY]
+Name=Treasure Map Location 1
+Comment=The Lonely Grave Upon A Hill
+Position=59606.0,432.0,57725.0
+
+[ENTRY]
+Name=Hadrian's Wall Henge
+Comment=[Comment here]
+Position=50238.0,310.0,42640.0
+
+[ENTRY]
+Name=Treasure Map Location 2
+Comment=The Three Graves By The Sea
+Position=55517.0,177.0,69412.0
+
+[ENTRY]
+Name=Treasure Map Location 6
+Comment=The Sword In The Bones
+Position=44625.0,277.0,59794.0
+
+[ENTRY]
+Name=Bog Rats Farm
+Comment=Inside the Ranch House at the Farm
+Position=43090.0,137.0,58770.0
+
+[ENTRY]
+Name=Treasure Map Location 5
+Comment=The Skull Upon The Tree
+Position=47409.0,266.0,44611.0
+
+[ENTRY]
+Name=Treasure Map Location 3
+Comment=The Stones Upon The Stones
+Position=49019.0,96.0,48881.0
+
+[ENTRY]
+Name=Lakeshore Keep
+Comment=Location of Konin Graves
+Position=50322.0,208.0,64151.0
+
+[ENTRY]
+Name=Battlefield Camps
+Comment=Avalonian Camps of Rancor Grindwind and Pernyn Ayn
+Position=50960.0,155.0,60319.0
+
+[ENTRY]
+Name=Dandridge Farm
+Comment=[Comment here]
+Position=60992.0,201.0,58673.0
+
+[ENTRY]
+Name=Overwatch Keep
+Comment=[Comment here]
+Position=36822.0,621.0,50808.0
+
+[ENTRY]
+Name=The Vespin Hives
+Comment=[Comment here]
+Position=36709.0,197.0,57195.0
+
+[ENTRY]
+Name=Family Heirloom Location
+Comment=Location of the Morgan Family Heirloom in the Undead Ruins of the Moors
+Position=48802.0,75.0,54572.0
+
+[ENTRY]
+Name=Undead Ruins - Nerilix
+Comment=Nerilix's wander area in the Undead Ruins in the Moors
+Position=47895.0,119.0,53821.0
+
+[ENTRY]
+Name=Oliver's Treasure Location
+Comment=Location of Oliver's Treasure Chest in the Undead Ruins in the Moors
+Position=48088.0,97.0,52781.0
+
+[ENTRY]
+Name=Undead Ruins - Black Lich
+Comment=Location of the Black Lich in the Undead Ruins
+Position=46743.0,96.0,53792.0
+
+[ENTRY]
+Name=Undead Ruins - Dharga
+Comment=Location of Dharga in the Undead Ruins in the Moors
+Position=49596.0,110.0,55842.0
+
+[ENTRY]
+Name=Secret Stash Location
+Comment=Location of Oliver's Secret Stash in the Moors
+Position=48310.0,65.0,54641.0
+
+[ENTRY]
+Name=Undead Ruins - Rocastor
+Comment=Location of Rocastor in the Undead Ruins in the Moors
+Position=47092.0,93.0,56347.0
+
+[ENTRY]
+Name=Three Statues Location
+Comment=Location of the Three Statues at the far western end of Hadrian's Wall
+Position=39860.0,117.0,43641.0
+
+[ENTRY]
+Name=Blanche Marin's Camp
+Comment=Location of Blanche Marin of the Hand of Zaraster
+Position=39856.0,363.0,63179.0
+
+[ENTRY]
+Name=Oglan Ironhead's Camp
+Comment=Location of Oglan Ironhead of the Hand of Zaraster
+Position=53518.0,217.0,56844.0
+
+[ENTRY]
+Name=Granger Lashley's Camp
+Comment=Location of Granger Lashley of the Hand of Zaraster
+Position=37359.0,66.0,54928.0
+
+[ENTRY]
+Name=Razlen Zaraster's Camp
+Comment=Location of Razlen Zaraster, the Master of Zaraster
+Position=39886.0,268.0,56331.0
+
+[ENTRY]
+Name=Jester Jumptail's Camp
+Comment=Location of the second bandit brother of the River Runner Bandits, Jester Jumptail at Felps' Farm
+Position=57737.0,226.0,69024.0
+
+[ENTRY]
+Name=Jek Jumptail's Camp
+Comment=Location of Jek Jumptail,  first bandit brother of the River Runner Bandits
+Position=50032.0,231.0,68843.0
+
+[ENTRY]
+Name=Ironstone Hidden Chest Location
+Comment=Location of the Hidden Chest in Ironstone. It rests on a mountain above Grimfrost's Lair.
+Position=27156.0,838.0,70138.0
+
+[ENTRY]
+Name=Hidden Chest Location - Chunnel
+Comment=Hidden Chest located on top of the Chunnel at the back.
+Position=59195.0,153.0,67126.0
 

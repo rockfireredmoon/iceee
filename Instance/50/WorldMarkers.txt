@@ -1,5 +1,45 @@
 [ENTRY]
-Name=Anex boss room
-Comment=[Comment here]
+Name=Anexima's Boss Room
+Comment=
 Position=15952.0,1447.0,17546.0
+
+[ENTRY]
+Name=Hidden Chest Room
+Comment=[Comment here]
+Position=17693.0,1358.0,18247.0
+
+[ENTRY]
+Name=Drakkar Zol's Plinth
+Comment=[Comment here]
+Position=16878.0,1388.0,19666.0
+
+[ENTRY]
+Name=Braakurk's Path Location
+Comment=[Comment here]
+Position=18779.0,1285.0,19406.0
+
+[ENTRY]
+Name=Iron Maw Entrance
+Comment=[Comment here]
+Position=19354.0,1458.0,17597.0
+
+[ENTRY]
+Name=The Poisoned Pool
+Comment=[Comment here]
+Position=22137.0,308.0,22096.0
+
+[ENTRY]
+Name=Valkalth's Plinth
+Comment=[Comment here]
+Position=22103.0,1011.0,19702.0
+
+[ENTRY]
+Name=Karayan Vexx's Bridge
+Comment=[Comment here]
+Position=22137.0,308.0,22096.0
+
+[ENTRY]
+Name=Iron Maw East Dead End
+Comment=[Comment here]
+Position=20957.0,1012.0,19476.0
 

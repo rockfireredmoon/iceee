@@ -1,10 +1,130 @@
 [ENTRY]
-Name=Welcome To Corsica
-Comment=
+Name=Corsica - North Beach Harbor
+Comment=Location of the first questgiver in Corsica. The boat from Mushroom Isle takes players here.
 Position=15871.0,1112.0,12724.0
 
 [ENTRY]
-Name=The Lighthouse
-Comment=
+Name=Corsica - Lighthouse
+Comment=The Corsica Lighthouse. Anglor Dren conducts his experiments here. This is the first dungeon instance players experience.
 Position=19645.0,1693.0,13565.0
+
+[ENTRY]
+Name=Corsica - North Beach
+Comment=Northern town in Corsica. This is the first actual town players experience.
+Position=15447.0,1160.0,13643.0
+
+[ENTRY]
+Name=Corsica - Vilegrove - Center
+Comment=Center of the Vilegrove in Corsica. Players encounter the game's first named mob, Ferngar here.
+Position=17808.0,1074.0,16232.0
+
+[ENTRY]
+Name=Corsica - Vilegrove - Edge
+Comment=Location of Meer Greenleaf's assistant Ker Bluefang.
+Position=16859.0,1224.0,16448.0
+
+[ENTRY]
+Name=Corsica - Overturned Cart
+Comment=Location of the Braga Brew requested by Worgram Wumpfist of North Beach.
+Position=18799.0,1215.0,16403.0
+
+[ENTRY]
+Name=Corsica - Old Dante Manor
+Comment=Location of Raji Redhoof's Journal
+Position=19808.0,1128.0,16214.0
+
+[ENTRY]
+Name=Corsica - The Strange Device
+Comment=Location of the Strange Device that Raji Redhoof asks the player to investigate.
+Position=18514.0,1124.0,18840.0
+
+[ENTRY]
+Name=Corsica - Greynon's Place
+Comment=Location of Hermi Greynon's home. The Anubians have invaded here and taken over the area. Hermi's 'Dearest Darling' is here.
+Position=16061.0,1124.0,20412.0
+
+[ENTRY]
+Name=Corsica - Southend
+Comment=Southern town in Corsica. The bridge to Earthrise located here is broken, preventing the Anubians from invading this way. The Southend Passage can also be found here. Players will use this to enter Earthrise.
+Position=17977.0,1595.0,20782.0
+
+[ENTRY]
+Name=Earthrise - Broken Bridge
+Comment=This is the bridge between Corsica and Earthrise on the Earthrise side. The people of Corsica have broken it to prevent the Anubians from crossing into Corsica from this way.
+Position=18280.0,1649.0,22722.0
+
+[ENTRY]
+Name=Earthrise - Anubian Base Camp1
+Comment=This is the eastern portion of the Base Camp. Captain Tabia is by a tent further west.
+Position=13948.0,1336.0,26540.0
+
+[ENTRY]
+Name=Earthrise - Anubian Base Camp2
+Comment=This is the western side of the Base Camp along the beach, Captain Mdjai wanders the beach here.
+Position=12854.0,1123.0,26933.0
+
+[ENTRY]
+Name=Earthrise - Anubian Gate Camp
+Comment=Location of the Anubian Gate and it's Master Architect, Nehtu.
+Position=14470.0,1568.0,28232.0
+
+[ENTRY]
+Name=Earthrise - Buzzing Mesa
+Comment=Top of the large mesa in the middle of Earthrise. It is home to a large colony of Vespins and protected by the Vespin Hiveward
+Position=17741.0,1806.0,29584.0
+
+[ENTRY]
+Name=Earthrise - Southern Simian Camp
+Comment=Location of the southern Simian slave camp.  Slavemaster Jabari and Magus Kepi can be found here.
+Position=19175.0,1622.0,28096.0
+
+[ENTRY]
+Name=Earthrise - Elemental Pit
+Comment=A "pit" filled with Earth Elementals in northern Earthrise. A stronger elemental, Stoneheart seems to 'lead' them.
+Position=17803.0,1441.0,26684.0
+
+[ENTRY]
+Name=Earthrise - Wayside Warcamp
+Comment=The Wayside Warcamp is the main Beast camp fighting the Anubians in Earthrise. Garnor Brighteye leads the Beasts here.
+Position=21430.0,1491.0,27451.0
+
+[ENTRY]
+Name=Earthrise - Northern Simian Camp
+Comment=Location of the northern Simian slave camp. Slavemaster Sek is found here. An old in-joke among EE fans regarding Sek has long amused them.
+Position=19329.0,1727.0,24527.0
+
+[ENTRY]
+Name=Earthrise - Passage Exit
+Comment=The Southend Passage exit into Earthrise is located here. A large waterfall flows over the path into the region just past here, creating a scenic view.
+Position=18976.0,1436.0,22773.0
+
+[ENTRY]
+Name=Earthrise - Highpoint
+Comment=Earthrise town of Highpoint located in the center of the region.
+Position=15256.0,1512.0,31568.0
+
+[ENTRY]
+Name=Earthrise - Shard Crater
+Comment=Crater made by a shard of the Spirit Mother which rests in it's center. A large Splinter named Spike wanders here. Both the corpse of Anton Brock along with a bunch of Redwine flowers is also found in the crater.
+Position=16020.0,1090.0,33756.0
+
+[ENTRY]
+Name=Earthrise - Summoning  Circle
+Comment=A large circle of natural spires commandeered by the Anubians to focus the powers of a Shard. Sorceress Nubiti and her summoned elemental Kneph are found here.
+Position=20207.0,1001.0,31907.0
+
+[ENTRY]
+Name=Earthrise - Anubian Warcamp
+Comment=Location of the Anubian war camp under the leadership of Commander Bakari.
+Position=18824.0,1356.0,34658.0
+
+[ENTRY]
+Name=Earthrise - Seraceila's Grove
+Comment=Grove of the once druid-turned-arachnid Seraceila. She resides here with the Shardborn Arachnids. Her sister asks the player to free Seraceila from a cruel fate.
+Position=14748.0,1344.0,35427.0
+
+[ENTRY]
+Name=Earthrise - Earthend Warcamp
+Comment=Warcamp under the command of Garren Greypaw. His goal is to retake the captured city of Earthend just beyond from the Anubians.
+Position=16704.0,1207.0,36565.0
 

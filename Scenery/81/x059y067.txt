@@ -1,15 +1,13 @@
 [ENTRY]
 ID=1130291
 Asset=Prop-Levers1#Prop-Lever_Torch
-Name=Untitled
-Pos=59205.4,165.848,67074.7
-Orient=0,0,0,1
+Pos=59205.4,165.848,67072.8
+Orient=0.0649542,0,0,0.997888
 Scale=1,1,1
 
 [ENTRY]
 ID=1130294
 Asset=Prop-Levers1#Prop-Lever_Floor
-Name=Untitled
 Pos=59083.4,160.84,67028.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -17,7 +15,6 @@ Scale=1,1,1
 [ENTRY]
 ID=1130295
 Asset=Prop-Levers1#Prop-Lever_Floor
-Name=Untitled
 Pos=59325,160.766,67025.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -25,7 +22,6 @@ Scale=1,1,1
 [ENTRY]
 ID=1130296
 Asset=Prop-Levers1#Prop-Lever_Floor
-Name=Untitled
 Pos=59202.9,150.407,67175.5
 Orient=0,0.0349929,0,0.999388
 Scale=1,1,1
@@ -33,7 +29,6 @@ Scale=1,1,1
 [ENTRY]
 ID=1130297
 Asset=Prop-Loot1#Prop-Loot-Silver_Chest1
-Name=Untitled
 Pos=59201.6,154.42,67118.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -41,7 +36,6 @@ Scale=1,1,1
 [ENTRY]
 ID=10000102
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=59202,6,67057
 Orient=0,0,0,1
 Scale=1,1,1
@@ -51,7 +45,6 @@ spawnPackage=#1556
 [ENTRY]
 ID=1358962782
 Asset=Par-Waves-1-Emitter
-Name=Untitled
 Pos=59492.1,62.6378,67620
 Orient=0,0.377654,0,0.925947
 Scale=1,1,1
@@ -60,7 +53,6 @@ Flags=1
 [ENTRY]
 ID=1358962818
 Asset=Effects#Par-Waves-1-Emitter
-Name=Untitled
 Pos=59072.9,67.5352,67558
 Orient=0,-0.39235,0,0.919816
 Scale=1,1,1
@@ -69,7 +61,6 @@ Flags=1
 [ENTRY]
 ID=1358966720
 Asset=Prop-Instance_Entrance
-Name=Untitled
 Pos=59201.4,61.3213,67048.8
 Orient=0,-0.703279,0,0.710914
 Scale=2.975,2.975,2.975
@@ -77,7 +68,6 @@ Scale=2.975,2.975,2.975
 [ENTRY]
 ID=1358966721
 Asset=Lights#Light-Large?COLOR=33FFFF
-Name=Untitled
 Pos=59202.5,55.5316,67012.3
 Orient=0,0,0,1
 Scale=1,1,1

@@ -590,6 +590,7 @@ DropRateProfile=generousinstance
 WarpName=Iron Maw
 DefLoc=18938,1266,18778
 PageSize=1000
+Instance=1
 
 
 [ENTRY]
