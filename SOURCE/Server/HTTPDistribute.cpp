@@ -970,6 +970,47 @@ void HTTPDistribute :: HandleHTTP_POST(char *dataStart, MULTISTRING &header)
 					g_AccountManager.cs.Leave();
 				}
 			}
+			else if(header[a][1].compare("/adminlinkaccount") == 0)
+			{
+				MULTISTRING params;
+				ExtractPairs(dataStart, params);
+
+				const char *username = GetValueOfKey(params, "username");
+				const char *auth = GetValueOfKey(params, "authtoken");
+
+				int wpos = 0;
+
+				if(username == NULL || auth == NULL ) {
+					g_Log.AddMessageFormat("[ERROR] Missing link account parameters.");
+					wpos += sprintf(&SendBuf[wpos], "HTTP/1.1 500 Internal Server Error\r\n");
+					wpos += sprintf(&SendBuf[wpos], "Content-Type: text/html\r\n");
+					wpos += sprintf(&SendBuf[wpos], "\r\n");
+					wpos += sprintf(&SendBuf[wpos], "Invalid request.\r\n");
+					TotalSendBytes += sc.AttemptSend(SendBuf, wpos);
+				}
+				else if(g_Config.RemotePasswordMatch(auth) == false)
+				{
+					g_Log.AddMessageFormat("[ERROR] Invalid remote authentication string.");
+					wpos += sprintf(&SendBuf[wpos], "HTTP/1.1 500 Internal Server Error\r\n");
+					wpos += sprintf(&SendBuf[wpos], "Content-Type: text/html\r\n");
+					wpos += sprintf(&SendBuf[wpos], "\r\n");
+					wpos += sprintf(&SendBuf[wpos], "No match.\r\n");
+					TotalSendBytes += sc.AttemptSend(SendBuf, wpos);
+				}
+				else
+				{
+					int retval = 0;
+					g_AccountManager.cs.Enter("RunAccountCreation");
+					AccountData * ad = g_AccountManager.FetchAccountByUsername(username);
+					wpos += sprintf(&SendBuf[wpos], "HTTP/1.1 200 OK\r\n");
+					wpos += sprintf(&SendBuf[wpos], "Content-Type: text/html\r\n");
+					wpos += sprintf(&SendBuf[wpos], "\r\n");
+					if(ad != NULL)
+							wpos += sprintf(&SendBuf[wpos], "%s:%s", ad->RegKey, ad->GroveName.c_str());
+					TotalSendBytes += sc.AttemptSend(SendBuf, wpos);
+					g_AccountManager.cs.Leave();
+				}
+			}
 			else if(header[a][1].compare("/resetpassword") == 0)
 			{
 				MULTISTRING params;
