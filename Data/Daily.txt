@@ -1,20 +1,20 @@
 Day	MinLevel	MaxLevel		ItemID	Type	Data
 
 ;
-; On day 1, we give out 5 credits
+; On day 1, we give out 10 credits
 ;
 ;
-1	0	999	7861	CREDITS	5
+1	0	999	7861	CREDITS	10
 
 ;
-; On day 2, we give out 5 credits
-2	0	999	7861	CREDITS	5
+; On day 2, we give out 10 credits
+2	0	999	7861	CREDITS	10
 
 ;
-; On day 3, we give out 5 credits and a potion appropriate for the tier and 5 credits.
+; On day 3, we give out 10 credits and a potion appropriate for the tier and 5 credits.
 ;
 ;
-3	0	999	7861	CREDITS	5
+3	0	999	7861	CREDITS	10
 3	0	9	7861	ITEM	40128,40114,40115,40116,40117
 3	10	19	7861	ITEM	40128,40114,40115,40116,40117,40118,40123
 3	20	29	7861	ITEM	40128,40114,40115,40116,40117,40119,40124
@@ -23,10 +23,10 @@ Day	MinLevel	MaxLevel		ItemID	Type	Data
 3	50	999	7861	ITEM	40128,40114,40115,40116,40117,40122,40127
 
 ;
-; On day 4, we give out 5 credits and a scroll appropriate for the tier
+; On day 4, we give out 10 credits and a scroll appropriate for the tier
 ;
 ;
-4	0	999	7861	CREDITS	5
+4	0	999	7861	CREDITS	10
 4	0	4	7861	ITEM	70001,70002,70003,70004,70005,70006,70012,70021,70033,70037,70038,70040,70041,70042,70049,70057,70058,70059,70060,70061,70062,70063,70064,70065,70066,70069,70072,70073,70074,70075,70080,70097,70098,70100,70101,70102,70119,70120,70121,70123,70124
 4	5	14	7861	ITEM	70000,70008,70009,70010,70011,70027,70026,70028,70029,70034,70035,70036,70039,70043,70047,70048,70050,70067,70068,70077,70078,70081,70082,70083,70085,70096,70103,70104,70105,70106,70117,70118,70122,70125
 4	15	24	7861	ITEM	70015,70018,70019,70020,70044,70051,70056,70070,70084,70087,70088,70092,70107,70116
@@ -35,18 +35,18 @@ Day	MinLevel	MaxLevel		ItemID	Type	Data
 
 
 ;
-; On day 5, we give out 5 credits and random ring or amulet for the players
+; On day 5, we give out 10 credits and random ring or amulet for the players
 ; level. This uses the 'dailyreward' drop rate profile to determine the rarity
 ; and stats, so the item will be ONLY UNCOMMON
 5	0	999	7861	VIRTUAL	2:dailyreward:19,17
-5	0	999	7861	CREDITS	5
+5	0	999	7861	CREDITS	10
 
 
 ;
-; On day 6, we give out 5 credits and a potion appropriate for the tier and 5 credits.
+; On day 6, we give out 10 credits and a potion appropriate for the tier and 5 credits.
 ;
 ;
-6	0	999	7861	CREDITS	5
+6	0	999	7861	CREDITS	10
 6	0	9	7861	ITEM	40128,40114,40115,40116,40117
 6	10	19	7861	ITEM	40128,40114,40115,40116,40117,40118,40123
 6	20	29	7861	ITEM	40128,40114,40115,40116,40117,40119,40124
@@ -55,10 +55,10 @@ Day	MinLevel	MaxLevel		ItemID	Type	Data
 6	50	999	7861	ITEM	40128,40114,40115,40116,40117,40122,40127
 
 ;
-; On day 7, we give out 5 credits and a scroll appropriate for the tier
+; On day 7, we give out 10 credits and a scroll appropriate for the tier
 ;
 ;
-7	0	999	7861	CREDITS	5
+7	0	999	7861	CREDITS	10
 7	0	4	7861	ITEM	70001,70002,70003,70004,70005,70006,70012,70021,70033,70037,70038,70040,70041,70042,70049,70057,70058,70059,70060,70061,70062,70063,70064,70065,70066,70069,70072,70073,70074,70075,70080,70097,70098,70100,70101,70102,70119,70120,70121,70123,70124
 7	5	14	7861	ITEM	70000,70008,70009,70010,70011,70027,70026,70028,70029,70034,70035,70036,70039,70043,70047,70048,70050,70067,70068,70077,70078,70081,70082,70083,70085,70096,70103,70104,70105,70106,70117,70118,70122,70125
 7	15	24	7861	ITEM	70015,70018,70019,70020,70044,70051,70056,70070,70084,70087,70088,70092,70107,70116
@@ -66,19 +66,19 @@ Day	MinLevel	MaxLevel		ItemID	Type	Data
 7	35	999	7861	ITEM	70017,70030,70032,70055,70079,70090,70091,70093,70094,70095,70099,70113,70114,70115
 
 
-; On day 8, we give out 5 credits, and a random piece of armour for the
+; On day 8, we give out 10 credits, and a random piece of armour for the
 ; players level. This uses the 'dailyreward' drop rate profile to determine the rarity
 ; and stats.
 
 8	0	999	7861	VIRTUAL	2:dailyreward:7,8,9,10,11,12,13,14,15,16
-8	0	999	7861	CREDITS	5
+8	0	999	7861	CREDITS	10
 
-; On day 9, we give out 5 credits, and a random weapon for the
+; On day 9, we give out 10 credits, and a random weapon for the
 ; players level. This uses the 'dailyreward' drop rate profile to determine the rarity
 ; and stats, so the item will be ONLY UNCOMMON
 
 9	0	999	7861	VIRTUAL	2:dailyreward:1/2,4/8,5/3,5/4,6/5|6|7
-9	0	999	7861	CREDITS	5
+9	0	999	7861	CREDITS	10
 
 ; On day 10, we give out 50 credits, and a random item (weapon or armour) for
 ; players level. This uses the 'weeklyreward' drop rate profile to determine the rarity
