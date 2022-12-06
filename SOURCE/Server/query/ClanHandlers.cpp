@@ -179,7 +179,7 @@ int ClanCreateHandler::handleQuery(SimulatorThread *sim,
 		sim->AttemptSend(sim->SendBuf, wpos);
 
 		Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2),
-				"%s has been formed! '%s'",
+				"%s has formed the clan '%s'.",
 				creatureInstance->charPtr->cdef.css.display_name,
 				c.mName.c_str());
 		g_SimulatorManager.BroadcastMessage(sim->Aux2);

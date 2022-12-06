@@ -43,7 +43,7 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 	std::string ruri;
 
 	/* Prepare the URI */
-	CivetServer::urlDecode(req_info->uri, strlen(req_info->uri), ruri, false);
+	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 
 	//
@@ -93,24 +93,37 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 				"Content-Disposition: attachment; filename=\"%s\";\r\n",
 				fn.c_str());
 		mg_printf(conn, "Last-Modified: %s\r\n", formatTime(&file.lastModified).c_str());
+		if(g_Config.HTTPKeepAlive)
+			mg_printf(conn, "Connection: keep-alive\r\n");
+		else
+			mg_printf(conn, "Connection: close\r\n");
 		mg_printf(conn, "\r\n");
 		send_file_data(conn, &file);
 	    fclose(file.fd);
 		mg_increase_sent_bytes(conn, file.fileSize);
+		if(!g_Config.HTTPKeepAlive)
+			mg_set_as_close(conn);
+		mg_set_status(conn, 200); // still set status for the benefit of access log
 		break;
 	}
 	case 304: {
-		g_Logs.http->info("Not modified %v (%v bytes)", ruri.c_str(), file.fileSize);
+		g_Logs.http->debug("Not modified %v (%v bytes)", ruri.c_str(), file.fileSize);
 		std::time_t now = std::time(NULL);
 		mg_printf(conn, "HTTP/1.1 304 Not Modified\r\n");
 		mg_printf(conn, "Expires: Tue, 1 Nov 2011 00:00:00 GMT\r\n");
 		mg_printf(conn, "Date: %s\r\n", formatTime(&now).c_str());
 		mg_printf(conn, "Last-Modified: %s\r\n", formatTime(&file.lastModified).c_str());
+		if(g_Config.HTTPKeepAlive)
+			mg_printf(conn, "Connection: keep-alive\r\n");
+		else
+			mg_printf(conn, "Connection: close\r\n");
 		mg_printf(conn, "Cache-Control: max-age=0\r\n\r\n");
+		mg_set_status(conn, 304);  // still set status for the benefit of access log
 		mg_set_as_close(conn);
 		break;
 	}
 	default:
+		mg_set_status(conn, 404); // still set status for the benefit of access log
 		g_Logs.http->info("Could not find %v", ruri.c_str());
 		sendStatusFile(conn, req_info, status, "Not Found", "File not found.");
 		mg_set_as_close(conn);

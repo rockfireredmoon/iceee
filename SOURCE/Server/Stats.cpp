@@ -292,10 +292,14 @@ StatusEffectBitInfo StatusEffectBitData[] = {
 	// New array index
 	{StatusEffects::INVISIBLE_EQUIPMENT,   2, (1 << 0), "INVISIBLE_EQUIPMENT" },
 	{StatusEffects::USABLE_BY_COMBATANT,   2, (1 << 1), "USABLE_BY_COMBATANT" },
-	{StatusEffects::USABLE_BY_SCRIPT,      2, (1 << 2), "USABLE_BY_SCRIPT" },
-	{StatusEffects::FLOATING,              2, (1 << 3), "FLOATING" },
-	{StatusEffects::HOVERING,              2, (1 << 4), "HOVERING" },
-	{StatusEffects::LEECHING,      		   2, (1 << 5), "LEECHING" },
+	{StatusEffects::LEECHING,      		   2, (1 << 2), "LEECHING" },
+	{StatusEffects::USABLE_BY_SCRIPT,      2, (1 << 3), "USABLE_BY_SCRIPT" },
+	{StatusEffects::FLOATING,              2, (1 << 4), "FLOATING" },
+	{StatusEffects::HOVERING,              2, (1 << 5), "HOVERING" },
+	{StatusEffects::MOUNTABLE,      	   2, (1 << 6), "MOUNTABLE" },
+	{StatusEffects::MOUNTED,      		   2, (1 << 7), "MOUNTED" },
+	{StatusEffects::CARRYING_RIDER,        2, (1 << 8), "CARRYING_RIDER" },
+
 };
 const int MAX_STATUSEFFECT = sizeof(StatusEffectBitData) / sizeof(StatusEffectBitInfo);
 

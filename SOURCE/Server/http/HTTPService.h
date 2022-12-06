@@ -23,16 +23,25 @@
 #include <string>
 #include <map>
 #include "HTTP.h"
+#include "../Components.h"
 
 namespace HTTPD {
 
 class FileChecksum
 {
 public:
+	FileChecksum();
 	typedef std::map<std::string, std::string> CHECKSUM_MAP;
 	CHECKSUM_MAP mChecksumData;
 	void LoadFromFile();
 	std::string MatchChecksum(const std::string filename, const std::string checksum);
+private:
+	std::string GetFilename();
+	void ScheduleCheck();
+	int mChecksumUpdateTimer;
+	unsigned long mChecksumUpdate;
+	int mChecked;
+	//Platform_CriticalSection cs;
 };
 
 class HTTPService

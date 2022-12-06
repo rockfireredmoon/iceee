@@ -1,7 +1,6 @@
 project('tawd', ['cpp','c'], default_options : [
-	'cpp_std=c++11',
+	'cpp_std=c++14',
 	'prefix=/usr',
-	'tmpdir=/tmp',
 	'sysconfdir=/etc',
 	'localstatedir=/var'])
 
@@ -79,8 +78,11 @@ else
 endif
 
 #Compiler arguments 
+
+# Temporary until i can be bother to update to the newer CivetWeb interfaces
+#add_global_arguments('-DMG_LEGACY_INTERFACE=1', language: ['cpp','c'])
+
 add_global_arguments('-DELPP_THREAD_SAFE=1', language: ['cpp','c'])
-add_global_arguments('-DELPP_NO_GLOBAL_LOCK=1', language: ['cpp','c'])
 add_global_arguments('-DLOCALCONFIGDIR="' + confdirs + '"', language: ['cpp','c'])
 if not openssl_dep.found() or not get_option('ssl')
 	add_global_arguments('-DNO_SSL=1', language: ['cpp','c'])
@@ -136,6 +138,7 @@ tacopie_lib = library('tacopie',[
 #cpp_redis
 cppredis_lib = library('cpp_redis',[
 	'SOURCE/LibCPPRedis/sources/misc/logger.cpp',
+	'SOURCE/LibCPPRedis/sources/misc/dispatch_queue.cpp',
 	'SOURCE/LibCPPRedis/sources/builders/error_builder.cpp',
 	'SOURCE/LibCPPRedis/sources/builders/builders_factory.cpp',
 	'SOURCE/LibCPPRedis/sources/builders/integer_builder.cpp',
@@ -146,6 +149,8 @@ cppredis_lib = library('cpp_redis',[
 	'SOURCE/LibCPPRedis/sources/core/sentinel.cpp',
 	'SOURCE/LibCPPRedis/sources/core/client.cpp',
 	'SOURCE/LibCPPRedis/sources/core/reply.cpp',
+	'SOURCE/LibCPPRedis/sources/core/types.cpp',
+	'SOURCE/LibCPPRedis/sources/core/consumer.cpp',
 	'SOURCE/LibCPPRedis/sources/core/subscriber.cpp',
 	'SOURCE/LibCPPRedis/sources/network/tcp_client.cpp',
 	'SOURCE/LibCPPRedis/sources/network/redis_connection.cpp'], 
@@ -182,7 +187,7 @@ server_lib = library('server',[
 	'SOURCE/Server/Creature.cpp',
 	'SOURCE/Server/CreditShop.cpp',
 	'SOURCE/Server/CreatureSpawner2.cpp',
-	'SOURCE/Server/Customiser.cpp',
+	'SOURCE/Server/AssetCatalogue.cpp',
 	'SOURCE/Server/Daily.cpp',
 	'SOURCE/Server/DebugProfiler.cpp',
 	'SOURCE/Server/DebugTracer.cpp',
@@ -222,6 +227,7 @@ server_lib = library('server',[
 	'SOURCE/Server/Quest.cpp',
 	'SOURCE/Server/QuestScript.cpp',
 	'SOURCE/Server/RemoteAction.cpp',
+	'SOURCE/Server/Random.cpp',
 	'SOURCE/Server/Report.cpp',
 	'SOURCE/Server/Router.cpp',
 	'SOURCE/Server/Scenery2.cpp',
@@ -287,7 +293,7 @@ server_lib = library('server',[
 	'SOURCE/Server/query/ZoneHandlers.cpp',
 	'SOURCE/Server/query/StatusHandlers.cpp',
 	'SOURCE/Server/query/PlayerHandlers.cpp',
-	'SOURCE/Server/query/CustomiseHandlers.cpp',
+	'SOURCE/Server/query/AssetCatalogueHandlers.cpp',
 	'SOURCE/Server/util/base64.cpp',
 	'SOURCE/Server/util/JsonHelpers.cpp',
 	'SOURCE/Server/util/SquirrelObjects.cpp',	

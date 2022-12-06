@@ -48,6 +48,7 @@ PreferenceDef PreferenceList[] = {  //was 31
 	{ 0, "other.BindPopup",              PT_String, "true" },  //confirmed style
 
 	{ 0, "control.Keybindings",          PT_String, "[]" },    //confirmed for empty set
+	{ 0, "modpref",          			 PT_String, "{}" },    //confirmed for empty set
 };
 const int MaxPref = sizeof(PreferenceList) / sizeof(PreferenceList[0]);
 

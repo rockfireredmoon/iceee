@@ -24,6 +24,7 @@
 #include "../Character.h"
 #include "../Config.h"
 #include "../Account.h"
+#include "../Random.h"
 #include "../InstanceScale.h"
 #include "../ConfigString.h"
 #include "../Scenery2.h"
@@ -1920,7 +1921,7 @@ int RollHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 		party = g_PartyManager.GetPartyByID(creatureInstance->PartyID);
 
 	if (creatureInstance->PartyID == 0 || party == NULL) {
-		int roll = randint(1, 100);
+		int roll = g_RandomManager.RandInt(1, 100);
 		Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "You rolled %d", roll);
 		sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 	} else if (party != NULL) {
@@ -1931,7 +1932,7 @@ int RollHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 			int roll = 0;
 			do {
 				has = false;
-				roll = randint(1, 100);
+				roll = g_RandomManager.RandInt(1, 100);
 				for (size_t i = 0; i < rolls.size(); i++) {
 					if (rolls[i] == roll) {
 						has = true;

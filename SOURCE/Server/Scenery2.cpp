@@ -1,5 +1,6 @@
 
 #include "Scenery2.h"
+#include "AssetCatalogue.h"
 #include "FileReader3.h"
 #include "Util.h"
 #include "ZoneDef.h"
@@ -641,6 +642,15 @@ const char* SceneryObject :: GetSpawnPackageName(void)
 		return NULL;
 	
 	return extraData.spawnPackage.c_str();
+}
+
+std::string SceneryObject::GetAssetName()
+{
+	 std::size_t res = Asset.find("?");
+	if(res == std::string::npos)
+		return Asset;
+	else
+		return "";
 }
 
 bool SceneryObject::ExtractATS(std::string& outputStr) const
@@ -1369,7 +1379,6 @@ void SceneryManager::Destroy(void)
 		it->second.Destroy();
 
 	mZones.clear();
-	mValidATS.clear();
 }
 
 SceneryZone* SceneryManager::FindZone(int zoneID)
@@ -1429,12 +1438,6 @@ SceneryPage* SceneryManager::GetOrCreatePage(int zoneID, int sceneryPageX, int s
 	*/
 }
 
-void SceneryManager::LoadData(void)
-{
-	LoadStringsFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "Valid_ATS.txt"), mValidATS);
-	g_Logs.server->info("Marked %v valid ATS files.", mValidATS.size());
-}
-
 void SceneryManager::CheckAutosave(bool force)
 {
 	if(g_ServerTime < mNextAutosaveTime && force == false)
@@ -1458,21 +1461,47 @@ void SceneryManager::CheckAutosave(bool force)
 
 bool SceneryManager::ValidATSEntry(const std::string& atsName)
 {
-	for(size_t i = 0; i < mValidATS.size(); i++)
-		if(mValidATS[i].compare(atsName) == 0)
-			return true;
-	return false;
+	AssetCatalogueItem *item = g_AssetCatalogueManager.GetItem(atsName);
+	return item != NULL && item->mType == AssetCatalogueItemType::SKIN;
 }
 
-bool SceneryManager::VerifyATS(const SceneryObject& prop)
+bool SceneryManager::VerifyATS(SceneryObject& prop)
 {
 	//Return true if the asset name passes ATS inspection, or does not contain an ATS.
 	std::string ats;
-	if(prop.ExtractATS(ats) == false)
-		return true;
+	std::string n = prop.GetAssetName();
 
-	if(ValidATSEntry(ats) == true)
+	if(prop.ExtractATS(ats) == false) {
+		/* Hasn't got an ATS, should it have one? */
+		if(Util::HasBeginning(n, "Dng-") || Util::HasBeginning(n, "Cav-") || Util::HasBeginning(n, "Bldg-")) {
+			AssetCatalogueItem *cat = g_AssetCatalogueManager.GetByID(n);
+			if(cat != NULL && cat->mChildren.size() > 0) {
+				/* There is a catalogue item, check it's first child (which should be
+				 * the skinned variant) and change the asset name for this prop to that
+				 */
+				AssetCatalogueItem *vcat = cat->mChildren[0];
+				if(vcat->mType == AssetCatalogueItemType::VARIANT && vcat->GetAsset() != "") {
+					/* Change the asset */
+					prop.Asset = vcat->GetAsset();
+					return true;
+				}
+			}
+
+			g_Logs.data->warn("Attempt to add prop [%v] that needs an ATS, but one was not specified and one could not be found in the catalogue.", prop.Asset);
+			return false;
+		}
+
 		return true;
+	}
+
+	if(ValidATSEntry(ats) == true) {
+		/* Don't reject or change, even if its not valid for this asset. This lets developers
+		 * manually specify the ATS in the client to test broken ones etc, but ordinary players
+		 * will be constrained by the UI in only being able to set correct ATS skins for each
+		 * asset
+		 */
+		return true;
+	}
 
 	return false;
 }

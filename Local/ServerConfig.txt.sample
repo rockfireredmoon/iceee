@@ -21,14 +21,53 @@
 ; 0.8.9 = 38    Ikimonogatari/EER.
 
 ProtocolVersion=33
+
+;
+; Authentication
+;
+
 AuthMode=1                 ; 0 = Two-factor (unsupported), 1 = admin (use this)
 AuthKey=key                ; Salt to the client's password hash. Will break existing accounts if changed.
 
+;
+; Simulator Configuration
+;
+
 RouterPort=4242            ; Port to listen to router connections (login screen connect)
 SimulatorPort=4300         ; Port to listen for simulator connections
-HTTPListenPort=8080        ; Port to listen to HTTP requests (API and CAR requests).  Set as zero to disable.
 
-HTTPServeAssets=1		   ;Whether or not to server CAR assets
+;
+; HTTP Server Server configuration
+;
+
+HTTPListenPort=8080        ; Port to listen to HTTP requests.  Set as zero to disable.
+
+; Maximum number of connections waiting to be accepted by the server operating system. 
+; Internally, this parameter is passed to the "listen" socket/system call.
+HTTPBacklog=200
+
+; Number of worker threads. CivetWeb handles each incoming connection in a separate thread. 
+; Therefore, the value of this option is effectively the number of concurrent HTTP
+; connections CivetWeb can handle.
+HTTPThreads=50
+
+; Maximum number of accepted connections waiting to be dispatched by a worker thread.
+HTTPConnectionQueue=20
+
+ ;Whether or not to serve CAR assets
+HTTPServeAssets=1	
+
+; Whether or not to validate the domain name in request
+;HTTPAuthDomainCheck=1
+
+; The domain name to check against if HTTPAuthDomainCheck is true. When blank
+; the SimulatorAddress will be used. 
+;HTTPAuthDomain=
+
+;
+; Other Configuration
+;
+
 ThreadSleep=1              ;Sleep time for simulator and router threads
 MainSleep=1                ;Sleep time for the main window thread
 ErrorSleep=5000            ;Sleep time for some thread errors
@@ -189,3 +228,12 @@ LogPath=Logs
 ; secret. The secret shoud be in the format username:password where either can be any
 ; string with any characters except for ':'.
 APIAuthentication=apiuser:apisecret
+
+; The URL that supplies the website integration API. This server will send messages
+; to this URL for various reasons, such as  authentication, sending private messages
+; etc
+;ServiceAuthURL=http://www.yourserver.com/rest
+
+; The GitHub token for posting in-game bug reports
+;GitHubToken=XXXXXXXXXXXXXXXXXXXXXXXXXXX
+

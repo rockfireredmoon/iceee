@@ -4,6 +4,7 @@
 #include "Scenery2.h"
 #include "FileReader.h"
 #include "Util.h"
+#include "Random.h"
 #include <cmath>
 #include <algorithm>
 #include "Globals.h"
@@ -546,11 +547,11 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 		int outer = spawner->spawnPoint->extraData.outerRadius;
 		if(inner != 0 || outer != 0)
 		{
-			double angle = randdbl(0, DOUBLE_PI);
+			double angle = g_RandomManager.RandDbl(0, DOUBLE_PI);
 			int span = outer - inner;
 			if(span < 0)
 				span = 0;
-			int dist = inner + randint(0, span);
+			int dist = inner + g_RandomManager.RandInt(0, span);
 			newItem.CurrentX += (int)((double)dist * cos(angle));
 			newItem.CurrentZ += (int)((double)dist * sin(angle));
 		}
@@ -1283,7 +1284,7 @@ int SpawnPackageDef :: GetRandomSpawn(SceneryObject *spawnPoint)
 		}
 	}
 
-	int rcheck = randint(minRoll, maxRoll);
+	int rcheck = g_RandomManager.RandInt(minRoll, maxRoll);
 	int base = 1;
 	int a;
 	for(a = 0; a < spawnCount; a++)
@@ -1674,7 +1675,7 @@ size_t UniqueSpawnEntry :: GetPropIndex(int PropID)
 
 void UniqueSpawnEntry :: ReRoll(int durationSeconds)
 {
-	mRandomIndex = randint(0, mMaxSpawnCount - 1);
+	mRandomIndex = g_RandomManager.RandInt(0, mMaxSpawnCount - 1);
 	mRestartTime = g_ServerTime + (durationSeconds * 1000);
 }
 

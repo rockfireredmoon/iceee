@@ -26,69 +26,74 @@
 
 namespace cpp_redis {
 
-namespace builders {
+	namespace builders {
 
-reply_builder::reply_builder(void)
-: m_builder(nullptr) {}
+		reply_builder::reply_builder()
+				: m_builder(nullptr) {}
 
-reply_builder&
-reply_builder::operator<<(const std::string& data) {
-  m_buffer += data;
+		reply_builder &
+		reply_builder::operator<<(const std::string &data) {
+			m_buffer += data;
 
-  while (build_reply())
-    ;
+			while (build_reply());
 
-  return *this;
-}
+			return *this;
+		}
 
-bool
-reply_builder::build_reply(void) {
-  if (!m_buffer.size())
-    return false;
+		void
+		reply_builder::reset() {
+			m_builder = nullptr;
+			m_buffer.clear();
+		}
 
-  if (!m_builder) {
-    m_builder = create_builder(m_buffer.front());
-    m_buffer.erase(0, 1);
-  }
+		bool
+		reply_builder::build_reply() {
+			if (m_buffer.empty())
+				return false;
 
-  *m_builder << m_buffer;
+			if (!m_builder) {
+				m_builder = create_builder(m_buffer.front());
+				m_buffer.erase(0, 1);
+			}
 
-  if (m_builder->reply_ready()) {
-    m_available_replies.push_back(m_builder->get_reply());
-    m_builder = nullptr;
+			*m_builder << m_buffer;
 
-    return true;
-  }
+			if (m_builder->reply_ready()) {
+				m_available_replies.push_back(m_builder->get_reply());
+				m_builder = nullptr;
 
-  return false;
-}
+				return true;
+			}
 
-void
-reply_builder::operator>>(reply& reply) {
-  reply = get_front();
-}
+			return false;
+		}
 
-const reply&
-reply_builder::get_front(void) const {
-  if (!reply_available())
-    throw redis_error("No available reply");
+		void
+		reply_builder::operator>>(reply &reply) {
+			reply = get_front();
+		}
 
-  return m_available_replies.front();
-}
+		const reply &
+		reply_builder::get_front() const {
+			if (!reply_available())
+				throw redis_error("No available reply");
 
-void
-reply_builder::pop_front(void) {
-  if (!reply_available())
-    throw redis_error("No available reply");
+			return m_available_replies.front();
+		}
 
-  m_available_replies.pop_front();
-}
+		void
+		reply_builder::pop_front() {
+			if (!reply_available())
+				throw redis_error("No available reply");
 
-bool
-reply_builder::reply_available(void) const {
-  return m_available_replies.size() > 0;
-}
+			m_available_replies.pop_front();
+		}
 
-} // namespace builders
+		bool
+		reply_builder::reply_available() const {
+			return !m_available_replies.empty();
+		}
+
+	} // namespace builders
 
 } // namespace cpp_redis

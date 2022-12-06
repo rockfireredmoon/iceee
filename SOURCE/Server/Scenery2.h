@@ -163,6 +163,8 @@ public:
 	std::string GetClusterKey();
 
 	const char *GetSpawnPackageName(void);
+
+	std::string GetAssetName();
 	bool ExtractATS(std::string& outputStr) const;
 
 	void WriteToJSON(Json::Value &value);
@@ -277,14 +279,13 @@ public:
 	~SceneryManager();
 	void Destroy(void);
 
-	void LoadData(void);
 	void CheckAutosave(bool force);
 
 	void GetThread(const char *request);
 	void ReleaseThread(void);
 
 	bool ValidATSEntry(const std::string& atsName);
-	bool VerifyATS(const SceneryObject& prop);
+	bool VerifyATS(SceneryObject& prop);
 	SceneryObject* GlobalGetPropPtr(int zoneID, int propID, SceneryPage** foundPage);
 	SceneryObject* AddProp(int zoneID, const SceneryObject& prop);
 	SceneryObject* ReplaceProp(int zoneID, const SceneryObject& prop);
@@ -317,7 +318,6 @@ public:
 
 private:
 	Platform_CriticalSection cs;
-	std::vector<std::string> mValidATS;
 	unsigned long mNextAutosaveTime;
 	std::vector<SceneryPageRequest> mPendingPageRequest;
 	std::vector<SceneryPageRequest> mImmediatePageRequest;

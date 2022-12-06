@@ -78,6 +78,7 @@ public:
 	const ChannelCompare *mChannel;
 
 	void WriteToJSON(Json::Value &value);
+	void ReadFromJSON(Json::Value &value);
 };
 
 class ChatManager
@@ -88,10 +89,10 @@ public:
 
 	deque<ChatMessage> CircularChatBuffer;
 
-	bool SendChatMessageAsOffline(ChatMessage &message, HTTPD::SiteSession *session);
+	bool SendChatMessageAsOffline(const ChatMessage &message, HTTPD::SiteSession *session);
 	bool SendChatMessage(ChatMessage &message, CreatureInstance *sendingCreatureInstance);
 	bool DeliverChatMessage(ChatMessage &message, CreatureInstance *sendingCreatureInstance);
-	void LogChatMessage(ChatMessage &message);
+	void LogChatMessage(const ChatMessage &message);
 	void LogMessage(std::string message);
 	int handleCommunicationMsg(char *channel, char *message, char *name);
 	Platform_CriticalSection cs;  //Needed for circular chat buffer which may be inserted into by many threads

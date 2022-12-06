@@ -34,3 +34,22 @@ HTTPCARFolder=../sparkplayer-eartheternal/bin/assets
 ; logs, it mainly is used for locations of logs of 3rd party components such as 
 ; Civet web logs. 
 LogPath=Logs
+
+; Maximum number of connections waiting to be accepted by the server operating system. 
+; Internally, this parameter is passed to the "listen" socket/system call.
+HTTPBacklog=200
+
+; Number of worker threads. CivetWeb handles each incoming connection in a separate thread. 
+; Therefore, the value of this option is effectively the number of concurrent HTTP
+; connections CivetWeb can handle.
+HTTPThreads=50
+
+; Maximum number of accepted connections waiting to be dispatched by a worker thread.
+HTTPConnectionQueue=20
+
+; Whether or not to validate the domain name in request
+;HTTPAuthDomainCheck=1
+
+; The domain name to check against if HTTPAuthDomainCheck is true. When blank
+; the SimulatorAddress will be used. 
+;HTTPAuthDomain=

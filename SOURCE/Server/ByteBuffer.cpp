@@ -156,6 +156,10 @@ float GetFloat(const char *buffer, size_t &advance)
 	advance += 4;
 	return retval;
 }
+int PutStringUTF(char *buffer, const std::string &tocopy)
+{
+	return PutStringUTF(buffer, tocopy.c_str());
+}
 
 int PutStringUTF(char *buffer, const char *tocopy)
 {

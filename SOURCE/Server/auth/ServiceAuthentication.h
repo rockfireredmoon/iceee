@@ -24,6 +24,7 @@ class ServiceAuthenticationHandler : public AuthHandler {
 public:
 	ServiceAuthenticationHandler();
 	~ServiceAuthenticationHandler();
+	std::string GetName();
 	AccountData *authenticate(const std::string &loginName, const std::string &authorizationHash, std::string *errorMessage);
 private:
 	void copyVeteranPlayerDetails(const std::string &pfUsername, AccountData *account);

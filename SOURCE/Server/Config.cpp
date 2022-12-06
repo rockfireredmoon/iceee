@@ -7,6 +7,7 @@
 #include "Stats.h"
 #include "util/Log.h"
 #include "Util.h"
+#include "StringUtil.h"
 
 GlobalConfigData g_Config;
 
@@ -130,6 +131,8 @@ bool LoadConfig(std::string filename) {
 			} else if (strcmp(NameBlock, "SimulatorAddress") == 0) {
 				strncpy(g_SimulatorAddress, lfr.BlockToString(1),
 						sizeof(g_SimulatorAddress) - 1);
+			} else if (strcmp(NameBlock, "HTTPAddress") == 0) {
+				g_Config.HTTPAddress = lfr.BlockToString(1);
 			} else if (strcmp(NameBlock, "BindAddress") == 0) {
 				strncpy(g_BindAddress, lfr.BlockToString(1),
 						sizeof(g_BindAddress) - 1);
@@ -231,12 +234,16 @@ bool LoadConfig(std::string filename) {
 				g_Config.DebugPingClientPollInterval = lfr.BlockToIntC(1);
 			else if (strcmp(NameBlock, "DebugPingServerLogThreshold") == 0)
 				g_Config.DebugPingServerLogThreshold = lfr.BlockToIntC(1);
-			else if (strcmp(NameBlock, "HTTPDeleteConnectedTime") == 0)
-				g_Config.HTTPDeleteConnectedTime = lfr.BlockToIntC(1);
-			else if (strcmp(NameBlock, "HTTPDeleteDisconnectedTime") == 0)
-				g_Config.HTTPDeleteDisconnectedTime = lfr.BlockToIntC(1);
-			else if (strcmp(NameBlock, "HTTPDeleteRecheckDelay") == 0)
-				g_Config.HTTPDeleteRecheckDelay = lfr.BlockToIntC(1);
+			else if (strcmp(NameBlock, "HTTPBacklog") == 0)
+				g_Config.HTTPBacklog = lfr.BlockToIntC(1);
+			else if (strcmp(NameBlock, "HTTPThreads") == 0)
+				g_Config.HTTPThreads = lfr.BlockToIntC(1);
+			else if (strcmp(NameBlock, "HTTPConnectionQueue") == 0)
+				g_Config.HTTPConnectionQueue = lfr.BlockToIntC(1);
+			else if (strcmp(NameBlock, "HTTPAuthDomainCheck") == 0)
+				g_Config.HTTPAuthDomainCheck = lfr.BlockToBoolC(1);
+			else if (strcmp(NameBlock, "HTTPAuthDomain") == 0)
+				g_Config.HTTPAuthDomain = lfr.BlockToString(1);
 			else if (strcmp(NameBlock, "PartyPositionSendInterval") == 0)
 				g_Config.PartyPositionSendInterval = lfr.BlockToIntC(1);
 			else if (strcmp(NameBlock, "VaultDefaultSize") == 0)
@@ -540,9 +547,11 @@ GlobalConfigData::GlobalConfigData() {
 	AprilFools = 0;
 	AprilFoolsAccount = 0;
 
-	HTTPDeleteDisconnectedTime = 60000;
-	HTTPDeleteConnectedTime = 300000;
-	HTTPDeleteRecheckDelay = 60000;
+	HTTPBacklog = 200;
+	HTTPThreads = 50;
+	HTTPConnectionQueue = 20;
+	HTTPAuthDomainCheck = false;
+	HTTPAuthDomain= "";
 	PartyPositionSendInterval = 15000;
 
 	VaultDefaultSize = 16;
@@ -626,7 +635,7 @@ GlobalConfigData::GlobalConfigData() {
 	InvalidLoginMessage = "Account not found.  Check username and password.";
 	MaintenanceMessage = "";
 
-	HTTPKeepAlive = 0;
+	HTTPKeepAlive = false; // TODO not yet supported by client
 	HTTPServeAssets = true;
 	DirectoryListing = false;
 
@@ -635,6 +644,7 @@ GlobalConfigData::GlobalConfigData() {
 
 	Clans = true;
 	ClanCost = 100000;
+	EnvironmentCycle = "Sunrise=05:30,Day=08:30,Sunset=18:00,Night=20:30";
 
 	MaxAuctionHours = 24 * 7;
 	MinAuctionHours = 1;
@@ -684,6 +694,27 @@ std::string GlobalConfigData::ResolveLogPath() {
 
 std::string GlobalConfigData::ResolvePath(std::string path) {
 	return path;
+}
+
+std::string GlobalConfigData::ResolveHTTPAddress() {
+	if(HTTPAddress == "") {
+#ifndef NO_SSL
+		if(g_HTTPSListenPort > 0)
+		{
+			if(g_HTTPSListenPort == 443)
+				return StringUtil::Format("https://%s/Release/Current", g_SimulatorAddress);
+			else
+				return StringUtil::Format("https://%s:%d/Release/Current", g_SimulatorAddress, g_HTTPSListenPort);
+		}
+#endif
+		if(g_HTTPListenPort == 80)
+			return StringUtil::Format("http://%s/Release/Current", g_SimulatorAddress);
+		else {
+			return StringUtil::Format("http://%s:%d/Release/Current", g_SimulatorAddress, g_HTTPListenPort);
+		}
+	}
+	else
+		return HTTPAddress;
 }
 
 bool GlobalConfigData::RemotePasswordMatch(const char *value) {

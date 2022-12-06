@@ -44,11 +44,6 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 	if (query->argCount < 1)
 		return 0;
 
-	//Creatures cannot be used in groves, to prevent abuse of shops.
-	if (creatureInstance->actInst->mZoneDefPtr->mGrove == true) {
-		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "N");
-	}
-
 	int WritePos = 0;
 
 	int CID = query->GetInteger(0);
@@ -60,8 +55,14 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 		CDef = target->CreatureDefID;
 		if (target->serverFlags & ServerFlags::IsUnusable)
 			failed = true;
+		else if (creatureInstance->actInst->mZoneDefPtr->mGrove == true && !target->HasStatus(StatusEffects::MOUNTABLE))
+				//Creatures cannot be used in groves, to prevent abuse of shops, except
+				//for mounts
+			failed = true;
 	} else
 		failed = true;
+
+
 
 	if (failed == true) {
 		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "N");
@@ -130,6 +131,8 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 				else if (cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE))
 					status = "Y";
 				else if (target->HasStatus(StatusEffects::HENGE))
+					status = "Y";
+				else if (target->HasStatus(StatusEffects::MOUNTABLE) && !target->HasStatus(StatusEffects::MOUNTED))
 					status = "Y";
 			}
 		}
@@ -355,10 +358,6 @@ int CreatureUseHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Invalid query->");
 
-	//Creatures cannot be interacted with in groves.
-	if (creatureInstance->actInst->mZoneDefPtr->mGrove == true)
-		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
-
 	if (creatureInstance->HasStatus(StatusEffects::DEAD)) {
 		sim->SendInfoMessage("You must be alive.", INFOMSG_ERROR);
 		return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
@@ -376,6 +375,10 @@ int CreatureUseHandler::handleQuery(SimulatorThread *sim,
 	if (creatureInstance->actInst->GetBoxRange(creatureInstance, target)
 			> SimulatorThread::INTERACT_RANGE)
 		return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
+
+	//Creatures cannot be interacted with in groves unless it is a mount.
+	if (creatureInstance->actInst->mZoneDefPtr->mGrove == true && !target->HasStatus(StatusEffects::MOUNTABLE))
+		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 
 	//LogMessageL(MSG_DIAG, "  Request creature.use for %d", CID);
 	//int CDef = ResolveCreatureDef(CID);
@@ -506,6 +509,21 @@ int CreatureUseHandler::handleQuery(SimulatorThread *sim,
 			g_Logs.server->info("Creature %v is usable by %v", CDef,
 					creatureInstance->CreatureDefID);
 			return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+		}
+
+		if(target->HasStatus(StatusEffects::MOUNTABLE)) {
+			if(creatureInstance->IsMounted()) {
+				if(creatureInstance->Unmount())
+					return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+				else
+					return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Refused to be unmount.");
+			}
+			else {
+				if(creatureInstance->Mount(target))
+					return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+				else
+					return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Refused to be mounted.");
+			}
 		}
 
 		//For any other interact notify the instance on the off chance that it needs to do something.

@@ -34,25 +34,73 @@
 int GoHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 		SimulatorQuery *query, CreatureInstance *creatureInstance) {
 
-	//Sent by the client when pressing 'C' when the build tool is open.  Intended function is to
-	//warp the player to the camera position.
-	// [0], [1], [2] = x, y, z coordinates, respectively.
+	/*  Query: go
+	 Sent by various actions on the client to warp to another place. The exact
+	 semantics will depend on the number of arguments
+	 */
 
 	if (pld->zoneDef->mGrove == false)
 		if (!sim->CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer))
 			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 					"Permission denied.");
 
+	int id = creatureInstance->actInst->mZone;
+	int instance = pld->CurrentInstanceID;
 	int x = creatureInstance->CurrentX;
 	int y = creatureInstance->CurrentY;
 	int z = creatureInstance->CurrentZ;
 
-	if (query->argCount >= 3) {
+	if (query->argCount == 3) {
 		x = static_cast<int>(query->GetFloat(0)); //The arguments come in as floats but we use ints.
 		y = static_cast<int>(query->GetFloat(1));
 		z = static_cast<int>(query->GetFloat(2));
 	}
-	sim->DoWarp(pld->CurrentZoneID, pld->CurrentInstanceID, x, y, z);
+	else if (query->argCount == 4) {
+		id = query->GetInteger(0);
+		if(id == 0) {
+			ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByExactWarpName(query->GetString(0));
+			if(zd == NULL) {
+				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+						"No such zone.");
+			}
+			id = zd->mID;
+		}
+		x = static_cast<int>(query->GetFloat(1)); //The arguments come in as floats but we use ints.
+		y = static_cast<int>(query->GetFloat(2));
+		z = static_cast<int>(query->GetFloat(3));
+		if(x == 0 && y == 0 && z == 0) {
+			ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByID(id);
+			if(zd != NULL) {
+				x = zd->DefX;
+				y = zd->DefY;
+				z = zd->DefZ;
+			}
+		}
+		instance = 0;
+	}
+	else if (query->argCount == 1) {
+		std::string n = query->GetString(0);
+		CreatureInstance *def;
+		if(n == "WARP_TARGET" && creatureInstance->CurrentTarget.targ != NULL) {
+			def = creatureInstance->CurrentTarget.targ;
+		}
+		else if(Util::HasBeginning(n, "Player/")) {
+			def = g_ActiveInstanceManager.GetPlayerCreatureByDefID(StringUtil::SafeParseInt(n.substr(7)));
+		}
+		if(def == NULL) {
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"No such player.");
+		}
+		else {
+			id = def->actInst->mZone;
+			instance = def->actInst->mInstanceID;
+			x = def->CurrentX;
+			y = def->CurrentY;
+			z = def->CurrentZ;
+		}
+	}
+
+	sim->DoWarp(id, instance, x, y, z);
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
@@ -82,6 +130,74 @@ int GroveEnvironmentCycleToggleHandler::handleQuery(SimulatorThread *sim,
 			(pld->zoneDef->mEnvironmentCycle ? "ON" : "OFF"));
 	sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
+//
+//LootPackagesList
+//
+
+struct DropPackageDefinitionCompare {
+    bool operator()(std::pair<std::string, DropPackageDefinition> &left,
+      std::pair<std::string, DropPackageDefinition> &right) {
+        return left.second.mName < right.second.mName;
+    }
+};
+
+int LootPackagesListHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	/*  Query: lootpackages.list
+		 */
+
+	if (query->argCount < 1)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Invalid query.");
+
+	bool dev = sim->CheckPermissionSimple(Perm_Account, Permission_Admin | Permission_Developer | Permission_Sage);
+	if(!dev)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Not allowed.");
+
+	int wpos = 0;
+	wpos += PutByte(&sim->SendBuf[wpos], 1);              //_handleQueryResultMsg
+	wpos += PutShort(&sim->SendBuf[wpos], 0);           //Placeholder for message size
+	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
+
+	unsigned int start = query->GetInteger(0);
+	unsigned int len = 50;
+	if(query->argCount > 1)
+		len = query->GetInteger(1);
+	std::string filter = "";
+	if(query->argCount > 2)
+		filter = query->GetString(2);
+	if(len > 50 || len == 0)
+		len = 50;
+
+	std::vector<std::pair<std::string, DropPackageDefinition>> results(g_DropTableManager.mPackage.begin(), g_DropTableManager.mPackage.end());
+	sort(results.begin(), results.end(), DropPackageDefinitionCompare());
+	if(results.size() == 0)
+		len = start = 0;
+	else {
+		if(start > results.size())
+			start = results.size();
+		if(start + len >= results.size())
+			len = results.size() - start;
+	}
+	wpos += PutShort(&sim->SendBuf[wpos], len);             //Row count
+	for (size_t a = start; a < start + len; a++) {
+		DropPackageDefinition zdinfo = results[a].second;
+		wpos += PutByte(&sim->SendBuf[wpos], 5); //String count
+		wpos += PutStringUTF(&sim->SendBuf[wpos], zdinfo.mName.c_str()); // 1
+		wpos += PutStringUTF(&sim->SendBuf[wpos], std::to_string(zdinfo.mMobFlags).c_str()); // 2
+		wpos += PutStringUTF(&sim->SendBuf[wpos], std::to_string(zdinfo.mAuto).c_str()); // 3
+		wpos += PutStringUTF(&sim->SendBuf[wpos], std::to_string(zdinfo.mCombinedClassFlags).c_str()); // 4
+		std::string s;
+		Util::Join(zdinfo.mSetList, ",", s);
+		wpos += PutStringUTF(&sim->SendBuf[wpos], s.c_str()); // 5
+	}
+	PutShort(&sim->SendBuf[1], wpos - 3);
+	return wpos;
 }
 
 //
@@ -172,6 +288,328 @@ int WorldListHandler::handleQuery(SimulatorThread *sim,
 	return wpos;
 }
 
+//
+//ZoneListHandler
+//
+struct ZoneDefInfoCompare {
+    bool operator()(std::pair<int, ZoneDefInfo> &left,
+      std::pair<int, ZoneDefInfo> &right) {
+        return left.second.mName < right.second.mName;
+    }
+};
+
+int ZoneListHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	/*  Query: zone.list
+	 Requests a list of zones for use in the zone tweak screen.
+	 */
+
+
+	if (query->argCount < 1)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Invalid query.");
+
+	bool dev = sim->CheckPermissionSimple(Perm_Account, Permission_Admin | Permission_Developer | Permission_Sage);
+	if(!dev) {
+		if (pld->zoneDef->mGrove == false)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"You are not in a grove.");
+		if (pld->zoneDef->mAccountID != pld->accPtr->ID)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"You must be in your grove.");
+	}
+
+//	regions = row.len() > 10 ? row[10] : "",
+//	displayName = row.len() > 11 ? row[11] : ""
+
+	int wpos = 0;
+	wpos += PutByte(&sim->SendBuf[wpos], 1);              //_handleQueryResultMsg
+	wpos += PutShort(&sim->SendBuf[wpos], 0);           //Placeholder for message size
+	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
+
+	unsigned int start = query->GetInteger(0);
+	unsigned int len = 50;
+	if(query->argCount > 1)
+		len = query->GetInteger(1);
+	std::string filter = "";
+	if(query->argCount > 2)
+		filter = query->GetString(2);
+	if(len > 50 || len == 0)
+		len = 50;
+
+	if(g_Logs.server->enabled(el::Level::Debug))
+		g_Logs.server->debug("Zone list query for zone, start at [%v], for length of [%v]. Filter is '%v'", start, len, filter);
+
+	std::vector<std::pair<int, ZoneDefInfo>> results;
+	for(auto it = g_ZoneDefManager.mZoneList.begin(); it != g_ZoneDefManager.mZoneList.end(); ++it) {
+		if((dev && !((*it).second.mGrove)) || (!dev && (*it).second.mAccountID == pld->accPtr->ID && !((*it).second.mGrove))) {
+			if(filter == "" || Util::CaseInsensitiveStringFind((*it).second.mName, filter) || Util::CaseInsensitiveStringFind((*it).second.mDesc, filter) || Util::CaseInsensitiveStringFind((*it).second.mWarpName, filter)) {
+				std::pair<int, ZoneDefInfo> pd = std::pair<int, ZoneDefInfo>(
+						(*it).second.mID, (*it).second);
+				results.push_back(pd);
+			}
+		}
+	}
+	sort(results.begin(), results.end(), ZoneDefInfoCompare());
+	if(results.size() == 0)
+		len = start = 0;
+	else {
+		if(start > results.size())
+			start = results.size();
+		if(start + len >= results.size())
+			len = results.size() - start;
+	}
+	if(g_Logs.server->enabled(el::Level::Debug))
+		g_Logs.server->debug("Actual zone query results, start at [%v], for length of [%v] in results of [%v]", start, len, results.size());
+
+	wpos += PutShort(&sim->SendBuf[wpos], len);             //Row count
+	for (size_t a = start; a < start + len; a++) {
+		ZoneDefInfo zdinfo = results[a].second;
+		wpos += WriteZoneDefInfo(&sim->SendBuf[wpos], &zdinfo);
+	}
+	PutShort(&sim->SendBuf[1], wpos - 3);
+	return wpos;
+}
+
+
+//
+//ZoneGetHandler
+//
+int ZoneGetHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	/*  Query: zone.get
+	 Requests a single zone.
+	 */
+	int zone = pld->zoneDef->mID;
+	if(query->argCount > 0)
+		zone = query->GetInteger(0);
+	bool dev = sim->CheckPermissionSimple(Perm_Account, Permission_Admin | Permission_Developer | Permission_Sage);
+	if(!dev) {
+		if (pld->zoneDef->mGrove == false)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"You are not in a grove.");
+		if (pld->zoneDef->mAccountID != pld->accPtr->ID)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"You must be in your grove.");
+		if(zone != pld->zoneDef->mID)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"Can only retrieve your grove.");
+	}
+
+	ZoneDefInfo *def = g_ZoneDefManager.GetPointerByID(zone);
+	if(def == NULL)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"No such zone.");
+
+	int wpos = 0;
+	wpos += PutByte(&sim->SendBuf[wpos], 1);              //_handleQueryResultMsg
+	wpos += PutShort(&sim->SendBuf[wpos], 0);           //Placeholder for message size
+	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
+	wpos += PutShort(&sim->SendBuf[wpos], 1);             //Row count
+	wpos += WriteZoneDefInfo(&sim->SendBuf[wpos], def);
+	PutShort(&sim->SendBuf[1], wpos - 3);
+	return wpos;
+}
+
+//
+//ZoneEditHandler
+//
+
+int ZoneEditHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	/*  Query: zone.edit
+	 Edits a zone property, create a new zone, or clone an existing zone, copying its
+	 configuration and scenery from an existing zone
+
+
+	 */
+
+
+	if (query->argCount < 2)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Invalid query.");
+
+	bool dev = sim->CheckPermissionSimple(Perm_Account, Permission_Admin | Permission_Developer | Permission_Sage);
+
+	int zone = query->GetInteger(0);
+	unsigned int idx = 1;
+	bool isNew = false;
+	if(zone == 0) {
+		if(query->GetStringObject(0) == "CLONE_CONTENTS") {
+			if(dev) {
+				int sourceZone = query->GetInteger(1);
+				ZoneDefInfo *source = g_ZoneDefManager.GetPointerByID(sourceZone);
+				if(source == NULL) {
+					return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+							"No such source zone.");
+				}
+				pld->zoneDef->PopulateFrom(*source);
+				g_ZoneDefManager.NotifyConfigurationChange();
+				if(pld->zoneDef->IsPlayerGrove())
+					g_ZoneDefManager.CreateGroveZone(*(pld->zoneDef));
+				else
+					g_ZoneDefManager.UpdateWorldZone(*(pld->zoneDef));
+
+				sim->SendInfoMessage(pld->zoneDef->mName.c_str(), INFOMSG_LOCATION);
+				sim->SendInfoMessage(pld->charPtr->Shard.c_str(), INFOMSG_SHARD);
+				int wpos = PrepExt_SendEnvironmentUpdateMsg(sim->SendBuf, creatureInstance->actInst, pld->CurrentZone, pld->zoneDef, -1, -1, 0);
+				wpos += PrepExt_SetTimeOfDay(&sim->SendBuf[wpos], sim->GetTimeOfDay().c_str());
+				creatureInstance->actInst->LSendToAllSimulator(sim->SendBuf, wpos, -1);
+				return PrepExt_QueryResponseString(sim->SendBuf, query->ID, std::to_string(zone).c_str());
+			}
+			else
+				// Only devs can create zones
+				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+						"Not allowed.");
+		}
+		else if(query->GetStringObject(0) == "NEW") {
+			if(dev) {
+				zone = g_ZoneDefManager.CreateWorldZone();
+				if(zone == 0) {
+					return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+							"Server refused to create a new zone. Please consult logs.");
+				}
+				isNew = true;
+			}
+			else
+				// Only devs can create zones
+				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+						"Not allowed.");
+		}
+		else
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"Invalid zone.");
+	}
+
+	ZoneDefInfo *def = g_ZoneDefManager.GetPointerByID(zone);
+	if(def == NULL) {
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"No such zone.");
+	}
+
+	if(isNew) {
+		def->mName = "New_Zone_" + std::to_string(def->mID);
+		def->mWarpName = def->mName;
+		def->DefX = 1;
+		def->DefY = 1;
+		def->DefZ = 1;
+	}
+
+	if(!dev) {
+		if (pld->zoneDef->mGrove == false)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"You are not in a grove.");
+		if (pld->zoneDef->mAccountID != pld->accPtr->ID)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"You must be in your grove.");
+
+		if(def->mID != pld->zoneDef->mID)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"You must be in this grove.");
+	}
+
+	while(idx < query->argCount) {
+		std::string key = query->GetString(idx++);
+		std::string value = query->GetString(idx++);
+		if(key == "name")
+			def->mName = value;
+		else if(key == "terrain") {
+			def->mTerrainConfig = value;
+			if(def->mID == creatureInstance->actInst->mZone) {
+				creatureInstance->actInst->SetEnvironment(value);
+			}
+		}
+		else if(key == "displayName")
+			def->mDesc = value;
+		else if(key == "mapName")
+			def->mMapName = value;
+		else if(key == "groupPermission") {
+			// TODO
+		}
+		else if(key == "environmentType") {
+			def->mEnvironmentType = value;
+			if(def->mID == creatureInstance->actInst->mZone) {
+				creatureInstance->actInst->SetEnvironment(value);
+			}
+		}
+		else if(key == "instancing")
+			def->mInstance = value.compare("MULTIPLE") == 0;
+		else if(key == "beefFactor") {
+			// TODO
+		}
+		else if(key == "warpName")
+			def->mWarpName = value;
+		else if(key == "regions") {
+			// TODO
+		}
+		else if(key == "defaultLayers") {
+			// TODO
+		}
+		else if(key == "instancing")
+			def->mInstance = value.compare("MULTIPLE") == 0;
+		else if(key == "groveName")
+			def->mGroveName = value;
+		else if(key == "grove")
+			def->mGrove = value == "Y" || value == "y";
+		else if(key == "persist")
+			def->mPersist = value == "Y" || value == "y";
+		else if(key == "arena")
+			def->mArena = value == "Y" || value == "y";
+		else if(key == "guildHall")
+			def->mGuildHall = value == "Y" || value == "y";
+		else if(key == "clan")
+			def->mClan = StringUtil::SafeParseInt(value, 0);
+		else if(key == "environmentCycle")
+			def->mEnvironmentCycle = value == "Y" || value == "y";
+		else if(key == "audit")
+			def->mAudit = value == "Y" || value == "y";
+		else if(key == "maxAggroRange")
+			def->mMaxAggroRange = StringUtil::SafeParseInt(value, ZoneDefInfo::DEFAULT_MAXAGGRORANGE);
+		else if(key == "maxLeashRange")
+			def->mMaxLeashRange = StringUtil::SafeParseInt(value, ZoneDefInfo::DEFAULT_MAXLEASHRANGEINSTANCE);
+		else if(key == "minLevel")
+			def->mMinLevel = StringUtil::SafeParseInt(value, 0);
+		else if(key == "maxLevel")
+			def->mMaxLevel = StringUtil::SafeParseInt(value, 9999);
+		else if(key == "pageSize")
+			def->mPageSize = StringUtil::SafeParseInt(value, ZoneDefInfo::DEFAULT_PAGESIZE);
+		else if(key == "mode")
+			def->mMode = StringUtil::SafeParseInt(value);
+		else if(key == "returnZone")
+			def->mReturnZone = StringUtil::SafeParseInt(value);
+		else if(key == "timeOfDay")
+			def->mTimeOfDay = value;
+		else if(key == "def") {
+			STRINGLIST l;
+			Util::Split(value, " ", l);
+			if(l.size() > 0)
+				def->DefX = StringUtil::SafeParseInt(l[0]);
+			else if(l.size() > 1)
+				def->DefY = StringUtil::SafeParseInt(l[1]);
+			else if(l.size() > 2)
+				def->DefZ = StringUtil::SafeParseInt(l[2]);
+		}
+		else
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"Invalid key.");
+	}
+
+	if(def->IsPlayerGrove()) {
+		g_ZoneDefManager.CreateGroveZone(*def);
+	}
+	else {
+		g_ZoneDefManager.UpdateWorldZone(*def);
+	}
+
+	if(isNew) {
+		sim->WarpToZone(def, def->DefX, def->DefY, def->DefZ);
+	}
+
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, std::to_string(zone).c_str());
+}
 //
 //ShardSetHandler
 //

@@ -3,9 +3,10 @@ Description=Earth Eternal - The Anubian War Daemon
 After=network.target
 
 [Service]
-Type=forking
+Type=simple
 PIDFile=/var/run/tawd.pid
-ExecStart=/usr/bin/tawd -d -p /var/run/tawd.pid -c /etc/tawd
+ExecStart=/usr/bin/tawd -p /var/run/tawd.pid -c /etc/tawd
 ExecStop=/usr/bin/kill -SIGTERM $MAINPID
 
 [Install]
+WantedBy=multi-user.target

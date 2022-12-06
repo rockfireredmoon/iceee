@@ -57,11 +57,14 @@ int LobbyAuthenticateMessage::handleMessage(SimulatorThread *sim, CharacterServe
 	GetStringUTF(&sim->readPtr[sim->ReadPos], authHash, sizeof(authHash), sim->ReadPos);  //authorization hash or or X-CSRF-Token:sess_id:session_name:uid
 
 
+	g_Logs.simulator->info("Starting authentication for %v (%v) using %v", loginName, simID, authHandler->GetName());
+
 	/* Authentication can take a long time as it might now be going off to an external service.
 	 * So we put the time consuming bit into a pool thread, then return to the server thread
 	 * once that is done.
 	 */
 	g_Scheduler.Pool([this, simID, authHandler, loginName, authHash](){
+		g_Logs.simulator->info("Starting first phase for %v (%v) using %v", loginName, simID, authHandler->GetName());
 
 		SimulatorThread *sim = g_SimulatorManager.GetPtrByID(simID);
 		if(sim == NULL) {
@@ -70,7 +73,7 @@ int LobbyAuthenticateMessage::handleMessage(SimulatorThread *sim, CharacterServe
 		}
 		std::string errorMessage;
 		AccountData *accPtr = authHandler->authenticate(loginName, authHash, &errorMessage);
-		g_Logs.simulator->info("Completed first phase of authentiation for %v (%v)", loginName, simID);
+		g_Logs.simulator->info("Completed first phase of authentication for %v (%v)", loginName, simID);
 
 		if (accPtr == NULL) {
 			g_Logs.simulator->error("[%v] Could not find account: %v", sim->InternalID, loginName);

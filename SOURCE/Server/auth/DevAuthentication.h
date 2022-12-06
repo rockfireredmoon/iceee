@@ -24,6 +24,7 @@ class DevAuthenticationHandler : public AuthHandler {
 public:
 	DevAuthenticationHandler();
 	~DevAuthenticationHandler();
+	std::string GetName();
 	AccountData *authenticate(const std::string &loginName, const std::string &authorizationHash, std::string *errorMessage);
 };
 

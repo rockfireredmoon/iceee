@@ -50,6 +50,30 @@ public:
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class LootPackagesListHandler : public QueryHandler {
+public:
+	~LootPackagesListHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class ZoneListHandler : public QueryHandler {
+public:
+	~ZoneListHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class ZoneGetHandler : public QueryHandler {
+public:
+	~ZoneGetHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class ZoneEditHandler : public QueryHandler {
+public:
+	~ZoneEditHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
 class ShardSetHandler : public QueryHandler {
 public:
 	~ShardSetHandler() {};

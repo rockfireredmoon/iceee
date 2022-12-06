@@ -24,6 +24,7 @@
 #include "../DirectoryAccess.h"
 #include "../StringUtil.h"
 #include "../util/Log.h"
+#include "../Scheduler.h"
 
 #include "../FileReader.h"
 #include <stdio.h>
@@ -47,31 +48,39 @@ using namespace HTTPD;
 
 FileChecksum g_FileChecksum;
 
-void FileChecksum :: LoadFromFile()
-{
-	std::string filename = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveHTTPCARPath(), "Release"),
-			"Current"), "HTTPChecksum.txt");
-	if(!Platform::FileExists(filename)) {
-		g_Logs.http->warn("Could not find newer style checksum %v, trying old location", filename);
-		filename = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "HTTPChecksum.txt");
+FileChecksum::FileChecksum() {
+	mChecked = 0;
+	mChecksumUpdate = 0;
+	mChecksumUpdateTimer = 0;
+}
+
+void FileChecksum::LoadFromFile() {
+//	cs.Enter("FileChecksum::LoadFromFile");
+	mChecksumData.clear();
+	std::string filename = GetFilename();
+	if (!Platform::FileExists(filename)) {
+		g_Logs.http->warn(
+				"Could not find newer style checksum %v, trying old location",
+				filename);
+		filename = Platform::JoinPath(
+				Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"),
+				"HTTPChecksum.txt");
 	}
 
 	g_Logs.http->info("Loading checksums from %v", filename);
 	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
-	{
+	if (lfr.OpenText(filename.c_str()) != Err_OK) {
 		g_Logs.http->warn("Could not open file: %v", filename);
+//		cs.Leave();
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;
 	std::string readfilename;
 	std::string readchecksum;
-	while(lfr.FileOpen() == true)
-	{
+	while (lfr.FileOpen() == true) {
 		lfr.ReadLine();
 		int r = lfr.BreakUntil("=", '=');
-		if(r >= 2)
-		{
+		if (r >= 2) {
 			readfilename = lfr.BlockToStringC(0, 0);
 			readchecksum = lfr.BlockToStringC(1, 0);
 			mChecksumData[readfilename] = readchecksum;
@@ -79,25 +88,64 @@ void FileChecksum :: LoadFromFile()
 		}
 	}
 	lfr.CloseCurrent();
+	mChecksumUpdate = Platform::GetLastModified(filename);
+	ScheduleCheck();
+//	cs.Leave();
 }
 
-std::string FileChecksum :: MatchChecksum(const std::string filename, const std::string checksum)
-{
+std::string FileChecksum::GetFilename() {
+	return Platform::JoinPath(
+				Platform::JoinPath(
+						Platform::JoinPath(g_Config.ResolveHTTPCARPath(),
+								"Release"), "Current"), "HTTPChecksum.txt");
+}
+
+void FileChecksum::ScheduleCheck() {
+	if(mChecksumUpdateTimer != 0) {
+		mChecksumUpdateTimer = 0;
+		g_Scheduler.Cancel(mChecksumUpdateTimer);
+	}
+	mChecksumUpdateTimer = g_Scheduler.ScheduleIn([this]() {
+		std::string filename = GetFilename();
+		if (Platform::GetLastModified(filename) != mChecksumUpdate) {
+			// Different again, reset counter to 1 so we check checking
+			mChecked = 1;
+		}
+		else if(mChecked > 3) {
+			// Stayed same after a change for 3 cycles, has changed
+			g_Logs.http->info("Checksum has changed: %v", filename);
+			LoadFromFile();
+
+			// Start again
+			mChecked = 0;
+		}
+		else if(mChecked > 0) {
+			// Had one change, but need more
+			mChecked++;
+		}
+		mChecksumUpdate = Platform::GetLastModified(filename);
+		ScheduleCheck();
+	}, 10000);
+}
+
+std::string FileChecksum::MatchChecksum(const std::string filename,
+		const std::string checksum) {
 	CHECKSUM_MAP::iterator it = mChecksumData.find(filename);
 
 	//If it doesn't appear in the list, assume it's valid so the client doesn't redownload
-	if(it == mChecksumData.end()) {
-		g_Logs.http->warn("File %v is not in the index, so it's checksum is unknown. Assuming no download required.", filename.c_str());
+	if (it == mChecksumData.end()) {
+		g_Logs.http->warn(
+				"File %v is not in the index, so it's checksum is unknown. Assuming no download required.",
+				filename.c_str());
 		return "";
 	}
 
-	if(it->second.compare(checksum) == 0) {
+	if (it->second.compare(checksum) == 0) {
 		return "";
 	}
 
 	return it->second;
 }
-
 
 //
 // HTTPService
@@ -113,7 +161,7 @@ HTTPService::~HTTPService() {
 }
 
 bool HTTPService::Shutdown() {
-	if(civetServer != NULL) {
+	if (civetServer != NULL) {
 		delete civetServer;
 		return true;
 	}
@@ -126,14 +174,15 @@ void HTTPService::RegisterHandler(std::string name, CivetHandler *handler) {
 
 bool HTTPService::Start() {
 
-	const char * zzOptions[32];
+	const char *zzOptions[32];
 	unsigned int idx = 0;
 
-	std::vector<const char *> opts;
+	std::vector<const char*> opts;
 
 	// Document root
 	zzOptions[idx++] = "document_root";
-	zzOptions[idx++] = Platform::JoinPath(g_Config.ResolveHTTPBasePath(), "Pages").c_str();
+	zzOptions[idx++] = Platform::JoinPath(g_Config.ResolveHTTPBasePath(),
+			"Pages").c_str();
 
 	bool http = g_HTTPListenPort > 0;
 #ifndef NO_SSL
@@ -143,13 +192,13 @@ bool HTTPService::Start() {
 #endif
 
 	// HTTP
-	if(http) {
+	if (http) {
 
 		zzOptions[idx++] = "listening_ports";
 
 		std::string ports;
-		if(g_HTTPListenPort > 0) {
-			if(strlen(g_BindAddress) > 0) {
+		if (g_HTTPListenPort > 0) {
+			if (strlen(g_BindAddress) > 0) {
 				ports.append(g_BindAddress);
 				ports.append(":");
 			}
@@ -177,20 +226,47 @@ bool HTTPService::Start() {
 
 		zzOptions[idx++] = ports.c_str();
 
-		std::string alog = Platform::JoinPath(g_Config.ResolveLogPath(), "HTTPAccess.txt");
-		std::string elog = Platform::JoinPath(g_Config.ResolveLogPath(), "HTTPError.txt");
+		std::string alog = Platform::JoinPath(g_Config.ResolveLogPath(),
+				"HTTPAccess.txt");
+		std::string elog = Platform::JoinPath(g_Config.ResolveLogPath(),
+				"HTTPError.txt");
 
 		// Logs
 		zzOptions[idx++] = "access_log_file";
 		zzOptions[idx++] = alog.c_str();
 		zzOptions[idx++] = "error_log_file";
 		zzOptions[idx++] = elog.c_str();
+
+		// Server
+		zzOptions[idx++] = "num_threads";
+		zzOptions[idx++] = std::to_string(g_Config.HTTPThreads).c_str();
+
+		zzOptions[idx++] = "listen_backlog";
+		zzOptions[idx++] = std::to_string(g_Config.HTTPBacklog).c_str();
+
+		zzOptions[idx++] = "connection_queue";
+		zzOptions[idx++] = std::to_string(g_Config.HTTPConnectionQueue).c_str();
+
+		zzOptions[idx++] = "enable_auth_domain_check";
+		zzOptions[idx++] = g_Config.HTTPAuthDomainCheck ? "yes" : "no";
+
+		zzOptions[idx++] = "authentication_domain";
+		if(g_Config.HTTPAuthDomain.length() == 0)
+			zzOptions[idx++] = g_SimulatorAddress;
+		else
+			zzOptions[idx++] = g_Config.HTTPAuthDomain.c_str();
+
+		// Other configuration
+		zzOptions[idx++] = "enable_keep_alive";
+		zzOptions[idx++] = g_Config.HTTPKeepAlive ? "yes" : "no";
 		if(g_Config.HTTPKeepAlive) {
-			zzOptions[idx++] = "enable_keep_alive";
-			zzOptions[idx++] = "yes";
+			g_Logs.http->warn("HTTP Keep Alive is enabled, but the client is known not to work correctly with this option.");
 		}
+
 		zzOptions[idx++] = "enable_directory_listing";
 		zzOptions[idx++] = g_Config.DirectoryListing ? "yes" : "no";
+
+		// SSL
 #ifndef NO_SSL
 		zzOptions[idx++] = "ssl_certificate";
 		zzOptions[idx++] = g_SSLCertificate.c_str();
@@ -200,24 +276,27 @@ bool HTTPService::Start() {
 		g_Logs.http->info("Starting CivetWeb");
 		BEGINTRY {
 			civetServer = new CivetServer(zzOptions);
-			if(!civetServer->isConfigured()) {
-				g_Logs.http->warn("CivetWeb HTTP server disabled due to misconfiguration.");
-				return false;
-			}
+//			if (!civetServer->isConfigured()) {
+//				g_Logs.http->warn(
+//						"CivetWeb HTTP server disabled due to misconfiguration.");
+//				return false;
+//			}
 
-			for(std::map<std::string, CivetHandler*>::iterator it = handlers.begin(); it != handlers.end(); ++it) {
+			for (std::map<std::string, CivetHandler*>::iterator it =
+					handlers.begin(); it != handlers.end(); ++it) {
 				civetServer->addHandler((*it).first, (*it).second);
 			}
 
 			return true;
 		}
 		BEGINCATCH {
-			g_Logs.http->error("CivetWeb HTTP server threw exception on startup. This is likely due to configuration or other services running on the same interface and / or port.");
+			g_Logs.http->error(
+					"CivetWeb HTTP server threw exception on startup. This is likely due to configuration or other services running on the same interface and / or port.");
 			return false;
 		}
-	}
-	else {
-		g_Logs.http->warn("CivetWeb HTTP server disabled. No HTTP requests will be served.");
+	} else {
+		g_Logs.http->warn(
+				"CivetWeb HTTP server disabled. No HTTP requests will be served.");
 
 		return false;
 	}

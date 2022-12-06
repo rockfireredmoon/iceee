@@ -3,7 +3,7 @@ default static item database.
 */
 
 #include "VirtualItem.h"
-#include "Util.h"
+#include "Random.h"
 
 #include "DropTable.h"
 #include "InstanceScale.h"
@@ -441,7 +441,7 @@ int VirtualItem :: RollStats(std::string& output, int numPoints, int rarity)
 	int iterCount = 0;
 	while(remain > 0)
 	{
-		int allocPts = randint(rollMin, rollMax);
+		int allocPts = g_RandomManager.RandInt(rollMin, rollMax);
 		if(allocPts > remain)
 			allocPts = remain;
 
@@ -451,7 +451,7 @@ int VirtualItem :: RollStats(std::string& output, int numPoints, int rarity)
 
 		//g_Log.AddMessageFormat("  alloc: %d (remain: %d)", allocPts, remain);
 
-		int allocSt = randint(0, statID.size() - 1);
+		int allocSt = g_RandomManager.RandInt(0, statID.size() - 1);
 		AppendStat(output, statID[allocSt], allocPts);
 		statID.erase(statID.begin() + allocSt);
 		remain -= allocPts;
@@ -462,8 +462,8 @@ int VirtualItem :: RollStats(std::string& output, int numPoints, int rarity)
 	{
 		int allocPts = numPoints;
 		if(i < iterations - 1)
-			allocPts = randint(1, numPoints);
-		int allocSt = randint(0, statID.size() - 1);
+			allocPts = g_RandomManager.RandInt(1, numPoints);
+		int allocSt = g_RandomManager.RandInt(0, statID.size() - 1);
 		//int r = GetStatIndex(statID[allocSt]);
 		AppendStat(output, statID[allocSt], allocPts);
 
@@ -751,7 +751,7 @@ int GetRandomTableIndex(std::vector<UsedTable>& tableList, int maxShares)
 			return i;
 
 	int base = 1;
-	int rnd = randint(1, maxShares);
+	int rnd = g_RandomManager.RandInt(1, maxShares);
 	for(size_t i = 0; i < tableList.size(); i++)
 	{
 		if(rnd >= base && rnd <= base + tableList[i].table->shares - 1)
@@ -781,7 +781,7 @@ void VirtualItem :: ApplyRandomTables(EquipTemplate* eqTemplate, int level, int 
 	int bonus = (int)(g_VirtualItemModSystem.rarityConfig[rarity].levelBonus * level);
 	while(bonus > 0)
 	{
-		int rnd = randint(1, 100);
+		int rnd = g_RandomManager.RandInt(1, 100);
 		if(rnd <= bonus)
 			maxMods++;
 		bonus -= 100;
@@ -799,7 +799,7 @@ void VirtualItem :: ApplyRandomTables(EquipTemplate* eqTemplate, int level, int 
 	{
 		if(nullMod > 0)
 		{
-			int rnd = randint(1, 100);
+			int rnd = g_RandomManager.RandInt(1, 100);
 			if(rnd <= nullMod)
 			{
 				curMods++;
@@ -1029,7 +1029,7 @@ int ModRow :: FetchData(int rarity)
 		min = max;
 		max = temp;
 	}
-	return randint(min, max);
+	return g_RandomManager.RandInt(min, max);
 }
 
 int ModRow :: FetchFirst(int rarity)
@@ -1412,7 +1412,7 @@ const char* EquipAppearance :: GetRandomString(int preferredRarity, SEARCHRESULT
 				continue;
 			if(results[i]->dataList.size() == 0)
 				continue;
-			int r = randint(0, results[i]->dataList.size() - 1);
+			int r = g_RandomManager.RandInt(0, results[i]->dataList.size() - 1);
 			return results[i]->dataList[r].c_str();
 		}
 		rarity--;
@@ -1515,7 +1515,7 @@ void EquipTable :: TallyMaxShares(void)
 VirtualItemSpawnType* EquipTable :: GetRandomEntry(void)
 {
 	int base = 1;
-	int rnd = randint(1, maxShares);
+	int rnd = g_RandomManager.RandInt(1, maxShares);
 	for(size_t i = 0; i < equipList.size(); i++)
 	{
 		if(rnd >= base && rnd <= base + equipList[i].shares - 1)
@@ -1563,7 +1563,7 @@ void NameTemplate :: CountShareTotal(void)
 const char* NameTemplate :: GetRandomName(void)
 {
 	int base = 1;
-	int r = randint(1, maxShares);
+	int r = g_RandomManager.RandInt(1, maxShares);
 	for(size_t i = 0; i < nameList.size(); i++)
 	{
 		if(r >= base && r <= base + nameList[i].shares - 1)
@@ -2020,7 +2020,7 @@ void VirtualItemModSystem :: LoadSettings(void)
 int VirtualItemModSystem :: GetDropRarity(const VirtualItemSpawnParams &params)
 {
 	//Roll a rarity type for a new drop.  Go through the list backwards.
-	int baseRoll = randint_32bit(1, DROP_SHARES);
+	int baseRoll = g_RandomManager.RandInt_32bit(1, DROP_SHARES);
 	for(int q = MAX_QUALITY_LEVEL; q >= MIN_QUALITY_LEVEL; q--)
 	{
 		if(params.level >= rarityConfig[q].level)

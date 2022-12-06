@@ -7,7 +7,7 @@
 #include "Instance.h"
 #include "Creature.h"
 #include "Ability2.h"
-#include "Util.h"
+#include "Random.h"
 #include "DirectoryAccess.h"
 #include "Report.h"
 #include "Config.h"
@@ -305,7 +305,7 @@ void AIScriptPlayer :: RunImplementationCommands(int opcode)
 		}
 		break;
 	case OP_RANDOMIZE:
-		SetVar(in->param2, randint(1, in->param1));
+		SetVar(in->param2, g_RandomManager.RandInt(1, in->param1));
 		break;
 	case OP_FINDCDEF:
 		{

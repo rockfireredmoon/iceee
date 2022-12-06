@@ -24,6 +24,7 @@ class ClusterAuthenticationHandler : public AuthHandler {
 public:
 	ClusterAuthenticationHandler();
 	~ClusterAuthenticationHandler();
+	std::string GetName();
 	AccountData *authenticate(const std::string &loginName, const std::string &authorizationHash, std::string *errorMessage);
 };
 

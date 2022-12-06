@@ -30,22 +30,33 @@ typedef std::function<void()> TaskType;
 template <typename T>
 class Queue {
 public:
+
+	void Clear() {
+        std::unique_lock<std::mutex> lock(this->d_mutex);
+        mCleared = true;
+        lock.unlock();
+        this->d_condition.notify_all();
+	}
+
     void Push(T const& value) {
-        {
-            std::unique_lock<std::mutex> lock(this->d_mutex);
-            d_queue.push_front(value);
-        }
+		std::unique_lock<std::mutex> lock(this->d_mutex);
+		d_queue.push_front(value);
+		lock.unlock();
         this->d_condition.notify_one();
     }
 
-    T Pop() {
+    bool Pop(T& item) {
         std::unique_lock<std::mutex> lock(this->d_mutex);
-        this->d_condition.wait(lock, [=]{ return !this->d_queue.empty(); });
+        this->d_condition.wait(lock, [=]{ return mCleared || !this->d_queue.empty(); });
+        if(mCleared)
+        	return false;
         T rc(std::move(this->d_queue.back()));
         this->d_queue.pop_back();
-        return rc;
+        item = rc;
+        return true;
     }
 private:
+    bool					mCleared;
     std::mutex              d_mutex;
     std::condition_variable d_condition;
     std::deque<T>           d_queue;
@@ -85,8 +96,11 @@ public:
 	int Schedule(const TaskType& task, unsigned long when);
 	int Submit(const TaskType& task);
 	void Cancel(int id);
-	TaskType PopPoolTask();
+	bool PopPoolTask(TaskType &task);
+	void Shutdown();
+	bool IsRunning();
 private:
+	bool mRunning;
 	unsigned long mNextRun;
 	int mNextTaskId;
 	Queue<TaskType> mQueue;

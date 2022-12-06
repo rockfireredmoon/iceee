@@ -29,25 +29,52 @@
 int MarkerListHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
-	if (!sim->CheckPermissionSimple(Perm_Account, Permission_Admin)
-			&& !sim->CheckPermissionSimple(Perm_Account, Permission_Builder))
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
-				"Permission denied.");
+	bool ok = sim->CheckPermissionSimple(Perm_Account, Permission_Admin)
+			|| sim->CheckPermissionSimple(Perm_Account, Permission_Builder);
+
 	if (query->args[0] == "zone") {
+		WorldMarkerContainer markers;
+
 		// Do a reload so we get external updates too
-		creatureInstance->actInst->worldMarkers.Reload();
+		if(query->argCount > 1 && query->GetInteger(1) > -1) {
+			ZoneDefInfo *zdef = g_ZoneDefManager.GetPointerByID(query->GetInteger(1));
+			if(zdef == NULL) {
+				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+						"No such zone.");
+			}
+			if(!ok && zdef->mAccountID != pld->accPtr->ID) {
+				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+						"Not owner.");
+			}
+
+			if (!zdef->IsPlayerGrove()) {
+				std::string p = Platform::JoinPath(
+						Platform::JoinPath(
+								Platform::JoinPath(g_Config.ResolveVariableDataPath(),
+										"Instance"), std::to_string(zdef->mID)), "WorldMarkers.txt");
+				markers.LoadFromFile(p, zdef->mID);
+			} else
+				markers.LoadFromCluster(zdef->mID);
+		}
+		else {
+			if(!ok && pld->zoneDef->mAccountID != pld->accPtr->ID) {
+				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+						"Not owner.");
+			}
+			markers.Copy(creatureInstance->actInst->worldMarkers);
+			markers.Reload();
+		}
 
 		int wpos = 0;
 		wpos += PutByte(&sim->SendBuf[wpos], 1);       //_handleQueryResultMsg
 		wpos += PutShort(&sim->SendBuf[wpos], 0);      //Message size
 		wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
-
 		wpos += PutShort(&sim->SendBuf[wpos],
-				creatureInstance->actInst->worldMarkers.WorldMarkerList.size());
+				markers.WorldMarkerList.size());
 		vector<WorldMarker>::iterator it;
 
-		for (it = creatureInstance->actInst->worldMarkers.WorldMarkerList.begin();
-				it != creatureInstance->actInst->worldMarkers.WorldMarkerList.end();
+		for (it = markers.WorldMarkerList.begin();
+				it != markers.WorldMarkerList.end();
 				++it) {
 			wpos += PutByte(&sim->SendBuf[wpos], 4);
 			sprintf(sim->Aux1, "%s", it->Name.c_str());
@@ -86,8 +113,9 @@ int MarkerEditHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Invalid query->");
 
 	vector<WorldMarker>::iterator it;
-	for (it = creatureInstance->actInst->worldMarkers.WorldMarkerList.begin();
-			it != creatureInstance->actInst->worldMarkers.WorldMarkerList.end();
+	WorldMarkerContainer worldMarkers = creatureInstance->actInst->worldMarkers;
+	for (it = worldMarkers.WorldMarkerList.begin();
+			it != worldMarkers.WorldMarkerList.end();
 			++it) {
 		if (it->Name.compare(query->args[0]) == 0) {
 			it->Name = query->args[2];
@@ -95,22 +123,29 @@ int MarkerEditHandler::handleQuery(SimulatorThread *sim,
 			it->X = creatureInstance->CurrentX;
 			it->Y = creatureInstance->CurrentY;
 			it->Z = creatureInstance->CurrentZ;
-			creatureInstance->actInst->worldMarkers.Save();
-			return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+			if(creatureInstance->actInst->worldMarkers.Save())
+				return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+			else
+				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+						"Failed to save marker.");
 		}
 	}
 	g_Logs.simulator->info("Creating new marker %v in zone %v at %v.",
 			query->args[2].c_str(), creatureInstance->actInst->mZone,
 			query->args[4].c_str());
 	WorldMarker wm;
+	wm.Zone = creatureInstance->actInst->mZone;
 	wm.Name = query->args[2];
 	wm.Comment = query->args[4];
 	wm.X = creatureInstance->CurrentX;
 	wm.Y = creatureInstance->CurrentY;
 	wm.Z = creatureInstance->CurrentZ;
 	creatureInstance->actInst->worldMarkers.WorldMarkerList.push_back(wm);
-	creatureInstance->actInst->worldMarkers.Save();
-	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+	if(creatureInstance->actInst->worldMarkers.Save())
+		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+	else
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Failed to save marker.");
 }
 int MarkerDelHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,

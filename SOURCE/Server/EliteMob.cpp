@@ -4,7 +4,7 @@
 
 #include "Creature.h"
 #include "Config.h"
-#include "Util.h"
+#include "Random.h"
 #include "util/Log.h"
 
 EliteManager g_EliteManager;
@@ -190,10 +190,10 @@ void EliteManager :: ApplyTransformation(CreatureInstance *creature)
 		return;
 
 	//Determine the kind of elite this this, and load the intrinsic affixes that belong to that type.
-	const EliteType *typeSel = types[randint(0, types.size() - 1)];
+	const EliteType *typeSel = types[g_RandomManager.RandInt(0, types.size() - 1)];
 	if(typeSel->mChance == 0)
 		return;
-	int chance = randint(1, typeSel->mChance);
+	int chance = g_RandomManager.RandInt(1, typeSel->mChance);
 	if(chance > 1)  //No spawn.
 		return;
 
@@ -210,11 +210,11 @@ void EliteManager :: ApplyTransformation(CreatureInstance *creature)
 	*/
 
 	int affixCount = 0;
-	int maxAffix = randint(typeSel->mMinAffix, typeSel->mMaxAffix);
+	int maxAffix = g_RandomManager.RandInt(typeSel->mMinAffix, typeSel->mMaxAffix);
 	STRINGLIST appliedAffixNames;
 	while(affixCount < maxAffix && randomAffixes.size() > 0)
 	{
-		size_t affixSel = randint(0, randomAffixes.size() - 1);
+		size_t affixSel = g_RandomManager.RandInt(0, randomAffixes.size() - 1);
 		AffixEntry *affix = randomAffixes[affixSel];
 
 		if(affix->mDisplayName.size() > 0)

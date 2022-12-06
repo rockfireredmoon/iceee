@@ -2,6 +2,7 @@
 #include "Debug.h"
 #include "Cluster.h"
 #include "StringUtil.h"
+#include "Random.h"
 #include "util/Log.h"
 
 #define VERIFYCINST(x)  EMPTY_OPERATION
@@ -74,10 +75,11 @@ void WorldMarker::Clear() {
 	X = 0;
 	Y = 0;
 	Z = 0;
+	Zone = 0;
 }
 
 bool WorldMarker::EntityKeys(AbstractEntityReader *reader) {
-	reader->Key(KEYPREFIX_WORLD_MARKER, Name);
+	reader->Key(StringUtil::Format("%s:%d", KEYPREFIX_WORLD_MARKER.c_str(), Zone), Name);
 	return true;
 }
 
@@ -92,7 +94,7 @@ bool WorldMarker::ReadEntity(AbstractEntityReader *reader) {
 }
 
 bool WorldMarker::WriteEntity(AbstractEntityWriter *writer) {
-	writer->Key(KEYPREFIX_WORLD_MARKER, Name);
+	writer->Key(StringUtil::Format("%s:%d", KEYPREFIX_WORLD_MARKER.c_str(), Zone), Name);
 	writer->Value("Comment", Comment);
 	writer->Value("X", X);
 	writer->Value("Y", Y);
@@ -109,12 +111,11 @@ WorldMarkerContainer::~WorldMarkerContainer() {
 }
 
 void WorldMarkerContainer::Clear() {
-	mZoneID = -1;
 	WorldMarkerList.clear();
 }
 
-void WorldMarkerContainer::Save() {
-	if (mZoneID != -1) {
+bool WorldMarkerContainer::Save() {
+	if (mFilename == "") {
 		/* Remove all the existing markers for this zone */
 		std::string markerKey = StringUtil::Format("%s:%d",
 				LISTPREFIX_WORLD_MARKERS.c_str(), mZoneID);
@@ -145,7 +146,7 @@ void WorldMarkerContainer::Save() {
 		if (output == NULL) {
 			g_Logs.data->error("Saving world markers could not open: %v",
 					mFilename.c_str());
-			return;
+			return false;
 		}
 
 		vector<WorldMarker>::iterator it;
@@ -164,11 +165,13 @@ void WorldMarkerContainer::Save() {
 		fflush(output);
 		fclose(output);
 	}
+
+	return true;
 }
 
 void WorldMarkerContainer::Reload() {
 	Clear();
-	if (mZoneID != 0) {
+	if (mFilename == "") {
 		/* Load from cluster - Grove zone */
 		STRINGLIST markers = g_ClusterManager.GetList(
 				StringUtil::Format("%s:%d", LISTPREFIX_WORLD_MARKERS.c_str(),
@@ -176,6 +179,7 @@ void WorldMarkerContainer::Reload() {
 		for (auto it = markers.begin(); it != markers.end(); ++it) {
 			WorldMarker m;
 			m.Name = *it;
+			m.Zone = mZoneID;
 			if (g_ClusterManager.ReadEntity(&m)) {
 				WorldMarkerList.push_back(m);
 			} else {
@@ -192,7 +196,7 @@ void WorldMarkerContainer::Reload() {
 		}
 
 		WorldMarker newItem;
-
+		newItem.Zone = mZoneID;
 		lfr.CommentStyle = Comment_Semi;
 		int r;
 		while (lfr.FileOpen() == true) {
@@ -204,6 +208,7 @@ void WorldMarkerContainer::Reload() {
 					if (newItem.Name.length() > 0) {
 						WorldMarkerList.push_back(newItem);
 						newItem.Clear();
+						newItem.Zone = mZoneID;
 					}
 				} else if (strcmp(lfr.SecBuffer, "NAME") == 0) {
 					newItem.Name = lfr.BlockToStringC(1, 0);
@@ -240,9 +245,15 @@ void WorldMarkerContainer::Reload() {
 	}
 }
 
-void WorldMarkerContainer::LoadFromFile(std::string filename) {
-	mZoneID = -1;
+void WorldMarkerContainer::LoadFromFile(std::string filename, int zoneID) {
+	mZoneID = zoneID;
 	mFilename = filename;
+	Reload();
+}
+
+void WorldMarkerContainer::Copy(WorldMarkerContainer &other) {
+	mZoneID = other.mZoneID;
+	mFilename = other.mFilename;
 	Reload();
 }
 
@@ -2523,7 +2534,7 @@ void ActiveInstance::InitializeData(void) {
 	Util::SafeFormat(buf, sizeof(buf), "%d", mZone);
 
 	std::string p;
-	if (!mZoneDefPtr->mGrove) {
+	if (!mZoneDefPtr->IsPlayerGrove()) {
 		/* Only non-grove zones can have shops and static spawns */
 		p = Platform::JoinPath(
 				Platform::JoinPath(
@@ -2554,7 +2565,7 @@ void ActiveInstance::InitializeData(void) {
 				Platform::JoinPath(
 						Platform::JoinPath(g_Config.ResolveVariableDataPath(),
 								"Instance"), buf), "WorldMarkers.txt");
-		worldMarkers.LoadFromFile(p);
+		worldMarkers.LoadFromFile(p, mZone);
 	} else {
 		worldMarkers.LoadFromCluster(mZone);
 	}
@@ -2877,9 +2888,9 @@ void ActiveInstance::SidekickDefend(CreatureInstance* host) {
 				SidekickListPtr[a]->SetServerFlag(ServerFlags::CalledBack,
 						true);
 				SidekickListPtr[a]->CurrentTarget.DesLocX = host->CurrentX
-						+ randint(-MED_SCATTER_RANGE, MED_SCATTER_RANGE);
+						+ g_RandomManager.RandInt(-MED_SCATTER_RANGE, MED_SCATTER_RANGE);
 				SidekickListPtr[a]->CurrentTarget.DesLocZ = host->CurrentZ
-						+ randint(-MED_SCATTER_RANGE, MED_SCATTER_RANGE);
+						+ g_RandomManager.RandInt(-MED_SCATTER_RANGE, MED_SCATTER_RANGE);
 			} else {
 				HateCreatureData hcd = host->GetHateProfile()->hateList[0];
 				CreatureInstance *cinst = GetNPCInstanceByCID(hcd.CID);
@@ -2904,9 +2915,9 @@ void ActiveInstance::SidekickCall(CreatureInstance* host) {
 			SidekickListPtr[a]->SetServerFlag(ServerFlags::CalledBack, true);
 			//Replace the current destination.
 			SidekickListPtr[a]->CurrentTarget.DesLocX = host->CurrentX
-					+ randint(-MED_SCATTER_RANGE, MED_SCATTER_RANGE);
+					+ g_RandomManager.RandInt(-MED_SCATTER_RANGE, MED_SCATTER_RANGE);
 			SidekickListPtr[a]->CurrentTarget.DesLocZ = host->CurrentZ
-					+ randint(-MED_SCATTER_RANGE, MED_SCATTER_RANGE);
+					+ g_RandomManager.RandInt(-MED_SCATTER_RANGE, MED_SCATTER_RANGE);
 		}
 }
 
@@ -2921,9 +2932,9 @@ void ActiveInstance::SidekickWarp(CreatureInstance *host) {
 			SidekickListPtr[a]->CurrentY = host->CurrentY;
 			SidekickListPtr[a]->CurrentZ = host->CurrentZ;
 			if (SidekickListPtr[a]->NotStatus(StatusEffects::DEAD) == true) {
-				SidekickListPtr[a]->CurrentX += randint(-SCATTER_RANGE,
+				SidekickListPtr[a]->CurrentX += g_RandomManager.RandInt(-SCATTER_RANGE,
 						SCATTER_RANGE);
-				SidekickListPtr[a]->CurrentZ += randint(-SCATTER_RANGE,
+				SidekickListPtr[a]->CurrentZ += g_RandomManager.RandInt(-SCATTER_RANGE,
 						SCATTER_RANGE);
 			}
 			//SidekickListPtr[a]->CurrentTarget.targ = NULL;
@@ -2959,9 +2970,9 @@ void ActiveInstance::SidekickScatter(CreatureInstance* host) {
 				z = SidekickListPtr[a]->AnchorObject->CurrentZ;
 			}
 			SidekickListPtr[a]->CurrentTarget.DesLocX = x
-					+ randint(-SCATTER_RANGE, SCATTER_RANGE);
+					+ g_RandomManager.RandInt(-SCATTER_RANGE, SCATTER_RANGE);
 			SidekickListPtr[a]->CurrentTarget.DesLocZ = z
-					+ randint(-SCATTER_RANGE, SCATTER_RANGE);
+					+ g_RandomManager.RandInt(-SCATTER_RANGE, SCATTER_RANGE);
 			SidekickListPtr[a]->movementTime = g_ServerTime;
 		}
 	}

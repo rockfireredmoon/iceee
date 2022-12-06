@@ -152,9 +152,11 @@ public:
 	std::string AprilFoolsName;
 	int AprilFoolsAccount;
 
-	int HTTPDeleteDisconnectedTime; //Time (milliseconds) to wait before removing a disconnected (no longer useful) Distribute thread.
-	int HTTPDeleteConnectedTime;    //Time (milliseconds) to wait before forcing a connected (but inactive) Distribute thread.
-	int HTTPDeleteRecheckDelay;     //Time interval (milliseconds) between checking for inactive HTTP Distribute threads
+	int HTTPBacklog; //Maximum number of connections waiting to be accepted by the server operating system.
+	int HTTPThreads;    //Number of worker threads.
+	int HTTPConnectionQueue;     //Maximum number of accepted connections waiting to be dispatched by a worker thread.
+	bool HTTPAuthDomainCheck;    //Check server domain
+	std::string HTTPAuthDomain;    //Server domain
 
 	int PartyPositionSendInterval; //Time (milliseconds) between sending position updates to members outside of local range.
 
@@ -239,6 +241,12 @@ public:
 	bool SMTPSSL;						// For emails, whether to use SSL
 	std::string SMTPSender;				// For emails, the default sender address
 
+	//Holds the address HTTP requests will be made to, from a clients perspect. If not set
+	//this will be computed from the simulator address and HTTP port (if any).
+	//This is mainly used for sim switching, informing the client of the (possibly new)
+	//address that should now be used for HTTP requests
+	std::string HTTPAddress;
+
 	std::vector<OAuth2Client*> OAuth2Clients;
 	bool LegacyAccounts;
 	bool PublicAPI;
@@ -278,6 +286,7 @@ public:
 	std::string ResolveHTTPCARPath();
 	std::vector<std::string> ResolveLocalConfigurationPath();
 	std::string ResolveLogPath();
+	std::string ResolveHTTPAddress();
 
 private:
 	std::string ResolvePath(std::string path);

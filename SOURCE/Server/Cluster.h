@@ -99,6 +99,7 @@ public:
 	unsigned long mStartTime;
 	int mPing;
 	std::string mSimulatorAddress;
+	std::string mHTTPAddress;
 
 	Shard();
 
@@ -176,6 +177,8 @@ public:
 	bool RemoveKey(const std::string &key, bool sync = true);
 	std::string GetKey(const std::string &key);
 	std::string GetKey(const std::string &key, const std::string &defaultValue);
+	int GetIntKey(const std::string &key);
+	int GetIntKey(const std::string &key, const int &defaultValue);
 	std::vector<std::string> GetList(const std::string &key);
 	bool ListAdd(const std::string &key, const std::string &value, bool sync = true);
 	bool ListSet(const std::string &key, const std::vector<std::string> &value, bool sync = true);
@@ -194,6 +197,7 @@ private:
 	bool mMaster;
 	unsigned long mPingSentTime;
 	unsigned long mNextPing;
+	bool PostInit();
 	void ConfirmTransfer(int cdefId, const string &shardName, const string &token, int simID);
 	void TransferFromOtherShard(int cdefId, const std::string &shardName, std::string token, int simID);
 	void ConfirmTransferToOtherShard(int cdefId, const std::string &shardName, std::string token, int simID);
@@ -205,16 +209,8 @@ private:
 	void JoinedOtherShard(const std::string &shardName, int cdefID, int zoneID, unsigned long simID);
 	void ShardPing(const std::string &shardName, unsigned long localTime);
 	void ShardPong(const std::string &shardName);
-	void ServerConfigurationReceived(const std::string &shardName, const std::string &simulatorAddress, int simulatorPort, const std::string &fullName, int mPlayers, unsigned long startTime, unsigned long utcTime, unsigned long localTime);
-	void OtherShardChat(const std::string &from, const std::string &to, const std::string &channel, bool tell, int senderClanID, const std::string &msg);
-	void OtherShardWeather(int zoneId, const std::string &mapType, const std::string &type, int weight);
-	void OtherShardThunder(int zoneId, const std::string &mapType);
-	void OtherShardLogin(const std::string &shardName, int accountID);
-	void OtherShardLogout(const std::string &shardName, int accountID);
-	void OtherShardAuction(int auctionItemId, const string &sellerName);
-	void OtherShardAuctionItemRemoved(int auctionItemId, int auctioneerCDefID);
-	void OtherShardAuctionItemUpdated(int auctionItemId);
-	void OtherShardPropUpdated(int propId);
+	void ServerConfigurationReceived(const std::string &shardName, const std::string &simulatorAddress, int simulatorPort, const std::string &fullName, int mPlayers, unsigned long startTime, unsigned long utcTime, unsigned long localTime, const std::string &httpAddress);
+	void Send(const std::string &msg, const Json::Value &cfg);
 	cpp_redis::subscriber mSub;
 	cpp_redis::client mClient;
 };

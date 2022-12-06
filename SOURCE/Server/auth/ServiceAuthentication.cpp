@@ -36,6 +36,10 @@ ServiceAuthenticationHandler::~ServiceAuthenticationHandler() {
 
 }
 
+std::string ServiceAuthenticationHandler::GetName() {
+	return "Service";
+}
+
 void ServiceAuthenticationHandler::copyVeteranPlayerDetails(const std::string &pfUsername, AccountData *data) {
 
 	g_Logs.server->info("Importing veteran details for account %v", data->Name);
@@ -98,7 +102,7 @@ void ServiceAuthenticationHandler::copyVeteranPlayerDetails(const std::string &p
 					}
 
 					// Create the zone
-					int zoneID = g_ZoneDefManager.CreateZone(zd);
+					int zoneID = g_ZoneDefManager.CreateGroveZone(zd);
 					zd.mID = zoneID;
 
 					if (gt != NULL) {

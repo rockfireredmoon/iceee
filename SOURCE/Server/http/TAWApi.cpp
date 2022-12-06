@@ -302,7 +302,7 @@ bool CreditShopHandler::handleAuthenticatedGet(CivetServer *server,
 	std::string ruri;
 
 	/* Prepare the URI */
-	CivetServer::urlDecode(req_info->uri, strlen(req_info->uri), ruri, false);
+	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 	ruri = removeStartSlash(removeEndSlash(ruri));
 
@@ -507,7 +507,7 @@ bool ClanHandler::handleAuthenticatedGet(CivetServer *server,
 	std::string ruri;
 
 	/* Prepare the URI */
-	CivetServer::urlDecode(req_info->uri, strlen(req_info->uri), ruri, false);
+	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 	ruri = removeStartSlash(removeEndSlash(ruri));
 
@@ -605,7 +605,7 @@ bool GuildHandler::handleAuthenticatedGet(CivetServer *server,
 	std::string ruri;
 
 	/* Prepare the URI */
-	CivetServer::urlDecode(req_info->uri, strlen(req_info->uri), ruri, false);
+	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 	ruri = removeStartSlash(removeEndSlash(ruri));
 
@@ -743,7 +743,7 @@ bool UserHandler::handleAuthenticatedGet(CivetServer *server,
 	std::string ruri;
 
 	/* Prepare the URI */
-	CivetServer::urlDecode(req_info->uri, strlen(req_info->uri), ruri, false);
+	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 	ruri = removeEndSlash(ruri);
 
@@ -819,7 +819,7 @@ bool CharacterHandler::handleAuthenticatedGet(CivetServer *server,
 	std::string ruri;
 
 	/* Prepare the URI */
-	CivetServer::urlDecode(req_info->uri, strlen(req_info->uri), ruri, false);
+	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 	ruri = removeEndSlash(ruri);
 
@@ -875,7 +875,7 @@ bool UserGrovesHandler::handleAuthenticatedGet(CivetServer *server,
 	std::string ruri;
 
 	/* Prepare the URI */
-	CivetServer::urlDecode(req_info->uri, strlen(req_info->uri), ruri, false);
+	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 	ruri = removeEndSlash(ruri);
 
@@ -933,7 +933,7 @@ bool ZoneHandler::handleAuthenticatedGet(CivetServer *server,
 	std::string ruri;
 
 	/* Prepare the URI */
-	CivetServer::urlDecode(req_info->uri, strlen(req_info->uri), ruri, false);
+	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 	ruri = removeEndSlash(ruri);
 
@@ -1003,7 +1003,7 @@ bool SceneryHandler::handleAuthenticatedGet(CivetServer *server,
 	std::string ruri;
 
 	/* Prepare the URI */
-	CivetServer::urlDecode(req_info->uri, strlen(req_info->uri), ruri, false);
+	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 
 	std::vector<std::string> pathParts;
@@ -1055,7 +1055,7 @@ bool ItemHandler::handleAuthenticatedGet(CivetServer *server,
 	std::string ruri;
 
 	/* Prepare the URI */
-	CivetServer::urlDecode(req_info->uri, strlen(req_info->uri), ruri, false);
+	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 	ruri = removeEndSlash(ruri);
 
@@ -1111,7 +1111,7 @@ bool AuctionHandler::handleAuthenticatedGet(CivetServer *server,
 	std::string ruri;
 
 	/* Prepare the URI */
-	CivetServer::urlDecode(req_info->uri, strlen(req_info->uri), ruri, false);
+	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 	ruri = removeStartSlash(removeEndSlash(ruri));
 

@@ -132,6 +132,21 @@ ChatMessage::ChatMessage(CharacterServerData *pld)
 	mSenderClanID = 0;
 }
 
+void ChatMessage::ReadFromJSON(Json::Value &value) {
+	mMessage = value["message"].asString();
+	mChannelName = value["channelName"].asInt();
+	mSenderCreatureDefID = value["senderCreatureDefID"].asInt();
+	mSenderClanID = value["clan"].asInt();
+	mSenderCreatureID = value["senderCreatureID"].asInt();
+	mRecipient = value["recipient"].asString();
+	mSendingInstance = value["sendingInstance"].asInt();
+	mSimulatorID = value["simulatorID"].asInt();
+	mTell = value["tell"].asBool();
+	mTime =value["time"].asLargestUInt();
+	mSender = value["sender"].asString();
+	mChannel = GetChatInfoByChannel(mChannelName.c_str());
+}
+
 void ChatMessage::WriteToJSON(Json::Value &value) {
 
 	struct tm * timeinfo;
@@ -143,6 +158,7 @@ void ChatMessage::WriteToJSON(Json::Value &value) {
 	value["message"] = mMessage;
 	value["channelName"] = mChannelName;
 	value["senderCreatureDefID"] = mSenderCreatureDefID;
+	value["clan"] = mSenderClanID;
 	value["senderCreatureID"] = mSenderCreatureID;
 	value["recipient"] = mRecipient;
 	value["sendingInstance"] = mSendingInstance;
@@ -288,7 +304,7 @@ void ChatManager :: LogMessage(std::string message)
 	g_Logs.chat->info(message);
 }
 
-bool ChatManager ::SendChatMessageAsOffline(ChatMessage &message, HTTPD::SiteSession *session) {
+bool ChatManager ::SendChatMessageAsOffline(const ChatMessage &message, HTTPD::SiteSession *session) {
 	/* Look up the account name for the character */
 	int cdefID = g_UsedNameDatabase.GetIDByName(message.mRecipient);
 	if(cdefID == -1) {
@@ -459,7 +475,7 @@ bool ChatManager::DeliverChatMessage(ChatMessage &message, CreatureInstance *sen
 	return found;
 }
 
-void ChatManager :: LogChatMessage(ChatMessage &message)
+void ChatManager :: LogChatMessage(const ChatMessage &message)
 {
 	cs.Enter("ChatManager::LogChatMessage");
 	CircularChatBuffer.push_back(message);

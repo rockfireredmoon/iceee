@@ -1,3 +1,7 @@
+#pragma once
+#ifndef CRAFTING_H
+#define CRAFTING_H
+
 #include <string>
 #include <vector>
 #include "ScriptCore.h"
@@ -86,3 +90,4 @@ private:
 
 extern CraftManager g_CraftManager;
 
+#endif //CRAFTING_H

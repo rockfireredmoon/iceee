@@ -20,7 +20,7 @@
 #define CUSTOMISEHANDLERS_H
 
 #include "Query.h"
-#include "../Customiser.h"
+#include "../AssetCatalogue.h"
 #include <vector>
 
 class GetPropCategoriesHandler : public QueryHandler {

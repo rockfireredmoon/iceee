@@ -26,6 +26,10 @@ DevAuthenticationHandler::~DevAuthenticationHandler() {
 
 }
 
+std::string DevAuthenticationHandler::GetName() {
+	return "User/Password";
+}
+
 AccountData * DevAuthenticationHandler::authenticate(const std::string &loginName, const std::string &authorizationHash, std::string *errorMessage) {
 
 	AccountData *accPtr = NULL;

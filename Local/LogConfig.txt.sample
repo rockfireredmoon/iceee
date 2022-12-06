@@ -10,7 +10,7 @@
 	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
 	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
 	* DEBUG:
-	   FORMAT               = "%datetime {%d/%M} [%level] %func %msg"
+	   FORMAT               = "%datetime [%level] %func %msg"
 -- server
 	* GLOBAL:
 	   FORMAT               =  "%datetime [%level] %msg"
@@ -23,7 +23,7 @@
 	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
 	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
 	* DEBUG:
-	   FORMAT               = "%datetime {%d/%M} [%level] %func %msg"
+	   FORMAT               = "%datetime [%level] %func %msg"
 -- chat
 	* GLOBAL:
 	   FORMAT               =  "%datetime [%level] %msg"
@@ -36,7 +36,7 @@
 	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
 	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
 	* DEBUG:
-	   FORMAT               = "%datetime {%d/%M} [%level] %func %msg"
+	   FORMAT               = "%datetime [%level] %func %msg"
 -- http
 	* GLOBAL:
 	   FORMAT               =  "%datetime [%level] %msg"
@@ -49,7 +49,7 @@
 	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
 	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
 	* DEBUG:
-	   FORMAT               = "%datetime {%d/%M} [%level] %func %msg"
+	   FORMAT               = "%datetime [%level] %func %msg"
 -- cheat
 	* GLOBAL:
 	   FORMAT               =  "%datetime [%level] %msg"
@@ -62,7 +62,7 @@
 	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
 	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
 	* DEBUG:
-	   FORMAT               = "%datetime {%d/%M} [%level] %func %msg"
+	   FORMAT               = "%datetime [%level] %func %msg"
 -- event
 	* GLOBAL:
 	   FORMAT               =  "%datetime [%level] %msg"
@@ -75,7 +75,7 @@
 	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
 	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
 	* DEBUG:
-	   FORMAT               = "%datetime {%d/%M} [%level] %func %msg"   
+	   FORMAT               = "%datetime [%level] %func %msg"   
 -- router
 	* GLOBAL:
 	   FORMAT               =  "%datetime [%level] %msg"
@@ -88,7 +88,7 @@
 	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
 	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
 	* DEBUG:
-	   FORMAT               = "%datetime {%d/%M} [%level] %func %msg"   
+	   FORMAT               = "%datetime [%level] %func %msg"   
 -- simulator
 	* GLOBAL:
 	   FORMAT               =  "%datetime [%level] %msg"
@@ -101,7 +101,7 @@
 	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
 	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
 	* DEBUG:
-	   FORMAT               = "%datetime {%d/%M} [%level] %func %msg"   
+	   FORMAT               = "%datetime [%level] %func %msg"   
 -- leaderboard
 	* GLOBAL:
 	   FORMAT               =  "%datetime [%level] %msg"
@@ -114,7 +114,7 @@
 	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
 	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
 	* DEBUG:
-	   FORMAT               = "%datetime {%d/%M} [%level] %func %msg"   
+	   FORMAT               = "%datetime [%level] %func %msg"   
 -- script
 	* GLOBAL:
 	   FORMAT               =  "%datetime [%level] %msg"
@@ -127,7 +127,7 @@
 	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
 	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
 	* DEBUG:
-	   FORMAT               = "%datetime {%d/%M} [%level] %func %msg"       
+	   FORMAT               = "%datetime [%level] %func %msg"       
 -- cluster
 	* GLOBAL:
 	   FORMAT               =  "%datetime [%level] %msg"
@@ -140,4 +140,4 @@
 	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
 	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
 	* DEBUG:
-	   FORMAT               = "%datetime {%d/%M} [%level] %func %msg"    
+	   FORMAT               = "%datetime [%level] %func %msg"    

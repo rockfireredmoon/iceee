@@ -76,7 +76,7 @@
 #include <Daily.h>
 #include <Books.h>
 #include <NPC.h>
-#include <Customiser.h>
+#include <AssetCatalogue.h>
 #include <Leaderboard.h>
 #include <http/HTTPService.h>
 #include <message/LobbyMessage.h>
@@ -110,7 +110,7 @@
 #include <query/StatusHandlers.h>
 #include <query/PlayerHandlers.h>
 #include <query/FormHandlers.h>
-#include <query/CustomiseHandlers.h>
+#include <query/AssetCatalogueHandlers.h>
 #include <curl/curl.h>
 #include <http/TAWApi.h>
 #include <http/GameInfo.h>
@@ -589,8 +589,8 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["ah.bid"] = new AuctionHouseBidHandler();
 	g_QueryManager.queryHandlers["ah.buy"] = new AuctionHouseBuyHandler();
 
-	g_QueryManager.queryHandlers["customise.props"] = new GetPropCategoriesHandler();
-	g_QueryManager.queryHandlers["customise.search"] = new SearchPropsHandler();
+	g_QueryManager.queryHandlers["asscat.props"] = new GetPropCategoriesHandler();
+	g_QueryManager.queryHandlers["asscat.search"] = new SearchPropsHandler();
 
 	g_QueryManager.queryHandlers["script.run"] = new ScriptRunHandler();
 	g_QueryManager.queryHandlers["script.load"] = new ScriptLoadHandler();
@@ -732,7 +732,11 @@ int InitServerMain(int argc, char *argv[]) {
 			new SetEnvironmentHandler();
 	g_QueryManager.queryHandlers["shard.list"] = new ShardListHandler();
 	g_QueryManager.queryHandlers["world.list"] = new WorldListHandler();
+	g_QueryManager.queryHandlers["zone.list"] = new ZoneListHandler();
+	g_QueryManager.queryHandlers["zone.get"] = new ZoneGetHandler();
+	g_QueryManager.queryHandlers["zone.edit"] = new ZoneEditHandler();
 	g_QueryManager.queryHandlers["shard.set"] = new ShardSetHandler();
+	g_QueryManager.queryHandlers["lootpackages.list"] = new LootPackagesListHandler();
 	g_QueryManager.queryHandlers["henge.setDest"] = new HengeSetDestHandler();
 	g_QueryManager.queryHandlers["map.marker"] = new MapMarkerHandler();
 	g_QueryManager.queryHandlers["mod.setgrovestart"] =
@@ -1007,11 +1011,11 @@ int InitServerMain(int argc, char *argv[]) {
 	g_Logs.data->info("Loaded %v NPC Dialog items.",
 			g_NPCDialogManager.mItems.size());
 
-	g_PropManager.LoadFromFile(Platform::JoinPath(
+	g_AssetCatalogueManager.LoadFromDirectory(
 					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"PropCatalogue"), "Props.txt"));
-	g_Logs.data->info("Loaded %v prop catalogue items.",
-			g_PropManager.Count());
+							"AssetCatalogue"));
+	g_Logs.data->info("Loaded %v asset catalogue items.",
+			g_AssetCatalogueManager.Count());
 
 	g_ZoneDefManager.LoadData();
 	g_GroveTemplateManager.LoadData();
@@ -1054,8 +1058,6 @@ int InitServerMain(int argc, char *argv[]) {
 		return 0;
 	}
 	g_Logs.data->info("Loaded %v Tips.", g_InfoManager.GetTips().size());
-
-	g_SceneryManager.LoadData();
 
 	g_SpawnPackageManager.LoadFromFile(
 			Platform::JoinPath(g_Config.ResolveStaticDataPath(),
@@ -1125,6 +1127,9 @@ int InitServerMain(int argc, char *argv[]) {
 			g_FileChecksum.mChecksumData.size());
 
 	if (daemonize) {
+		//
+		// TODO this seems to break the reddis client
+		//      it looks like its probably being done at the wrong point
 		int ret = daemon(1, DAEMON_NO_CLOSE);
 		if (ret == 0) {
 			g_Logs.server->info("Daemonized!\n");
@@ -1216,7 +1221,10 @@ int InitServerMain(int argc, char *argv[]) {
 
 	// Legacy web control panel
 	g_HTTPService.RegisterHandler("/remoteaction", new HTTPD::RemoteActionHandler());
-	g_HTTPService.Start();
+	if(!g_HTTPService.Start() && g_Config.HTTPServeAssets) {
+		g_Logs.server->fatal("Failed to start HTTP server, and it is required to server assets.Giving up.");
+		return 0;
+	}
 
 	srand(g_ServerLaunchTime & Platform::MAX_UINT);
 
@@ -1486,6 +1494,7 @@ void UnloadResources(void) {
 
 	g_AccountManager.UnloadAllData();
 	g_CharacterManager.Clear();
+	g_Scheduler.Shutdown();
 	//DeleteCharacterList();
 
 #ifdef WINDOWS_PLATFORM
@@ -1835,6 +1844,12 @@ void Debug_OutputCharacter(FILE *output, int index, CreatureInstance *cInst) {
 	if (cInst->AnchorObject != NULL)
 		fprintf(output, "    Officer: %s (Ptr: %p)\r\n",
 				cInst->AnchorObject->css.display_name, cInst->AnchorObject);
+	if (cInst->MountedBy != NULL)
+		fprintf(output, "    Mounted By: %s (Ptr: %p)\r\n",
+				cInst->MountedBy->css.display_name, cInst->MountedBy);
+	if (cInst->MountedOn != NULL)
+		fprintf(output, "    Mounted By: %s (Ptr: %p)\r\n",
+				cInst->MountedOn->css.display_name, cInst->MountedOn);
 
 	if (cInst->HasStatus(StatusEffects::AUTO_ATTACK))
 		fprintf(output, "    AUTO_ATTACK");

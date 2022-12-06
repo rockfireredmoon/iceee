@@ -3,7 +3,7 @@
 #include "FileReader3.h"
 #include "Config.h"
 #include "PVP.h"
-#include "Util.h"
+#include "Random.h"
 #include "Audit.h"  //For scenery audits.
 #include "InstanceScale.h"
 #include "Report.h"
@@ -15,6 +15,7 @@
 #include "Scheduler.h"
 #include "StringUtil.h"
 #include "util/Log.h"
+#include "ByteBuffer.h"
 
 ZoneDefManager g_ZoneDefManager;
 ZoneBarrierManager g_ZoneBarrierManager;
@@ -174,7 +175,7 @@ ZoneIndexEntry::ZoneIndexEntry() {
 	mAccountID = 0;
 }
 
-void ZoneIndexEntry::CopyFrom(const ZoneIndexEntry& other) {
+void ZoneIndexEntry::CopyFrom(const ZoneIndexEntry &other) {
 	mID = other.mID;
 	mAccountID = other.mAccountID;
 	mWarpName = other.mWarpName;
@@ -190,6 +191,7 @@ ZoneDefInfo::~ZoneDefInfo() {
 
 void ZoneDefInfo::Clear(void) {
 	mID = 0;
+	mStatic = false;
 	mAccountID = 0;
 	mDesc.clear();
 	mName.clear();
@@ -218,6 +220,7 @@ void ZoneDefInfo::Clear(void) {
 	mAudit = false;
 	mTimeOfDay = "";
 	mEnvironmentCycle = false;
+	mClan = 0;
 
 	mPlayerFilterType = FILTER_PLAYER_NONE;
 	mPlayerFilterID.clear();
@@ -231,8 +234,12 @@ void ZoneDefInfo::Clear(void) {
 	mTileEnvironment.clear();
 }
 
-void ZoneDefInfo::CopyFrom(const ZoneDefInfo& other) {
+void ZoneDefInfo::CopyFrom(const ZoneDefInfo &other) {
 	mID = other.mID;
+	PopulateFrom(other);
+}
+
+void ZoneDefInfo::PopulateFrom(const ZoneDefInfo &other) {
 	mAccountID = other.mAccountID;
 	mDesc = other.mDesc;
 	mName = other.mName;
@@ -253,6 +260,7 @@ void ZoneDefInfo::CopyFrom(const ZoneDefInfo& other) {
 	mInstance = other.mInstance;
 	mGrove = other.mGrove;
 	mGuildHall = other.mGuildHall;
+	mClan = other.mClan;
 	mArena = other.mArena;
 	mMode = other.mMode;
 	mAudit = other.mAudit;
@@ -335,6 +343,7 @@ bool ZoneDefInfo::ReadEntity(AbstractEntityReader *reader) {
 	mInstance = reader->ValueBool("Instance");
 	mGrove = reader->ValueBool("Grove");
 	mGuildHall = reader->ValueBool("GuildHall");
+	mClan= reader->ValueInt("Clan");
 	mArena = reader->ValueBool("Arena");
 	mAudit = reader->ValueBool("Audit");
 	SetDropRateProfile(reader->Value("DropRateProfile"));
@@ -409,6 +418,14 @@ bool ZoneDefInfo::WriteEntity(AbstractEntityWriter *writer) {
 	if (mAudit == true)
 		writer->Value("Audit", mAudit);
 	writer->Value("Grove", mGrove);
+	writer->Value("Instance", mInstance);
+	writer->Value("Persist", mPersist);
+	writer->Value("GuildHall", mGuildHall);
+	writer->Value("Clan", mClan);
+	writer->Value("Arena", mArena);
+	writer->Value("Audit", mAudit);
+	writer->Value("MinLevel", mMinLevel);
+	writer->Value("MaxLevel", mMaxLevel);
 	writer->Value("EnvironmentCycle", mEnvironmentCycle);
 	if (mPageSize != ZoneDefInfo::DEFAULT_PAGESIZE)
 		writer->Value("PageSize", mPageSize);
@@ -426,13 +443,24 @@ bool ZoneDefInfo::WriteEntity(AbstractEntityWriter *writer) {
 		writer->ListValue("PlayerFilterID", l);
 
 	writer->Value("DefLoc", StringUtil::Format("%d,%d,%d", DefX, DefY, DefZ));
-	STRINGLIST l2;
-	for (auto a = mTileEnvironment.begin(); a != mTileEnvironment.end(); ++a)
-		l2.push_back(
-				StringUtil::Format("%d,%d,%s", a->first.x, a->first.y,
-						a->second.c_str()));
+	STRINGLIST l2, l2b;
+	for (auto a = mTileEnvironment.begin(); a != mTileEnvironment.end(); ++a) {
+		STRINGLIST ll;
+		Util::Split(a->second, ",", ll);
+		if (ll.size() > 3) {
+			l2b.push_back(
+					StringUtil::Format("%d,%d,%s", a->first.x, a->first.y,
+							a->second.c_str()));
+		} else {
+			l2.push_back(
+					StringUtil::Format("%d,%d,%s", a->first.x, a->first.y,
+							a->second.c_str()));
+		}
+	}
 	if (l2.size() > 0)
 		writer->ListValue("TileEnvironment", l2);
+	if (l2b.size() > 0)
+		writer->ListValue("AreaEnvironment", l2b);
 	STRINGLIST l3;
 	for (auto a = mEditPermissions.begin(); a != mEditPermissions.end(); ++a)
 		(*a).WriteEntity(writer);
@@ -591,16 +619,35 @@ bool ZoneDefInfo::HasEditPermission(int accountID, int characterDefID,
 	if (x < 0.0F || z < 0.0F)
 		return false;
 
-	for (size_t i = 0; i < mEditPermissions.size(); i++) {
-		if (mEditPermissions[i].HasEditPermission(accountID, characterDefID,
-				characterName, x, z, DEFAULT_PAGESIZE) == true)
-			return true;
-	}
-
-	//Put the account check here in case a custom account permission was set up in the list.
+	//Play can always edit their own grove
 	if ((mAccountID != 0) && (accountID == mAccountID))
 		return true;
-	return false;
+
+	if(mClan != 0) {
+		/* If a clan, make sure the character is in this clan  and is of the right
+		 * rank
+		 */
+		Clans::Clan clan = g_ClanManager.GetClan(mClan);
+		if(clan.HasMember(characterDefID)) {
+			Clans::ClanMember member = clan.GetMember(characterDefID);
+			if(member.mRank != Clans::Rank::LEADER && member.mRank != Clans::Rank::OFFICER)
+				return false;
+		}
+		else
+			return false;
+
+	}
+
+	if(mEditPermissions.size() > 0) {
+		for (size_t i = 0; i < mEditPermissions.size(); i++) {
+			if (mEditPermissions[i].HasEditPermission(accountID, characterDefID,
+					characterName, x, z, DEFAULT_PAGESIZE) == true)
+				return true;
+		}
+		return false;
+	}
+
+	return true;
 }
 
 void ZoneDefInfo::UpdateGrovePermission(STRINGLIST &params) {
@@ -772,6 +819,7 @@ void ZoneDefInfo::ReadFromJSON(Json::Value &value) {
 	mGrove = value["grove"].asBool();
 	mArena = value["arena"].asBool();
 	mGuildHall = value["hall"].asBool();
+	mClan = value["clan"].asInt();
 	mEnvironmentCycle = value["cycle"].asBool();
 	mAudit = value["audit"].asBool();
 
@@ -826,6 +874,7 @@ void ZoneDefInfo::WriteToJSON(Json::Value &value) {
 	value["grove"] = mGrove;
 	value["arena"] = mArena;
 	value["hall"] = mGuildHall;
+	value["clan"] = mClan;
 	value["cycle"] = mEnvironmentCycle;
 	value["audit"] = mAudit;
 	value["maxAggro"] = mMaxAggroRange;
@@ -888,6 +937,7 @@ int ZoneDefManager::LoadFile(std::string fileName) {
 
 	lfr.CommentStyle = Comment_Semi;
 	ZoneDefInfo newItem;
+	newItem.mStatic = true;
 
 	while (lfr.FileOpen() == true) {
 		int r = lfr.ReadLine();
@@ -899,6 +949,7 @@ int ZoneDefManager::LoadFile(std::string fileName) {
 					newItem.SetDefaults();
 					mZoneList[newItem.mID].CopyFrom(newItem);
 					newItem.Clear();
+					newItem.mStatic = true;
 				}
 			} else {
 				if (strcmp(lfr.SecBuffer, "ID") == 0)
@@ -948,6 +999,8 @@ int ZoneDefManager::LoadFile(std::string fileName) {
 					newItem.mGrove = lfr.BlockToBoolC(1);
 				else if (strcmp(lfr.SecBuffer, "GUILDHALL") == 0)
 					newItem.mGuildHall = lfr.BlockToBoolC(1);
+				else if (strcmp(lfr.SecBuffer, "CLAN") == 0)
+					newItem.mClan = lfr.BlockToIntC(1);
 				else if (strcmp(lfr.SecBuffer, "ARENA") == 0)
 					newItem.mArena = lfr.BlockToBoolC(1);
 				else if (strcmp(lfr.SecBuffer, "AUDIT") == 0)
@@ -1008,14 +1061,14 @@ int ZoneDefManager::LoadFile(std::string fileName) {
 	return 0;
 }
 
-ZoneDefInfo * ZoneDefManager::ResolveZoneDef(int ID) {
+ZoneDefInfo* ZoneDefManager::ResolveZoneDef(int ID) {
 	ZONEDEF_ITERATOR it = mZoneList.find(ID);
 	if (it == mZoneList.end())
 		return LoadZoneDef(ID);
 	return &it->second;
 }
 
-ZoneDefInfo * ZoneDefManager::LoadZoneDef(int ID) {
+ZoneDefInfo* ZoneDefManager::LoadZoneDef(int ID) {
 	//Official zones are static and can't be loaded at runtime..
 	if (ID < GROVE_ZONE_ID_DEFAULT) {
 		g_Logs.server->error("Could not find ZoneDef: %v", ID);
@@ -1039,12 +1092,79 @@ ZoneDefInfo * ZoneDefManager::LoadZoneDef(int ID) {
 	return &it->second;
 }
 
+int ZoneDefManager::UpdateWorldZone(ZoneDefInfo &newZone) {
+	mZoneList[newZone.mID].CopyFrom(newZone);
+	std::string instancesPath = Platform::JoinPath(
+			g_Config.ResolveVariableDataPath(), "Instance");
+	std::string p = Platform::JoinPath(instancesPath,
+			std::to_string(newZone.mID));
+	if (!Platform::DirExists(p)) {
+		Platform::MakeDirectories(p);
+	}
+	p = Platform::JoinPath(p, "ZoneDef.txt");
+	TextFileEntityWriter tew(p);
+	tew.PushSection("ENTITY");
+	if (tew.Start()) {
+		if (newZone.WriteEntity(&tew)) {
+			tew.End();
+		}
+	}
+	return 0;
+}
+
 void ZoneDefManager::LoadData(void) {
-	//Load static entries (usually offical instances, never modified during run time)
-	LoadFile(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"Data"), "ZoneDef.txt"));
+	//Load static entries (usually official instances, never modified during run time)
+//	LoadFile(
+//			Platform::JoinPath(
+//					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+//							"Data"), "ZoneDef.txt"));
+
+	std::string instancesPath = Platform::JoinPath(
+			g_Config.ResolveVariableDataPath(), "Instance");
+
+	//
+	// Temporary. Convert All static zones to instance zonedef.txt files
+	//
+//	std::map<int, ZoneDefInfo>::iterator it2;
+//	for (it2 = mZoneList.begin(); it2 != mZoneList.end(); ++it2) {
+//		ZoneDefInfo zd = it2->second;
+//		UpdateWorldZone(zd);
+//	}
+
+	Platform_DirectoryReader r;
+	string dir = r.GetDirectory();
+	r.SetDirectory(instancesPath);
+	r.ReadDirectories();
+	r.SetDirectory(dir);
+
+	vector<std::string>::iterator it;
+	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
+		std::string p = Platform::JoinPath(instancesPath, *it);
+		p = Platform::JoinPath(p, "ZoneDef.txt");
+		TextFileEntityReader ter(p, Case_None, Comment_Semi);
+		ter.Start();
+		if (!ter.Exists()) {
+			g_Logs.server->warn("No ZoneDef.txt in instance directory [%v].",
+					p);
+			continue;
+		}
+
+		ter.Key("", "", true);
+		ter.Index("ENTRY");
+		STRINGLIST sections = ter.Sections();
+		for (auto a = sections.begin(); a != sections.end(); ++a) {
+			ter.PushSection(*a);
+			ZoneDefInfo t;
+			t.mID = StringUtil::SafeParseInt(*it);
+			if (!t.EntityKeys(&ter) || !t.ReadEntity(&ter)) {
+				continue;
+			}
+			t.SetDefaults();
+			mZoneList[t.mID].CopyFrom(t);
+			ter.PopSection();
+		}
+		ter.End();
+	}
 
 	g_Logs.server->info("Loaded %v ZoneDef.", mZoneList.size());
 
@@ -1052,9 +1172,21 @@ void ZoneDefManager::LoadData(void) {
 		g_ClusterManager.SetKey(ID_NEXT_ZONE_ID,
 				StringUtil::Format("%d", GROVE_ZONE_ID_DEFAULT));
 	}
+
+	/* Check the highest world zone ID */
+	std::map<int, ZoneDefInfo>::iterator it2;
+	int highest = 0;
+	for (it2 = mZoneList.begin(); it2 != mZoneList.end(); ++it2) {
+		ZoneDefInfo zd = it2->second;
+		if(!zd.mGrove && !zd.mArena) {
+			highest = std::max(zd.mID, highest);
+		}
+	}
+	g_ClusterManager.SetKey(ID_NEXT_WORLD_ZONE_ID,
+			StringUtil::Format("%d", highest));
 }
 
-ZoneDefInfo * ZoneDefManager::GetPointerByID(int ID) {
+ZoneDefInfo* ZoneDefManager::GetPointerByID(int ID) {
 	ZoneDefInfo *retptr = NULL;
 	cs.Enter("ZoneDefManager::GetPointerByID");
 	retptr = ResolveZoneDef(ID);
@@ -1073,14 +1205,15 @@ ZoneDefInfo * ZoneDefManager::GetPointerByID(int ID) {
 	return retptr;
 }
 
-ZoneDefInfo * ZoneDefManager::GetPointerByPartialWarpName(
+ZoneDefInfo* ZoneDefManager::GetPointerByPartialWarpName(
 		const std::string &name) {
 	ZoneDefInfo *retptr = NULL;
 
 	STRINGLIST l;
 	g_ClusterManager.Scan([this, &l](const std::string &match) {
 		l.push_back(match);
-	},
+	}
+			,
 			StringUtil::Format("%s:*%s*",
 					KEYPREFIX_WARP_NAME_TO_ZONE_ID.c_str(), name.c_str()), 1);
 
@@ -1126,7 +1259,7 @@ std::string ZoneDefManager::GetNextGroveName(std::string groveName) {
 	return name;
 }
 
-ZoneDefInfo * ZoneDefManager::GetPointerByExactWarpName(const char *name) {
+ZoneDefInfo* ZoneDefManager::GetPointerByExactWarpName(const char *name) {
 	ZoneDefInfo *retptr = NULL;
 
 	std::string zoneIdStr = g_ClusterManager.GetKey(
@@ -1149,7 +1282,7 @@ ZoneDefInfo * ZoneDefManager::GetPointerByExactWarpName(const char *name) {
 	return retptr;
 }
 
-ZoneDefInfo * ZoneDefManager::GetPointerByGroveName(const char *name) {
+ZoneDefInfo* ZoneDefManager::GetPointerByGroveName(const char *name) {
 	ZoneDefInfo *retptr = NULL;
 
 	std::vector<std::string> zoneIdStrs = g_ClusterManager.GetList(
@@ -1170,13 +1303,38 @@ ZoneDefInfo * ZoneDefManager::GetPointerByGroveName(const char *name) {
 	return retptr;
 }
 
-int ZoneDefManager::GetNewZoneID(void) {
+int ZoneDefManager::GetNewGroveZoneID(void) {
 	return g_ClusterManager.NextValue(ID_NEXT_ZONE_ID, GROVE_ZONE_ID_INCREMENT);
 }
 
-int ZoneDefManager::CreateZone(ZoneDefInfo &newZone) {
-	cs.Enter("ZoneDefManager::CreateZone");
-	int newZoneID = GetNewZoneID();
+int ZoneDefManager::GetNewWorldZoneID(void) {
+	return g_ClusterManager.NextValue(ID_NEXT_WORLD_ZONE_ID, WORLD_ZONE_ID_INCREMENT);
+}
+
+int ZoneDefManager::CreateWorldZone() {
+	int curId = g_ClusterManager.GetIntKey(ID_NEXT_WORLD_ZONE_ID);
+	/* Don't let this clash with grove zones. If we get to this point,
+	 * there will be other things to worry about!
+	 */
+	if(curId < GROVE_ZONE_ID_DEFAULT - 100) {
+		ZoneDefInfo zd;
+		zd.mID = GetNewWorldZoneID();
+		InsertZone(zd, false);
+		return zd.mID;
+	}
+	else {
+		g_Logs.server->error("Hit maximum world zone ID [%v]", GROVE_ZONE_ID_INCREMENT - 101);
+		return 0;
+	}
+}
+
+int ZoneDefManager::CreateGroveZone(ZoneDefInfo &newZone) {
+	if(!newZone.mGrove && !newZone.mGuildHall) {
+		return 0;
+	}
+
+	cs.Enter("ZoneDefManager::CreateGroveZone");
+	int newZoneID = GetNewGroveZoneID();
 
 	newZone.mID = newZoneID;
 	//Flag for the next autosave.
@@ -1189,7 +1347,7 @@ int ZoneDefManager::CreateZone(ZoneDefInfo &newZone) {
 }
 
 int ZoneDefManager::CreateGrove(int accountID, const char *grovename) {
-	int newZoneID = GetNewZoneID();
+	int newZoneID = GetNewGroveZoneID();
 	ZoneDefInfo newZone;
 
 	newZone.mAccountID = accountID;
@@ -1219,7 +1377,7 @@ int ZoneDefManager::CreateGrove(int accountID, const char *grovename) {
 
 //Copy zone data into the active table.  If creating an entirely new grove, an index
 //can be created for it.
-void ZoneDefManager::InsertZone(const ZoneDefInfo& newZone, bool createIndex) {
+void ZoneDefManager::InsertZone(const ZoneDefInfo &newZone, bool createIndex) {
 	//Copy into the resident zone list.
 	mZoneList[newZone.mID].CopyFrom(newZone);
 
@@ -1297,7 +1455,7 @@ int ZoneDefManager::CheckAutoSave(bool force) {
 }
 
 int ZoneDefManager::EnumerateGroveIds(int searchAccountID, int characterDefId,
-		std::vector<int>& groveIdList) {
+		std::vector<int> &groveIdList) {
 	cs.Enter("ZoneDefManager::EnumerateGroveIds");
 	ZONEINDEX_ITERATOR it;
 	CharacterData *cdata =
@@ -1328,8 +1486,9 @@ int ZoneDefManager::EnumerateGroveIds(int searchAccountID, int characterDefId,
 	return static_cast<int>(groveIdList.size());
 }
 
+
 int ZoneDefManager::EnumerateGroves(int searchAccountID, int characterDefId,
-		std::vector<std::string>& groveList) {
+		std::vector<std::string> &groveList) {
 	cs.Enter("ZoneDefManager::EnumerateGroves");
 	ZONEINDEX_ITERATOR it;
 	CharacterData *cdata =
@@ -1365,7 +1524,7 @@ int ZoneDefManager::EnumerateGroves(int searchAccountID, int characterDefId,
 	return static_cast<int>(groveList.size());
 }
 
-int ZoneDefManager::EnumerateArenas(std::vector<std::string>& arenaList) {
+int ZoneDefManager::EnumerateArenas(std::vector<std::string> &arenaList) {
 	ZONEDEF_ITERATOR it;
 	for (it = mZoneList.begin(); it != mZoneList.end(); ++it) {
 		if (it->second.mArena == true)
@@ -1408,7 +1567,7 @@ bool ZoneDefManager::ZoneUnloadReady(void) {
 	return false;
 }
 
-void ZoneDefManager::UnloadInactiveZones(std::vector<int>& activeZones) {
+void ZoneDefManager::UnloadInactiveZones(std::vector<int> &activeZones) {
 	ZONEDEF_ITERATOR it;
 	it = mZoneList.begin();
 	while (it != mZoneList.end()) {
@@ -1626,16 +1785,14 @@ void EnvironmentCycleManager::RescheduleUpdate() {
 			StringUtil::FormatTimeHHMMSS(current.mEnd),
 			StringUtil::FormatTimeHHMMSS(next), next, wait,
 			StringUtil::FormatTimeHHMMSS(wait));
-	mChangeTaskID =
-			g_Scheduler.Schedule(
-					[this]() {
-						std::string tod = GetCurrentCycle().mName;
-						g_Logs.server->info("Switching environment to %v", tod);
-						for(size_t i = 0; i < g_ActiveInstanceManager.instListPtr.size(); i++) {
-							g_ActiveInstanceManager.instListPtr[i]->UpdateEnvironmentCycle(tod);
-						}
-						RescheduleUpdate();
-					}, wait + g_PlatformTime.getMilliseconds());
+	mChangeTaskID = g_Scheduler.Schedule([this]() {
+		std::string tod = GetCurrentCycle().mName;
+		g_Logs.server->info("Switching environment to %v", tod);
+		for (size_t i = 0; i < g_ActiveInstanceManager.instListPtr.size(); i++) {
+	g_ActiveInstanceManager.instListPtr[i]->UpdateEnvironmentCycle(tod);
+}
+		RescheduleUpdate();
+	}, wait + g_PlatformTime.getMilliseconds());
 
 }
 
@@ -1723,10 +1880,8 @@ void GroveTemplate::GetProps(std::vector<SceneryObject> &objects) const {
 			Platform::JoinPath("GroveTemplates", mShortName));
 
 	Platform_DirectoryReader r;
-	std::string dir = r.GetDirectory();
 	r.SetDirectory(fileName);
 	r.ReadFiles();
-	r.SetDirectory(dir.c_str());
 
 	std::vector<std::string>::iterator it;
 	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
@@ -1824,7 +1979,7 @@ void GroveTemplateManager::ResolveTerrainMap(void) {
 
 unsigned long RandomFutureTime(int min, int max) {
 	return g_ServerTime
-			+ ((unsigned long) (randmodrng(min, max) * 1000l) / TIME_FACTOR);
+			+ ((unsigned long) (g_RandomManager.RandModRng(min, max) * 1000l) / TIME_FACTOR);
 }
 
 WeatherDef::WeatherDef() {
@@ -1950,7 +2105,7 @@ void WeatherState::RunCycle(ActiveInstance *instance) {
 
 				/* During de-escalation we also roll for thunder to stop using the inverse chance that was used to start */
 				if (mThunder) {
-					int chance = randmodrng(0, 100);
+					int chance = g_RandomManager.RandModRng(0, 100);
 					mThunder = chance < (100 - mDefinition.mThunderChance);
 					if (!mThunder) {
 						mNextThunder = 0;
@@ -1971,7 +2126,7 @@ void WeatherState::SendWeatherUpdate(ActiveInstance *instance,
 			it != instance->RegSim.end(); ++it) {
 		for (std::vector<std::string>::iterator it2 = mMapNames.begin();
 				it2 != mMapNames.end(); it2++) {
-			SimulatorThread* sim = *it;
+			SimulatorThread *sim = *it;
 			if (sim->pld.CurrentMapInt == -1
 					|| MapDef.mMapList[sim->pld.CurrentMapInt].Name.compare(
 							*it2) == 0) {
@@ -1993,7 +2148,7 @@ void WeatherState::SendWeatherUpdate(ActiveInstance *instance,
 void WeatherState::SendThunder(ActiveInstance *instance, bool sendToCluster) {
 	for (std::vector<SimulatorThread*>::iterator it = instance->RegSim.begin();
 			it != instance->RegSim.end(); ++it) {
-		SimulatorThread* sim = *it;
+		SimulatorThread *sim = *it;
 		for (std::vector<std::string>::iterator it2 = mMapNames.begin();
 				it2 != mMapNames.end(); it2++) {
 			if (sim->pld.CurrentMapInt == -1
@@ -2014,7 +2169,7 @@ void WeatherState::SendThunder(ActiveInstance *instance, bool sendToCluster) {
 }
 
 void WeatherState::RollThunder() {
-	int chance = randmodrng(0, 100);
+	int chance = g_RandomManager.RandModRng(0, 100);
 	mThunder = chance < mDefinition.mThunderChance;
 	mNextThunder = 0;
 	if (mThunder) {
@@ -2027,7 +2182,7 @@ bool WeatherState::PickNewWeather() {
 	if (mWeatherType.length() == 0) {
 
 		/* Weather is starting */
-		int chance = randmodrng(0, 100);
+		int chance = g_RandomManager.RandModRng(0, 100);
 		if (chance < mDefinition.mHeavyChance) {
 			mWeatherWeight = WeatherState::HEAVY;
 		} else if (chance < mDefinition.mMediumChance) {
@@ -2043,14 +2198,14 @@ bool WeatherState::PickNewWeather() {
 
 		mNextStateChange = RandomFutureTime(mDefinition.mWeatherMin,
 				mDefinition.mWeatherMax);
-		mWeatherType = mDefinition.mWeatherTypes[randmodrng(0,
+		mWeatherType = mDefinition.mWeatherTypes[g_RandomManager.RandModRng(0,
 				mDefinition.mWeatherTypes.size())];
 
 		/* Roll for thunder */
 		RollThunder();
 
 		/* Roll for escalation */
-		chance = randmodrng(0, 100);
+		chance = g_RandomManager.RandModRng(0, 100);
 		mEscalateState = WeatherState::ONE_OFF;
 		if (chance < mDefinition.mEscalateChance) {
 			mEscalateState = WeatherState::ESCALATING;
@@ -2160,7 +2315,7 @@ void WeatherManager::ZoneThunder(int zoneId, std::string mapName) {
 				"Request for thunder on zone %v but no active instance found.",
 				zoneId);
 	else {
-		WeatherState* state = GetWeather(mapName, inst->mInstanceID);
+		WeatherState *state = GetWeather(mapName, inst->mInstanceID);
 		if (state == NULL) {
 			g_Logs.server->warn("No weather state for %v:%v.", mapName,
 					inst->mInstanceID);
@@ -2179,7 +2334,7 @@ void WeatherManager::ZoneWeather(int zoneId, std::string mapName,
 				"Request for weather on zone %v but no active instance found.",
 				zoneId);
 	else {
-		WeatherState* state = GetWeather(mapName, inst->mInstanceID);
+		WeatherState *state = GetWeather(mapName, inst->mInstanceID);
 		if (state == NULL) {
 			g_Logs.server->warn("No weather state for %v:%v.", mapName,
 					inst->mInstanceID);
@@ -2322,5 +2477,43 @@ int PrepExt_SendEnvironmentUpdateMsg(char *buffer, ActiveInstance *instance,
 	wpos += PutStringUTF(&buffer[wpos], zoneDef->mMapName.c_str());
 
 	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
+
+int WriteZoneDefInfo(char *buffer,
+		ZoneDefInfo *item) {
+	int wpos = 0;
+
+	wpos += PutByte(&buffer[wpos], 28); //String count
+	wpos += PutStringUTF(&buffer[wpos], std::to_string(item->mID)); // 1
+	wpos += PutStringUTF(&buffer[wpos], item->mName); // 2
+	wpos += PutStringUTF(&buffer[wpos], item->mTerrainConfig); // 3
+	wpos += PutStringUTF(&buffer[wpos], item->mEnvironmentType); // 4
+	wpos += PutStringUTF(&buffer[wpos], item->mMapName); // 5
+	wpos += PutStringUTF(&buffer[wpos], ""); // 6 - (was group name)?
+	wpos += PutStringUTF(&buffer[wpos], item->mInstance ? "MULTIPLE" : "SINGLE"); // 7
+	wpos += PutStringUTF(&buffer[wpos], ""); // 8 beef factor - what is this?
+	wpos += PutStringUTF(&buffer[wpos], item->mWarpName); // 9 warp name (was category)
+	wpos += PutStringUTF(&buffer[wpos], ""); // 10 regions
+	wpos += PutStringUTF(&buffer[wpos], item->mDesc); // 11 display name
+	wpos += PutStringUTF(&buffer[wpos], ""); // 12 default layers
+	wpos += PutStringUTF(&buffer[wpos], item->mGroveName); // 13 grove name
+	wpos += PutStringUTF(&buffer[wpos], item->mGrove ? "Y" : "N"); // 14 grove flag
+	wpos += PutStringUTF(&buffer[wpos], item->mPersist ? "Y" : "N"); // 15 persistent instance
+	wpos += PutStringUTF(&buffer[wpos], item->mArena ? "Y" : "N"); // 16 arena
+	wpos += PutStringUTF(&buffer[wpos], item->mGuildHall ? "Y" : "N"); // 17 guild hall
+	wpos += PutStringUTF(&buffer[wpos], item->mEnvironmentCycle ? "Y" : "N"); // 18 environment cycle
+	wpos += PutStringUTF(&buffer[wpos], item->mAudit ? "Y" : "N"); // 19 audit changes
+	wpos += PutStringUTF(&buffer[wpos], std::to_string(item->mMaxAggroRange) ); // 20 max aggro range
+	wpos += PutStringUTF(&buffer[wpos], std::to_string(item->mMaxLeashRange) ); // 21 max leash range
+	wpos += PutStringUTF(&buffer[wpos], std::to_string(item->mMinLevel) ); // 22 max aggro range
+	wpos += PutStringUTF(&buffer[wpos], std::to_string(item->mMaxLevel) ); // 23 max leash range
+	wpos += PutStringUTF(&buffer[wpos], std::to_string(item->DefX) + " " + std::to_string(item->DefY) + " " + std::to_string(item->DefZ) ); // 24 def x
+	wpos += PutStringUTF(&buffer[wpos], std::to_string(item->mPageSize) ); // 25 page size
+	wpos += PutStringUTF(&buffer[wpos], std::to_string(item->mMode ) ); // 26 page size
+	wpos += PutStringUTF(&buffer[wpos], std::to_string(item->mReturnZone) ); // 27 return zone
+	wpos += PutStringUTF(&buffer[wpos], item->mTimeOfDay); // 28
+
 	return wpos;
 }

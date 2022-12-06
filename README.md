@@ -156,7 +156,8 @@ easily obtainable for your OS/Distribution.
 Run :-
 
 ```bash
-meson builddir --default-library=static 
+mkdir -p build/default
+meson build/default --default-library=static 
 ```
 
 #### Compile
@@ -164,7 +165,7 @@ meson builddir --default-library=static
 Now compile the source :-
 
 ```bash
-cd builddir
+cd build/default
 ninja compile
 ```
 
@@ -344,7 +345,7 @@ cd ../iceee
 You now have everything you need to run the server. Assuming you are in the server source directory, run :-
 
 ```
-builddir/tawd -C
+build/default/tawd -C
 ```
 
 The server will now start up with a default logging level of INFO output to the console.
@@ -357,19 +358,19 @@ First off, create an administrator account :-
  
 
 ```
-builddir/eeaccount -i create admin 'mysecret' admin --roles=administrator
+build/default/eeaccount -i create admin 'mysecret' admin --roles=administrator
 ```
 
 You can then create accounts for your Sages (GMs) :-
 
 ```
-builddir/eeaccount -i create sage1 'mysecret' sagegrove1 --roles=sage
+build/default/eeaccount -i create sage1 'mysecret' sagegrove1 --roles=sage
 ```
 
 And finally acccounts for ordinary players
 
 ```
-builddir/eeaccount -i create aplayer 'mysecret' playergrove1
+build/default/eeaccount -i create aplayer 'mysecret' playergrove1
 ```
 
 There are various other ways by which accounts by created, such as via HTTP calls. These are intended for integration with web sites. 
@@ -393,14 +394,14 @@ There are a number of options available to aid debuggging and running the proces
 At some point, you will probably want to actually the server, or create installable packages for your
 distribution.
 
-Again, working from build workspace 'builddir' :-
+Again, working from build workspace 'build/default' :-
 
 ```bash
 cd ..
 meson configure --default-library=static -Dprefix=/usr -Dlocalstatedir=/var -Dsysconfdir=/etc -Dlocalconfigdir=/etc/tawd
 ```
 
-NOTE: Old versions of Meson use a slightly different command that must be run inside the builddir.
+NOTE: Old versions of Meson use a slightly different command that must be run inside `build/default`.
 
 ```bash
 mesonconf --default-library=static -Dprefix=/usr -Dlocalstatedir=/var -Dsysconfdir=/etc -Dlocalconfigdir=/etc/tawd
@@ -415,6 +416,6 @@ If you want to install as a service (e.g Windows Service, SystemD Service etc), 
 Finally run the install. You will probably need to run this as administrator if the files are installed in system locations (the default) :-
 
 ```bash
-cd builddir
+cd build/default
 sudo meson install
 ```

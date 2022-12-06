@@ -26,6 +26,7 @@ class AuthHandler {
 public:
 	AuthHandler();
 	virtual ~AuthHandler();
+	virtual std::string GetName() =0;
 	virtual AccountData *authenticate(const std::string &loginName, const std::string &authorizationHash, std::string *errorMessage) =0;
 };
 

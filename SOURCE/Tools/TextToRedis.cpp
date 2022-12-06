@@ -28,6 +28,7 @@
 #include <Item.h>
 #include <VirtualItem.h>
 #include <ZoneDef.h>
+#include <AssetCatalogue.h>
 #include <CreditShop.h>
 #include <IGForum.h>
 #include <StringUtil.h>
@@ -314,7 +315,9 @@ int main(int argc, char *argv[]) {
 	/* We need some static data */
 	g_ItemManager.LoadData();
 	g_AbilityManager.LoadData();
-	g_SceneryManager.LoadData();
+	g_AssetCatalogueManager.LoadFromDirectory(
+					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
+							"AssetCatalogue"));
 	g_ZoneDefManager.LoadData();
 
 	g_Logs.data->info("Reading user data from %v", userDataPath);

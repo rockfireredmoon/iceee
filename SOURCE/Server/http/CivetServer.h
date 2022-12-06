@@ -1,18 +1,34 @@
-/* Copyright (c) 2013-2014 the Civetweb developers
+/* Copyright (c) 2013-2017 the Civetweb developers
  * Copyright (c) 2013 No Face Press, LLC
  *
  * License http://opensource.org/licenses/mit-license.php MIT License
  */
 
-#ifndef _CIVETWEB_SERVER_H_
-#define _CIVETWEB_SERVER_H_
+#ifndef CIVETSERVER_HEADER_INCLUDED
+#define CIVETSERVER_HEADER_INCLUDED
 #ifdef __cplusplus
 
 #include "civetweb.h"
 #include <map>
+#include <stdexcept>
 #include <string>
 #include <vector>
-#include <stdexcept>
+
+#ifndef CIVETWEB_CXX_API
+#if defined(_WIN32)
+#if defined(CIVETWEB_CXX_DLL_EXPORTS)
+#define CIVETWEB_CXX_API __declspec(dllexport)
+#elif defined(CIVETWEB_CXX_DLL_IMPORTS)
+#define CIVETWEB_CXX_API __declspec(dllimport)
+#else
+#define CIVETWEB_CXX_API
+#endif
+#elif __GNUC__ >= 4
+#define CIVETWEB_CXX_API __attribute__((visibility("default")))
+#else
+#define CIVETWEB_CXX_API
+#endif
+#endif
 
 // forward declaration
 class CivetServer;
@@ -20,7 +36,7 @@ class CivetServer;
 /**
  * Exception class for thrown exceptions within the CivetHandler object.
  */
-class CIVETWEB_API CivetException : public std::runtime_error
+class CIVETWEB_CXX_API CivetException : public std::runtime_error
 {
   public:
 	CivetException(const std::string &msg) : std::runtime_error(msg)
@@ -32,7 +48,7 @@ class CIVETWEB_API CivetException : public std::runtime_error
  * Basic interface for a URI request handler.  Handlers implementations
  * must be reentrant.
  */
-class CIVETWEB_API CivetHandler
+class CIVETWEB_CXX_API CivetHandler
 {
   public:
 	/**
@@ -59,6 +75,15 @@ class CIVETWEB_API CivetHandler
 	 * @returns true if implemented, false otherwise
 	 */
 	virtual bool handlePost(CivetServer *server, struct mg_connection *conn);
+
+	/**
+	 * Callback method for HEAD request.
+	 *
+	 * @param server - the calling server
+	 * @param conn - the connection information
+	 * @returns true if implemented, false otherwise
+	 */
+	virtual bool handleHead(CivetServer *server, struct mg_connection *conn);
 
 	/**
 	 * Callback method for PUT request.
@@ -101,7 +126,7 @@ class CIVETWEB_API CivetHandler
  * Basic interface for a URI authorization handler.  Handler implementations
  * must be reentrant.
  */
-class CIVETWEB_API CivetAuthHandler
+class CIVETWEB_CXX_API CivetAuthHandler
 {
   public:
 	/**
@@ -126,7 +151,7 @@ class CIVETWEB_API CivetAuthHandler
  * Basic interface for a websocket handler.  Handlers implementations
  * must be reentrant.
  */
-class CIVETWEB_API CivetWebSocketHandler
+class CIVETWEB_CXX_API CivetWebSocketHandler
 {
   public:
 	/**
@@ -184,11 +209,20 @@ class CIVETWEB_API CivetWebSocketHandler
 };
 
 /**
+ * CivetCallbacks
+ *
+ * wrapper for mg_callbacks
+ */
+struct CIVETWEB_CXX_API CivetCallbacks : public mg_callbacks {
+	CivetCallbacks();
+};
+
+/**
  * CivetServer
  *
  * Basic class for embedded web server.  This has an URL mapping built-in.
  */
-class CIVETWEB_API CivetServer
+class CIVETWEB_CXX_API CivetServer
 {
   public:
 	/**
@@ -198,28 +232,27 @@ class CIVETWEB_API CivetServer
 	 * It is good practice to call getContext() after this in case there
 	 * were errors starting the server.
 	 *
+	 * Note: CivetServer should not be used as a static instance in a Windows
+	 * DLL, since the constructor creates threads and the destructor joins
+	 * them again (creating/joining threads should not be done in static
+	 * constructors).
+	 *
 	 * @param options - the web server options.
 	 * @param callbacks - optional web server callback methods.
 	 *
 	 * @throws CivetException
 	 */
-	CivetServer(const char **options, const struct mg_callbacks *callbacks = 0);
-	CivetServer(std::vector<std::string> options,
-	            const struct mg_callbacks *callbacks = 0);
+	CivetServer(const char **options,
+	            const struct CivetCallbacks *callbacks = 0,
+	            const void *UserContext = 0);
+	CivetServer(const std::vector<std::string> &options,
+	            const struct CivetCallbacks *callbacks = 0,
+	            const void *UserContext = 0);
 
 	/**
 	 * Destructor
 	 */
 	virtual ~CivetServer();
-
-    /**
-     * For TAWD
-     *
-     * isConfigure()
-     *
-     * Get if the server is configured correctly and maybe used (has a non NULL contet.
-     */
-    bool isConfigured();
 
 	/**
 	 * close()
@@ -336,17 +369,27 @@ class CIVETWEB_API CivetServer
 	std::vector<int> getListeningPorts();
 
 	/**
+	 * getListeningPorts()
+	 *
+	 * Variant of getListeningPorts() returning the full port information
+	 * (protocol, SSL, ...)
+	 *
+	 * @return A vector of ports
+	 */
+	std::vector<struct mg_server_port> getListeningPortsFull();
+
+	/**
 	 * getCookie(struct mg_connection *conn, const std::string &cookieName,
-	 *std::string &cookieValue)
+	 * std::string &cookieValue)
 	 *
 	 * Puts the cookie value string that matches the cookie name in the
-	 *cookieValue destinaton string.
+	 * cookieValue destination string.
 	 *
 	 * @param conn - the connection information
 	 * @param cookieName - cookie name to get the value from
-	 * @param cookieValue - cookie value is returned using thiis reference
+	 * @param cookieValue - cookie value is returned using this reference
 	 * @returns the size of the cookie value string read.
-	*/
+	 */
 	static int getCookie(struct mg_connection *conn,
 	                     const std::string &cookieName,
 	                     std::string &cookieValue);
@@ -355,16 +398,16 @@ class CIVETWEB_API CivetServer
 	 * getHeader(struct mg_connection *conn, const std::string &headerName)
 	 * @param conn - the connection information
 	 * @param headerName - header name to get the value from
-	 * @returns a char array whcih contains the header value as string
-	*/
+	 * @returns a char array which contains the header value as string
+	 */
 	static const char *getHeader(struct mg_connection *conn,
 	                             const std::string &headerName);
 
 	/**
 	 * getParam(struct mg_connection *conn, const char *, std::string &, size_t)
 	 *
-	 * Returns a query paramter contained in the supplied buffer.  The
-	 * occurance value is a zero-based index of a particular key name.  This
+	 * Returns a query which contained in the supplied buffer.  The
+	 * occurrence value is a zero-based index of a particular key name.  This
 	 * should not be confused with the index over all of the keys.  Note that
 	 *this
 	 * function assumes that parameters are sent as text in http query string
@@ -391,8 +434,8 @@ class CIVETWEB_API CivetServer
 	/**
 	 * getParam(const std::string &, const char *, std::string &, size_t)
 	 *
-	 * Returns a query paramter contained in the supplied buffer.  The
-	 * occurance value is a zero-based index of a particular key name.  This
+	 * Returns a query parameter contained in the supplied buffer.  The
+	 * occurrence value is a zero-based index of a particular key name.  This
 	 * should not be confused with the index over all of the keys.
 	 *
 	 * @param data - the query string (text)
@@ -414,8 +457,8 @@ class CIVETWEB_API CivetServer
 	/**
 	 * getParam(const char *, size_t, const char *, std::string &, size_t)
 	 *
-	 * Returns a query paramter contained in the supplied buffer.  The
-	 * occurance value is a zero-based index of a particular key name.  This
+	 * Returns a query parameter contained in the supplied buffer.  The
+	 * occurrence value is a zero-based index of a particular key name.  This
 	 * should not be confused with the index over all of the keys.
 	 *
 	 * @param data the - query string (text)
@@ -431,6 +474,18 @@ class CIVETWEB_API CivetServer
 	                     const char *name,
 	                     std::string &dst,
 	                     size_t occurrence = 0);
+
+	/**
+	 * getPostData(struct mg_connection *)
+	 *
+	 * Returns response body from a request made as POST. Since the
+	 * connections map is protected, it can't be directly accessed.
+	 * This uses string to store post data to handle big posts.
+	 *
+	 * @param conn - connection from which post data will be read
+	 * @return Post data (empty if not available).
+	 */
+	static std::string getPostData(struct mg_connection *conn);
 
 	/**
 	 * urlDecode(const std::string &, std::string &, bool)
@@ -516,25 +571,33 @@ class CIVETWEB_API CivetServer
 	                      std::string &dst,
 	                      bool append = false);
 
+	// generic user context which can be set/read,
+	// the server does nothing with this apart from keep it.
+	const void *
+	getUserContext() const
+	{
+		return UserContext;
+	}
+
   protected:
 	class CivetConnection
 	{
 	  public:
-		char *postData;
-		unsigned long postDataLen;
-
-		CivetConnection();
-		~CivetConnection();
+		std::vector<char> postData;
 	};
 
 	struct mg_context *context;
-	std::map<struct mg_connection *, class CivetConnection> connections;
+	std::map<const struct mg_connection *, CivetConnection> connections;
+
+	// generic user context which can be set/read,
+	// the server does nothing with this apart from keep it.
+	const void *UserContext;
 
   private:
 	/**
 	 * requestHandler(struct mg_connection *, void *cbdata)
 	 *
-	 * Handles the incomming request.
+	 * Handles the incoming request.
 	 *
 	 * @param conn - the connection information
 	 * @param cbdata - pointer to the CivetHandler instance.
@@ -579,4 +642,4 @@ class CIVETWEB_API CivetServer
 };
 
 #endif /*  __cplusplus */
-#endif /* _CIVETWEB_SERVER_H_ */
+#endif /* CIVETSERVER_HEADER_INCLUDED */

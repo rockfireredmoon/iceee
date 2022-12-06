@@ -86,6 +86,27 @@ struct ciLessLibC : public std::binary_function<std::string, std::string, bool> 
 
 typedef std::map<std::string, std::vector<std::string>, ciLessLibC> TEXT_FILE_SECTION_MAP;
 
+
+class TextFileEntityWriter: public AbstractEntityWriter {
+public:
+	TextFileEntityWriter(std::string path);
+	virtual ~TextFileEntityWriter();
+
+	virtual bool Value(const std::string &key, const std::string &value);
+	virtual bool ListValue(const std::string &key, std::vector<std::string> &value);
+
+	virtual void PushSection(const std::string &section);
+	virtual void Section(const std::string &section);
+
+	virtual bool Start();
+	virtual bool End();
+	virtual bool Abort();
+
+private:
+	std::string mPath;
+	FILE *mOutput;
+};
+
 class TextFileEntityReader : public AbstractEntityReader {
 public:
 	TextFileEntityReader(std::string filename, int caseConv, int commentStyle);

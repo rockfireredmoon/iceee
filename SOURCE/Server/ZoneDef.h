@@ -20,6 +20,7 @@ static std::string LISTPREFIX_GROVE_NAME_TO_ZONE_ID = "GroveNameToZoneID";
 static std::string KEYPREFIX_WARP_NAME_TO_ZONE_ID = "WarpNameToZoneID";
 static std::string LISTPREFIX_ACCOUNT_ID_TO_ZONE_ID = "AccountIDToZoneID";
 static std::string ID_NEXT_ZONE_ID = "NextZoneID";
+static std::string ID_NEXT_WORLD_ZONE_ID = "NextWorldZoneID";
 
 class DropRateProfile;
 
@@ -211,10 +212,12 @@ public:
 	bool mGuildHall;		 //If true, this zone is a guild hall and has custom rulesets attached to it
 	bool mEnvironmentCycle;  //If true, environment time of day cycling is enabled.
 	bool mAudit;             //If true, scenery edits are forced to be audited (by default, groves are not but normal gameplay zones are).
+	bool mStatic;			 //If true, this is a read-only zone defined in static data. This is deprecated, all zones should place ZoneDef.txt in each Instance directory
 	int mMaxAggroRange;      //This is a forced limit to the range that mobs may aggro.  Intended for places like the Rotted Maze
 	int mMaxLeashRange;      //Maximum leash range.  Even if the spawn point is given a higher leash range, it will never be higher than this value, if set.
 	int mMinLevel;			 //Minimum level that characters must be to enter this zone
 	int mMaxLevel;			 //Maximum level that characters must be to enter this zone
+	int mClan;				 //If non-zero, this is a clan grove for the clan with that ID
 
 	int mPlayerFilterType;    //If nonzero, filter players according to type.
 	std::vector<int> mPlayerFilterID;  //Creature Def IDs of the players to filter.
@@ -246,6 +249,7 @@ public:
 	int GetNextPropID();
 	void Clear(void);
 	void CopyFrom(const ZoneDefInfo& other);
+	void PopulateFrom(const ZoneDefInfo& other);
 	void SetDefaults(void);
 	bool IsPlayerGrove(void);
 	bool IsGuildHall(void);
@@ -319,8 +323,11 @@ public:
 
 	static const int GROVE_ZONE_ID_INCREMENT = 8;
 	static const int GROVE_ZONE_ID_DEFAULT = 5000;
+	static const int WORLD_ZONE_ID_INCREMENT = 1;
 
-	int CreateZone(ZoneDefInfo &newZone);
+	int CreateWorldZone();
+	int CreateGroveZone(ZoneDefInfo &newZone);
+	int UpdateWorldZone(ZoneDefInfo &newZone);
 	int CreateGrove(int accountID, const char *grovename);
 	int CheckAutoSave(bool force);
 
@@ -352,7 +359,8 @@ private:
 	ChangeData ZoneListChanges;
 	Platform_CriticalSection cs;
 
-	int GetNewZoneID(void);
+	int GetNewGroveZoneID(void);
+	int GetNewWorldZoneID(void);
 	int LoadFile(std::string fileName);
 
 	ZoneDefInfo * ResolveZoneDef(int ID);
@@ -464,6 +472,8 @@ private:
 	void ResolveTerrainMap(void);
 	void LoadFile(std::string filename);
 };
+
+int WriteZoneDefInfo(char *buffer, ZoneDefInfo *item);
 
 extern ZoneDefManager g_ZoneDefManager;
 extern ZoneBarrierManager g_ZoneBarrierManager;

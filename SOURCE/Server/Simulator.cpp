@@ -36,6 +36,7 @@
 #include "InstanceScale.h"
 #include "Combat.h"
 #include "ConfigString.h"
+#include "Random.h"
 #include "GM.h"
 #include "Info.h"
 #include "PVP.h"
@@ -3596,9 +3597,9 @@ void SimulatorThread::RunPortalRequest(void) {
 			SendInfoMessage(Aux1, INFOMSG_ERROR);
 			return;
 		}
-		x = sim->creatureInst->CurrentX + randmodrng(5, 20);
+		x = sim->creatureInst->CurrentX + g_RandomManager.RandModRng(5, 20);
 		y = sim->creatureInst->CurrentY;
-		z = sim->creatureInst->CurrentZ + randmodrng(5, 20);
+		z = sim->creatureInst->CurrentZ + g_RandomManager.RandModRng(5, 20);
 		zone = sim->creatureInst->actInst->mZone;
 	} else {
 		g_Logs.server->warn("Portal request type not found: %v (%v)",
@@ -3755,15 +3756,16 @@ void SimulatorThread::CreatureUseHenge(int creatureID, int creatureDefID) {
  */
 
 void SimulatorThread::FinaliseTransfer(Shard &shard, const std::string &token) {
-	g_Logs.simulator->info("Finalising transfer of %v to %v",
-			pld.charPtr->cdef.css.display_name, shard.mName);
+	g_Logs.simulator->info("Finalising transfer of %v to %v (%v)",
+			pld.charPtr->cdef.css.display_name, shard.mName, shard.mHTTPAddress);
 	int wpos = 0;
 	wpos += PutByte(&SendBuf[wpos], 56);  //_handleSimSwitch
 	wpos += PutShort(&SendBuf[wpos], 0);
-	wpos += PutStringUTF(&SendBuf[wpos], shard.mSimulatorAddress.c_str());
+	wpos += PutStringUTF(&SendBuf[wpos], shard.mSimulatorAddress);
 	wpos += PutInteger(&SendBuf[wpos], shard.mSimulatorPort);
-	wpos += PutStringUTF(&SendBuf[wpos], token.c_str());
+	wpos += PutStringUTF(&SendBuf[wpos], token);
 	wpos += PutStringUTF(&SendBuf[wpos], pld.charPtr->cdef.css.display_name);
+	wpos += PutStringUTF(&SendBuf[wpos], shard.mHTTPAddress);
 	PutShort(&SendBuf[1], wpos - 3);
 	AttemptSend(SendBuf, wpos);
 
@@ -4125,7 +4127,7 @@ PartyMember * SimulatorThread::RollForPartyLoot(ActiveParty *party,
 	}
 	for (std::set<int>::iterator it = creatureIds.begin();
 			it != creatureIds.end(); ++it) {
-		int rolled = randmodrng(1, 100);
+		int rolled = g_RandomManager.RandModRng(1, 100);
 		PartyMember *m = party->GetMemberByID(*it);
 		if (rolled > maxRoll) {
 			maxRoller = m;

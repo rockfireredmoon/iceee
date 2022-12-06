@@ -1,7 +1,7 @@
 #include <vector>
 #include "Globals.h"
 #include "Inventory.h"
-#include "Util.h"
+#include "Random.h"
 
 #include "Config.h"
 #include "Debug.h"
@@ -686,7 +686,7 @@ InventorySlot * InventoryManager :: PickRandomItem(int containerID) {
 	}
 	if(c == 0)
 		return NULL;
-	return tempCon[randmodrng(0, c)];
+	return tempCon[g_RandomManager.RandModRng(0, c)];
 
 }
 

@@ -13,7 +13,7 @@ option('cfg_TmpDir', type: 'string', value: '/tmp', description: 'Path to tempor
 option('localconfigdir', type: 'string', value: 'Local', description: 'Default path to local configuration files (default to Local).')
 option('docdir', type: 'string', value: '', description: 'Path for documentations. Defaults to prefix/share/doc/tawd.')
 option('webdir', type: 'string', value: '', description: 'Path for web resource. Defaults to prefix/share/tawd/Web.')
-option('configdirs', type: 'string', value: 'Local', description: 'List of directories for executables to look for configuration files (default to localconfigdir).')
+option('configdirs', type: 'string', value: '', description: 'List of directories for executables to look for configuration files (default to localconfigdir).')
 option('serverdatadir', type: 'string', value: '..', description: 'Path to other server data (WebPages and asset folders, defaults to project root).')
 option('ssl', type: 'boolean', value: false, description: 'Build HTTP server with HTTPS support.')
 option('service', type: 'boolean', value: false, description: 'Configure support for building and installing as a server (e.g. SystemD on Linux, Windows Service etc).')

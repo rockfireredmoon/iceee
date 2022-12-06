@@ -48,42 +48,21 @@ static string PROP_UPDATED = "prop-updated";
 
 using namespace std;
 
-string RedisConnectStatus(cpp_redis::client::connect_state status) {
+string RedisConnectStatus(cpp_redis::connect_state status) {
 	switch (status) {
-	case cpp_redis::client::connect_state::dropped:
+	case cpp_redis::connect_state::dropped:
 		return "Dropped";
-	case cpp_redis::client::connect_state::failed:
+	case cpp_redis::connect_state::failed:
 		return "Failed";
-	case cpp_redis::client::connect_state::lookup_failed:
+	case cpp_redis::connect_state::lookup_failed:
 		return "Lookup Failed";
-	case cpp_redis::client::connect_state::ok:
+	case cpp_redis::connect_state::ok:
 		return "OK";
-	case cpp_redis::client::connect_state::sleeping:
+	case cpp_redis::connect_state::sleeping:
 		return "Sleeping";
-	case cpp_redis::client::connect_state::start:
+	case cpp_redis::connect_state::start:
 		return "Start";
-	case cpp_redis::client::connect_state::stopped:
-		return "Stopped";
-	default:
-		return "Unknown";
-	}
-}
-
-string RedisConnectStatus(cpp_redis::subscriber::connect_state status) {
-	switch (status) {
-	case cpp_redis::subscriber::connect_state::dropped:
-		return "Dropped";
-	case cpp_redis::subscriber::connect_state::failed:
-		return "Failed";
-	case cpp_redis::subscriber::connect_state::lookup_failed:
-		return "Lookup Failed";
-	case cpp_redis::subscriber::connect_state::ok:
-		return "OK";
-	case cpp_redis::subscriber::connect_state::sleeping:
-		return "Sleeping";
-	case cpp_redis::subscriber::connect_state::start:
-		return "Start";
-	case cpp_redis::subscriber::connect_state::stopped:
+	case cpp_redis::connect_state::stopped:
 		return "Stopped";
 	default:
 		return "Unknown";
@@ -97,20 +76,20 @@ string RedisConnectStatus(cpp_redis::subscriber::connect_state status) {
 ClusterLogger::ClusterLogger() {
 }
 
-void ClusterLogger::debug(const string& msg, const string& file, size_t line) {
+void ClusterLogger::debug(const string &msg, const string &file, size_t line) {
 	g_Logs.cluster->debug("[%v:%v] %v", file, line, msg);
 }
 
-void ClusterLogger::info(const string& msg, const string& file, size_t line) {
+void ClusterLogger::info(const string &msg, const string &file, size_t line) {
 	g_Logs.cluster->info("[%v:%v] %v", file, line, msg);
 }
 
-void ClusterLogger::warn(const string& msg, const string& file, size_t line) {
+void ClusterLogger::warn(const string &msg, const string &file, size_t line) {
 	g_Logs.cluster->warn("[%v:%v] %v", file, line, msg);
 
 }
 
-void ClusterLogger::error(const string& msg, const string& file, size_t line) {
+void ClusterLogger::error(const string &msg, const string &file, size_t line) {
 	g_Logs.cluster->error("[%v:%v] %v", file, line, msg);
 
 }
@@ -371,7 +350,7 @@ bool ClusterEntityWriter::Value(const string &key, const string &value) {
 	return true;
 }
 
-bool ClusterEntityWriter::ListValue(const string & key, vector<string> &value) {
+bool ClusterEntityWriter::ListValue(const string &key, vector<string> &value) {
 	string v;
 	for (auto it = value.begin(); it != value.end(); ++it) {
 		if (v.size() > 0)
@@ -403,6 +382,7 @@ Shard::Shard() {
 	mLastSeen = 0;
 	mSimulatorPort = 0;
 	mSimulatorAddress = "";
+	mHTTPAddress = "";
 	mPlayers = 0;
 	mFullName = DEFAULT_SHARD_NAME;
 	mServerTime = 0;
@@ -417,6 +397,7 @@ void Shard::WriteToJSON(Json::Value &value) {
 	value["lastSeen"] = Json::UInt64(mLastSeen);
 	value["simulatorPort"] = mSimulatorPort;
 	value["simulatorAddress"] = mSimulatorAddress;
+	value["httpAddress"] = mHTTPAddress;
 	value["players"] = mPlayers;
 	value["fullName"] = mFullName;
 	value["serverTime"] = Json::UInt64(mServerTime);
@@ -469,11 +450,13 @@ string ClusterManager::GetMaster() {
 
 STRINGLIST ClusterManager::GetAvailableShardNames() {
 	STRINGLIST l;
-	SYNCHRONIZED(mMutex){
-	for(map<string, Shard>::iterator it = mActiveShards.begin(); it != mActiveShards.end(); ++it) {
-		l.push_back(it->first);
+	SYNCHRONIZED(mMutex)
+	{
+		for (map<string, Shard>::iterator it = mActiveShards.begin();
+				it != mActiveShards.end(); ++it) {
+			l.push_back(it->first);
+		}
 	}
-}
 	return l;
 }
 
@@ -517,9 +500,9 @@ bool ClusterManager::ListRemove(const std::string &key,
 vector<string> ClusterManager::GetList(const std::string &key) {
 	STRINGLIST l;
 	mClient.lrange(key, 0, -1, [this, &l](const cpp_redis::reply &reply) {
-		if(reply.ok()) {
+		if (reply.ok()) {
 			auto arr = reply.as_array();
-			for(auto a = arr.begin(); a != arr.end(); ++a) {
+			for (auto a = arr.begin(); a != arr.end(); ++a) {
 				l.push_back((*a).as_string());
 			}
 		}
@@ -549,6 +532,21 @@ string ClusterManager::GetKey(const string &key, const string &defaultValue) {
 		return defaultValue;
 	else
 		return rep.as_string();
+}
+
+int ClusterManager::GetIntKey(const string &key) {
+	return GetIntKey(key, 0);
+}
+
+int ClusterManager::GetIntKey(const string &key, const int &defaultValue) {
+	g_Logs.cluster->debug("Getting key %v", key);
+	auto getGet = mClient.get(key);
+	mClient.sync_commit();
+	cpp_redis::reply rep = getGet.get();
+	if (rep.is_null())
+		return defaultValue;
+	else
+		return StringUtil::SafeParseInt(rep.as_string());
 }
 
 bool ClusterManager::RemoveKey(const string &key, bool sync) {
@@ -607,173 +605,190 @@ int64_t ClusterManager::NextValue(const string &key, int incr) {
 	}
 }
 
-int ClusterManager::Scan(const ScanCallback& task, const string &pattern,
+int ClusterManager::Scan(const ScanCallback &task, const string &pattern,
 		size_t max) {
-	size_t cursor = 0;
+	int64_t cursor = 0;
 	size_t count = 0;
-	g_Logs.cluster->debug("Scanning for keys matching %v", pattern);
+	size_t scanned = 0;
+	size_t pages = 0;
+	if (max == 0)
+		max = 10000;
+	if (g_Logs.cluster->enabled(el::Level::Debug))
+		g_Logs.cluster->debug("Scanning for keys matching %v", pattern);
 	do {
-		mClient.scan(cursor, pattern,
-				[this,task, pattern, &cursor, &count, max](const cpp_redis::reply &reply) {
+		mClient.scan(cursor, pattern, max,
+				[this, task, pattern, &cursor, &count, max, &scanned, &pages](
+						const cpp_redis::reply &reply) {
 					auto repl = reply.as_array();
-					cursor = atoi(repl[0].as_string().c_str());
+					cursor = std::stoi(repl[0].as_string());
+					pages++;
 					auto data = repl[1].as_array();
-					for(auto el = data.begin(); ( max == 0 || count < max ) && el != data.end(); ++el) {
+					scanned += data.size();
+					for (auto el = data.begin();
+							(max == 0 || count < max) && el != data.end();
+							++el) {
 						task((*el).as_string());
 						count++;
 					}
 				});
 		mClient.sync_commit();
 	} while (cursor > 0 && (max == 0 || count < max));
+	if (g_Logs.cluster->enabled(el::Level::Debug))
+		g_Logs.cluster->debug("Scanning for keys matching %v, matched %v", pattern, count);
 	return 0;
 }
 
 void ClusterManager::JoinedShard(unsigned long simID, int zoneID,
 		CharacterData *cdata) {
-	SYNCHRONIZED(mMutex){
-	ShardPlayer sp = mActivePlayers[cdata->cdef.CreatureDefID];
-	if(sp.mID == 0) {
-		mActiveShards[mShardName].mPlayers++;
-		g_Logs.cluster->info("Notify cluster of new player (%v@%v) on Sim %v", cdata->cdef.css.display_name, zoneID, simID);
-	}
-	else
-	g_Logs.cluster->info("Notify cluster of player (%v@%v) update on Sim %v", cdata->cdef.css.display_name, zoneID, simID);
+	SYNCHRONIZED(mMutex)
+	{
+		ShardPlayer sp = mActivePlayers[cdata->cdef.CreatureDefID];
+		if (sp.mID == 0) {
+			mActiveShards[mShardName].mPlayers++;
+			g_Logs.cluster->info(
+					"Notify cluster of new player (%v@%v) on Sim %v",
+					cdata->cdef.css.display_name, zoneID, simID);
+		} else
+			g_Logs.cluster->info(
+					"Notify cluster of player (%v@%v) update on Sim %v",
+					cdata->cdef.css.display_name, zoneID, simID);
 
-	sp.mID = cdata->cdef.CreatureDefID;
-	sp.mShard = mShardName;
-	sp.mCharacterData = cdata;
-	sp.mZoneID = zoneID;
-	sp.mSimID = simID;
-	mActivePlayers[sp.mID] = sp;
+		sp.mID = cdata->cdef.CreatureDefID;
+		sp.mShard = mShardName;
+		sp.mCharacterData = cdata;
+		sp.mZoneID = zoneID;
+		sp.mSimID = simID;
+		mActivePlayers[sp.mID] = sp;
 
-	if(mClusterable) {
-		mClient.publish(PLAYER_JOINED_SHARD,
-				StringUtil::Format("%s:%d:%d:%lu", mShardName.c_str(),
-						cdata->cdef.CreatureDefID, zoneID, simID));
-		mClient.commit();
+		if (mClusterable) {
+			Json::Value cfg;
+			cfg["shardName"] = mShardName;
+			cfg["creatureDefId"] = cdata->cdef.CreatureDefID;
+			cfg["zoneId"] = zoneID;
+			cfg["simId"] = Json::LargestUInt(simID);
+			Send(PLAYER_JOINED_SHARD, cfg);
+		}
 	}
-}
 }
 
 void ClusterManager::ShardPing(const string &shardName,
 		unsigned long localTime) {
-	SYNCHRONIZED(mMutex){
-	if(mActiveShards[shardName].mName.compare("") == 0) {
-		g_Logs.cluster->warn("Ping from shard %v that we did not know about. This may be because this shard was recently restarted. Requesting it's configuration", shardName);
-		mClient.publish(SERVER_RECONFIGURE, shardName);
-		mClient.commit();
+	SYNCHRONIZED(mMutex)
+	{
+		if (mActiveShards[shardName].mName.compare("") == 0) {
+			g_Logs.cluster->warn(
+					"Ping from shard %v that we did not know about. This may be because this shard was recently restarted. Requesting it's configuration",
+					shardName);
+			mClient.publish(SERVER_RECONFIGURE, shardName);
+			mClient.commit();
+		} else {
+			long ms = g_PlatformTime.getMilliseconds();
+			Shard s = mActiveShards[shardName];
+			s.mLastSeen = ms;
+			s.SetTimes(g_PlatformTime.getLocalMilliSeconds(), ms);
+			mActiveShards[shardName] = s;
+			mClient.publish(SERVER_PONG, mShardName);
+			mClient.commit();
+			g_Logs.cluster->debug("Ping from shard %v at %v", mShardName, ms);
+		}
 	}
-	else {
-		long ms = g_PlatformTime.getMilliseconds();
-		Shard s = mActiveShards[shardName];
-		s.mLastSeen = ms;
-		s.SetTimes(g_PlatformTime.getLocalMilliSeconds(), ms);
-		mActiveShards[shardName] = s;
-		mClient.publish(SERVER_PONG, mShardName);
-		mClient.commit();
-		g_Logs.cluster->debug("Ping from shard %v at %v", mShardName, ms);
-	}
-}
 }
 
 void ClusterManager::ShardPong(const string &shardName) {
-	SYNCHRONIZED(mMutex){
-	if(mActiveShards[shardName].mName.compare("") == 0) {
-		g_Logs.cluster->warn("Pong from shard %v that we did not know about.", shardName);
+	SYNCHRONIZED(mMutex)
+	{
+		if (mActiveShards[shardName].mName.compare("") == 0) {
+			g_Logs.cluster->warn(
+					"Pong from shard %v that we did not know about.",
+					shardName);
+		} else {
+			int tm =
+					mPingSentTime == 0 ?
+							0 :
+							g_PlatformTime.getMilliseconds() - mPingSentTime;
+			mActiveShards[shardName].mPing = tm;
+			g_Logs.cluster->debug("Pong from shard %v took %v ms", shardName,
+					tm);
+		}
 	}
-	else {
-		int tm = mPingSentTime == 0 ? 0 : g_PlatformTime.getMilliseconds() - mPingSentTime;
-		mActiveShards[shardName].mPing = tm;
-		g_Logs.cluster->debug("Pong from shard %v took %v ms", shardName, tm);
-	}
-}
 }
 
 void ClusterManager::LeftOtherShard(const string &shardName, int cdefid) {
-	SYNCHRONIZED(mMutex){
-	for (auto it = mPending.begin();
-			it != mPending.end(); ++it) {
-		if((*it).mID == cdefid) {
+	SYNCHRONIZED(mMutex)
+	{
+		for (auto it = mPending.begin(); it != mPending.end(); ++it) {
+			if ((*it).mID == cdefid) {
+				g_Logs.cluster->info(
+						"Ignoring that %v left shard %v, as we will be their new shard.",
+						cdefid, shardName);
+				return;
+			}
+		}
+
+		map<int, ShardPlayer>::iterator it = mActivePlayers.find(cdefid);
+		if (it == mActivePlayers.end()) {
 			g_Logs.cluster->info(
-					"Ignoring that %v left shard %v, as we will be their new shard.",
+					"Player %v left shard %v, but this shard wasn't aware of this character!",
 					cdefid, shardName);
-			return;
+		} else {
+			mActiveShards[shardName].mPlayers--;
+			ShardPlayer sp = mActivePlayers[cdefid];
+			g_Logs.cluster->info(
+					"Player %v (%v) left shard %v, now have %v left.", cdefid,
+					sp.mCharacterData->cdef.css.display_name, shardName,
+					mActiveShards[shardName].mPlayers);
+			mActivePlayers.erase(it);
+
+			/* Send status */
+			CharacterData *cd = sp.mCharacterData;
+
+			g_Scheduler.Submit([this, cd]() {
+				char buf[128];
+				/* TODO - Can we send to friend simulators only like it does on source server? */
+				g_SimulatorManager.SendToAllSimulators(buf, PrepExt_FriendsLogStatus(buf, cd, 0), NULL);
+				g_CharacterManager.UnloadCharacter(cd->cdef.CreatureDefID);
+			});
+
 		}
 	}
-
-	map<int, ShardPlayer>::iterator it = mActivePlayers.find(cdefid);
-	if (it == mActivePlayers.end()) {
-		g_Logs.cluster->info(
-				"Player %v left shard %v, but this shard wasn't aware of this character!",
-				cdefid, shardName);
-	} else {
-		mActiveShards[shardName].mPlayers--;
-		ShardPlayer sp = mActivePlayers[cdefid];
-		g_Logs.cluster->info("Player %v (%v) left shard %v, now have %v left.", cdefid,
-				sp.mCharacterData->cdef.css.display_name, shardName, mActiveShards[shardName].mPlayers);
-		mActivePlayers.erase(it);
-
-		/* Send status */
-		CharacterData *cd = sp.mCharacterData;
-
-		g_Scheduler.Submit([this, cd]() {
-					char buf[128];
-					/* TODO - Can we send to friend simulators only like it does on source server? */
-					g_SimulatorManager.SendToAllSimulators(buf, PrepExt_FriendsLogStatus(buf, cd, 0), NULL);
-					g_CharacterManager.UnloadCharacter(cd->cdef.CreatureDefID);
-				});
-
-	}
-}
 }
 
 void ClusterManager::FindMasterShard() {
-	SYNCHRONIZED(mMutex){
-	Shard m;
-	unsigned long earliest = g_PlatformTime.getMilliseconds() + 10000;
-	for (auto it = mActiveShards.begin();
-			it != mActiveShards.end(); ++it) {
-		if (it->second.mStartTime < earliest) {
-			m = it->second;
-			earliest = m.mStartTime;
+	SYNCHRONIZED(mMutex)
+	{
+		Shard m;
+		unsigned long earliest = g_PlatformTime.getMilliseconds() + 10000;
+		for (auto it = mActiveShards.begin(); it != mActiveShards.end(); ++it) {
+			if (it->second.mStartTime < earliest) {
+				m = it->second;
+				earliest = m.mStartTime;
+			}
+		}
+		if (mMasterShard.compare(m.mName) != 0) {
+
+			mMasterShard = m.mName;
+			g_Logs.cluster->info("The master shard has now changed to %v",
+					mMasterShard);
+			mMaster = mMasterShard.compare(mShardName) == 0;
+
+			if (mMaster) {
+				/* If we are now the master, we have to take over the Auction House times
+				 * and weather control
+				 */
+				g_Scheduler.Submit([]() {
+					g_AuctionHouseManager.LoadItems();
+				});
+			} else {
+				g_AuctionHouseManager.CancelAllTimers();
+			}
 		}
 	}
-	if(mMasterShard.compare(m.mName) != 0) {
-
-		mMasterShard = m.mName;
-		g_Logs.cluster->info("The master shard has now changed to %v", mMasterShard);
-		mMaster = mMasterShard.compare(mShardName) == 0;
-
-		if(mMaster) {
-			/* If we are now the master, we have to take over the Auction House times
-			 * and weather control
-			 */
-			g_Scheduler.Submit([]() {
-						g_AuctionHouseManager.LoadItems();
-					});
-		}
-		else {
-			g_AuctionHouseManager.CancelAllTimers();
-		}
-	}
-}
-}
-void ClusterManager::OtherShardLogin(const std::string &shardName,
-		int accountID) {
-	g_Logs.cluster->info("Account %v logged in to shard %v", accountID,
-			shardName);
-}
-
-void ClusterManager::OtherShardLogout(const std::string &shardName,
-		int accountID) {
-	g_Logs.cluster->info("Account %v logged out of shard %v", accountID,
-			shardName);
 }
 
 void ClusterManager::JoinedOtherShard(const string &shardName, int cdefid,
 		int zoneID, unsigned long simID) {
 	g_CharacterManager.GetThread("SimulatorThread::SetPersona");
-	CharacterData * cd = g_CharacterManager.RequestCharacter(cdefid, false);
+	CharacterData *cd = g_CharacterManager.RequestCharacter(cdefid, false);
 	g_CharacterManager.ReleaseThread();
 	if (cd == NULL)
 		g_Logs.cluster->info(
@@ -788,30 +803,32 @@ void ClusterManager::JoinedOtherShard(const string &shardName, int cdefid,
 		sp.mSimID = simID;
 		sp.mID = cdefid;
 		sp.mCharacterData = cd;
-		SYNCHRONIZED(mMutex){
+		SYNCHRONIZED(mMutex)
+		{
 
-		if(mActivePlayers.find(cdefid) == mActivePlayers.end()) {
+			if (mActivePlayers.find(cdefid) == mActivePlayers.end()) {
 
-			mActiveShards[shardName].mPlayers++;
-			g_Logs.cluster->info("Player %v (%v) joined shard %v", cdefid,
-					cd->cdef.css.display_name, shardName);
-		}
-		else {
-			if(mActivePlayers[cdefid].mShard.compare(shardName) == 0)
-			g_Logs.cluster->debug("Player %v (%v) updated for shard %v", cdefid,
-					cd->cdef.css.display_name, shardName);
-			else {
-				g_Logs.cluster->debug("Player %v (%v) changed shards from %v to %v ", cdefid,
-						cd->cdef.css.display_name, mActivePlayers[cdefid].mShard, shardName);
+				mActiveShards[shardName].mPlayers++;
+				g_Logs.cluster->info("Player %v (%v) joined shard %v", cdefid,
+						cd->cdef.css.display_name, shardName);
+			} else {
+				if (mActivePlayers[cdefid].mShard.compare(shardName) == 0)
+					g_Logs.cluster->debug("Player %v (%v) updated for shard %v",
+							cdefid, cd->cdef.css.display_name, shardName);
+				else {
+					g_Logs.cluster->debug(
+							"Player %v (%v) changed shards from %v to %v ",
+							cdefid, cd->cdef.css.display_name,
+							mActivePlayers[cdefid].mShard, shardName);
 
-				mActiveShards[mActivePlayers[cdefid].mShard].mPlayers--;
+					mActiveShards[mActivePlayers[cdefid].mShard].mPlayers--;
+				}
 			}
+
+			mActivePlayers[cdefid] = sp;
 		}
 
-		mActivePlayers[cdefid] = sp;
-	}
-
-	/* Social Stuff */
+		/* Social Stuff */
 		SocialWindowEntry data;
 		data.creatureDefID = cdefid;
 		data.name = cd->cdef.css.display_name;
@@ -828,7 +845,9 @@ void ClusterManager::JoinedOtherShard(const string &shardName, int cdefid,
 				[this, sp]() {
 					char buf[128];
 					/* TODO - Can we send to friend simulators only like it does on source server? */
-					g_SimulatorManager.SendToAllSimulators(buf, PrepExt_FriendsLogStatus(buf, sp.mCharacterData, 1), NULL);
+					g_SimulatorManager.SendToAllSimulators(buf,
+							PrepExt_FriendsLogStatus(buf, sp.mCharacterData, 1),
+							NULL);
 				});
 	}
 }
@@ -836,28 +855,33 @@ void ClusterManager::JoinedOtherShard(const string &shardName, int cdefid,
 void ClusterManager::ServerConfigurationReceived(const string &shardName,
 		const string &simulatorAddress, int simulatorPort,
 		const string &fullName, int players, unsigned long startTime,
-		unsigned long utcTime, unsigned long localTime) {
-	SYNCHRONIZED(mMutex){
-	Shard s = mActiveShards[shardName];
-	if (s.mName.compare("") == 0) {
-		NewShard(shardName);
-		s = mActiveShards[shardName];
+		unsigned long utcTime, unsigned long localTime,
+		const std::string &httpAddress) {
+	SYNCHRONIZED(mMutex)
+	{
+		Shard s = mActiveShards[shardName];
+		if (s.mName.compare("") == 0) {
+			NewShard(shardName);
+			s = mActiveShards[shardName];
+		}
+		long ms = g_PlatformTime.getMilliseconds();
+		s.mLastSeen = ms;
+		s.mFullName = fullName;
+		s.mPlayers = players;
+		s.mSimulatorAddress = simulatorAddress;
+		s.mHTTPAddress = httpAddress;
+		s.mSimulatorPort = simulatorPort;
+		s.mStartTime = startTime;
+		s.SetTimes(localTime, utcTime);
+		int tm = mPingSentTime == 0 ? 0 : ms - mPingSentTime;
+		s.mPing = tm;
+		g_Logs.cluster->info(
+				"Simulator for shard %v is %v:%v (S2S ping %v). HTTP server for this shard is %v",
+				shardName, s.mSimulatorAddress, s.mSimulatorPort, tm,
+				s.mHTTPAddress);
+		mActiveShards[s.mName] = s;
+		FindMasterShard();
 	}
-	long ms = g_PlatformTime.getMilliseconds();
-	s.mLastSeen = ms;
-	s.mFullName = fullName;
-	s.mPlayers = players;
-	s.mSimulatorAddress = simulatorAddress;
-	s.mSimulatorPort = simulatorPort;
-	s.mStartTime = startTime;
-	s.SetTimes(localTime, utcTime);
-	int tm = mPingSentTime == 0 ? 0 : ms - mPingSentTime;
-	s.mPing = tm;
-	g_Logs.cluster->info("Simulator for shard %v is %v:%v (S2S ping %v)", shardName,
-			s.mSimulatorAddress, s.mSimulatorPort, tm);
-	mActiveShards[s.mName] = s;
-	FindMasterShard();
-}
 }
 
 string ClusterManager::SimTransfer(int cdefId, const string &shardName,
@@ -870,10 +894,14 @@ string ClusterManager::SimTransfer(int cdefId, const string &shardName,
 	g_Logs.cluster->info(
 			"Notifying shard %v that %v (sim %v) is about to connect to them using token %v.",
 			shardName, cdefId, simID, token);
-	mClient.publish(SIM_TRANSFER,
-			StringUtil::Format("%s:%s:%d:%s:%d", mShardName.c_str(),
-					shardName.c_str(), cdefId, token.c_str(), simID));
-	mClient.commit();
+
+	Json::Value cfg;
+	cfg["shardName"] = mShardName;
+	cfg["target"] = shardName;
+	cfg["creatureDefId"] = cdefId;
+	cfg["token"] = token;
+	cfg["simId"] = Json::LargestUInt(simID);
+	Send(SIM_TRANSFER, cfg);
 	return token;
 }
 
@@ -882,38 +910,61 @@ void ClusterManager::ConfirmTransfer(int cdefId, const string &shardName,
 	g_Logs.cluster->info(
 			"Notifying shard %v that %v will be accepted for transfer to this shard using token %v [%v]",
 			shardName, cdefId, token, simID);
-	mClient.publish(CONFIRM_TRANSFER,
-			StringUtil::Format("%s:%s:%d:%s:%d", mShardName.c_str(),
-					shardName.c_str(), cdefId, token.c_str(), simID));
+	Json::Value cfg;
+	cfg["shardName"] = mShardName;
+	cfg["target"] = shardName;
+	cfg["creatureDefId"] = cdefId;
+	cfg["token"] = token;
+	cfg["simId"] = Json::LargestUInt(simID);
+	Send(CONFIRM_TRANSFER, cfg);
+}
+
+void ClusterManager::Send(const std::string &msg, const Json::Value &val) {
+	Json::StyledWriter writer;
+	std::string str = writer.write(val);
+	if (g_Logs.cluster->enabled(el::Level::Debug))
+		g_Logs.cluster->debug("Send cluster message: %v [%v]", msg, str);
+	mClient.publish(msg, str);
 	mClient.commit();
 }
 
 void ClusterManager::SendConfiguration() {
 	g_Logs.cluster->info(
-			"Received a request to send our shard configuration (Simulator %v:%v).",
-			g_SimulatorAddress, g_SimulatorPort);
-	mClient.publish(SERVER_CONFIGURATION,
-			StringUtil::Format("%s:%s:%d:%s:%d:%lu:%lu:%lu", mShardName.c_str(),
-					g_SimulatorAddress, g_SimulatorPort, mFullName.c_str(),
-					GetActiveShard(mShardName).mPlayers, g_ServerLaunchTime,
-					g_PlatformTime.getUTCMilliSeconds(),
-					g_PlatformTime.getLocalMilliSeconds()));
-	mClient.commit();
-	SYNCHRONIZED(mMutex){
-	/* Send all of the players we know about as well */
-	for(map<int, ShardPlayer>::iterator it = mActivePlayers.begin(); it != mActivePlayers.end(); ++it) {
-		ShardPlayer p = it->second;
-		if(p.IsLocal()) {
-			/* Only send players that belong to our cluster */
-			mClient.publish(PLAYER_JOINED_SHARD,
-					StringUtil::Format("%s:%d:%d:%lu:%s", mShardName.c_str(),
-							p.mID, p.mZoneID, p.mSimID));
-			mClient.commit();
-		}
-	}
+			"Received a request to send our shard configuration (Simulator %v:%v, HTTP %v).",
+			g_SimulatorAddress, g_SimulatorPort, g_Config.ResolveHTTPAddress());
 
-	/* And all of the local account logins (possibly multiple times for each account) */
-	// TODO this wont work. we might end up sending to shards that already are aware of account
+	// TODO make all other messages JSON too
+
+	Json::Value cfg;
+	cfg["shardName"] = mShardName;
+	cfg["simulatorAddress"] = g_SimulatorAddress;
+	cfg["simulatorPort"] = g_SimulatorPort;
+	cfg["fullName"] = mFullName;
+	cfg["players"] = GetActiveShard(mShardName).mPlayers;
+	cfg["launchTime"] = Json::LargestUInt(g_ServerLaunchTime);
+	cfg["utc"] = Json::LargestUInt(g_PlatformTime.getUTCMilliSeconds());
+	cfg["time"] = Json::LargestUInt(g_PlatformTime.getLocalMilliSeconds());
+	cfg["http"] = g_Config.ResolveHTTPAddress();
+	Send(SERVER_CONFIGURATION, cfg);
+	SYNCHRONIZED(mMutex)
+	{
+		/* Send all of the players we know about as well */
+		for (map<int, ShardPlayer>::iterator it = mActivePlayers.begin();
+				it != mActivePlayers.end(); ++it) {
+			ShardPlayer p = it->second;
+			if (p.IsLocal()) {
+				/* Only send players that belong to our cluster */
+				Json::Value cfg;
+				cfg["shardName"] = mShardName;
+				cfg["creatureDefId"] = p.mID;
+				cfg["zoneId"] = p.mZoneID;
+				cfg["simId"] = Json::LargestUInt(p.mSimID);
+				Send(PLAYER_JOINED_SHARD, cfg);
+			}
+		}
+
+		/* And all of the local account logins (possibly multiple times for each account) */
+		// TODO this wont work. we might end up sending to shards that already are aware of account
 //		for(map<int, int>::iterator it = mActiveLocalAccounts.begin(); it != mActiveLocalAccounts.end(); ++it) {
 //			int count = it->second;
 //			for(int j = 0 ; j < count ; j++) {
@@ -924,26 +975,31 @@ void ClusterManager::SendConfiguration() {
 //				mClient.commit();
 //			}
 //		}
-}
+	}
 }
 
 void ClusterManager::LeftShard(int CDefID) {
-	SYNCHRONIZED(mMutex){
-	map<int, ShardPlayer>::iterator it = mActivePlayers.find(CDefID);
-	if(it != mActivePlayers.end()) {
-		mActiveShards[mShardName].mPlayers--;
-		g_Logs.cluster->info("Local player %v left shard, now have %v players left.", CDefID, mActiveShards[mShardName].mPlayers);
-		mActivePlayers.erase(it);
-		if(mClusterable && mClient.is_connected()) {
-			mClient.publish(PLAYER_LEFT_SHARD,
-					StringUtil::Format("%s:%d", mShardName.c_str(), CDefID));
-			mClient.commit();
-		}
+	SYNCHRONIZED(mMutex)
+	{
+		map<int, ShardPlayer>::iterator it = mActivePlayers.find(CDefID);
+		if (it != mActivePlayers.end()) {
+			mActiveShards[mShardName].mPlayers--;
+			g_Logs.cluster->info(
+					"Local player %v left shard, now have %v players left.",
+					CDefID, mActiveShards[mShardName].mPlayers);
+			mActivePlayers.erase(it);
+			if (mClusterable && mClient.is_connected()) {
+				Json::Value cfg;
+				cfg["shardName"] = mShardName;
+				cfg["creatureDefId"] = CDefID;
+				Send(PLAYER_LEFT_SHARD, cfg);
+			}
+		} else
+			/* Happens on sim switch */
+			g_Logs.cluster->debug(
+					"Local player %v left shard, but we didn't know about them!",
+					CDefID);
 	}
-	else
-	/* Happens on sim switch */
-	g_Logs.cluster->debug("Local player %v left shard, but we didn't know about them!", CDefID);
-}
 }
 
 Shard ClusterManager::GetActiveShard(const string &shardName) {
@@ -961,9 +1017,10 @@ void ClusterManager::Login(int accountID) {
 						accountID), StringUtil::Format("%lu", g_ServerTime),
 				mShardName);
 		if (mClusterable) {
-			mClient.publish(LOGIN,
-					StringUtil::Format("%s:%d", mShardName.c_str(), accountID));
-			mClient.commit();
+			Json::Value cfg;
+			cfg["shardName"] = mShardName;
+			cfg["accountID"] = accountID;
+			Send(LOGIN, cfg);
 		}
 	}
 }
@@ -989,9 +1046,10 @@ void ClusterManager::Logout(int accountID) {
 			}
 		}
 		if (mClusterable) {
-			mClient.publish(LOGOUT,
-					StringUtil::Format("%s:%d", mShardName.c_str(), accountID));
-			mClient.commit();
+			Json::Value cfg;
+			cfg["shardName"] = mShardName;
+			cfg["accountID"] = accountID;
+			Send(LOGOUT, cfg);
 		}
 	}
 }
@@ -999,117 +1057,143 @@ void ClusterManager::Logout(int accountID) {
 int ClusterManager::CountAccountSessions(int accountID, bool includeLocal,
 		bool includeRemote) {
 	int count = 0;
-	SYNCHRONIZED(mMutex){
-	auto asget = mClient.hgetall(StringUtil::Format("%s:%d", KEYPREFIX_ACCOUNT_SESSIONS.c_str(), accountID));
-	mClient.sync_commit();
-	cpp_redis::reply rep = asget.get();
-	if(rep.is_array()) {
-		auto arr = rep.as_array();
-		for(auto a = arr.begin(); a != arr.end(); ++a) {
-			string n = (*a).as_string();
-			string v = (*++a).as_string();
-			if( ( v.compare(mShardName) == 0 && includeLocal) ||
-					( v.compare(mShardName) != 0 && includeRemote) )
-			count++;
+	SYNCHRONIZED(mMutex)
+	{
+		auto asget = mClient.hgetall(
+				StringUtil::Format("%s:%d", KEYPREFIX_ACCOUNT_SESSIONS.c_str(),
+						accountID));
+		mClient.sync_commit();
+		cpp_redis::reply rep = asget.get();
+		if (rep.is_array()) {
+			auto arr = rep.as_array();
+			for (auto a = arr.begin(); a != arr.end(); ++a) {
+				string n = (*a).as_string();
+				string v = (*++a).as_string();
+				if ((v.compare(mShardName) == 0 && includeLocal)
+						|| (v.compare(mShardName) != 0 && includeRemote))
+					count++;
+			}
 		}
 	}
-}
 	return count;
 }
 
 bool ClusterManager::IsPlayerOnOtherShard(const string &characterName) {
-	SYNCHRONIZED(mMutex){
-	for(auto it2 = mActivePlayers.begin(); it2 != mActivePlayers.end(); ++it2) {
-		if(it2->second.mCharacterData != NULL && it2->second.mShard.compare(mShardName) !=0 && strcmp(it2->second.mCharacterData->cdef.css.display_name, characterName.c_str()) == 0) {
-			return true;
+	SYNCHRONIZED(mMutex)
+	{
+		for (auto it2 = mActivePlayers.begin(); it2 != mActivePlayers.end();
+				++it2) {
+			if (it2->second.mCharacterData != NULL
+					&& it2->second.mShard.compare(mShardName) != 0
+					&& strcmp(it2->second.mCharacterData->cdef.css.display_name,
+							characterName.c_str()) == 0) {
+				return true;
+			}
 		}
 	}
-}
-return false;
+	return false;
 }
 
 void ClusterManager::ShardRemoved(const string &shardName) {
-	SYNCHRONIZED(mMutex){
-	map<string, Shard>::iterator it = mActiveShards.find(shardName);
-	if (it != mActiveShards.end()) {
-		vector<int> l;
+	SYNCHRONIZED(mMutex)
+	{
+		map<string, Shard>::iterator it = mActiveShards.find(shardName);
+		if (it != mActiveShards.end()) {
+			vector<int> l;
 
-		/* Remove all players on this shard */
-		for(auto it2 = mActivePlayers.begin(); it2 != mActivePlayers.end();) {
-			if(it2->second.mShard.compare(shardName) == 0) {
-				l.push_back((it2++)->second.mID);
+			/* Remove all players on this shard */
+			for (auto it2 = mActivePlayers.begin(); it2 != mActivePlayers.end();
+					) {
+				if (it2->second.mShard.compare(shardName) == 0) {
+					l.push_back((it2++)->second.mID);
+				} else
+					++it2;
 			}
-			else
-			++it2;
-		}
 
-		for(auto it2 = l.begin(); it2 != l.end(); ++it2)
-		LeftOtherShard(shardName, *it2);
+			for (auto it2 = l.begin(); it2 != l.end(); ++it2)
+				LeftOtherShard(shardName, *it2);
 
-		g_Scheduler.Submit([this, shardName]() {
-					char buf[128];
-					g_SimulatorManager.SendToAllSimulators(buf, PrepExt_SendInfoMessage(buf, StringUtil::Format("Shard %s is now offline.", shardName.c_str()).c_str(), INFOMSG_INFO), NULL);
-				});
+			g_Scheduler.Submit(
+					[this, shardName]() {
+						char buf[128];
+						g_SimulatorManager.SendToAllSimulators(buf,
+								PrepExt_SendInfoMessage(buf,
+										StringUtil::Format(
+												"Shard %s is now offline.",
+												shardName.c_str()).c_str(),
+										INFOMSG_INFO), NULL);
+					});
 
-		mActiveShards.erase(it);
+			mActiveShards.erase(it);
 
-		g_Logs.cluster->info(
-				"A shard was shutdown [%v]. %v players were on this shard at the time. There are now %v in the cluster.",
-				shardName, l.size(), mActiveShards.size());
+			g_Logs.cluster->info(
+					"A shard was shutdown [%v]. %v players were on this shard at the time. There are now %v in the cluster.",
+					shardName, l.size(), mActiveShards.size());
 
-		FindMasterShard();
-	} else
-	g_Logs.cluster->info("A shard we didn't know about has shutdown [%v]",
-			shardName);
-}
+			FindMasterShard();
+		} else
+			g_Logs.cluster->info(
+					"A shard we didn't know about has shutdown [%v]",
+					shardName);
+	}
 }
 
 void ClusterManager::NewShard(const string &shardName) {
-	SYNCHRONIZED(mMutex){
-	if (mActiveShards.find(shardName) != mActiveShards.end()) {
-		g_Logs.cluster->warn(
-				"Got a new shard notification [%v] for a shard we already knew about. This suggests it crashed uncleanly, but came back up before the ping interval expired.",
-				shardName);
-		ShardRemoved(shardName);
-	}
-	mActiveShards[shardName] = Shard();
-	mActiveShards[shardName].mName = shardName;
-	mActiveShards[shardName].mLastSeen = g_PlatformTime.getMilliseconds();
-	g_Logs.cluster->info(
-			"New shard in cluster [%v]. There are now %v in the cluster.",
-			shardName, mActiveShards.size());
+	SYNCHRONIZED(mMutex)
+	{
+		if (mActiveShards.find(shardName) != mActiveShards.end()) {
+			g_Logs.cluster->warn(
+					"Got a new shard notification [%v] for a shard we already knew about. This suggests it crashed uncleanly, but came back up before the ping interval expired.",
+					shardName);
+			ShardRemoved(shardName);
+		}
+		mActiveShards[shardName] = Shard();
+		mActiveShards[shardName].mName = shardName;
+		mActiveShards[shardName].mLastSeen = g_PlatformTime.getMilliseconds();
+		g_Logs.cluster->info(
+				"New shard in cluster [%v]. There are now %v in the cluster.",
+				shardName, mActiveShards.size());
 
-	g_Scheduler.Submit([this, shardName]() {
-				char buf[128];
-				g_SimulatorManager.SendToAllSimulators(buf, PrepExt_SendInfoMessage(buf, StringUtil::Format("Shard %s is now online.", shardName.c_str()).c_str(), INFOMSG_INFO), NULL);
-			});
-}
+		g_Scheduler.Submit(
+				[this, shardName]() {
+					char buf[128];
+					g_SimulatorManager.SendToAllSimulators(buf,
+							PrepExt_SendInfoMessage(buf,
+									StringUtil::Format(
+											"Shard %s is now online.",
+											shardName.c_str()).c_str(),
+									INFOMSG_INFO), NULL);
+				});
+	}
 }
 
 PendingShardPlayer ClusterManager::FindToken(const string &token) {
-	SYNCHRONIZED(mMutex){
-	for (auto it = mPending.begin();
-			it != mPending.end(); ++it) {
-		if((*it).mToken.compare(token) == 0) {
-			PendingShardPlayer p = *it;
+	SYNCHRONIZED(mMutex)
+	{
+		for (auto it = mPending.begin(); it != mPending.end(); ++it) {
+			if ((*it).mToken.compare(token) == 0) {
+				PendingShardPlayer p = *it;
 
-			map<int, ShardPlayer>::iterator ait = mActivePlayers.find(p.mID);
-			if (ait != mActivePlayers.end()) {
+				map<int, ShardPlayer>::iterator ait = mActivePlayers.find(
+						p.mID);
+				if (ait != mActivePlayers.end()) {
 
-				mActiveShards[p.mShardName].mPlayers--;
-				ShardPlayer sp = mActivePlayers[p.mID];
-				g_Logs.cluster->info("Player %v (%v) left shard %v for us, removing their current shard information.", p.mID,
-						sp.mCharacterData->cdef.css.display_name, p.mShardName);
-				mActivePlayers.erase(ait);
+					mActiveShards[p.mShardName].mPlayers--;
+					ShardPlayer sp = mActivePlayers[p.mID];
+					g_Logs.cluster->info(
+							"Player %v (%v) left shard %v for us, removing their current shard information.",
+							p.mID, sp.mCharacterData->cdef.css.display_name,
+							p.mShardName);
+					mActivePlayers.erase(ait);
+				}
+
+				mPending.erase(it);
+
+				return p;
 			}
-
-			mPending.erase(it);
-
-			return p;
 		}
 	}
-}
-return PendingShardPlayer();
+	return PendingShardPlayer();
 }
 
 void ClusterManager::ConfirmTransferToOtherShard(int cdefId,
@@ -1132,98 +1216,19 @@ void ClusterManager::TransferFromOtherShard(int cdefId,
 
 	/* Reload any data for this character now */
 	g_CharacterManager.ReloadCharacter(cdefId, false);
-	g_AccountManager.ReloadAccountID(g_CharacterManager.GetPointerByID(cdefId)->AccountID);
+	g_AccountManager.ReloadAccountID(
+			g_CharacterManager.GetPointerByID(cdefId)->AccountID);
 
 	PendingShardPlayer p;
 	p.mID = cdefId;
 	p.mToken = token;
 	p.mShardName = shardName;
 	p.mReceived = g_PlatformTime.getMilliseconds();
-	SYNCHRONIZED(mMutex){
-	mPending.push_back(p);
-}
+	SYNCHRONIZED(mMutex)
+	{
+		mPending.push_back(p);
+	}
 	ConfirmTransfer(cdefId, shardName, token, simID);
-}
-
-void ClusterManager::OtherShardWeather(int zoneId, const string &mapName,
-		const string &weatherType, int weight) {
-	g_Scheduler.Submit([this, zoneId, mapName, weatherType, weight]() {
-		g_WeatherManager.ZoneWeather(zoneId, mapName, weatherType, weight);
-	});
-}
-
-void ClusterManager::OtherShardThunder(int zoneId, const string &mapName) {
-	g_Scheduler.Submit([this, zoneId, mapName]() {
-		g_WeatherManager.ZoneThunder(zoneId, mapName);
-	});
-}
-void ClusterManager::OtherShardAuction(int auctionItemId,
-		const string &sellerName) {
-	g_Scheduler.Submit([this, auctionItemId, sellerName]() {
-		AuctionHouseItem item = g_AuctionHouseManager.LoadItem(auctionItemId);
-		g_AuctionHouseManager.BroadcastAndSetupTimer(&item, sellerName);
-	});
-}
-void ClusterManager::OtherShardAuctionItemRemoved(int auctionItemId,
-		int auctioneerCDefID) {
-	g_Scheduler.Submit(
-			[this, auctionItemId, auctioneerCDefID]() {
-				CreatureInstance *instance = g_ActiveInstanceManager.GetNPCCreatureByDefID(auctioneerCDefID);
-				if(instance != NULL) {
-					g_AuctionHouseManager.BroadcastRemovedItem(instance->CreatureID, auctionItemId);
-				}
-				else {
-					g_Logs.server->debug("No auctioneer instance %v to broadcast remove of item %v to, ignoring.", auctioneerCDefID, auctionItemId);
-				}
-			});
-}
-void ClusterManager::OtherShardAuctionItemUpdated(int auctionItemId) {
-	g_Scheduler.Submit(
-			[this, auctionItemId]() {
-				AuctionHouseItem item = g_AuctionHouseManager.LoadItem(auctionItemId);
-				if(item.mId == 0) {
-					g_Logs.server->debug("Update for auction item %v failed, the item doesn't exist.", auctionItemId);
-				}
-				else {
-					CreatureInstance *instance = g_ActiveInstanceManager.GetNPCCreatureByDefID(item.mAuctioneer);
-					if(instance != NULL) {
-						g_AuctionHouseManager.BroadcastRemovedItem(instance->CreatureID, auctionItemId);
-					}
-					else {
-						g_Logs.server->debug("No auctioneer instance of %v to broadcast update of item %v to, ignoring.", item.mAuctioneer, auctionItemId);
-					}
-				}
-			});
-}
-void ClusterManager::OtherShardPropUpdated(int propId) {
-	g_Scheduler.Submit(
-			[this, propId]() {
-			});
-}
-
-void ClusterManager::OtherShardChat(const string &from, const string &to,
-		const string &channel, bool tell, int senderClanID, const string &msg) {
-	g_Scheduler.Submit([this,from,to,channel,msg,tell,senderClanID]() {
-		ChatMessage cm(msg);
-		if (channel.compare("clan") == 0) {
-			int cdefID = g_UsedNameDatabase.GetIDByName(from);
-			if (cdefID != -1) {
-				CharacterData *cd = g_CharacterManager.RequestCharacter(
-						cdefID, true);
-				if (cd != NULL) {
-					cm.mSenderClanID = cd->clan;
-				}
-			}
-		}
-
-		cm.mChannelName = channel;
-		cm.mChannel = GetChatInfoByChannel(cm.mChannelName.c_str());
-		cm.mSender = from;
-		cm.mTell = tell;
-		cm.mSenderClanID = senderClanID;
-		cm.mRecipient = to;
-		g_ChatManager.DeliverChatMessage(cm, NULL);
-	});
 }
 
 bool ClusterManager::IsMaster() {
@@ -1235,20 +1240,24 @@ void ClusterManager::Weather(int zoneId, const string &mapName,
 	if (mClusterable) {
 		g_Logs.cluster->info("Sending on weather %v (%v).", weatherType,
 				weight);
-		mClient.publish(WEATHER,
-				StringUtil::Format("%s:%d:%s:%s:%s", mShardName.c_str(), zoneId,
-						mapName.c_str(), weatherType.c_str(), weight));
-		mClient.commit();
+		Json::Value w;
+		w["shardName"] = mShardName;
+		w["zoneId"] = zoneId;
+		w["mapName"] = mapName;
+		w["type"] = weatherType;
+		w["weight"] = weight;
+		Send(WEATHER, w);
 	}
 }
 
 void ClusterManager::Auction(int auctionItemId, const string &sellerName) {
 	if (mClusterable) {
 		g_Logs.cluster->info("Sending on new auction item %v", auctionItemId);
-		mClient.publish(AUCTION_ITEM,
-				StringUtil::Format("%s:%d:%s", mShardName.c_str(),
-						auctionItemId, sellerName.c_str()));
-		mClient.commit();
+		Json::Value w;
+		w["shardName"] = mShardName;
+		w["auctionItemId"] = auctionItemId;
+		w["sellerName"] = sellerName;
+		Send(AUCTION_ITEM, w);
 	}
 }
 
@@ -1256,21 +1265,20 @@ void ClusterManager::AuctionItemUpdated(int auctionItemId) {
 	if (mClusterable) {
 		g_Logs.cluster->info("Sending on updated auction item %v",
 				auctionItemId);
-		mClient.publish(AUCTION_ITEM_UPDATED,
-				StringUtil::Format("%s:%d", mShardName.c_str(),
-						auctionItemId));
-		mClient.commit();
+		Json::Value w;
+		w["shardName"] = mShardName;
+		w["auctionItemId"] = auctionItemId;
+		Send(AUCTION_ITEM_UPDATED, w);
 	}
 }
 
 void ClusterManager::PropUpdated(int propId) {
 	if (mClusterable) {
-		g_Logs.cluster->info("Sending on updated prop %v",
-				propId);
-		mClient.publish(PROP_UPDATED,
-				StringUtil::Format("%s:%d", mShardName.c_str(),
-						propId));
-		mClient.commit();
+		g_Logs.cluster->info("Sending on updated prop %v", propId);
+		Json::Value w;
+		w["shardName"] = mShardName;
+		w["propId"] = propId;
+		Send(PROP_UPDATED, w);
 	}
 }
 
@@ -1279,20 +1287,22 @@ void ClusterManager::AuctionItemRemoved(int auctionItemId,
 	if (mClusterable) {
 		g_Logs.cluster->info("Sending on removed auction item %v",
 				auctionItemId);
-		mClient.publish(AUCTION_ITEM_REMOVED,
-				StringUtil::Format("%s:%d:%d", mShardName.c_str(),
-						auctionItemId, auctioneerCDefID));
-		mClient.commit();
+		Json::Value w;
+		w["shardName"] = mShardName;
+		w["auctionItemId"] = auctionItemId;
+		w["auctioneerCDefID"] = auctioneerCDefID;
+		Send(AUCTION_ITEM_REMOVED, w);
 	}
 }
 
 void ClusterManager::Thunder(int zoneId, const string &mapName) {
 	if (mClusterable) {
 		g_Logs.cluster->info("Sending on thunder");
-		mClient.publish(WEATHER,
-				StringUtil::Format("%s:%d:%s", mShardName.c_str(), zoneId,
-						mapName.c_str()));
-		mClient.commit();
+		Json::Value w;
+		w["shardName"] = mShardName;
+		w["zoneId"] = zoneId;
+		w["mapName"] = mapName;
+		Send(THUNDER, w);
 	}
 }
 
@@ -1300,13 +1310,9 @@ void ClusterManager::Chat(ChatMessage &message) {
 	if (mClusterable) {
 		g_Logs.cluster->info("Sending on chat message from %v to %v.",
 				message.mSender, message.mChannel);
-		mClient.publish(CHAT,
-				StringUtil::Format("%s:%s:%s:%s:%s:%d:%s", mShardName.c_str(),
-						message.mSender.c_str(), message.mRecipient.c_str(),
-						message.mChannelName.c_str(),
-						message.mTell ? "true" : "false", message.mSenderClanID,
-						message.mMessage.c_str()));
-		mClient.commit();
+		Json::Value val;
+		message.WriteToJSON(val);
+		Send(CHAT, val);
 	}
 }
 
@@ -1392,12 +1398,11 @@ int ClusterManager::LoadConfiguration(const string &filename) {
 }
 
 bool ClusterManager::Init() {
-	if(mHost.length() == 0) {
+	if (mHost.length() == 0) {
 		g_Logs.cluster->error(
 				"No Redis host specified in any cluster configuration file. Check all Cluster.txt configuration files.");
 		return false;
 	}
-
 
 	//! High availablity requires at least 2 io service workers
 	cpp_redis::network::set_default_nb_workers(10);
@@ -1419,33 +1424,91 @@ bool ClusterManager::Init() {
 	shard.mName = mShardName;
 	shard.mSimulatorAddress = g_SimulatorAddress;
 	shard.mSimulatorPort = g_SimulatorPort;
+	shard.mHTTPAddress = g_Config.ResolveHTTPAddress();
 	shard.mFullName = mFullName;
 	shard.mStartTime = ms;
 	shard.SetTimes(g_PlatformTime.getLocalMilliSeconds(), ms);
 	mActiveShards[mShardName] = shard;
 	FindMasterShard();
 
+	bool ok = false;
 	mClient.connect(mHost, mPort,
-			[](const string& host, size_t port, cpp_redis::client::connect_state status) {
-				if (status == cpp_redis::client::connect_state::dropped) {
-					g_Logs.cluster->error("Redis client disconnected from %v:%v",
-							host, port);
+			[this, &ok](const string &host, size_t port,
+					cpp_redis::connect_state status) {
+				if (status == cpp_redis::connect_state::dropped) {
+					g_Logs.cluster->error(
+							"Redis client disconnected from %v:%v", host, port);
+				} else {
+					g_Logs.cluster->info("Redis state change %v:%v (%v)", host,
+							port, RedisConnectStatus(status));
+					ok = true;
 				}
-				else
-				g_Logs.cluster->info("Redis state change %v:%v (%v)", host, port, RedisConnectStatus(status));
-			});
+			}, 30000, 99999, 30000);
+
+	if (!ok)
+		return false;
+
+	if (mPassword.length() > 0) {
+		mClient.auth(mPassword,
+				[this, &ok](const cpp_redis::reply &reply) {
+					if (reply.is_error()) {
+						g_Logs.cluster->error(
+								"Redis client failed to authenticate from %v:%v",
+								mHost, mPort);
+					} else {
+						g_Logs.cluster->info("Redis authenticated %v:%v", mHost,
+								mPort);
+					}
+				});
+		mClient.sync_commit();
+		if (ok)
+			return PostInit();
+		return true;
+	} else
+		return PostInit();
+
+	return false;
+}
+
+bool ClusterManager::PostInit() {
 
 	/*
 	 * Subscribe to channel to listen for other shards coming online
 	 */
 	if (mClusterable && !mNoEvents) {
+		bool ok = false;
 		mSub.connect(mHost, mPort,
-				[](const string& host, size_t port, cpp_redis::subscriber::connect_state status) {
-					if (status == cpp_redis::subscriber::connect_state::dropped)
-					g_Logs.cluster->error("Redis event channel disconnected from %v:%v", host, port);
-					else
-					g_Logs.cluster->info("Redis event channel state change %v:%v (%v)", host, port, RedisConnectStatus(status));
-				});
+				[&ok](const string &host, size_t port,
+						cpp_redis::connect_state status) {
+					if (status == cpp_redis::connect_state::dropped)
+						g_Logs.cluster->error(
+								"Redis event channel disconnected from %v:%v",
+								host, port);
+					else {
+						g_Logs.cluster->info(
+								"Redis event channel state change %v:%v (%v)",
+								host, port, RedisConnectStatus(status));
+						ok = true;
+					}
+				}, 30000, 99999, 30000);
+		if (!ok)
+			return false;
+		if (mPassword.length() > 0) {
+			mSub.auth(mPassword,
+					[this, &ok](const cpp_redis::reply &reply) {
+						if (reply.is_error()) {
+							g_Logs.cluster->error(
+									"Redis event channel failed to authenticate from %v:%v",
+									mHost, mPort);
+						} else {
+							g_Logs.cluster->info(
+									"Redis event channel authenticated %v:%v",
+									mHost, mPort);
+							ok = true;
+						}
+					});
+			mSub.commit();
+		}
 	}
 
 	/*
@@ -1456,24 +1519,33 @@ bool ClusterManager::Init() {
 	Scan([this, &keys](const string &key) {
 		keys.push_back(key);
 	}, StringUtil::Format("%s:*", KEYPREFIX_ACCOUNT_SESSIONS.c_str()));
-	for (auto it = keys.begin(); it != keys.end(); ++it) {
-		string key = *it;
-		auto asget = mClient.hgetall(key);
-		mClient.sync_commit();
-		cpp_redis::reply rep = asget.get();
-		if (rep.is_array()) {
-			auto arr = rep.as_array();
-			for (auto a = arr.begin(); a != arr.end(); ++a) {
-				string n = (*a).as_string();
-				string v = (*++a).as_string();
-				if (v.compare(mShardName) == 0) {
-					g_Logs.cluster->info(
-							"Removing stale account session for %v (%v)", n, v);
-					mClient.hdel(key, { n });
-					mClient.commit();
+	if (keys.size() > 0) {
+		g_Logs.cluster->info("Found %v sessions", keys.size());
+		int removed = 0;
+		for (auto it = keys.begin(); it != keys.end(); ++it) {
+			string key = *it;
+			auto asget = mClient.hgetall(key);
+			mClient.sync_commit();
+			cpp_redis::reply rep = asget.get();
+			if (rep.is_array()) {
+				auto arr = rep.as_array();
+				for (auto a = arr.begin(); a != arr.end(); ++a) {
+					string n = (*a).as_string();
+					string v = (*++a).as_string();
+					if (v.compare(mShardName) == 0) {
+						g_Logs.cluster->info(
+								"Removing stale account session for %v (%v)", n,
+								v);
+						mClient.hdel(key, { n });
+						mClient.commit();
+						removed++;
+					}
 				}
 			}
 		}
+		g_Logs.cluster->info("Removed %v stale sessions", removed);
+	} else {
+		g_Logs.cluster->info("No stale sessions found");
 	}
 
 	return true;
@@ -1486,33 +1558,40 @@ void ClusterManager::RunProcessingCycle() {
 		g_Logs.cluster->debug("Sending shard ping for %v at %v", mShardName,
 				g_ServerTime);
 
-		mClient.publish(SERVER_PING,
-				StringUtil::Format("%s:%lu", mShardName.c_str(), g_ServerTime));
-		mClient.commit();
+		Json::Value ping;
+		ping["shardName"] = mShardName;
+		ping["time"] = Json::LargestUInt(g_ServerTime);
+		Send(SERVER_PING, ping);
+
 		mPingSentTime = g_ServerTime;
 		mNextPing = g_ServerTime + CLUSTER_PING_INTERVAL;
 		unsigned long expire = g_ServerTime - CLUSTER_SHARD_TIMEOUT;
 		vector<string> r;
 
-		SYNCHRONIZED(mMutex){
-		for (map<string, Shard>::iterator it = mActiveShards.begin();
-				it != mActiveShards.end(); ++it) {
-			if (it->first.compare(mShardName) != 0) {
-				g_Logs.cluster->debug(
-						"Expiry check. Comparing %v against %v for %v",
-						it->second.mLastSeen, expire, it->first);
-				if (it->second.mLastSeen != 0
-						&& it->second.mLastSeen < expire) {
-					g_Logs.cluster->warn("Haven't had ping from shard %v for a while (last seen %v, expire %v). Will remove.", it->first,
-							StringUtil::FormatTimeHHMM(it->second.mLastSeen), StringUtil::FormatTimeHHMM(expire));
-					r.push_back(it->first);
+		SYNCHRONIZED(mMutex)
+		{
+			for (map<string, Shard>::iterator it = mActiveShards.begin();
+					it != mActiveShards.end(); ++it) {
+				if (it->first.compare(mShardName) != 0) {
+					g_Logs.cluster->debug(
+							"Expiry check. Comparing %v against %v for %v",
+							it->second.mLastSeen, expire, it->first);
+					if (it->second.mLastSeen != 0
+							&& it->second.mLastSeen < expire) {
+						g_Logs.cluster->warn(
+								"Haven't had ping from shard %v for a while (last seen %v, expire %v). Will remove.",
+								it->first,
+								StringUtil::FormatTimeHHMM(
+										it->second.mLastSeen),
+								StringUtil::FormatTimeHHMM(expire));
+						r.push_back(it->first);
+					}
+				} else {
+					it->second.SetTimes(g_PlatformTime.getLocalMilliSeconds(),
+							g_ServerTime);
 				}
 			}
-			else {
-				it->second.SetTimes(g_PlatformTime.getLocalMilliSeconds(), g_ServerTime);
-			}
 		}
-	}
 
 		for (vector<string>::iterator it = r.begin(); it != r.end(); ++it) {
 			ShardRemoved(*it);
@@ -1526,192 +1605,364 @@ void ClusterManager::Ready() {
 		g_Logs.cluster->info("Start listening for cluster events");
 
 		mSub.subscribe(SERVER_STARTED,
-				[this](const string& chan, const string& msg) {
-					if(msg.compare(mShardName) != 0) {
-						g_Scheduler.Pool([this,msg]() {
-									NewShard(msg);
-									mClient.publish(SERVER_RECONFIGURE, msg);
-									mClient.commit();
-								});
+				[this](const string &chan, const string &msg) {
+					if (msg.compare(mShardName) != 0) {
+						g_Scheduler.Submit([this, msg]() {
+							NewShard(msg);
+							mClient.publish(SERVER_RECONFIGURE, msg);
+							mClient.commit();
+						});
 					}
 				});
 		mSub.subscribe(SERVER_RECONFIGURE,
-				[this](const string& chan, const string& msg) {
-					if(msg.compare(mShardName) == 0) {
-						g_Scheduler.Pool([this]() {
-									SendConfiguration();
-								});
+				[this](const string &chan, const string &msg) {
+					if (msg.compare(mShardName) == 0) {
+						g_Scheduler.Submit([this]() {
+							SendConfiguration();
+						});
 					}
 				});
 		mSub.subscribe(SERVER_CONFIGURATION,
-				[this](const string& chan, const string& msg) {
-					vector<string> l;
-					Util::Split(msg, ":", l);
-					if(l[0].compare(mShardName) != 0) {
-						g_Scheduler.Pool([this,l]() {
-									ServerConfigurationReceived(l[0], l[1], atoi(l[2].c_str()), l[3], atoi(l[4].c_str()), strtoul(l[5].c_str(), NULL, 0), strtoul(l[6].c_str(), NULL, 0), strtoul(l[7].c_str(), NULL, 0));
-								});
+				[this](const string &chan, const string &msg) {
+
+					if (g_Logs.cluster->enabled(el::Level::Debug))
+						g_Logs.cluster->debug("Received configuration %v : %v",
+								chan, msg);
+
+					Json::Value cfg;
+					Json::Reader reader;
+					if (reader.parse(msg, cfg)) {
+						if (cfg["shardName"].asString() != mShardName) {
+							g_Scheduler.Submit(
+									[this, cfg]() {
+										ServerConfigurationReceived(
+												cfg["shardName"].asString(),
+												cfg["simulatorAddress"].asString(),
+												cfg["simulatorPort"].asInt(),
+												cfg["fullName"].asString(),
+												cfg["players"].asInt(),
+												cfg["launchTime"].asLargestUInt(),
+												cfg["utc"].asLargestUInt(),
+												cfg["time"].asLargestUInt(),
+												cfg["http"].asString());
+									});
+						}
+					} else {
+						g_Logs.cluster->error(
+								"Malformed server configuration event.");
 					}
+
 				});
 		mSub.subscribe(SERVER_STOPPED,
-				[this](const string& chan, const string& msg) {
-					if(msg.compare(mShardName) != 0) {
-						g_Scheduler.Pool([this,msg]() {
-									ShardRemoved(msg);
-								});
+				[this](const string &chan, const string &msg) {
+					if (msg.compare(mShardName) != 0) {
+						g_Scheduler.Submit([this, msg]() {
+							ShardRemoved(msg);
+						});
 					}
 				});
 		mSub.subscribe(SERVER_PING,
-				[this](const string& chan, const string& msg) {
-					vector<string> l;
-					Util::Split(msg, ":", l);
-					if(l[0].compare(mShardName) != 0) {
-						g_Scheduler.Pool([this,l]() {
-									ShardPing(l[0], strtoul(l[1].c_str(), NULL, 0));
-								});
+				[this](const string &chan, const string &msg) {
+					Json::Value cfg;
+					Json::Reader reader;
+					if (reader.parse(msg, cfg)) {
+						if (cfg["shardName"].asString() != mShardName) {
+							g_Scheduler.Submit(
+									[this, cfg]() {
+										ShardPing(cfg["shardName"].asString(),
+												cfg["time"].asLargestUInt());
+									});
+						}
+					} else {
+						g_Logs.cluster->error("Malformed server ping.");
 					}
 				});
-		mSub.subscribe(CHAT,
-				[this](const string& chan, const string& msg) {
-					vector<string> l;
-					Util::Split(msg, ":", l);
-					if(l[0].compare(mShardName) != 0) {
-						size_t found = msg.find_last_of(":");
-						g_Scheduler.Pool([this,l,msg,found]() {
-									OtherShardChat(l[1], l[2], l[3], l[4].compare("true") == 0, atoi(l[5].c_str()), msg.substr(found + 1));
-								});
-					}
-				});
-		mSub.subscribe(WEATHER,
-				[this](const string& chan, const string& msg) {
-					vector<string> l;
-					Util::Split(msg, ":", l);
-					if(l[0].compare(mShardName) != 0) {
-						g_Scheduler.Pool([this,l]() {
-									OtherShardWeather(atoi(l[1].c_str()), l[2], l[3], atoi(l[4].c_str()));
-								});
-					}
-				});
-		mSub.subscribe(THUNDER, [this](const string& chan, const string& msg) {
-			vector<string> l;
-			Util::Split(msg, ":", l);
-			if(l[0].compare(mShardName) != 0) {
-				g_Scheduler.Pool([this,l]() {
-							OtherShardThunder(atoi(l[1].c_str()), l[2]);
-						});
+		mSub.subscribe(CHAT, [this](const string &chan, const string &msg) {
+			Json::Value cfg;
+			Json::Reader reader;
+			if (reader.parse(msg, cfg)) {
+				if (cfg["shardName"].asString() != mShardName) {
+					ChatMessage msg;
+					msg.ReadFromJSON(cfg);
+					g_Scheduler.Submit([this, &msg]() {
+						g_ChatManager.DeliverChatMessage(msg, NULL);
+					});
+				}
+			} else {
+				g_Logs.cluster->error("Malformed server configuration event.");
 			}
+
 		});
-		mSub.subscribe(AUCTION_ITEM,
-				[this](const string& chan, const string& msg) {
-					vector<string> l;
-					Util::Split(msg, ":", l);
-					if(l[0].compare(mShardName) != 0) {
-						g_Scheduler.Pool([this,l]() {
-									OtherShardAuction(atoi(l[1].c_str()), l[2]);
-								});
+		mSub.subscribe(WEATHER,
+				[this](const string &chan, const string &msg) {
+					Json::Value weather;
+					Json::Reader reader;
+					if (reader.parse(msg, weather)) {
+						if (weather["shardName"].asString() != mShardName) {
+							g_Scheduler.Submit(
+									[this, weather]() {
+										g_WeatherManager.ZoneWeather(
+												weather["zoneId"].asInt(),
+												weather["mapName"].asString(),
+												weather["type"].asString(),
+												weather["weight"].asInt());
+									});
+						}
+					} else {
+						g_Logs.cluster->error("Malformed weather event.");
 					}
+				});
+		mSub.subscribe(THUNDER,
+				[this](const string &chan, const string &msg) {
+					Json::Value thunder;
+					Json::Reader reader;
+					if (reader.parse(msg, thunder)) {
+						if (thunder["shardName"].asString() != mShardName) {
+							g_Scheduler.Submit(
+									[this, thunder]() {
+										g_WeatherManager.ZoneThunder(
+												thunder["zoneId"].asInt(),
+												thunder["mapName"].asString());
+									});
+						}
+					} else {
+						g_Logs.cluster->error("Malformed thunder event.");
+					}
+
+				});
+		mSub.subscribe(AUCTION_ITEM,
+				[this](const string &chan, const string &msg) {
+
+					Json::Value auctionItem;
+					Json::Reader reader;
+					if (reader.parse(msg, auctionItem)) {
+						if (auctionItem["shardName"].asString() != mShardName) {
+							g_Scheduler.Pool(
+									[this, auctionItem]() {
+										AuctionHouseItem item =
+												g_AuctionHouseManager.LoadItem(
+														auctionItem["auctionItemId"].asInt());
+										g_Scheduler.Submit(
+												[this, auctionItem, &item]() {
+													g_AuctionHouseManager.BroadcastAndSetupTimer(
+															&item,
+															auctionItem["sellerName"].asString());
+												});
+									});
+						}
+					} else {
+						g_Logs.cluster->error("Malformed auction item event.");
+					}
+
 				});
 		mSub.subscribe(AUCTION_ITEM_REMOVED,
-				[this](const string& chan, const string& msg) {
-					vector<string> l;
-					Util::Split(msg, ":", l);
-					if(l[0].compare(mShardName) != 0) {
-						g_Scheduler.Pool([this,l]() {
-									OtherShardAuctionItemRemoved(atoi(l[1].c_str()), atoi(l[2].c_str()));
-								});
+				[this](const string &chan, const string &msg) {
+					Json::Value auctionItem;
+					Json::Reader reader;
+					if (reader.parse(msg, auctionItem)) {
+						if (auctionItem["shardName"].asString() != mShardName) {
+							g_Scheduler.Submit(
+									[this, auctionItem]() {
+										CreatureInstance *instance =
+												g_ActiveInstanceManager.GetNPCCreatureByDefID(
+														auctionItem["auctioneerCDefID"].asInt());
+										if (instance != NULL) {
+											g_AuctionHouseManager.BroadcastRemovedItem(
+													instance->CreatureID,
+													auctionItem["auctionItemId"].asInt());
+										} else {
+											g_Logs.server->debug(
+													"No auctioneer instance %v to broadcast remove of item %v to, ignoring.",
+													auctionItem["auctioneerCDefID"].asInt(),
+													auctionItem["auctionItemId"].asInt());
+										}
+									});
+						}
+					} else {
+						g_Logs.cluster->error(
+								"Malformed auction item remote event.");
 					}
+
 				});
 		mSub.subscribe(AUCTION_ITEM_UPDATED,
-				[this](const string& chan, const string& msg) {
-					vector<string> l;
-					Util::Split(msg, ":", l);
-					if(l[0].compare(mShardName) != 0) {
-						g_Scheduler.Pool([this,l]() {
-									OtherShardAuctionItemUpdated(atoi(l[1].c_str()));
-								});
+				[this](const string &chan, const string &msg) {
+					Json::Value auctionItem;
+					Json::Reader reader;
+					if (reader.parse(msg, auctionItem)) {
+						if (auctionItem["shardName"].asString() != mShardName) {
+							g_Scheduler.Pool(
+									[this, auctionItem]() {
+										AuctionHouseItem item =
+												g_AuctionHouseManager.LoadItem(
+														auctionItem["auctionItemId"].asInt());
+										if (item.mId == 0) {
+											g_Logs.server->debug(
+													"Update for auction item %v failed, the item doesn't exist.",
+													auctionItem["auctionItemId"].asInt());
+										} else {
+											g_Scheduler.Submit(
+													[this, auctionItem, item]() {
+														CreatureInstance *instance =
+																g_ActiveInstanceManager.GetNPCCreatureByDefID(
+																		item.mAuctioneer);
+														if (instance != NULL) {
+															g_AuctionHouseManager.BroadcastRemovedItem(
+																	instance->CreatureID,
+																	auctionItem["auctionItemId"].asInt());
+														} else {
+															g_Logs.server->debug(
+																	"No auctioneer instance of %v to broadcast update of item %v to, ignoring.",
+																	item.mAuctioneer,
+																	auctionItem["auctionItemId"].asInt());
+														}
+													});
+										}
+									});
+						}
+					} else {
+						g_Logs.cluster->error(
+								"Malformed auction item update event.");
 					}
 				});
 
-				mSub.subscribe(PROP_UPDATED,
-				[this](const string& chan, const string& msg) {
-					vector<string> l;
-					Util::Split(msg, ":", l);
-					if(l[0].compare(mShardName) != 0) {
-						g_Scheduler.Pool([this,l]() {
-									OtherShardPropUpdated(atoi(l[1].c_str()));
-								});
+		mSub.subscribe(PROP_UPDATED,
+				[this](const string &chan, const string &msg) {
+					Json::Value auctionItem;
+					Json::Reader reader;
+					if (reader.parse(msg, auctionItem)) {
+						if (auctionItem["shardName"].asString() != mShardName) {
+							// TODO send prop updates
+						}
+					} else {
+						g_Logs.cluster->error(
+								"Malformed auction prop update event.");
 					}
 				});
 
 		mSub.subscribe(SERVER_PONG,
-				[this](const string& chan, const string& msg) {
-					if(msg.compare(mShardName) != 0) {
-						g_Scheduler.Pool([this,msg]() {
-									ShardPong(msg);
-								});
+				[this](const string &chan, const string &msg) {
+					if (msg.compare(mShardName) != 0) {
+						g_Scheduler.Pool([this, msg]() {
+							ShardPong(msg);
+						});
 					}
 				});
 		mSub.subscribe(PLAYER_JOINED_SHARD,
-				[this](const string& chan, const string& msg) {
-					vector<string> l;
-					Util::Split(msg, ":", l);
-					if(l[0].compare(mShardName) != 0) {
-						int cdefid = atoi(l[1].c_str());
-						g_Scheduler.Pool([this,l,cdefid]() {
-									JoinedOtherShard(l[0], cdefid, atoi(l[2].c_str()), strtoul(l[3].c_str(), NULL, 0));
-								});
+				[this](const string &chan, const string &msg) {
+					Json::Value player;
+					Json::Reader reader;
+					if (reader.parse(msg, player)) {
+						if (player["shardName"].asString() != mShardName) {
+							g_Scheduler.Pool(
+									[this, player]() {
+										JoinedOtherShard(
+												player["shardName"].asString(),
+												player["creatureDefId"].asInt(),
+												player["zoneId"].asInt(),
+												player["simId"].asLargestUInt());
+									});
+						}
+					} else {
+						g_Logs.cluster->error("Malformed player join event.");
 					}
 				});
 		mSub.subscribe(PLAYER_LEFT_SHARD,
-				[this](const string& chan, const string& msg) {
-					vector<string> l;
-					Util::Split(msg, ":", l);
-					if(l[0].compare(mShardName) != 0) {
-						int cdefid = atoi(l[1].c_str());
-						g_Scheduler.Pool([this,l,cdefid]() {
-									LeftOtherShard(l[0], cdefid);
-								});
+				[this](const string &chan, const string &msg) {
+					Json::Value player;
+					Json::Reader reader;
+					if (reader.parse(msg, player)) {
+						if (player["shardName"].asString() != mShardName) {
+							g_Scheduler.Pool(
+									[this, player]() {
+										LeftOtherShard(
+												player["shardName"].asString(),
+												player["creatureDefId"].asInt());
+									});
+						}
+					} else {
+						g_Logs.cluster->error("Malformed player left event.");
 					}
 				});
 
-		mSub.subscribe(LOGIN, [this](const string& chan, const string& msg) {
-			vector<string> l;
-			Util::Split(msg, ":", l);
-			if(l[0].compare(mShardName) != 0) {
-				g_Scheduler.Pool([this,l]() {
-							OtherShardLogin(l[0], atoi(l[1].c_str()));
-						});
-			}
-		});
-		mSub.subscribe(LOGOUT, [this](const string& chan, const string& msg) {
-			vector<string> l;
-			Util::Split(msg, ":", l);
-			if(l[0].compare(mShardName) != 0) {
-				g_Scheduler.Pool([this,l]() {
-							OtherShardLogout(l[0], atoi(l[1].c_str()));
-						});
-			}
-		});
+		mSub.subscribe(LOGIN,
+				[this](const string &chan, const string &msg) {
+					Json::Value player;
+					Json::Reader reader;
+					if (reader.parse(msg, player)) {
+						if (player["shardName"].asString() != mShardName) {
+							g_Scheduler.Pool(
+									[this, player]() {
+										g_Logs.cluster->info(
+												"Account %v logged in to shard %v",
+												player["accountID"].asInt(),
+												player["shardName"].asString());
+									});
+						}
+					} else {
+						g_Logs.cluster->error("Malformed player left event.");
+					}
+				});
+		mSub.subscribe(LOGOUT,
+				[this](const string &chan, const string &msg) {
+					Json::Value player;
+					Json::Reader reader;
+					if (reader.parse(msg, player)) {
+						if (player["shardName"].asString() != mShardName) {
+							g_Scheduler.Pool(
+									[this, player]() {
+										g_Logs.cluster->info(
+												"Account %v logged out of shard %v",
+												player["accountID"].asInt(),
+												player["shardName"].asString());
+									});
+						}
+					} else {
+						g_Logs.cluster->error("Malformed player left event.");
+					}
+				});
 
 		mSub.subscribe(SIM_TRANSFER,
-				[this](const string& chan, const string& msg) {
-					vector<string> l;
-					Util::Split(msg, ":", l);
-					if(l[0].compare(mShardName) != 0 && l[1].compare(mShardName) == 0) {
-						g_Scheduler.Pool([this,l]() {
-									TransferFromOtherShard(atoi(l[2].c_str()), l[0], l[3], atoi(l[4].c_str()));
-								});
+				[this](const string &chan, const string &msg) {
+
+					Json::Value sim;
+					Json::Reader reader;
+					if (reader.parse(msg, sim)) {
+						if (sim["shardName"].asString() != mShardName
+								&& sim["target"].asString() == mShardName) {
+							g_Scheduler.Submit(
+									[this, sim]() {
+										TransferFromOtherShard(
+												sim["creatureDefId"].asInt(),
+												sim["shardName"].asString(),
+												sim["token"].asString(),
+												sim["simId"].asLargestUInt());
+									});
+						}
+					} else {
+						g_Logs.cluster->error("Malformed sim transfer event.");
 					}
 				});
 
 		mSub.subscribe(CONFIRM_TRANSFER,
-				[this](const string& chan, const string& msg) {
-					vector<string> l;
-					Util::Split(msg, ":", l);
-					if(l[0].compare(mShardName) != 0 && l[1].compare(mShardName) == 0) {
-						g_Scheduler.Submit([this,l]() {
-									ConfirmTransferToOtherShard(atoi(l[2].c_str()), l[0], l[3], atoi(l[4].c_str()));
-								});
+				[this](const string &chan, const string &msg) {
+
+					Json::Value sim;
+					Json::Reader reader;
+					if (reader.parse(msg, sim)) {
+						if (sim["shardName"].asString() != mShardName
+								&& sim["target"].asString() == mShardName) {
+							g_Scheduler.Submit(
+									[this, sim]() {
+										ConfirmTransferToOtherShard(
+												sim["creatureDefId"].asInt(),
+												sim["shardName"].asString(),
+												sim["token"].asString(),
+												sim["simId"].asLargestUInt());
+									});
+						}
+					} else {
+						g_Logs.cluster->error(
+								"Malformed confirm sim transfer event.");
 					}
 				});
 

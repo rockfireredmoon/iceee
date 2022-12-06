@@ -47,14 +47,11 @@ int GameQueryMessage::handleMessage(SimulatorThread *sim, CharacterServerData *p
 	query->Clear(); //Clear it here so that debug polls can fetch the most recent query.
 	sim->ReadQueryFromMessage();
 
-	//LogMessageL(MSG_SHOW, "[DEBUG] handle_game_query:%s (ID:%d)", query.name.c_str(), query.ID);
-
-	// Debug
-	/*
-	 LogMessageL(MSG_SHOW, "Query: %d=%s", query.ID, query.name.c_str());
-	 for(int i = 0; i < query.argCount; i++)
-	 LogMessageL(MSG_SHOW, "  %d=%s", i, query.args[i].c_str());
-	 */
+	if(g_Logs.simulator->enabled(el::Level::Debug)) {
+		g_Logs.simulator->debug("Query: [%v]=[%v]", query->ID, query->name.c_str());
+		for(unsigned int i = 0; i < query->argCount; i++)
+			g_Logs.simulator->debug("  [%v]=[%v]", i, query->args[i].c_str());
+	}
 
 	QueryHandler *qh = g_QueryManager.getQueryHandler(query->name);
 	if (qh == NULL) {

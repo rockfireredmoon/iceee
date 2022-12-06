@@ -9,6 +9,7 @@
 
 #include "Simulator.h"
 #include "Util.h"
+#include "Random.h"
 #include "Instance.h"
 #include "Stats.h"
 #include "Item.h"  //For item ID verification
@@ -1231,6 +1232,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertFunction("Scale", &AbilityCalculator::Scale);
 	InsertFunction("Untransform", &AbilityCalculator::Untransform);
 	InsertFunction("NotTransformed", &AbilityCalculator::NotTransformed);
+	InsertFunction("Mounted", &AbilityCalculator::Mounted);
 	
 	//The verifier indicates which argument indexes should be flagged for examination
 	//as valid expressions.
@@ -1238,6 +1240,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertVerifier("StatusSelf",  ABVerifier(ABVerifier::EFFECT, ABVerifier::TIME));  //Status(statusEffect, time)
 	InsertVerifier("NotSilenced", ABVerifier());                          //NotSilenced()
 	InsertVerifier("NotTransformed", ABVerifier());                          //NotTransformed()
+	InsertVerifier("Mounted", ABVerifier());                          //Mounted()
 	InsertVerifier("HasStatus", ABVerifier(ABVerifier::EFFECT));          //HasStatus(effectName)
 	InsertVerifier("NotStatus", ABVerifier(ABVerifier::EFFECT));          //NotStatus(effectName)
 	InsertVerifier("Interrupt", ABVerifier());                            //Interrupt()
@@ -2647,6 +2650,24 @@ int AbilityCalculator :: AddGrove(ARGUMENT_LIST args)
 		ciTarget->simulatorPtr->SendInfoMessage("No such grove template.", INFOMSG_ERROR);
 	}
 	else {
+		// Type 0 - player grove
+		// Type 1 - clan grove
+		int type = args.GetInteger(1);
+		if(type == 1) {
+			/* Validate conditions for clan grove */
+			if(ciTarget->charPtr->clan == 0) {
+				ciTarget->simulatorPtr->SendInfoMessage("You must be in a clan to create a clan grove.", INFOMSG_ERROR);
+				return NO_RETURN_VALUE;
+			}
+
+			Clans::Clan clan = g_ClanManager.GetClan(ciTarget->charPtr->clan);
+			Clans::ClanMember member = clan.GetMember(ciTarget->CreatureID);
+			if(member.mRank != Clans::Rank::OFFICER && member.mRank != Clans::Rank::LEADER) {
+				ciTarget->simulatorPtr->SendInfoMessage("You must be either the leader or an office to be able to create your clan's grove.", INFOMSG_ERROR);
+				return NO_RETURN_VALUE;
+			}
+		}
+
 		std::string name = g_ZoneDefManager.GetNextGroveName(ciTarget->simulatorPtr->pld.accPtr->GroveName);
 		if(name.size() == 0)
 			ciTarget->simulatorPtr->SendInfoMessage("No free grove names.", INFOMSG_ERROR);
@@ -2667,11 +2688,14 @@ int AbilityCalculator :: AddGrove(ARGUMENT_LIST args)
 			newZone.mGrove = true;
 			newZone.mGuildHall = false;
 			newZone.mRegions = gt->mRegionsPng;
+			if(type == 1) {
+				newZone.mClan = ciTarget->charPtr->clan;
+			}
 
 			//Flag for the next autosave.
 
 			BuildPermissionArea bp;
-			bp.ZoneID = g_ZoneDefManager.CreateZone(newZone);;
+			bp.ZoneID = g_ZoneDefManager.CreateGroveZone(newZone);;
 			bp.x1 = gt->mTileX1;
 			bp.y1 = gt->mTileY1;
 			bp.x2 = gt->mTileX2;
@@ -3358,6 +3382,14 @@ int AbilityCalculator :: NotTransformed(ARGUMENT_LIST args)
 	return ABILITY_GENERIC;
 }
 
+//Action.  Condition.  True when mounted.
+int AbilityCalculator :: Mounted(ARGUMENT_LIST args)
+{
+	if(ciSource->IsMounted())
+		return ABILITY_SUCCESS;
+	return ABILITY_GENERIC;
+}
+
 //Action.  New to this server.  Removes all clothes (but keeps stats)
 int AbilityCalculator :: Nudify(ARGUMENT_LIST args)
 {
@@ -3423,7 +3455,7 @@ void AbilityCalculator :: ApplyBlockChance(int &amount)
 
 	if(blockChance > 0)
 	{
-		int rnd = randint(1, INTEGRAL_FRACTION_TOTAL);
+		int rnd = g_RandomManager.RandInt(1, INTEGRAL_FRACTION_TOTAL);
 		if(rnd <= blockChance)
 		{
 			mIsBlocked = true;
@@ -3452,7 +3484,7 @@ void AbilityCalculator :: ApplyParryChance(int &amount)
 
 	if(parryChance > 0)
 	{
-		int rnd = randint(1, INTEGRAL_FRACTION_TOTAL);
+		int rnd = g_RandomManager.RandInt(1, INTEGRAL_FRACTION_TOTAL);
 		if(rnd <= parryChance)
 		{
 			RegisterTargetImplicitActions(EventType::onParry, amount);
@@ -3476,7 +3508,7 @@ void AbilityCalculator :: ApplyDodgeChance(int &amount)
 
 	if(dodgeChance > 0)
 	{
-		int rnd = randint(1, INTEGRAL_FRACTION_TOTAL);
+		int rnd = g_RandomManager.RandInt(1, INTEGRAL_FRACTION_TOTAL);
 		if(rnd <= dodgeChance)
 		{
 			mIsDodged = true;
@@ -3504,14 +3536,14 @@ void AbilityCalculator :: ApplyHitChances(int &amount, int damageType)
 		else
 			missChance *= CREATURE_LIGHT_CHANCE_PER_LEVEL;
 
-		int rnd = randint(1, INTEGRAL_FRACTION_TOTAL);
+		int rnd = g_RandomManager.RandInt(1, INTEGRAL_FRACTION_TOTAL);
 		if(rnd <= missChance)
 		{
 			double mult = 0.0;
 			if(ciSource->serverFlags & ServerFlags::IsPlayer)
-				mult = randdbl(PLAYER_LIGHT_MULTIPLIER_MIN, PLAYER_LIGHT_MULTIPLIER_MAX);
+				mult = g_RandomManager.RandDbl(PLAYER_LIGHT_MULTIPLIER_MIN, PLAYER_LIGHT_MULTIPLIER_MAX);
 			else
-				mult = randdbl(CREATURE_LIGHT_MULTIPLIER_MIN, CREATURE_LIGHT_MULTIPLIER_MAX);
+				mult = g_RandomManager.RandDbl(CREATURE_LIGHT_MULTIPLIER_MIN, CREATURE_LIGHT_MULTIPLIER_MAX);
 
 			amount = (int)((double)amount * mult);
 			mIsLightHit = true;
@@ -3618,7 +3650,7 @@ void AbilityCalculator :: CheckCritical(int &amount, int damageType)
 
 
 	//Roll critical. If CritChance is zero or less, it will never trigger.
-	int rnd = randint(1, 1000);
+	int rnd = g_RandomManager.RandInt(1, 1000);
 	if(rnd <= CritChance)
 	{
 		//Success!  Set critical flag and modify the damage.
@@ -3647,7 +3679,7 @@ void AbilityCalculator :: CheckCritical(int &amount, int damageType)
 			float luckMod = (float)luckTotal / 90.0F;
 			int SuperChance = (int)(luckMod * luckMod) * 10;
 
-			rnd = randint(1, 1000);
+			rnd = g_RandomManager.RandInt(1, 1000);
 
 			if(rnd <= SuperChance)
 			{
@@ -3905,7 +3937,7 @@ bool AbilityCalculator :: CheckActivationChance(unsigned char requiredChance, un
 	
 	if(mChanceRoll == 0 || (chanceGroupID || mChanceRollID))
 	{
-		mChanceRoll = randint(1, 100);
+		mChanceRoll = g_RandomManager.RandInt(1, 100);
 		mChanceRollID = chanceGroupID; 
 	}
 	return (mChanceRoll <= requiredChance);

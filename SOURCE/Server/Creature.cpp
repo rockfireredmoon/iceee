@@ -30,6 +30,7 @@
 #include "Guilds.h"
 #include "Stats.h"
 #include "Util.h"
+#include "Random.h"
 
 #include "Debug.h"
 #include "Report.h"
@@ -344,6 +345,7 @@ void CreatureDefinition::Clear(void) {
 	DropRateMult = 1.0;
 	DropRateProfile = "";
 	NamedMob = false;
+	AbilityOnUse = 0;
 	Items.clear();
 }
 
@@ -356,6 +358,7 @@ void CreatureDefinition::CopyFrom(CreatureDefinition& source) {
 	DropRateMult = source.DropRateMult;
 	DropRateProfile = source.DropRateProfile;
 	NamedMob = source.NamedMob;
+	AbilityOnUse = source.AbilityOnUse;
 	Items = source.Items;
 }
 
@@ -366,6 +369,7 @@ bool CreatureDefinition::operator <(const CreatureDefinition& other) const {
 void CreatureDefinition::WriteToJSON(Json::Value &value) {
 	value["id"] = CreatureDefID;
 	value["defHints"] = DefHints;
+	value["abilityOnUse"] = AbilityOnUse;
 	Json::Value defx(Json::arrayValue);
 	for (std::vector<int>::iterator it = DefaultEffects.begin();
 			it != DefaultEffects.end(); ++it) {
@@ -415,6 +419,9 @@ void CreatureDefinition::SaveToStream(FILE *output) {
 	fprintf(output, "ID=%d\r\n", CreatureDefID);
 	if (DefHints > 0)
 		fprintf(output, "defHints=%d\r\n", DefHints);
+	if (AbilityOnUse > 0)
+		fprintf(output, "AbilityOnUse=%d\r\n", AbilityOnUse);
+
 
 	std::string extraDataString = GetExtraDataString();
 	if (extraDataString.length() > 0) {
@@ -492,6 +499,8 @@ void CreatureInstance::Clear(void) {
 	CurrentY = 0;
 	CurrentZ = 0;
 	AnchorObject = NULL;
+	MountedBy = NULL;
+	MountedOn = NULL;
 
 	Heading = 0;
 	Rotation = 0;
@@ -549,7 +558,7 @@ void CreatureInstance::Clear(void) {
 	transformAbilityId = 0;
 
 	LastUseDefID = 0;
-
+	MountAbilityId = 0;
 	swimming = false;
 }
 
@@ -592,6 +601,10 @@ void CreatureInstance::UnloadResources(void) {
 	g_QuestNutManager.RemoveActiveScripts(CreatureID);
 
 	KillAI();
+
+	if(IsMounted())
+		Unmount();
+
 	RemoveAttachedHateProfile();
 	if (serverFlags & ServerFlags::IsPlayer) {
 		if (activeLootID != 0) {
@@ -882,7 +895,7 @@ int CreatureInstance::GetMitigatedDamage(int damageAmount, int armorRating,
 	double reduct = ((double) armorRating
 			/ ((armorRating + (DamageReductionModiferPerLevel * css.level)
 					+ DamageReductionAdditive)));
-	//reduct += randdbl(ARMOR_VARIATION_MIN, ARMOR_VARIATION_MAX);
+	//reduct += g_RandomManager.RandDbl(ARMOR_VARIATION_MIN, ARMOR_VARIATION_MAX);
 	damageAmount -= (int) ((double) damageAmount * reduct);
 	if (damageAmount < 0)
 		damageAmount = 0;
@@ -899,7 +912,7 @@ int CreatureInstance::GetReducedDamage(int armorRating, int damageAmount) {
 	double reduct = ((double) armorRating
 			/ ((armorRating + (DamageReductionModiferPerLevel * css.level)
 					+ DamageReductionAdditive)));
-	reduct += randdbl(ARMOR_VARIATION_MIN, ARMOR_VARIATION_MAX);
+	reduct += g_RandomManager.RandDbl(ARMOR_VARIATION_MIN, ARMOR_VARIATION_MAX);
 	damageAmount -= (int) ((double) damageAmount * reduct);
 	if (damageAmount < 0)
 		damageAmount = 0;
@@ -1232,11 +1245,11 @@ void CreatureInstance::CheckInterrupts(void) {
 	//checks for setback or interrupt.
 	if (ab[0].bPending == true) {
 		if (ab[0].type == AbilityType::Cast) {
-			if (randint(1, 1000) <= css.casting_setback_chance)
+			if (g_RandomManager.RandInt(1, 1000) <= css.casting_setback_chance)
 				CastSetback();
 		} else if (ab[0].type == AbilityType::Channel) {
 			int chance = css.channeling_break_chance + ab[0].interruptChanceMod;
-			if (randint(1, 1000) <= chance)
+			if (g_RandomManager.RandInt(1, 1000) <= chance)
 				Interrupt();
 		}
 	}
@@ -1368,6 +1381,104 @@ void CreatureInstance::SetCombatStatus(void) {
 	Status(StatusEffects::IN_COMBAT, 5);
 	Status(StatusEffects::IN_COMBAT_STAND, 5);
 	Untransform();
+}
+
+bool CreatureInstance::IsMounted() {
+	return MountedOn != NULL || MountedBy != NULL;
+}
+
+bool CreatureInstance::IsMountedMount() {
+	return MountedBy != NULL;
+}
+
+bool CreatureInstance::IsMountedMounter() {
+	return MountedOn != NULL;
+}
+
+bool CreatureInstance::Mount(CreatureInstance *mount) {
+	if(IsMounted()) {
+		g_Logs.server->warn("Already mounted!");
+		return false;
+	}
+	else if(mount != NULL && mount->IsMounted()){
+		g_Logs.server->warn("Provided mount is already mount!");
+		return false;
+	}
+	else if(HasStatus(StatusEffects::MOUNTABLE)) {
+		g_Logs.server->warn("A mount cannot mount anything!");
+		return false;
+	}
+	else if(!mount->HasStatus(StatusEffects::MOUNTABLE)) {
+		g_Logs.server->warn("Not mountable");
+		return false;
+	}
+
+	MountedOn = mount;
+	mount->MountedBy = this;
+	g_Logs.server->info("Mounted [%v] on [%v]", css.display_name, mount->css.display_name);
+	SetServerFlag(ServerFlags::ScriptMovement, true);
+	Speed = CREATURE_RUN_SPEED;
+	MoveTo(mount->CurrentX, mount->CurrentZ, 0, 0);
+	_AddStatusList(StatusEffects::MOUNTED, -1);
+	mount->_AddStatusList(StatusEffects::CARRYING_RIDER, -1);
+
+	CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(
+			mount->CreatureDefID);
+	if (cdef != NULL && cdef->AbilityOnUse > 0) {
+		MountAbilityId = cdef->AbilityOnUse;
+		SelectTarget(this);
+		g_Logs.server->info("Calling Mounted ability [%v] on [%v]", cdef->AbilityOnUse, css.display_name);
+		CallAbilityEvent(cdef->AbilityOnUse,
+				EventType::onRequest);
+	}
+	else
+		MountAbilityId = 0;
+
+	int wpos = 0;
+	wpos += PutByte(&GSendBuf[wpos], 101);     //_handleMount TODO!!!!
+	wpos += PutShort(&GSendBuf[wpos], 0);
+	wpos += PutByte(&GSendBuf[wpos], 1); // mount
+	wpos += PutInteger(&GSendBuf[wpos], CreatureID);
+	wpos += PutInteger(&GSendBuf[wpos], mount->CreatureID);
+	PutShort(&GSendBuf[1], wpos - 3);       //Set message size
+	actInst->LSendToLocalSimulator(GSendBuf, wpos, CurrentX, CurrentZ);
+
+	return true;
+}
+
+bool CreatureInstance::Unmount() {
+	if(IsMountedMount()) {
+		g_Logs.server->warn("Must unmount from the mounter creature!");
+		return false;
+	}
+	else if(IsMounted()) {
+		CreatureInstance *wasMounted = MountedOn;
+		MountedOn->MountedBy = NULL;
+		MountedOn = NULL;
+		wasMounted->_RemoveStatusList(StatusEffects::CARRYING_RIDER);
+		_RemoveStatusList(StatusEffects::MOUNTED);
+
+		CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(
+				wasMounted->CreatureDefID);
+		if (cdef != NULL && cdef->AbilityOnUse > 0) {
+			g_Logs.server->info("Cancelling Mounted ability [%v] on [%v]", cdef->AbilityOnUse, css.display_name);
+			RemoveBuffsFromAbility(cdef->AbilityOnUse, true);
+		}
+		MountAbilityId = 0;
+
+		g_Logs.server->warn("Unmounted [%v] from [%v]", css.display_name, wasMounted->css.display_name);
+		int wpos = 0;
+		wpos += PutByte(&GSendBuf[wpos], 101);     //_handleMount TODO!!!!
+		wpos += PutShort(&GSendBuf[wpos], 0);
+		wpos += PutByte(&GSendBuf[wpos], 0); // mount
+		wpos += PutInteger(&GSendBuf[wpos], CreatureID);
+		wpos += PutInteger(&GSendBuf[wpos], wasMounted->CreatureID);
+		PutShort(&GSendBuf[1], wpos - 3);       //Set message size
+		actInst->LSendToLocalSimulator(GSendBuf, wpos, CurrentX, CurrentZ);
+		return true;
+	}
+	g_Logs.server->warn("Already mounted!");
+	return false;
 }
 
 void CreatureInstance::Untransform(void) {
@@ -1991,13 +2102,18 @@ void CreatureInstance::UpdateBaseStatMinimum(int statID, float amount) {
 // Subtract an active buff and delete it from the active list.  The calling function is
 // responsible for iterating or otherwise correctly determinating a valid index.
 void CreatureInstance::RemoveBuffIndex(size_t index) {
-	if (activeStatMod[index].abilityID != 0) {
-		g_AbilityManager.ActivateAbility(this, activeStatMod[index].abilityID,
-				EventType::onDeactivate, &ab[0]);
+	if(activeStatMod[index].abilityID == MountAbilityId && IsMounted()) {
+		Unmount();
 	}
-	SubtractBaseStatMod(activeStatMod[index].modStatID,
-			activeStatMod[index].amount);
-	activeStatMod.erase(activeStatMod.begin() + index);
+	else {
+		if (activeStatMod[index].abilityID != 0) {
+			g_AbilityManager.ActivateAbility(this, activeStatMod[index].abilityID,
+					EventType::onDeactivate, &ab[0]);
+		}
+		SubtractBaseStatMod(activeStatMod[index].modStatID,
+				activeStatMod[index].amount);
+		activeStatMod.erase(activeStatMod.begin() + index);
+	}
 }
 
 // Remove all buffs
@@ -2709,27 +2825,27 @@ int CreatureInstance::MWD(void) {
 	amount += GetOffhandDamage();
 
 	return amount;
-	//return (int)(css.strength * 0.3) + css.base_damage_melee + randint(MainDamage[0], MainDamage[1]);
+	//return (int)(css.strength * 0.3) + css.base_damage_melee + g_RandomManager.RandInt(MainDamage[0], MainDamage[1]);
 }
 
 int CreatureInstance::RWD(void) {
 	int amount = (int) (css.strength * 0.3) + css.base_damage_melee
-			+ randint(RangedDamage[0], RangedDamage[1]);
+			+ g_RandomManager.RandInt(RangedDamage[0], RangedDamage[1]);
 	amount += GetAdditiveWeaponSpecialization(amount,
 			ItemEquipSlot::WEAPON_RANGED);
 	return amount;
-	//return (int)(css.strength * 0.3) + css.base_damage_melee + randint(RangedDamage[0], RangedDamage[1]);
+	//return (int)(css.strength * 0.3) + css.base_damage_melee + g_RandomManager.RandInt(RangedDamage[0], RangedDamage[1]);
 }
 
 int CreatureInstance::WMD(void) {
 	int amount = (int) (css.strength * 0.3) + css.base_damage_melee
-			+ randint(MainDamage[0], MainDamage[1])
-			+ (int) (randint(OffhandDamage[0], OffhandDamage[1])
+			+ g_RandomManager.RandInt(MainDamage[0], MainDamage[1])
+			+ (int) (g_RandomManager.RandInt(OffhandDamage[0], OffhandDamage[1])
 					* ((float) css.offhand_weapon_damage / 1000.0F));
 	amount += GetAdditiveWeaponSpecialization(amount,
 			ItemEquipSlot::WEAPON_MAIN_HAND);
 	return amount;
-	//return (int)(css.strength * 0.3) + css.base_damage_melee + randint(MainDamage[0], MainDamage[1]) + (int)(randint(OffhandDamage[0], OffhandDamage[1]) * ((float)css.offhand_weapon_damage / 1000.0F));
+	//return (int)(css.strength * 0.3) + css.base_damage_melee + g_RandomManager.RandInt(MainDamage[0], MainDamage[1]) + (int)(g_RandomManager.RandInt(OffhandDamage[0], OffhandDamage[1]) * ((float)css.offhand_weapon_damage / 1000.0F));
 }
 
 void CreatureInstance::ApplyRawDamage(int amount) {
@@ -2887,6 +3003,10 @@ void CreatureInstance::PrepareDeath(void) {
 
 void CreatureInstance::ProcessDeath(void) {
 
+	if(IsMounted()) {
+		Unmount();
+	}
+
 	CREATURE_SEARCH attackerList;
 	ResolveAttackers(attackerList);
 
@@ -3037,7 +3157,7 @@ void CreatureInstance::ProcessDeath(void) {
 					char buffer[2048];
 
 					// Pick how many items will be dropped
-					int items = randmodrng(g_Config.MinPVPPlayerLootItems,
+					int items = g_RandomManager.RandModRng(g_Config.MinPVPPlayerLootItems,
 							g_Config.MaxPVPPlayerLootItems + 1);
 
 					if (items > 0) {
@@ -3061,7 +3181,7 @@ void CreatureInstance::ProcessDeath(void) {
 
 							// If the slot is a stack, pick a random amount to lose, up to the maximum of 16 (which is max in a chest anyway)
 							if (slot->count > 1) {
-								toLoot = randmodrng(0, slot->count);
+								toLoot = g_RandomManager.RandModRng(0, slot->count);
 							}
 
 							for (int i = 0;
@@ -4790,15 +4910,15 @@ void CreatureInstance::RunDialog(void) {
 							dialogIndex = 0;
 							break;
 						case Sequence::RANDOM:
-							dialogIndex = randmodrng(0,
+							dialogIndex = g_RandomManager.RandModRng(0,
 									diag->mParagraphs.size());
 							break;
 						}
 						timer_dialog = g_ServerTime
-								+ randmodrng(diag->mMinInterval,
+								+ g_RandomManager.RandModRng(diag->mMinInterval,
 										diag->mMaxInterval);
 					} else {
-						int delay = randmodrng(diag->mMinInterval,
+						int delay = g_RandomManager.RandModRng(diag->mMinInterval,
 								diag->mMaxInterval);
 
 						/* Otherwise perform this item */
@@ -4831,7 +4951,7 @@ void CreatureInstance::RunDialog(void) {
 								dialogIndex = 0;
 							break;
 						case Sequence::RANDOM:
-							dialogIndex = randmodrng(0,
+							dialogIndex = g_RandomManager.RandModRng(0,
 									diag->mParagraphs.size());
 							break;
 						}
@@ -5098,6 +5218,10 @@ void CreatureInstance::RunAutoTargetSelection(void) {
 //Return true if an NPC passes all conditions necessary to perform a movement update.
 //Assumes the NPC is alive.
 bool CreatureInstance::isNPCReadyMovement(void) {
+	if(!HasStatus(StatusEffects::MOUNTABLE) && IsMounted() && !MountedOn->isNPCReadyMovement())
+		/* Mount cannot move. This would be for mounted NPCs */
+		return false;
+
 	if (serverFlags & ServerFlags::Stationary)
 		return false;
 	if (g_ServerTime < movementTime)
@@ -5121,13 +5245,41 @@ void CreatureInstance::RunProcessingCycle(void) {
 		ProcessRegen();
 		CheckUpdateTimers();
 
+//		if(IsMounted()) {
+//			/* TODO offsets */
+//			CurrentX = MountedOn ->CurrentX;
+//			CurrentY = MountedOn ->CurrentY;
+//			CurrentZ = MountedOn ->CurrentZ;
+//			Rotation = MountedOn ->Rotation;
+//			Heading = MountedOn ->Rotation;
+//		}
+
 		if (serverFlags & ServerFlags::IsNPC) {
 			if (serverFlags & ServerFlags::LocalActive) {
 				if (isNPCReadyMovement() == true) {
 					int r = 0;
 					UpdateDestination();
-					r += RotateToTarget();
-					r += RunMovementStep();
+
+					// NOTE: Player position is now controlled by mount, position, not the other way
+					// around. Keep this around though for now in case
+					if(IsMountedMount()) {
+						if(MountedBy->Rotation != Rotation || MountedBy->Rotation != Heading) {
+							Heading = Rotation = MountedBy->Rotation ;
+							r++;
+						}
+
+						if(MountedBy->CurrentX != CurrentX || MountedBy->CurrentZ != CurrentZ) {
+							Speed = 0;
+							CurrentX = MountedBy->CurrentX;
+							CurrentY = MountedBy->CurrentY;
+							CurrentZ = MountedBy->CurrentZ;
+							r++;
+						}
+					}
+					else {
+						r += RotateToTarget();
+						r += RunMovementStep();
+					}
 					if (r > 0) {
 
 						int size = PrepExt_GeneralMoveUpdate(GSendBuf, this);
@@ -5228,7 +5380,7 @@ void CreatureInstance::CheckPathLocation(void) {
 	//If there are no new points, defaulting to the previous node is the only choice.
 	int newPathNode = previousPathNode;
 	if (openNode.size() > 0) {
-		int rndLink = randint(0, openNode.size() - 1);
+		int rndLink = g_RandomManager.RandInt(0, openNode.size() - 1);
 		newPathNode = openNode[rndLink];
 	}
 
@@ -5277,8 +5429,7 @@ int CreatureInstance::RotateToTarget(void) {
 
 	int xlen = CurrentTarget.targ->CurrentX - CurrentX;
 	int zlen = CurrentTarget.targ->CurrentZ - CurrentZ;
-	float rotf = (float) atan2((double) xlen, (double) zlen);
-	unsigned char rot = (unsigned char) (rotf * 255.0F / 6.283185F);
+	unsigned char rot = Util::DistanceToRotationByte(xlen, zlen);
 
 	if (oldRot != rot) {
 		Rotation = rot;
@@ -5302,8 +5453,7 @@ int CreatureInstance::RunMovementStep(void) {
 	int xlen = CurrentTarget.DesLocX - CurrentX;
 	int zlen = CurrentTarget.DesLocZ - CurrentZ;
 	int dist = (int) sqrt((double) ((xlen * xlen) + (zlen * zlen)));
-	float rotf = (float) atan2((double) xlen, (double) zlen);
-	unsigned char rot = (unsigned char) (rotf * 255.0F / 6.283185F);
+	unsigned char rot = Util::DistanceToRotationByte(xlen, zlen);
 	Rotation = rot;
 	Heading = rot;
 
@@ -5404,7 +5554,7 @@ int CreatureInstance::RunMovementStep(void) {
 			if (updateDist < 5)
 				updateDist = 5;
 
-			float angle = (float) Rotation * 6.283185F / 255.0F;
+			float angle = Util::RotationToRadians(Rotation);
 
 //			int oldX = CurrentX;
 //			int oldZ = CurrentZ;
@@ -5529,8 +5679,8 @@ void CreatureInstance::CheckLeashMovement(void) {
 
 	if (wanderRadius > 0 && CurrentTarget.DesLocX == 0
 			&& CurrentTarget.DesLocZ == 0) {
-		MoveTo(tetherNodeX + randint(-wanderRadius, wanderRadius),
-				tetherNodeZ + randint(-wanderRadius, wanderRadius), 0, 0);
+		MoveTo(tetherNodeX + g_RandomManager.RandInt(-wanderRadius, wanderRadius),
+				tetherNodeZ + g_RandomManager.RandInt(-wanderRadius, wanderRadius), 0, 0);
 		Speed = CREATURE_WALK_SPEED;
 	}
 }
@@ -5601,10 +5751,10 @@ void CreatureInstance::MoveToTarget_Ex2(void) {
 			if (dist > FARDIST) // || yoffs > YOFFSET)
 					{
 				CurrentX = AnchorObject->CurrentX
-						+ randint(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
+						+ g_RandomManager.RandInt(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
 				CurrentY = AnchorObject->CurrentY;
 				CurrentZ = AnchorObject->CurrentZ
-						+ randint(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
+						+ g_RandomManager.RandInt(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
 				int size = PrepExt_UpdateFullPosition(GSendBuf, this);
 				//actInst->LSendToAllSimulator(GSendBuf, size, -1);
 				actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX,
@@ -5634,10 +5784,10 @@ void CreatureInstance::MoveToTarget_Ex2(void) {
 							+ (int) ((float) (REQDIST - 10) * sin(rotf));
 				} else {
 					CurrentTarget.DesLocX = AnchorObject->CurrentX
-							+ randint(-CLOSE_SCATTER_RANGE,
+							+ g_RandomManager.RandInt(-CLOSE_SCATTER_RANGE,
 									CLOSE_SCATTER_RANGE);
 					CurrentTarget.DesLocZ = AnchorObject->CurrentZ
-							+ randint(-CLOSE_SCATTER_RANGE,
+							+ g_RandomManager.RandInt(-CLOSE_SCATTER_RANGE,
 									CLOSE_SCATTER_RANGE);
 					timer_autoattack = g_ServerTime;
 				}
@@ -5647,11 +5797,11 @@ void CreatureInstance::MoveToTarget_Ex2(void) {
 				int dist = actInst->GetPlaneRange(this, CurrentTarget.targ,
 						SANE_DISTANCE);
 				if (dist > CurrentTarget.desiredRange) {
-					//int xlen = CurrentX - CurrentTarget.targ->CurrentX + randint(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
-					//int zlen = CurrentZ - CurrentTarget.targ->CurrentZ + randint(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
+					//int xlen = CurrentX - CurrentTarget.targ->CurrentX + g_RandomManager.RandInt(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
+					//int zlen = CurrentZ - CurrentTarget.targ->CurrentZ + g_RandomManager.RandInt(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
 					//float rotf = (float)atan2((double)xlen, (double)zlen);
 
-					float rotf = (float) randdbl(-PI, PI);
+					float rotf = (float) g_RandomManager.RandDbl(-PI, PI);
 
 					//Take this angle and project a point location away from it that's just within
 					//the desired range.
@@ -5691,10 +5841,9 @@ void CreatureInstance::MoveToTarget_Ex2(void) {
 	int zlen = tz - CurrentZ;
 	//int xlen = CurrentX - CurrentTarget.DesLocX;
 	//int zlen = CurrentZ - CurrentTarget.DesLocZ;
-	float rotf = (float) atan2((double) xlen, (double) zlen);
 
 	bool update = false;
-	unsigned char rot = (unsigned char) (rotf * 256.0F / 6.283185F);
+	unsigned char rot = Util::DistanceToRotationByte(xlen, zlen);
 	if (rot != Rotation) {
 		Rotation = rot;
 		Heading = rot;
@@ -5747,7 +5896,7 @@ void CreatureInstance::MoveToTarget_Ex2(void) {
 		if (distRemain > maxmove)
 			distRemain = maxmove;
 
-		float angle = (float) Heading * 6.283185F / 256.0F;
+		float angle = Util::RotationToRadians(Heading);
 		CurrentZ += (int) ((float) distRemain * cos(angle));
 		CurrentX += (int) ((float) distRemain * sin(angle));
 		if (distRemain < maxmove) {
@@ -6250,6 +6399,7 @@ void CreatureInstance::CheckActiveStatusEffects(void) {
 	while (i < activeStatMod.size()) {
 		if (g_ServerTime >= activeStatMod[i].expireTime) {
 			RemoveBuffIndex(i);
+			
 			// Before it called to remove all buffs with this ID, then separated ability
 			//   and normal buff removal.  Realized this wasn't necessary and just changed
 			//  to remove this particular index.
@@ -7250,11 +7400,11 @@ void CreatureInstance::PlayerLoot(int level,
 
 			if (profile.virtualItemReward.components.size() > 0) {
 				VirtualItemRewardComponent ei =
-						profile.virtualItemReward.components[randmod(
+						profile.virtualItemReward.components[g_RandomManager.RandMod(
 								profile.virtualItemReward.components.size())];
 				params.mEquipType = ei.equipType;
 				if (ei.weaponTypes.size() > 0) {
-					params.mWeaponType = ei.weaponTypes[randmod(
+					params.mWeaponType = ei.weaponTypes[g_RandomManager.RandMod(
 							ei.weaponTypes.size())];
 				}
 			}
@@ -7276,7 +7426,7 @@ void CreatureInstance::PlayerLoot(int level,
 
 			// Have 10 attempts at getting a valid item.
 			for (int i = 0; i < 10; i++) {
-				itemID = profile.itemReward.itemIDs[randmod(
+				itemID = profile.itemReward.itemIDs[g_RandomManager.RandMod(
 						profile.itemReward.itemIDs.size())];
 				item = g_ItemManager.GetPointerByID(itemID);
 				if (item != NULL) {
@@ -7378,7 +7528,7 @@ void CreatureInstance::CreateLoot(int finderLevel, int partySize) {
 	 * many items
 	 */
 	for (int i = 6; i >= 1; i--) {
-		int baseRoll = randint_32bit(1, VirtualItemModSystem::DROP_SHARES);
+		int baseRoll = g_RandomManager.RandInt_32bit(1, VirtualItemModSystem::DROP_SHARES);
 		int compare = dropRateProfile.Amount.QData[i];
 		if (baseRoll <= compare) {
 			amount = i;
@@ -7658,8 +7808,8 @@ int CreatureInstance::CAF_SummonSidekick(int CDefID, int maxSummon,
 	SidekickObject skobj(CDefID, SidekickObject::ABILITY, abGroupID);
 	charPtr->SidekickList.push_back(skobj);
 	CreatureInstance* nsk = actInst->InstantiateSidekick(this, skobj, 0);
-	nsk->CurrentX = CurrentX + randint(-50, 50);
-	nsk->CurrentZ = CurrentZ + randint(-50, 50);
+	nsk->CurrentX = CurrentX + g_RandomManager.RandInt(-50, 50);
+	nsk->CurrentZ = CurrentZ + g_RandomManager.RandInt(-50, 50);
 	if (nsk != NULL) {
 		actInst->RebuildSidekickList();
 		//nsk->CAF_RunSidekickStatFilter(abGroupID);
@@ -7827,7 +7977,7 @@ void CreatureInstance::NotifySuperCrit(int TargetCreatureID) {
 
 int CreatureInstance::GetMainhandDamage(void) {
 	int amount = (int) (css.strength * 0.3) + css.base_damage_melee
-			+ randint(MainDamage[0], MainDamage[1]);
+			+ g_RandomManager.RandInt(MainDamage[0], MainDamage[1]);
 	amount += GetAdditiveWeaponSpecialization(amount,
 			ItemEquipSlot::WEAPON_MAIN_HAND);
 	return amount;
@@ -7847,7 +7997,7 @@ int CreatureInstance::GetOffhandDamage(void) {
 		return 0;
 
 	float damage = (css.strength * 0.3F) + css.base_damage_melee
-			+ randint(OffhandDamage[0], OffhandDamage[1]);
+			+ g_RandomManager.RandInt(OffhandDamage[0], OffhandDamage[1]);
 	damage *= ((float) css.offhand_weapon_damage / 1000.0F);
 	damage += (float) GetAdditiveWeaponSpecialization(static_cast<int>(damage),
 			ItemEquipSlot::WEAPON_OFF_HAND);
@@ -8405,6 +8555,8 @@ int CreatureDefManager::LoadFile(std::string filename) {
 				newItem.CreatureDefID = lfr.BlockToIntC(1);
 			} else if (strcmp(lfr.SecBuffer, "defHints") == 0) {
 				newItem.DefHints = lfr.BlockToIntC(1);
+			} else if (strcmp(lfr.SecBuffer, "AbilityOnUse") == 0) {
+				newItem.AbilityOnUse = lfr.BlockToIntC(1);
 			} else if (strcmp(lfr.SecBuffer, "ExtraData") == 0) {
 				ConfigString str(lfr.BlockToStringC(1, 0));
 				newItem.NamedMob = str.HasKey("namedmob");

@@ -64,6 +64,7 @@ public:
 	std::string Name;
 	std::string Comment;
 	float X, Y, Z;
+	int Zone;
 	WorldMarker();
 	~WorldMarker();
 	void Clear(void);
@@ -85,10 +86,11 @@ public:
 	std::vector<WorldMarker> WorldMarkerList;
 	int mZoneID;
 
+	void Copy(WorldMarkerContainer &other);
 	void Clear(void);
-	void Save();
+	bool Save();
 	void Reload();
-	void LoadFromFile(std::string filename);
+	void LoadFromFile(std::string filename, int zoneID);
 	void LoadFromCluster(int zoneID);
 
 };

@@ -15,7 +15,7 @@
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
 
-#include "CustomiseHandlers.h"
+#include "AssetCatalogueHandlers.h"
 #include "../ByteBuffer.h"
 #include "../Config.h"
 #include "../Chat.h"
@@ -25,6 +25,13 @@
 #include <algorithm>
 
 using namespace std;
+
+bool itemSort(AssetCatalogueItem *l1, AssetCatalogueItem *l2) {
+	if(l1->mOrder == l2->mOrder) {
+		return l1->GetDisplayName() > l2->GetDisplayName();
+	}
+	return l1->mOrder > l2->mOrder;
+}
 
 //
 // GetPropCategoriesHandler
@@ -38,7 +45,7 @@ int GetPropCategoriesHandler::handleQuery(SimulatorThread *sim,
 				"Invalid query.");
 
 	std::string parent = query->GetString(0);
-	if(!g_PropManager.Contains(parent)) {
+	if(!g_AssetCatalogueManager.Contains(parent)) {
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"No such prop catalogue item.");
 	}
@@ -49,8 +56,8 @@ int GetPropCategoriesHandler::handleQuery(SimulatorThread *sim,
 	wpos += PutShort(&sim->SendBuf[wpos], 0);      //Message size
 	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);   //Query response index
 
-	PropItem *item = g_PropManager.GetItem(parent);
-	std::vector<PropItem*> items =  g_PropManager.GetChildren(parent, pld);
+	AssetCatalogueItem *item = g_AssetCatalogueManager.GetItem(parent);
+	std::vector<AssetCatalogueItem*> items =  g_AssetCatalogueManager.GetChildren(parent, pld);
 
 	int rows = items.size();
 	if (rows > 99) {
@@ -60,14 +67,17 @@ int GetPropCategoriesHandler::handleQuery(SimulatorThread *sim,
 	wpos += PutShort(&sim->SendBuf[wpos], rows + 1);
 
 	// First row contains category data
-	wpos += PutByte(&sim->SendBuf[wpos], 5);
-	wpos += WritePropItem(&sim->SendBuf[wpos], item);
+	wpos += PutByte(&sim->SendBuf[wpos], 6);
+	wpos += WriteAssetCatalogueItem(&sim->SendBuf[wpos], item);
 
-	// Subsequent rows contain each child name and ID
+	// Subsequent rows contain each child name, asset and type
+	sort(items.begin(), items.end(), itemSort);
 	for (auto it = items.begin(); it != items.end(); ++it) {
-		wpos += PutByte(&sim->SendBuf[wpos], 2);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], (*it)->mName.c_str());
-		wpos += PutStringUTF(&sim->SendBuf[wpos], (*it)->mID.c_str());
+		wpos += PutByte(&sim->SendBuf[wpos], 4);
+		wpos += PutStringUTF(&sim->SendBuf[wpos], (*it)->mName);
+		wpos += PutStringUTF(&sim->SendBuf[wpos], (*it)->GetAsset());
+		wpos += PutStringUTF(&sim->SendBuf[wpos], std::to_string((*it)->mType));
+		wpos += PutStringUTF(&sim->SendBuf[wpos], (*it)->GetDisplayName());
 		rows--;
 		if(rows < 1)
 			break;
@@ -89,10 +99,10 @@ int SearchPropsHandler::handleQuery(SimulatorThread *sim,
 				"Invalid query.");
 
 	std::string search = query->GetString(0);
-	std::vector<PropItem*> items;
-	PropSearch ps;
+	std::vector<AssetCatalogueItem*> items;
+	AssetCatalogueSearch ps;
 	ps.mSearch = search;
-	g_PropManager.Search(ps, &items);
+	g_AssetCatalogueManager.Search(ps, &items);
 
 	int wpos = 0;
 	wpos += PutByte(&sim->SendBuf[wpos], 1);      //_handleQueryResultMsg
@@ -107,17 +117,20 @@ int SearchPropsHandler::handleQuery(SimulatorThread *sim,
 	wpos += PutShort(&sim->SendBuf[wpos], rows + 1);
 
 	// First row contains root data
-	wpos += PutByte(&sim->SendBuf[wpos], 5);
-	PropItem searchResults;
+	wpos += PutByte(&sim->SendBuf[wpos], 6);
+	AssetCatalogueItem searchResults;
 	searchResults.mDescription = "Search Results";
 	searchResults.mName = "Search Results";
-	wpos += WritePropItem(&sim->SendBuf[wpos], &searchResults);
+	wpos += WriteAssetCatalogueItem(&sim->SendBuf[wpos], &searchResults);
 
 	// Subsequent rows contain each search match
+	sort(items.begin(), items.end(), itemSort);
 	for (auto it = items.begin(); it != items.end(); ++it) {
-		wpos += PutByte(&sim->SendBuf[wpos], 2);
+		wpos += PutByte(&sim->SendBuf[wpos], 4);
 		wpos += PutStringUTF(&sim->SendBuf[wpos], (*it)->mName.c_str());
-		wpos += PutStringUTF(&sim->SendBuf[wpos], (*it)->mID.c_str());
+		wpos += PutStringUTF(&sim->SendBuf[wpos], (*it)->GetAsset().c_str());
+		wpos += PutStringUTF(&sim->SendBuf[wpos], std::to_string((*it)->mType));
+		wpos += PutStringUTF(&sim->SendBuf[wpos], (*it)->GetDisplayName());
 		rows--;
 		if(rows < 1)
 			break;

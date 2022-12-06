@@ -4,6 +4,7 @@
 #define BYTEBUFFER_H
 
 #include <vector>
+#include <string>
 
 #ifndef WINDOWS_PLATFORM
 	#include <sys/types.h>
@@ -40,6 +41,7 @@ int PutInteger(char *buffer, int val);
 int PutIntegerReq(void);
 int PutFloat(char *buffer, float val);
 int PutStringUTF(char *buffer, const char *tocopy);
+int PutStringUTF(char *buffer, const std::string &tocopy);
 int PutStringReq(const char *tocopy);
 
 float GetFloat(const char *buffer, size_t &advance);

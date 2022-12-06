@@ -641,54 +641,6 @@ int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize,
 	return wpos;
 }
 
-int randint_32bit(int min, int max) {
-	// Generate a 32 bit random number.
-
-	/*
-	 Explanation:
-	 rand() doesn't work well for larger numbers.
-	 RAND_MAX is limited to 32767.
-	 There are other quirks, where powers of two seem to generate more even
-	 distributions of numbers.
-
-	 Since smaller numbers have better distribution, use a sequence
-	 of random numbers and use those to fill the bits of a larger number.
-	 */
-
-	// RAND_MAX (as defined with a value of 0x7fff) is only 15 bits wide.
-	unsigned long rand_build = (rand() << 15) | rand();
-	//unsigned long rand_build = ((rand() & 0xFF) << 24) | ((rand() & 0xFF) << 16) | ((rand() & 0xFF) << 8) | ((rand() & 0xFF));
-	return min + (rand_build % (max - min + 1));
-}
-
-int randmod(int max) {
-	// Max is exclusive, e.g, max of 10 would give numbers between 0 and 9
-	return rand() % max;
-}
-
-int randmodrng(int min, int max) {
-	// Min is inclusive, max is exclusive, e.g, min of 3, max of 10 would give numbers between 3 and 9
-	return (rand() % (max - min) + min);
-}
-
-int randi(int max) {
-	return randint(1, max);
-}
-
-int randint(int min, int max) {
-	//Returning <max> is possible, but highly unlikely compared to the individual
-	//chances of any other value
-	//return ((double) rand() / ((double) RAND_MAX) * (max - min)) + min;
-
-	//This should be fixed to generate <max> as much as others
-	return (int) (((double) rand() / ((double) RAND_MAX + 1) * ((max + 1) - min))
-			+ min);
-}
-
-double randdbl(double min, double max) {
-	return ((double) rand() / ((double) RAND_MAX) * (max - min)) + min;
-}
-
 char *StringFromInt(char *buffer, int value) {
 	sprintf(buffer, "%d", value);
 	return buffer;
@@ -1715,5 +1667,22 @@ std::string StringFormat(const std::string& format, Args ... args) {
 	return std::string(buf.get(), buf.get() + size - 1); // We don't want the '\0' inside
 }
 
+unsigned char DistanceToRotationByte(int xlen, int zlen) {
+	return RadianToRotationByte((float)atan2((double)xlen, (double)zlen));
+}
+
+float RotationToRadians(unsigned int rotation) {
+	return (float)rotation * 6.283185F / 255.0F;
+}
+
+float RadianToRotation(float radians) {
+	return radians * 255.0F / 6.283185F;
+}
+
+unsigned char RadianToRotationByte(float radians) {
+	/* This weird cast is to take a difference on Arm into account.
+	 * https://stackoverflow.com/questions/4752315/coercing-float-into-unsigned-char-on-arm-vs-intel */
+	return (unsigned char)((int)RadianToRotation(radians));
+}
 
 } //namespace Util

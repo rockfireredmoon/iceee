@@ -30,18 +30,23 @@ ClusterAuthenticationHandler::~ClusterAuthenticationHandler() {
 
 }
 
+std::string ClusterAuthenticationHandler::GetName() {
+	return "Cluster";
+}
+
 AccountData * ClusterAuthenticationHandler::authenticate(const std::string &loginName, const std::string &authorizationHash, std::string *errorMessage) {
 
 	AccountData *accPtr = NULL;
 	CharacterData *cd = NULL;
 
+	g_Logs.data->info("Looking for token %v for user %v", authorizationHash, loginName);
 	PendingShardPlayer psp = g_ClusterManager.FindToken(authorizationHash);
 	if(psp.mID == 0) {
 		g_Logs.data->error("Could not find token %v associated with user %v", authorizationHash, loginName);
 		return NULL;
 	}
 
-	g_Logs.data->info("Cluster authentication token password %v for user user %v", authorizationHash, loginName);
+	g_Logs.data->info("Cluster authentication token password %v for user %v", authorizationHash, loginName);
 	g_CharacterManager.GetThread("ClusterAuthenticationHandler::authenticate");
 	cd = g_CharacterManager.RequestCharacter(psp.mID, false);
 	if(cd == NULL) {

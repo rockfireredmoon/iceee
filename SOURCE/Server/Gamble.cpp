@@ -1,4 +1,5 @@
 #include "Gamble.h"
+#include "Random.h"
 #include "FileReader.h"
 #include "Util.h"
 
@@ -51,7 +52,7 @@ int GambleDefinition :: GetRandomSelection(void)
 	}
 
 	int base = 1;
-	int rnd = randint(1, maxShares);
+	int rnd = g_RandomManager.RandInt(1, maxShares);
 	for(size_t i = 0; i < itemSelection.size(); i++)
 	{
 		if(rnd >= base && rnd <= base + itemSelection[i].Shares - 1)

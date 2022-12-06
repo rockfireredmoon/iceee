@@ -48,8 +48,8 @@ sentinel::~sentinel(void) {
 }
 
 sentinel&
-sentinel::add_sentinel(const std::string& host, std::size_t port, std::uint32_t timeout_msecs) {
-  m_sentinels.push_back({host, port, timeout_msecs});
+sentinel::add_sentinel(const std::string& host, std::size_t port, std::uint32_t timeout_ms) {
+  m_sentinels.push_back({host, port, timeout_ms});
   return *this;
 }
 
@@ -124,7 +124,7 @@ sentinel::connect_sentinel(const sentinel_disconnect_handler_t& sentinel_disconn
   while (not_connected && it != m_sentinels.end()) {
     try {
       __CPP_REDIS_LOG(debug, std::string("cpp_redis::sentinel attempting to connect to host ") + it->get_host());
-      m_client.connect(it->get_host(), it->get_port(), disconnect_handler, receive_handler, it->get_timeout_msecs());
+      m_client.connect(it->get_host(), it->get_port(), disconnect_handler, receive_handler, it->get_timeout_ms());
     }
     catch (const redis_error&) {
       __CPP_REDIS_LOG(info, std::string("cpp_redis::sentinel unable to connect to sentinel host ") + it->get_host());
@@ -152,13 +152,13 @@ sentinel::connect_sentinel(const sentinel_disconnect_handler_t& sentinel_disconn
 void
 sentinel::connect(const std::string& host, std::size_t port,
   const sentinel_disconnect_handler_t& sentinel_disconnect_handler,
-  std::uint32_t timeout_msecs) {
+  std::uint32_t timeout_ms) {
   __CPP_REDIS_LOG(debug, "cpp_redis::sentinel attempts to connect");
 
   auto disconnect_handler = std::bind(&sentinel::connection_disconnect_handler, this, std::placeholders::_1);
   auto receive_handler    = std::bind(&sentinel::connection_receive_handler, this, std::placeholders::_1, std::placeholders::_2);
 
-  m_client.connect(host, port, disconnect_handler, receive_handler, timeout_msecs);
+  m_client.connect(host, port, disconnect_handler, receive_handler, timeout_ms);
 
   __CPP_REDIS_LOG(info, "cpp_redis::sentinel connected");
 
@@ -251,7 +251,9 @@ sentinel::send(const std::vector<std::string>& redis_cmd, const reply_callback_t
   return *this;
 }
 
-//! commit pipelined transaction
+/**
+ * commit pipelined transaction
+ */
 sentinel&
 sentinel::commit(void) {
   try_commit();
@@ -276,10 +278,10 @@ sentinel::try_commit(void) {
     m_client.commit();
     __CPP_REDIS_LOG(info, "cpp_redis::sentinel sent pipelined commands");
   }
-  catch (const cpp_redis::redis_error& e) {
+  catch (const cpp_redis::redis_error&) {
     __CPP_REDIS_LOG(error, "cpp_redis::sentinel could not send pipelined commands");
     clear_callbacks();
-    throw e;
+    throw;
   }
 }
 
@@ -357,4 +359,4 @@ sentinel::set(const std::string& name, const std::string& option, const std::str
   return *this;
 }
 
-} //! cpp_redis
+} // namespace cpp_redis

@@ -18,6 +18,10 @@ namespace StringUtil
 
 	std::string FormatTimeHHMMSSmm(unsigned long ms);
 
+	int SafeParseInt(const std::string& str);
+
+	int SafeParseInt(const std::string& str, int defaultValue);
+
 	unsigned long ParseTimeHHMM(const std::string& timeString);
 
 	unsigned long ParseTimeHHMMSS(const std::string& timeString);
@@ -28,6 +32,14 @@ namespace StringUtil
 	std::string LowerCase(const std::string& in);
 
 	std::string UpperCase(const std::string& in);
+
+	void LTrim(std::string &s);
+	void RTrim(std::string &s);
+	void Trim(std::string &s);
+	std::string LTrimCopy(std::string s);
+	std::string RTrimCopy(std::string s);
+	std::string TrimCopy(std::string s);
+
 }
 
 #endif //STRINGUTIL_H

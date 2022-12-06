@@ -19,6 +19,7 @@
 #include "../Creature.h"
 #include "../Instance.h"
 #include "../Debug.h"
+#include "../Random.h"
 #include "../Config.h"
 #include "../Components.h"
 #include "../Simulator.h"
@@ -187,9 +188,9 @@ int GMSpawnHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 			// Random position around the players positions
 			int radius = atoi(data.c_str());
 			s = creatureInstance->actInst->SpawnGeneric(creatureID,
-					c->CurrentX + randmodrng(1, radius) - (radius / 2),
+					c->CurrentX + g_RandomManager.RandModRng(1, radius) - (radius / 2),
 					c->CurrentY,
-					c->CurrentZ + randmodrng(1, radius) - (radius / 2),
+					c->CurrentZ + g_RandomManager.RandModRng(1, radius) - (radius / 2),
 					c->Rotation, flags);
 
 		} else {
@@ -219,7 +220,7 @@ int GMSpawnHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 		case 1:
 			l = creatureInstance->actInst->PlayerListPtr;
 			if (l.size() > 0) {
-				targ = l[randmodrng(0, l.size())];
+				targ = l[g_RandomManager.RandModRng(0, l.size())];
 				s->SelectTarget(targ);
 				r = s->CallAbilityEvent(abilityID, EventType::onRequest);
 				if (r != 0)
@@ -231,7 +232,7 @@ int GMSpawnHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 		case 2:
 			l = creatureInstance->actInst->NPCListPtr;
 			if (l.size() > 0) {
-				targ = l[randmodrng(0, l.size())];
+				targ = l[g_RandomManager.RandModRng(0, l.size())];
 				s->SelectTarget(targ);
 				r = s->CallAbilityEvent(abilityID, EventType::onRequest);
 				if (r != 0)

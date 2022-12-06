@@ -36,6 +36,7 @@ ScheduledTimerTask::~ScheduledTimerTask() {
 //
 
 Scheduler::Scheduler() {
+	mRunning = true;
 	mNextTaskId = 0;
 	mNextRun = 0;
 }
@@ -51,6 +52,16 @@ void Scheduler::Init() {
 			workers.push_back(worker);
 		}
 	}
+}
+
+void Scheduler::Shutdown() {
+	mRunning = false;
+	g_Logs.server->info("Shutting down scheduler, %v tasks to clear", scheduled.size());
+	mMutex.lock();
+	scheduled.clear();
+	mQueue.Clear();
+	mMutex.unlock();
+	g_Logs.server->info("Shut down scheduler");
 }
 
 void Scheduler::Cancel(int id) {
@@ -71,12 +82,13 @@ void Scheduler::RunProcessingCycle() {
 	int c = 0;
 
 //	g_Logs.server->info("Have %v tasks in scheduler, next run is %v", scheduled.size(), mNextRun);
-	while(mNextRun > 0 && c < MAX_TASKS_PER_CYCLE && scheduled.size() > 0) {
+	while(mRunning && mNextRun > 0 && c < MAX_TASKS_PER_CYCLE && scheduled.size() > 0) {
 		unsigned long now = g_PlatformTime.getMilliseconds();
 		if(now > mNextRun) {
 			ScheduledTimerTask t = scheduled[0];
 			scheduled.erase(scheduled.begin());
-			g_Logs.server->info("Scheduled task running %v", t.mTaskId);
+			if(g_Logs.server->enabled(el::Level::Debug))
+				g_Logs.server->debug("Scheduled task running %v", t.mTaskId);
 			mMutex.unlock();
 			t.mTask();
 			mMutex.lock();
@@ -84,7 +96,8 @@ void Scheduler::RunProcessingCycle() {
 			// Update next run time
 			if(scheduled.size() > 0) {
 				mNextRun = scheduled[0].mWhen;
-				g_Logs.server->info("Next scheduler task will run in %v", StringUtil::FormatTimeHHMMSSmm(mNextRun - g_ServerTime));
+				if(g_Logs.server->enabled(el::Level::Debug))
+					g_Logs.server->debug("Next scheduler task will run in %v", StringUtil::FormatTimeHHMMSSmm(mNextRun - g_ServerTime));
 			}
 			else {
 				mNextRun = 0;
@@ -111,23 +124,34 @@ int Scheduler::Schedule(const TaskType& task, unsigned long when) {
 		when = g_ServerTime + g_MainSleep;
 	}
 	ScheduledTimerTask taskWrapper(task, when);
-	g_Logs.server->info("This scheduler task will run in %v", StringUtil::FormatTimeHHMMSSmm(when - g_ServerTime));
+	if(g_Logs.server->enabled(el::Level::Debug))
+			g_Logs.server->debug("This scheduler task will run in %v", StringUtil::FormatTimeHHMMSSmm(when - g_ServerTime));
 	mMutex.lock();
 	taskWrapper.mTaskId = mNextTaskId++;
 	scheduled.push_back(taskWrapper);
 	sort(scheduled.begin(), scheduled.end(), ScheduledTaskSort);
 	mNextRun = scheduled[0].mWhen;
-	g_Logs.server->info("Next scheduler task will run in %v", StringUtil::FormatTimeHHMMSSmm(mNextRun - g_ServerTime));
+	if(g_Logs.server->enabled(el::Level::Debug))
+			g_Logs.server->debug("Next scheduler task will run in %v", StringUtil::FormatTimeHHMMSSmm(mNextRun - g_ServerTime));
 	mMutex.unlock();
 	return taskWrapper.mTaskId;
+}
+
+bool Scheduler::IsRunning() {
+	return mRunning;
 }
 
 int Scheduler::Submit(const TaskType& task) {
 	return Schedule(task, g_ServerTime);
 }
 
-TaskType Scheduler::PopPoolTask() {
-	return mQueue.Pop();
+bool Scheduler::PopPoolTask(TaskType &task) {
+	if(g_Logs.server->enabled(el::Level::Debug))
+		g_Logs.server->debug("Popping pool task");
+	bool r = mQueue.Pop(task);
+	if(g_Logs.server->enabled(el::Level::Debug))
+		g_Logs.server->debug("Popped pool task");
+	return r;
 }
 
 PooledWorker::PooledWorker(int workerID) {
@@ -144,10 +168,16 @@ void PooledWorker::ThreadProc(PooledWorker *object) {
 
 void PooledWorker::Work() {
 	g_Logs.server->info("Starting pooled thread worker %v", mWorkerID);
-	while(true) {
-		g_Logs.server->debug("Waiting for work on thread %v", mWorkerID);
-		TaskType t = g_Scheduler.PopPoolTask();
-		t();
-		PLATFORM_SLEEP(g_MainSleep);
+	while(g_Scheduler.IsRunning()) {
+		if(g_Logs.server->enabled(el::Level::Debug))
+			g_Logs.server->debug("Waiting for work on thread %v", mWorkerID);
+		TaskType t;
+		if(g_Scheduler.PopPoolTask(t)) {
+			t();
+			PLATFORM_SLEEP(g_MainSleep);
+		}
+		else
+			break;
 	}
+	g_Logs.server->info("Left scheduler worker loop");
 }

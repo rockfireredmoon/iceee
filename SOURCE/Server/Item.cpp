@@ -4,6 +4,7 @@
 #include "ByteBuffer.h"
 #include "DirectoryAccess.h"
 #include <algorithm>
+#include "Random.h"
 #include "Gamble.h"
 #include "Util.h"
 #include "VirtualItem.h"
@@ -637,7 +638,7 @@ void ItemDef :: ProcessParams(void)
 		Util::Split(datapairs[i], "=", keyvalue);
 		if(keyvalue.size() >= 2)
 		{
-			int index = GetStatIndexByName(keyvalue[0].c_str());
+			int index = GetStatIndexByName(keyvalue[0]);
 			if(index >= 0)
 			{
 				int statID = StatList[index].ID;
@@ -1248,7 +1249,7 @@ int ItemManager :: RunPurchaseModifier(int itemID)
 		return itemID;
 	}
 
-	int randIndex = randint(0, (int)searchList.size() - 1);
+	int randIndex = g_RandomManager.RandInt(0, (int)searchList.size() - 1);
 	if(randIndex < 0 || randIndex >= (int)searchList.size())
 	{
 		g_Logs.data->warn("RunPurchaseModifier() index error.");

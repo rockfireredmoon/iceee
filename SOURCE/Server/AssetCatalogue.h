@@ -35,7 +35,7 @@
 static std::string KEYPREFIX_CUSTOM_PROP_ITEM = "CustomPropItem";
 static std::string LISTPREFIX_CUSTOM_PROP_ITEMS = "CustomPropItems";
 
-namespace PropType
+namespace AssetCatalogueItemType
 {
 	enum
 	{
@@ -44,57 +44,64 @@ namespace PropType
 		BUILDING = 2,
 		CAVE = 3,
 		DUNGEON = 4,
-		CATEGORY = 5
+		CATEGORY = 5,
+		SKIN = 6,
+		VARIANT = 7
 	};
 	std::string GetDescription(int propTypeID);
 }
 
-class PropSearch
+class AssetCatalogueSearch
 {
 public:
-	PropSearch();
-	~PropSearch();
+	AssetCatalogueSearch();
+	~AssetCatalogueSearch();
 	int mPropTypeID;
 	std::string mSearch;
 	unsigned int mMax;
 };
 
-class PropItem {
+class AssetCatalogueItem {
 public:
-	PropItem();
-	~PropItem();
+	AssetCatalogueItem();
+	~AssetCatalogueItem();
+
+	std::string GetDisplayName();
+	std::string GetAsset();
 
 	std::string mName;
+	std::string mDisplayName;
 	std::string mDescription;
-	std::string mID;
-	int mPropTypeID;
+	std::string mAsset;
+	int mOrder;
+	int mType;
 	STRINGLIST mKeywords;
-	PropItem *mParent;
-	std::vector<PropItem*> mChildren;
+	std::vector<AssetCatalogueItem*> mParents;
+	std::vector<AssetCatalogueItem*> mChildren;
 };
 
-class PropManager
+class AssetCatelogueManager
 {
 public:
 	Platform_CriticalSection cs;
 
-	PropManager();
-	~PropManager();
-	int LoadFromFile(std::string fileName);
-	void Search(PropSearch search, std::vector<PropItem*> *results);
+	AssetCatelogueManager();
+	~AssetCatelogueManager();
+	int LoadFromDirectory(std::string directory);
+	void Search(AssetCatalogueSearch search, std::vector<AssetCatalogueItem*> *results);
 	unsigned int Count();
 	bool Contains(std::string name);
-	PropItem* GetItem(std::string name);
-	PropItem* GetByID(std::string id);
-	std::vector<PropItem*> GetChildren(std::string name, CharacterServerData *pld);
+	AssetCatalogueItem* GetItem(std::string name);
+	AssetCatalogueItem* GetByID(std::string id);
+	std::vector<AssetCatalogueItem*> GetChildren(std::string name, CharacterServerData *pld);
 private:
-	std::map<std::string, PropItem*> mItems;
-	PropItem* mFavourites;
-	void SearchProps(std::vector<PropItem*> *items, PropSearch search, PropItem* mItem);
+	std::map<std::string, AssetCatalogueItem*> mItems;
+	AssetCatalogueItem* mFavourites;
+	void SearchProps(std::vector<AssetCatalogueItem*> *items, AssetCatalogueSearch search, AssetCatalogueItem* mItem);
 };
 
-int WritePropItem(char *buffer, PropItem *item);
+int WriteAssetCatalogueItem(char *buffer, AssetCatalogueItem *item);
 
-extern PropManager g_PropManager;
+extern AssetCatelogueManager g_AssetCatalogueManager;
 
 #endif

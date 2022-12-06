@@ -343,3 +343,80 @@ bool TextFileEntityReader::CheckLoaded() {
 	}
 	return mLoaded && !mError;
 }
+
+
+//
+// TextFileEntityWriter
+//
+TextFileEntityWriter::TextFileEntityWriter(std::string path) {
+	mPath = path;
+	mOutput = NULL;
+}
+
+TextFileEntityWriter::~TextFileEntityWriter() {
+	if(mOutput != NULL)
+		End();
+}
+
+void TextFileEntityWriter::PushSection(const string &section) {
+	if(mOutput != NULL) {
+		if(mSection != "")
+			fprintf(mOutput, "\r\n");
+	}
+	AbstractEntityWriter::PushSection(section);
+	if(mOutput != NULL) {
+		fprintf(mOutput, "[%s]\r\n", section.c_str());
+	}
+}
+
+void TextFileEntityWriter::Section(const string &section) {
+	if(mSection != "")
+		fprintf(mOutput, "\r\n");
+	AbstractEntityWriter::Section(section);
+	fprintf(mOutput, "[%s]\r\n", section.c_str());
+}
+
+bool TextFileEntityWriter::Value(const string &key, const string &value) {
+	fprintf(mOutput, "%s=%s\r\n", key.c_str(), value.c_str());
+	return true;
+}
+
+bool TextFileEntityWriter::ListValue(const string & key, vector<string> &value) {
+	string v;
+	for (auto it = value.begin(); it != value.end(); ++it) {
+		if (v.size() > 0)
+			v += ",";
+		v += StringUtil::ReplaceAll(StringUtil::ReplaceAll((*it), "\\", "\\\\"),
+				",", "\\,");
+	}
+	fprintf(mOutput, "%s=%s\r\n", key.c_str(), v.c_str());
+	return false;
+}
+
+bool TextFileEntityWriter::Start() {
+
+	mOutput = fopen(mPath.c_str(), "wb");
+	if (mOutput == NULL) {
+		g_Logs.data->error("[ERROR] TextFileEntityWriter could not open: %s",
+				mPath);
+		return false;
+	}
+
+	if(mSection != "")
+		fprintf(mOutput, "[%s]\r\n", mSection.c_str());
+
+	return true;
+}
+
+bool TextFileEntityWriter::Abort() {
+	return true;
+}
+
+bool TextFileEntityWriter::End() {
+	if(mOutput != NULL) {
+		fflush(mOutput);
+		fclose(mOutput);
+		mOutput = NULL;
+	}
+	return true;
+}

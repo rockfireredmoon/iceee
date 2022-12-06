@@ -134,10 +134,10 @@ struct ActiveAbilityInfo
 	
 	//Amount to adjust resources when processing ability conditions and actions.
 	//Used internally by the server.
-	char willAdjust;
-	char mightAdjust;
-	char willChargeAdjust;
-	char mightChargeAdjust;
+	int willAdjust;
+	int mightAdjust;
+	int willChargeAdjust;
+	int mightChargeAdjust;
 	bool bResourcesSpent;    //If true, will/might and charges have not been spent yet.
 
 	int TargetCount;
@@ -189,6 +189,7 @@ public:
 	std::string DropRateProfile;
 	float DropRateMult;
 	bool NamedMob;
+	int AbilityOnUse;
 	
 	bool operator < (const CreatureDefinition& other) const;
 	std::string GetExtraDataString();
@@ -387,6 +388,8 @@ public:
 	int CurrentX;           //Position on map (horizontal position on grid)
 	int CurrentY;           //Position on map (elevation)
 	int CurrentZ;           //Position on map (vertical position on grid)
+	CreatureInstance *MountedBy;  //The creature this creature has been mounted by
+	CreatureInstance *MountedOn;  //The creature this creature is mounted on
 	CreatureInstance *AnchorObject;  //For sidekicks, this is the host player they follow.
 	SidekickObject sidekickData; //For sidekicks, contains data from when they were spawned / recruited.
 
@@ -444,6 +447,7 @@ public:
 	vector<BaseStatData> baseStats;  //Base stats.  New entries are saved to this list when a unique Add() is made.
 
 	bool swimming; // Whether the player is swimming
+	int MountAbilityId;
 
 	ActiveBuff * AddMod(unsigned char tier, int buffCategory, short abID, short abgID, double durationSec);
 	void AttachItem(const char *type, const char *node);
@@ -512,6 +516,12 @@ public:
 	void CheckFallDamage(int elevation);
 
 	bool IsValidForPVP(void);
+
+	bool IsMountedMount();
+	bool IsMountedMounter();
+	bool IsMounted();
+	bool Mount(CreatureInstance *mount);
+	bool Unmount();
 
 	//These functions operate on "activeStatusEffect"
 	int _HasStatusList(int statusID);

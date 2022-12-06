@@ -386,6 +386,18 @@ void Helper_OutputCreature(ReportBuffer &report, int index,
 		report.AddLine("  Position: %d, %d, %d (MovT: %d)\r\n", obj->CurrentX,
 				obj->CurrentY, obj->CurrentZ, obj->movementTime - g_ServerTime);
 	}
+	if (obj->MountedBy != NULL) {
+		report.AddLine("  Mounter: %p (%s)\r\n", obj->MountedBy,
+				obj->MountedBy->css.display_name);
+		report.AddLine("  Position: %d, %d, %d (MovT: %d)\r\n", obj->CurrentX,
+				obj->CurrentY, obj->CurrentZ, obj->movementTime - g_ServerTime);
+	}
+	if (obj->MountedOn != NULL) {
+		report.AddLine("  Mount: %p (%s)\r\n", obj->MountedOn,
+				obj->MountedOn->css.display_name);
+		report.AddLine("  Position: %d, %d, %d (MovT: %d)\r\n", obj->CurrentX,
+				obj->CurrentY, obj->CurrentZ, obj->movementTime - g_ServerTime);
+	}
 }
 
 void RefreshScripts(ReportBuffer &report) {

@@ -525,8 +525,10 @@ namespace StatusEffects
 		LEECHING = 66,
 		USABLE_BY_SCRIPT = 67,
 		FLOATING = 68,
-		HOVERING = 69
-
+		HOVERING = 69,
+		MOUNTABLE = 70,
+		MOUNTED = 71,
+		CARRYING_RIDER = 72,
 	};
 }
 

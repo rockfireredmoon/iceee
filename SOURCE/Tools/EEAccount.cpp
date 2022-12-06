@@ -93,7 +93,20 @@ int main(int argc, char *argv[]) {
 	if(!g_ClusterManager.Init())
 		return 1;
 
-	if (command == "create") {
+	if (command == "help" || command == "") {
+		g_Logs.data->verbose(0, "Manage local game accounts");
+		g_Logs.data->verbose(0, "");
+		g_Logs.data->verbose(0, "For most commands, if you supply no further arguments, help for that command will be printed.");
+		g_Logs.data->verbose(0, "");
+		g_Logs.data->verbose(0, StringUtil::Format("%s create - create new accounts", argv[0]));
+		g_Logs.data->verbose(0, StringUtil::Format("%s password - change passwords", argv[0]));
+		g_Logs.data->verbose(0, StringUtil::Format("%s show - show account details", argv[0]));
+		g_Logs.data->verbose(0, StringUtil::Format("%s roles - show or change account roles", argv[0]));
+		g_Logs.data->verbose(0, StringUtil::Format("%s delete - delete accounts", argv[0]));
+		g_Logs.data->verbose(0, StringUtil::Format("%s groves - show account grove details", argv[0]));
+		g_Logs.data->verbose(0, StringUtil::Format("%s remove-grove - remove player groves", argv[0]));
+	}
+	else if (command == "create") {
 		/* Create account */
 		g_ZoneDefManager.LoadData();
 
@@ -213,7 +226,7 @@ int main(int argc, char *argv[]) {
 					"'remove-grove' requires 1 arguments. <groveId>.");
 			return 1;
 		}
-		int gid  = std::stoi(options[0].c_str());
+		int gid  = StringUtil::SafeParseInt(options[0].c_str());
 		ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByID(gid);
 		if (zd == NULL) {
 			g_Logs.data->error("Could not find zone %v", gid);

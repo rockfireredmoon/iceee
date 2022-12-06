@@ -42,7 +42,7 @@ bool GameInfoHandler::handleGet(CivetServer *server,
 	string ruri;
 
 	/* Prepare the URI */
-	CivetServer::urlDecode(req_info->uri, strlen(req_info->uri), ruri, false);
+	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 
 	int status = 404;
