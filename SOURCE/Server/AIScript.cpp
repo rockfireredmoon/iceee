@@ -11,6 +11,7 @@
 #include "DirectoryAccess.h"
 #include "Report.h"
 #include "Config.h"
+#include "Gamble.h"
 
 
 AIScriptManager aiScriptManager;
@@ -305,7 +306,7 @@ void AIScriptPlayer :: RunImplementationCommands(int opcode)
 		}
 		break;
 	case OP_RANDOMIZE:
-		SetVar(in->param2, randint(1, in->param1));
+		SetVar(in->param2, g_GambleManager.RandInt(1, in->param1));
 		break;
 	case OP_FINDCDEF:
 		{

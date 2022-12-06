@@ -7,7 +7,7 @@
 #include "Simulator.h"
 #include "StringList.h"
 #include "Debug.h"
-#include "Util.h"
+#include "Gamble.h"
 #include "Config.h"
 #include "Globals.h"
 #include "PartyManager.h"
@@ -12944,9 +12944,9 @@ int SimulatorThread :: handle_query_gm_spawn(void)
 			// Random position around the players positions
 			int radius = atoi(data.c_str());
 			s = creatureInst->actInst->SpawnGeneric(creatureID,
-								c->CurrentX + randmodrng(1, radius) - ( radius / 2 ),
+								c->CurrentX + g_GambleManager.RandModRng(1, radius) - ( radius / 2 ),
 								c->CurrentY,
-								c->CurrentZ + randmodrng(1, radius) - ( radius / 2 ),
+								c->CurrentZ + g_GambleManager.RandModRng(1, radius) - ( radius / 2 ),
 								c->Rotation, flags);
 
 		} else {
@@ -12974,7 +12974,7 @@ int SimulatorThread :: handle_query_gm_spawn(void)
 		case 1:
 			l = creatureInst->actInst->PlayerListPtr;
 			if(l.size() > 0) {
-				targ = l[randmodrng(0, l.size())];
+				targ = l[g_GambleManager.RandModRng(0, l.size())];
 				s->SelectTarget(targ);
 				r = s->CallAbilityEvent(abilityID,
 						EventType::onRequest);
@@ -12985,7 +12985,7 @@ int SimulatorThread :: handle_query_gm_spawn(void)
 		case 2:
 			l = creatureInst->actInst->NPCListPtr;
 			if(l.size() > 0) {
-				targ = l[randmodrng(0, l.size())];
+				targ = l[g_GambleManager.RandModRng(0, l.size())];
 				s->SelectTarget(targ);
 				r = s->CallAbilityEvent(abilityID, EventType::onRequest);
 				if(r != 0)
@@ -13794,9 +13794,9 @@ void SimulatorThread :: RunPortalRequest(void)
 			SendInfoMessage(Aux1, INFOMSG_ERROR);
 			return;
 		}
-		x = sim->creatureInst->CurrentX + randmodrng(5, 20);
+		x = sim->creatureInst->CurrentX + g_GambleManager.RandModRng(5, 20);
 		y = sim->creatureInst->CurrentY;
-		z = sim->creatureInst->CurrentZ + randmodrng(5, 20);
+		z = sim->creatureInst->CurrentZ + g_GambleManager.RandModRng(5, 20);
 		zone =sim->creatureInst->actInst->mZone;
 	}
 	else {
@@ -15745,7 +15745,7 @@ int SimulatorThread :: handle_command_roll(void)
 	
 	if(creatureInst->PartyID == 0 || party == NULL)
 	{
-		int roll = randint(1, 100);
+		int roll = g_GambleManager.RandInt(1, 100);
 		Util::SafeFormat(Aux1, sizeof(Aux1), "You rolled %d", roll);
 		SendInfoMessage(Aux1, INFOMSG_INFO);
 	}
@@ -15760,7 +15760,7 @@ int SimulatorThread :: handle_command_roll(void)
 			do
 			{
 				has = false;
-				roll = randint(1, 100);
+				roll = g_GambleManager.RandInt(1, 100);
 				for(size_t i = 0; i < rolls.size(); i++)
 				{
 					if(rolls[i] == roll)
@@ -16370,7 +16370,7 @@ PartyMember * SimulatorThread :: RollForPartyLoot(ActiveParty *party, std::set<i
 		return party->GetMemberByID(*creatureIds.begin());
 	}
 	for (std::set<int>::iterator it=creatureIds.begin(); it!=creatureIds.end(); ++it) {
-		int rolled = randmodrng(1, 100);
+		int rolled = g_GambleManager.RandModRng(1, 100);
 		PartyMember *m = party->GetMemberByID(*it);
 		if(rolled > maxRoll) {
 			maxRoller = m;

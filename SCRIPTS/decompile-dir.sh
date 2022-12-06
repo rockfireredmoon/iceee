@@ -16,8 +16,8 @@ for dir in $* ; do
 	find ${dir} > /tmp/$$.list
 	while read line ; do
 		case "${line}" in
-		*.skeleton) ${base}/SCRIPTS/convert.sh "${line}" ;;
-		*.skeletonXXXX) ${base}/SCRIPTS/convert.sh "${line}"
+		*.skeletonXXXXX) ${base}/SCRIPTS/convert.sh "${line}" ;;
+		*.skeleton) ${base}/SCRIPTS/convert.sh "${line}"
 		
 					# NO LONGER NEEDED, ANIM FILES CAN BE LOADED BY JME3
 					
@@ -39,6 +39,7 @@ for dir in $* ; do
 						outskel=$(dirname ${line})/$(basename ${line}).xml.tmp
 						inskel=$(dirname ${line})/$(basename ${line}).xml
 						echo "Processing animations ${anims} for ${inskel} to ${outskel}" 
+						exit
 	 					java -classpath ${base}/UTILITIES/icetools.jar \
 	 						org.icetools.anim.AnimToXML \
 	 						${inskel} \

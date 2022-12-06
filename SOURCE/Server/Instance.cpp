@@ -39,7 +39,7 @@ unsigned long CREATURE_DELETE_RECHECK = 60000; //Delay between rescanning for de
 #include "Character.h"
 #include "ActiveCharacter.h"
 #include "Simulator.h"
-#include "Util.h"
+#include "Gamble.h"
 #include "Creature.h"
 #include "Ability2.h"
 #include "AIScript.h"  //For script resolution
@@ -2805,8 +2805,8 @@ void ActiveInstance :: SidekickCall(CreatureInstance* host)
 			SidekickListPtr[a]->movementTime = g_ServerTime;
 			SidekickListPtr[a]->SetServerFlag(ServerFlags::CalledBack, true);
 			//Replace the current destination.
-			SidekickListPtr[a]->CurrentTarget.DesLocX = host->CurrentX + randint(-MED_SCATTER_RANGE, MED_SCATTER_RANGE);
-			SidekickListPtr[a]->CurrentTarget.DesLocZ = host->CurrentZ + randint(-MED_SCATTER_RANGE, MED_SCATTER_RANGE);
+			SidekickListPtr[a]->CurrentTarget.DesLocX = host->CurrentX + g_GambleManager.RandInt(-MED_SCATTER_RANGE, MED_SCATTER_RANGE);
+			SidekickListPtr[a]->CurrentTarget.DesLocZ = host->CurrentZ + g_GambleManager.RandInt(-MED_SCATTER_RANGE, MED_SCATTER_RANGE);
 		}
 }
 
@@ -2824,8 +2824,8 @@ void ActiveInstance :: SidekickWarp(CreatureInstance *host)
 			SidekickListPtr[a]->CurrentZ = host->CurrentZ;
 			if(SidekickListPtr[a]->NotStatus(StatusEffects::DEAD) == true)
 			{
-				SidekickListPtr[a]->CurrentX += randint(-SCATTER_RANGE, SCATTER_RANGE);
-				SidekickListPtr[a]->CurrentZ += randint(-SCATTER_RANGE, SCATTER_RANGE);
+				SidekickListPtr[a]->CurrentX += g_GambleManager.RandInt(-SCATTER_RANGE, SCATTER_RANGE);
+				SidekickListPtr[a]->CurrentZ += g_GambleManager.RandInt(-SCATTER_RANGE, SCATTER_RANGE);
 			}
 			//SidekickListPtr[a]->CurrentTarget.targ = NULL;
 			SidekickListPtr[a]->SelectTarget(NULL);
@@ -2864,8 +2864,8 @@ void ActiveInstance :: SidekickScatter(CreatureInstance* host)
 				x = SidekickListPtr[a]->AnchorObject->CurrentX;
 				z = SidekickListPtr[a]->AnchorObject->CurrentZ;
 			}
-			SidekickListPtr[a]->CurrentTarget.DesLocX = x + randint(-SCATTER_RANGE, SCATTER_RANGE);
-			SidekickListPtr[a]->CurrentTarget.DesLocZ = z + randint(-SCATTER_RANGE, SCATTER_RANGE);
+			SidekickListPtr[a]->CurrentTarget.DesLocX = x + g_GambleManager.RandInt(-SCATTER_RANGE, SCATTER_RANGE);
+			SidekickListPtr[a]->CurrentTarget.DesLocZ = z + g_GambleManager.RandInt(-SCATTER_RANGE, SCATTER_RANGE);
 			SidekickListPtr[a]->movementTime = g_ServerTime;
 		}
 	}

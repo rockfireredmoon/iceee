@@ -1,9 +1,9 @@
 #include <vector>
 #include "Globals.h"
 #include "Inventory.h"
-#include "Util.h"
 #include "StringList.h"
 #include "Config.h"
+#include "Gamble.h"
 #include "Debug.h"
 
 int InventorySlot :: GetStackCount(void)
@@ -683,7 +683,7 @@ InventorySlot * InventoryManager :: PickRandomItem(int containerID) {
 	}
 	if(c == 0)
 		return NULL;
-	return tempCon[randmodrng(0, c)];
+	return tempCon[g_GambleManager.RandModRng(0, c)];
 
 }
 

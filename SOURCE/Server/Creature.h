@@ -131,10 +131,10 @@ struct ActiveAbilityInfo
 	
 	//Amount to adjust resources when processing ability conditions and actions.
 	//Used internally by the server.
-	char willAdjust;
-	char mightAdjust;
-	char willChargeAdjust;
-	char mightChargeAdjust;
+	int willAdjust;
+	int mightAdjust;
+	int willChargeAdjust;
+	int mightChargeAdjust;
 	bool bResourcesSpent;    //If true, will/might and charges have not been spent yet.
 
 	int TargetCount;

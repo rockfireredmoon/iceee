@@ -159,3 +159,89 @@ This greatly speeds up the build. Adjust depending on the nuumber of cores you h
 ```bash
 make -j4
 ```
+
+### Configuring The Server
+
+Before starting the server, you will probably want to configure it for your environment.
+
+#### Configuring Server Behaviour
+
+All other server behaviour is configured using the ServerConfig.txt file. As with all other configuration files, this is shipped as a ServerConfig.txt.sample, and must be copied and edited before
+use.
+
+```
+cp ServerConfig.txt.sample ServerConfig.txt
+```
+
+Then edit *ServerConfig.txt* with your favourite text editor. This file contains many options,
+most of which are commented. For a new installation, the ones that most likely need to be changed are :-
+
+```
+; The address which is advertised to clients via the 'router' service.  This address
+; must be resolvable by clients and may either be a hostname or IP address. When blank
+; the first public IP address that the simulator service is bound to is used. 
+SimulatorAddress=localhost
+
+; The address to which the server will bind the simulator and router services. If left
+; blank, all detected network interfaces will be used.
+;BindAddress=1.2.3.4
+
+..
+..
+
+RouterPort=4242            ; Port to listen to router connections (login screen connect)
+SimulatorPort=4300         ; Port to listen for simulator connections
+HTTPListenPort=8080        ; Port to listen to HTTP requests.  Set as zero to disable.
+
+
+```
+
+The default configuration will work fine if you are setting up a server for your own use ('localhost'), 
+but if you wish to make the server available to others over the internet, you will at least need to 
+set *SimulatorAddress*. If you are running multiple servers on the same machine, you can either :-
+
+ * Configure an IP address for each server, and use *BindAddress* in each instances ServerConfig.txt to
+   bind to that address [RECOMMENDED].
+ * Use the same IP address for each instance, but change *RouterPort*, *SimulatorPort* and *HTTPListPort*  in each instances ServerConfig.txt so that ports do not conflict.
+ 
+#### Preparing GClient Assets
+
+Having a running EE server on it's own in not much use, you will also need the *Client Assets* (i.e. all 3D models, 
+Music, Sounds, Client Logic and more).
+
+##### Client Assets
+
+For various reasons we do not currently make this publically available. If you need assets, please contact us and we can provide you with a pre-built bundle.
+
+###### Pre-built Client Assets
+
+You will be provided with a file name *iceee-assets.zip*.
+
+Assuming you are starting from the server source directory, it is recommended you unzip this file into the same parent folder as the server source. This way the default file locations in *ServerConfig.txt* are all ready setup as needed and ready to go.
+
+```
+cd ..
+unzip /path/to/iceee-assets.zip
+cd iceee
+```
+
+This will go to the parent folder, unzip the assets for the appropriate version of the game, and then change directory back into the server source folder (if you cloned the server source to somewhere other than 'iceee' folder, change accordingly).
+
+
+### Running The Server
+
+You now have everything you need to run the server. Assuming you are in the server source directory, run :-
+
+```
+SOURCE/Server/vald
+```
+
+The server will now start up with a default logging level of INFO output to the console.
+
+### Creating The User Accounts
+
+Before logging on to the server using the client, you will need to create a user. The default configuration uses a built in user database.
+
+TODO
+ 
+

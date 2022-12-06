@@ -80,17 +80,22 @@ int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize, int
 int PrepExt_Broadcast(char *buffer, const char *message);
 int PrepExt_Chat(char *buffer, int characterID, const char *display_name, const char *channel, const char *message);
 
-int randint_32bit(int min, int max);
-int randint(int min, int max);
-int randmod(int max);
-int randi(int max);
-int randmodrng(int min, int max);
-double randdbl(double min, double max);
+//int randint_32bit(int min, int max);
+//int randint(int min, int max);
+//int randmod(int max);
+//int randi(int max);
+//int randmodrng(int min, int max);
+//double randdbl(double min, double max);
 
 char *StringFromInt(char *buffer, int value);
 char *StringFromFloat(char *buffer, double value);
 char *StringFromBool(char *buffer, bool value);
 char *StringFromBool(char *buffer, int value);
+
+float RadianToRotation(float radians);
+float RotationToRadians(unsigned int rotation);
+unsigned char DistanceToRotationByte(int xlen, int zlen);
+unsigned char RadianToRotationByte(float radians);
 
 namespace Util
 {

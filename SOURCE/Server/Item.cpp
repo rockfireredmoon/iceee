@@ -1159,7 +1159,7 @@ int ItemManager :: RunPurchaseModifier(int itemID)
 		return itemID;
 	}
 
-	int randIndex = randint(0, (int)searchList.size() - 1);
+	int randIndex = g_GambleManager.RandInt(0, (int)searchList.size() - 1);
 	if(randIndex < 0 || randIndex >= (int)searchList.size())
 	{
 		g_Log.AddMessageFormat("RunPurchaseModifier() index error.");

@@ -4,8 +4,8 @@
 #include "StringList.h"
 #include "DirectoryAccess.h"
 #include "ByteBuffer.h"
-#include "Util.h" //For randint()
 #include "Item.h"
+#include "Gamble.h"
 #include <algorithm>
 #include <string.h>
 
@@ -738,7 +738,7 @@ void DropTableManager :: RollDrops(const DropRollParameters& params, std::vector
 		for(size_t i = 0; i < filter.size(); i++)
 		{
 			if(g_Config.MegaLootParty) {
-				itemIndex = randint(0, filter[i]->mItemList.size() - 1);
+				itemIndex = g_GambleManager.RandInt(0, filter[i]->mItemList.size() - 1);
 				output.push_back(filter[i]->mItemList[itemIndex]);
 			}
 			else
@@ -759,11 +759,11 @@ void DropTableManager :: RollDrops(const DropRollParameters& params, std::vector
 				//For for any other percent, or for drops based on shares, it will only roll one.
 				while(needed > 0)
 				{
-					dropRoll = randint_32bit(1, max);
+					dropRoll = g_GambleManager.Randint_32bit(1, max);
 
 					if(dropRoll <= needed)
 					{
-						itemIndex = randint(0, filter[i]->mItemList.size() - 1);
+						itemIndex = g_GambleManager.RandInt(0, filter[i]->mItemList.size() - 1);
 						output.push_back(filter[i]->mItemList[itemIndex]);
 					}
 
@@ -838,7 +838,7 @@ void DropTableManager :: RollDrops(const DropRollParameters& params, std::vector
 	if(n < 35)
 		dcAdjust = int((float)LootSystem::DROP_MAX_SHARES * ((float)n / 35));
 
-	dropRoll = randint_32bit(1, dcAdjust);     // LootSystem::DROP_MAX_SHARES);
+	dropRoll = g_GambleManager.Randint_32bit(1, dcAdjust);     // LootSystem::DROP_MAX_SHARES);
 	
 	for(size_t i = 0; i < 5; i++)   //For each rarity class (uncommon, rare, epic, legendary, artifact)
 	{
@@ -860,8 +860,8 @@ void DropTableManager :: RollDrops(const DropRollParameters& params, std::vector
 		}
 
 		//We have a list of sets.  Roll a set, then roll a specific item from that set.
-		int setIndex = randint(0, filter.size() - 1);
-		itemIndex = randint(0, filter[setIndex]->mItemList.size() - 1);
+		int setIndex = g_GambleManager.RandInt(0, filter.size() - 1);
+		itemIndex = g_GambleManager.RandInt(0, filter[setIndex]->mItemList.size() - 1);
 		output.push_back(filter[setIndex]->mItemList[itemIndex]);
 
 		//We're checking in order from rarest to most common, if we don't break then it will

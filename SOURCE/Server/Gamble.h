@@ -1,4 +1,5 @@
 #include <vector>
+#include <random>
 
 struct ItemListQuery
 {
@@ -70,11 +71,19 @@ public:
 		SEARCH_LIST              //Use a specific list of items, 
 	};
 	std::vector<GambleDefinition> defList;
+	std::default_random_engine randomEngine;
 
 	void LoadFile(const char *filename);
 	int GetSearchType(const char *name);
 	int GetStandardCount(void);
 	GambleDefinition *GetGambleDefByTriggerItemID(int itemID);
+
+	int Randint_32bit(int min, int max);
+	int RandInt(int min, int max);
+	int RandMod(int max);
+	int RandI(int max);
+	int RandModRng(int min, int max);
+	double RandDbl(double min, double max);
 };
 
 extern GambleManager g_GambleManager;

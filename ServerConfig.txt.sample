@@ -1,0 +1,242 @@
+; Most important stuff is here.  If you're hosting your own server, you'll need to
+; change SimulatorAddress to reflect the IP address or domain that is hosting the server.
+; Change HTTPBaseFolder to locate where the CAR assets are distributed.
+; Make sure all ports (RouterPort, SimulatorPort, HTTPListenPort) are available and open
+; to the network/internet (may need port forwarding).
+
+
+;SimulatorAddress=127.0.0.1
+;BindAddress=127.0.0.1
+
+; For the HTTP server, this is the base folder that contains the file structure for the
+; game assets, to be distributed to clients that require them.
+; For example, if the client requests the following file:
+;     \Release\Current\EarthEternal.car
+; And HTTPBaseFolder is set to this exact path:
+;     C:\Games\EEProject86
+; Then this file must exist in the exact path:
+;     C:\Games\EEProject86\Release\Current\EarthEternal.car
+
+HTTPBaseFolder=asset
+
+
+;Protocol version should match the client
+; 0.06a = 19 
+; 0.06b = 20 
+; 0.8.6 = 33    Maximum compatibility, the server was derived from this.
+; 0.8.8 = 37    Last Sparkplay version.
+; 0.8.9 = 38    Ikimonogatari/EER.
+
+ProtocolVersion=33
+AuthMode=1                 ; 0 = Two-factor (unsupported), 1 = admin (use this)
+AuthKey=key                ; Salt to the client's password hash. Will break existing accounts if changed.
+
+RouterPort=4242            ; Port to listen to router connections (login screen connect)
+SimulatorPort=4300         ; Port to listen for simulator connections
+HTTPListenPort=8080          ; Port to listen to HTTP requests.  Set as zero to disable.
+
+ThreadSleep=1              ;Sleep time for simulator and router threads
+MainSleep=1                ;Sleep time for the main window thread
+ErrorSleep=5000            ;Sleep time for some thread errors
+
+
+SimulatorLog=1             ;Enable logging of simulator messages
+GlobalLogging=1            ;Can override to disable all message logging.
+
+RebroadcastDelay=18000     ;Milliseconds to wait between sending constant object updates
+
+SceneryAutosaveTime=300000   ; Milliseconds between autosaving modified scenery pages
+BaseSceneryID=1000000        ; Starting ID for new props on an empty server
+
+
+; Under normal game conditions, a file not found error is returned so the
+; client's cache is not crashed.  This message cannot be modified.
+; These conditions are used only if an empty file request is made.
+;
+; HTTP404Header
+;   The response header can be composed by several strings (use multiple
+;   HTTP404Header lines) up to 256 total bytes.
+;
+; HTTP404Message
+;   This message is appended to the header.  This is the data loaded
+;   into the browser window, therefore it supports HTML markup.  Limit is
+;   512 bytes.
+
+; Header response to redirect
+;HTTP404Header=HTTP/1.1 301 Moved Permanently
+;HTTP404Header=Location: http://example.com/
+
+; Header response for when a file cannot be found.
+HTTP404Header=HTTP/1.1 404 Not Found
+HTTP404MessageFile=WebPages/404.html
+
+ForceUpdateTime=1500      ;Milliseconds after a character stops moving to force an exact position update
+
+; As of version 19, the item override can be either:
+; -1 to ignore, 0 to clear all, 1 to clear bindonpickup, 2 to clear bindonequip
+ItemBindingTypeOverride=2  ; Always use this value, or -1 for no override.
+ItemArmorTypeOverride=-1    ; Always use this value, or -1 for no override.
+ItemWeaponTypeOverride=-1   ; Always use this value, or -1 for no override.    
+;ItemWeaponTypeOverride=8   ; Always use this value, or -1 for no override.    
+
+
+MOTD_Name=Server
+MOTD_Channel=*SysChat
+MOTD_Message=Valkal's Shadow - See https://github.com/rockfireredmoon/iceee/tree/valkals_shadow
+
+
+; Filter bits for status messages (add values for all included types)
+; 1  - Guaranteed show (usually nonstandard warning and diagnostic messages)
+; 2  - Critical message (exceptions)
+; 4  - Errors
+; 8  - Warnings
+; 16 - Standard diagnostic messages.
+; 32 - Verbose diagnostic messages
+MessageLevel=15         ; Show + Critical + Error + Warnings
+;MessageLevel=255        ; All bits, all messages
+;MessageLevel=31         ; Verbose was too much...
+
+; Password for the administrative web panel
+RemoteAuthenticationPassword=changeme
+
+DefZone=81                   ; Default Zone ID for characters to log into
+DefX=43329 ;64000
+DefY=263
+DefZ=67793 ;48000
+
+ProperSceneryList=1          ; Use a proper scenery response (longer loading screens, but low chance of getting stuck in props as they're loading)
+BuybackLimit=32               ; Maximum number of items reserved in the buyback list.  There are 16 items per page.
+
+
+; Milliseconds to block movement updates from the client after performing
+; an explicit zone or position warp.
+WarpMovementBlockTime=5000
+
+IdleCheckVerification=0
+IdleCheckFrequency=1200000
+IdleCheckDistance=50
+IdleCheckCast=6
+IdleCheckCastInterval=60000
+IdleCheckDistanceTolerance=100
+
+;EnvironmentCycle=Day=120&Sunset=60&Night=120&Sunrise=60
+
+CapExperienceLevel=55
+CapExperienceAmount=0
+
+DebugPingServer=0
+DebugPingClient=0
+DebugPingFrequency=1000
+DebugPingClientPollInterval=60
+DebugPingServerLogThreshold=1000
+
+CustomAbilityMechanics=1
+
+HTTPDeleteConnectedTime=10000
+HTTPDeleteDisconnectedTime=10000
+HTTPDeleteRecheckDelay=5000
+
+PartyPositionSendInterval=10000
+
+; Log levels: Log any messages up to and including the given level.
+;  -1     Basic operation messages are always logged.
+;   0     No logging.
+;   1     Critical errors are usually unexpected events or bad data.
+;   2     General errors.  Investigate to see if they need to be fixed.
+;   3     Warnings.  Not always bad, but may indicate problems.
+;   4     Normal diagnostic messages.
+;   5     Verbose diagnostic message.
+
+LogLevelHTTPBase=3
+LogLevelHTTPDistribute=3
+LogLevelSimulatorBase=4
+
+VaultDefaultSize=16
+VaultInitialPurchaseSize=8
+
+NamedMobDropMultiplier=6.0
+
+GlobalMovementBonus=0
+AllowEliteMob=1
+
+DexBlockDivisor=30
+DexParryDivisor=30
+DexDodgeDivisor=90
+SpiResistDivisor=30
+PsyResistDivisor=30
+
+
+ForceMaxPacketSize=1000
+
+SceneryAuditDelay=20000
+SceneryAuditAllow=1
+
+LootMaxRandomizedLevel=50
+LootMaxRandomizedSpecialLevel=55
+LootNamedMobSpecial=1
+LootMinimumMobRaritySpecial=2
+
+HeroismQuestLevelTolerance=3
+HeroismQuestLevelPenalty=4
+
+ProgressiveDropRateBonusMult=0.0025,0.0050,0.0100,0.0200
+ProgressiveDropRateBonusMultMax=2.0
+DropRateBonusMultMax=250.0
+
+; Sends heartbeat messages even during lobby to detect disconnects before gameplay stage.
+SendLobbyHeartbeat=1    ;MODDED CLIENT REQUIRED
+
+UseIntegerHealth=1  ;MODDED CLIENT REQUIRED
+UseMessageBox=1     ;MODDED CLIENT REQUIRED
+UseStopSwim=1       ;MODDED CLIENT REQUIRED
+
+NamedMobDropMultiplier=6.0
+
+VerifyMovement=0
+
+; If UseMessageBox=0
+;InvalidLoginMessage=Account not found.  Check username and password.
+
+; If UseMessageBox=1
+InvalidLoginMessage=<font size="24"><b>Account not found. Check your username and password.</b></font>
+
+DebugLogAIScriptUse=1
+
+Upgrade=0
+
+; Persistent Buffs
+;
+; An experimental feature where buff status is saved on logout (cooldowns are already
+; saved).
+PersistentBuffs=1
+
+; Store credits at the account level rather than the character level
+AccountCredits=1
+
+; GitHub account to post bugs to (<username>:<personal-token>)
+GitHubToken=XXXXXXXXXXXXXXXXX:XXXXXXXXXXXXXXXXXX
+
+; How many items to drop on death during PVP match
+MinPVPPlayerLootItems=1
+MaxPVPPlayerLootItems=3
+
+; How many credits a named mob drops
+NamedMobCreditDrops=1
+
+; Use the Party Loot system
+PartyLoot=1
+
+; Whether to enable fall damage
+FallDamage=0
+
+; Verbose debuigging
+DebugVerbose=1
+
+; Enable weather cycles
+UseWeather=1
+
+; Use reagents
+UseReagents=0
+
+; Whether to enable "Mega Loot Party". Every kill results in at least one drop. 
+MegaLootParty=0

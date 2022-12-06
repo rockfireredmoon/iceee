@@ -5,6 +5,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include "Creature.h"
+#include "Gamble.h"
 #include "Formula.h"
 #include "StringList.h"
 #include "Simulator.h"
@@ -3440,7 +3441,7 @@ void AbilityCalculator :: ApplyBlockChance(int &amount)
 
 	if(blockChance > 0)
 	{
-		int rnd = randint(1, INTEGRAL_FRACTION_TOTAL);
+		int rnd = g_GambleManager.RandInt(1, INTEGRAL_FRACTION_TOTAL);
 		if(rnd <= blockChance)
 		{
 			mIsBlocked = true;
@@ -3469,7 +3470,7 @@ void AbilityCalculator :: ApplyParryChance(int &amount)
 
 	if(parryChance > 0)
 	{
-		int rnd = randint(1, INTEGRAL_FRACTION_TOTAL);
+		int rnd = g_GambleManager.RandInt(1, INTEGRAL_FRACTION_TOTAL);
 		if(rnd <= parryChance)
 		{
 			RegisterTargetImplicitActions(EventType::onParry, amount);
@@ -3493,7 +3494,7 @@ void AbilityCalculator :: ApplyDodgeChance(int &amount)
 
 	if(dodgeChance > 0)
 	{
-		int rnd = randint(1, INTEGRAL_FRACTION_TOTAL);
+		int rnd = g_GambleManager.RandInt(1, INTEGRAL_FRACTION_TOTAL);
 		if(rnd <= dodgeChance)
 		{
 			mIsDodged = true;
@@ -3521,14 +3522,14 @@ void AbilityCalculator :: ApplyHitChances(int &amount, int damageType)
 		else
 			missChance *= CREATURE_LIGHT_CHANCE_PER_LEVEL;
 
-		int rnd = randint(1, INTEGRAL_FRACTION_TOTAL);
+		int rnd = g_GambleManager.RandInt(1, INTEGRAL_FRACTION_TOTAL);
 		if(rnd <= missChance)
 		{
 			double mult = 0.0;
 			if(ciSource->serverFlags & ServerFlags::IsPlayer)
-				mult = randdbl(PLAYER_LIGHT_MULTIPLIER_MIN, PLAYER_LIGHT_MULTIPLIER_MAX);
+				mult = g_GambleManager.RandDbl(PLAYER_LIGHT_MULTIPLIER_MIN, PLAYER_LIGHT_MULTIPLIER_MAX);
 			else
-				mult = randdbl(CREATURE_LIGHT_MULTIPLIER_MIN, CREATURE_LIGHT_MULTIPLIER_MAX);
+				mult = g_GambleManager.RandDbl(CREATURE_LIGHT_MULTIPLIER_MIN, CREATURE_LIGHT_MULTIPLIER_MAX);
 
 			amount = (int)((double)amount * mult);
 			mIsLightHit = true;
@@ -3635,7 +3636,7 @@ void AbilityCalculator :: CheckCritical(int &amount, int damageType)
 
 
 	//Roll critical. If CritChance is zero or less, it will never trigger.
-	int rnd = randint(1, 1000);
+	int rnd = g_GambleManager.RandInt(1, 1000);
 	if(rnd <= CritChance)
 	{
 		//Success!  Set critical flag and modify the damage.
@@ -3664,7 +3665,7 @@ void AbilityCalculator :: CheckCritical(int &amount, int damageType)
 			float luckMod = (float)luckTotal / 90.0F;
 			int SuperChance = (int)(luckMod * luckMod) * 10;
 
-			rnd = randint(1, 1000);
+			rnd = g_GambleManager.RandInt(1, 1000);
 
 			if(rnd <= SuperChance)
 			{
@@ -3780,6 +3781,9 @@ void AbilityCalculator :: AddDamageString(int damageType, int damageAmount)
 
 void AbilityCalculator :: ModifyOrbs(void)
 {
+
+	//g_Log.AddMessageFormat("[DEBUG] ModifyOrbs: %d", ciSourceAb->abilityID);
+
 	if(ciSourceAb->bResourcesSpent == true)
 		return;
 
@@ -3790,6 +3794,8 @@ void AbilityCalculator :: ModifyOrbs(void)
 	mMightChargeAdjust = ciSourceAb->mightChargeAdjust;
 	mWillChargeAdjust = ciSourceAb->willChargeAdjust;
 	ciSourceAb->bResourcesSpent = true;
+
+	//g_Log.AddMessageFormat("[DEBUG] Might Adjust: %d, Will Adjust: %d, Might Charge Adjust: %d, Will Charge Adjust: %d", mMightAdjust, mWillAdjust, mMightChargeAdjust, mWillChargeAdjust);
 	
 	if(mMightAdjust != 0)
 	{
@@ -3921,7 +3927,7 @@ bool AbilityCalculator :: CheckActivationChance(unsigned char requiredChance, un
 	
 	if(mChanceRoll == 0 || (chanceGroupID || mChanceRollID))
 	{
-		mChanceRoll = randint(1, 100);
+		mChanceRoll = g_GambleManager.RandInt(1, 100);
 		mChanceRollID = chanceGroupID; 
 	}
 	return (mChanceRoll <= requiredChance);

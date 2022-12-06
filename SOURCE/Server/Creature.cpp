@@ -30,6 +30,7 @@
 #include "Guilds.h"
 #include "Stats.h"
 #include "Util.h"
+#include "Gamble.h"
 
 #include "Debug.h"
 #include "Report.h"
@@ -895,7 +896,7 @@ int CreatureInstance :: GetReducedDamage(int armorRating, int damageAmount)
 		return damageAmount;
 
 	double reduct = ((double)armorRating / ((armorRating + (DamageReductionModiferPerLevel * css.level) + DamageReductionAdditive)));
-	reduct += randdbl(ARMOR_VARIATION_MIN, ARMOR_VARIATION_MAX);
+	reduct += g_GambleManager.RandDbl(ARMOR_VARIATION_MIN, ARMOR_VARIATION_MAX);
 	damageAmount -= (int)((double)damageAmount * reduct);
 	if(damageAmount < 0)
 		damageAmount = 0;
@@ -1168,13 +1169,13 @@ void CreatureInstance :: CheckInterrupts(void)
 	{
 		if(ab[0].type == AbilityType::Cast)
 		{
-			if(randint(1, 1000) <= css.casting_setback_chance)
+			if(g_GambleManager.RandInt(1, 1000) <= css.casting_setback_chance)
 				CastSetback();
 		}
 		else if(ab[0].type == AbilityType::Channel)
 		{
 			int chance = css.channeling_break_chance + ab[0].interruptChanceMod;
-			if(randint(1, 1000) <= chance)
+			if(g_GambleManager.RandInt(1, 1000) <= chance)
 				Interrupt();
 		}
 	}
@@ -2762,7 +2763,7 @@ int CreatureInstance :: MWD(void)
 
 int CreatureInstance :: RWD(void)
 {
-	int amount = (int)(css.strength * 0.3) + css.base_damage_melee + randint(RangedDamage[0], RangedDamage[1]);
+	int amount = (int)(css.strength * 0.3) + css.base_damage_melee + g_GambleManager.RandInt(RangedDamage[0], RangedDamage[1]);
 	amount += GetAdditiveWeaponSpecialization(amount, ItemEquipSlot::WEAPON_RANGED);
 	return amount;
 	//return (int)(css.strength * 0.3) + css.base_damage_melee + randint(RangedDamage[0], RangedDamage[1]);
@@ -2770,7 +2771,7 @@ int CreatureInstance :: RWD(void)
 
 int CreatureInstance :: WMD(void)
 {
-	int amount = (int)(css.strength * 0.3) + css.base_damage_melee + randint(MainDamage[0], MainDamage[1]) + (int)(randint(OffhandDamage[0], OffhandDamage[1]) * ((float)css.offhand_weapon_damage / 1000.0F));
+	int amount = (int)(css.strength * 0.3) + css.base_damage_melee + g_GambleManager.RandInt(MainDamage[0], MainDamage[1]) + (int)(g_GambleManager.RandInt(OffhandDamage[0], OffhandDamage[1]) * ((float)css.offhand_weapon_damage / 1000.0F));
 	amount += GetAdditiveWeaponSpecialization(amount, ItemEquipSlot::WEAPON_MAIN_HAND);
 	return amount;
 	//return (int)(css.strength * 0.3) + css.base_damage_melee + randint(MainDamage[0], MainDamage[1]) + (int)(randint(OffhandDamage[0], OffhandDamage[1]) * ((float)css.offhand_weapon_damage / 1000.0F));
@@ -3034,7 +3035,7 @@ void CreatureInstance :: ProcessDeath(void)
 					char buffer[2048];
 
 					// Pick how many items will be dropped
-					int items = randmodrng(g_Config.MinPVPPlayerLootItems, g_Config.MaxPVPPlayerLootItems + 1);
+					int items = g_GambleManager.RandModRng(g_Config.MinPVPPlayerLootItems, g_Config.MaxPVPPlayerLootItems + 1);
 
 					if(items > 0) {
 
@@ -3056,7 +3057,7 @@ void CreatureInstance :: ProcessDeath(void)
 
 							// If the slot is a stack, pick a random amount to lose, up to the maximum of 16 (which is max in a chest anyway)
 							if(slot->count > 1) {
-								toLoot = randmodrng(0, slot->count);
+								toLoot = g_GambleManager.RandModRng(0, slot->count);
 							}
 
 
@@ -4774,13 +4775,13 @@ void CreatureInstance :: RunDialog(void)
 							dialogIndex = 0;
 							break;
 						case Sequence::RANDOM:
-							dialogIndex = randmodrng(0, diag->mParagraphs.size());
+							dialogIndex = g_GambleManager.RandModRng(0, diag->mParagraphs.size());
 							break;
 						}
-						timer_dialog = g_ServerTime + randmodrng(diag->mMinInterval, diag->mMaxInterval);
+						timer_dialog = g_ServerTime + g_GambleManager.RandModRng(diag->mMinInterval, diag->mMaxInterval);
 					}
 					else {
-						int delay = randmodrng(diag->mMinInterval, diag->mMaxInterval);
+						int delay = g_GambleManager.RandModRng(diag->mMinInterval, diag->mMaxInterval);
 
 						/* Otherwise perform this item */
 						NPCDialogParagraph para = diag->mParagraphs[dialogIndex];
@@ -4806,7 +4807,7 @@ void CreatureInstance :: RunDialog(void)
 								dialogIndex = 0;
 							break;
 						case Sequence::RANDOM:
-							dialogIndex = randmodrng(0, diag->mParagraphs.size());
+							dialogIndex = g_GambleManager.RandModRng(0, diag->mParagraphs.size());
 							break;
 						}
 					}
@@ -5243,7 +5244,7 @@ void CreatureInstance :: CheckPathLocation(void)
 	int newPathNode = previousPathNode;
 	if(openNode.size() > 0)
 	{
-		int rndLink = randint(0, openNode.size() - 1);
+		int rndLink = g_GambleManager.RandInt(0, openNode.size() - 1);
 		newPathNode = openNode[rndLink];
 	}
 
@@ -5293,8 +5294,7 @@ int CreatureInstance :: RotateToTarget(void)
 
 	int xlen = CurrentTarget.targ->CurrentX - CurrentX;
 	int zlen = CurrentTarget.targ->CurrentZ - CurrentZ;
-	float rotf = (float)atan2((double)xlen, (double)zlen);
-	unsigned char rot = (unsigned char)(rotf * 255.0F / 6.283185F);
+	unsigned char rot = DistanceToRotationByte(xlen, zlen);
 
 	if(oldRot != rot)
 	{
@@ -5321,8 +5321,7 @@ int CreatureInstance :: RunMovementStep(void)
 	int xlen = CurrentTarget.DesLocX - CurrentX;
 	int zlen = CurrentTarget.DesLocZ - CurrentZ;
 	int dist = (int)sqrt((double)((xlen * xlen) + (zlen * zlen)));
-	float rotf = (float)atan2((double)xlen, (double)zlen);
-	unsigned char rot = (unsigned char)(rotf * 255.0F / 6.283185F);
+	unsigned char rot = DistanceToRotationByte(xlen, zlen);
 	Rotation = rot;
 	Heading = rot;
 
@@ -5419,7 +5418,7 @@ int CreatureInstance :: RunMovementStep(void)
 			if(updateDist < 5)
 				updateDist = 5;
 
-			float angle = (float)Rotation * 6.283185F / 255.0F;
+			float angle = RotationToRadians(Rotation);
 
 			int oldX = CurrentX;
 			int oldZ = CurrentZ;
@@ -5560,7 +5559,9 @@ void CreatureInstance :: CheckLeashMovement(void)
 
 	if(wanderRadius > 0 && CurrentTarget.DesLocX == 0 && CurrentTarget.DesLocZ == 0)
 	{
-		MoveTo(tetherNodeX + randint(-wanderRadius, wanderRadius), tetherNodeZ + randint(-wanderRadius, wanderRadius), 0, 0);
+		int byX = g_GambleManager.RandInt(-wanderRadius, wanderRadius);
+		int byY = g_GambleManager.RandInt(-wanderRadius, wanderRadius);
+		MoveTo(tetherNodeX + byX, tetherNodeZ + byY, 0, 0);
 		Speed = CREATURE_WALK_SPEED;
 	}
 }
@@ -5597,7 +5598,6 @@ void CreatureInstance :: StopMovement(int result)
 }
 void CreatureInstance :: MoveTo(int x, int z, int range, int speed)
 {
-
 	StopMovement(ScriptCore::Result::INTERRUPTED);
 	CurrentTarget.DesLocX = x;
 	CurrentTarget.DesLocZ = z;
@@ -5625,9 +5625,9 @@ void CreatureInstance :: MoveToTarget_Ex2(void)
 			//int yoffs = abs(CurrentY - AnchorObject->CurrentY);
 			if(dist > FARDIST) // || yoffs > YOFFSET)
 			{
-				CurrentX = AnchorObject->CurrentX + randint(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
+				CurrentX = AnchorObject->CurrentX + g_GambleManager.RandInt(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
 				CurrentY = AnchorObject->CurrentY;
-				CurrentZ = AnchorObject->CurrentZ + randint(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
+				CurrentZ = AnchorObject->CurrentZ + g_GambleManager.RandInt(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
 				int size = PrepExt_UpdateFullPosition(GSendBuf, this);
 				//actInst->LSendToAllSimulator(GSendBuf, size, -1);
 				actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
@@ -5657,8 +5657,8 @@ void CreatureInstance :: MoveToTarget_Ex2(void)
 				}
 				else
 				{
-					CurrentTarget.DesLocX = AnchorObject->CurrentX + randint(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
-					CurrentTarget.DesLocZ = AnchorObject->CurrentZ + randint(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
+					CurrentTarget.DesLocX = AnchorObject->CurrentX + g_GambleManager.RandInt(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
+					CurrentTarget.DesLocZ = AnchorObject->CurrentZ + g_GambleManager.RandInt(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
 					timer_autoattack = g_ServerTime;
 				}
 			}
@@ -5674,7 +5674,7 @@ void CreatureInstance :: MoveToTarget_Ex2(void)
 					//int zlen = CurrentZ - CurrentTarget.targ->CurrentZ + randint(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
 					//float rotf = (float)atan2((double)xlen, (double)zlen);
 
-					float rotf = (float)randdbl(-PI, PI);
+					float rotf = (float)g_GambleManager.RandDbl(-PI, PI);
 
 					//Take this angle and project a point location away from it that's just within
 					//the desired range.
@@ -5716,10 +5716,9 @@ void CreatureInstance :: MoveToTarget_Ex2(void)
 	int zlen = tz - CurrentZ;
 	//int xlen = CurrentX - CurrentTarget.DesLocX;
 	//int zlen = CurrentZ - CurrentTarget.DesLocZ;
-	float rotf = (float)atan2((double)xlen, (double)zlen);
 
 	bool update = false;
-	unsigned char rot = (unsigned char)(rotf * 256.0F / 6.283185F);
+	unsigned char rot = DistanceToRotationByte(xlen, zlen);
 	if(rot != Rotation)
 	{
 		Rotation = rot;
@@ -5779,7 +5778,7 @@ void CreatureInstance :: MoveToTarget_Ex2(void)
 		if(distRemain > maxmove)
 			distRemain = maxmove;
 
-		float angle = (float)Heading * 6.283185F / 256.0F;
+		float angle = RotationToRadians(Heading);
 		CurrentZ += (int)((float)distRemain * cos(angle));
 		CurrentX += (int)((float)distRemain * sin(angle));
 		//g_Log.AddMessageFormat("distRemain:%d, dist:%d", distRemain, dist);
@@ -7334,10 +7333,10 @@ void CreatureInstance :: PlayerLoot(int level, std::vector<DailyProfile> profile
 			params.minimumQuality = profile.virtualItemReward.minItemRarity;
 
 			if(profile.virtualItemReward.components.size() > 0) {
-				VirtualItemRewardComponent ei = profile.virtualItemReward.components[randmod(profile.virtualItemReward.components.size())];
+				VirtualItemRewardComponent ei = profile.virtualItemReward.components[g_GambleManager.RandMod(profile.virtualItemReward.components.size())];
 				params.mEquipType = ei.equipType;
 				if(ei.weaponTypes.size() > 0) {
-					params.mWeaponType = ei.weaponTypes[randmod(ei.weaponTypes.size())];
+					params.mWeaponType = ei.weaponTypes[g_GambleManager.RandMod(ei.weaponTypes.size())];
 				}
 			}
 
@@ -7356,7 +7355,7 @@ void CreatureInstance :: PlayerLoot(int level, std::vector<DailyProfile> profile
 			int itemID = 0;
 			// Have 10 attempts at getting a valid item.
 			for(int i = 0 ; i < 10; i++) {
-				itemID = profile.itemReward.itemIDs[randmod(profile.itemReward.itemIDs.size())];
+				itemID = profile.itemReward.itemIDs[g_GambleManager.RandMod(profile.itemReward.itemIDs.size())];
 				item = g_ItemManager.GetPointerByID(itemID);
 				if(item != NULL) {
 					loot.AddItem(itemID);
@@ -7456,7 +7455,7 @@ void  CreatureInstance :: CreateLoot(int finderLevel, int partySize)
 	 * many items
 	 */
 	for(int i = 6 ; i >= 1 ; i--) {
-		int baseRoll = randint_32bit(1, VirtualItemModSystem::DROP_SHARES);
+		int baseRoll = g_GambleManager.Randint_32bit(1, VirtualItemModSystem::DROP_SHARES);
 		int compare = dropRateProfile.Amount.QData[i];
 		if(baseRoll <= compare) {
 			amount = i;
@@ -7745,8 +7744,8 @@ int CreatureInstance :: CAF_SummonSidekick(int CDefID, int maxSummon, short abGr
 	SidekickObject skobj(CDefID, SidekickObject::ABILITY, abGroupID);
 	charPtr->SidekickList.push_back(skobj);
 	CreatureInstance* nsk = actInst->InstantiateSidekick(this, skobj, 0);
-	nsk->CurrentX = CurrentX + randint(-50, 50);
-	nsk->CurrentZ = CurrentZ + randint(-50, 50);
+	nsk->CurrentX = CurrentX + g_GambleManager.RandInt(-50, 50);
+	nsk->CurrentZ = CurrentZ + g_GambleManager.RandInt(-50, 50);
 	if(nsk != NULL)
 	{
 		actInst->RebuildSidekickList();
@@ -7925,7 +7924,7 @@ void CreatureInstance :: NotifySuperCrit(int TargetCreatureID)
 
 int CreatureInstance :: GetMainhandDamage(void)
 {
-	int amount = (int)(css.strength * 0.3) + css.base_damage_melee + randint(MainDamage[0], MainDamage[1]);
+	int amount = (int)(css.strength * 0.3) + css.base_damage_melee + g_GambleManager.RandInt(MainDamage[0], MainDamage[1]);
 	amount += GetAdditiveWeaponSpecialization(amount, ItemEquipSlot::WEAPON_MAIN_HAND);
 	return amount;
 }
@@ -7943,7 +7942,7 @@ int CreatureInstance :: GetOffhandDamage(void)
 	if(EquippedWeapons[ItemEquipSlot::WEAPON_OFF_HAND] == 0 || OffhandDamage[1] == 0)
 		return 0;
 
-	float damage = (css.strength * 0.3F) + css.base_damage_melee + randint(OffhandDamage[0], OffhandDamage[1]);
+	float damage = (css.strength * 0.3F) + css.base_damage_melee + g_GambleManager.RandInt(OffhandDamage[0], OffhandDamage[1]);
 	damage *= ((float)css.offhand_weapon_damage / 1000.0F);
 	damage += (float)GetAdditiveWeaponSpecialization(static_cast<int>(damage), ItemEquipSlot::WEAPON_OFF_HAND);
 	return (int)damage;

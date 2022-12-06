@@ -4,7 +4,7 @@
 #include "StringList.h"
 #include "Config.h"
 #include "PVP.h"
-#include "Util.h"
+#include "Gamble.h"
 #include "Audit.h"  //For scenery audits.
 #include "InstanceScale.h"
 #include "Report.h"
@@ -1775,7 +1775,7 @@ void WeatherDef :: SetDefaults() {
 WeatherState :: WeatherState(int instanceId, WeatherDef &def) {
 	mInstanceId = instanceId;
 	mDefinition = def;
-	mNextStateChange = g_ServerTime + ( randmodrng(def.mFineMin, def.mFineMax) * 1000 );
+	mNextStateChange = g_ServerTime + ( g_GambleManager.RandModRng(def.mFineMin, def.mFineMax) * 1000 );
 	mWeatherType = "";
 	mWeatherWeight = WeatherState::LIGHT;
 	mEscalateState = WeatherState::ONE_OFF;
@@ -1792,7 +1792,7 @@ WeatherState :: ~WeatherState() {
 
 void WeatherState :: RunCycle(ActiveInstance *instance) {
 	if(mThunder && g_ServerTime >= mNextThunder) {
-		mNextThunder = g_ServerTime + ( randmodrng(mDefinition.mThunderGapMin, mDefinition.mThunderGapMax) * 1000);
+		mNextThunder = g_ServerTime + ( g_GambleManager.RandModRng(mDefinition.mThunderGapMin, mDefinition.mThunderGapMax) * 1000);
 		SendThunder(instance);
 	}
 
@@ -1808,7 +1808,7 @@ void WeatherState :: RunCycle(ActiveInstance *instance) {
 				mEscalateState = WeatherState::DEESCALATING;
 				mWeatherWeight = WeatherState::MAX_WEIGHT - 2;
 			}
-			mNextStateChange = g_ServerTime + ( randmodrng(mDefinition.mWeatherMin, mDefinition.mWeatherMax) * 1000 );
+			mNextStateChange = g_ServerTime + ( g_GambleManager.RandModRng(mDefinition.mWeatherMin, mDefinition.mWeatherMax) * 1000 );
 			SendWeatherUpdate(instance);
 
 			/* During escalation we also roll for thunder to start */
@@ -1823,13 +1823,13 @@ void WeatherState :: RunCycle(ActiveInstance *instance) {
 					SendWeatherUpdate(instance);
 			}
 			else {
-				mNextStateChange = g_ServerTime + ( randmodrng(mDefinition.mWeatherMin, mDefinition.mWeatherMax) * 1000 );
+				mNextStateChange = g_ServerTime + ( g_GambleManager.RandModRng(mDefinition.mWeatherMin, mDefinition.mWeatherMax) * 1000 );
 				SendWeatherUpdate(instance);
 			}
 
 			/* During de-escalation we also roll for thunder to stop using the inverse chance that was used to start */
 			if(mThunder) {
-				int chance = randmodrng(0, 100);
+				int chance = g_GambleManager.RandModRng(0, 100);
 				mThunder = chance < ( 100 - mDefinition.mThunderChance );
 				if(!mThunder) {
 					mNextThunder = 0;
@@ -1865,11 +1865,11 @@ void WeatherState :: SendThunder(ActiveInstance *instance) {
 }
 
 void WeatherState :: RollThunder() {
-	int chance = randmodrng(0, 100);
+	int chance = g_GambleManager.RandModRng(0, 100);
 	mThunder = chance < mDefinition.mThunderChance;
 	mNextThunder = 0;
 	if(mThunder) {
-		mNextThunder = g_ServerTime + ( randmodrng(mDefinition.mThunderGapMin, mDefinition.mThunderGapMax) * 1000 );
+		mNextThunder = g_ServerTime + ( g_GambleManager.RandModRng(mDefinition.mThunderGapMin, mDefinition.mThunderGapMax) * 1000 );
 	}
 }
 
@@ -1877,7 +1877,7 @@ bool WeatherState :: PickNewWeather() {
 	if(mWeatherType.length() == 0) {
 
 		/* Weather is starting */
-		int chance = randmodrng(0, 100);
+		int chance = g_GambleManager.RandModRng(0, 100);
 		if(chance < mDefinition.mHeavyChance) {
 			mWeatherWeight == WeatherState::HEAVY;
 		}
@@ -1889,18 +1889,18 @@ bool WeatherState :: PickNewWeather() {
 		}
 		else {
 			/* No weather to start, wait for next cycle */
-			mNextStateChange = g_ServerTime + ( randmodrng(mDefinition.mFineMin, mDefinition.mFineMax) * 1000 );
+			mNextStateChange = g_ServerTime + ( g_GambleManager.RandModRng(mDefinition.mFineMin, mDefinition.mFineMax) * 1000 );
 			return false;
 		}
 
-		mNextStateChange = g_ServerTime + ( randmodrng(mDefinition.mWeatherMin, mDefinition.mWeatherMax) * 1000 );
-		mWeatherType = mDefinition.mWeatherTypes[randmodrng(0, mDefinition.mWeatherTypes.size())];
+		mNextStateChange = g_ServerTime + ( g_GambleManager.RandModRng(mDefinition.mWeatherMin, mDefinition.mWeatherMax) * 1000 );
+		mWeatherType = mDefinition.mWeatherTypes[g_GambleManager.RandModRng(0, mDefinition.mWeatherTypes.size())];
 
 		/* Roll for thunder */
 		RollThunder();
 
 		/* Roll for escalation */
-		chance = randmodrng(0, 100);
+		chance = g_GambleManager.RandModRng(0, 100);
 		mEscalateState = WeatherState::ONE_OFF;
 		if(chance < mDefinition.mEscalateChance) {
 			mEscalateState = WeatherState::ESCALATING;
@@ -1917,7 +1917,7 @@ bool WeatherState :: PickNewWeather() {
 void WeatherState :: StopWeather() {
 	mThunder = false;
 	mNextThunder = 0;
-	mNextStateChange = g_ServerTime + ( randmodrng(mDefinition.mFineMin, mDefinition.mFineMax) * 1000 );
+	mNextStateChange = g_ServerTime + ( g_GambleManager.RandModRng(mDefinition.mFineMin, mDefinition.mFineMax) * 1000 );
 	mWeatherType = "";
 	mWeatherWeight = WeatherState::LIGHT;
 	mEscalateState = WeatherState::ONE_OFF;

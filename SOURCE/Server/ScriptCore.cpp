@@ -23,7 +23,7 @@
 #include "FileReader.h"
 #include "Simulator.h"
 #include "StringList.h"
-#include "Util.h"
+#include "Gamble.h"
 #include "Config.h"
 
 extern unsigned long g_ServerTime;
@@ -46,6 +46,74 @@ void Errorfunc(HSQUIRRELVM v, const SQChar *s, ...) {
 
 namespace ScriptCore
 {
+
+	int randint_32bit(int min, int max)
+	{
+	//	// Generate a 32 bit random number.
+	//
+	//	/*
+	//		Explanation:
+	//		rand() doesn't work well for larger numbers.
+	//		RAND_MAX is limited to 32767.
+	//		There are other quirks, where powers of two seem to generate more even
+	//		distributions of numbers.
+	//
+	//		Since smaller numbers have better distribution, use a sequence
+	//		of random numbers and use those to fill the bits of a larger number.
+	//	*/
+	//
+	//	// RAND_MAX (as defined with a value of 0x7fff) is only 15 bits wide.
+	//	if(min == max)
+	//		return min;
+	//	unsigned long rand_build = (rand() << 15) | rand();
+	//	//unsigned long rand_build = ((rand() & 0xFF) << 24) | ((rand() & 0xFF) << 16) | ((rand() & 0xFF) << 8) | ((rand() & 0xFF));
+	//	return min + (rand_build % (max - min + 1));
+		return g_GambleManager.Randint_32bit(min, max);
+	}
+
+	int randmod(int max) {
+	//	if(max == 0)
+	//		return 0;
+	//	// Max is exclusive, e.g, max of 10 would give numbers between 0 and 9
+	//	return rand()%max;
+		return g_GambleManager.RandMod(max);
+	}
+
+	int randmodrng(int min, int max) {
+	//	if(min == max)
+	//		return min;
+	//	// Min is inclusive, max is exclusive, e.g, min of 3, max of 10 would give numbers between 3 and 9
+	//	return(rand()%(max-min)+min);
+		return g_GambleManager.RandModRng(min, max);
+	}
+
+	int randi(int max) {
+		// return randint(1, max);
+		// TODO remove the above
+		return g_GambleManager.RandI(max);
+	}
+
+	int randint(int min, int max)
+	{
+		//Returning <max> is possible, but highly unlikely compared to the individual
+		//chances of any other value
+		//return ((double) rand() / ((double) RAND_MAX) * (max - min)) + min;
+
+		//This should be fixed to generate <max> as much as others
+		//return (int) (((double) rand() / ((double)RAND_MAX + 1) * ((max + 1) - min)) + min);
+
+		// TODO remove the above
+		return g_GambleManager.RandInt(min, max);
+	}
+
+	double randdbl(double min, double max)
+	{
+		// return ((double)rand() / ((double)RAND_MAX) * (max - min)) + min;
+
+		// TODO remove the above
+		return g_GambleManager.RandDbl(min, max);
+	}
+
 	ScriptParam::ScriptParam() {
 		type = OPT_INT;
 		iValue = 0;
@@ -637,7 +705,7 @@ namespace ScriptCore
 		clazz->Func(_SC("get_server_time"), &NutPlayer::GetServerTime);
 		clazz->Func(_SC("get_caller"), &NutPlayer::GetCaller);
 
-		int GetCaller();
+//		int GetCaller();
 
 		clazz->SquirrelFunc(_SC("sleep"), &Sleep);
 
