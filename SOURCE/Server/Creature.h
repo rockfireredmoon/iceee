@@ -151,8 +151,12 @@ struct ActiveAbilityInfo
 	bool IsBusy(void);
 };
 
-struct SelectedObject
+class SelectedObject
 {
+public:
+	SelectedObject();
+	~SelectedObject();
+
 	CreatureInstance *targ;   //Pointer to creature instance
 	//CreatureInstance *aaTarg; //Pointer to the creature that the auto-attack is initiated for.
 	short desiredRange;  //If the AI is out of range of its target, this is the range it must proceed within
@@ -160,7 +164,6 @@ struct SelectedObject
 	int DesLocX;              //For the new movement system, the desired X location to move.
 	int DesLocZ;              //For the new movement system, the desired Z location to move.
 	int desiredSpeed;		  //For scripting to specify a desired speed
-	SelectedObject();
 	void Clear(bool UNUSED_eraseAutoAttack);
 	bool hasTargetCDef(int CDefID);
 };

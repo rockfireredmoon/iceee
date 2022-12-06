@@ -46,7 +46,7 @@ public:
 	bool isExist;         //If true, the router thread exists.  If it doesn't, the main program should attempt to reactivate it.
 	bool isActive;        //If true, the thread is active and running.
 	int Status;           //This maintains the activity Status, determining whether it needs to Init, Restart, etc.
-	char SimTarget[128];  //The constructed response string containing the simulator address and port
+	char SimTarget[192];  //The constructed response string containing the simulator address and port
 
 	int HomePort;
 	int TargetPort;

@@ -75,6 +75,10 @@ PendingOperation pendingOperations;
 SelectedObject::SelectedObject() {
 	Clear(true);
 }
+
+SelectedObject::~SelectedObject() {
+}
+
 void SelectedObject::Clear(bool UNUSED_eraseAutoAttack) {
 	targ = NULL;
 	//if(eraseAutoAttack == true)
@@ -85,6 +89,7 @@ void SelectedObject::Clear(bool UNUSED_eraseAutoAttack) {
 	DesLocX = 0;
 	DesLocZ = 0;
 }
+
 bool SelectedObject::hasTargetCDef(int CDefID) {
 	if (targ == NULL)
 		return false;
@@ -518,7 +523,7 @@ void CreatureInstance::Clear(void) {
 	PartyID = 0;
 	serverFlags = 0;
 
-	memset(&CurrentTarget, 0, sizeof(CurrentTarget));
+	CurrentTarget.Clear(true);
 
 	movementTime = 0;
 

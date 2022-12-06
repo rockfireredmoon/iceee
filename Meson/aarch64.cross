@@ -1,0 +1,18 @@
+[binaries]
+c       = 'aarch64-linux-gnu-gcc'
+cpp     = 'aarch64-linux-gnu-g++'
+ld      = 'aarch64-linux-gnu-ld'
+ar      = 'aarch64-linux-gnu-ar'
+as      = 'aarch64-linux-gnu-as'
+size    = 'aarch64-linux-gnu-size'
+objdump = 'aarch64-linux-gnu-objdump'
+objcopy = 'aarch64-linux-gnu-objcopy'
+strip   = 'aarch64-linux-gnu-strip'
+gdb     = 'aarch64-linux-gnu-gdb'
+pkgconfig = 'aarch64-linux-gnu-pkg-config'
+
+[host_machine]
+system     = 'linux'
+cpu_family = 'arm'
+cpu        = 'cortex-a35'
+endian     = 'little'
