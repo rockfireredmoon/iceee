@@ -395,7 +395,7 @@ if get_option('service') and build_machine.system() == 'linux'
 	endif
 endif
 
-install_data(sources: ['Local/ServerConfig.txt.sample','Local/LogConfig.txt.sample','Local/Cluster.txt.sample','Local/URL.txt.sample', 'Local/HTTPConfig.txt'], install_dir : docpath)
+install_data(sources: ['Local/ServerConfig.txt.sample','Local/LogConfig.txt.sample','Local/Cluster.txt.sample','Local/URL.txt.sample', 'Local/HTTPConfig.txt.sample'], install_dir : docpath)
 install_data(sources: ['README.md','LICENSE'], install_dir : docpath)
 install_data(sources: ['Web/Errors/404.html'], install_dir : webpath + '/Errors')
 install_data(sources: ['Web/Pages/Account.html','Web/Pages/RemoteServerTools.html','Web/Pages/ResetPassword.html'], install_dir : webpath + '/Pages')
