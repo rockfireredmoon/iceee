@@ -42,6 +42,7 @@ unsigned long CREATURE_DELETE_RECHECK = 60000; //Delay between rescanning for de
 #include "Character.h"
 #include "ActiveCharacter.h"
 #include "Simulator.h"
+#include "Random.h"
 #include "Util.h"
 #include "Creature.h"
 #include "Ability2.h"

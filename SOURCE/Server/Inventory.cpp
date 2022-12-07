@@ -5,6 +5,7 @@
 
 #include "Config.h"
 #include "Debug.h"
+#include "Util.h"
 #include "util/Log.h"
 
 int InventorySlot :: GetStackCount(void)

@@ -1,4 +1,4 @@
-project('tawd', ['cpp','c'], default_options : [
+project('tawd', ['cpp','c'], version: '0.9.0', default_options : [
 	'cpp_std=c++14',
 	'prefix=/usr',
 	'sysconfdir=/etc',
@@ -92,7 +92,7 @@ if pthread_dep.found()
 endif
 
 #Squirrel
-squirrel_lib = library('squirrel',[
+squirrel_lib = library('tawd-squirrel',[
 	'SOURCE/squirrel/squirrel/sqapi.cpp',
 	'SOURCE/squirrel/squirrel/sqbaselib.cpp',
 	'SOURCE/squirrel/squirrel/sqclass.cpp',
@@ -104,10 +104,13 @@ squirrel_lib = library('squirrel',[
 	'SOURCE/squirrel/squirrel/sqobject.cpp',
 	'SOURCE/squirrel/squirrel/sqstate.cpp',
 	'SOURCE/squirrel/squirrel/sqtable.cpp',
-	'SOURCE/squirrel/squirrel/sqvm.cpp'], include_directories : squirrel_inc)
+	'SOURCE/squirrel/squirrel/sqvm.cpp'],
+  	install : true, 
+  	version : meson.project_version(),
+	include_directories : squirrel_inc)
 	
 #Squirrel stdlib
-sqstdlib_lib = library('sqstdlib',[
+sqstdlib_lib = library('tawd-sqstdlib',[
 	'SOURCE/squirrel/sqstdlib/sqstdaux.cpp',
 	'SOURCE/squirrel/sqstdlib/sqstdblob.cpp',
 	'SOURCE/squirrel/sqstdlib/sqstdio.cpp',
@@ -117,10 +120,12 @@ sqstdlib_lib = library('sqstdlib',[
 	'SOURCE/squirrel/sqstdlib/sqstdstring.cpp',
 	'SOURCE/squirrel/sqstdlib/sqstdsystem.cpp'], 
 	include_directories : [squirrel_inc, squirrel_lib_inc],
+  	install : true,
+  	version : meson.project_version(),
 	link_with: [squirrel_lib])
 	
 #tacopie
-tacopie_lib = library('tacopie',[
+tacopie_lib = library('tawd-tacopie',[
 	'SOURCE/LibCPPRedis/tacopie/sources/utils/error.cpp',
 	'SOURCE/LibCPPRedis/tacopie/sources/utils/thread_pool.cpp',
 	'SOURCE/LibCPPRedis/tacopie/sources/utils/logger.cpp',
@@ -133,10 +138,12 @@ tacopie_lib = library('tacopie',[
 	'SOURCE/LibCPPRedis/tacopie/sources/network/unix/unix_tcp_socket.cpp',
 	'SOURCE/LibCPPRedis/tacopie/sources/network/unix/unix_self_pipe.cpp'], 
 	dependencies: [thread_dep],
+  	version: meson.project_version(),
+  	install : true,
 	include_directories : [tacopie_inc])
 	
 #cpp_redis
-cppredis_lib = library('cpp_redis',[
+cppredis_lib = library('tawd-cpp_redis',[
 	'SOURCE/LibCPPRedis/sources/misc/logger.cpp',
 	'SOURCE/LibCPPRedis/sources/misc/dispatch_queue.cpp',
 	'SOURCE/LibCPPRedis/sources/builders/error_builder.cpp',
@@ -155,11 +162,13 @@ cppredis_lib = library('cpp_redis',[
 	'SOURCE/LibCPPRedis/sources/network/tcp_client.cpp',
 	'SOURCE/LibCPPRedis/sources/network/redis_connection.cpp'], 
 	dependencies: [thread_dep],
+  	install : true,
+  	version: meson.project_version(),
 	include_directories : [cppredis_inc,tacopie_inc],
 	link_with: [tacopie_lib])
 
 #Server library
-server_lib = library('server',[
+server_lib = library('tawd-server',[
 	'SOURCE/Server/md5.cc',
 	'SOURCE/Server/Ability2.cpp',
 	'SOURCE/Server/AbilityTime.cpp',
@@ -301,6 +310,8 @@ server_lib = library('server',[
 	'SOURCE/Server/util/Log.cpp'], 
 	include_directories : [squirrel_inc, sqstdlib_lib_inc, cppredis_inc, tacopie_inc],
 	dependencies: [thread_dep, curl_dep],
+  	install : true,
+  	version: meson.project_version(),
 	link_with: [squirrel_lib,sqstdlib_lib,cppredis_lib,tacopie_lib])
 
 #Main Daemon
@@ -385,13 +396,12 @@ url_target = custom_target('URL',
   	install_dir : confdir)
     
 if get_option('service') and build_machine.system() == 'linux'
-	systemd_dep = dependency('systemd')
-	if systemd_dep.found()
-		install_data(sources: 'Etc/Linux/tawd.service', install_dir : get_option('systemdservicedir'))
-		install_data(sources: 'Etc/Linux/eehttpd.service', install_dir : get_option('systemdservicedir'))
-	else
+	if get_option('sysvinit')
 		install_data(sources: 'Etc/Linux/tawd', install_dir : get_option('sysconfdir') + '/etc/init.d')
 		install_data(sources: 'Etc/Linux/eehttpd', install_dir : get_option('sysconfdir') + '/etc/init.d')
+	else
+		install_data(sources: 'Etc/Linux/tawd.service', install_dir : get_option('systemdservicedir'))
+		install_data(sources: 'Etc/Linux/eehttpd.service', install_dir : get_option('systemdservicedir'))
 	endif
 endif
 

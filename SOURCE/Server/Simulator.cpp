@@ -4121,7 +4121,7 @@ PartyMember * SimulatorThread::RollForPartyLoot(ActiveParty *party,
 			creatureIds.size());
 	int maxRoll = 0;
 	ItemDef *cdef = g_ItemManager.GetPointerByID(itemId);
-	PartyMember *maxRoller;
+	PartyMember *maxRoller = NULL;
 	if (creatureIds.size() == 1) {
 		return party->GetMemberByID(*creatureIds.begin());
 	}

@@ -101,7 +101,7 @@ int AssetCatelogueManager::LoadFromDirectory(std::string fileName) {
 	mItems[""] = rootItem;
 
 	AssetCatalogueItem *newItem = new AssetCatalogueItem();
-	int lastType;
+	int lastType = 0;
 
 	Platform_DirectoryReader r;
 	r.SetDirectory(fileName);

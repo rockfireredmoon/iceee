@@ -405,7 +405,7 @@ void RefreshScripts(ReportBuffer &report) {
 	g_QuestNutManager.cs.Enter("RemoteAction::RefreshScripts");
 	std::map<int, std::list<QuestScript::QuestNutPlayer *> >::iterator it =
 			g_QuestNutManager.questAct.begin();
-	double seconds;
+	double seconds = 0;
 	for (; it != g_QuestNutManager.questAct.end(); ++it) {
 		std::list<QuestScript::QuestNutPlayer *> l = it->second;
 		report.AddLine("+-Quest %d", it->first);

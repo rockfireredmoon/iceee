@@ -1,11 +1,12 @@
+#include "CommonTypes.h"
 #include "Config.h"
 #include "DropTable.h"
 #include "FileReader.h"
-
 #include "DirectoryAccess.h"
 #include "ByteBuffer.h"
 #include "Random.h"
 #include "Item.h"
+#include "Util.h"
 #include <algorithm>
 #include <string.h>
 #include "util/Log.h"

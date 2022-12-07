@@ -5824,8 +5824,8 @@ void CreatureInstance::MoveToTarget_Ex2(void) {
 
 	int nextMoveTime = 1000; //2250;
 
-	int tx;
-	int tz;
+	int tx = 0;
+	int tz = 0;
 	if (CurrentTarget.DesLocX == 0) {
 		if (CurrentTarget.targ != NULL) {
 			tx = CurrentTarget.targ->CurrentX;
