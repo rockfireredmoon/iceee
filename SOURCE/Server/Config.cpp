@@ -630,7 +630,7 @@ GlobalConfigData::GlobalConfigData() {
 	PublicAPI = true;
 	LegacyAccounts = false;
 	LegacyServer = "";
-	APIAuthentication = "api:api";
+	APIAuthentication = "";
 
 	InvalidLoginMessage = "Account not found.  Check username and password.";
 	MaintenanceMessage = "";

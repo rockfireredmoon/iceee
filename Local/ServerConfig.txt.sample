@@ -227,7 +227,9 @@ LogPath=Logs
 ; API authentication. The secret to use for HTTP API requests. Please use a VERY strong
 ; secret. The secret shoud be in the format username:password where either can be any
 ; string with any characters except for ':'.
-APIAuthentication=apiuser:apisecret
+;
+; Commenting out this item prevents the API from being used (the default).
+;APIAuthentication=apiuser:apisecret
 
 ; The URL that supplies the website integration API. This server will send messages
 ; to this URL for various reasons, such as  authentication, sending private messages

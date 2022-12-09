@@ -44,7 +44,13 @@ using namespace HTTPD;
 
 bool AuthenticatedHandler::handleGet(CivetServer *server,
 		struct mg_connection *conn) {
-	if (!isAuthorized(server, conn, g_Config.APIAuthentication)) {
+	if(g_Config.APIAuthentication.length() == 0) {
+		g_Logs.server->warn(
+				"API request made, but 'APIAuthentication' has not be set in configuration. All API requests must be authenticated.");
+		writeWWWAuthenticate(server, conn, "TAWD");
+		return true;
+	}
+	else if (!isAuthorized(server, conn, g_Config.APIAuthentication)) {
 		writeWWWAuthenticate(server, conn, "TAWD");
 		return true;
 	}

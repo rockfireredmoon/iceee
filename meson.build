@@ -65,7 +65,7 @@ endif
 
 # CAR path (default path for client CAR files)
 if get_option('cfg_HTTPCARFolder') == ''
-	carpath = get_option('prefix') + '/share/tawd/Release'
+	carpath = get_option('prefix') + '/share/tawd'
 else
 	carpath = get_option('cfg_HTTPCARFolder')
 endif
