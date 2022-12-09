@@ -1,7 +1,7 @@
 # Running Your Own Server
 
 You are here if you wish to run your own private server for any Earth Eternal game such as 
-[https://www.theanubianwar.com/valkals-shadow](Valkal's Shadow).  
+[Valkal's Shadow](https://www.theanubianwar.com/valkals-shadow).  
 
 ## Recommended Setup
 
