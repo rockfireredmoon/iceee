@@ -276,6 +276,8 @@ public:
 	bool ValidString(const char *str);
 	bool ValidGroveString(std::string &nameToAdjust);
 	AccountData * FetchAccountByUsername(const char *username);
+	STRINGLIST MatchAccountNames(std::string globPattern);
+
 	const char * GetErrorMessage(int message);
 	int CheckAutoSave(bool force);
 	int HasPendingMinorUpdates(void);

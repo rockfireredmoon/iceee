@@ -286,6 +286,7 @@ public:
 	std::string ResolveHTTPCARPath();
 	std::vector<std::string> ResolveLocalConfigurationPath();
 	std::string ResolveLogPath();
+	std::string ResolveSimulatorAddress();
 	std::string ResolveHTTPAddress();
 
 private:

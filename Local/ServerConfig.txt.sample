@@ -126,10 +126,6 @@ DebugPingServerLogThreshold=1000
 
 CustomAbilityMechanics=1
 
-HTTPDeleteConnectedTime=10000
-HTTPDeleteDisconnectedTime=10000
-HTTPDeleteRecheckDelay=5000
-
 PartyPositionSendInterval=10000
 
 VaultDefaultSize=16

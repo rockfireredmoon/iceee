@@ -696,21 +696,31 @@ std::string GlobalConfigData::ResolvePath(std::string path) {
 	return path;
 }
 
+std::string GlobalConfigData::ResolveSimulatorAddress() {
+	if(strlen(g_SimulatorAddress) == 0) {
+		// TODO - get assigned IP address on server
+		// This is not that easy
+		return "127.0.0.1";
+	}
+	else
+		return g_SimulatorAddress;
+}
+
 std::string GlobalConfigData::ResolveHTTPAddress() {
 	if(HTTPAddress == "") {
 #ifndef NO_SSL
 		if(g_HTTPSListenPort > 0)
 		{
 			if(g_HTTPSListenPort == 443)
-				return StringUtil::Format("https://%s/Release/Current", g_SimulatorAddress);
+				return StringUtil::Format("https://%s/Release/Current", ResolveSimulatorAddress());
 			else
-				return StringUtil::Format("https://%s:%d/Release/Current", g_SimulatorAddress, g_HTTPSListenPort);
+				return StringUtil::Format("https://%s:%d/Release/Current", ResolveSimulatorAddress(), g_HTTPSListenPort);
 		}
 #endif
 		if(g_HTTPListenPort == 80)
-			return StringUtil::Format("http://%s/Release/Current", g_SimulatorAddress);
+			return StringUtil::Format("http://%s/Release/Current", ResolveSimulatorAddress());
 		else {
-			return StringUtil::Format("http://%s:%d/Release/Current", g_SimulatorAddress, g_HTTPListenPort);
+			return StringUtil::Format("http://%s:%d/Release/Current", ResolveSimulatorAddress(), g_HTTPListenPort);
 		}
 	}
 	else

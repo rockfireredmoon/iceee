@@ -929,15 +929,18 @@ void ClusterManager::Send(const std::string &msg, const Json::Value &val) {
 }
 
 void ClusterManager::SendConfiguration() {
+
+	auto simAddress = g_Config.ResolveSimulatorAddress();
+
 	g_Logs.cluster->info(
 			"Received a request to send our shard configuration (Simulator %v:%v, HTTP %v).",
-			g_SimulatorAddress, g_SimulatorPort, g_Config.ResolveHTTPAddress());
+			simAddress, g_SimulatorPort, g_Config.ResolveHTTPAddress());
 
 	// TODO make all other messages JSON too
 
 	Json::Value cfg;
 	cfg["shardName"] = mShardName;
-	cfg["simulatorAddress"] = g_SimulatorAddress;
+	cfg["simulatorAddress"] = simAddress;
 	cfg["simulatorPort"] = g_SimulatorPort;
 	cfg["fullName"] = mFullName;
 	cfg["players"] = GetActiveShard(mShardName).mPlayers;
@@ -1413,7 +1416,8 @@ bool ClusterManager::Init() {
 
 	/* We can only support sharding if simulator addresses are actually specified */
 
-	mClusterable = strlen(g_SimulatorAddress) != 0;
+	auto simAddress = g_Config.ResolveSimulatorAddress();
+	mClusterable = simAddress.length() > 0;
 	if (!mClusterable) {
 		g_Logs.cluster->warn(
 				"Shards not supported, as SimulatorAddress is not specified in ServerConfig.txt");
@@ -1422,7 +1426,7 @@ bool ClusterManager::Init() {
 	/* Our own shard is always active */
 	Shard shard;
 	shard.mName = mShardName;
-	shard.mSimulatorAddress = g_SimulatorAddress;
+	shard.mSimulatorAddress = simAddress;
 	shard.mSimulatorPort = g_SimulatorPort;
 	shard.mHTTPAddress = g_Config.ResolveHTTPAddress();
 	shard.mFullName = mFullName;

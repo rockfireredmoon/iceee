@@ -130,10 +130,11 @@ void RouterThread :: Shutdown(void)
 
 int RouterThread :: ResolvePort(const char *address, int port)
 {
-	if(strlen(g_SimulatorAddress) == 0)
+	auto simAddress = g_Config.ResolveSimulatorAddress();
+	if(simAddress.length() == 0)
 		sprintf(SimTarget, "%s:%d", address, port);
 	else
-		sprintf(SimTarget, "%s:%d", g_SimulatorAddress, port);
+		sprintf(SimTarget, "%s:%d", simAddress.c_str(), port);
 	return 1;
 }
 

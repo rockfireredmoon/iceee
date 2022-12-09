@@ -252,7 +252,7 @@ bool HTTPService::Start() {
 
 		zzOptions[idx++] = "authentication_domain";
 		if(g_Config.HTTPAuthDomain.length() == 0)
-			zzOptions[idx++] = g_SimulatorAddress;
+			zzOptions[idx++] = g_Config.ResolveSimulatorAddress().c_str();
 		else
 			zzOptions[idx++] = g_Config.HTTPAuthDomain.c_str();
 

@@ -101,10 +101,21 @@ int main(int argc, char *argv[]) {
 		g_Logs.data->verbose(0, StringUtil::Format("%s create - create new accounts", argv[0]));
 		g_Logs.data->verbose(0, StringUtil::Format("%s password - change passwords", argv[0]));
 		g_Logs.data->verbose(0, StringUtil::Format("%s show - show account details", argv[0]));
+		g_Logs.data->verbose(0, StringUtil::Format("%s list - list", argv[0]));
 		g_Logs.data->verbose(0, StringUtil::Format("%s roles - show or change account roles", argv[0]));
 		g_Logs.data->verbose(0, StringUtil::Format("%s delete - delete accounts", argv[0]));
 		g_Logs.data->verbose(0, StringUtil::Format("%s groves - show account grove details", argv[0]));
 		g_Logs.data->verbose(0, StringUtil::Format("%s remove-grove - remove player groves", argv[0]));
+	}
+	else if (command == "list") {
+		std::string glob = "*";
+		if(options.size() > 0) {
+			glob = options[0];
+		}
+		auto matches = g_AccountManager.MatchAccountNames(glob);
+		for (auto it = matches.begin(); it != matches.end(); ++it) {
+			printf("%s\n", (*it).c_str());
+		}
 	}
 	else if (command == "create") {
 		/* Create account */

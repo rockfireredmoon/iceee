@@ -1302,6 +1302,17 @@ std::string AccountManager::GenerateToken(int accountID, unsigned long ttl,
 	return token;
 }
 
+
+STRINGLIST AccountManager::MatchAccountNames(std::string globPattern) {
+	STRINGLIST accounts;
+	g_ClusterManager.Scan([this, &accounts](const std::string &key) {
+		STRINGLIST l;
+		Util::Split(key, ":", l);
+		accounts.push_back(l[1]);
+	}, StringUtil::Format("%s:*:DEFAULT", KEYPREFIX_ACCOUNT_QUICK_DATA.c_str()));
+	return accounts;
+}
+
 AccountData * AccountManager::FetchAccountByUsername(const char *username) {
 	ACCOUNT_ITERATOR it;
 	for (it = AccList.begin(); it != AccList.end(); ++it)
