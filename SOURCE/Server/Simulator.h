@@ -130,8 +130,6 @@ public:
 	long TotalRecBytes;
 	int MessageEnd;
 	size_t ReadPos;    //Current read position within RecBuf(), when extracting data from packets.
-	size_t WritePos;   //Current write position within SendBuf(), when writing packets.
-	bool PendingSend; //If set to true, the recv() handler will send any data marked for sending
 	char Aux1[4096];          //Generic large buffer.
 	char Aux2[128];           //Generic small buffer.
 	char Aux3[128];           //Generic small buffer.
@@ -180,15 +178,6 @@ public:
 	void LoadAccountCharacters(AccountData *accPtr);
 	void JoinGuild(GuildDefinition *gDef, int startValour);
 
-	void ClearLoot(ActiveParty *party, ActiveLootContainer *loot);
-	void ResetLoot(ActiveParty *party, ActiveLootContainer *loot, int itemId);
-	void UndoLoot(ActiveParty *party, ActiveLootContainer *loot, int itemId, int creatureId);
-
-	int OfferLoot(int mode, ActiveLootContainer *loot, ActiveParty *party, CreatureInstance *receivingCreature, int ItemID, bool needOrGreed, int CID, int conIndex);
-
-	void CheckIfLootReadyToDistribute(ActiveLootContainer *loot, LootTag lootTag);
-	PartyMember * RollForPartyLoot(ActiveParty *party, std::set<int> creatureIds, const char *rollType, int itemId);
-
 	bool ActivateActionAbilities(InventorySlot *slot);
 	int CheckDistance(int creatureID);
 	int ItemMorph(bool command);
@@ -198,7 +187,7 @@ public:
 	int protected_CheckDistanceBetweenCreaturesFor(CreatureInstance *sourceCreatureInst, int creatureID, int range);
 	int protected_CheckDistance(int creatureID);
 	int protected_helper_query_item_move(int origContainer, int origSlot, int destContainer, int destSlot, AccountData *destAccount);
-	int protected_helper_query_loot_item(void);
+
 	int protected_helper_tweak_self(int CDefID, int defhints, int argOffset);
 
 	bool HasPropEditPermission(SceneryObject *prop, float x = 0.0F, float z = 0.0F);

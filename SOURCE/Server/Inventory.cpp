@@ -879,6 +879,11 @@ int InventoryManager :: ItemMove(char *buffer, char *convBuf, CharacterStatSet *
 
 int InventoryManager :: AddItemUpdate(char *buffer, char *convBuf, InventorySlot *slot)
 {
+
+	if (g_Logs.server->enabled(el::Level::Debug))
+		g_Logs.server->debug("Preparing inventory update for item ID %v in container %v",
+				slot->IID, slot->CCSID);
+
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 70);       //_handleItemUpdateMsg
 	wpos += PutShort(&buffer[wpos], 0);       //Placeholder for size
@@ -913,6 +918,10 @@ int InventoryManager :: AddItemUpdate(char *buffer, char *convBuf, InventorySlot
 
 int InventoryManager :: RemoveItemUpdate(char *buffer, char *convBuf, InventorySlot *slot)
 {
+	if (g_Logs.server->enabled(el::Level::Debug))
+		g_Logs.server->debug("Preparing inventory remove for item ID %v in container %v",
+				slot->IID, slot->CCSID);
+
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 70);       //_handleItemUpdateMsg
 	wpos += PutShort(&buffer[wpos], 0);       //Placeholder for size
@@ -1152,6 +1161,10 @@ const char * InventoryManager :: GetEqErrorString(int code)
 
 int AddItemUpdate(char *buffer, char *convBuf, InventorySlot *slot)
 {
+	if (g_Logs.server->enabled(el::Level::Debug))
+		g_Logs.server->debug("Preparing inventory add for item ID %v in container %v",
+				slot->IID, slot->CCSID);
+
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 70);       //_handleItemUpdateMsg
 	wpos += PutShort(&buffer[wpos], 0);       //Placeholder for size
@@ -1216,6 +1229,10 @@ int AddItemUpdate(char *buffer, char *convBuf, InventorySlot *slot)
 
 int RemoveItemUpdate(char *buffer, char *convBuf, InventorySlot *slot)
 {
+	if (g_Logs.server->enabled(el::Level::Debug))
+		g_Logs.server->debug("Preparing inventory remove for item ID %v in container %v",
+				slot->IID, slot->CCSID);
+
 	//This function assumes that the buffer position in the argument list
 	//is set to the current write position.
 	int wpos = 0;

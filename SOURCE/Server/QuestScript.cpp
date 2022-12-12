@@ -591,23 +591,19 @@ int QuestNutPlayer::AddQuest(QuestDefinition questDefinition) {
 void QuestNutPlayer::SidekicksDefend() {
 	source->RemoveNoncombatantStatus("skattack");
 	source->simulatorPtr->AddMessage((long) source, 0, BCM_SidekickDefend);
-	source->simulatorPtr->PendingSend = true;
 }
 
 void QuestNutPlayer::SidekicksAttack() {
 	source->RemoveNoncombatantStatus("skattack");
 	source->simulatorPtr->AddMessage((long) source, 0, BCM_SidekickAttack);
-	source->simulatorPtr->PendingSend = true;
 }
 
 void QuestNutPlayer::CallSidekicks() {
 	source->simulatorPtr->AddMessage((long) source, 0, BCM_SidekickCall);
-	source->simulatorPtr->PendingSend = true;
 }
 
 void QuestNutPlayer::ScatterSidekicks() {
 	source->simulatorPtr->AddMessage((long) source, 0, BCM_SidekickScatter);
-	source->simulatorPtr->PendingSend = true;
 }
 
 int QuestNutPlayer::RecruitSidekick(int CID, int type, int param, int hate) {

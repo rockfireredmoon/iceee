@@ -65,14 +65,18 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 	}
 
 	// Open the file if either there was no condition, or the checksum doesn't match
-	if (checksum == NULL) {
+	if (checksum == NULL || strlen(checksum) == 0) {
 		// No condition
 		status = openFile(req_info, &file);
 		newChecksum = g_FileChecksum.MatchChecksum(ruri, "__");
+		g_Logs.http->info("New for %v checksum is %v", ruri.c_str(), newChecksum);
 	} else {
+		g_Logs.http->debug("Checksum for %v provided. %v", ruri.c_str(), checksum);
+
 		//If the checksum does not match, we need to update.
 		newChecksum = g_FileChecksum.MatchChecksum(ruri, checksum);
 		if (newChecksum.size() > 0) {
+			g_Logs.http->info("Checksum for %v (%v) changed to %v.", ruri.c_str(), checksum, newChecksum.c_str());
 			status = openFile(req_info, &file);
 		}
 	}

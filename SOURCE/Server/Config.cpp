@@ -712,15 +712,15 @@ std::string GlobalConfigData::ResolveHTTPAddress() {
 		if(g_HTTPSListenPort > 0)
 		{
 			if(g_HTTPSListenPort == 443)
-				return StringUtil::Format("https://%s/Release/Current", ResolveSimulatorAddress());
+				return StringUtil::Format("https://%s/Release/Current", ResolveSimulatorAddress().c_str());
 			else
-				return StringUtil::Format("https://%s:%d/Release/Current", ResolveSimulatorAddress(), g_HTTPSListenPort);
+				return StringUtil::Format("https://%s:%d/Release/Current", ResolveSimulatorAddress().c_str(), g_HTTPSListenPort);
 		}
 #endif
 		if(g_HTTPListenPort == 80)
-			return StringUtil::Format("http://%s/Release/Current", ResolveSimulatorAddress());
+			return StringUtil::Format("http://%s/Release/Current", ResolveSimulatorAddress().c_str());
 		else {
-			return StringUtil::Format("http://%s:%d/Release/Current", ResolveSimulatorAddress(), g_HTTPListenPort);
+			return StringUtil::Format("http://%s:%d/Release/Current", ResolveSimulatorAddress().c_str(), g_HTTPListenPort);
 		}
 	}
 	else

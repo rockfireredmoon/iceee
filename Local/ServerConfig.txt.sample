@@ -201,6 +201,10 @@ HTTPBaseFolder=Web
 ;     /EarthEternal/ClientAssets/Release/Current/EarthEternal.car 
 HTTPCARFolder=../sparkplayer-eartheternal/bin/assets
 
+; The address to advertise as this nodes HTTP base URL. When not supplied, will be
+; derived from the simulator address (and this node will have to be server assets)
+;HTTPAddress=http://myserver:8080/Release/Current
+
 ; The location of static data files. These are files that do not change during at all
 ; during the run time of the server.
 StaticDataPath=../iceee-data/Static

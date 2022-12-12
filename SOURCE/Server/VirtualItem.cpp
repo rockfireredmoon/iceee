@@ -886,6 +886,11 @@ int ItemManager :: RollVirtualItem(VirtualItemSpawnParams &viParams)
 	if(viParams.minimumQuality > 0 && rarity < viParams.minimumQuality)
 		rarity = viParams.minimumQuality;
 
+
+	if(g_Config.MegaLootParty && rarity < VirtualItemModSystem::MIN_QUALITY_LEVEL) {
+		rarity = VirtualItemModSystem::MIN_QUALITY_LEVEL;
+	}
+
 	/* DEBUG PURPOSES ONLY
 	Sleep(1);
 #ifndef WINDOWS_PLATFORM

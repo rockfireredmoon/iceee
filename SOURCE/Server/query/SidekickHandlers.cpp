@@ -112,7 +112,6 @@ int SidekickRemoveHandler::handleQuery(SimulatorThread *sim,
 				"You must select a sidekick to remove.", INFOMSG_ERROR);
 		wpos += PrepExt_QueryResponseString(&sim->SendBuf[wpos], query->ID,
 				"OK");
-		sim->PendingSend = true;
 		return wpos;
 	}
 
@@ -154,7 +153,6 @@ int SidekickAttackHandler::handleQuery(SimulatorThread *sim,
 		CreatureInstance *creatureInstance) {
 	creatureInstance->RemoveNoncombatantStatus("skattack");
 	sim->AddMessage((long) creatureInstance, 0, BCM_SidekickAttack);
-	sim->PendingSend = true;
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
@@ -167,7 +165,6 @@ int SidekickDefendHandler::handleQuery(SimulatorThread *sim,
 		CreatureInstance *creatureInstance) {
 	creatureInstance->RemoveNoncombatantStatus("skattack");
 	sim->AddMessage((long) creatureInstance, 0, BCM_SidekickDefend);
-	sim->PendingSend = true;
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
@@ -179,7 +176,6 @@ int SidekickCallHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
 	sim->AddMessage((long) creatureInstance, 0, BCM_SidekickCall);
-	sim->PendingSend = true;
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
@@ -191,7 +187,6 @@ int SidekickWarpHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
 	sim->AddMessage((long) creatureInstance, 0, BCM_SidekickWarp);
-	sim->PendingSend = true;
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 //
@@ -202,7 +197,6 @@ int SidekickScatterHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
 	sim->AddMessage((long) creatureInstance, 0, BCM_SidekickScatter);
-	sim->PendingSend = true;
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
@@ -233,7 +227,6 @@ int SidekickLowHandler::handleQuery(SimulatorThread *sim,
 				creatureInstance->CurrentTarget.targ->CreatureID);
 	}
 	wpos += PrepExt_QueryResponseString(&sim->SendBuf[wpos], query->ID, "OK");
-	sim->PendingSend = true;
 	return wpos;
 }
 
@@ -254,7 +247,6 @@ int SidekickPartyHandler::handleQuery(SimulatorThread *sim,
 			sim->SendBuf);
 	WritePos += PrepExt_QueryResponseString(&sim->SendBuf[WritePos], query->ID,
 			"OK");
-	sim->PendingSend = true;
 	return WritePos;
 }
 

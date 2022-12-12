@@ -7567,6 +7567,10 @@ void CreatureInstance::CreateLoot(int finderLevel, int partySize) {
 		loot.AddItem(itemList[i]);
 	}
 
+	if(itemList.size() == 0 && g_Config.MegaLootParty) {
+		loot.AddItem(g_ItemManager.RollVirtualItem(params));
+	}
+
 	activeLootID = actInst->lootsys.AttachLootToCreature(loot, CreatureID);
 }
 

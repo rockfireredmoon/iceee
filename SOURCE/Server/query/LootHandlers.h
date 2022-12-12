@@ -19,6 +19,7 @@
 #define LOOTHANDLERS_H
 
 #include "Query.h"
+#include "../PartyManager.h"
 
 class LootListHandler : public QueryHandler {
 public:
@@ -30,6 +31,7 @@ class LootItemHandler : public QueryHandler {
 public:
 	~LootItemHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+
 };
 
 class LootExitHandler : public QueryHandler {
@@ -47,3 +49,11 @@ private:
 			SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 #endif
+
+int OfferLoot(SimulatorThread *sim, int mode, ActiveLootContainer *loot, ActiveParty *party, CreatureInstance *receivingCreature, int ItemID, bool needOrGreed, int CID, int conIndex);
+void CheckIfLootReadyToDistribute(SimulatorThread *sim, CreatureInstance *creatureInstance, ActiveLootContainer *loot, LootTag lootTag);
+int protected_helper_query_loot_item(SimulatorThread *sim, int CID, int itemID, CreatureInstance *creatureInstance, CharacterServerData *pld, int &conIndex);
+void ClearLoot(ActiveParty *party, ActiveLootContainer *loot);
+void ResetLoot(ActiveParty *party, ActiveLootContainer *loot, int itemId);
+void UndoLoot(ActiveParty *party, ActiveLootContainer *loot, int itemId, int creatureId);
+PartyMember * RollForPartyLoot(SimulatorThread *sim, ActiveParty *party, std::set<int> creatureIds, const char *rollType, int itemId);

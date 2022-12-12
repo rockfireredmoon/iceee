@@ -336,6 +336,8 @@ bool AccountData::ReadEntity(AbstractEntityReader *reader) {
 					ID);
 		}
 	}
+
+	/* NOTE: This is now deprecated. On save, all preferences will be stored as subsection keys */
 	STRINGLIST prefs = reader->ListValue("Pref");
 	for (auto a = prefs.begin(); a != prefs.end(); ++a) {
 		size_t found = (*a).find_last_of(",");
@@ -359,6 +361,12 @@ bool AccountData::ReadEntity(AbstractEntityReader *reader) {
 			}
 		}
 	}
+
+	reader->PushSection("PREFS");
+	auto keys = reader->Keys();
+	for (auto a = keys.begin(); a != keys.end(); ++a)
+		preferenceList.SetPref((*a).c_str(), reader->Value((*a)).c_str());
+	reader->PopSection();
 
 	reader->PushSection("CHARACTERCACHE");
 	characterCache.ReadEntity(reader);
@@ -437,13 +445,7 @@ bool AccountData::WriteEntity(AbstractEntityWriter *writer) {
 	writer->ListValue("AccountQuest", l);
 
 	l = STRINGLIST();
-	for (auto a = preferenceList.PrefList.begin();
-			a != preferenceList.PrefList.end(); ++a) {
-		l.push_back(
-				StringUtil::Format("%s,%s", (*a).name.c_str(),
-						(*a).value.c_str()));
-	}
-	writer->ListValue("Pref", l);
+	writer->ListValue("Pref", l); // Deprecated
 
 	int a, b;
 	for (a = 0; a < MAXCONTAINER; a++) {
@@ -473,6 +475,12 @@ bool AccountData::WriteEntity(AbstractEntityWriter *writer) {
 				writer->ListValue(GetContainerNameFromID(a), l);
 		}
 	}
+
+	writer->PushSection("PREFS");
+	for (auto a = preferenceList.PrefList.begin();
+			a != preferenceList.PrefList.end(); ++a)
+		writer->Value((*a).name, (*a).value);
+	writer->PopSection();
 
 	//TODO:VAULT fprintf(output, "CurrentVaultSize=%d\r\n", CurrentVaultSize);
 	//	for(size_t i = 0; i < vaultInventory.size(); i++)
