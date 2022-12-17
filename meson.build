@@ -657,7 +657,7 @@ install_data(sources: [
 	'Doc/DEVELOPERS.md',
 	'Doc/GAME_CONFIGURATION.md', 
 	'Doc/IN_GAME_COMMANDS.md', 
-	'Doc/SERVE_AND_CLUSTER_CONFIGURATION.md',
+	'Doc/SERVER_AND_CLUSTER_CONFIGURATION.md',
 	'Doc/SERVER.md',
 	], install_dir : docpath)
 install_data(sources: ['Web/Errors/404.html'], install_dir : webpath + '/Errors')
