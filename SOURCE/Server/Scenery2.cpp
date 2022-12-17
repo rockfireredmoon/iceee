@@ -1740,14 +1740,12 @@ void SceneryManager::SendPageRequest(const SceneryPageRequest& request, std::lis
 	outgoingPackets.push_back(PacketManager::PACKET_PAIR(request.socket, data));
 }
 
-
-void SceneryManager::ThreadProc(SceneryManager *object)
+void SceneryManager::InitThread()
 {
-	object->ThreadMain();
-	PLATFORM_CLOSETHREAD(0);
+	mThread = new boost::thread( { &SceneryManager::RunMain, this });
 }
 
-void SceneryManager::ThreadMain(void)
+void SceneryManager::RunMain(void)
 {
 	bThreadActive = true;
 
@@ -1760,14 +1758,6 @@ void SceneryManager::ThreadMain(void)
 
 		PLATFORM_SLEEP(1);
 	}
-}
-
-void SceneryManager::LaunchThread(void)
-{
-	if(Platform_CreateThread(0, (void*)ThreadProc, &g_SceneryManager, NULL) == 0)
-		g_Logs.server->error("SceneryManager::LaunchThread: error creating thread");
-	else
-		g_Logs.server->info("SceneryManager::LaunchThread: successful");
 }
 
 bool SceneryManager::DeleteZone(int id) {
@@ -1796,9 +1786,11 @@ bool SceneryManager::DeleteZone(int id) {
 	return true;
 }
 
-void SceneryManager::ShutdownThread(void)
+void SceneryManager::Shutdown(void)
 {
 	bThreadActive = false;
+	mThread->join();
+	delete mThread;
 }
 
 bool SceneryManager::IsGarbageCheckReady(void)

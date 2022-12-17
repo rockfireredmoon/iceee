@@ -47,9 +47,9 @@ void SocketClass :: Clear(void)
 	memset(debugName, 0, sizeof(debugName));
 }
 
-int SocketClass :: CreateSocket(char *port, const char *address)
+int SocketClass :: CreateSocket(unsigned int port, const std::string &address)
 {
-	this->port = atoi(port);
+	this->port = port;
 
 #ifdef WINDOWS_PLATFORM
 	addrinfo hints;
@@ -59,9 +59,9 @@ int SocketClass :: CreateSocket(char *port, const char *address)
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_protocol = IPPROTO_TCP;
 	hints.ai_flags = AI_PASSIVE;
-	if(getaddrinfo(NULL, port, &hints, &result) != 0)
+	if(getaddrinfo(NULL, itoa(port), &hints, &result) != 0)
 	{
-		LogMessage("getaddrinfo failed for port: %d", this->port);
+		LogMessage("getaddrinfo failed for port: %d", port);
 		return -1;
 	}
 
@@ -88,13 +88,13 @@ int SocketClass :: CreateSocket(char *port, const char *address)
 	freeaddrinfo(result);
 	if(newsocket == -1)
 	{
-		LogMessage("Unable to create socket for port: %d", this->port);
+		LogMessage("Unable to create socket for port: %d", port);
 		return -1;
 	}
 
 	if(listen(newsocket, SOMAXCONN) == SOCKET_ERROR)
 	{
-		LogMessage("Unable to listen on port: %d", this->port);
+		LogMessage("Unable to listen on port: %d", port);
 		closesocket(newsocket);
 	}
 
@@ -114,19 +114,17 @@ int SocketClass :: CreateSocket(char *port, const char *address)
 	sockaddr_in serveraddr;
 	memset(&serveraddr, 0, sizeof(serveraddr));
 
-	int portNum = atoi(port);
-
 	serveraddr.sin_family = AF_INET;
-	serveraddr.sin_port = htons(portNum);
+	serveraddr.sin_port = htons(port);
 
 	// Em - 13/3/2015 - Allow binding to different address (to have multiple servers on same host with no client mod)
-	if(strlen(address) > 0) {
-		if(inet_aton(address, &serveraddr.sin_addr) < 0) {
-			g_Logs.server->info("Binding to all address for port %v because bind address %v is invalid", portNum, address);
+	if(address.length() > 0) {
+		if(inet_aton(address.c_str(), &serveraddr.sin_addr) < 0) {
+			g_Logs.server->info("Binding to all address for port %v because bind address %v is invalid", port, address);
 			serveraddr.sin_addr.s_addr = INADDR_ANY;
 		}
 		else {
-			g_Logs.server->info("Bound port %v to %v", portNum, address);
+			g_Logs.server->info("Bound port %v to %v", port, address);
 		}
 	}
 	else {
@@ -285,6 +283,10 @@ void SocketClass :: ShutdownServer(void)
 	}
 }
 
+int SocketClass :: AttemptSend(const std::string &string) {
+	return AttemptSend(string.c_str(), string.length());
+}
+
 int SocketClass :: AttemptSend(const char *buffer, int buflen)
 {
 	//Returns the number of bytes sent, or -1 of failure so that the calling function
@@ -342,6 +344,10 @@ int SocketClass :: AttemptSend(const char *buffer, int buflen)
 		return pos;
 
 	return -1;
+}
+
+int SocketClass :: AttemptSendNoBlock(const std::string &string) {
+	return AttemptSendNoBlock(string.c_str(), string.length());
 }
 
 int SocketClass :: AttemptSendNoBlock(const char *buffer, int buflen)

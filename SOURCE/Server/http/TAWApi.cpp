@@ -19,6 +19,7 @@
 #include "../Chat.h"
 #include "../Util.h"
 #include "../Account.h"
+#include "../GameConfig.h"
 #include "../Creature.h"
 #include "../Simulator.h"
 #include "../Character.h"
@@ -272,7 +273,7 @@ bool CreditShopHandler::handleAuthenticatedPost(CivetServer *server,
 			if (csItem.mPriceCurrency == Currency::CREDITS
 					|| csItem.mPriceCurrency == Currency::COPPER_CREDITS) {
 				css->credits -= csItem.mPriceCredits;
-				if (g_Config.AccountCredits) {
+				if (g_GameConfig.UseAccountCredits) {
 					accPtr->Credits = css->credits;
 					accPtr->PendingMinorUpdates++;
 				}

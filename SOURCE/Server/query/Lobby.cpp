@@ -21,6 +21,7 @@
 #include "../Account.h"
 #include "../Ability2.h"
 #include "../Config.h"
+#include "../GameConfig.h"
 #include "../URL.h"
 #include "../util/Log.h"
 #include <algorithm>
@@ -84,7 +85,7 @@ int PersonaListHandler::handleQuery(SimulatorThread *sim,
 				return 0;
 			}
 
-			if (g_Config.AprilFools != 0) {
+			if (g_GameConfig.AprilFools != 0) {
 				WritePos += PutByte(&sim->SendBuf[WritePos], 6); //6 character data strings
 				WritePos += PutStringUTF(&sim->SendBuf[WritePos],
 						cce->display_name.c_str()); //Seems to be sent twice in 0.8.9.  Unknown purpose.

@@ -1,6 +1,12 @@
-# Configuring The Server
+# Server And Cluster Configuration
 
-This page gives a quick overview of the main configuration files. If you have installed our official packages, there should be no need to copy the sample configuration files, as defaults will have installed.
+This page gives a quick overview of the main configuration files, used to control the technical aspects of the game such as network configuration, authentication etc. 
+
+If you have installed our official packages, there should be no need to copy the sample configuration files, as defaults will have installed.
+
+If you just want to adjust the behaviour of the game when it is running, see (Game Configuration)[GAME_CONFIGURATION.md].
+
+*The server must be restarted if you make any changes to these configuration files before they take effect*
 
 ## Locating The Configuration Files
 
@@ -117,6 +123,6 @@ NOTE: If you are setting up a cluster, MOST other options should the SAME on all
 
 `LogConfig.txt`
 
-Logging is provided by EasyLogging (https://muflihun.github.io/easyloggingpp/). See this site for detailed information on how logging is configured.
+Logging is provided by [EasyLogging](https://muflihun.github.io/easyloggingpp/). See this site for detailed information on how logging is configured.
 
 If you are just starting out, there should be no need to change anything in this file. All logs by default will go to the *Logs* folder. 

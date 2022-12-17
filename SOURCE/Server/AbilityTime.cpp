@@ -2,6 +2,7 @@
 #include "Ability2.h"
 
 #include "Config.h"
+#include "GameConfig.h"
 #include "StringUtil.h"
 #include <string.h>
 #include "util/Log.h"
@@ -143,7 +144,7 @@ void ActiveBuffManager :: DebugLogBuffs(const char *label)
 		const char *cat = g_AbilityManager.ResolveBuffCategoryName(buffList[i].buffType);
 		g_Logs.server->debug("ab:%v,abgid:%v,tier:%v,cat:%v,timeleft:%v", buffList[i].abID, buffList[i].abgID, buffList[i].tier, cat, ( buffList[i].castEndTimeMS - g_ServerTime) / 1000);
 	}
-	if(g_Config.PersistentBuffs) {
+	if(g_GameConfig.UsePersistentBuffs) {
 		g_Logs.server->debug("Persistent Active ability buffs (%v)", label);
 		for(size_t i = 0; i < persistentBuffList.size(); i++)
 		{
@@ -156,7 +157,7 @@ void ActiveBuffManager :: DebugLogBuffs(const char *label)
 void ActiveBuffManager :: CopyFrom(const ActiveBuffManager &source)
 {
 	buffList.assign(source.buffList.begin(), source.buffList.end());
-	if(g_Config.PersistentBuffs) {
+	if(g_GameConfig.UsePersistentBuffs) {
 		persistentBuffList.assign(source.persistentBuffList.begin(), source.persistentBuffList.end());
 	}
 }

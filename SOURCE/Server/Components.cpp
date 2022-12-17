@@ -40,7 +40,7 @@ Platform_CriticalSection :: Platform_CriticalSection()
 	Clear();
 }
 
-Platform_CriticalSection :: Platform_CriticalSection(const char *name)
+Platform_CriticalSection :: Platform_CriticalSection(const std::string &name)
 {
 	Clear();
 	SetDebugName(name);
@@ -52,9 +52,9 @@ void Platform_CriticalSection :: Clear(void)
 	initialized = false;
 	notifyWait = false;
 	disabled = false;
-	lastLock = NULL;
+	lastLock = "";
 	lockCount = 0;
-	memset(debugName, 0, sizeof(debugName));
+	debugName = "";
 	useDebugMessages = false;
 	acquireTime = 0;
 }
@@ -96,9 +96,9 @@ void Platform_CriticalSection :: Init(void)
 	}
 }
 
-void Platform_CriticalSection :: SetDebugName(const char *name)
+void Platform_CriticalSection :: SetDebugName(const std::string &name)
 {
-	strncpy(debugName, name, sizeof(debugName) - 1);
+	debugName = name;
 	useDebugMessages = true;
 	notifyWait = true;
 }
@@ -127,7 +127,7 @@ void Platform_CriticalSection :: Reset(void)
 	Init();
 }
 
-void Platform_CriticalSection :: Enter(const char *requestDesc)
+void Platform_CriticalSection :: Enter(const std::string &requestDesc)
 {
 	if(disabled == true)
 		return;
@@ -189,50 +189,13 @@ void Platform_CriticalSection :: Leave(void)
 		//g_Log.AddMessageFormatW(MSG_SHOW, "[DEBUG] LEAVE CriticalSection[%s]", debugName);
 	}
 #endif
-	lastLock = NULL;
+	lastLock = "";
 }
 
 int Platform_CriticalSection :: GetLockCount(void)
 {
 	return lockCount;
 }
-
-
-//
-//	Creating Threads
-//
-//  Note: for thread creation, windows returns a handle (nonzero) and Linux
-//  returns zero on success.  These functions are modified to always return nonzero
-//  on success.
-
-#ifndef HAS_PTHREAD
-
-int Platform_CreateThread(size_t stackSize, void* ptrRoutine, void* ptrArgs, DWORD* threadID)
-{
-	HANDLE res = CreateThread(NULL, stackSize, (LPTHREAD_START_ROUTINE)ptrRoutine, ptrArgs, 0, threadID);
-	return (res != NULL);
-}
-
-#else //# HAS_PTHREAD
-
-int Platform_CreateThread(size_t stackSize, void* ptrRoutine, void* ptrArgs, unsigned long *threadID)
-{
-	pthread_t thread;
-	pthread_attr_t threadAttr;
-	pthread_attr_init(&threadAttr);
-	pthread_attr_setstacksize(&threadAttr, stackSize);
-    pthread_attr_setdetachstate(&threadAttr, PTHREAD_CREATE_DETACHED);
-	int res = pthread_create(&thread, &threadAttr, (PLATFORM_FUNCTIONPTR)ptrRoutine, ptrArgs);
-	if(res != 0)
-		return 0;
-	return 1;
-}
-
-#endif //# HAS_PTHREAD
-
-
-
-
 
 //
 //	Thread Sleeping

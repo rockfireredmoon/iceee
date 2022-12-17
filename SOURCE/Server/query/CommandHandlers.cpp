@@ -38,6 +38,9 @@
 #include "../AIScript2.h"
 #include "../Cluster.h"
 #include "../Scheduler.h"
+#include "../GameConfig.h"
+#include <boost/format.hpp>
+#include <string.h>
 
 //
 //AbstractCommandHandler
@@ -685,6 +688,60 @@ int GiveIDHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 	wpos += PrepExt_QueryResponseString(&sim->SendBuf[wpos], query->ID, "OK");
 	return wpos;
 }
+
+
+
+
+//
+//GamConfigHandler
+//
+GameConfigHandler::GameConfigHandler() :
+		AbstractCommandHandler("Usage: /gameconfig", 0) {
+	mAllowedPermissions.push_back(Permission_Admin | Permission_Developer) ;
+}
+
+int GameConfigHandler::handleCommand(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	/*  Query: gameconfig
+	 List, get or set cluster wide game configuration.
+	 Args : [0] = optional name of configuration key to get.
+	 Args : [1] = optional name of configuration key to get.
+	 */
+	if (query->argCount > 0) {
+		auto key = query->GetStringObject(0);
+		if(key.compare("reload") == 0) {
+			g_ClusterManager.GameConfigChanged("","");
+			sim->SendInfoMessage("Reloaded game configuration from database.", INFOMSG_INFO);
+		}
+		else {
+			if(g_GameConfig.HasKey(key)) {
+				if(query->argCount > 1) {
+					g_GameConfig.Set(key, query->GetStringObject(1));
+					sim->SendInfoMessage("Configuration changed.", INFOMSG_INFO);
+				}
+				else {
+					sim->SendInfoMessage(str(boost::format("%s=%s")
+												% key
+												% g_GameConfig.Get(query->GetStringObject(0))).c_str(), INFOMSG_INFO);
+				}
+			}
+			else {
+				sim->SendInfoMessage("No such game configuration key. Type /gameconfig on it's own to list keys.", INFOMSG_ERROR);
+			}
+		}
+	}
+	else {
+		auto cfg = g_GameConfig.GetAll();
+		for (auto it =cfg.begin(); it != cfg.end(); ++it) {
+			sim->SendInfoMessage(str(boost::format("%s=%s")
+							% it->first
+							% it->second).c_str(), INFOMSG_INFO);
+		}
+	}
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
 //
 //GiveAllHandler
 //
@@ -1715,36 +1772,6 @@ int SetPermissionCHandler::handleCommand(SimulatorThread *sim,
 }
 
 //
-//SetBehaviorHandler
-//
-SetBehaviorHandler::SetBehaviorHandler() :
-		AbstractCommandHandler(
-				"Usage: /setbuildpermissions <accountName> <instanceId> [<x1>,<y1>,<x2>,<y2>]",
-				2) {
-	mAllowedPermissions.push_back(Permission_Admin);
-}
-
-int SetBehaviorHandler::handleCommand(SimulatorThread *sim,
-		CharacterServerData *pld, SimulatorQuery *query,
-		CreatureInstance *creatureInstance) {
-
-	//[0] = flag bit value
-	//[1] = state
-
-	if (query->argCount < 2)
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
-				"Usage: /setbehavior bitvalue state");
-
-	int value = atoi(query->args[0].c_str());
-	int state = atoi(query->args[1].c_str());
-	g_Config.SetAdministrativeBehaviorFlag(value, (state != 0) ? true : false);
-	sprintf(sim->Aux1, "BehaviorFlag is now: %lu",
-			g_Config.debugAdministrativeBehaviorFlags);
-	sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
-	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
-}
-
-//
 //DeriveSetHandler
 //
 DeriveSetHandler::DeriveSetHandler() :
@@ -2175,18 +2202,6 @@ int DtrigHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 		break;
 	case 24:
 		g_ActiveInstanceManager.DebugFlushInactiveInstances();
-		break;
-	case 50:
-		if (query->argCount > 1)
-			g_Config.AprilFools = query->GetInteger(1);
-		break;
-	case 51:
-		if (query->argCount > 1)
-			g_Config.AprilFoolsName = query->GetString(1);
-		break;
-	case 52:
-		if (query->argCount > 1)
-			g_Config.AprilFoolsAccount = query->GetInteger(1);
 		break;
 	case 100:
 		if (creatureInstance->CurrentTarget.targ != NULL)

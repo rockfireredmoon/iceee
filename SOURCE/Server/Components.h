@@ -50,6 +50,8 @@ FOR LINUX
 		USE_SEH_EXCEPTIONS   NOT SUPPORTED
 */
 
+#include <string.h>
+
 extern unsigned long g_ServerTime;
 extern unsigned long g_ServerLaunchTime;
 
@@ -118,25 +120,25 @@ class Platform_CriticalSection
 {
 public:
 	Platform_CriticalSection();
-	Platform_CriticalSection(const char *name);
+	Platform_CriticalSection(const std::string &name);
 	~Platform_CriticalSection();
 
-	void Enter(const char *requestDesc);
+	void Enter(const std::string &requestDesc);
 	void Leave(void);
 	int GetLockCount(void);
 	void Init(void);
 	void Delete(void);
 	void Reset(void);
-	void SetDebugName(const char *name);
+	void SetDebugName(const std::string &name);
 
 	bool initialized;
 	bool notifyWait; //Log a debug message if Enter() is called while lockCount is nonzero.
 	bool disabled;   //If true, locking and unlocking will be ignored.
 
 private:
-	const char *lastLock;
+	std::string lastLock;
 	volatile int lockCount;  //Set to 1 when Enter() is successful, set to 0 when Leave() is successful. 
-	char debugName[32];      //Holds the name of this critical section, used when reporting debug messages
+	std::string debugName;      //Holds the name of this critical section, used when reporting debug messages
 	bool useDebugMessages;   //If set to true, debug messages will be logged.
 #ifdef DEBUG_TIME
 	unsigned long acquireTime;
@@ -182,23 +184,6 @@ private:
 			PLATFORM_CLOSETHREAD();
 		}
 */
-
-
-#ifdef HAS_PTHREAD
-	typedef void*(*PLATFORM_FUNCTIONPTR)(void*);
-	#define PLATFORM_THREADRETURN    static void*
-	#define PLATFORM_THREADARGS      void*
-	#define PLATFORM_CLOSETHREAD(x)  pthread_exit(NULL);
-	int Platform_CreateThread(size_t stackSize, void* ptrRoutine, void* ptrArgs, unsigned long *threadID);
-#else
-	#define PLATFORM_THREADRETURN    DWORD WINAPI
-	#define PLATFORM_THREADARGS      LPVOID
-	//#define PLATFORM_CLOSETHREAD(x)  __noop;    //Formerly  ExitThread(0)  Turns out this function is intended for C and not C++.  Testing revealed that it could cause memory errors and crashes.
-	#define PLATFORM_CLOSETHREAD(x);
-	int Platform_CreateThread(size_t stackSize, void* ptrRoutine, void* ptrArgs, DWORD* threadID);
-#endif
-
-
 
 //
 //	Thread Sleeping

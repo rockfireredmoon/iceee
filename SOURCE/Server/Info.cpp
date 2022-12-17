@@ -1,5 +1,6 @@
 #include "Info.h"
 #include "Config.h"
+#include "GameConfig.h"
 #include "StringUtil.h"
 #include "Cluster.h"
 #include "util/Log.h"
@@ -57,24 +58,58 @@ InfoManager::InfoManager() {
 InfoManager::~InfoManager() {
 }
 
+std::string GetOverrideZone() {
+	STRINGLIST output;
+	Util::Split(g_GameConfig.OverrideStartLoc, ";", output);
+	return output[0];
+}
+
+STRINGLIST GetOverridePos() {
+	STRINGLIST output;
+	Util::Split(g_GameConfig.OverrideStartLoc, ";", output);
+	STRINGLIST output2;
+	Util::Split(output[1], ",", output2);
+	return output2;
+}
+
 int InfoManager::GetStartX() {
-	return g_Config.DefX < 0 ? mStartX : g_Config.DefX;
+	auto pos = GetOverridePos();
+	if(pos.size() > 2) {
+		return std::stoi(pos[0]);
+	}
+	return mStartX;
 }
 
 int InfoManager::GetStartY() {
-	return g_Config.DefY < 0 ? mStartY : g_Config.DefY;
+	auto pos = GetOverridePos();
+	if(pos.size() > 2) {
+		return std::stoi(pos[1]);
+	}
+	return mStartY;
 }
 
 int InfoManager::GetStartZ() {
-	return g_Config.DefZ < 0 ? mStartZ : g_Config.DefZ;
+	auto pos = GetOverridePos();
+	if(pos.size() > 2) {
+		return std::stoi(pos[2]);
+	}
+	return mStartZ;
 }
 
 int InfoManager::GetStartZone() {
-	return g_Config.DefZone < 0 ? mStartZone : g_Config.DefZone;
+	auto zone = GetOverrideZone();
+	if(zone.size() > 0)
+		return std::stoi(zone);
+	else
+		return mStartZone;
 }
 
 int InfoManager::GetStartRotation() {
-	return g_Config.DefRotation < 0 ? mStartX : g_Config.DefRotation;
+	auto pos = GetOverridePos();
+	if(pos.size() > 3) {
+		return std::stoi(pos[3]);
+	}
+	return mStartRotation;
 }
 
 std::string InfoManager::GetMOTD() {

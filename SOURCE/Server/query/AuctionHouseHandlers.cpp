@@ -18,6 +18,7 @@
 #include "AuctionHouseHandlers.h"
 #include "../ByteBuffer.h"
 #include "../Config.h"
+#include "../GameConfig.h"
 #include "../Chat.h"
 #include "../Instance.h"
 #include "../AuctionHouse.h"
@@ -76,7 +77,7 @@ int AuctionHouseContentsHandler::handleQuery(SimulatorThread *sim,
 
 	// First row contains some auction data
 	wpos += PutByte(&sim->SendBuf[wpos], 2);
-	Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2), "%f", g_Config.PercentageCommisionPerHour);
+	Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2), "%f", g_GameConfig.PercentageCommisionPerHour);
 	wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux2);
 	wpos += PutStringUTF(&sim->SendBuf[wpos], auctioneerInstance->css.display_name);
 
@@ -121,17 +122,17 @@ int AuctionHouseAuctionHandler::handleQuery(SimulatorThread *sim,
 	int days = atoi(query->GetString(1));
 	int hours = atoi(query->GetString(2));
 	int totalHours = (days * 24) + hours;
-	if (totalHours < g_Config.MinAuctionHours) {
+	if (totalHours < g_GameConfig.MinAuctionHours) {
 		Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2),
 				"Auction too short. Must be at least %d hours.",
-				g_Config.MinAuctionHours);
+				g_GameConfig.MinAuctionHours);
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, sim->Aux2);
 	}
 
-	if (totalHours > g_Config.MaxAuctionHours) {
+	if (totalHours > g_GameConfig.MaxAuctionHours) {
 		Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2),
 				"Auction too long. Can be at most %d hours.",
-				g_Config.MaxAuctionHours);
+				g_GameConfig.MaxAuctionHours);
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, sim->Aux2);
 	}
 
@@ -159,9 +160,9 @@ int AuctionHouseAuctionHandler::handleQuery(SimulatorThread *sim,
 
 	// Work out the commission and make sure the player has enough coin/credits
 	unsigned long copperCommision = (unsigned long) ((double) copper
-			* (g_Config.PercentageCommisionPerHour / 100) * totalHours);
+			* (g_GameConfig.PercentageCommisionPerHour / 100) * totalHours);
 	unsigned long creditsCommision = (unsigned long) ((double) credits
-			* (g_Config.PercentageCommisionPerHour / 100) * totalHours);
+			* (g_GameConfig.PercentageCommisionPerHour / 100) * totalHours);
 
 	if ((int)copperCommision > creatureInstance->css.copper) {
 		Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2),
@@ -172,13 +173,13 @@ int AuctionHouseAuctionHandler::handleQuery(SimulatorThread *sim,
 				sim->Aux2);
 	}
 
-	if ((g_Config.AccountCredits && (int)creditsCommision > pld->accPtr->Credits)
-			|| (!g_Config.AccountCredits
+	if ((g_GameConfig.UseAccountCredits && (int)creditsCommision > pld->accPtr->Credits)
+			|| (!g_GameConfig.UseAccountCredits
 					&& (int)creditsCommision > creatureInstance->css.credits)) {
 		Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2),
 				"You do not have enough credits to list this item. %lu are required, but you only have %lu.",
 				creditsCommision,
-				g_Config.AccountCredits ?
+				g_GameConfig.UseAccountCredits ?
 						pld->accPtr->Credits :
 						(int)creditsCommision > creatureInstance->css.copper);
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
@@ -353,7 +354,7 @@ int AuctionHouseBuyHandler::handleQuery(SimulatorThread *sim,
 
 	if (item.mBuyItNowCredits > 0) {
 		creatureInstance->css.credits -= item.mBuyItNowCredits;
-		if (g_Config.AccountCredits) {
+		if (g_GameConfig.UseAccountCredits) {
 			pld->accPtr->Credits = creatureInstance->css.credits;
 			pld->accPtr->PendingMinorUpdates++;
 			if(sellerAccount != NULL) {

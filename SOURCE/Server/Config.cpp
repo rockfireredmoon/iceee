@@ -144,17 +144,7 @@ bool LoadConfig(std::string filename) {
 				g_ErrorSleep = lfr.BlockToInt(1);
 			} else if (strcmp(NameBlock, "MainSleep") == 0) {
 				g_MainSleep = lfr.BlockToInt(1);
-			} else if (strcmp(NameBlock, "DefX") == 0) {
-				g_Config.DefX = lfr.BlockToInt(1);
-			} else if (strcmp(NameBlock, "DefY") == 0) {
-				g_Config.DefY = lfr.BlockToInt(1);
-			} else if (strcmp(NameBlock, "DefZ") == 0) {
-				g_Config.DefZ = lfr.BlockToInt(1);
-			} else if (strcmp(NameBlock, "DefZone") == 0) {
-				g_Config.DefZone = lfr.BlockToInt(1);
-			} else if (strcmp(NameBlock, "DefRotation") == 0) {
-				g_Config.DefRotation = lfr.BlockToInt(1);
-			} else if (strcmp(NameBlock, "HTTPBaseFolder") == 0) {
+			}  else if (strcmp(NameBlock, "HTTPBaseFolder") == 0) {
 				g_Config.HTTPBaseFolder = lfr.BlockToString(1);
 			} else if (strcmp(NameBlock, "HTTPCARFolder") == 0) {
 				g_Config.HTTPCARFolder = lfr.BlockToString(1);
@@ -192,10 +182,7 @@ bool LoadConfig(std::string filename) {
 						0);
 			} else if (strcmp(NameBlock, "ProperSceneryList") == 0) {
 				g_Config.ProperSceneryList = lfr.BlockToIntC(1);
-			} else if (strcmp(NameBlock, "BuybackLimit") == 0) {
-				g_Config.BuybackLimit = lfr.BlockToIntC(1);
-			} else if (strcmp(NameBlock, "Upgrade") == 0)
-				g_Config.Upgrade = lfr.BlockToIntC(1);
+			}
 			else if (strcmp(NameBlock, "HeartbeatIntervalMS") == 0)
 				g_Config.HeartbeatIntervalMS = lfr.BlockToIntC(1);
 			else if (strcmp(NameBlock, "HeartbeatAbortCount") == 0)
@@ -214,16 +201,8 @@ bool LoadConfig(std::string filename) {
 				g_Config.IdleCheckCastInterval = lfr.BlockToIntC(1);
 			else if (strcmp(NameBlock, "IdleCheckDistanceTolerance") == 0)
 				g_Config.IdleCheckDistanceTolerance = lfr.BlockToIntC(1);
-			else if (strcmp(NameBlock, "EnvironmentCycle") == 0)
-				g_Config.EnvironmentCycle = lfr.BlockToString(1);
 			else if (strcmp(NameBlock, "SendLobbyHeartbeat") == 0)
-				g_Config.SendLobbyHeartbeat = lfr.BlockToBoolC(1);
-			else if (strcmp(NameBlock, "CapExperienceLevel") == 0)
-				g_Config.CapExperienceLevel = lfr.BlockToIntC(1);
-			else if (strcmp(NameBlock, "CapExperienceAmount") == 0)
-				g_Config.CapExperienceAmount = lfr.BlockToIntC(1);
-			else if (strcmp(NameBlock, "CustomAbilityMechanics") == 0)
-				g_Config.CustomAbilityMechanics = lfr.BlockToBoolC(1);
+				g_Config.UseLobbyHeartbeat = lfr.BlockToBoolC(1);
 			else if (strcmp(NameBlock, "DebugPingServer") == 0)
 				g_Config.DebugPingServer = lfr.BlockToBoolC(1);
 			else if (strcmp(NameBlock, "DebugPingClient") == 0)
@@ -246,65 +225,18 @@ bool LoadConfig(std::string filename) {
 				g_Config.HTTPAuthDomain = lfr.BlockToString(1);
 			else if (strcmp(NameBlock, "PartyPositionSendInterval") == 0)
 				g_Config.PartyPositionSendInterval = lfr.BlockToIntC(1);
-			else if (strcmp(NameBlock, "VaultDefaultSize") == 0)
-				g_Config.VaultDefaultSize = lfr.BlockToIntC(1);
-			else if (strcmp(NameBlock, "VaultInitialPurchaseSize") == 0)
-				g_Config.VaultInitialPurchaseSize = lfr.BlockToIntC(1);
 			else if (strcmp(NameBlock, "DebugPacketSendTrigger") == 0)
 				g_Config.DebugPacketSendTrigger = lfr.BlockToIntC(1);
 			else if (strcmp(NameBlock, "DebugPacketSendDelay") == 0)
 				g_Config.DebugPacketSendDelay = lfr.BlockToIntC(1);
 			else if (strcmp(NameBlock, "DebugPacketSendMessage") == 0)
 				g_Config.DebugPacketSendMessage = lfr.BlockToBoolC(1);
-			else if (strcmp(NameBlock, "GlobalMovementBonus") == 0)
-				g_Config.GlobalMovementBonus = lfr.BlockToIntC(1);
-			else if (strcmp(NameBlock, "AllowEliteMob") == 0)
-				g_Config.AllowEliteMob = lfr.BlockToBoolC(1);
-			else if (strcmp(NameBlock, "DexBlockDivisor") == 0)
-				g_Config.DexBlockDivisor = lfr.BlockToFloatC(1);
-			else if (strcmp(NameBlock, "DexParryDivisor") == 0)
-				g_Config.DexParryDivisor = lfr.BlockToFloatC(1);
-			else if (strcmp(NameBlock, "DexDodgeDivisor") == 0)
-				g_Config.DexDodgeDivisor = lfr.BlockToFloatC(1);
-			else if (strcmp(NameBlock, "SpiResistDivisor") == 0)
-				g_Config.SpiResistDivisor = lfr.BlockToFloatC(1);
-			else if (strcmp(NameBlock, "PsyResistDivisor") == 0)
-				g_Config.PsyResistDivisor = lfr.BlockToFloatC(1);
 			else if (strcmp(NameBlock, "ForceMaxPacketSize") == 0)
 				g_Config.ForceMaxPacketSize = lfr.BlockToIntC(1);
 			else if (strcmp(NameBlock, "SceneryAuditDelay") == 0)
 				g_Config.SceneryAuditDelay = lfr.BlockToIntC(1);
 			else if (strcmp(NameBlock, "SceneryAuditAllow") == 0)
 				g_Config.SceneryAuditAllow = lfr.BlockToBoolC(1);
-			else if (strcmp(NameBlock, "MegaLootParty") == 0)
-				g_Config.MegaLootParty = lfr.BlockToBoolC(1);
-			else if (strcmp(NameBlock, "LootMaxRandomizedLevel") == 0)
-				g_Config.LootMaxRandomizedLevel = lfr.BlockToIntC(1);
-			else if (strcmp(NameBlock, "LootMaxRandomizedSpecialLevel") == 0)
-				g_Config.LootMaxRandomizedSpecialLevel = lfr.BlockToIntC(1);
-			else if (strcmp(NameBlock, "LootNamedMobSpecial") == 0)
-				g_Config.LootNamedMobSpecial = lfr.BlockToBoolC(1);
-			else if (strcmp(NameBlock, "LootMinimumMobRaritySpecial") == 0)
-				g_Config.LootMinimumMobRaritySpecial = lfr.BlockToIntC(1);
-			else if (strcmp(NameBlock, "HeroismQuestLevelTolerance") == 0)
-				g_Config.HeroismQuestLevelTolerance = lfr.BlockToIntC(1);
-			else if (strcmp(NameBlock, "HeroismQuestLevelPenalty") == 0)
-				g_Config.HeroismQuestLevelPenalty = lfr.BlockToIntC(1);
-			else if (strcmp(NameBlock, "NamedMobDropMultiplier") == 0)
-				g_Config.NamedMobDropMultiplier =
-						static_cast<float>(lfr.BlockToDblC(1));
-			else if (strcmp(NameBlock, "NamedMobCreditDrops") == 0)
-				g_Config.NamedMobCreditDrops = lfr.BlockToIntC(1);
-			else if (strcmp(NameBlock, "ProgressiveDropRateBonusMult") == 0)
-				Util::AssignFloatArrayFromStringSplit(
-						g_Config.ProgressiveDropRateBonusMult,
-						COUNT_ARRAY_ELEMENTS(
-								g_Config.ProgressiveDropRateBonusMult),
-						lfr.BlockToStringC(1, 0));
-			else if (strcmp(NameBlock, "ProgressiveDropRateBonusMultMax") == 0)
-				g_Config.ProgressiveDropRateBonusMultMax = lfr.BlockToFloatC(1);
-			else if (strcmp(NameBlock, "DropRateBonusMultMax") == 0)
-				g_Config.DropRateBonusMultMax = lfr.BlockToFloatC(1);
 			else if (strcmp(NameBlock, "UseIntegerHealth") == 0) {
 				g_Config.UseIntegerHealth = lfr.BlockToBool(1);
 				StatManager::SetHealthToInteger(g_Config.UseIntegerHealth);
@@ -314,8 +246,6 @@ bool LoadConfig(std::string filename) {
 				g_Config.UseStopSwim = lfr.BlockToBool(1);
 			else if (strcmp(NameBlock, "UseWeather") == 0)
 				g_Config.UseWeather = lfr.BlockToBool(1);
-			else if (strcmp(NameBlock, "UseReagents") == 0)
-				g_Config.UseReagents = lfr.BlockToBool(1);
 			else if (strcmp(NameBlock, "UseUserAgentProtection") == 0)
 				g_Config.UseUserAgentProtection = lfr.BlockToBool(1);
 			else if (strcmp(NameBlock, "InvalidLoginMessage") == 0)
@@ -328,6 +258,8 @@ bool LoadConfig(std::string filename) {
 				g_Config.ServiceAuthURL = lfr.BlockToStringC(1, 0);
 			else if (strcmp(NameBlock, "VerifyMovement") == 0)
 				g_Config.VerifyMovement = lfr.BlockToBool(1);
+			else if (strcmp(NameBlock, "VerifySpeed") == 0)
+				g_Config.VerifySpeed = lfr.BlockToBool(1);
 			else if (strcmp(NameBlock, "DebugLogAIScriptUse") == 0)
 				g_Config.DebugLogAIScriptUse = lfr.BlockToBool(1);
 			else if (strcmp(NameBlock, "SquirrelGCCallCount") == 0)
@@ -340,20 +272,6 @@ bool LoadConfig(std::string filename) {
 				g_Config.SquirrelVMStackSize = lfr.BlockToIntC(1);
 			else if (strcmp(NameBlock, "SquirrelQueueSpeed") == 0)
 				g_Config.SquirrelQueueSpeed = lfr.BlockToIntC(1);
-			else if (strcmp(NameBlock, "PersistentBuffs") == 0)
-				g_Config.PersistentBuffs = lfr.BlockToBool(1);
-			else if (strcmp(NameBlock, "FallDamage") == 0)
-				g_Config.FallDamage = lfr.BlockToBool(1);
-			else if (strcmp(NameBlock, "PartyLoot") == 0)
-				g_Config.PartyLoot = lfr.BlockToBool(1);
-			else if (strcmp(NameBlock, "AccountCredits") == 0)
-				g_Config.AccountCredits = lfr.BlockToBool(1);
-			else if (strcmp(NameBlock, "MinPVPPlayerLootItems") == 0)
-				g_Config.MinPVPPlayerLootItems = lfr.BlockToIntC(1);
-			else if (strcmp(NameBlock, "MaxPVPPlayerLootItems") == 0)
-				g_Config.MaxPVPPlayerLootItems = lfr.BlockToIntC(1);
-			else if (strcmp(NameBlock, "NameChangeCost") == 0)
-				g_Config.NameChangeCost = lfr.BlockToInt(1);
 			else if (strcmp(NameBlock, "SSLVerifyPeer") == 0)
 				g_Config.SSLVerifyPeer = lfr.BlockToBool(1);
 			else if (strcmp(NameBlock, "SSLVerifyHostname") == 0)
@@ -405,22 +323,9 @@ bool LoadConfig(std::string filename) {
 					g_Logs.data->error("Invalid OAuth2Client string [%v] in config file [%v]",
 							lfr.BlockToString(0), filename);
 				}
-			} else if (strcmp(NameBlock, "Clans") == 0)
-				g_Config.Clans = lfr.BlockToBool(1);
-			else if (strcmp(NameBlock, "ClanCost") == 0)
-				g_Config.ClanCost = lfr.BlockToInt(1);
-			else if (strcmp(NameBlock, "MaxAuctionHours") == 0)
-				g_Config.MaxAuctionHours = lfr.BlockToInt(1);
-			else if (strcmp(NameBlock, "MinAuctionHours") == 0)
-				g_Config.MinAuctionHours = lfr.BlockToInt(1);
-			else if (strcmp(NameBlock, "MinAuctionHours") == 0)
-				g_Config.PercentageCommisionPerHour = lfr.BlockToFloatC(1);
-			else if (strcmp(NameBlock, "MaxAuctionExpiredHours") == 0)
-				g_Config.MaxAuctionExpiredHours = lfr.BlockToInt(1);
+			}
 			else if (strcmp(NameBlock, "ShutdownHandlerScript") == 0)
 				g_Config.ShutdownHandlerScript = lfr.BlockToStringC(1, 0);
-			else if (strcmp(NameBlock, "MaxNewCreditShopItemDays") == 0)
-				g_Config.MaxNewCreditShopItemDays = lfr.BlockToFloatC(1);
 			else if (strcmp(NameBlock, "StaticDataPath") == 0)
 				g_Config.StaticDataPath = lfr.BlockToStringC(1, 0);
 			else if (strcmp(NameBlock, "VariableDataPath") == 0)
@@ -503,13 +408,6 @@ int LoadStringKeyValFile(std::string filename, vector<StringKeyVal> &list) {
 GlobalConfigData::GlobalConfigData() {
 	//Set defaults for config settings.
 	ProperSceneryList = 1;
-	BuybackLimit = 32;
-
-	MegaLootParty = false;
-	CapValourLevel = 0;
-
-	debugAdministrativeBehaviorFlags = 0;
-	Upgrade = 0;
 
 	HeartbeatIntervalMS = 10000;
 	HeartbeatAbortCount = -1; //Requires a modded client to perform this task, so disable by default.
@@ -523,29 +421,19 @@ GlobalConfigData::GlobalConfigData() {
 	IdleCheckCastInterval = 60000; //1 minute
 	IdleCheckDistanceTolerance = 100;
 
-	CapExperienceLevel = 70; //If the player level is this or greater, set incoming experience amount to the below value
-	CapExperienceAmount = 0; //Experience amount to give if the level cap is reached.
-
-	CustomAbilityMechanics = false;   //Classic emulation by default.
-
-	SendLobbyHeartbeat = false; //Requires a modified client to receive and handle the heartbeat message in Lobby mode.
+	UseLobbyHeartbeat = false; //Requires a modified client to receive and handle the heartbeat message in Lobby mode.
 
 	DebugPingServer = false;     //Modded client required.
 	DebugPingClient = false;     //Modded client required.
 	DebugPingFrequency = 1000;   //Milliseconds.
 	DebugPingClientPollInterval = 60;  //Number of pings between status polling.
 	DebugPingServerLogThreshold = 2000; //Log all pings higher than this to file.
+	DebugPacketSendTrigger = 128;
+	DebugPacketSendDelay = 0;
+	DebugPacketSendMessage = false;
+	ForceMaxPacketSize = 1000;
 	internalStatus_PingID = 0;
 	internalStatus_PingCount = 0;
-
-	DefX = -1;
-	DefY = -1;
-	DefZ = -1;
-	DefRotation = -1;
-	DefZone = -1;
-
-	AprilFools = 0;
-	AprilFoolsAccount = 0;
 
 	HTTPBacklog = 200;
 	HTTPThreads = 50;
@@ -554,51 +442,17 @@ GlobalConfigData::GlobalConfigData() {
 	HTTPAuthDomain= "";
 	PartyPositionSendInterval = 15000;
 
-	VaultDefaultSize = 16;
-	VaultInitialPurchaseSize = 8;
-
-	GlobalMovementBonus = 0;
-	AllowEliteMob = true;
-	DexBlockDivisor = 0.0F;
-	DexParryDivisor = 0.0F;
-	DexDodgeDivisor = 0.0F;
-	SpiResistDivisor = 0.0F;
-	PsyResistDivisor = 0.0F;
-
-	NamedMobDropMultiplier = 4.0F;
-	NamedMobCreditDrops = 1;
-
 	SceneryAuditDelay = 120000;  //2 minutes;
 	SceneryAuditAllow = true;
 
-	LootMaxRandomizedLevel = 50;
-	LootMaxRandomizedSpecialLevel = 55;
-	LootNamedMobSpecial = true;
-	LootMinimumMobRaritySpecial = 2;
-
-	HeroismQuestLevelTolerance = 3;
-	HeroismQuestLevelPenalty = 4;
-
-	DebugPacketSendTrigger = 128;
-	DebugPacketSendDelay = 0;
-	DebugPacketSendMessage = false;
-	ForceMaxPacketSize = 1000;
-
-	ProgressiveDropRateBonusMult[0] = 0.0025F;
-	ProgressiveDropRateBonusMult[1] = 0.0050F;
-	ProgressiveDropRateBonusMult[2] = 0.0100F;
-	ProgressiveDropRateBonusMult[3] = 0.0200F;
-	ProgressiveDropRateBonusMultMax = 2.0F;
-	DropRateBonusMultMax = 200.0F;
-
-	UseIntegerHealth = false;
-	UseMessageBox = false;
-	UseStopSwim = false;
+	UseIntegerHealth = true;
+	UseMessageBox = true;
+	UseStopSwim = true;
 	UseWeather = true;
-	UseReagents = false;
 	UseUserAgentProtection = true;
 
 	VerifyMovement = false;
+	VerifySpeed = false;
 	DebugLogAIScriptUse = false;
 	DebugVerbose = false;
 
@@ -607,15 +461,6 @@ GlobalConfigData::GlobalConfigData() {
 	SquirrelGCMaxDelay = 60000;
 	SquirrelVMStackSize = 512;
 	SquirrelQueueSpeed = 10000;
-
-	PersistentBuffs = false;
-	PartyLoot = false;
-	FallDamage = false;
-
-	AccountCredits = true;
-	NameChangeCost = 300;
-	MinPVPPlayerLootItems = 0;
-	MaxPVPPlayerLootItems = 0;
 
 	SSLVerifyPeer = true;
 	SSLVerifyHostname = true;
@@ -641,16 +486,6 @@ GlobalConfigData::GlobalConfigData() {
 
 	SiteServiceUsername = "";
 	SiteServicePassword = "";
-
-	Clans = true;
-	ClanCost = 100000;
-	EnvironmentCycle = "Sunrise=05:30,Day=08:30,Sunset=18:00,Night=20:30";
-
-	MaxAuctionHours = 24 * 7;
-	MinAuctionHours = 1;
-	PercentageCommisionPerHour = 5.0 / 24;
-	MaxAuctionExpiredHours = 24;
-	MaxNewCreditShopItemDays = 14;
 
 	ShutdownHandlerScript = "";
 
@@ -706,21 +541,21 @@ std::string GlobalConfigData::ResolveSimulatorAddress() {
 		return g_SimulatorAddress;
 }
 
-std::string GlobalConfigData::ResolveHTTPAddress() {
+std::string GlobalConfigData::ResolveHTTPAddress(std::string simAddress) {
 	if(HTTPAddress == "") {
 #ifndef NO_SSL
 		if(g_HTTPSListenPort > 0)
 		{
 			if(g_HTTPSListenPort == 443)
-				return StringUtil::Format("https://%s/Release/Current", ResolveSimulatorAddress().c_str());
+				return StringUtil::Format("https://%s/Release/Current", simAddress.c_str());
 			else
-				return StringUtil::Format("https://%s:%d/Release/Current", ResolveSimulatorAddress().c_str(), g_HTTPSListenPort);
+				return StringUtil::Format("https://%s:%d/Release/Current", simAddress.c_str(), g_HTTPSListenPort);
 		}
 #endif
 		if(g_HTTPListenPort == 80)
-			return StringUtil::Format("http://%s/Release/Current", ResolveSimulatorAddress().c_str());
+			return StringUtil::Format("http://%s/Release/Current", simAddress.c_str());
 		else {
-			return StringUtil::Format("http://%s:%d/Release/Current", ResolveSimulatorAddress().c_str(), g_HTTPListenPort);
+			return StringUtil::Format("http://%s:%d/Release/Current", simAddress.c_str(), g_HTTPListenPort);
 		}
 	}
 	else
@@ -731,16 +566,4 @@ bool GlobalConfigData::RemotePasswordMatch(const char *value) {
 	if (RemoteAuthenticationPassword.compare(value) == 0)
 		return true;
 	return false;
-}
-
-void GlobalConfigData::SetAdministrativeBehaviorFlag(unsigned long bitValue,
-		bool state) {
-	if (state == true)
-		debugAdministrativeBehaviorFlags |= bitValue;
-	else
-		debugAdministrativeBehaviorFlags &= (~(bitValue));
-}
-
-bool GlobalConfigData::HasAdministrativeBehaviorFlag(unsigned long bitValue) {
-	return ((debugAdministrativeBehaviorFlags & bitValue) != 0);
 }

@@ -9,6 +9,7 @@
 #include "Debug.h"
 #include "Util.h"
 #include "Config.h"
+#include "GameConfig.h"
 #include "Globals.h"
 #include "Cluster.h"
 #include "PartyManager.h"
@@ -56,7 +57,7 @@
 
 //This is the main function of the simulator thread.  A thread must be created for each port
 //since the connecting function will halt until a connection is established.
-PLATFORM_THREADRETURN SimulatorThreadProc(PLATFORM_THREADARGS lpParam);
+//PLATFORM_THREADRETURN SimulatorThreadProc(PLATFORM_THREADARGS lpParam);
 
 const int UNREFASHION_LOWERBOUND = 8980; //These items remove a refashioned effect.
 const int UNREFASHION_UPPERBOUND = 8989;
@@ -208,7 +209,6 @@ SimulatorManager::SimulatorManager() {
 	cs.notifyWait = false;
 	cs.Init();
 	nextFlushTime = 0;
-
 	curl_global_init(CURL_GLOBAL_DEFAULT);
 
 }
@@ -548,7 +548,6 @@ SimulatorThread::SimulatorThread() {
 	firstConnect = true;
 
 	memset(LogBuffer, 0, sizeof(LogBuffer));
-	InternalIndex = 0;
 	InternalID = 0;
 	GlobalThreadID = 0;
 
@@ -642,52 +641,42 @@ void SimulatorThread::ResetValues(bool hardReset) {
 	PendingHeartbeatResponse = 0;
 }
 
-int SimulatorThread::InitThread(int instanceindex, int globalThreadID) {
-	InternalIndex = instanceindex;
+void SimulatorThread::InitThread(int globalThreadID) {
 	GlobalThreadID = globalThreadID;
-
-	int res = Platform_CreateThread(0, (void*) SimulatorThreadProc, this,
-			&ThreadID);
-	if (res == 0)
-		g_Logs.simulator->error("[%v] Could not create thread.", InternalID);
-
-	return res;
+	boost::thread t( { &SimulatorThread::RunMain, this });
+	t.detach();
 }
 
-//This thread exists outside the class, but a new instance is created when a new
-//thread is launched.  It takes a parameter of the address back to its simulator class
-//so it can call the necessary functions.
-//DWORD WINAPI SimulatorThreadProc(LPVOID lpParam)
-PLATFORM_THREADRETURN SimulatorThreadProc(PLATFORM_THREADARGS lpParam)
-{
-	SimulatorThread *controller = (SimulatorThread*)lpParam;
-	if(controller->sim_cs.initialized == false)
+void SimulatorThread::RunMain() {
+	//This thread exists outside the class, but a new instance is created when a new
+	//thread is launched.  It takes a parameter of the address back to its simulator class
+	//so it can call the necessary functions.
+	//DWORD WINAPI SimulatorThreadProc(LPVOID lpParam)
+	if(sim_cs.initialized == false)
 	{
 		g_Logs.simulator->fatal("Simulator critical section is not initialized.");
-		return 0;
+		return;
 	}
-	controller->LastUpdate = g_ServerTime;
-	controller->isThreadActive = true;
-	controller->isThreadExist = true;
-	controller->Status = Status_Init;
+	LastUpdate = g_ServerTime;
+	isThreadActive = true;
+	isThreadExist = true;
+	Status = Status_Init;
 
 	AdjustComponentCount(1);
 
 	//The Simulator will loop within its own main function until it's shut down, or
 	//a critical error is encountered.
-	controller->RunMainLoop();
+	RunMainLoop();
 
 	//controller->sc.ShutdownServer();
 	//controller->Disconnect("SimulatorThreadProc");
 	//controller->Connected = false;
 
-	controller->isThreadExist = false;
-	controller->LastUpdate = g_ServerTime;
+	isThreadExist = false;
+	LastUpdate = g_ServerTime;
 	AdjustComponentCount(-1);
-	controller->AddPendingDisconnect();
-	g_Logs.simulator->info("Thread for Sim:%v shut down.", controller->InternalID);
-	PLATFORM_CLOSETHREAD(0);
-	return 0;
+	AddPendingDisconnect();
+	g_Logs.simulator->info("Thread for Sim:%v shut down.", InternalID);
 }
 
 void SimulatorThread::RunMainLoop(void) {
@@ -788,7 +777,7 @@ void SimulatorThread::RunMainLoop(void) {
 		BEGINCATCH
 		{
 			g_Logs.simulator->fatal("Exception occurred in [Sim:%v]",
-					InternalIndex);
+					InternalID);
 			ForceErrorMessage("CRITICAL ERROR: EMERGENCY DISCONNECT",
 					INFOMSG_ERROR);
 			Disconnect("RunMainLoop");
@@ -1392,7 +1381,7 @@ void SimulatorThread::SetPersona(int personaIndex) {
 
 	LoadCharacterSession();
 
-	if (g_Config.AccountCredits) {
+	if (g_GameConfig.UseAccountCredits) {
 		creatureInst->css.credits = pld.accPtr->Credits;
 	}
 
@@ -1749,7 +1738,7 @@ void SimulatorThread::MainCallHelperInstanceUnregister(void) {
 		return;
 
 	int wpos = PrepExt_RemoveCreature(SendBuf, creatureInst->CreatureID);
-	creatureInst->actInst->LSendToAllSimulator(SendBuf, wpos, InternalIndex);
+	creatureInst->actInst->LSendToAllSimulator(SendBuf, wpos, InternalID);
 
 	creatureInst->actInst->SidekickUnregister(creatureInst);
 	g_ActiveInstanceManager.FlushSimulator(InternalID);
@@ -1979,7 +1968,7 @@ void SimulatorThread::AddMessage(long param1, long param2, int message) {
 	 g_Logs.simulator->error("Could not add BroadCast event.");
 	 */
 	MessageComponent msg;
-	msg.SimulatorID = InternalIndex;
+	msg.SimulatorID = InternalID;
 	msg.actInst = creatureInst->actInst;
 	msg.param1 = param1;
 	msg.param2 = param2;
@@ -2863,7 +2852,7 @@ int SimulatorThread::CheckDistance(int creatureID) {
 }
 
 void SimulatorThread::Debug_GenerateReport(ReportBuffer *report) {
-	report->AddLine("Sim:%d", InternalIndex);
+	report->AddLine("Sim:%d", InternalID);
 	if (creatureInst != NULL)
 		report->AddLine("display_name=%s", creatureInst->css.display_name);
 	if (pld.accPtr != NULL) {
@@ -3499,6 +3488,24 @@ std::string SimulatorThread::ShardSet(std::string shardName,
 		std::string charName) {
 	if (creatureInst->Speed != 0) {
 		return "You must be stationary.";
+	}
+
+	auto canAlwaysSwitch = CheckPermissionSimple(Perm_Account,
+			Permission_Admin | Permission_Developer | Permission_Sage);
+
+	if(!canAlwaysSwitch) {
+		auto inRange = g_ZoneMarkerDataManager.GetSanctuaryInRange(
+				pld.zoneDef->mID, creatureInst->CurrentX,
+				creatureInst->CurrentZ, SANCTUARY_PROXIMITY_USE) != NULL;
+
+		if (pld.zoneDef->IsPVPArena() || pld.zoneDef->IsDungeon()) {
+			if(inRange) {
+				return "You may not switch shards in a dungeon or an arena.";
+			}
+			else {
+				return "You must be within range of a sanctuary, and not in a dungeon or an arena.";
+			}
+		}
 	}
 
 	Shard s = g_ClusterManager.GetActiveShard(shardName);

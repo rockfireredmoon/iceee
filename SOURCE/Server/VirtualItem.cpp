@@ -11,6 +11,8 @@ default static item database.
 #include <algorithm>
 #include "Debug.h"
 #include "Config.h"
+#include "GameConfig.h"
+#include "GameConfig.h"
 #include "Stats.h"
 #include "DirectoryAccess.h"
 #include "StringUtil.h"
@@ -130,17 +132,17 @@ void VirtualItemSpawnParams :: SetAllDropMult(float value)
 void VirtualItemSpawnParams :: ClampLimits(void)
 {
 	bool special = false;
-	if(namedMob == true && g_Config.LootNamedMobSpecial == true)
+	if(namedMob == true && g_GameConfig.LootNamedMobSpecial == true)
 		special = true;
-	if(rarity >= g_Config.LootMinimumMobRaritySpecial)
+	if(rarity >= g_GameConfig.LootMinimumMobRaritySpecial)
 		special = true;
 
 	int levelLimit = 0;
-	if(g_Config.LootMaxRandomizedLevel > 0)
-		levelLimit = g_Config.LootMaxRandomizedLevel;
+	if(g_GameConfig.LootMaxRandomizedLevel > 0)
+		levelLimit = g_GameConfig.LootMaxRandomizedLevel;
 
-	if(special == true && g_Config.LootMaxRandomizedSpecialLevel > 0)
-		levelLimit = g_Config.LootMaxRandomizedSpecialLevel;
+	if(special == true && g_GameConfig.LootMaxRandomizedSpecialLevel > 0)
+		levelLimit = g_GameConfig.LootMaxRandomizedSpecialLevel;
 	
 	if(levelLimit != 0)
 		level = Util::ClipInt(level, 1, levelLimit);
@@ -887,7 +889,7 @@ int ItemManager :: RollVirtualItem(VirtualItemSpawnParams &viParams)
 		rarity = viParams.minimumQuality;
 
 
-	if(g_Config.MegaLootParty && rarity < VirtualItemModSystem::MIN_QUALITY_LEVEL) {
+	if(g_GameConfig.MegaLootParty && rarity < VirtualItemModSystem::MIN_QUALITY_LEVEL) {
 		rarity = VirtualItemModSystem::MIN_QUALITY_LEVEL;
 	}
 

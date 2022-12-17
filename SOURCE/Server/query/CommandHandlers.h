@@ -140,6 +140,13 @@ public:
 	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class GameConfigHandler : public AbstractCommandHandler {
+public:
+	GameConfigHandler();
+	~GameConfigHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
 class ForceAbilityHandler : public AbstractCommandHandler {
 public:
 	ForceAbilityHandler();
@@ -353,13 +360,6 @@ class SetPermissionCHandler : public AbstractCommandHandler {
 public:
 	SetPermissionCHandler();
 	~SetPermissionCHandler() {};
-	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
-};
-
-class SetBehaviorHandler : public AbstractCommandHandler {
-public:
-	SetBehaviorHandler();
-	~SetBehaviorHandler() {};
 	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 

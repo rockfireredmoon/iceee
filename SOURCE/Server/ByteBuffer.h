@@ -54,6 +54,7 @@ int GetInteger(const char *buffer, size_t &advance);
 //the extract substring is converted into a numeric value of the required type and
 //returned.
 char *GetStringUTF(const char *buffer, char *recbuf, int bufsize, size_t &advance);
+std::string GetCPPStringUTF(const char *buffer, int bufsize, size_t &advance);
 float GetPartFloat(const char *buffer, size_t &start);
 
 #endif //BYTEBUFFER_H

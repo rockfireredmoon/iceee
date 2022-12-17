@@ -791,6 +791,7 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["esay"] = new EsayHandler();
 	g_QueryManager.queryHandlers["health"] = new HealthHandler();
 	g_QueryManager.queryHandlers["speed"] = new SpeedHandler();
+	g_QueryManager.queryHandlers["gameconfig"] = new GameConfigHandler();
 	g_QueryManager.queryHandlers["fa"] = new ForceAbilityHandler();
 	g_QueryManager.queryHandlers["partylowest"] = new PartyLowestHandler();
 	g_QueryManager.queryHandlers["who"] = new WhoHandler();
@@ -824,7 +825,6 @@ int InitServerMain(int argc, char *argv[]) {
 			new SetBuildPermissionHandler();
 	g_QueryManager.queryHandlers["setpermissionc"] =
 			new SetPermissionCHandler();
-	g_QueryManager.queryHandlers["setbehavior"] = new SetBehaviorHandler();
 	g_QueryManager.queryHandlers["deriveset"] = new DeriveSetHandler();
 	g_QueryManager.queryHandlers["igstatus"] = new IGStatusHandler();
 	g_QueryManager.queryHandlers["partyzap"] = new PartyZapHandler();
@@ -905,9 +905,6 @@ int InitServerMain(int argc, char *argv[]) {
 	if (!g_ClusterManager.Init()) {
 		return 0;
 	}
-
-	g_EnvironmentCycleManager.Init();
-	g_EnvironmentCycleManager.ApplyConfig(g_Config.EnvironmentCycle);
 
 	g_CharacterManager.CreateDefaultCharacter();
 	g_ItemManager.LoadData();
@@ -1111,10 +1108,8 @@ int InitServerMain(int argc, char *argv[]) {
 	LogMessage("WSAStartup failed: %d\n", res);
 #endif
 
-	if (g_Config.Upgrade == 0) {
-		Router.SetBindAddress(g_BindAddress);
-		SimulatorBase.SetBindAddress(g_BindAddress);
-	}
+	Router.SetBindAddress(g_BindAddress);
+	SimulatorBase.SetBindAddress(g_BindAddress);
 
 //	if(g_HTTPListenPort > 0 && g_Config.Upgrade == 0)
 //	{
@@ -1145,7 +1140,7 @@ int InitServerMain(int argc, char *argv[]) {
 		}
 	}
 
-	if (g_RouterPort != 0 && g_Config.Upgrade == 0) {
+	if (g_RouterPort != 0) {
 		Router.SetHomePort(g_RouterPort);
 		Router.SetTargetPort(g_SimulatorPort);
 		Router.InitThread(0, g_GlobalThreadID++);
@@ -1154,11 +1149,11 @@ int InitServerMain(int argc, char *argv[]) {
 	SimulatorBase.SetHomePort(g_SimulatorPort);
 	SimulatorBase.InitThread(0, g_GlobalThreadID++);
 
-	g_PacketManager.LaunchThread();
-	g_SceneryManager.LaunchThread();
+	g_PacketManager.InitThread();
+	g_SceneryManager.InitThread();
 
 	// setup leaderboard
-	g_LeaderboardManager.mBoards.push_back(new CharacterLeaderboard());
+	g_LeaderboardManager.AddBoard(new CharacterLeaderboard());
 	g_LeaderboardManager.InitThread(g_GlobalThreadID++);
 
 	g_Logs.data->info("Server data has finished loading.");
@@ -1232,10 +1227,8 @@ int InitServerMain(int argc, char *argv[]) {
 	if (VerifyOperation() == false)
 		g_ServerStatus = SERVER_STATUS_STOPPED;
 
-	RunUpgradeCheck();
-
 	g_ClusterManager.Ready();
-	g_EnvironmentCycleManager.RescheduleUpdate();
+	g_EnvironmentCycleManager.Init();
 	g_Scheduler.Init();
 	g_Logs.server->verbose(0, "The server is ready");
 
@@ -1411,16 +1404,15 @@ bool VerifyOperation(void) {
 }
 
 void ShutDown(void) {
-	g_ClusterManager.Shutdown();
+	g_ClusterManager.PreShutdown();
 
 	g_Logs.FlushAll();
-	g_Logs.CloseAll();
 
 	//VarDump();
 	CheckCharacterAutosave(true);
 
-	g_PacketManager.ShutdownThread();
-	g_SceneryManager.ShutdownThread();
+	g_PacketManager.Shutdown();
+	g_SceneryManager.Shutdown();
 
 	g_SceneryManager.CheckAutosave(true);
 	g_AccountManager.RunUpdateCycle(true);
@@ -1443,16 +1435,14 @@ void ShutDown(void) {
 	if (g_RouterPort != 0) {
 		if (Router.isExist == true) {
 			g_Logs.server->info("Shutting down Router");
-			Router.isActive = false;
-			Router.sc.ShutdownServer();
+			Router.Shutdown();
 		}
 	}
 
 	g_LeaderboardManager.Shutdown();
 
 	g_Logs.server->info("Shutting down SimulatorBase");
-	SimulatorBase.isActive = false;
-	SimulatorBase.sc.ShutdownServer();
+	SimulatorBase.Shutdown();
 	g_Logs.server->info("Threads shut down, disconnecting all clients...");
 
 	SIMULATOR_IT it;
@@ -1513,6 +1503,12 @@ void UnloadResources(void) {
 	pendingOperations.Free();
 	g_SimulatorManager.Free();
 	g_Logs.FlushAll();
+
+	// Stop the database
+	g_ClusterManager.Shutdown();
+
+	g_Logs.FlushAll();
+	g_Logs.CloseAll();
 	//Debugger.Destroy();
 	TRACE_FREE();
 }
@@ -1650,7 +1646,7 @@ void SendHeartbeatMessages(void) {
 		if (it->isConnected == false)
 			continue;
 
-		if (it->ProtocolState == 0 && g_Config.SendLobbyHeartbeat == false)
+		if (it->ProtocolState == 0 && g_Config.UseLobbyHeartbeat == false)
 			continue;
 
 		//Don't send any message if they're actively sending data to the server.
@@ -1927,14 +1923,6 @@ void Debug_FullDump(void) {
 #endif
 	}
 	fclose(output);
-}
-
-void RunUpgradeCheck(void) {
-	if (g_Config.Upgrade <= 0)
-		return;
-
-	g_Logs.server->info("g_Config: Server upgraded, shutting down.");
-	g_ServerStatus = SERVER_STATUS_STOPPED;
 }
 
 void BroadcastLocationToParty(SimulatorThread &player) {

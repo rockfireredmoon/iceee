@@ -13,6 +13,8 @@ cppredis_inc = include_directories('SOURCE/LibCPPRedis/includes')
 tacopie_inc = include_directories('SOURCE/LibCPPRedis/tacopie/includes')
 
 #Dependencies
+
+boost_dep = dependency('boost', modules : ['thread', 'system'])
 thread_dep = dependency('threads')
 curl_dep = dependency('libcurl')
 openssl_dep = dependency('openssl', required: false)
@@ -211,6 +213,7 @@ server_lib = library('tawd-server',[
 	'SOURCE/Server/Forms.cpp',
 	'SOURCE/Server/Fun.cpp',
 	'SOURCE/Server/Gamble.cpp',
+	'SOURCE/Server/GameConfig.cpp',
 	'SOURCE/Server/Globals.cpp',
 	'SOURCE/Server/Guilds.cpp',
 	'SOURCE/Server/GM.cpp',
@@ -309,14 +312,14 @@ server_lib = library('tawd-server',[
 	'SOURCE/Server/util/easylogging++.cc',
 	'SOURCE/Server/util/Log.cpp'], 
 	include_directories : [squirrel_inc, sqstdlib_lib_inc, cppredis_inc, tacopie_inc],
-	dependencies: [thread_dep, curl_dep],
+	dependencies: [thread_dep, curl_dep,boost_dep],
   	install : true,
   	version: meson.project_version(),
 	link_with: [squirrel_lib,sqstdlib_lib,cppredis_lib,tacopie_lib])
 
 #Main Daemon
 server_lib_cppargs = []
-if get_option('service') and build_machine.system() == 'windows'
+if get_option('service') and host_machine.system() == 'windows'
 	server_lib_cppargs += '-DWINDOWS_SERVICE=1'
 endif
 executable('tawd', 'SOURCE/Daemon/main.cpp', 
@@ -429,6 +432,7 @@ install_headers(
 	'SOURCE/Server/AbilityTime.h',
 	'SOURCE/Server/Daily.h',
 	'SOURCE/Server/Gamble.h',
+	'SOURCE/Server/GameConfig.h',
 	'SOURCE/Server/Audit.h',
 	'SOURCE/Server/RotatingList.h',
 	'SOURCE/Server/util/JsonHelpers.h',
@@ -634,7 +638,7 @@ install_headers(
 	'SOURCE/squirrel/sqstdlib/sqstdstream.h',
 	'SOURCE/squirrel/sqstdlib/sqstdblobimpl.h', subdir: 'tawd/squirrel')
     
-if get_option('service') and build_machine.system() == 'linux'
+if get_option('service') and host_machine.system() == 'linux'
 	if get_option('sysvinit')
 		install_data(sources: 'Etc/Linux/tawd', install_dir : get_option('sysconfdir') + '/etc/init.d')
 		install_data(sources: 'Etc/Linux/eehttpd', install_dir : get_option('sysconfdir') + '/etc/init.d')

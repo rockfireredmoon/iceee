@@ -23,6 +23,7 @@
 #include "../ChatChannel.h"
 #include "../Debug.h"
 #include "../Config.h"
+#include "../GameConfig.h"
 #include "../util/Log.h"
 
 //
@@ -516,7 +517,7 @@ int PartyHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	} else if (strcmp(command, "loot.mode") == 0) {
 		ActiveParty *party = g_PartyManager.GetPartyByID(
 				creatureInstance->PartyID);
-		if (!g_Config.PartyLoot)
+		if (!g_GameConfig.UsePartyLoot)
 			sim->SendInfoMessage("Party loot modes are currently disabled.",
 					INFOMSG_ERROR);
 		else if (party == NULL)
@@ -552,7 +553,7 @@ int PartyHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	} else if (strcmp(command, "loot.flags") == 0) {
 		ActiveParty *party = g_PartyManager.GetPartyByID(
 				creatureInstance->PartyID);
-		if (!g_Config.PartyLoot)
+		if (!g_GameConfig.UsePartyLoot)
 			sim->SendInfoMessage("Party loot modes are currently disabled.",
 					INFOMSG_ERROR);
 		else if (party == NULL)

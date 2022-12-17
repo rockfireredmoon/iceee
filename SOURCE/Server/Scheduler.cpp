@@ -4,8 +4,8 @@
 #include "util/Log.h"
 #include "StringUtil.h"
 
+
 #define MAX_TASKS_PER_CYCLE 5
-#define POOL_SIZE 5
 
 Scheduler g_Scheduler;
 
@@ -36,32 +36,36 @@ ScheduledTimerTask::~ScheduledTimerTask() {
 //
 
 Scheduler::Scheduler() {
+	mPool = new boost::asio::thread_pool(POOL_SIZE);
 	mRunning = true;
 	mNextTaskId = 0;
 	mNextRun = 0;
 }
 
+Scheduler::~Scheduler() {
+	Shutdown();
+}
+
 void Scheduler::Init() {
-	/* Setup thread pool */
-	for(int i = 0 ; i < POOL_SIZE; i++) {
-		PooledWorker *worker = new PooledWorker(i);
-		if(Platform_CreateThread(0, (void*)worker->ThreadProc, worker, NULL) == 0) {
-			g_Logs.server->error("Failed to create worker thread %v", i);
-		}
-		else {
-			workers.push_back(worker);
-		}
-	}
 }
 
 void Scheduler::Shutdown() {
-	mRunning = false;
-	g_Logs.server->info("Shutting down scheduler, %v tasks to clear", scheduled.size());
-	mMutex.lock();
-	scheduled.clear();
-	mQueue.Clear();
-	mMutex.unlock();
-	g_Logs.server->info("Shut down scheduler");
+	if(mRunning) {
+		mMutex.lock();
+		mRunning = false;
+		g_Logs.server->info("Shutting down scheduler, %v tasks to clear", scheduled.size());
+		g_Logs.server->info("REMOVEME Stopping POOL");
+		mPool->stop();
+		g_Logs.server->info("REMOVEME Stopping QUEUE");
+		mQueue.stop();
+		g_Logs.server->info("REMOVEME Stopping SCHED");
+		scheduled.clear();
+		g_Logs.server->info("REMOVEME Stopping DEL");
+		delete mPool;
+		g_Logs.server->info("REMOVEME Stopping UNL");
+		mMutex.unlock();
+		g_Logs.server->info("Shut down scheduler");
+	}
 }
 
 void Scheduler::Cancel(int id) {
@@ -87,17 +91,20 @@ void Scheduler::RunProcessingCycle() {
 		if(now > mNextRun) {
 			ScheduledTimerTask t = scheduled[0];
 			scheduled.erase(scheduled.begin());
-			if(g_Logs.server->enabled(el::Level::Debug))
-				g_Logs.server->debug("Scheduled task running %v", t.mTaskId);
-			mMutex.unlock();
-			t.mTask();
-			mMutex.lock();
+			if(g_Logs.server->enabled(el::Level::Trace))
+				g_Logs.server->trace("Scheduled task running %v", t.mTaskId);
+
+//			mMutex.unlock();
+//			t.mTask();
+//			mMutex.lock();
+
+			mQueue.post(t.mTask);
 
 			// Update next run time
 			if(scheduled.size() > 0) {
 				mNextRun = scheduled[0].mWhen;
-				if(g_Logs.server->enabled(el::Level::Debug))
-					g_Logs.server->debug("Next scheduler task will run in %v", StringUtil::FormatTimeHHMMSSmm(mNextRun - g_ServerTime));
+				if(g_Logs.server->enabled(el::Level::Trace))
+					g_Logs.server->trace("Next scheduler task will run in %v", StringUtil::FormatTimeHHMMSSmm(mNextRun - g_ServerTime));
 			}
 			else {
 				mNextRun = 0;
@@ -108,11 +115,15 @@ void Scheduler::RunProcessingCycle() {
 			break;
 	}
 	mMutex.unlock();
+
+	mQueue.run();
+	mMutex.lock();
+	mQueue.restart();
+	mMutex.unlock();
 }
 
-int Scheduler::Pool(const TaskType& task) {
-	mQueue.Push(task);
-	return 0;
+void Scheduler::Pool(const TaskType& task) {
+	boost::asio::post(*mPool, task);
 }
 
 int Scheduler::ScheduleIn(const TaskType& task, unsigned long when) {
@@ -125,14 +136,14 @@ int Scheduler::Schedule(const TaskType& task, unsigned long when) {
 	}
 	ScheduledTimerTask taskWrapper(task, when);
 	if(g_Logs.server->enabled(el::Level::Debug))
-			g_Logs.server->debug("This scheduler task will run in %v", StringUtil::FormatTimeHHMMSSmm(when - g_ServerTime));
+			g_Logs.server->debug("This scheduler (id: %v) task will run in %v", mNextTaskId, StringUtil::FormatTimeHHMMSSmm(when - g_ServerTime));
 	mMutex.lock();
 	taskWrapper.mTaskId = mNextTaskId++;
 	scheduled.push_back(taskWrapper);
 	sort(scheduled.begin(), scheduled.end(), ScheduledTaskSort);
 	mNextRun = scheduled[0].mWhen;
-	if(g_Logs.server->enabled(el::Level::Debug))
-			g_Logs.server->debug("Next scheduler task will run in %v", StringUtil::FormatTimeHHMMSSmm(mNextRun - g_ServerTime));
+	if(g_Logs.server->enabled(el::Level::Trace))
+			g_Logs.server->trace("Next scheduler task will run in %v", StringUtil::FormatTimeHHMMSSmm(mNextRun - g_ServerTime));
 	mMutex.unlock();
 	return taskWrapper.mTaskId;
 }
@@ -141,43 +152,12 @@ bool Scheduler::IsRunning() {
 	return mRunning;
 }
 
-int Scheduler::Submit(const TaskType& task) {
+int Scheduler::Schedule(const TaskType& task) {
 	return Schedule(task, g_ServerTime);
 }
 
-bool Scheduler::PopPoolTask(TaskType &task) {
-	if(g_Logs.server->enabled(el::Level::Debug))
-		g_Logs.server->debug("Popping pool task");
-	bool r = mQueue.Pop(task);
-	if(g_Logs.server->enabled(el::Level::Debug))
-		g_Logs.server->debug("Popped pool task");
-	return r;
+void Scheduler::Submit(const TaskType& task) {
+	mQueue.post(task);
+	//Schedule(task, g_ServerTime);
 }
 
-PooledWorker::PooledWorker(int workerID) {
-	mWorkerID = workerID;
-}
-
-PooledWorker::~PooledWorker() {
-
-}
-
-void PooledWorker::ThreadProc(PooledWorker *object) {
-	object->Work();
-}
-
-void PooledWorker::Work() {
-	g_Logs.server->info("Starting pooled thread worker %v", mWorkerID);
-	while(g_Scheduler.IsRunning()) {
-		if(g_Logs.server->enabled(el::Level::Debug))
-			g_Logs.server->debug("Waiting for work on thread %v", mWorkerID);
-		TaskType t;
-		if(g_Scheduler.PopPoolTask(t)) {
-			t();
-			PLATFORM_SLEEP(g_MainSleep);
-		}
-		else
-			break;
-	}
-	g_Logs.server->info("Left scheduler worker loop");
-}

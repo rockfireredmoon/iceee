@@ -1,5 +1,6 @@
 #include "CreditShop.h"
 #include "Config.h"
+#include "GameConfig.h"
 #include "Util.h"
 #include "StringUtil.h"
 #include "FileReader.h"
@@ -298,7 +299,7 @@ int CreditShopManager::ValidateItem(CreditShopItem *csItem, AccountData *accPtr,
 
 	if (csItem->mPriceCurrency == Currency::CREDITS
 			|| csItem->mPriceCurrency == Currency::COPPER_CREDITS) {
-		if (g_Config.AccountCredits) {
+		if (g_GameConfig.UseAccountCredits) {
 			css->credits = accPtr->Credits;
 		}
 		if ((unsigned long) css->credits < csItem->mPriceCredits)

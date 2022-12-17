@@ -4,44 +4,19 @@
 #include "Globals.h"
 
 #include "Simulator.h"
-#include <stdlib.h>   //For itoa()
+#include <boost/format.hpp>
 #include "Util.h"
 #include "util/Log.h"
 
-PLATFORM_THREADRETURN SimulatorBaseThreadProc(PLATFORM_THREADARGS lpParam);
+//PLATFORM_THREADRETURN SimulatorBaseThreadProc(PLATFORM_THREADARGS lpParam);
 SimulatorBaseThread SimulatorBase;
 
 SimulatorBaseThread :: SimulatorBaseThread()
-{
-	ResetValues(true);
-	sc.SetDebugName("SIM_BASE");
-}
-
-SimulatorBaseThread :: ~SimulatorBaseThread()
-{
-	sc.ShutdownServer();
-}
-
-void SimulatorBaseThread :: SetHomePort(int port)
-{
-	//Takes an integer value and converts it into a port string, since this is what
-	//the socket init call requires.
-	HomePort = port;
-	sprintf(HomePortStr, "%d", port);
-}
-
-void SimulatorBaseThread :: SetBindAddress(const char *address)
-{
-	sprintf(BindAddress, "%s", address);
-}
-
-void SimulatorBaseThread :: ResetValues(bool fullRestart)
 {
 	//Erases the receiving buffer and resets the byte counters.
 	//Optionally if <fullRestart> is set to true, it performs a hard reset
 	//of the thread.
 	memset(RecBuf, 0, sizeof(RecBuf));
-	memset(LogBuffer, 0, sizeof(LogBuffer));
 
 	MessageCountRec = 0;
 
@@ -54,44 +29,40 @@ void SimulatorBaseThread :: ResetValues(bool fullRestart)
 	SendBytes = 0;
 	TotalSendBytes = 0;
 
-	if(fullRestart == true)
-	{
-		ThreadID = 0;
-		isExist = false;
-		isActive = false;
-		Status = Status_Init;
-		memset(HomePortStr, 0, sizeof(HomePortStr));
-		HomePort = 0;
-	}
+	ThreadID = 0;
+	isExist = false;
+	isActive = false;
+	Status = Status_Init;
+	HomePort = 0;
+
+	mThread = NULL;
+
+	sc.SetDebugName("SIM_BASE");
 }
 
-int SimulatorBaseThread :: InitThread(int instanceindex, int globalThreadID)
+SimulatorBaseThread :: ~SimulatorBaseThread()
+{
+	sc.ShutdownServer();
+}
+
+void SimulatorBaseThread :: SetHomePort(int port)
+{
+	HomePort = port;
+}
+
+void SimulatorBaseThread :: SetBindAddress(const std::string &address)
+{
+	BindAddress = address;
+}
+
+
+void SimulatorBaseThread :: InitThread(int instanceindex, int globalThreadID)
 {
 	//LogMessageL("[HTTP:%d] Address: %08X", instanceindex, this);
-	ResetValues(false);
 	InternalIndex = instanceindex;
 	GlobalThreadID = globalThreadID;
 
-	//Set to active now because the thread might launch and quit 
-	//before it gets set to active later.
-
-	/*
-	HANDLE h = CreateThread( NULL, 0, (LPTHREAD_START_ROUTINE)SimulatorBaseThreadProc, this, 0, &ThreadID);
-	if(h == NULL)
-	{
-		isActive = false;
-		LogMessageL("[SimB] Could not create thread.");
-		return 1;
-	}
-	*/
-	int r = Platform_CreateThread(0, (void*)SimulatorBaseThreadProc, this, &ThreadID);
-	if(r == 0)
-	{
-		isActive = false;
-		g_Logs.simulator->error("[SimB] Could not create thread.");
-		return 1;
-	}
-	return 0;
+	mThread = new boost::thread( { &SimulatorBaseThread::RunMain, this });
 }
 
 void SimulatorBaseThread :: OnConnect(void)
@@ -99,38 +70,31 @@ void SimulatorBaseThread :: OnConnect(void)
 	return;
 }
 
-void SimulatorBaseThread :: Restart(void)
-{
-	sc.ShutdownServer();
-	Status = Status_Init;
-}
 void SimulatorBaseThread :: Shutdown(void)
 {
 	isActive = false;
-	Status = Status_Restart;
 	sc.ShutdownServer();
+	mThread->join();
+	delete mThread;
 }
 
-PLATFORM_THREADRETURN SimulatorBaseThreadProc(PLATFORM_THREADARGS lpParam)
-{
-	SimulatorBaseThread *controller = (SimulatorBaseThread*)lpParam;
-
-	controller->isActive = true;
-	controller->isExist = true;
+void SimulatorBaseThread :: RunMain(void) {
+	isActive = true;
+	isExist = true;
 	AdjustComponentCount(1);
 
-	controller->RunMainLoop();
+	RunMainLoop();
 
 	// Thread has been deactivated, shut it down
-	controller->sc.ShutdownServer();
+	sc.ShutdownServer();
 
 	g_Logs.simulator->info("[SimB] Thread shut down.");
 
-	controller->isExist = false;
+	isExist = false;
 
 	AdjustComponentCount(-1);
-	return 0;
 }
+
 
 void SimulatorBaseThread :: RunMainLoop(void)
 {
@@ -146,7 +110,7 @@ void SimulatorBaseThread :: RunMainLoop(void)
 		}
 		else if(Status == Status_Init)
 		{
-			if(sc.CreateSocket(HomePortStr, BindAddress) == 0)
+			if(sc.CreateSocket(HomePort, BindAddress) == 0)
 			{
 				g_Logs.simulator->info("[SimB] Server created, awaiting connection on port %v (socket:%v).", HomePort, sc.ListenSocket);
 				Status = Status_Wait;
@@ -174,27 +138,15 @@ void SimulatorBaseThread :: RunMainLoop(void)
 				else {
 					g_Logs.simulator->info("Socket error: %v", sc.GetErrorMessage());
 					//This shouldn't normally fail.  Need a complete restart.
-					Status = Status_Restart;
+					Status = Status_Wait;
 				}
 			}
-		}
-		else if(Status == Status_Restart)
-		{
-			g_Logs.simulator->info("[SimB] Disconnecting server.");
-			sc.ShutdownServer();
-			Status = Status_Init;
-			PLATFORM_SLEEP(g_ErrorSleep);
 		}
 		else if(Status == Status_Kick)
 		{
 			g_Logs.simulator->info("[SimB] Kicking client.");
 			sc.DisconnectClient();
 			Status = Status_Wait;  //Wait for another connection.
-		}
-		else
-		{
-			g_Logs.simulator->error("[SimB] Unknown status.");
-			Status = Status_Restart;
 		}
 		//Keep it from burning up unnecessary CPU cycles.
 		PLATFORM_SLEEP(SleepDelayNormal);
@@ -218,20 +170,15 @@ int SimulatorBaseThread :: LaunchSimulatorThread(void)
 			simPtr->ResetValues(true);
 			simPtr->InternalID = g_SimulatorManager.nextSimulatorID++;
 			simPtr->sim_cs.Reset();
-			char buffer[256];
-			sprintf(buffer, "CS_SIM:%d", simPtr->InternalID);
 			simPtr->sim_cs.Init();
-			simPtr->sim_cs.SetDebugName(buffer);
+			simPtr->sim_cs.SetDebugName(str(boost::format("CS_SIM:%d") % simPtr->InternalID));
 			simPtr->sc.TransferClientSocketFrom(sc);
 			simPtr->sc.SetClientNoDelay();
 			simPtr->sc.SetTimeOut(5);
 			simPtr->LastUpdate = g_ServerTime;
 
-			int res = simPtr->InitThread(simPtr->InternalID, g_GlobalThreadID++);
-			if(res != 0)
-				g_Logs.simulator->info("[SimB] Passing over to simulator ID:%v (socket:%v).", simPtr->InternalID, sc.ClientSocket);
-			else
-				g_Logs.simulator->fatal("[SimB] Failed to launch thread. %v", simPtr->InternalID);
+			simPtr->InitThread(g_GlobalThreadID++);
+			g_Logs.simulator->info("[SimB] Passing over to simulator ID:%v (socket:%v).", simPtr->InternalID, sc.ClientSocket);
 		}
 		else
 		{

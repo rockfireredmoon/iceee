@@ -22,7 +22,7 @@ public:
 	~SocketClass();
 	void Clear(void);
 
-	int CreateSocket(char *port, const char *address);
+	int CreateSocket(unsigned int port, const std::string &address);
 	int Accept(void);
 	void DisconnectClient(void);
 	void ShutdownServer(void);
@@ -35,7 +35,9 @@ public:
 	sockaddr_in acceptData;
 	char debugName[32];  //Used to identify the owner of this socket, for debug purposes.
 
+	int AttemptSend(const std::string &buffer);
 	int AttemptSend(const char *buffer, int buflen);
+	int AttemptSendNoBlock(const std::string &buffer);
 	int AttemptSendNoBlock(const char *buffer, int buflen);
 	int tryrecv(char *buffer, int bufsize);
 	void TransferClientSocketFrom(SocketClass& source);

@@ -18,6 +18,7 @@
 #include "ClanHandlers.h"
 #include "../Account.h"
 #include "../Config.h"
+#include "../GameConfig.h"
 #include <algorithm>
 
 using namespace Clans;
@@ -137,7 +138,7 @@ int ClanCreateHandler::handleQuery(SimulatorThread *sim,
 	 Creates a clan
 	 Args: [clan]
 	 */
-	if (!g_Config.Clans)
+	if (!g_GameConfig.Clans)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Clans are not enabled.");
 
@@ -150,11 +151,11 @@ int ClanCreateHandler::handleQuery(SimulatorThread *sim,
 				"You may not create a clan, you are already part of one.");
 	}
 
-	if (creatureInstance->css.copper < (int)g_Config.ClanCost)
+	if (creatureInstance->css.copper < (int)g_GameConfig.ClanCost)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"You do not have enough gold to create a clan.");
 
-	creatureInstance->AdjustCopper(-g_Config.ClanCost);
+	creatureInstance->AdjustCopper(-g_GameConfig.ClanCost);
 
 	int clanID = g_ClanManager.FindClanID(query->args[0]);
 	if (clanID == -1) {
@@ -208,7 +209,7 @@ int ClanInfoHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	wpos += PutInteger(&sim->SendBuf[wpos], query->ID); //Query response index
 
 	int clanID = creatureInstance->charPtr->clan;
-	if (!g_Config.Clans || clanID == 0 || !g_ClanManager.HasClan(clanID)) {
+	if (!g_GameConfig.Clans || clanID == 0 || !g_ClanManager.HasClan(clanID)) {
 		wpos += PutShort(&sim->SendBuf[wpos], 0);
 	} else {
 		Clans::Clan c = g_ClanManager.GetClan(clanID);
@@ -240,7 +241,7 @@ int ClanMotdHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	 Set the motd.
 	 Args: [none]
 	 */
-	if (!g_Config.Clans)
+	if (!g_GameConfig.Clans)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Clans are not enabled.");
 
@@ -297,7 +298,7 @@ int ClanInviteAcceptHandler::handleQuery(SimulatorThread *sim,
 	 Invite a player.
 	 Args: [none]
 	 */
-	if (!g_Config.Clans)
+	if (!g_GameConfig.Clans)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Clans are not enabled.");
 
@@ -380,7 +381,7 @@ int ClanInviteHandler::handleQuery(SimulatorThread *sim,
 	 Invite a player.
 	 Args: [none]
 	 */
-	if (!g_Config.Clans)
+	if (!g_GameConfig.Clans)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Clans are not enabled.");
 
@@ -430,7 +431,7 @@ int ClanRankHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	 Change a members rank.
 	 Args: member name, rank name
 	 */
-	if (!g_Config.Clans)
+	if (!g_GameConfig.Clans)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Clans are not enabled.");
 
@@ -523,7 +524,7 @@ int ClanListHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);   //Query response index
 
 	int clanID = creatureInstance->charPtr->clan;
-	if (!g_Config.Clans || clanID == 0 || !g_ClanManager.HasClan(clanID)) {
+	if (!g_GameConfig.Clans || clanID == 0 || !g_ClanManager.HasClan(clanID)) {
 		wpos += PutShort(&sim->SendBuf[wpos], 0);
 	} else {
 		Clans::Clan c = g_ClanManager.GetClan(clanID);
@@ -583,7 +584,7 @@ int ClanRemoveHandler::handleQuery(SimulatorThread *sim,
 	 Remove a clan member.
 	 Args: [member]
 	 */
-	if (!g_Config.Clans)
+	if (!g_GameConfig.Clans)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Clans are not enabled.");
 
@@ -673,7 +674,7 @@ int ClanLeaveHandler::handleQuery(SimulatorThread *sim,
 	/*  Query: clan.leave
 	 Leave a clan.
 	 */
-	if (!g_Config.Clans)
+	if (!g_GameConfig.Clans)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Clans are not enabled.");
 

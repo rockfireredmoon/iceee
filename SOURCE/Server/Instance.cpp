@@ -1,4 +1,5 @@
 #include "Components.h"
+#include "GameConfig.h"
 #include "Debug.h"
 #include "Cluster.h"
 #include "StringUtil.h"
@@ -614,7 +615,6 @@ ActiveInstance::ActiveInstance() {
 	nutScriptPlayer = NULL;
 	scriptPlayer = NULL;
 	pvpGame = NULL;
-
 	Clear();
 }
 
@@ -796,7 +796,7 @@ CreatureInstance * ActiveInstance::LoadPlayer(CreatureInstance *source,
 	//Return an index into the quick access array.
 	if (SimExist(simCall) >= 0) {
 		g_Logs.server->error("LoadPlayer() Sim:%v already exists, quitting",
-				simCall->InternalIndex);
+				simCall->InternalID);
 		return NULL;
 	}
 	RegSim.push_back(simCall);
@@ -814,7 +814,7 @@ CreatureInstance * ActiveInstance::LoadPlayer(CreatureInstance *source,
 	//CreatureID and CreatureDefID are the same for players
 	newItem.CreatureDefID = source->CreatureDefID;
 	//newItem.CreatureID = GetNewActorID();
-	newItem.CreatureID = 2000000 + simCall->InternalIndex;
+	newItem.CreatureID = 2000000 + simCall->InternalID;
 
 	//newItem.SimulatorIndex = source->SimulatorIndex;
 	newItem.simulatorPtr = source->simulatorPtr;
@@ -876,7 +876,7 @@ int ActiveInstance::UnloadPlayer(SimulatorThread *callSim) {
 	int r = SimExist(callSim);
 	if (r == -1) {
 		g_Logs.server->error("UnloadPlayer Sim:%v not found.",
-				callSim->InternalIndex);
+				callSim->InternalID);
 		return -1;
 	}
 
@@ -1240,7 +1240,7 @@ int ActiveInstance::LSendToAllSimulator(const char *buffer, int length,
 	int success = 0;
 	for (size_t i = 0; i < RegSim.size(); i++) {
 		if ((RegSim[i]->CheckStateGameplayProtocol() == true)
-				&& (RegSim[i]->InternalIndex != ignoreIndex)) {
+				&& (RegSim[i]->InternalID != ignoreIndex)) {
 			int res = RegSim[i]->AttemptSend(buffer, length);
 			if (res >= 0)
 				success++;
@@ -3878,12 +3878,12 @@ void ActiveInstance::NotifyKill(int mobRarity) {
 
 	//Make absolutely sure that our rarity index cannot exceed the data array size (0 to count-1)
 	static const int MAX_COUNT = COUNT_ARRAY_ELEMENTS(
-			g_Config.ProgressiveDropRateBonusMult);
+			g_GameConfig.ProgressiveDropRateBonusMult);
 	mobRarity = Util::ClipInt(mobRarity, 0, MAX_COUNT - 1);
 	mDropRateBonusMultiplier +=
-			g_Config.ProgressiveDropRateBonusMult[mobRarity];
+			g_GameConfig.ProgressiveDropRateBonusMult[mobRarity];
 	mDropRateBonusMultiplier = Util::ClipFloat(mDropRateBonusMultiplier, 1.0F,
-			g_Config.ProgressiveDropRateBonusMultMax);
+			g_GameConfig.ProgressiveDropRateBonusMultMax);
 
 	/*
 	 switch(mobRarity)
@@ -4023,14 +4023,14 @@ int ActiveInstanceManager::AddSimulator_Ex(PlayerInstancePlacementData &pd) {
 	CreatureInstance *cptr = ptr->LoadPlayer(pd.in_cInst, pd.in_simPtr);
 	if (cptr == NULL) {
 		g_Logs.server->error("AddSimulator() Failed to add Sim:%v to zone %v",
-				pd.in_simPtr->InternalIndex, pd.in_zoneID);
+				pd.in_simPtr->InternalID, pd.in_zoneID);
 		return -1;
 	}
 
 	cptr->BuildZoneString(ptr->mInstanceID, ptr->mZone, 0);
 	cptr->OnInstanceEnter(ptr->arenaRuleset);
 	g_Logs.server->info("Added Sim:%v to instance %v",
-			pd.in_simPtr->InternalIndex, ptr->mInstanceID);
+			pd.in_simPtr->InternalID, ptr->mInstanceID);
 	ptr->AdjustPlayerCount(1);
 
 	pd.out_cInst = cptr;

@@ -255,7 +255,7 @@ void RefreshThreads(ReportBuffer &report) {
 
 	SIMULATOR_IT it;
 	for (it = Simulator.begin(); it != Simulator.end(); ++it) {
-		report.AddLine("[Sim:%d] (%s) %s / %s (End: %d)", it->InternalIndex,
+		report.AddLine("[Sim:%d] (%s) %s / %s (End: %d)", it->InternalID,
 				StatusPhaseStrings[it->Status],
 				GetDataSizeStr(it->TotalSendBytes),
 				GetDataSizeStr(it->TotalRecBytes), it->MessageEnd);
@@ -497,7 +497,7 @@ void RefreshInstance(ReportBuffer &report) {
 		report.AddLine("Registered Simulators:");
 		for (b = 0; b < ainst->RegSim.size(); b++)
 			report.AddLine("Sim:%d (name: %s, ptr: %p)",
-					ainst->RegSim[b]->InternalIndex,
+					ainst->RegSim[b]->InternalID,
 					ainst->RegSim[b]->creatureInst->css.display_name,
 					ainst->RegSim[b]);
 

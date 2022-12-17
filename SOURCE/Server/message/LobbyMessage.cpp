@@ -51,11 +51,8 @@ int LobbyAuthenticateMessage::handleMessage(SimulatorThread *sim, CharacterServe
 
 	int simID = sim->InternalID;
 
-	char loginName[128];
-	char authHash[128];
-	GetStringUTF(&sim->readPtr[sim->ReadPos], loginName, sizeof(loginName), sim->ReadPos);  //login name
-	GetStringUTF(&sim->readPtr[sim->ReadPos], authHash, sizeof(authHash), sim->ReadPos);  //authorization hash or or X-CSRF-Token:sess_id:session_name:uid
-
+	std::string loginName = GetCPPStringUTF(&sim->readPtr[sim->ReadPos], 128, sim->ReadPos);  //login name
+	std::string authHash = GetCPPStringUTF(&sim->readPtr[sim->ReadPos], 128, sim->ReadPos);  //authorization hash or or X-CSRF-Token:sess_id:session_name:uid
 
 	g_Logs.simulator->info("Starting authentication for %v (%v) using %v", loginName, simID, authHandler->GetName());
 
@@ -63,6 +60,9 @@ int LobbyAuthenticateMessage::handleMessage(SimulatorThread *sim, CharacterServe
 	 * So we put the time consuming bit into a pool thread, then return to the server thread
 	 * once that is done.
 	 */
+
+	// TODO this pool is blocking sim switching authentication!
+
 	g_Scheduler.Pool([this, simID, authHandler, loginName, authHash](){
 		g_Logs.simulator->info("Starting first phase for %v (%v) using %v", loginName, simID, authHandler->GetName());
 
@@ -92,8 +92,13 @@ int LobbyAuthenticateMessage::handleMessage(SimulatorThread *sim, CharacterServe
 			/* Now the lengthy operation is over, complete authentication on the main server thread */
 
 			g_Logs.simulator->info("Submitting authentication on main thread for %v (%v)", accPtr->Name, simID);
-			g_Scheduler.Submit([this, accPtr, simID](){
-				g_Logs.server->info("Completing authentication on main thread for %v (%v)", accPtr->Name, simID);
+			auto accID = accPtr->ID;
+
+			g_Scheduler.Submit([this, accID, simID](){
+
+				auto innerAccPtr = g_AccountManager.FetchIndividualAccount(accID);
+
+				g_Logs.server->info("Completing authentication on main thread for %v (%v)", innerAccPtr->Name, simID);
 
 				SimulatorThread *sim = g_SimulatorManager.GetPtrByID(simID);
 				if(sim == NULL) {
@@ -101,7 +106,7 @@ int LobbyAuthenticateMessage::handleMessage(SimulatorThread *sim, CharacterServe
 					return;
 				}
 
-				if(g_Config.MaintenanceMessage.length() > 0 && accPtr->HasPermission(Perm_Account, Permission_Admin) == false && accPtr->HasPermission(Perm_Account, Permission_Sage) == false)	{
+				if(g_Config.MaintenanceMessage.length() > 0 && innerAccPtr->HasPermission(Perm_Account, Permission_Admin) == false && innerAccPtr->HasPermission(Perm_Account, Permission_Sage) == false)	{
 					Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "The server is currently unavailable due to mainenance. The reason given was '%s'", g_Config.MaintenanceMessage.c_str());
 					sim->ForceErrorMessage(sim->Aux1, INFOMSG_ERROR);
 					sim->Disconnect("SimulatorThread::handle_lobby_authenticate");
@@ -109,11 +114,11 @@ int LobbyAuthenticateMessage::handleMessage(SimulatorThread *sim, CharacterServe
 				}
 
 				//Check for ban.
-				if (accPtr->SuspendTimeSec >= 0) {
+				if (innerAccPtr->SuspendTimeSec >= 0) {
 					unsigned long timePassed = g_PlatformTime.getAbsoluteSeconds()
-							- accPtr->SuspendTimeSec;
-					if (timePassed < accPtr->SuspendDurationSec) {
-						unsigned long remain = accPtr->SuspendDurationSec - timePassed;
+							- innerAccPtr->SuspendTimeSec;
+					if (timePassed < innerAccPtr->SuspendDurationSec) {
+						unsigned long remain = innerAccPtr->SuspendDurationSec - timePassed;
 						Util::FormatTime(sim->Aux3, sizeof(sim->Aux3), remain);
 						Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
 								"Your account has been suspended. Time remaining: %s",
@@ -122,13 +127,13 @@ int LobbyAuthenticateMessage::handleMessage(SimulatorThread *sim, CharacterServe
 						sim->Disconnect("SimulatorThread::handle_lobby_authenticate");
 						return;
 					} else
-						accPtr->ClearBan();
+						innerAccPtr->ClearBan();
 				}
 
 				//Check for multiple logins.
-				if (g_ClusterManager.CountAccountSessions(accPtr->ID) > 0) {
-					if (accPtr->HasPermission(Perm_Account, Permission_Admin) == false) {
-						g_SimulatorManager.CheckIdleSimulatorBoot(accPtr);
+				if (g_ClusterManager.CountAccountSessions(innerAccPtr->ID) > 0) {
+					if (innerAccPtr->HasPermission(Perm_Account, Permission_Admin) == false) {
+						g_SimulatorManager.CheckIdleSimulatorBoot(innerAccPtr);
 						sim->ForceErrorMessage("That account is already logged in.",
 								INFOMSG_ERROR);
 						sim->Disconnect("SimulatorThread::handle_lobby_authenticate");
@@ -136,14 +141,14 @@ int LobbyAuthenticateMessage::handleMessage(SimulatorThread *sim, CharacterServe
 					}
 				}
 
-				g_Logs.event->info("[ACCOUNT] Account '%v' logged in", accPtr->Name);
+				g_Logs.event->info("[ACCOUNT] Account '%v' logged in", innerAccPtr->Name);
 
 				//If we get here, we can successfully log into the account.
-				accPtr->AdjustSessionLoginCount(1);
+				innerAccPtr->AdjustSessionLoginCount(1);
 				g_Logs.simulator->info("[%v] Logging in as: %v [Socket:%v]", sim->InternalID,
-						accPtr->Name, sim->sc.ClientSocket);
+						innerAccPtr->Name, sim->sc.ClientSocket);
 				unsigned long startTime = g_PlatformTime.getMilliseconds();
-				sim->LoadAccountCharacters(accPtr);
+				sim->LoadAccountCharacters(innerAccPtr);
 				g_Logs.simulator->debug("[%v] TIME PASS loading account chars: %v ms",
 						sim->InternalID, g_PlatformTime.getMilliseconds() - startTime);
 
@@ -159,6 +164,9 @@ int LobbyAuthenticateMessage::handleMessage(SimulatorThread *sim, CharacterServe
 
 
 	});
+
+	g_Logs.simulator->info("Pooled authentication for %v (%v) using %v", loginName, simID, authHandler->GetName());
+
 	return 0;
 }
 

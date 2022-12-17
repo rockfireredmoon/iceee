@@ -1,7 +1,6 @@
 # Building
 
-You are here if you wish to build and configure a server from source. If you just wish to play Earth Eternal,
-run a standard private server, you should instead read [this](SERVER.md).
+You are here if you wish to build and configure a server from source. If you just wish to play Earth Eternal, run a standard private server, you should instead read [this](SERVER.md).
 
 ## Introduction
 
@@ -18,9 +17,11 @@ In order to build and run a server, the basic steps are :-
 Most 3rd party dependencies are included in the source tree, and you do not need to do anything.
 But, there are a couple that must install first.
 
- * libcurl (https://curl.haxx.se/libcurl/). Used for outgoing network connectivity to the website and other services such as GitHub
+ * [libcurl](https://curl.haxx.se/libcurl/). Used for outgoing network connectivity to the website and other services such as GitHub
    and mail servers.
- * OpenSSL (https://www.openssl.org/). Used only when SSL is enabled, this adds HTTPS functionality to the HTTP server.
+ * [OpenSSL](https://www.openssl.org/). Used only when SSL is enabled, this adds HTTPS functionality to the HTTP server.
+ * [Boost](https://www.boost.org/). Introduced to replace boilerplate code that was necessary in an earlier time, but there are now better alternatives. This currently includes threading, but more will be ported to boost and/or standard C++ over time.
+ 
 
 ### Run-time Pre-requisites
 
@@ -68,7 +69,7 @@ ninja compile
 
 ### Configuring The Server
 
-Before starting the server, you will need to configure it for your environment. Follow the instructions on the [Configuration](CONFIGURATION.md) page, copying the sample configuration files and adjusting for your environment.
+Before starting the server, you will need to configure it for your environment. Follow the instructions on the [Server And Cluster Configuration](SERVER_AND_CLUSTER_CONFIGURATION.md) page, copying the sample configuration files and adjusting for your environment.
 
 ### Preparing Game Server Data and Client Assets
 

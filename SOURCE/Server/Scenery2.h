@@ -9,6 +9,7 @@
 #include "CreatureSpawner2.h"
 #include "Entities.h"
 #include "json/json.h"
+#include <boost/thread.hpp>
 
 static std::string KEYPREFIX_GROVE = "Grove";
 static std::string KEYPREFIX_SCENERY = "Scenery";
@@ -306,10 +307,9 @@ public:
 	static int WriteDetachParticles(char *outbuf, const char *lootTag, const char *originalTag, const char *winner, int creatureId, int slotIndex);
 
 	//Thread delegation for loading scenery.
-	static void ThreadProc(SceneryManager *object);
-	void ThreadMain(void);
-	void LaunchThread(void);
-	void ShutdownThread(void);
+	void RunMain(void);
+	void InitThread(void);
+	void Shutdown(void);
 	bool bThreadActive;
 
 	static const unsigned int GARBAGE_CHECK_EXPIRE_TIME = 3600000;
@@ -317,6 +317,7 @@ public:
 	static const unsigned int GARBAGE_CHECK_TILE_RANGE = 10;
 
 private:
+	boost::thread *mThread;
 	Platform_CriticalSection cs;
 	unsigned long mNextAutosaveTime;
 	std::vector<SceneryPageRequest> mPendingPageRequest;

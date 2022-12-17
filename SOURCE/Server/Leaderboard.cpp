@@ -21,20 +21,6 @@
 #include "Util.h"
 #include "util/Log.h"
 
-PLATFORM_THREADRETURN LeaderboardThreadProc(PLATFORM_THREADARGS lpParam)
-{
-	LeaderboardManager *controller = (LeaderboardManager*)lpParam;
-	controller->mIsExist = true;
-	controller->mIsActive = true;
-	AdjustComponentCount(1);
-	controller->RunMainLoop();
-	g_Logs.leaderboard->info("LeaderboardManager Thread shut down.");
-	controller->mIsExist = false;
-	AdjustComponentCount(-1);
-	PLATFORM_CLOSETHREAD(0);
-	return 0;
-}
-
 LeaderboardManager g_LeaderboardManager;
 
 //
@@ -93,9 +79,16 @@ LeaderboardManager::LeaderboardManager() {
 	mGlobalThreadID = 0;
 	mIsActive = false;
 	mIsExist = false;
+	mThread = NULL;
 }
 
 LeaderboardManager::~LeaderboardManager() {
+	if(mIsActive)
+		Shutdown();
+}
+
+void LeaderboardManager::AddBoard(Leaderboard *board) {
+	mBoards.push_back(board);
 }
 
 Leaderboard* LeaderboardManager::GetBoard(std::string name) {
@@ -110,23 +103,22 @@ Leaderboard* LeaderboardManager::GetBoard(std::string name) {
 
 int LeaderboardManager::InitThread(int globalThreadID) {
 	mGlobalThreadID = globalThreadID;
-	int r = Platform_CreateThread(0, (void*) LeaderboardThreadProc, this,
-			&mThreadID);
-	if (r == 0) {
-		mIsActive = false;
-		g_Logs.leaderboard->error(
-				"LeaderboardManager %v could not create thread.",
-				globalThreadID);
-		return 1;
-	}
+	mThread = new boost::thread( { &LeaderboardManager::RunMain, this });
 	return 0;
 }
 
 void LeaderboardManager::Shutdown() {
 	mIsActive = false;
+	g_Logs.leaderboard->info("Waiting for LeaderboardManager Thread shut down.");
+	mThread->join();
+	delete mThread;
 }
 
-void LeaderboardManager::RunMainLoop() {
+void LeaderboardManager::RunMain() {
+	mIsExist = true;
+	mIsActive = true;
+	AdjustComponentCount(1);
+
 	unsigned seconds = 0;
 	while (mIsActive == true) {
 		if (seconds % 60 == 0) {
@@ -138,4 +130,9 @@ void LeaderboardManager::RunMainLoop() {
 		seconds++;
 		PLATFORM_SLEEP(1000);
 	}
+
+	g_Logs.leaderboard->info("LeaderboardManager Thread shut down.");
+	mIsExist = false;
+	AdjustComponentCount(-1);
 }
+

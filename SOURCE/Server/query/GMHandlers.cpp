@@ -21,6 +21,7 @@
 #include "../Debug.h"
 #include "../Random.h"
 #include "../Config.h"
+#include "../GameConfig.h"
 #include "../Components.h"
 #include "../Simulator.h"
 #include "../Ability2.h"
@@ -77,12 +78,12 @@ int AddFundsHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 							creatureInstance->SendStatUpdate(STAT::COPPER);
 						cd->pendingChanges++;
 					} else {
-						if (g_Config.AccountCredits)
+						if (g_GameConfig.UseAccountCredits)
 							css->credits = ad->Credits;
 						css->credits += amount;
 						if (css->credits < 0)
 							css->credits = 0;
-						if (g_Config.AccountCredits) {
+						if (g_GameConfig.UseAccountCredits) {
 							ad->Credits = css->credits;
 							ad->PendingMinorUpdates++;
 						} else

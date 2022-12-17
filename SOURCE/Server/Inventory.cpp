@@ -4,6 +4,7 @@
 #include "Random.h"
 
 #include "Config.h"
+#include "GameConfig.h"
 #include "Debug.h"
 #include "Util.h"
 #include "util/Log.h"
@@ -969,7 +970,7 @@ void InventoryManager :: FixBuyBack(void)
 	*/
 	
 	//Array index order: [oldest] ... [newest]
-	int difference = (int)containerList[BUYBACK_CONTAINER].size() - g_Config.BuybackLimit;
+	int difference = (int)containerList[BUYBACK_CONTAINER].size() - g_GameConfig.BuybackLimit;
 	if(difference > 0)
 		containerList[BUYBACK_CONTAINER].erase(containerList[BUYBACK_CONTAINER].begin(), containerList[BUYBACK_CONTAINER].begin() + difference);
 
@@ -1001,7 +1002,7 @@ int InventoryManager :: AddBuyBack(InventorySlot *item, char *buffer)
 	}
 	*/
 	//Array index order: [oldest] ... [newest]
-	if((int)containerList[BUYBACK_CONTAINER].size() >= g_Config.BuybackLimit)
+	if((int)containerList[BUYBACK_CONTAINER].size() >= g_GameConfig.BuybackLimit)
 	{
 		wpos += RemoveItemUpdate(&buffer[wpos], convbuf, &containerList[BUYBACK_CONTAINER][0]);
 		g_ItemManager.NotifyDestroy(containerList[BUYBACK_CONTAINER][0].IID, "addBuyBack");

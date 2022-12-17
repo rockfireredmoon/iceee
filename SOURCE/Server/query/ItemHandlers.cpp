@@ -17,6 +17,7 @@
 
 #include "ItemHandlers.h"
 #include "../Creature.h"
+#include "../GameConfig.h"
 #include "../Instance.h"
 #include "../Debug.h"
 #include "../Config.h"
@@ -201,11 +202,11 @@ int UseItem(SimulatorThread *sim, CharacterServerData *pld,
 				int abPoints = cfg.GetValueInt("abilitypoints");
 				int heroism = cfg.GetValueInt("heroism");
 				if (credits > 0) {
-					if (g_Config.AccountCredits) {
+					if (g_GameConfig.UseAccountCredits) {
 						creatureInstance->css.credits = pld->accPtr->Credits;
 					}
 					creatureInstance->css.credits += credits;
-					if (g_Config.AccountCredits) {
+					if (g_GameConfig.UseAccountCredits) {
 						pld->accPtr->Credits = creatureInstance->css.credits;
 						pld->accPtr->PendingMinorUpdates++;
 					}

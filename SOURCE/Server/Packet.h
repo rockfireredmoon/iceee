@@ -6,6 +6,7 @@
 #include <string>
 #include <list>
 #include <vector>
+#include <boost/thread.hpp>
 
 #include <map>
 #include "Report.h"  //Only needed for debug report.
@@ -94,10 +95,9 @@ public:
 	void GetThread(const char *request);
 	void ReleaseThread(void);
 
-	static void ThreadProc(PacketManager *object);
-	void ThreadMain(void);
-	void LaunchThread(void);
-	void ShutdownThread(void);
+	void RunMain(void);
+	void InitThread(void);
+	void Shutdown(void);
 	bool bThreadActive;
 
 	unsigned long mTotalBytesSent;         //Total number of bytes successfully sent on the socket.
@@ -130,6 +130,7 @@ public:
 	void GenerateDebugReport(ReportBuffer &report);
 
 private:
+	boost::thread *mThread;
 	int mLastError;
 	Platform_CriticalSection cs;
 };

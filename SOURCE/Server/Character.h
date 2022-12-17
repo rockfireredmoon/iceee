@@ -241,7 +241,6 @@ public:
 	void QuestJoin(int questID);
 	void OnFinishedLoading(void);
 	void CheckVersion(void);
-	void VersionUpgradeCharacterItems(void);
 	void OnCharacterCreation(void);
 	void OnLevelChange(int newLevel);
 	void OnRankChange(int newRank);

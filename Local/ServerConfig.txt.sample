@@ -1,3 +1,7 @@
+; ==============================================================================
+; Sample Server Configuration
+; ==============================================================================
+
 ; Most important stuff is here.  If you're hosting your own server, you'll need to
 ; change SimulatorAddress to reflect the IP address or domain that is hosting the server.
 ; Change HTTPBaseFolder to locate where the CAR assets are distributed.
@@ -22,23 +26,23 @@
 
 ProtocolVersion=33
 
-;
+; ==============================================================================
 ; Authentication
-;
+; ==============================================================================
 
 AuthMode=1                 ; 0 = Two-factor (unsupported), 1 = admin (use this)
 AuthKey=key                ; Salt to the client's password hash. Will break existing accounts if changed.
 
-;
+; ==============================================================================
 ; Simulator Configuration
-;
+; ==============================================================================
 
 RouterPort=4242            ; Port to listen to router connections (login screen connect)
 SimulatorPort=4300         ; Port to listen for simulator connections
 
-;
+; ==============================================================================
 ; HTTP Server Server configuration
-;
+; ==============================================================================
 
 HTTPListenPort=8080        ; Port to listen to HTTP requests.  Set as zero to disable.
 
@@ -64,19 +68,26 @@ HTTPServeAssets=1
 ; the SimulatorAddress will be used. 
 ;HTTPAuthDomain=
 
-;
+; Password for the administrative web panel
+RemoteAuthenticationPassword=admin
+
+
+; ==============================================================================
+; Timers And Delays
+; ==============================================================================
+
+ThreadSleep=1              		; Sleep time for simulator and router threads
+MainSleep=1                		; Sleep time for the main window thread
+ErrorSleep=5000            		; Sleep time for some thread errors
+RebroadcastDelay=18000     		; Milliseconds to wait between sending constant object updates
+SceneryAutosaveTime=5000   		; Milliseconds between autosaving modified scenery pages
+ForceUpdateTime=1500      		; Milliseconds after a character stops moving to force an exact position update
+PartyPositionSendInterval=10000 ; Milliseconds between sending party positions
+WarpMovementBlockTime=5000		; Milliseconds to block movement updates from the client after performing an explicit zone or position warp. 
+
+; ==============================================================================
 ; Other Configuration
-;
-
-ThreadSleep=1              ;Sleep time for simulator and router threads
-MainSleep=1                ;Sleep time for the main window thread
-ErrorSleep=5000            ;Sleep time for some thread errors
-
-RebroadcastDelay=18000     ;Milliseconds to wait between sending constant object updates
-
-SceneryAutosaveTime=5000   ; Milliseconds between autosaving modified scenery pages
-
-ForceUpdateTime=1500      ;Milliseconds after a character stops moving to force an exact position update
+; ==============================================================================
 
 ; As of version 19, the item override can be either:
 ; -1 to ignore, 0 to clear all, 1 to clear bindonpickup, 2 to clear bindonequip
@@ -88,23 +99,7 @@ ItemWeaponTypeOverride=-1   ; Always use this value, or -1 for no override.
 MOTD_Name=Server
 MOTD_Channel=*SysChat
 
-; Password for the administrative web panel
-RemoteAuthenticationPassword=admin
-
-; Zone ID and location for characters to log into. When not set, this will default
-; to the locations set in the static Game.txt data file.
-;DefZone=92
-;DefX=10422
-;DefY=614
-;DefZ=12548
-;DefRotation=180
-
 ProperSceneryList=1          ; Use a proper scenery response (longer loading screens, but low chance of getting stuck in props as they're loading)
-BuybackLimit=32               ; Maximum number of items reserved in the buyback list.  There are 16 items per page.
-
-; Milliseconds to block movement updates from the client after performing
-; an explicit zone or position warp.
-WarpMovementBlockTime=5000
 
 IdleCheckVerification=0
 IdleCheckFrequency=1200000
@@ -112,63 +107,29 @@ IdleCheckDistance=50
 IdleCheckCast=6
 IdleCheckCastInterval=60000
 IdleCheckDistanceTolerance=100
-
-EnvironmentCycle=Sunrise=05:30,Day=08:30,Sunset=18:00,Night=20:30
-
-CapExperienceLevel=55
-CapExperienceAmount=1
+VerifyMovement=0
+VerifySpeed=0
 
 DebugPingServer=0
 DebugPingClient=0
 DebugPingFrequency=1000
 DebugPingClientPollInterval=60
 DebugPingServerLogThreshold=1000
-
-CustomAbilityMechanics=1
-
-PartyPositionSendInterval=10000
-
-VaultDefaultSize=16
-VaultInitialPurchaseSize=8
-
-NamedMobDropMultiplier=6.0
-
-GlobalMovementBonus=5
-AllowEliteMob=1
-
-DexBlockDivisor=30
-DexParryDivisor=30
-DexDodgeDivisor=90
-SpiResistDivisor=30
-PsyResistDivisor=30
+DebugLogAIScriptUse=0
 
 ForceMaxPacketSize=1000
-
 SceneryAuditDelay=20000
 SceneryAuditAllow=1
 
-LootMaxRandomizedLevel=50
-LootMaxRandomizedSpecialLevel=55
-LootNamedMobSpecial=1
-LootMinimumMobRaritySpecial=2
-
-HeroismQuestLevelTolerance=3
-HeroismQuestLevelPenalty=4
-
-ProgressiveDropRateBonusMult=0.0025,0.0050,0.0100,0.0200
-ProgressiveDropRateBonusMultMax=2.0
-DropRateBonusMultMax=250.0
-
 ; Sends heartbeat messages even during lobby to detect disconnects before gameplay stage.
-SendLobbyHeartbeat=1    ;MODDED CLIENT REQUIRED
+; MODDED CLIENT REQUIRED
+;UseLobbyHeartbeat=1    
 
-UseIntegerHealth=1  ;MODDED CLIENT REQUIRED
-UseMessageBox=1     ;MODDED CLIENT REQUIRED
-UseStopSwim=1       ;MODDED CLIENT REQUIRED
+; MODDED CLIENT REQUIRED
+;UseIntegerHealth=1
 
-NamedMobDropMultiplier=6.0
-
-VerifyMovement=0
+; MODDED CLIENT REQUIRED
+;UseMessageBox=1
 
 ; If UseMessageBox=0
 ;InvalidLoginMessage=Account not found.  Check username and password.
@@ -176,17 +137,22 @@ VerifyMovement=0
 ; If UseMessageBox=1
 InvalidLoginMessage=<font size="24"><b>Account not found. Check your username and password.</b></font>
 
-DebugLogAIScriptUse=0
-Upgrade=0
+; MODDED CLIENT REQUIRED
+;UseStopSwim=1
+
+; If true, weather systems will be enabled - MODDED CLIENT REQUIRED -
+;UseWeather=1
+
+; Whether or not to enable user agent protection. When enabled, HTTP access for most paths are
+; only allowed by clients that use the Sparkplayer user agent string ['ire3d(VERSION)' or 'EETAW']. Enabled by default 
+;UseUserAgentProtection=1
 
 ; A script to execute when the server has crashed
 ShutdownHandlerScript=
 
-; Whether or not to enable user agent protection. When enabled, HTTP access for most paths are
-; only allowed by clients that use the Sparkplayer user agent string. Enabled by default 
-;UseUserAgentProtection=1
-
+; ==============================================================================
 ; Location of data files and assets
+;==============================================================================
 
 ; For the HTTP server, this is the base folder that contains files that can
 ; be served over HTTP (such as web control panel, password reset etc). 

@@ -2,6 +2,7 @@
 
 #include "CreatureSpawner2.h"
 #include "Scenery2.h"
+#include "GameConfig.h"
 #include "FileReader.h"
 #include "Util.h"
 #include "Random.h"
@@ -659,7 +660,7 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 
 	ptr->css.aggro_players = aggro;
 
-	bool tryElite = g_Config.AllowEliteMob;
+	bool tryElite = g_GameConfig.AllowEliteMob;
 	if(tryElite == true)
 	{
 		if(ptr->Faction == FACTION_PLAYERFRIENDLY || aggro == 0)

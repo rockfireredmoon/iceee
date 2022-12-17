@@ -19,6 +19,7 @@
 #include "../Account.h"
 #include "../Character.h"
 #include "../Creature.h"
+#include "../GameConfig.h"
 #include "../Instance.h"
 #include "../Config.h"
 #include <algorithm>
@@ -229,7 +230,7 @@ int VaultExpandHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Your vault space is at maximum capacity.");
 
-	if (g_Config.AccountCredits) {
+	if (g_GameConfig.UseAccountCredits) {
 		creatureInstance->css.credits = pld->accPtr->Credits;
 	}
 	if (creatureInstance->css.credits < CharacterData::VAULT_EXPAND_CREDIT_COST)
@@ -240,7 +241,7 @@ int VaultExpandHandler::handleQuery(SimulatorThread *sim,
 	int newSize = pld->charPtr->VaultGetTotalCapacity();
 	creatureInstance->css.credits -= CharacterData::VAULT_EXPAND_CREDIT_COST;
 
-	if (g_Config.AccountCredits) {
+	if (g_GameConfig.UseAccountCredits) {
 		pld->accPtr->Credits = creatureInstance->css.credits;
 		pld->accPtr->PendingMinorUpdates++;
 	}

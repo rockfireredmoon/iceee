@@ -28,6 +28,7 @@
 #include "../Debug.h"
 #include "../DebugProfiler.h"
 #include "../Config.h"
+#include "../GameConfig.h"
 #include "../ScriptCore.h"
 #include "../util/Log.h"
 #include "../http/SiteClient.h"
@@ -180,7 +181,7 @@ int UpdateVelocityMessage::handleMessage(SimulatorThread *sim, CharacterServerDa
 
 //	LogMessageL(MSG_SHOW, "Heading:%d, Rot:%d, Spd:%d, X: %d, Y: %d, Z: %d", creatureInstance->Heading, creatureInstance->Rotation, speed, x, y, z);
 
-	if (g_Config.FallDamage && !creatureInstance->actInst->mZoneDefPtr->mGrove) {
+	if (g_GameConfig.FallDamage && !creatureInstance->actInst->mZoneDefPtr->mGrove) {
 		int deltaY = creatureInstance->CurrentY - y;
 		if (deltaY >= 30)
 			pld->bFalling = true;
@@ -200,8 +201,7 @@ int UpdateVelocityMessage::handleMessage(SimulatorThread *sim, CharacterServerDa
 		}
 	}
 
-	if (g_Config.HasAdministrativeBehaviorFlag(ADMIN_BEHAVIOR_VERIFYSPEED)
-			== true) {
+	if (g_Config.VerifySpeed) {
 		if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer) == false) {
 			int xlen = abs(x - (creatureInstance->CurrentX & 0xFFFF));
 			int zlen = abs(z - (creatureInstance->CurrentZ & 0xFFFF));
@@ -535,9 +535,9 @@ int CommunicateMessage::handleMessage(SimulatorThread *sim, CharacterServerData 
 	//Compose the packet for the outgoing chat data
 
 	const char *charName = pld->charPtr->cdef.css.display_name;
-	if (g_Config.AprilFoolsAccount == pld->accPtr->ID) {
-		if (g_Config.AprilFoolsName.size() > 0)
-			charName = g_Config.AprilFoolsName.c_str();
+	if (g_GameConfig.AprilFoolsAccount == pld->accPtr->ID) {
+		if (g_GameConfig.AprilFoolsName.size() > 0)
+			charName = g_GameConfig.AprilFoolsName.c_str();
 	}
 
 	ChatMessage msg;

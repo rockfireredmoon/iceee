@@ -211,6 +211,12 @@ char *GetStringUTF(const char *buffer, char *recbuf, int bufsize, size_t &advanc
 	return recbuf;
 }
 
+std::string GetCPPStringUTF(const char *buffer, int bufsize, size_t &advance)
+{
+	char b[bufsize];
+	return GetStringUTF(buffer, b, bufsize, advance);
+}
+
 float GetPartFloat(const char *buffer, size_t &start)
 {
 	size_t len = strlen(buffer);

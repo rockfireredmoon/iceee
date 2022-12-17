@@ -1,5 +1,6 @@
 //#pragma warning(disable: 4996)
 #include "Config.h"  //For protocol.
+#include "GameConfig.h"
 #include "Ability2.h"
 #include <stdio.h>
 #include <stdarg.h>
@@ -1725,7 +1726,7 @@ int AbilityManager2 :: ActivateAbility(CreatureInstance *cInst, short abilityID,
 		cInst->OverrideCurrentAbility(abilityID);
 		EnumerateTargets(cInst, it->second.mTargetType, it->second.mTargetFilter, it->second.mTargetTypeRange);
 
-		if(g_Config.CustomAbilityMechanics == true)
+		if(g_GameConfig.CustomAbilityMechanics == true)
 		{
 			if(cInst->HasStatus(StatusEffects::DISARM) == true)
 			{
@@ -1828,7 +1829,7 @@ int AbilityManager2 :: ActivateAbility(CreatureInstance *cInst, short abilityID,
 		int cooldownCategory = ResolveCooldownCategoryID(it->second.GetRowAsCString(ABROW::COOLDOWN_CATEGORY));
 		cInst->RegisterCooldown(cooldownCategory, it->second.mCooldownTime);
 
-		if(g_Config.UseReagents)
+		if(g_GameConfig.UseReagents)
 			abProcessing.ConsumeReagent();
 
 		//If there's an implicit action attached to this skill, register it with the creature.
@@ -2802,7 +2803,7 @@ int AbilityCalculator :: MeleeDamage(ARGUMENT_LIST args)
 {
 	//Evaluate the amount in the damage formula.  The attacker performed an action, so cancel
 	//invisibility.  Apply damage mitigation factors for physical damage.
-	if(g_Config.CustomAbilityMechanics == true)
+	if(g_GameConfig.CustomAbilityMechanics == true)
 	{
 		if(ciSource->HasStatus(StatusEffects::DISARM))
 			return ABILITY_DISARM;
@@ -3341,7 +3342,7 @@ int AbilityCalculator :: Reagent(ARGUMENT_LIST args)
 	mReagentItemID = args.GetInteger(0);
 	mReagentItemCount = args.GetInteger(1);
 
-	if(g_Config.UseReagents && ciSource->charPtr != NULL && ciSource->charPtr->inventory.GetItemCount(INV_CONTAINER, mReagentItemID) < mReagentItemCount)
+	if(g_GameConfig.UseReagents && ciSource->charPtr != NULL && ciSource->charPtr->inventory.GetItemCount(INV_CONTAINER, mReagentItemID) < mReagentItemCount)
 		return ABILITY_REAGENTS;
 
 	return ABILITY_SUCCESS;

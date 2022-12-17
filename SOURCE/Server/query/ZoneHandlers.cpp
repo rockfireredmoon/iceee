@@ -630,8 +630,10 @@ int ShardSetHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	std::string res = sim->ShardSet(shardName, charName);
 	if(res.length() == 0)
 		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
-	else
+	else {
+		sim->SendInfoMessage(res.c_str(), INFOMSG_INFO);
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, res.c_str());
+	}
 }
 
 //

@@ -170,6 +170,7 @@ public:
 
 	void AdjustSessionLoginCount(short count);
 	bool QualifyGarbage(bool force);
+	void ExpireOn(unsigned long);
 
 	static void GenerateClientPasswordHash(const char *username, const char *password, std::string &outputString);
 	static void GenerateSaltedHash(const char *inputString, std::string &outputString);
@@ -184,6 +185,7 @@ public:
 	int GetTotalCompletedAchievements();
 	void WriteToJSON(Json::Value &value);
 	void ReadFromJSON(Json::Value &value);
+	void UpdateExpiry();
 private:
 	unsigned long ExpireTime;  //The server time when the account will be ready for garbage deletion.
 };

@@ -145,11 +145,13 @@ public:
 	int LoadConfiguration(const std::string &configPath);
 	bool Init();
 	void Ready();
+	void PreShutdown();
 	void Shutdown(bool wait = false);
 	bool IsMaster();
 	void RunProcessingCycle();
 	STRINGLIST GetAvailableShardNames();
 	int CountAccountSessions(int accountID, bool includeLocal = true, bool includeRemote = true);
+	bool IsShardActive(const std::string &shardName);
 	Shard GetActiveShard(const std::string &shardName);
 	std::string GetClusterEnvironment();
 	void JoinedShard(unsigned long simID, int zoneID, CharacterData *cdata);
@@ -163,6 +165,8 @@ public:
 	void AuctionItemRemoved(int auctionItemId, int auctioneerCDefID);
 	void AuctionItemUpdated(int auctionItemId);
 	void PropUpdated(int propId);
+	void GameConfigChanged(const string &key, const string &value);
+	void SendGameConfigurationChanged();
 	void Weather(int zoneId, const std::string &mapType, const std::string &type, int weight);
 	PendingShardPlayer FindToken(const std::string &token);
 	ShardPlayer GetActivePlayer(int CDefId);
@@ -180,6 +184,9 @@ public:
 	int GetIntKey(const std::string &key);
 	int GetIntKey(const std::string &key, const int &defaultValue);
 	std::vector<std::string> GetList(const std::string &key);
+	std::map<std::string, std::string> GetMap(const std::string &key);
+	std::string GetMapVal(const std::string &key, const std::string &mapKey, const std::string &mapDefaultValue);
+	void SetMapVal(const std::string &key, const std::string &mapKey, const std::string &mapVal);
 	bool ListAdd(const std::string &key, const std::string &value, bool sync = true);
 	bool ListSet(const std::string &key, const std::vector<std::string> &value, bool sync = true);
 	bool ListRemove(const std::string &key, const std::string &value, bool sync = true);
@@ -203,6 +210,7 @@ private:
 	void ConfirmTransferToOtherShard(int cdefId, const std::string &shardName, std::string token, int simID);
 	void FindMasterShard();
 	void SendConfiguration();
+	void RequestReconfigure(const string &shardName);
 	void NewShard(const std::string &shardName);
 	void ShardRemoved(const std::string &shardName);
 	void LeftOtherShard(const std::string &shardName, int cdefID);

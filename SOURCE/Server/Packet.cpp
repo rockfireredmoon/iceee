@@ -145,12 +145,7 @@ void PacketManager::ReleaseThread() {
 	cs.Leave();
 }
 
-void PacketManager::ThreadProc(PacketManager *object) {
-	object->ThreadMain();
-	PLATFORM_CLOSETHREAD(0);
-}
-
-void PacketManager::ThreadMain(void) {
+void PacketManager::RunMain(void) {
 	bThreadActive = true;
 
 	while (bThreadActive == true) {
@@ -161,17 +156,15 @@ void PacketManager::ThreadMain(void) {
 	}
 }
 
-void PacketManager::LaunchThread(void) {
-	if (Platform_CreateThread(0, (void*) ThreadProc, &g_PacketManager, NULL)
-			== 0)
-		g_Logs.server->error(
-				"PacketManager::LaunchThread: error creating thread");
-	else
-		g_Logs.server->info("PacketManager::LaunchThread: successful");
+void PacketManager::InitThread()
+{
+	mThread = new boost::thread( { &PacketManager::RunMain, this });
 }
 
-void PacketManager::ShutdownThread(void) {
+void PacketManager::Shutdown(void) {
 	bThreadActive = false;
+	mThread->join();
+	delete mThread;
 }
 
 void PacketManager::AddOutgoingPacket2(int socket, const Packet &data) {

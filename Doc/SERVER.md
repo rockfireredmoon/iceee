@@ -35,7 +35,9 @@ systemctl start tawd
 
 You should now move on to creating some [game accounts](ACCOUNTS.md), configuring your server for first time use. 
 
-If you encounter any problems, review the [Configuration](CONFIGURATION.md) files and adjust accordingly. Our packages install a configuration that should work "out of the box" for the simplest setup, but anything more advanced will require manualy configuration.
+If you encounter any problems, review the [Server And Cluster Configuration](SERVER_AND_CLUSTER_CONFIGURATION.md) files and adjust accordingly. Our packages install a configuration that should work "out of the box" for the simplest setup, but anything more advanced will require manualy configuration.
+
+You may also wish to adjust some of the [Game Configuration](GAME_CONFIGURATION.md). These are settings that generally affect game play such as looting parameters, fall damage and lots more.
  
 ### Other Operating Systems
 

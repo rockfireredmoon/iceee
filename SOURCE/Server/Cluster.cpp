@@ -3,6 +3,7 @@
 #include "Config.h"
 #include "Components.h"
 #include "Scheduler.h"
+#include "GameConfig.h"
 #include "Util.h"
 #include "StringUtil.h"
 #include "Simulator.h"
@@ -45,6 +46,7 @@ static string AUCTION_ITEM_REMOVED = "auction-item-removed";
 static string AUCTION_ITEM_UPDATED = "auction-item-updated";
 static string CONFIRM_TRANSFER = "confirm-transfer";
 static string PROP_UPDATED = "prop-updated";
+static string GAME_CONFIG_CHANGED = "game-config-changed";
 
 using namespace std;
 
@@ -432,7 +434,7 @@ void Shard::SetTimes(unsigned long localTime, unsigned long serverTime) {
 
 ClusterManager::ClusterManager() {
 	mNextPing = 0;
-	mShardName = "ICEEE1";
+	mShardName = "Default";
 	mFullName = DEFAULT_SHARD_NAME;
 	mPingSentTime = 0;
 	mMasterShard = "";
@@ -495,6 +497,38 @@ bool ClusterManager::ListRemove(const std::string &key,
 		mClient.commit();
 	}
 	return true;
+}
+
+std::string ClusterManager::GetMapVal(const std::string &key, const std::string &mapKey, const std::string &defaultValue) {
+	auto asget = mClient.hget(key, mapKey);
+	mClient.sync_commit();
+	cpp_redis::reply rep = asget.get();
+	if(rep.is_string()) {
+		return rep.as_string();
+	}
+	else
+		return defaultValue;
+}
+
+void ClusterManager::SetMapVal(const std::string &key, const std::string &mapKey, const std::string &mapVal) {
+	mClient.hset(key, mapKey, mapVal);
+	mClient.sync_commit();
+}
+
+map<string, string> ClusterManager::GetMap(const std::string &key) {
+	std::map<std::string, std::string> l;
+	auto asget = mClient.hgetall(key);
+	mClient.sync_commit();
+	cpp_redis::reply rep = asget.get();
+	if (rep.is_array()) {
+		auto arr = rep.as_array();
+		for (auto a = arr.begin(); a != arr.end(); ++a) {
+			string n = (*a).as_string();
+			string v = (*++a).as_string();
+			l[n] = v;
+		}
+	}
+	return l;
 }
 
 vector<string> ClusterManager::GetList(const std::string &key) {
@@ -675,11 +709,12 @@ void ClusterManager::ShardPing(const string &shardName,
 		unsigned long localTime) {
 	SYNCHRONIZED(mMutex)
 	{
-		if (mActiveShards[shardName].mName.compare("") == 0) {
+		if (!IsShardActive(shardName)) {
 			g_Logs.cluster->warn(
 					"Ping from shard %v that we did not know about. This may be because this shard was recently restarted. Requesting it's configuration",
 					shardName);
-			mClient.publish(SERVER_RECONFIGURE, shardName);
+
+			RequestReconfigure(shardName);
 			mClient.commit();
 		} else {
 			long ms = g_PlatformTime.getMilliseconds();
@@ -689,15 +724,25 @@ void ClusterManager::ShardPing(const string &shardName,
 			mActiveShards[shardName] = s;
 			mClient.publish(SERVER_PONG, mShardName);
 			mClient.commit();
-			g_Logs.cluster->debug("Ping from shard %v at %v", mShardName, ms);
+			g_Logs.cluster->debug("Ping from shard %v at %v", shardName, ms);
 		}
+	}
+}
+
+void ClusterManager::RequestReconfigure(const string &shardName) {
+	SYNCHRONIZED(mMutex)
+	{
+		Json::Value cfg;
+		cfg["shardName"] = shardName;
+		cfg["originator"] = mShardName;
+		Send(SERVER_RECONFIGURE, cfg);
 	}
 }
 
 void ClusterManager::ShardPong(const string &shardName) {
 	SYNCHRONIZED(mMutex)
 	{
-		if (mActiveShards[shardName].mName.compare("") == 0) {
+		if (!IsShardActive(shardName)) {
 			g_Logs.cluster->warn(
 					"Pong from shard %v that we did not know about.",
 					shardName);
@@ -859,8 +904,11 @@ void ClusterManager::ServerConfigurationReceived(const string &shardName,
 		const std::string &httpAddress) {
 	SYNCHRONIZED(mMutex)
 	{
-		Shard s = mActiveShards[shardName];
-		if (s.mName.compare("") == 0) {
+		Shard s;
+		if(IsShardActive(shardName)) {
+			s = mActiveShards[shardName];
+		}
+		else {
 			NewShard(shardName);
 			s = mActiveShards[shardName];
 		}
@@ -934,7 +982,7 @@ void ClusterManager::SendConfiguration() {
 
 	g_Logs.cluster->info(
 			"Received a request to send our shard configuration (Simulator %v:%v, HTTP %v).",
-			simAddress, g_SimulatorPort, g_Config.ResolveHTTPAddress());
+			simAddress, g_SimulatorPort, g_Config.ResolveHTTPAddress(simAddress));
 
 	// TODO make all other messages JSON too
 
@@ -947,7 +995,7 @@ void ClusterManager::SendConfiguration() {
 	cfg["launchTime"] = Json::LargestUInt(g_ServerLaunchTime);
 	cfg["utc"] = Json::LargestUInt(g_PlatformTime.getUTCMilliSeconds());
 	cfg["time"] = Json::LargestUInt(g_PlatformTime.getLocalMilliSeconds());
-	cfg["http"] = g_Config.ResolveHTTPAddress();
+	cfg["http"] = g_Config.ResolveHTTPAddress(simAddress);
 	Send(SERVER_CONFIGURATION, cfg);
 	SYNCHRONIZED(mMutex)
 	{
@@ -1005,8 +1053,23 @@ void ClusterManager::LeftShard(int CDefID) {
 	}
 }
 
+bool ClusterManager::IsShardActive(const string &shardName) {
+	bool active;
+	SYNCHRONIZED(mMutex)
+	{
+		active = mActiveShards.find(shardName) != mActiveShards.end();
+	}
+	return active;
+}
+
 Shard ClusterManager::GetActiveShard(const string &shardName) {
-	return mActiveShards[shardName];
+	Shard s;
+	SYNCHRONIZED(mMutex)
+	{
+		if(IsShardActive(shardName))
+			s = mActiveShards[shardName];
+	}
+	return s;
 }
 
 ShardPlayer ClusterManager::GetActivePlayer(int CDefId) {
@@ -1144,7 +1207,7 @@ void ClusterManager::ShardRemoved(const string &shardName) {
 void ClusterManager::NewShard(const string &shardName) {
 	SYNCHRONIZED(mMutex)
 	{
-		if (mActiveShards.find(shardName) != mActiveShards.end()) {
+		if (IsShardActive(shardName)) {
 			g_Logs.cluster->warn(
 					"Got a new shard notification [%v] for a shard we already knew about. This suggests it crashed uncleanly, but came back up before the ping interval expired.",
 					shardName);
@@ -1219,8 +1282,9 @@ void ClusterManager::TransferFromOtherShard(int cdefId,
 
 	/* Reload any data for this character now */
 	g_CharacterManager.ReloadCharacter(cdefId, false);
-	g_AccountManager.ReloadAccountID(
+	auto account = g_AccountManager.ReloadAccountID(
 			g_CharacterManager.GetPointerByID(cdefId)->AccountID);
+	account->ExpireOn(g_ServerTime + 30000);
 
 	PendingShardPlayer p;
 	p.mID = cdefId;
@@ -1295,6 +1359,17 @@ void ClusterManager::AuctionItemRemoved(int auctionItemId,
 		w["auctionItemId"] = auctionItemId;
 		w["auctioneerCDefID"] = auctioneerCDefID;
 		Send(AUCTION_ITEM_REMOVED, w);
+	}
+}
+
+void ClusterManager::GameConfigChanged(const string &key, const string &value) {
+	if (mClusterable) {
+		g_Logs.cluster->info("Sending on thunder");
+		Json::Value w;
+		w["shardName"] = mShardName;
+		w["key"] = key;
+		w["value"] = value;
+		Send(GAME_CONFIG_CHANGED, w);
 	}
 }
 
@@ -1428,7 +1503,7 @@ bool ClusterManager::Init() {
 	shard.mName = mShardName;
 	shard.mSimulatorAddress = simAddress;
 	shard.mSimulatorPort = g_SimulatorPort;
-	shard.mHTTPAddress = g_Config.ResolveHTTPAddress();
+	shard.mHTTPAddress = g_Config.ResolveHTTPAddress(simAddress);
 	shard.mFullName = mFullName;
 	shard.mStartTime = ms;
 	shard.SetTimes(g_PlatformTime.getLocalMilliSeconds(), ms);
@@ -1613,17 +1688,29 @@ void ClusterManager::Ready() {
 					if (msg.compare(mShardName) != 0) {
 						g_Scheduler.Submit([this, msg]() {
 							NewShard(msg);
-							mClient.publish(SERVER_RECONFIGURE, msg);
-							mClient.commit();
+							RequestReconfigure(msg);
 						});
 					}
 				});
 		mSub.subscribe(SERVER_RECONFIGURE,
 				[this](const string &chan, const string &msg) {
-					if (msg.compare(mShardName) == 0) {
-						g_Scheduler.Submit([this]() {
-							SendConfiguration();
-						});
+					Json::Value cfg;
+					Json::Reader reader;
+					if (reader.parse(msg, cfg)) {
+						string shardName = cfg["shardName"].asString();
+						string originator = cfg["originator"].asString();
+						g_Logs.cluster->info("Request to reconfigure %v from %v. We are %v", shardName, originator, mShardName);
+						if (shardName.compare(mShardName) == 0) {
+							g_Scheduler.Submit([this, shardName, originator]() {
+								SendConfiguration();
+								if(!IsShardActive(originator)) {
+									g_Logs.cluster->info("We didn't know about %v, request it repeat the favour and send us configuration", originator);
+									g_Scheduler.Submit([this, originator]() {
+										RequestReconfigure(originator);
+									});
+								}
+							});
+						}
 					}
 				});
 		mSub.subscribe(SERVER_CONFIGURATION,
@@ -1731,6 +1818,21 @@ void ClusterManager::Ready() {
 						}
 					} else {
 						g_Logs.cluster->error("Malformed thunder event.");
+					}
+
+				});
+		mSub.subscribe(GAME_CONFIG_CHANGED,
+				[this](const string &chan, const string &msg) {
+					Json::Value configChange;
+					Json::Reader reader;
+					if (reader.parse(msg, configChange)) {
+						if (configChange["shardName"].asString() != mShardName) {
+							g_Logs.cluster->info(
+									"Game configuration '%v' changed to '%v'.", configChange["key"].asString(), configChange["value"].asString());
+							g_GameConfig.Reload();
+						}
+					} else {
+						g_Logs.cluster->error("Malformed game configuration change event.");
 					}
 
 				});
@@ -1931,6 +2033,7 @@ void ClusterManager::Ready() {
 					Json::Value sim;
 					Json::Reader reader;
 					if (reader.parse(msg, sim)) {
+						g_Logs.cluster->info("REMOVEME XXX SIM TRANSFER %v : %v", sim["shardName"].asString(), mShardName);
 						if (sim["shardName"].asString() != mShardName
 								&& sim["target"].asString() == mShardName) {
 							g_Scheduler.Submit(
@@ -1979,7 +2082,8 @@ void ClusterManager::Ready() {
 	}
 }
 
-void ClusterManager::Shutdown(bool wait) {
+void ClusterManager::PreShutdown() {
+
 	if (mClusterable) {
 		g_Logs.cluster->info("Informing cluster of shutdown");
 		mClient.publish(SERVER_STOPPED, mShardName);
@@ -1990,11 +2094,15 @@ void ClusterManager::Shutdown(bool wait) {
 			g_Logs.cluster->info("Failed to inform client of shutdown. %v",
 					e.what());
 		}
-		g_Logs.cluster->info("Disconnecting from Database");
+	}
+}
+
+void ClusterManager::Shutdown(bool wait) {
+	g_Logs.cluster->info("Disconnecting from Database");
+	if (mClusterable) {
 		mClient.disconnect(wait);
 		mSub.disconnect(wait);
 	} else {
-		g_Logs.cluster->info("Disconnecting from Database");
 		mClient.disconnect(wait);
 	}
 }

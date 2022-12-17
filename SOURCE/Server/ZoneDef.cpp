@@ -2,6 +2,7 @@
 #include "FileReader.h"
 #include "FileReader3.h"
 #include "Config.h"
+#include "GameConfig.h"
 #include "PVP.h"
 #include "Random.h"
 #include "Audit.h"  //For scenery audits.
@@ -1769,7 +1770,9 @@ EnvironmentCycleManager::~EnvironmentCycleManager() {
 }
 
 void EnvironmentCycleManager::Init() {
-	ApplyConfig("Sunrise=05:30,Day=08:30,Sunset=18:00,Night=20:30");
+	//ApplyConfig("Sunrise=05:30,Day=08:30,Sunset=18:00,Night=20:30");
+	ApplyConfig(g_GameConfig.EnvironmentCycle);
+	RescheduleUpdate();
 }
 
 void EnvironmentCycleManager::RescheduleUpdate() {

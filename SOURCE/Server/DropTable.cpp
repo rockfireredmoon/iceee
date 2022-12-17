@@ -1,6 +1,7 @@
 #include "CommonTypes.h"
 #include "Config.h"
 #include "DropTable.h"
+#include "GameConfig.h"
 #include "FileReader.h"
 #include "DirectoryAccess.h"
 #include "ByteBuffer.h"
@@ -738,7 +739,7 @@ void DropTableManager :: RollDrops(const DropRollParameters& params, std::vector
 		queryResults.Filter(DropTableManager::CLASS_FLAG_EXPLICIT, filter);
 		for(size_t i = 0; i < filter.size(); i++)
 		{
-			if(g_Config.MegaLootParty) {
+			if(g_GameConfig.MegaLootParty) {
 				itemIndex = g_RandomManager.RandInt(0, filter[i]->mItemList.size() - 1);
 				output.push_back(filter[i]->mItemList[itemIndex]);
 			}

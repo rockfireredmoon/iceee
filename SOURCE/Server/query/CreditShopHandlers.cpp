@@ -19,6 +19,7 @@
 #include "../CreditShop.h"
 #include "../Account.h"
 #include "../Config.h"
+#include "../GameConfig.h"
 #include "../Cluster.h"
 #include "../Scheduler.h"
 #include "../Debug.h"
@@ -53,11 +54,11 @@ int CreditShopPurchaseNameHandler::handleQuery(SimulatorThread *sim,
 	string fullName = firstName + " " + secondName;
 	string currentName = creatureInstance->css.display_name;
 
-	if (g_Config.AccountCredits) {
+	if (g_GameConfig.UseAccountCredits) {
 		creatureInstance->css.credits = pld->accPtr->Credits;
 	}
 	if ((unsigned long) creatureInstance->css.credits
-			< g_Config.NameChangeCost) {
+			< g_GameConfig.NameChangeCost) {
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"You do not have enough credits!");
 	}
@@ -89,8 +90,8 @@ int CreditShopPurchaseNameHandler::handleQuery(SimulatorThread *sim,
 	g_Logs.cs->info("Player '%v' changed their name to '%v'",
 			currentName.c_str(), fullName.c_str());
 
-	creatureInstance->css.credits -= g_Config.NameChangeCost;
-	if (g_Config.AccountCredits) {
+	creatureInstance->css.credits -= g_GameConfig.NameChangeCost;
+	if (g_GameConfig.UseAccountCredits) {
 		pld->accPtr->Credits = creatureInstance->css.credits;
 		pld->accPtr->PendingMinorUpdates++;
 	}
@@ -232,7 +233,7 @@ int CreditShopListHandler::handleQuery(SimulatorThread *sim,
 
 			// First row has cost of name change
 			wpos += PutByte(&sim->SendBuf[wpos], 1);
-			sprintf(sim->Aux1, "%d", g_Config.NameChangeCost);
+			sprintf(sim->Aux1, "%d", g_GameConfig.NameChangeCost);
 			wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
 
 			// Track maximum sold, to calculate what is 'HOT'.
@@ -291,7 +292,7 @@ int CreditShopListHandler::handleQuery(SimulatorThread *sim,
 					sprintf(sim->Aux1, "%s", Status::GetNameByID(Status::HOT).c_str());
 				}
 				else {
-					time_t expire = ( g_Config.MaxNewCreditShopItemDays * 86400 ) + (*it).mCreatedDate;
+					time_t expire = ( g_GameConfig.MaxNewCreditShopItemDays * 86400 ) + (*it).mCreatedDate;
 					if((*it).mCreatedDate > 0 && (time_t)(g_ServerTime / 1000UL) < expire) {
 						sprintf(sim->Aux1, "%s", Status::GetNameByID(Status::NEW).c_str());
 					}
@@ -415,7 +416,7 @@ int CreditShopBuyHandler::handleQuery(SimulatorThread *sim,
 		if (csItem.mPriceCurrency == Currency::CREDITS
 				|| csItem.mPriceCurrency == Currency::COPPER_CREDITS) {
 			creatureInstance->css.credits -= csItem.mPriceCredits;
-			if (g_Config.AccountCredits) {
+			if (g_GameConfig.UseAccountCredits) {
 				pld->accPtr->Credits = creatureInstance->css.credits;
 				pld->accPtr->PendingMinorUpdates++;
 			}

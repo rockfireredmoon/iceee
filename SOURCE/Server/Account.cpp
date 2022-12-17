@@ -754,26 +754,40 @@ void AccountData::ClearBan(void) {
 }
 
 void AccountData::AdjustSessionLoginCount(short count) {
+
+	g_Logs.server->info(
+			"Adjusting login count for [%v] by %v.",
+			Name, count);
+
 	if (count == 1) {
 		// Login
 		g_ClusterManager.Login(ID);
 	} else if (count == -1) {
 		// Logout
 		g_ClusterManager.Logout(ID);
+	}
 
-	}
+	UpdateExpiry();
+}
+
+void AccountData::UpdateExpiry() {
 	if (g_ClusterManager.CountAccountSessions(ID) > 0) {
-		ExpireTime = PlatformTime::MAX_TIME;
+		ExpireOn(PlatformTime::MAX_TIME);
 	} else {
-		ExpireTime = g_ServerTime + EXPIRE_TIME;
+		ExpireOn(g_ServerTime + EXPIRE_TIME);
 	}
+}
+
+void AccountData::ExpireOn(unsigned long time) {
+	if(ExpireTime == PlatformTime::MAX_TIME || time > ExpireTime)
+		ExpireTime = time;
 }
 
 /* Determine if the account is ready for unloading. Normally honors login time unless forced
  to unload, such as during shutdown.*/
 bool AccountData::QualifyGarbage(bool force) {
-	if (g_ClusterManager.CountAccountSessions(ID, true, false) > 0)
-		return false;
+//	if (g_ClusterManager.CountAccountSessions(ID, true, false) > 0)
+//		return false;
 
 	if (PendingMinorUpdates > 0)
 		return false;
@@ -1108,6 +1122,7 @@ int AccountManager::CreateAccount(const char *username, const char *password,
 
 	newAccount.PendingMinorUpdates++;  //Save at the next available opportunity
 	AccList.push_back(newAccount);
+	newAccount.ExpireOn(g_ServerTime + AccountData::EXPIRE_TIME);
 	AppendQuickData(&newAccount);
 
 	return ACCOUNT_SUCCESS;
@@ -1772,6 +1787,7 @@ AccountData * AccountManager::LoadAccountID(int accountID) {
 	}
 
 	AccList.push_back(accData);
+	accData.UpdateExpiry();
 
 	if (AccList.size() > 0)
 		if (AccList.back().ID == accountID)

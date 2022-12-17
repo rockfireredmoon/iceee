@@ -17,6 +17,7 @@
 
 #include "AuctionHouse.h"
 #include "Config.h"
+#include "GameConfig.h"
 #include "Util.h"
 #include "FileReader.h"
 #include "DirectoryAccess.h"
@@ -297,7 +298,7 @@ int AuctionHouseManager::ValidateItem(AuctionHouseItem *ahItem,
 	if ((unsigned long) css->copper < ahItem->mBuyItNowCopper)
 		return AuctionHouseError::NOT_ENOUGH_COPPER;
 
-	if (g_Config.AccountCredits) {
+	if (g_GameConfig.UseAccountCredits) {
 		css->credits = accPtr->Credits;
 	}
 	if ((unsigned long) css->credits < ahItem->mBuyItNowCredits)
@@ -415,7 +416,7 @@ void AuctionHouseManager::CompleteAuction(int auctionItemID) {
 			InventoryManager *inventory = &characterData->inventory;
 
 			// Check the prospective recipient has enough copper/credits/inventory space
-			if (g_Config.AccountCredits) {
+			if (g_GameConfig.UseAccountCredits) {
 				css->credits = account->Credits;
 			}
 
@@ -522,7 +523,7 @@ void AuctionHouseManager::CompleteAuction(int auctionItemID) {
 				// Take credits from recipient and give to seller
 				if (it->mCredits > 0) {
 					css->credits -= it->mCredits;
-					if (g_Config.AccountCredits)
+					if (g_GameConfig.UseAccountCredits)
 						account->PendingMinorUpdates++;
 					else
 						characterData->pendingChanges++;
@@ -532,7 +533,7 @@ void AuctionHouseManager::CompleteAuction(int auctionItemID) {
 
 					if (sellerCss != NULL) {
 						sellerCss->credits += it->mCredits;
-						if (g_Config.AccountCredits && sellerAccount != NULL)
+						if (g_GameConfig.UseAccountCredits && sellerAccount != NULL)
 							sellerAccount->PendingMinorUpdates++;
 						else if (sellerCharacterData != NULL) {
 							sellerCharacterData->pendingChanges++;
@@ -563,7 +564,7 @@ void AuctionHouseManager::CompleteAuction(int auctionItemID) {
 	else {
 		g_Logs.server->warn("Auction ended for item %v but the item doesn't exist.", item.mItemId);
 		CancelItemTimer(item.mId);
-		mTimers[item.mId] = g_Scheduler.Submit([this, item](){
+		mTimers[item.mId] = g_Scheduler.Schedule([this, item](){
 			ExpireItem(item);
 		});
 		cs.Leave();
@@ -575,7 +576,7 @@ void AuctionHouseManager::CompleteAuction(int auctionItemID) {
 		Util::SafeFormat(buf, sizeof(buf),
 				"Your auction item '%s' failed to attract any bids. You have %d hours to remove it from the auction before it is automatically removed and placed in your vendor buyback inventory.",
 				itemDef->mDisplayName.c_str(),
-				g_Config.MaxAuctionExpiredHours);
+				g_GameConfig.MaxAuctionExpiredHours);
 		ChatMessage cm(buf);
 		cm.mChannelName = "tc/";
 		cm.mRecipient = sellerCss->display_name;
@@ -592,14 +593,14 @@ void AuctionHouseManager::CompleteAuction(int auctionItemID) {
 		CancelItemTimer(item.mId);
 		mTimers[item.mId] = g_Scheduler.Schedule([this, item](){
 			ExpireItem(item);
-		}, item.mEndDate + (g_Config.MaxAuctionExpiredHours * 3600000));
+		}, item.mEndDate + (g_GameConfig.MaxAuctionExpiredHours * 3600000));
 		cs.Leave();
 	} else {
 		if (!reserveReached) {
 			Util::SafeFormat(buf, sizeof(buf),
 					"Your auction item '%s' failed to reach the reserve price. You have %d hours to remove it from the auction before it is automatically removed and placed in your vendor buyback inventory.",
 					itemDef->mDisplayName.c_str(),
-					g_Config.MaxAuctionExpiredHours);
+					g_GameConfig.MaxAuctionExpiredHours);
 			ChatMessage cm(buf);
 			cm.mChannelName = "tc/";
 			cm.mRecipient = sellerCss->display_name;
@@ -617,7 +618,7 @@ void AuctionHouseManager::CompleteAuction(int auctionItemID) {
 			CancelItemTimer(item.mId);
 			mTimers[item.mId] = g_Scheduler.Schedule([this, item](){
 				ExpireItem(item);
-			}, item.mEndDate + (g_Config.MaxAuctionExpiredHours * 3600000));
+			}, item.mEndDate + (g_GameConfig.MaxAuctionExpiredHours * 3600000));
 
 			cs.Leave();
 		} else {
@@ -854,7 +855,7 @@ AuctionHouseItem AuctionHouseManager::Auction(CreatureInstance *creatureInstance
 
 	if (creditsCommision > 0) {
 		creatureInstance->css.credits -= creditsCommision;
-		if (g_Config.AccountCredits) {
+		if (g_GameConfig.UseAccountCredits) {
 			pld->accPtr->Credits = creatureInstance->css.credits;
 			pld->accPtr->PendingMinorUpdates++;
 		}
@@ -1100,7 +1101,7 @@ int AuctionHouseManager::LoadItems(void) {
 				// Remove the item completely
 				mTimers[item.mId] = g_Scheduler.Schedule([this, item](){
 					ExpireItem(item);
-				}, item.mEndDate + (g_Config.MaxAuctionExpiredHours * 3600000));
+				}, item.mEndDate + (g_GameConfig.MaxAuctionExpiredHours * 3600000));
 			}
 		}
 		cs.Leave();

@@ -25,42 +25,38 @@
 #include <deque>
 #include "CommonTypes.h"
 
-typedef std::function<void()> TaskType;
+#include <boost/asio.hpp>
+#include <boost/asio/thread_pool.hpp>
+#include <boost/asio/post.hpp>
+#include <boost/thread.hpp>
 
-template <typename T>
-class Queue {
-public:
 
-	void Clear() {
-        std::unique_lock<std::mutex> lock(this->d_mutex);
-        mCleared = true;
-        lock.unlock();
-        this->d_condition.notify_all();
-	}
+//
+//
+//	mWork = std::unique_ptr<boost::asio::io_service::work>(new boost::asio::io_service::work(mLogicService));
+//
+//#include <boost/asio.hpp>
+//#include <boost/asio/post.hpp>
+//#include <boost/thread.hpp>
+//	void RunMainLoop();
+//	void RunOnLogicThread(CompletionToken task);
+//	boost::asio::io_service mLogicService; // The main logic service. Queues jobs to run on main thread
+//	std::unique_ptr<boost::asio::io_service::work> mWork;
+//
+//void SimulatorManager::RunMainLoop(void) {
+//	mLogicService.run();
+//}
+//
+//void SimulatorManager::RunOnLogicThread(CompletionToken task) {
+//	boost::asio::post(mLogicService, task);
+////	mLogicService.post(task);
+//}
+//	mWork.reset();
 
-    void Push(T const& value) {
-		std::unique_lock<std::mutex> lock(this->d_mutex);
-		d_queue.push_front(value);
-		lock.unlock();
-        this->d_condition.notify_one();
-    }
 
-    bool Pop(T& item) {
-        std::unique_lock<std::mutex> lock(this->d_mutex);
-        this->d_condition.wait(lock, [=]{ return mCleared || !this->d_queue.empty(); });
-        if(mCleared)
-        	return false;
-        T rc(std::move(this->d_queue.back()));
-        this->d_queue.pop_back();
-        item = rc;
-        return true;
-    }
-private:
-    bool					mCleared;
-    std::mutex              d_mutex;
-    std::condition_variable d_condition;
-    std::deque<T>           d_queue;
-};
+#define POOL_SIZE 5
+
+typedef boost::function<void()> TaskType;
 
 class ScheduledTimerTask
 {
@@ -74,39 +70,28 @@ public:
 	TaskType mTask;
 };
 
-class PooledWorker {
-public:
-	PooledWorker(int workerID);
-	~PooledWorker();
-	//Thread delegation for loading scenery.
-	static void ThreadProc(PooledWorker *object);
-
-	void Work();
-
-	int mWorkerID;
-};
-
 class Scheduler {
 public:
 	Scheduler();
+	~Scheduler();
 	void Init();
 	void RunProcessingCycle();
-	int Pool(const TaskType& task);
+	void Pool(const TaskType& task);
 	int ScheduleIn(const TaskType& task, unsigned long wait);
 	int Schedule(const TaskType& task, unsigned long when);
-	int Submit(const TaskType& task);
+	int Schedule(const TaskType& task);
+	void Submit(const TaskType& task);
 	void Cancel(int id);
-	bool PopPoolTask(TaskType &task);
 	void Shutdown();
 	bool IsRunning();
 private:
 	bool mRunning;
 	unsigned long mNextRun;
 	int mNextTaskId;
-	Queue<TaskType> mQueue;
+	boost::asio::io_service mQueue;
+	boost::asio::thread_pool *mPool;
 	std::recursive_mutex mMutex;
 	std::vector<ScheduledTimerTask> scheduled;
-	std::vector<PooledWorker*> workers;
 };
 
 extern Scheduler g_Scheduler;

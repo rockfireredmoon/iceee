@@ -28,6 +28,7 @@
 #include "InstanceScale.h"
 #include "VirtualItem.h"
 #include "Guilds.h"
+#include "GameConfig.h"
 #include "Stats.h"
 #include "Util.h"
 #include "Random.h"
@@ -2484,7 +2485,7 @@ void CreatureInstance::Amp(unsigned char tier, unsigned char buffType, int abID,
 	case STAT::CONSTITUTION:
 	case STAT::PSYCHE:
 	case STAT::SPIRIT:
-		if (g_Config.CustomAbilityMechanics == true)
+		if (g_GameConfig.CustomAbilityMechanics == true)
 			amount = GetStatValueByID(statID, &css);
 		else
 			amount = _GetBaseStat(statID);
@@ -3162,8 +3163,8 @@ void CreatureInstance::ProcessDeath(void) {
 					char buffer[2048];
 
 					// Pick how many items will be dropped
-					int items = g_RandomManager.RandModRng(g_Config.MinPVPPlayerLootItems,
-							g_Config.MaxPVPPlayerLootItems + 1);
+					int items = g_RandomManager.RandModRng(g_GameConfig.MinPVPPlayerLootItems,
+							g_GameConfig.MaxPVPPlayerLootItems + 1);
 
 					if (items > 0) {
 
@@ -3326,7 +3327,7 @@ void CreatureInstance::ProcessDeath(void) {
 					CreatureDefID);
 			if (cdef != NULL) {
 				if (cdef->NamedMob) {
-					creditDrops = g_Config.NamedMobCreditDrops;
+					creditDrops = g_GameConfig.NamedMobCreditDrops;
 				}
 			}
 			if (css.credit_drops > 0) {
@@ -4822,7 +4823,7 @@ void CreatureInstance::SendAutoAttack(int abilityID, int targetID) {
 
 void CreatureInstance::ActivateSavedAbilities(void) {
 	std::vector<ActiveBuff>::iterator it;
-	if (g_Config.PersistentBuffs) {
+	if (g_GameConfig.UsePersistentBuffs) {
 		if (buffManager.buffList.size() > 0)
 			/* First copy active buffs to persistent buffs. This is done because is the player logs out
 			 * and in again quickly, the character won't have been reloaded yet. If they had buffs
@@ -6752,13 +6753,13 @@ void CreatureInstance::AddCredits(int amount) {
 		return;
 	}
 
-	if (g_Config.AccountCredits && simulatorPtr != NULL) {
+	if (g_GameConfig.UseAccountCredits && simulatorPtr != NULL) {
 		css.credits = simulatorPtr->pld.accPtr->Credits;
 	}
 
 	css.credits += amount;
 
-	if (g_Config.AccountCredits && simulatorPtr != NULL) {
+	if (g_GameConfig.UseAccountCredits && simulatorPtr != NULL) {
 		simulatorPtr->pld.accPtr->Credits = css.credits;
 		simulatorPtr->pld.accPtr->PendingMinorUpdates++;
 	}
@@ -6772,9 +6773,9 @@ void CreatureInstance::AddExperience(int amount) {
 		g_Logs.server->error("AddExperience() active instance is NULL.");
 		return;
 	}
-	if (css.level >= g_Config.CapExperienceLevel)
-		if (amount > g_Config.CapExperienceAmount)
-			amount = g_Config.CapExperienceAmount;
+	if (g_GameConfig.CapExperienceLevel > 0 && css.level >= g_GameConfig.CapExperienceLevel)
+		if (amount > g_GameConfig.CapExperienceAmount)
+			amount = g_GameConfig.CapExperienceAmount;
 
 	css.experience += amount;
 
@@ -6829,9 +6830,9 @@ void CreatureInstance::AddHeroism(int amount) {
 }
 
 void CreatureInstance::AddHeroismForQuest(int amount, int questLevel) {
-	int threshold = questLevel + g_Config.HeroismQuestLevelTolerance;
+	int threshold = questLevel + g_GameConfig.HeroismQuestLevelTolerance;
 	if (css.level > threshold) {
-		amount -= ((css.level - threshold) * g_Config.HeroismQuestLevelPenalty);
+		amount -= ((css.level - threshold) * g_GameConfig.HeroismQuestLevelPenalty);
 	}
 
 	// Adjust for other bonuses
@@ -7320,8 +7321,8 @@ float CreatureInstance::GetDropRateMultiplier(CreatureDefinition *cdef) {
 	float dropRateBonus = 1.0F;
 	if (cdef != NULL) {
 		if (cdef->NamedMob) {
-			if (g_Config.NamedMobDropMultiplier > 0.0F)
-				dropRateBonus *= g_Config.NamedMobDropMultiplier;
+			if (g_GameConfig.NamedMobDropMultiplier > 0.0F)
+				dropRateBonus *= g_GameConfig.NamedMobDropMultiplier;
 		}
 
 		float extra = cdef->DropRateMult;
@@ -7363,7 +7364,7 @@ float CreatureInstance::GetDropRateMultiplier(CreatureDefinition *cdef) {
 	}
 
 	dropRateBonus = Util::ClipFloat(dropRateBonus, 0.0F,
-			g_Config.DropRateBonusMultMax);
+			g_GameConfig.DropRateBonusMultMax);
 
 	//Debug logging, not necessary.
 	if (dropRateBonus > 2.0F)
@@ -7567,7 +7568,7 @@ void CreatureInstance::CreateLoot(int finderLevel, int partySize) {
 		loot.AddItem(itemList[i]);
 	}
 
-	if(itemList.size() == 0 && g_Config.MegaLootParty) {
+	if(itemList.size() == 0 && g_GameConfig.MegaLootParty) {
 		loot.AddItem(g_ItemManager.RollVirtualItem(params));
 	}
 
@@ -8196,9 +8197,9 @@ void CreatureInstance::BuildZoneString(int instanceID, int zoneID,
 }
 
 void CreatureInstance::ApplyGlobalInstanceBuffs(void) {
-	if (g_Config.GlobalMovementBonus != 0)
+	if (g_GameConfig.GlobalMovementBonus != 0)
 		AddBuff(BuffSource::INSTANCE, 0, 0, 0, 0, STAT::MOD_MOVEMENT,
-				g_Config.GlobalMovementBonus, g_Config.GlobalMovementBonus, -1);
+				g_GameConfig.GlobalMovementBonus, g_GameConfig.GlobalMovementBonus, -1);
 }
 
 void CreatureInstance::OnInstanceEnter(const ArenaRuleset &arenaRuleset) {

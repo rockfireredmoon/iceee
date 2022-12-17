@@ -3,6 +3,7 @@
 #include "Character.h"
 #include "FileReader.h"
 #include "Config.h"       //For global variables holding default positions
+#include "GameConfig.h"
 //To report errors
 #include "ItemSet.h"
 #include "Info.h"
@@ -466,7 +467,7 @@ bool CharacterData::ReadEntity(AbstractEntityReader *reader) {
 	//
 	// Abilities
 	//
-	if (g_Config.PersistentBuffs) {
+	if (g_GameConfig.UsePersistentBuffs) {
 		reader->Section("ABILITIES");
 		keys = reader->Keys();
 		for (auto i = keys.begin(); i != keys.end(); ++i) {
@@ -667,7 +668,7 @@ bool CharacterData::WriteEntity(AbstractEntityWriter *writer) {
 	//
 	// Abilities
 	//
-	if (g_Config.PersistentBuffs) {
+	if (g_GameConfig.UsePersistentBuffs) {
 		writer->Section("ABILITIES");
 		buffManager.WriteEntity(writer);
 	}
@@ -1175,8 +1176,6 @@ void CharacterData::OnFinishedLoading(void) {
 			cdef.css.level) + ExtraAbilityPoints;
 	CheckVersion();
 
-	VersionUpgradeCharacterItems();
-
 	//Check if the scaler is valid since it may have changed through updates.
 	if (InstanceScaler.size() > 0) {
 		if (g_InstanceScaleManager.GetProfile(InstanceScaler) == NULL)
@@ -1188,8 +1187,7 @@ void CharacterData::CheckVersion(void) {
 	if (characterVersion >= SERVER_CHARACTER_VERSION)
 		return;
 
-	if (characterVersion < 2)
-		VersionUpgradeCharacterItems();
+	// TODO character upgrades have been removed. But this code left in case we need to do upgrades in future
 
 	characterVersion = SERVER_CHARACTER_VERSION;
 	pendingChanges++;
@@ -1197,63 +1195,9 @@ void CharacterData::CheckVersion(void) {
 			cdef.CreatureDefID);
 }
 
-void CharacterData::VersionUpgradeCharacterItems(void) {
-	if (g_Config.Upgrade == 0)
-		return;
-
-	for (int c = 0; c < MAXCONTAINER; c++) {
-		for (size_t i = 0; i < inventory.containerList[c].size(); i++) {
-			ItemDef *itemDef = inventory.containerList[c][i].ResolveItemPtr();
-			if (itemDef != NULL) {
-				if (itemDef->mBindingType == BIND_ON_PICKUP
-						&& inventory.containerList[c][i].bindStatus == 0) {
-					inventory.containerList[c][i].bindStatus = 1;
-					g_Logs.data->info("Updating bind status %v (%v):%v",
-							cdef.css.display_name, cdef.CreatureDefID,
-							itemDef->mDisplayName.c_str());
-				}
-			}
-		}
-	}
-	size_t pos = 0;
-	while (pos < inventory.containerList[EQ_CONTAINER].size()) {
-		bool del = false;
-		ItemDef *itemDef =
-				inventory.containerList[EQ_CONTAINER][pos].ResolveItemPtr();
-		if (itemDef != NULL) {
-			int slot = inventory.containerList[EQ_CONTAINER][pos].GetSlot();
-			int res = inventory.VerifyEquipItem(itemDef, slot, cdef.css.level,
-					cdef.css.profession);
-			if (res != InventoryManager::EQ_ERROR_NONE) {
-				int slot = inventory.GetFreeSlot(INV_CONTAINER);
-				if (slot >= 0) {
-					InventorySlot copy;
-					copy.CopyFrom(inventory.containerList[EQ_CONTAINER][pos],
-							true);
-					copy.CCSID = inventory.GetCCSID(INV_CONTAINER, slot);
-					inventory.containerList[INV_CONTAINER].push_back(copy);
-					del = true;
-				} else
-					g_Logs.server->warn("%v: No inventory space for: %v",
-							cdef.css.display_name,
-							itemDef->mDisplayName.c_str());
-			}
-		}
-		if (del == false)
-			pos++;
-		else {
-			g_Logs.server->info("%v: Moving unequippable item: %v",
-					cdef.css.display_name, itemDef->mDisplayName.c_str());
-			inventory.containerList[EQ_CONTAINER].erase(
-					inventory.containerList[EQ_CONTAINER].begin() + pos);
-		}
-	}
-	pendingChanges++;
-}
-
 //Called by the character creation functions to initialize some specific defaults.
 void CharacterData::OnCharacterCreation(void) {
-	CurrentVaultSize = g_Config.VaultInitialPurchaseSize;
+	CurrentVaultSize = g_GameConfig.VaultInitialPurchaseSize;
 
 	if (cdef.css.level <= 1) {
 		//Add the default quest.
@@ -1514,14 +1458,14 @@ void CharacterData::Debug_CountItems(int *intArr) {
 //Return the total vault capacity by combining the default space with the character-specific
 //expanded space.
 int CharacterData::VaultGetTotalCapacity(void) {
-	int slots = g_Config.VaultDefaultSize + CurrentVaultSize;
+	int slots = g_GameConfig.VaultDefaultSize + CurrentVaultSize;
 	return Util::ClipInt(slots, 0, MAX_VAULT_SIZE);
 }
 
 //Return true if the vault has reached its maximum limit (default + extra).  If the limit
 //is reached, it should allow any more expansions.
 bool CharacterData::VaultIsMaximumCapacity(void) {
-	return ((g_Config.VaultDefaultSize + CurrentVaultSize) >= MAX_VAULT_SIZE);
+	return ((g_GameConfig.VaultDefaultSize + CurrentVaultSize) >= MAX_VAULT_SIZE);
 }
 
 //Perform a vault expansion.  Assumes that all conditions are met.  Adjusts the relevant information
