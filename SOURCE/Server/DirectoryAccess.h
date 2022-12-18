@@ -26,9 +26,9 @@ public:
     void ReadDirectories();
     void ReadFiles(void);
     std::string GetDirectory();
-    void SetDirectory(std::string path);
+    void SetDirectory(const std::string &path);
     int FileCount(void);
-    bool CheckInvalidDir(std::string filename);
+    bool CheckInvalidDir(const std::string &filename);
 
 private:
     int TYPE_DIR;
@@ -62,23 +62,23 @@ private:
 
 namespace Platform
 {
-	bool IsAbsolute(std::string str);
+	bool IsAbsolute(const std::string &str);
 	std::string GetDirectory();
-	void SetDirectory(std::string path);
-	std::string FixPaths(std::string pathName);
-	void MakeDirectory(std::string path);
-	void MakeDirectories(std::string path);
-	int FileCopy(std::string sourceFile, std::string destFile);
-	bool Delete(std::string path);
-    bool FileExists(std::string sourceFile);
-    bool DirExists(std::string path);
-    std::string JoinPath(std::string folder, std::string path);
-    std::string Dirname(std::string path);
-    std::string Filename(std::string path);
-    std::string Extension(std::string path);
-    std::string Basename(std::string path);
-    unsigned long GetLastModified(std::string path);
-    int SetLastModified(std::string path, unsigned long lastModified);
+	void SetDirectory(const std::string &path);
+	std::string FixPaths(const std::string &pathName);
+	void MakeDirectory(const std::string & path);
+	void MakeDirectories(const std::string &path);
+	int FileCopy(const std::string &sourceFile, const std::string &destFile);
+	bool Delete(const std::string &path);
+    bool FileExists(const std::string &sourceFile);
+    bool DirExists(const std::string &path);
+    std::string JoinPath(const std::string &folder, const std::string &path);
+    std::string Dirname(const std::string &path);
+    std::string Filename(const std::string &path);
+    std::string Extension(const std::string &path);
+    std::string Basename(const std::string &path);
+    unsigned long GetLastModified(const std::string &path);
+    int SetLastModified(const std::string &path, unsigned long lastModified);
 }
 
 #endif //DIRECTORYACCESS_H

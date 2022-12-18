@@ -173,6 +173,8 @@ public:
 	bool DirectoryListing;
 	bool HTTPKeepAlive;
 	bool HTTPServeAssets;
+	unsigned int RedisWorkers;
+	unsigned int SchedulerThreads;
 
 	std::string LegacyServer;			// URL of server to transfer groves from
 	std::string APIAuthentication;		// Username:Password to allow API authentication
@@ -194,19 +196,14 @@ public:
 	std::vector<std::string> ResolveLocalConfigurationPath();
 	std::string ResolveLogPath();
 	std::string ResolveSimulatorAddress();
-	std::string ResolveHTTPAddress(std::string simAddress);
+	std::string ResolveHTTPAddress(const std::string &simAddress);
 
 private:
-	std::string ResolvePath(std::string path);
+	std::string ResolvePath(const std::string &path);
 };
 
 extern GlobalConfigData g_Config;
 
-void AppendString(std::string &dest, char *appendStr);
-bool LoadConfig(std::string filename);
-void LoadFileIntoString(std::string &dest, std::string filename);
-int SaveSession(std::string filename);
-int LoadStringsFile(std::string filename, vector<string> &list);
-int LoadStringKeyValFile(std::string filename, vector<StringKeyVal> &list);
+bool LoadConfig(const std::string &filename);
 
 #endif //CONFIG_H

@@ -121,6 +121,12 @@ ForceMaxPacketSize=1000
 SceneryAuditDelay=20000
 SceneryAuditAllow=1
 
+; The number of threads to assign for Redis connections
+;RedisWorkers=10
+
+; The number of threads to assign for scheduled game tasks (auction house and other timers)
+;SchedulerThreads=4
+
 ; Sends heartbeat messages even during lobby to detect disconnects before gameplay stage.
 ; MODDED CLIENT REQUIRED
 ;UseLobbyHeartbeat=1    

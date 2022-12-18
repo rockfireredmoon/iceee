@@ -146,6 +146,7 @@ void PacketManager::ReleaseThread() {
 }
 
 void PacketManager::RunMain(void) {
+	SetNativeThreadName("PacketManager");
 	bThreadActive = true;
 
 	while (bThreadActive == true) {

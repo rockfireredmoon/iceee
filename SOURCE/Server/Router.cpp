@@ -85,6 +85,7 @@ void RouterThread::Shutdown(void) {
 }
 
 void RouterThread::RunMain(void) {
+	SetNativeThreadName("Router");
 	isExist = true;
 	isActive = true;
 	AdjustComponentCount(1);

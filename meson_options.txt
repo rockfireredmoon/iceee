@@ -15,8 +15,10 @@ option('docdir', type: 'string', value: '', description: 'Path for documentation
 option('webdir', type: 'string', value: '', description: 'Path for web resource. Defaults to prefix/share/tawd/Web.')
 option('configdirs', type: 'string', value: '', description: 'List of directories for executables to look for configuration files (default to localconfigdir).')
 option('serverdatadir', type: 'string', value: '..', description: 'Path to other server data (WebPages and asset folders, defaults to project root).')
+option('systemdservicedir', type: 'string', value: '/lib/systemd/system', description: 'Location to install SystemD service files.')
+
+# Other Config
+option('sysvinit', type: 'boolean', value: false, description: 'Install SysV init script instead of SystemD service files.')
 option('ssl', type: 'boolean', value: false, description: 'Build HTTP server with HTTPS support.')
 option('service', type: 'boolean', value: false, description: 'Configure support for building and installing as a server (e.g. SystemD on Linux, Windows Service etc).')
-option('systemdservicedir', type: 'string', value: '/lib/systemd/system', description: 'Location to install SystemD service files.')
-option('sysvinit', type: 'boolean', value: false, description: 'Install SysV init script instead of SystemD service files.')
 

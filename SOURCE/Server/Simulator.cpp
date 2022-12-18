@@ -50,6 +50,7 @@
 #include "query/Query.h"
 #include "message/MessageHandler.h"
 #include <curl/curl.h>
+#include <boost/format.hpp>
 #include "md5.hh"
 #include "json/json.h"
 #include "query/ClanHandlers.h"
@@ -648,15 +649,13 @@ void SimulatorThread::InitThread(int globalThreadID) {
 }
 
 void SimulatorThread::RunMain() {
-	//This thread exists outside the class, but a new instance is created when a new
-	//thread is launched.  It takes a parameter of the address back to its simulator class
-	//so it can call the necessary functions.
-	//DWORD WINAPI SimulatorThreadProc(LPVOID lpParam)
 	if(sim_cs.initialized == false)
 	{
 		g_Logs.simulator->fatal("Simulator critical section is not initialized.");
 		return;
 	}
+	SetNativeThreadName(str(
+			boost::format("Simulator:%d:%d") % InternalID % GlobalThreadID).c_str());
 	LastUpdate = g_ServerTime;
 	isThreadActive = true;
 	isThreadExist = true;

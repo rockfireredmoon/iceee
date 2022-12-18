@@ -174,15 +174,11 @@ void HTTPService::RegisterHandler(std::string name, CivetHandler *handler) {
 
 bool HTTPService::Start() {
 
-	const char *zzOptions[32];
-	unsigned int idx = 0;
-
-	std::vector<const char*> opts;
+	std::vector<std::string> zzOptions;
 
 	// Document root
-	zzOptions[idx++] = "document_root";
-	zzOptions[idx++] = Platform::JoinPath(g_Config.ResolveHTTPBasePath(),
-			"Pages").c_str();
+	zzOptions.push_back("document_root");
+	zzOptions.push_back(Platform::JoinPath(g_Config.ResolveHTTPBasePath(), "Pages"));
 
 	bool http = g_HTTPListenPort > 0;
 #ifndef NO_SSL
@@ -194,7 +190,7 @@ bool HTTPService::Start() {
 	// HTTP
 	if (http) {
 
-		zzOptions[idx++] = "listening_ports";
+		zzOptions.push_back("listening_ports");
 
 		std::string ports;
 		if (g_HTTPListenPort > 0) {
@@ -224,7 +220,7 @@ bool HTTPService::Start() {
 		}
 #endif
 
-		zzOptions[idx++] = ports.c_str();
+		zzOptions.push_back(ports);
 
 		std::string alog = Platform::JoinPath(g_Config.ResolveLogPath(),
 				"HTTPAccess.txt");
@@ -232,46 +228,45 @@ bool HTTPService::Start() {
 				"HTTPError.txt");
 
 		// Logs
-		zzOptions[idx++] = "access_log_file";
-		zzOptions[idx++] = alog.c_str();
-		zzOptions[idx++] = "error_log_file";
-		zzOptions[idx++] = elog.c_str();
+		zzOptions.push_back("access_log_file");
+		zzOptions.push_back(alog);
+		zzOptions.push_back("error_log_file");
+		zzOptions.push_back(elog);
 
 		// Server
-		zzOptions[idx++] = "num_threads";
-		zzOptions[idx++] = std::to_string(g_Config.HTTPThreads).c_str();
+		zzOptions.push_back("num_threads");
+		zzOptions.push_back(std::to_string(g_Config.HTTPThreads));
 
-		zzOptions[idx++] = "listen_backlog";
-		zzOptions[idx++] = std::to_string(g_Config.HTTPBacklog).c_str();
+		zzOptions.push_back("listen_backlog");
+		zzOptions.push_back(std::to_string(g_Config.HTTPBacklog));
 
-		zzOptions[idx++] = "connection_queue";
-		zzOptions[idx++] = std::to_string(g_Config.HTTPConnectionQueue).c_str();
+		zzOptions.push_back("connection_queue");
+		zzOptions.push_back(std::to_string(g_Config.HTTPConnectionQueue));
 
-		zzOptions[idx++] = "enable_auth_domain_check";
-		zzOptions[idx++] = g_Config.HTTPAuthDomainCheck ? "yes" : "no";
+		zzOptions.push_back("enable_auth_domain_check");
+		zzOptions.push_back(g_Config.HTTPAuthDomainCheck ? "yes" : "no");
 
-		zzOptions[idx++] = "authentication_domain";
+		zzOptions.push_back("authentication_domain");
 		if(g_Config.HTTPAuthDomain.length() == 0)
-			zzOptions[idx++] = g_Config.ResolveSimulatorAddress().c_str();
+			zzOptions.push_back(g_Config.ResolveSimulatorAddress());
 		else
-			zzOptions[idx++] = g_Config.HTTPAuthDomain.c_str();
+			zzOptions.push_back(g_Config.HTTPAuthDomain);
 
 		// Other configuration
-		zzOptions[idx++] = "enable_keep_alive";
-		zzOptions[idx++] = g_Config.HTTPKeepAlive ? "yes" : "no";
+		zzOptions.push_back("enable_keep_alive");
+		zzOptions.push_back(g_Config.HTTPKeepAlive ? "yes" : "no");
 		if(g_Config.HTTPKeepAlive) {
 			g_Logs.http->warn("HTTP Keep Alive is enabled, but the client is known not to work correctly with this option.");
 		}
 
-		zzOptions[idx++] = "enable_directory_listing";
-		zzOptions[idx++] = g_Config.DirectoryListing ? "yes" : "no";
+		zzOptions.push_back("enable_directory_listing");
+		zzOptions.push_back(g_Config.DirectoryListing ? "yes" : "no");
 
 		// SSL
 #ifndef NO_SSL
-		zzOptions[idx++] = "ssl_certificate";
-		zzOptions[idx++] = g_SSLCertificate.c_str();
+		zzOptions.push_back("ssl_certificate");
+		zzOptions.push_back(g_SSLCertificate.);
 #endif
-		zzOptions[idx] = 0;
 
 		g_Logs.http->info("Starting CivetWeb");
 		BEGINTRY {

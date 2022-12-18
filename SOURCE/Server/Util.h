@@ -7,6 +7,16 @@
 #include "Forms.h"
 #include "Achievements.h"
 
+#ifdef _WIN32
+void SetNativeThreadName(uint32_t dwThreadID, const char* threadName);
+void SetNativeThreadName( const char* threadName);
+void SetNativeThreadName( std::thread* thread, const char* threadName);
+#elif defined(__linux__)
+void SetNativeThreadName( const char* threadName);
+#else
+void SetNativeThreadName(std::thread* thread, const char* threadName);
+#endif
+
 const int MODMESSAGE_EVENT_SUPERCRIT = 1;
 const int MODMESSAGE_EVENT_EMOTE = 2;
 const int MODMESSAGE_EVENT_EMOTE_CONTROL = 3;

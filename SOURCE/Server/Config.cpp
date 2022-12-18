@@ -78,15 +78,6 @@ char g_Executable[512] = { 0 };
 const int g_JumpConstant = 32767;
 // *******************************  Functions  *******************************
 
-void AppendString(std::string &dest, char *appendStr) {
-	if (dest.size() == 0) {
-		dest = appendStr;
-	} else {
-		dest.append("\r\n");
-		dest.append(appendStr);
-	}
-}
-
 /*
  void CheckNewLine(std::string &dest)
  {
@@ -101,7 +92,7 @@ void AppendString(std::string &dest, char *appendStr) {
  }
  */
 
-bool LoadConfig(std::string filename) {
+bool LoadConfig(const std::string &filename) {
 	bool oauthSet = false;
 
 	//Loads the configuration options from the target file.  These are core options
@@ -225,6 +216,10 @@ bool LoadConfig(std::string filename) {
 				g_Config.HTTPAuthDomain = lfr.BlockToString(1);
 			else if (strcmp(NameBlock, "PartyPositionSendInterval") == 0)
 				g_Config.PartyPositionSendInterval = lfr.BlockToIntC(1);
+			else if (strcmp(NameBlock, "RedisWorkers") == 0)
+				g_Config.RedisWorkers = lfr.BlockToIntC(1);
+			else if (strcmp(NameBlock, "SchedulerThreads") == 0)
+				g_Config.SchedulerThreads = lfr.BlockToIntC(1);
 			else if (strcmp(NameBlock, "DebugPacketSendTrigger") == 0)
 				g_Config.DebugPacketSendTrigger = lfr.BlockToIntC(1);
 			else if (strcmp(NameBlock, "DebugPacketSendDelay") == 0)
@@ -344,67 +339,6 @@ bool LoadConfig(std::string filename) {
 	return true;
 }
 
-void LoadFileIntoString(std::string &dest, std::string filename) {
-	FILE *input = fopen(filename.c_str(), "rb");
-	if (input == NULL) {
-		g_Logs.data->info("Generic error opening file [%v].",
-				filename);
-		return;
-	}
-	char buffer[4096];
-	while (!feof(input)) {
-		if (fgets(buffer, sizeof(buffer), input) == NULL)
-			break;
-		if (!feof(input)) {
-			if (dest.size() == 0)
-				dest = buffer;
-			else
-				dest.append(buffer);
-		}
-	}
-	fclose(input);
-}
-
-int LoadStringsFile(std::string filename, vector<string> &list) {
-	FileReader lfr;
-	if (lfr.OpenText(filename.c_str()) != Err_OK) {
-		g_Logs.data->error("Error opening file: %v", filename);
-		return -1;
-	}
-
-	lfr.CommentStyle = Comment_Semi;
-	while (lfr.FileOpen() == true) {
-		int r = lfr.ReadLine();
-		if (r > 0) {
-			list.push_back(lfr.DataBuffer);
-		}
-	}
-	lfr.CloseCurrent();
-	return list.size();
-}
-
-int LoadStringKeyValFile(std::string filename, vector<StringKeyVal> &list) {
-	FileReader lfr;
-	if (lfr.OpenText(filename.c_str()) != Err_OK) {
-		g_Logs.data->error("Error opening file: %v", filename);
-		return -1;
-	}
-
-	lfr.CommentStyle = Comment_Semi;
-	StringKeyVal newItem;
-	while (lfr.FileOpen() == true) {
-		int r = lfr.ReadLine();
-		lfr.SingleBreak("=");
-		if (r > 0) {
-			newItem.key = lfr.BlockToStringC(0, 0);
-			newItem.value = lfr.BlockToStringC(1, 0);
-			list.push_back(newItem);
-		}
-	}
-	lfr.CloseCurrent();
-	return list.size();
-}
-
 GlobalConfigData::GlobalConfigData() {
 	//Set defaults for config settings.
 	ProperSceneryList = 1;
@@ -476,6 +410,8 @@ GlobalConfigData::GlobalConfigData() {
 	LegacyAccounts = false;
 	LegacyServer = "";
 	APIAuthentication = "";
+	RedisWorkers = 10;
+	SchedulerThreads = 4;
 
 	InvalidLoginMessage = "Account not found.  Check username and password.";
 	MaintenanceMessage = "";
@@ -527,8 +463,8 @@ std::string GlobalConfigData::ResolveLogPath() {
 	return ResolvePath(LogPath);
 }
 
-std::string GlobalConfigData::ResolvePath(std::string path) {
-	return path;
+std::string GlobalConfigData::ResolvePath(const std::string &path) {
+	return std::string(path);
 }
 
 std::string GlobalConfigData::ResolveSimulatorAddress() {
@@ -541,7 +477,7 @@ std::string GlobalConfigData::ResolveSimulatorAddress() {
 		return g_SimulatorAddress;
 }
 
-std::string GlobalConfigData::ResolveHTTPAddress(std::string simAddress) {
+std::string GlobalConfigData::ResolveHTTPAddress(const std::string &simAddress) {
 	if(HTTPAddress == "") {
 #ifndef NO_SSL
 		if(g_HTTPSListenPort > 0)

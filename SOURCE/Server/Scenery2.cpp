@@ -1747,6 +1747,7 @@ void SceneryManager::InitThread()
 
 void SceneryManager::RunMain(void)
 {
+	SetNativeThreadName("SceneryManager");
 	bThreadActive = true;
 
 	while(bThreadActive == true)

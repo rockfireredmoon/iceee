@@ -115,6 +115,7 @@ void LeaderboardManager::Shutdown() {
 }
 
 void LeaderboardManager::RunMain() {
+	SetNativeThreadName("Leaderboard");
 	mIsExist = true;
 	mIsActive = true;
 	AdjustComponentCount(1);

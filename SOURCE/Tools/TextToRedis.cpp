@@ -838,5 +838,9 @@ int main(int argc, char *argv[]) {
 	}
 
 	/* Shutdown cleanly so all messags get sent */
+	g_Logs.data->info(
+			"Import of data completed.");
 	g_ClusterManager.Shutdown(true);
+	g_Logs.data->info(
+			"End of import process.");
 }

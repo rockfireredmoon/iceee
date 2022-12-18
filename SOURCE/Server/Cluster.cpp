@@ -1483,7 +1483,7 @@ bool ClusterManager::Init() {
 	}
 
 	//! High availablity requires at least 2 io service workers
-	cpp_redis::network::set_default_nb_workers(10);
+	cpp_redis::network::set_default_nb_workers(g_Config.RedisWorkers);
 
 	long ms = g_PlatformTime.getMilliseconds();
 	mNextPing = ms + CLUSTER_PING_INTERVAL;

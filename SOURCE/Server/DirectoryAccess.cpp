@@ -58,7 +58,7 @@ void Platform_DirectoryReader :: ReadFiles(void)
     RunScan(TYPE_FILE);
 }
 
-void Platform_DirectoryReader :: SetDirectory(std::string path)
+void Platform_DirectoryReader :: SetDirectory(const std::string &path)
 {
 	cwd = path;
 }
@@ -73,7 +73,7 @@ int Platform_DirectoryReader :: FileCount(void)
     return fileList.size();
 }
 
-bool Platform_DirectoryReader :: CheckInvalidDir(std::string entryName)
+bool Platform_DirectoryReader :: CheckInvalidDir(const std::string &entryName)
 {
     if(excludeRel == true)
     {
@@ -155,26 +155,27 @@ void Platform_DirectoryReader :: RunScan(int filter)
 
 #endif //#ifdef WINDOWS_PLATFORM
 
-// This function will fix the slashes in a file name to make it conform
-// to a Windows "\" or Linux "/" folder access convention.
-std::string Platform::FixPaths(std::string pathName)
+std::string Platform::FixPaths(const std::string &pathName)
 {
 	size_t len = pathName.length();
+	std::string s;
 	for(size_t i = 0; i < len; i++)
 	{
 		if(pathName[i] == PLATFORM_FOLDERINVALID)
-			pathName[i] = PLATFORM_FOLDERVALID;
+			s += PLATFORM_FOLDERVALID;
+		else
+			s += pathName[i];
 	}
-	return pathName;
+	return s;
 }
 
 
-void Platform::SetDirectory(std::string path)
+void Platform::SetDirectory(const std::string &path)
 {
     PLATFORM_CHDIR(path.c_str());
 }
 
-bool Platform::IsAbsolute(std::string str) {
+bool Platform::IsAbsolute(const std::string &str) {
 #if defined(_WIN32) || defined(WIN32)
 	if (str.size() > 2 && str.substr(1, 2).compare(":\\") == 0) {
 		return true;
@@ -193,7 +194,7 @@ std::string Platform :: GetDirectory()
 	//return get_current_dir_name();
 }
 
-bool Platform::DirExists(std::string path)
+bool Platform::DirExists(const std::string &path)
 {
 #ifdef WINDOWS_PLATFORM
 	DWORD ftyp = GetFileAttributesA(path);
@@ -213,12 +214,12 @@ bool Platform::DirExists(std::string path)
 #endif
 }
 
-bool Platform::Delete(std::string path)
+bool Platform::Delete(const std::string &path)
 {
 	return remove(path.c_str()) == 0;
 }
 
-bool Platform::FileExists(std::string path)
+bool Platform::FileExists(const std::string &path)
 {
 	FILE *input = fopen(path.c_str(), "rb");
 	if(input == NULL)
@@ -227,7 +228,7 @@ bool Platform::FileExists(std::string path)
 	return true;
 }
 
-unsigned long Platform::GetLastModified(std::string path) {
+unsigned long Platform::GetLastModified(const std::string &path) {
 #ifdef WINDOWS_PLATFORM
 
 	FILETIME ftCreate, ftAccess, ftWrite;
@@ -258,7 +259,7 @@ unsigned long Platform::GetLastModified(std::string path) {
 #endif
 }
 
-int Platform::SetLastModified(std::string path, unsigned long lastModifiedSec) {
+int Platform::SetLastModified(const std::string &path, unsigned long lastModifiedSec) {
 #ifdef WINDOWS_PLATFORM
 
 	HANDLE hFile;
@@ -301,7 +302,7 @@ int Platform::SetLastModified(std::string path, unsigned long lastModifiedSec) {
 #endif
 }
 
-void Platform::MakeDirectory(std::string path)
+void Platform::MakeDirectory(const std::string &path)
 {
 #ifdef WINDOWS_PLATFORM
     _mkdir(path.c_str());
@@ -310,7 +311,7 @@ void Platform::MakeDirectory(std::string path)
 #endif
 }
 
-void Platform::MakeDirectories(std::string path) {
+void Platform::MakeDirectories(const std::string &path) {
 	STRINGLIST v;
 	const std::string p = path;
 	const std::string d(1, PLATFORM_FOLDERVALID);
@@ -328,10 +329,10 @@ void Platform::MakeDirectories(std::string path) {
 	}
 }
 
-std::string Platform::JoinPath(std::string folder, std::string path)
+std::string Platform::JoinPath(const std::string &folder, const std::string &path)
 {
 	if(folder.length() == 0 || folder.compare(".") == 0)
-		folder = g_WorkingDirectory;
+		return JoinPath(g_WorkingDirectory, path);
 	if(Util::HasBeginning(path, "/"))
 		return path;
 	else
@@ -340,7 +341,7 @@ std::string Platform::JoinPath(std::string folder, std::string path)
 
 
 
-std::string Platform::Filename(std::string path)
+std::string Platform::Filename(const std::string &path)
 {
 	STRINGLIST v;
 	const std::string p = path;
@@ -352,7 +353,7 @@ std::string Platform::Filename(std::string path)
 		return v[v.size() - 1];
 }
 
-std::string Platform::Basename(std::string path)
+std::string Platform::Basename(const std::string &path)
 {
 	STRINGLIST v;
 	const std::string p = Filename(path);
@@ -368,7 +369,7 @@ std::string Platform::Basename(std::string path)
 	}
 }
 
-std::string Platform::Extension(std::string path)
+std::string Platform::Extension(const std::string &path)
 {
 	STRINGLIST v;
 	const std::string p = Filename(path);
@@ -382,7 +383,7 @@ std::string Platform::Extension(std::string path)
 		return v[v.size() - 1];
 }
 
-std::string Platform::Dirname(std::string path)
+std::string Platform::Dirname(const std::string &path)
 {
 	STRINGLIST v;
 	const std::string p = path;
@@ -400,7 +401,7 @@ std::string Platform::Dirname(std::string path)
 	}
 }
 
-int Platform :: FileCopy(std::string sourceFile, std::string destFile)
+int Platform :: FileCopy(const std::string &sourceFile, const std::string &destFile)
 {
 	FILE *input = fopen(sourceFile.c_str(), "rb");
 	if(input == NULL)

@@ -79,6 +79,7 @@ void SimulatorBaseThread :: Shutdown(void)
 }
 
 void SimulatorBaseThread :: RunMain(void) {
+	SetNativeThreadName("SimulatorBase");
 	isActive = true;
 	isExist = true;
 	AdjustComponentCount(1);
