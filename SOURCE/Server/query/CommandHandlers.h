@@ -22,16 +22,18 @@
 #include "../Globals.h"
 #include <vector>
 
+using namespace std;
+
 class AbstractCommandHandler : public QueryHandler {
 public:
-	AbstractCommandHandler(std::string usage, int requiredArgs);
+	AbstractCommandHandler(string usage, int requiredArgs);
 	~AbstractCommandHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 	virtual int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance)=0;
 	bool isAllowed(SimulatorThread *sim);
-	std::string mUsage;
+	string mUsage;
 protected:
-	std::vector<int> mAllowedPermissions;
+	vector<int> mAllowedPermissions;
 	unsigned int mRequiredArgs;
 };
 
@@ -174,7 +176,7 @@ public:
 	~ShutdownHandler() {};
 	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 private:
-	void ScheduleShutdown(int minutes, const std::string &reason);
+	void ScheduleShutdown(int minutes, const string &reason);
 	int mShutdownTask;
 };
 

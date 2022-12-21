@@ -24,11 +24,11 @@ FileReader3 :: ~FileReader3()
 	}
 }
 
-int FileReader3 :: OpenFile(const char *filename)
+int FileReader3 :: OpenFile(const fs::path &filename)
 {
 	if(fileHandle != NULL)
 		return SUCCESS;
-	fileHandle = fopen(filename, "rb");
+	fileHandle = fopen(filename.string().c_str(), "rb");
 	if(fileHandle == NULL)
 		return FAILED;
 	return SUCCESS;

@@ -127,8 +127,12 @@ void SimulatorBaseThread :: RunMainLoop(void)
 			int res = sc.Accept();
 			if(res == 0)
 			{
-				LaunchSimulatorThread();
-				sc.ClientSocket = SocketClass::Invalid_Socket;
+				//g_Scheduler.Submit(bind(&SimulatorBaseThread::LaunchSimulatorThread, this));
+				g_Scheduler.Submit([this] {
+						this->LaunchSimulatorThread();
+						sc.ClientSocket = SocketClass::Invalid_Socket;
+				});
+//				LaunchSimulatorThread();
 			}
 			else
 			{
@@ -160,38 +164,60 @@ void SimulatorBaseThread :: CheckAutoResponse(void)
 
 int SimulatorBaseThread :: LaunchSimulatorThread(void)
 {
-	ThreadRequest threadReq;
-	threadReq.status = threadReq.STATUS_WAITMAIN;
-	g_SimulatorManager.RegisterAction(&threadReq);
-	if(threadReq.WaitForStatus(ThreadRequest::STATUS_WAITWORK, 1, ThreadRequest::DEFAULT_WAIT_TIME) == true)
-	{
-		SimulatorThread *simPtr = g_SimulatorManager.CreateSimulator();
-		if(simPtr != NULL)
-		{
-			simPtr->ResetValues(true);
-			simPtr->InternalID = g_SimulatorManager.nextSimulatorID++;
-			simPtr->sim_cs.Reset();
-			simPtr->sim_cs.Init();
-			simPtr->sim_cs.SetDebugName(str(boost::format("CS_SIM:%d") % simPtr->InternalID));
-			simPtr->sc.TransferClientSocketFrom(sc);
-			simPtr->sc.SetClientNoDelay();
-			simPtr->sc.SetTimeOut(5);
-			simPtr->LastUpdate = g_ServerTime;
+//	ThreadRequest threadReq;
+//	threadReq.status = threadReq.STATUS_WAITMAIN;
+//	g_SimulatorManager.RegisterAction(&threadReq);
+//	if(threadReq.WaitForStatus(ThreadRequest::STATUS_WAITWORK, 1, ThreadRequest::DEFAULT_WAIT_TIME) == true)
+//	{
+//		SimulatorThread *simPtr = g_SimulatorManager.CreateSimulator();
+//		if(simPtr != NULL)
+//		{
+//			simPtr->ResetValues(true);
+//			simPtr->InternalID = g_SimulatorManager.nextSimulatorID++;
+//			simPtr->sim_cs.Reset();
+//			simPtr->sim_cs.Init();
+//			simPtr->sim_cs.SetDebugName(str(boost::format("CS_SIM:%d") % simPtr->InternalID));
+//			simPtr->sc.TransferClientSocketFrom(sc);
+//			simPtr->sc.SetClientNoDelay();
+//			simPtr->sc.SetTimeOut(5);
+//			simPtr->LastUpdate = g_ServerTime;
+//
+//			simPtr->InitThread(g_GlobalThreadID++);
+//			g_Logs.simulator->info("[SimB] Passing over to simulator ID:%v (socket:%v).", simPtr->InternalID, sc.ClientSocket);
+//		}
+//		else
+//		{
+//			g_Logs.simulator->fatal("[SimB] SimBase failed to create simulator.");
+//		}
+//	}
+//	else
+//	{
+//		g_Logs.simulator->fatal("[SimB] SimBase failed to call a thread launch.");
+//	}
+//
+//	threadReq.status = ThreadRequest::STATUS_COMPLETE;
+//	g_SimulatorManager.UnregisterAction(&threadReq);
 
-			simPtr->InitThread(g_GlobalThreadID++);
-			g_Logs.simulator->info("[SimB] Passing over to simulator ID:%v (socket:%v).", simPtr->InternalID, sc.ClientSocket);
-		}
-		else
-		{
-			g_Logs.simulator->fatal("[SimB] SimBase failed to create simulator.");
-		}
-	}
-	else
-	{
-		g_Logs.simulator->fatal("[SimB] SimBase failed to call a thread launch.");
+	SimulatorThread *simPtr = g_SimulatorManager.CreateSimulator();
+	if (simPtr != NULL) {
+		simPtr->ResetValues(true);
+		simPtr->InternalID = g_SimulatorManager.nextSimulatorID++;
+		simPtr->sim_cs.Reset();
+		simPtr->sim_cs.Init();
+		simPtr->sim_cs.SetDebugName(str(boost::format("CS_SIM:%d") % simPtr->InternalID));
+		simPtr->sc.TransferClientSocketFrom(sc);
+		simPtr->sc.SetClientNoDelay();
+		simPtr->sc.SetTimeOut(5);
+		simPtr->LastUpdate = g_ServerTime;
+
+		simPtr->InitThread(g_GlobalThreadID++);
+		g_Logs.simulator->info(
+				"[SimB] Passing over to simulator ID:%v (socket:%v).",
+				simPtr->InternalID, sc.ClientSocket);
+	} else {
+		g_Logs.simulator->fatal(
+				"[SimB] SimBase failed to create simulator.");
 	}
 
-	threadReq.status = ThreadRequest::STATUS_COMPLETE;
-	g_SimulatorManager.UnregisterAction(&threadReq);
 	return 0;
 }

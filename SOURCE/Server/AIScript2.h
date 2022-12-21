@@ -2,9 +2,13 @@
 #define AISCRIPT2_H
 
 #include <list>
+#include <filesystem>
 
 #include "ScriptCore.h"
 #include "InstanceScript.h"
+
+using namespace std;
+namespace fs = filesystem;
 
 class CreatureInstance;
 class ReportBuffer;
@@ -30,7 +34,7 @@ public:
 	virtual void HaltDerivedExecution();
 	virtual void HaltedDerived();
 //	virtual void RegisterAbstractInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<AbstractInstanceNutPlayer, NutPlayer> *instanceClass);
-	void Initialize(CreatureInstance *creature, AINutDef *defPtr, std::string &errors);
+	void Initialize(CreatureInstance *creature, AINutDef *defPtr, string &errors);
 
 	static SQInteger GetEnemiesNear(HSQUIRRELVM v);
 
@@ -94,11 +98,11 @@ class AINutManager
 public:
 	AINutManager();
 	~AINutManager();
-	std::list<AINutDef*> aiDef;
-	std::list<AINutPlayer*> aiAct;
+	list<AINutDef*> aiDef;
+	list<AINutPlayer*> aiAct;
 	int LoadScripts(void);
 	AINutDef* GetScriptByName(const char *name);
-	AINutPlayer *AddActiveScript(CreatureInstance *creature, AINutDef *def, std::vector<std::string> args, std::string &errors);
+	AINutPlayer *AddActiveScript(CreatureInstance *creature, AINutDef *def, vector<string> args, string &errors);
 	void RemoveActiveScript(AINutPlayer *registeredPtr);
 };
 

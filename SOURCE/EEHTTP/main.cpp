@@ -298,12 +298,11 @@ int InitServerMain(int argc, char *argv[]) {
 
 	g_Logs.Init(lvl, consoleOut, "LogConfig.txt");
 
-	std::vector<std::string> paths = g_Config.ResolveLocalConfigurationPath();
-	for (std::vector<std::string>::iterator it = paths.begin();
-			it != paths.end(); ++it) {
-		std::string dir = *it;
-		std::string filename = Platform::JoinPath(dir, "HTTPConfig.txt");
-		if(!LoadConfig(filename) && it == paths.begin())
+	auto paths = g_Config.ResolveLocalConfigurationPath();
+	for (auto it = paths.begin(); it != paths.end(); ++it) {
+		auto dir = *it;
+		auto filename = dir / "HTTPConfig.txt";
+		if(!g_Config.LoadConfig(filename) && it == paths.begin())
 			g_Logs.data->error("Could not open HTTP configuration file: %v", filename);
 	}
 	g_Logs.server->info("Working directory %v.", g_WorkingDirectory);

@@ -22,7 +22,6 @@
 #include "HTTPService.h"
 #include "../Util.h"
 #include "../Config.h"
-#include "../StringUtil.h"
 #include "../DirectoryAccess.h"
 
 #include "../util/Log.h"
@@ -92,11 +91,11 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 		mg_printf(conn,	"Content-Length: %lu\r\n", file.fileSize);
 		mg_printf(conn, "Accept-Range: bytes\r\n");
 		std::string fn;
-		fn = Platform::Filename(ruri);
+		fn = Util::RightOf(ruri, "/");
 		mg_printf(conn,
 				"Content-Disposition: attachment; filename=\"%s\";\r\n",
 				fn.c_str());
-		mg_printf(conn, "Last-Modified: %s\r\n", formatTime(&file.lastModified).c_str());
+		mg_printf(conn, "Last-Modified: %s\r\n", formatTime(Util::ToTimeT(file.lastModified)).c_str());
 		if(g_Config.HTTPKeepAlive)
 			mg_printf(conn, "Connection: keep-alive\r\n");
 		else
@@ -115,8 +114,8 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 		std::time_t now = std::time(NULL);
 		mg_printf(conn, "HTTP/1.1 304 Not Modified\r\n");
 		mg_printf(conn, "Expires: Tue, 1 Nov 2011 00:00:00 GMT\r\n");
-		mg_printf(conn, "Date: %s\r\n", formatTime(&now).c_str());
-		mg_printf(conn, "Last-Modified: %s\r\n", formatTime(&file.lastModified).c_str());
+		mg_printf(conn, "Date: %s\r\n", formatTime(now).c_str());
+		mg_printf(conn, "Last-Modified: %s\r\n", formatTime(Util::ToTimeT(file.lastModified)).c_str());
 		if(g_Config.HTTPKeepAlive)
 			mg_printf(conn, "Connection: keep-alive\r\n");
 		else

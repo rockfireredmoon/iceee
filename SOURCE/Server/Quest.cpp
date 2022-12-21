@@ -928,10 +928,10 @@ void QuestDefinitionContainer::Clear(void) {
 	mQuests.clear();
 }
 
-void QuestDefinitionContainer::LoadQuestPackages(std::string filename) {
+void QuestDefinitionContainer::LoadQuestPackages(const fs::path &filename) {
 	g_Logs.data->info("Loading quest packages file %v", filename);
 	FileReader lfr;
-	if (lfr.OpenText(filename.c_str()) != Err_OK) {
+	if (lfr.OpenText(filename) != Err_OK) {
 		g_Logs.data->error("Could not open Quest list file [%v]", filename);
 		return;
 	}
@@ -939,17 +939,17 @@ void QuestDefinitionContainer::LoadQuestPackages(std::string filename) {
 	while (lfr.FileOpen() == true) {
 		int r = lfr.ReadLine();
 		if (r > 0) {
-			LoadFromFile(Platform::JoinPath(g_Config.ResolveStaticDataPath(), Platform::FixPaths(lfr.DataBuffer)));
+			LoadFromFile(g_Config.ResolveStaticDataPath() / Platform::FixPaths(lfr.DataBuffer));
 		}
 	}
 	lfr.CloseCurrent();
 }
 
-void QuestDefinitionContainer::LoadFromFile(std::string filename) {
+void QuestDefinitionContainer::LoadFromFile(const fs::path &filename) {
 	g_Logs.data->info("Loading quests file %v", filename);
 
 	FileReader lfr;
-	if (lfr.OpenText(filename.c_str()) != Err_OK) {
+	if (lfr.OpenText(filename) != Err_OK) {
 		g_Logs.data->error("Could not open quest definition file [%v]",
 				filename);
 		return;

@@ -2,7 +2,7 @@
 #include "Components.h"
 #include "Config.h"
 #include "util/Log.h"
-#include "StringUtil.h"
+#include "Util.h"
 
 
 #define MAX_TASKS_PER_CYCLE 5
@@ -32,6 +32,32 @@ ScheduledTimerTask::~ScheduledTimerTask() {
 }
 
 //
+// Schedulable
+//
+
+Schedulable::Schedulable() {
+}
+Schedulable::Schedulable(const Schedulable& p1) {
+}
+
+Schedulable::~Schedulable() {
+}
+
+void Schedulable::Submit(const TaskType& task) {
+	mQueue.post(task);
+	//Schedule(task, g_ServerTime);
+}
+
+void Schedulable::RunScheduledTasks() {
+	mQueue.run();
+	mQueue.restart();
+}
+
+void Schedulable::Shutdown() {
+	mQueue.stop();
+}
+
+//
 // Scheduler
 //
 
@@ -55,15 +81,10 @@ void Scheduler::Shutdown() {
 		mMutex.lock();
 		mRunning = false;
 		g_Logs.server->info("Shutting down scheduler, %v tasks to clear", scheduled.size());
-		g_Logs.server->info("REMOVEME Stopping POOL");
 		mPool->stop();
-		g_Logs.server->info("REMOVEME Stopping QUEUE");
-		mQueue.stop();
-		g_Logs.server->info("REMOVEME Stopping SCHED");
+		this->Schedulable::Shutdown();
 		scheduled.clear();
-		g_Logs.server->info("REMOVEME Stopping DEL");
 		delete mPool;
-		g_Logs.server->info("REMOVEME Stopping UNL");
 		mMutex.unlock();
 		g_Logs.server->info("Shut down scheduler");
 	}
@@ -82,7 +103,7 @@ void Scheduler::Cancel(int id) {
 	mMutex.unlock();
 }
 
-void Scheduler::RunProcessingCycle() {
+void Scheduler::RunScheduledTasks() {
 	mMutex.lock();
 	int c = 0;
 
@@ -95,17 +116,13 @@ void Scheduler::RunProcessingCycle() {
 			if(g_Logs.server->enabled(el::Level::Trace))
 				g_Logs.server->trace("Scheduled task running %v", t.mTaskId);
 
-//			mMutex.unlock();
-//			t.mTask();
-//			mMutex.lock();
-
-			mQueue.post(t.mTask);
+			Submit(t.mTask);
 
 			// Update next run time
 			if(scheduled.size() > 0) {
 				mNextRun = scheduled[0].mWhen;
 				if(g_Logs.server->enabled(el::Level::Trace))
-					g_Logs.server->trace("Next scheduler task will run in %v", StringUtil::FormatTimeHHMMSSmm(mNextRun - g_ServerTime));
+					g_Logs.server->trace("Next scheduler task will run in %v", Util::FormatTimeHHMMSSmm(mNextRun - g_ServerTime));
 			}
 			else {
 				mNextRun = 0;
@@ -117,10 +134,7 @@ void Scheduler::RunProcessingCycle() {
 	}
 	mMutex.unlock();
 
-	mQueue.run();
-	mMutex.lock();
-	mQueue.restart();
-	mMutex.unlock();
+	this->Schedulable::RunScheduledTasks();
 }
 
 void Scheduler::Pool(const TaskType& task) {
@@ -137,14 +151,14 @@ int Scheduler::Schedule(const TaskType& task, unsigned long when) {
 	}
 	ScheduledTimerTask taskWrapper(task, when);
 	if(g_Logs.server->enabled(el::Level::Debug))
-			g_Logs.server->debug("This scheduler (id: %v) task will run in %v", mNextTaskId, StringUtil::FormatTimeHHMMSSmm(when - g_ServerTime));
+			g_Logs.server->debug("This scheduler (id: %v) task will run in %v", mNextTaskId, Util::FormatTimeHHMMSSmm(when - g_ServerTime));
 	mMutex.lock();
 	taskWrapper.mTaskId = mNextTaskId++;
 	scheduled.push_back(taskWrapper);
 	sort(scheduled.begin(), scheduled.end(), ScheduledTaskSort);
 	mNextRun = scheduled[0].mWhen;
 	if(g_Logs.server->enabled(el::Level::Trace))
-			g_Logs.server->trace("Next scheduler task will run in %v", StringUtil::FormatTimeHHMMSSmm(mNextRun - g_ServerTime));
+			g_Logs.server->trace("Next scheduler task will run in %v", Util::FormatTimeHHMMSSmm(mNextRun - g_ServerTime));
 	mMutex.unlock();
 	return taskWrapper.mTaskId;
 }
@@ -155,10 +169,5 @@ bool Scheduler::IsRunning() {
 
 int Scheduler::Schedule(const TaskType& task) {
 	return Schedule(task, g_ServerTime);
-}
-
-void Scheduler::Submit(const TaskType& task) {
-	mQueue.post(task);
-	//Schedule(task, g_ServerTime);
 }
 

@@ -13,15 +13,13 @@ URLManager::URLManager() {
 
 void URLManager::LoadFile(void) {
 
-	std::vector<std::string> paths = g_Config.ResolveLocalConfigurationPath();
-	for (std::vector<std::string>::iterator it = paths.begin();
-			it != paths.end(); ++it) {
-		std::string dir = *it;
-		std::string filename = Platform::JoinPath(
-				dir, "URL.txt");
+	auto paths = g_Config.ResolveLocalConfigurationPath();
+	for (auto it = paths.begin(); it != paths.end(); ++it) {
+		auto dir = *it;
+		auto filename = dir /"URL.txt";
 
 		FileReader3 fr;
-		if (fr.OpenFile(filename.c_str()) == FileReader3::SUCCESS) {
+		if (fr.OpenFile(filename) == FileReader3::SUCCESS) {
 			fr.SetCommentChar(';');
 			while (fr.Readable() == true) {
 				fr.ReadLine();

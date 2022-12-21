@@ -48,9 +48,9 @@ bool FileReader :: FileOpen(void)
 	return true;
 }
 
-int FileReader :: OpenText(const char *filename)
+int FileReader :: OpenText(const fs::path &filename)
 {
-	if((FileHandle[File_Primary] = fopen(filename, "rb")) == NULL)
+	if((FileHandle[File_Primary] = fopen(filename.string().c_str(), "rb")) == NULL)
 		return Err_FileInvalid;
 
 	LineNumber = 0;

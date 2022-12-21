@@ -4,7 +4,6 @@
 #include "FileReader.h"
 #include "Config.h"
 #include "Cluster.h"
-#include "StringUtil.h"
 #include "DirectoryAccess.h"
 
 #include "util/Log.h"
@@ -52,7 +51,7 @@ IGFCategory :: IGFCategory()
 
 
 bool IGFCategory :: WriteEntity(AbstractEntityWriter *writer) {
-	writer->Key(KEYPREFIX_IGF_CATEGORY, StringUtil::Format("%d", mID));
+	writer->Key(KEYPREFIX_IGF_CATEGORY, Util::Format("%d", mID));
 	writer->Value("Title", mTitle);
 	writer->Value("ParentCategory", mParentCategory);
 	writer->Value("Locked", mLocked);
@@ -60,13 +59,13 @@ bool IGFCategory :: WriteEntity(AbstractEntityWriter *writer) {
 	writer->Value("LastUpdateTime", mLastUpdateTime);
 	STRINGLIST l;
 	for(auto it = mThreadList.begin(); it != mThreadList.end(); ++it)
-		l.push_back(StringUtil::Format("%d", *it));
+		l.push_back(Util::Format("%d", *it));
 	writer->ListValue("ThreadList", l);
 	return true;
 }
 
 bool IGFCategory :: EntityKeys(AbstractEntityReader *reader) {
-	reader->Key(KEYPREFIX_IGF_CATEGORY, StringUtil::Format("%d", mID), true);
+	reader->Key(KEYPREFIX_IGF_CATEGORY, Util::Format("%d", mID), true);
 	return true;
 }
 
@@ -126,7 +125,7 @@ IGFThread :: IGFThread()
 }
 
 bool IGFThread :: WriteEntity(AbstractEntityWriter *writer) {
-	writer->Key(KEYPREFIX_IGF_THREAD, StringUtil::Format("%d", mID));
+	writer->Key(KEYPREFIX_IGF_THREAD, Util::Format("%d", mID));
 
 	writer->Value("Title", mTitle);
 	writer->Value("CreationAccount", mCreationAccount);
@@ -139,13 +138,13 @@ bool IGFThread :: WriteEntity(AbstractEntityWriter *writer) {
 	writer->Value("LastUpdateTime", mLastUpdateTime);
 	STRINGLIST l;
 	for(auto it = mPostList.begin(); it != mPostList.end(); ++it)
-		l.push_back(StringUtil::Format("%d", *it));
+		l.push_back(Util::Format("%d", *it));
 	writer->ListValue("PostList", l);
 	return true;
 }
 
 bool IGFThread :: EntityKeys(AbstractEntityReader *reader) {
-	reader->Key(KEYPREFIX_IGF_THREAD, StringUtil::Format("%d", mID), true);
+	reader->Key(KEYPREFIX_IGF_THREAD, Util::Format("%d", mID), true);
 	return true;
 }
 
@@ -212,7 +211,7 @@ IGFPost :: IGFPost()
 }
 
 bool IGFPost :: WriteEntity(AbstractEntityWriter *writer) {
-	writer->Key(KEYPREFIX_IGF_POST, StringUtil::Format("%d", mID));
+	writer->Key(KEYPREFIX_IGF_POST, Util::Format("%d", mID));
 	writer->Value("CreationAccount", mCreationAccount);
 	writer->Value("CreationTime", mCreationTime);
 	writer->Value("CreatorName", mCreatorName);
@@ -225,7 +224,7 @@ bool IGFPost :: WriteEntity(AbstractEntityWriter *writer) {
 }
 
 bool IGFPost :: EntityKeys(AbstractEntityReader *reader) {
-	reader->Key(KEYPREFIX_IGF_POST, StringUtil::Format("%d", mID), true);
+	reader->Key(KEYPREFIX_IGF_POST, Util::Format("%d", mID), true);
 	return true;
 }
 
@@ -972,7 +971,7 @@ void IGFManager :: DeleteObjectData(int objectType, int objectID)
 			return;
 
 		g_ClusterManager.RemoveEntity(&category);
-		g_ClusterManager.ListRemove(LISTPREFIX_IGF_CATEGORIES, StringUtil::Format("%d", objectID));
+		g_ClusterManager.ListRemove(LISTPREFIX_IGF_CATEGORIES, Util::Format("%d", objectID));
 	}
 }
 

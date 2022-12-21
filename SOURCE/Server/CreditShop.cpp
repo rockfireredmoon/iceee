@@ -2,7 +2,6 @@
 #include "Config.h"
 #include "GameConfig.h"
 #include "Util.h"
-#include "StringUtil.h"
 #include "FileReader.h"
 #include "Cluster.h"
 #include "DirectoryAccess.h"
@@ -153,7 +152,7 @@ CreditShopItem::~CreditShopItem() {
 
 
 bool CreditShopItem :: WriteEntity(AbstractEntityWriter *writer) {
-	writer->Key(KEYPREFIX_CS_ITEM, StringUtil::Format("%d", mId));
+	writer->Key(KEYPREFIX_CS_ITEM, Util::Format("%d", mId));
 	writer->Value("Title", mTitle);
 	writer->Value("Description", mDescription);
 	if(mStartDate > 0)
@@ -184,7 +183,7 @@ bool CreditShopItem :: WriteEntity(AbstractEntityWriter *writer) {
 }
 
 bool CreditShopItem :: EntityKeys(AbstractEntityReader *reader) {
-	reader->Key(KEYPREFIX_CS_ITEM, StringUtil::Format("%d", mId), true);
+	reader->Key(KEYPREFIX_CS_ITEM, Util::Format("%d", mId), true);
 	return true;
 }
 
@@ -337,7 +336,7 @@ bool CreditShopManager::CreateItem(CreditShopItem * item) {
 	item->mCreatedDate = g_ServerTime / 1000;
 	g_Logs.data->info("Creating credit shop item %v to cluster.", item->mId);
 	if(g_ClusterManager.WriteEntity(item)) {
-		return g_ClusterManager.ListAdd(LISTPREFIX_CS_ITEMS, StringUtil::Format("%d", item->mId));
+		return g_ClusterManager.ListAdd(LISTPREFIX_CS_ITEMS, Util::Format("%d", item->mId));
 	}
 	return false;
 }
@@ -356,7 +355,7 @@ bool CreditShopManager::RemoveItem(int id) {
 		return false;
 	}
 	if(g_ClusterManager.RemoveEntity(&it)) {
-		return g_ClusterManager.ListRemove(LISTPREFIX_CS_ITEMS, StringUtil::Format("%d", id));
+		return g_ClusterManager.ListRemove(LISTPREFIX_CS_ITEMS, Util::Format("%d", id));
 	}
 	return false;
 }

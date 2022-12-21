@@ -13,7 +13,6 @@
 #include "ConfigString.h"
 #include "Stats.h"
 #include "Cluster.h"
-#include "StringUtil.h"
 #include "util/Log.h"
 #include <stddef.h>
 
@@ -859,21 +858,21 @@ void ItemManager :: Finalize(void)
 void ItemManager :: LoadData(void)
 {
 	if(!g_ClusterManager.HasKey(ID_NEXT_VIRTUAL_ITEM_ID)) {
-		g_ClusterManager.SetKey(ID_NEXT_VIRTUAL_ITEM_ID, StringUtil::Format("%d", BASE_VIRTUAL_ITEM_ID));
+		g_ClusterManager.SetKey(ID_NEXT_VIRTUAL_ITEM_ID, Util::Format("%d", BASE_VIRTUAL_ITEM_ID));
 	}
-	LoadItemPackages(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Packages"), "ItemPack.txt"), false);
-	LoadItemPackages(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Packages"), "ItemPackOverride.txt"), true);
+	LoadItemPackages(g_Config.ResolveStaticDataPath() / "Packages" / "ItemPack.txt", false);
+	LoadItemPackages(g_Config.ResolveStaticDataPath() / "Packages" / "ItemPackOverride.txt", true);
 	g_Logs.data->info("Loaded %v items.", g_ItemManager.GetStandardCount());
 }
 
-void ItemManager :: LoadItemList(std::string filename, bool itemOverride)
+void ItemManager :: LoadItemList(const fs::path &filename, bool itemOverride)
 {
 	g_Logs.data->info("Loading items file %v", filename);
 
 	TimeObject to("ItemManager::LoadItemList");
 
 	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
+	if(lfr.OpenText(filename) != Err_OK)
 	{
 		g_Logs.data->error("Could not open file [%v].", filename);
 		return;
@@ -921,11 +920,11 @@ void ItemManager :: LoadItemList(std::string filename, bool itemOverride)
 	lfr.CloseCurrent();
 }
 
-void ItemManager :: LoadItemPackages(std::string listFile, bool itemOverride)
+void ItemManager :: LoadItemPackages(const fs::path &listFile, bool itemOverride)
 {
 	g_Logs.data->info("Loading item packages file %v", listFile);
 	FileReader lfr;
-	if(lfr.OpenText(listFile.c_str()) != Err_OK)
+	if(lfr.OpenText(listFile) != Err_OK)
 	{
 		g_Logs.data->error("Could not open Item list file [%v]", listFile);
 		Finalize();
@@ -937,7 +936,7 @@ void ItemManager :: LoadItemPackages(std::string listFile, bool itemOverride)
 		int r = lfr.ReadLine();
 		if(r > 0)
 		{
-			LoadItemList(Platform::JoinPath(g_Config.ResolveStaticDataPath(), Platform::FixPaths(lfr.DataBuffer)), itemOverride);
+			LoadItemList(g_Config.ResolveStaticDataPath() / Platform::FixPaths(lfr.DataBuffer), itemOverride);
 		}
 	}
 	lfr.CloseCurrent();

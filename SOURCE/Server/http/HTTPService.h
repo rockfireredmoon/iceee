@@ -24,6 +24,10 @@
 #include <map>
 #include "HTTP.h"
 #include "../Components.h"
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 namespace HTTPD {
 
@@ -34,9 +38,9 @@ public:
 	typedef std::map<std::string, std::string> CHECKSUM_MAP;
 	CHECKSUM_MAP mChecksumData;
 	void LoadFromFile();
-	std::string MatchChecksum(const std::string filename, const std::string checksum);
+	std::string MatchChecksum(const fs::path &filename, const std::string checksum);
 private:
-	std::string GetFilename();
+	fs::path GetFilename();
 	void ScheduleCheck();
 	int mChecksumUpdateTimer;
 	unsigned long mChecksumUpdate;

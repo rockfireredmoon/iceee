@@ -22,7 +22,6 @@
 #include "../Config.h"
 #include "../Util.h"
 #include "../DirectoryAccess.h"
-#include "../StringUtil.h"
 #include "../util/Log.h"
 #include "../Scheduler.h"
 
@@ -57,19 +56,17 @@ FileChecksum::FileChecksum() {
 void FileChecksum::LoadFromFile() {
 //	cs.Enter("FileChecksum::LoadFromFile");
 	mChecksumData.clear();
-	std::string filename = GetFilename();
-	if (!Platform::FileExists(filename)) {
+	auto filename = GetFilename();
+	if (!fs::exists(filename)) {
 		g_Logs.http->warn(
 				"Could not find newer style checksum %v, trying old location",
 				filename);
-		filename = Platform::JoinPath(
-				Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"),
-				"HTTPChecksum.txt");
+		filename = g_Config.ResolveStaticDataPath() / "Data" / "HTTPChecksum.txt";
 	}
 
 	g_Logs.http->info("Loading checksums from %v", filename);
 	FileReader lfr;
-	if (lfr.OpenText(filename.c_str()) != Err_OK) {
+	if (lfr.OpenText(filename) != Err_OK) {
 		g_Logs.http->warn("Could not open file: %v", filename);
 //		cs.Leave();
 		return;
@@ -93,11 +90,8 @@ void FileChecksum::LoadFromFile() {
 //	cs.Leave();
 }
 
-std::string FileChecksum::GetFilename() {
-	return Platform::JoinPath(
-				Platform::JoinPath(
-						Platform::JoinPath(g_Config.ResolveHTTPCARPath(),
-								"Release"), "Current"), "HTTPChecksum.txt");
+fs::path FileChecksum::GetFilename() {
+	return g_Config.ResolveHTTPCARPath() / "Release" / "Current"/ "HTTPChecksum.txt";
 }
 
 void FileChecksum::ScheduleCheck() {
@@ -128,15 +122,15 @@ void FileChecksum::ScheduleCheck() {
 	}, 10000);
 }
 
-std::string FileChecksum::MatchChecksum(const std::string filename,
+std::string FileChecksum::MatchChecksum(const fs::path &filename,
 		const std::string checksum) {
-	CHECKSUM_MAP::iterator it = mChecksumData.find(filename);
+	CHECKSUM_MAP::iterator it = mChecksumData.find(filename.string());
 
 	//If it doesn't appear in the list, assume it's valid so the client doesn't redownload
 	if (it == mChecksumData.end()) {
 		g_Logs.http->warn(
 				"File %v is not in the index, so it's checksum is unknown. Assuming no download required.",
-				filename.c_str());
+				filename);
 		return "";
 	}
 
@@ -178,7 +172,7 @@ bool HTTPService::Start() {
 
 	// Document root
 	zzOptions.push_back("document_root");
-	zzOptions.push_back(Platform::JoinPath(g_Config.ResolveHTTPBasePath(), "Pages"));
+	zzOptions.push_back((g_Config.ResolveHTTPBasePath()/ "Pages").string());
 
 	bool http = g_HTTPListenPort > 0;
 #ifndef NO_SSL
@@ -198,7 +192,7 @@ bool HTTPService::Start() {
 				ports.append(g_BindAddress);
 				ports.append(":");
 			}
-			ports.append(StringUtil::Format("%d", g_HTTPListenPort));
+			ports.append(Util::Format("%d", g_HTTPListenPort));
 			g_Logs.http->info("CivetWeb HTTP configured on port %v", ports);
 		}
 #ifndef NO_SSL
@@ -214,7 +208,7 @@ bool HTTPService::Start() {
 					ports.append(g_BindAddress);
 					ports.append(":");
 				}
-				ports.append(StringUtil::Format("%d", g_HTTPSListenPort));
+				ports.append(Util::Format("%d", g_HTTPSListenPort));
 				g_Logs.http->info("CivetWeb HTTPS configured on port %v", ports);
 			}
 		}
@@ -222,10 +216,8 @@ bool HTTPService::Start() {
 
 		zzOptions.push_back(ports);
 
-		std::string alog = Platform::JoinPath(g_Config.ResolveLogPath(),
-				"HTTPAccess.txt");
-		std::string elog = Platform::JoinPath(g_Config.ResolveLogPath(),
-				"HTTPError.txt");
+		std::string alog = (g_Config.ResolveLogPath()/ 	"HTTPAccess.txt").string();
+		std::string elog = (g_Config.ResolveLogPath()/ "HTTPError.txt").string();
 
 		// Logs
 		zzOptions.push_back("access_log_file");

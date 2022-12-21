@@ -57,13 +57,13 @@ int SpawnCreateHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Invalid query->");
 
-	std::string id = query->args[1];
+	string id = query->args[1];
 	int CDef = atoi(id.c_str());
-	std::string type = query->args[0];
+	string type = query->args[0];
 
 	if (query->argCount > 2) {
 		/* New style build mode */
-		std::string name = query->args[2];
+		string name = query->args[2];
 		int flags = atoi(query->args[3].c_str());
 		int r = atoi(query->args[4].c_str());
 		float x = atoi(query->args[5].c_str());
@@ -92,7 +92,7 @@ int SpawnCreateHandler::handleQuery(SimulatorThread *sim,
 			if (type == "PACKAGE") {
 				prop.SetExtendedProperty("SpawnPackage", name);
 			} else {
-				std::string flagStr = "";
+				string flagStr = "";
 				if ((flags & SpawnPackageDef::FLAG_ENEMY) != 0) {
 					flagStr += "E";
 				} else if ((flags & SpawnPackageDef::FLAG_FRIENDLY) != 0) {
@@ -176,12 +176,12 @@ int SpawnCreateHandler::handleQuery(SimulatorThread *sim,
 		if (type == "PACKAGE") {
 			SpawnPackageDef *def = g_SpawnPackageManager.GetPointerByName(
 					id.c_str());
-			sim->AddMessage((long) creatureInstance, def->GetRandomSpawn(NULL),
-					BCM_SpawnCreateCreature);
-			;
+
+
+			creatureInstance->actInst->Submit(bind(&ActiveInstance::SpawnCreate, creatureInstance->actInst, creatureInstance, def->GetRandomSpawn(NULL)));
 		} else {
-			sim->AddMessage((long) creatureInstance, CDef,
-					BCM_SpawnCreateCreature);
+
+			creatureInstance->actInst->Submit(bind(&ActiveInstance::SpawnCreate, creatureInstance->actInst, creatureInstance, CDef));
 		}
 	}
 
@@ -219,8 +219,8 @@ int SpawnListHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Invalid query->");
 
-	std::string category = query->args[0];
-	std::string search = query->args[1];
+	string category = query->args[0];
+	string search = query->args[1];
 
 	//Response for each creature
 	//  {id=row[0],name=row[1],type=mTypeMap[row[2]]};

@@ -8,10 +8,9 @@
 #include "Simulator.h"
 #include "Creature.h"
 #include "Config.h"
-#include "StringUtil.h"
 #include <stdlib.h>
 #include "sqrat.h"
-#include <algorithm>    // std::remove
+#include <algorithm>    // remove
 
 #include "util/SquirrelObjects.h"
 #include "util/Log.h"
@@ -83,15 +82,15 @@ const int maxExtOpCode = COUNT_ARRAY_ELEMENTS(extCoreOpCode);
 InstanceNutDef::~InstanceNutDef() {
 }
 
-std::string InstanceNutDef::GetInstanceNutScriptPath(int zoneID) {
-	return Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Instance"), StringUtil::Format("%d", zoneID)), "Script.nut");
+fs::path InstanceNutDef::GetInstanceNutScriptPath(int zoneID) {
+	return g_Config.ResolveVariableDataPath() / "Instance" / Util::Format("%d", zoneID) / "Script.nut";
 }
-std::string InstanceNutDef::GetInstanceScriptPath(int zoneID,
+fs::path InstanceNutDef::GetInstanceScriptPath(int zoneID,
 		bool pathIfNotExists) {
-	std::string p = GetInstanceNutScriptPath(zoneID);
-	if (!Platform::FileExists(p.c_str())) {
-		std::string t = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Instance"), StringUtil::Format("%d", zoneID)), "Script.txt");
-		if (!Platform::FileExists(t.c_str()) && !pathIfNotExists) {
+	auto p = GetInstanceNutScriptPath(zoneID);
+	if (!fs::exists(p)) {
+		auto t = g_Config.ResolveVariableDataPath() / "Instance" / Util::Format("%d", zoneID) / "Script.txt";
+		if (!fs::exists(t) && !pathIfNotExists) {
 			return "";
 		}
 		else if (pathIfNotExists) {
@@ -104,8 +103,8 @@ std::string InstanceNutDef::GetInstanceScriptPath(int zoneID,
 }
 
 bool InstanceNutDef::LoadFromCluster(int zoneID) {
-	mSourceFile = StringUtil::Format("Grove/%d.nut", zoneID);
-	scriptName = StringUtil::Format("%d", zoneID);
+	mSourceFile = Util::Format("Grove/%d.nut", zoneID);
+	scriptName = Util::Format("%d", zoneID);
 	return g_ClusterManager.ReadEntity(this);
 }
 
@@ -367,15 +366,15 @@ bool AbstractInstanceNutPlayer::SetEnvironment(const char *environment) {
 	return true;
 }
 
-std::string AbstractInstanceNutPlayer::GetTimeOfDay() {
+string AbstractInstanceNutPlayer::GetTimeOfDay() {
 	return actInst->GetTimeOfDay();
 }
 
-void AbstractInstanceNutPlayer::SetTimeOfDay(std::string timeOfDay) {
+void AbstractInstanceNutPlayer::SetTimeOfDay(string timeOfDay) {
 	actInst->SetTimeOfDay(timeOfDay);
 }
 
-std::string AbstractInstanceNutPlayer::GetEnvironment(int x, int y) {
+string AbstractInstanceNutPlayer::GetEnvironment(int x, int y) {
 	return actInst->GetEnvironment(x, y);
 }
 
@@ -565,7 +564,7 @@ SQInteger AbstractInstanceNutPlayer::GetCreaturesNearCreature(HSQUIRRELVM v) {
 			Sqrat::Var<int> playerAbilityRestrict(v, 4);
 			Sqrat::Var<int> npcAbilityRestrict(v, 5);
 			Sqrat::Var<int> sidekickAbilityRestrict(v, 6);
-			//std::vector<CreatureInstance*> vv;
+			//vector<CreatureInstance*> vv;
 			CreatureInstance::CREATURE_PTR_SEARCH vv;
 			CreatureInstance* target = left.value.actInst->GetNPCInstanceByCID(
 					cid.value);
@@ -577,7 +576,7 @@ SQInteger AbstractInstanceNutPlayer::GetCreaturesNearCreature(HSQUIRRELVM v) {
 						sidekickAbilityRestrict.value, vv);
 			}
 			sq_newarray(v, 0);
-			for (std::size_t i = 0; i < vv.size(); ++i) {
+			for (size_t i = 0; i < vv.size(); ++i) {
 				sq_pushinteger(v, vv[i]->CreatureID);
 				sq_arrayappend(v, -2);
 			}
@@ -593,22 +592,22 @@ int AbstractInstanceNutPlayer::GetNPCID(int CDefID) {
 	return targ == NULL ? 0 : targ->CreatureID;
 }
 
-void AbstractInstanceNutPlayer::MonitorArea(std::string name,
+void AbstractInstanceNutPlayer::MonitorArea(string name,
 		Squirrel::Area area) {
 	InstanceScript::MonitorArea a;
 	a.name = name;
 	a.area = area;
 	monitorAreas.push_back(a);
 
-	for (std::vector<CreatureInstance*>::iterator it =
+	for (vector<CreatureInstance*>::iterator it =
 			actInst->PlayerListPtr.begin(); it != actInst->PlayerListPtr.end();
 			++it) {
 		PlayerMovement(*it);
 	}
 }
 
-void AbstractInstanceNutPlayer::UnmonitorArea(std::string name) {
-	for (std::vector<InstanceScript::MonitorArea>::iterator it =
+void AbstractInstanceNutPlayer::UnmonitorArea(string name) {
+	for (vector<InstanceScript::MonitorArea>::iterator it =
 			monitorAreas.begin(); it != monitorAreas.end(); ++it) {
 		if ((*it).name.compare(name) == 0) {
 			monitorAreas.erase(it);
@@ -619,14 +618,14 @@ void AbstractInstanceNutPlayer::UnmonitorArea(std::string name) {
 
 void AbstractInstanceNutPlayer::PlayerLeft(CreatureInstance *creature) {
 	bool contain;
-	for (std::vector<InstanceScript::MonitorArea>::iterator it =
+	for (vector<InstanceScript::MonitorArea>::iterator it =
 			monitorAreas.begin(); it != monitorAreas.end(); ++it) {
 		InstanceScript::MonitorArea mon = *it;
 		contain = mon.Contains(creature->CreatureID);
 		if (contain) {
 			// Player leaves monitored area
 			mon.Remove(creature->CreatureID);
-			std::vector<ScriptCore::ScriptParam> p;
+			vector<ScriptCore::ScriptParam> p;
 			p.push_back(ScriptCore::ScriptParam(creature->CreatureID));
 			char ConvBuf[256];
 			Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_player_exit_%s",
@@ -648,7 +647,7 @@ void AbstractInstanceNutPlayer::PlayerMovement(CreatureInstance *creature) {
 			area.creatureIds.push_back(creature->CreatureID);
 			monitorAreas[i] = area;
 			// Player enters monitored area
-			std::vector<ScriptCore::ScriptParam> p;
+			vector<ScriptCore::ScriptParam> p;
 			p.push_back(ScriptCore::ScriptParam(area.name));
 			p.push_back(ScriptCore::ScriptParam(creature->CreatureID));
 			char ConvBuf[256];
@@ -658,7 +657,7 @@ void AbstractInstanceNutPlayer::PlayerMovement(CreatureInstance *creature) {
 			// Player leaves monitored area
 			area.Remove(creature->CreatureID);
 			monitorAreas[i] = area;
-			std::vector<ScriptCore::ScriptParam> p;
+			vector<ScriptCore::ScriptParam> p;
 			p.push_back(ScriptCore::ScriptParam(area.name));
 			p.push_back(ScriptCore::ScriptParam(creature->CreatureID));
 			char ConvBuf[256];
@@ -668,10 +667,10 @@ void AbstractInstanceNutPlayer::PlayerMovement(CreatureInstance *creature) {
 	}
 }
 
-std::vector<int> AbstractInstanceNutPlayer::ScanForNPCs(
+vector<int> AbstractInstanceNutPlayer::ScanForNPCs(
 		Squirrel::Area *location, int CDefID) {
 
-	std::vector<int> vv;
+	vector<int> vv;
 
 	if (actInst != NULL) {
 		for (size_t i = 0; i < actInst->NPCListPtr.size(); i++) {
@@ -749,9 +748,9 @@ SQInteger AbstractInstanceNutPlayer::ScanNPCs(HSQUIRRELVM v) {
 			Sqrat::Var<int> end(v, 3);
 			Squirrel::Area *location = &right.value;
 			int CDefID = end.value;
-			std::vector<int> vv = left.value.ScanForNPCs(location, CDefID);
+			vector<int> vv = left.value.ScanForNPCs(location, CDefID);
 			sq_newarray(v, vv.size());
-			for (std::size_t i = 0; i < vv.size(); ++i) {
+			for (size_t i = 0; i < vv.size(); ++i) {
 				Sqrat::PushVar(v, i);
 				Sqrat::PushVar(v, vv[i]);
 				sq_rawset(v, -3);
@@ -769,9 +768,9 @@ SQInteger AbstractInstanceNutPlayer::Scan(HSQUIRRELVM v) {
 		if (!Sqrat::Error::Occurred(v)) {
 			Sqrat::Var<Squirrel::Area> right(v, 2);
 			Squirrel::Area *location = &right.value;
-			std::vector<int> vv = left.value.ScanForNPCs(location, -1);
+			vector<int> vv = left.value.ScanForNPCs(location, -1);
 			sq_newarray(v, vv.size());
-			for (std::size_t i = 0; i < vv.size(); ++i) {
+			for (size_t i = 0; i < vv.size(); ++i) {
 				Sqrat::PushVar(v, i);
 				Sqrat::PushVar(v, vv[i]);
 				sq_rawset(v, -3);
@@ -788,17 +787,17 @@ SQInteger AbstractInstanceNutPlayer::GetHated(HSQUIRRELVM v) {
 		Sqrat::Var<AbstractInstanceNutPlayer&> left(v, 1);
 		if (!Sqrat::Error::Occurred(v)) {
 			Sqrat::Var<int> right(v, 2);
-			std::vector<int> vv;
+			vector<int> vv;
 			CreatureInstance *creature = left.value.GetNPCPtr(right.value);
 			if (creature != NULL && creature->hateProfilePtr != NULL) {
-				std::vector<HateCreatureData>::iterator it;
+				vector<HateCreatureData>::iterator it;
 				for (it = creature->hateProfilePtr->hateList.begin();
 						it < creature->hateProfilePtr->hateList.end(); ++it) {
 					vv.push_back(it->CID);
 				}
 			}
 			sq_newarray(v, vv.size());
-			for (std::size_t i = 0; i < vv.size(); ++i) {
+			for (size_t i = 0; i < vv.size(); ++i) {
 				Sqrat::PushVar(v, i);
 				Sqrat::PushVar(v, vv[i]);
 				sq_rawset(v, -3);
@@ -815,7 +814,7 @@ SQInteger AbstractInstanceNutPlayer::AllCIDs(HSQUIRRELVM v) {
 		Sqrat::Var<InstanceNutPlayer&> left(v, 1);
 		if (!Sqrat::Error::Occurred(v)) {
 			sq_newarray(v, 0);
-			std::vector<CreatureInstance*>::iterator it;
+			vector<CreatureInstance*>::iterator it;
 			for (it = left.value.actInst->NPCListPtr.begin();
 					it != left.value.actInst->NPCListPtr.end(); ++it) {
 				sq_pushinteger(v, (*it)->CreatureID);
@@ -843,7 +842,7 @@ SQInteger AbstractInstanceNutPlayer::AllPlayers(HSQUIRRELVM v) {
 		Sqrat::Var<InstanceNutPlayer&> left(v, 1);
 		if (!Sqrat::Error::Occurred(v)) {
 			sq_newarray(v, 0);
-			std::vector<CreatureInstance*>::iterator it;
+			vector<CreatureInstance*>::iterator it;
 			for (it = left.value.actInst->PlayerListPtr.begin();
 					it != left.value.actInst->PlayerListPtr.end(); ++it) {
 				sq_pushinteger(v, (*it)->CreatureID);
@@ -858,10 +857,10 @@ SQInteger AbstractInstanceNutPlayer::AllPlayers(HSQUIRRELVM v) {
 
 Sqrat::Object AbstractInstanceNutPlayer::Props(Squirrel::Vector3I location) {
 
-	std::vector<SceneryObject> vv;
+	vector<SceneryObject> vv;
 	Sqrat::Array arr(vm);
 	actInst->GetProps(location.mX, location.mZ, &vv);
-	for(std::vector<SceneryObject>::iterator it = vv.begin(); it != vv.end(); it++) {
+	for(vector<SceneryObject>::iterator it = vv.begin(); it != vv.end(); it++) {
 		arr.Append(*it);
 	}
 
@@ -873,10 +872,10 @@ SQInteger AbstractInstanceNutPlayer::CIDs(HSQUIRRELVM v) {
 		Sqrat::Var<InstanceNutPlayer&> left(v, 1);
 		if (!Sqrat::Error::Occurred(v)) {
 			Sqrat::Var<int> right(v, 2);
-			std::vector<int> vv;
+			vector<int> vv;
 			left.value.actInst->GetNPCInstancesByCDefID(right.value, &vv);
 			sq_newarray(v, vv.size());
-			for (std::size_t i = 0; i < vv.size(); ++i) {
+			for (size_t i = 0; i < vv.size(); ++i) {
 				Sqrat::PushVar(v, i);
 				Sqrat::PushVar(v, vv[i]);
 				sq_rawset(v, -3);
@@ -928,14 +927,14 @@ void InstanceNutPlayer::HaltedDerived() {
 void InstanceNutPlayer::HaltDerivedExecution() {
 	UnremoveProps();
 
-	std::vector<SceneryEffect> effectsToRemove;
+	vector<SceneryEffect> effectsToRemove;
 	effectsToRemove.insert(effectsToRemove.begin(), activeEffects.begin(),
 			activeEffects.end());
-	std::vector<SceneryEffect>::iterator eit;
+	vector<SceneryEffect>::iterator eit;
 	for (eit = effectsToRemove.begin(); eit != effectsToRemove.end(); ++eit)
 		DetachSceneryEffect(eit->propID, eit->tag);
 
-	std::vector<int>::iterator it;
+	vector<int>::iterator it;
 	for (it = spawned.begin(); it != spawned.end(); ++it) {
 		CreatureInstance *source = actInst->GetInstanceByCID(*it);
 		if (source != NULL)
@@ -950,7 +949,7 @@ void InstanceNutPlayer::HaltDerivedExecution() {
 	}
 	genericSpawned.clear();
 
-	std::map<int, int>::iterator it2;
+	map<int, int>::iterator it2;
 	char buf[32];
 	for (it2 = openedForms.begin(); it2 != openedForms.end(); ++it2) {
 		CreatureInstance *creature = actInst->GetInstanceByCID(it2->second);
@@ -1099,8 +1098,8 @@ void InstanceNutPlayer::RegisterFunctions() {
 
 	// Form objects
 	Sqrat::Class<FormDefinition> formClass(vm, "Form", true);
-	formClass.Ctor<std::string>();
-	formClass.Ctor<std::string, std::string>();
+	formClass.Ctor<string>();
+	formClass.Ctor<string, string>();
 	Sqrat::RootTable(vm).Bind(_SC("Form"), formClass);
 	formClass.Var("title", &FormDefinition::mTitle);
 	formClass.Var("description", &FormDefinition::mDescription);
@@ -1108,16 +1107,16 @@ void InstanceNutPlayer::RegisterFunctions() {
 
 	Sqrat::Class<FormRow> formRowClass(vm, "FormRow", true);
 	formRowClass.Ctor();
-	formRowClass.Ctor<std::string>();
+	formRowClass.Ctor<string>();
 	Sqrat::RootTable(vm).Bind(_SC("FormRow"), formRowClass);
 	formRowClass.Var("group", &FormRow::mGroup);
 	formRowClass.Var("height", &FormRow::mHeight);
 	formRowClass.Func("add_item", &FormRow::AddItem);
 
 	Sqrat::Class<FormItem> formItemClass(vm, "FormItem", true);
-	formItemClass.Ctor<std::string, int>();
-	formItemClass.Ctor<std::string, int, std::string>();
-	formItemClass.Ctor<std::string, int, std::string, int>();
+	formItemClass.Ctor<string, int>();
+	formItemClass.Ctor<string, int, string>();
+	formItemClass.Ctor<string, int, string, int>();
 	Sqrat::RootTable(vm).Bind(_SC("FormItem"), formItemClass);
 	formItemClass.Var("name", &FormItem::mName);
 	formItemClass.Var("type", &FormItem::mType);
@@ -1173,9 +1172,9 @@ int InstanceNutPlayer::GetVirtualPartySize(int partyID) {
 	return party == NULL ? 0 : party->mMemberList.size();
 }
 
-std::vector<int> InstanceNutPlayer::GetVirtualPartyMembers(int partyID) {
+vector<int> InstanceNutPlayer::GetVirtualPartyMembers(int partyID) {
 	ActiveParty * party = g_PartyManager.GetPartyByID(partyID);
-	std::vector<int> p;
+	vector<int> p;
 	if (party == NULL)
 		g_Logs.script->error(
 				"Cannot get party members for ID %v because it doesn't exist.",
@@ -1330,7 +1329,7 @@ void InstanceNutPlayer::AttachItem(int CID, const char *type,
 }
 
 void InstanceNutPlayer::UnremoveProps() {
-	std::list<int>::iterator it;
+	list<int>::iterator it;
 	for (it = actInst->RemovedProps.begin(); it != actInst->RemovedProps.end();
 			++it)
 		DoUnremoveProp(*it);
@@ -1338,7 +1337,7 @@ void InstanceNutPlayer::UnremoveProps() {
 }
 
 void InstanceNutPlayer::UnremoveProp(int propID) {
-	std::list<int>::iterator found = std::find(actInst->RemovedProps.begin(),
+	list<int>::iterator found = find(actInst->RemovedProps.begin(),
 			actInst->RemovedProps.end(), propID);
 	if (found != actInst->RemovedProps.end()) {
 		DoUnremoveProp(propID);
@@ -1423,7 +1422,7 @@ bool InstanceNutPlayer::InviteQuest(int CID, int questID, bool inviteParty) {
 		if (inviteParty && ci->PartyID > 0) {
 			ActiveParty* party = g_PartyManager.GetPartyByID(ci->PartyID);
 			if (party != NULL) {
-				std::vector<PartyMember>::iterator it;
+				vector<PartyMember>::iterator it;
 				for (it = party->mMemberList.begin();
 						it != party->mMemberList.end(); ++it) {
 					PartyMember m = *it;
@@ -1509,7 +1508,7 @@ bool InstanceNutPlayer::JoinQuest(int CID, int questID, bool joinParty) {
 		if (joinParty && ci->PartyID > 0) {
 			ActiveParty* party = g_PartyManager.GetPartyByID(ci->PartyID);
 			if (party != NULL) {
-				std::vector<PartyMember>::iterator it;
+				vector<PartyMember>::iterator it;
 				for (it = party->mMemberList.begin();
 						it != party->mMemberList.end(); ++it) {
 					PartyMember m = *it;
@@ -1554,7 +1553,7 @@ int InstanceNutPlayer::Transform(int propID, Sqrat::Table transformation) {
 		l.propID = propID;
 
 		Squirrel::Printer printer;
-		std::string transformString;
+		string transformString;
 		printer.PrintTable(&transformString, transformation);
 
 		l.effect = transformString.c_str();
@@ -1604,7 +1603,7 @@ void InstanceNutPlayer::DetachSceneryEffect(int propID, int tag) {
 		int wpos = actInst->DetachSceneryEffect(buffer, tagObj->propID,
 				tagObj->type, tag);
 		actInst->LSendToAllSimulator(buffer, wpos, -1);
-		for (std::vector<SceneryEffect>::iterator it = activeEffects.begin();
+		for (vector<SceneryEffect>::iterator it = activeEffects.begin();
 				it != activeEffects.end(); ++it) {
 			if (it->propID == propID && it->tag == tag) {
 				activeEffects.erase(it);
@@ -1799,7 +1798,7 @@ bool InstanceNutPlayer::Despawn(int CID) {
 		g_Logs.script->debug("No spawn %v", CID);
 		return false;
 	}
-	spawned.erase(std::remove(spawned.begin(), spawned.end(), CID),
+	spawned.erase(remove(spawned.begin(), spawned.end(), CID),
 			spawned.end());
 	actInst->spawnsys.Despawn(CID);
 	return true;
@@ -1807,11 +1806,11 @@ bool InstanceNutPlayer::Despawn(int CID) {
 
 int InstanceNutPlayer::DespawnAll(int CDefID) {
 	int despawned = 0;
-	std::vector<int> v;
+	vector<int> v;
 	actInst->GetNPCInstancesByCDefID(CDefID, &v);
-	for (std::vector<int>::iterator it = v.begin(); it != v.end(); ++it) {
+	for (vector<int>::iterator it = v.begin(); it != v.end(); ++it) {
 		actInst->spawnsys.Despawn(*it);
-		spawned.erase(std::remove(spawned.begin(), spawned.end(), *it),
+		spawned.erase(remove(spawned.begin(), spawned.end(), *it),
 				spawned.end());
 		despawned++;
 	}
@@ -1918,8 +1917,8 @@ int InstanceNutPlayer::OLDSpawnAt(int creatureID, float x, float y, float z,
 //
 //
 
-std::string InstanceScriptDef::GetInstanceTslScriptPath(int zoneID) {
-	return Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Instance"), StringUtil::Format("%d", zoneID)), "Script.txt");
+fs::path InstanceScriptDef::GetInstanceTslScriptPath(int zoneID) {
+	return g_Config.ResolveVariableDataPath() / "Instance" / Util::Format("%d", zoneID) / "Script.txt";
 }
 
 void InstanceScriptDef::GetExtendedOpCodeTable(OpCodeInfo **arrayStart,
@@ -1983,7 +1982,7 @@ bool InstanceScriptDef::HandleAdvancedCommand(const char *commandToken,
 }
 
 Squirrel::Area* InstanceScriptDef::GetLocationByName(const char *location) {
-	std::map<std::string, Squirrel::Area>::iterator it;
+	map<string, Squirrel::Area>::iterator it;
 	it = mLocationDef.find(location);
 	if (it == mLocationDef.end())
 		return NULL;
@@ -2215,7 +2214,7 @@ Squirrel::Area* InstanceScriptPlayer::GetLocationByName(const char *name) {
 }
 
 void InstanceScriptPlayer::ScanNPCCIDFor(Squirrel::Area *location, int CDefID,
-		std::vector<int>& destResult) {
+		vector<int>& destResult) {
 	destResult.clear();
 	if (actInst == NULL || location == NULL)
 		return;
@@ -2236,7 +2235,7 @@ void InstanceScriptPlayer::ScanNPCCIDFor(Squirrel::Area *location, int CDefID,
 }
 
 void InstanceScriptPlayer::ScanNPCCID(Squirrel::Area *location,
-		std::vector<int>& destResult) {
+		vector<int>& destResult) {
 	destResult.clear();
 	if (actInst == NULL || location == NULL)
 		return;
@@ -2285,7 +2284,7 @@ bool InstanceNutPlayer::Interact(int CID, const char *text, int time,
 void InstanceNutPlayer::RemoveInteraction(int CID) {
 	CreatureInstance *creature = actInst->GetInstanceByCID(CID);
 	if (creature != NULL) {
-		std::vector<ActiveInteraction>::iterator eit;
+		vector<ActiveInteraction>::iterator eit;
 		for (eit = interactions.begin(); eit != interactions.end(); ++eit) {
 			if (creature == eit->mCreature) {
 				interactions.erase(eit);
@@ -2300,7 +2299,7 @@ void InstanceNutPlayer::CloseForm(int CID, int formId) {
 	if (creature == NULL || creature->simulatorPtr == NULL)
 		return;
 
-	std::map<int, int>::iterator it = openedForms.find(formId);
+	map<int, int>::iterator it = openedForms.find(formId);
 	if (it != openedForms.end()) {
 		openedForms.erase(it);
 	}
@@ -2314,7 +2313,7 @@ void InstanceNutPlayer::OpenForm(int CID, FormDefinition form) {
 	if (creature == NULL || creature->simulatorPtr == NULL)
 		return;
 
-	openedForms.insert(std::map<int, int>::value_type(form.mId, CID));
+	openedForms.insert(map<int, int>::value_type(form.mId, CID));
 	char buf[4096];
 	creature->simulatorPtr->AttemptSend(buf, PrepExt_SendFormOpen(buf, form));
 }
@@ -2371,7 +2370,7 @@ bool InstanceNutPlayer::GiveItem(int CID, int itemID) {
 void InstanceNutPlayer::InterruptInteraction(int CID) {
 	CreatureInstance *creature = actInst->GetInstanceByCID(CID);
 	if (creature != NULL) {
-		std::vector<ActiveInteraction>::iterator eit;
+		vector<ActiveInteraction>::iterator eit;
 		for (eit = interactions.begin(); eit != interactions.end(); ++eit) {
 			if (creature == eit->mCreature) {
 				interactions.erase(eit);
@@ -2383,7 +2382,7 @@ void InstanceNutPlayer::InterruptInteraction(int CID) {
 		g_Logs.server->warn("Interrupt on a creature that doesn't exist. %v",
 				CID);
 	}
-	std::vector<ScriptCore::ScriptParam> p;
+	vector<ScriptCore::ScriptParam> p;
 	p.push_back(ScriptCore::ScriptParam(CID));
 	RunFunction("on_interrupt", p, false);
 	return;

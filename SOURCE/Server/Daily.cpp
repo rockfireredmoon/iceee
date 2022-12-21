@@ -38,7 +38,7 @@ const char *GetNameByID(int id) {
 	return "<undefined>";
 }
 
-int GetIDByName(const std::string &name) {
+int GetIDByName(const string &name) {
 	if (name.compare("ITEM") == 0)
 		return ITEM;
 	if (name.compare("VIRTUAL") == 0)
@@ -59,11 +59,11 @@ void ItemReward::CopyFrom(const ItemReward &source) {
 	itemIDs.assign(source.itemIDs.begin(), source.itemIDs.end());
 }
 
-void ItemReward::FromData(std::string data) {
-	std::vector<std::string> a;
+void ItemReward::FromData(string data) {
+	vector<string> a;
 	Util::Split(data.c_str(), ",", a);
-	for(std::vector<std::string>::iterator it = a.begin(); it != a.end(); ++it) {
-		itemIDs.push_back(atoi(it->c_str()));
+	for(auto s : a) {
+		itemIDs.push_back(stoi(s));
 	}
 }
 
@@ -77,7 +77,7 @@ void CreditReward::CopyFrom(const CreditReward &source) {
 	credits = source.credits;
 }
 
-void CreditReward::FromData(std::string data) {
+void CreditReward::FromData(string data) {
 	credits = atoi(data.c_str());
 }
 
@@ -101,8 +101,8 @@ VirtualItemReward::VirtualItemReward() {
 	components.clear();
 }
 
-void VirtualItemReward::FromData(std::string data) {
-	std::vector<std::string> a;
+void VirtualItemReward::FromData(string data) {
+	vector<string> a;
 	Util::Split(data.c_str(), ":", a);
 	if(a.size() < 3) {
 		g_Logs.data->warn("Daily configuration contains incomplete VIRTUAL item");
@@ -111,18 +111,18 @@ void VirtualItemReward::FromData(std::string data) {
 		minItemRarity = atoi(a[0].c_str());
 		dropRateProfileName = a[1];
 		if(a[2].compare("NONE") != 0 && a[2].compare("ANY") != 0) {
-			std::vector<std::string> l;
+			vector<string> l;
 			Util::Split(a[2], ",", l);
-			for(std::vector<std::string>::iterator it = l.begin(); it != l.end(); ++it) {
-				std::vector<std::string> a;
+			for(auto it = l.begin(); it != l.end(); ++it) {
+				vector<string> a;
 				Util::Split(it->c_str(), "/", a);
 				VirtualItemRewardComponent ei;
-				ei.equipType = atoi(a[0].c_str());
+				ei.equipType = stoi(a[0]);
 				if(a.size() > 1) {
-					std::vector<std::string> z;
+					vector<string> z;
 					Util::Split(a[1], "|", z);
-					for(std::vector<std::string>::iterator it2 = z.begin(); it2 != z.end(); ++it2) {
-						ei.weaponTypes.push_back(atoi(it2->c_str()));
+					for(auto s : z) {
+						ei.weaponTypes.push_back(stoi(s));
 					}
 				}
 			}
@@ -133,11 +133,11 @@ void VirtualItemReward::FromData(std::string data) {
 void VirtualItemReward::CopyFrom(const VirtualItemReward &source) {
 	dropRateProfileName = source.dropRateProfileName;
 	minItemRarity = source.minItemRarity;
-	std::vector<VirtualItemRewardComponent> sourceComponents = source.components;
+	vector<VirtualItemRewardComponent> sourceComponents = source.components;
 	components.clear();
-	for(std::vector<VirtualItemRewardComponent>::iterator it = sourceComponents.begin(); it != sourceComponents.end(); ++it) {
+	for(auto v : sourceComponents) {
 		VirtualItemRewardComponent ei;
-		ei.CopyFrom(*it);
+		ei.CopyFrom(v);
 		components.push_back(ei);
 	}
 }
@@ -181,15 +181,15 @@ void DailyProfileManager::LoadData(void)
 {
 	mProfiles.clear();  //In case we're reloading.
 
-	LoadTable(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "Daily.txt"));
+	LoadTable(g_Config.ResolveStaticDataPath() / "Data" /  "Daily.txt");
 
 	g_Logs.data->info("Loaded %v daily profiles", mProfiles.size());
 }
 
-void DailyProfileManager::LoadTable(std::string filename)
+void DailyProfileManager::LoadTable(const fs::path &filename)
 {
 	FileReader3 fr;
-	if(fr.OpenFile(filename.c_str()) != FileReader3::SUCCESS)
+	if(fr.OpenFile(filename) != FileReader3::SUCCESS)
 	{
 		g_Logs.data->error("Could not open file [%v]", filename);
 		return;
@@ -206,8 +206,8 @@ void DailyProfileManager::LoadTable(std::string filename)
 			int minLevel = fr.BlockToIntC(1);
 			int maxLevel = fr.BlockToIntC(2);
 			int spawnCreatureDefID = fr.BlockToIntC(3);
-			std::string type = fr.BlockToStringC(4);
-			std::string data = fr.BlockToStringC(5);
+			string type = fr.BlockToStringC(4);
+			string data = fr.BlockToStringC(5);
 
 			DailyProfile entry;
 			entry.dayNumber = dayNumber;
@@ -237,19 +237,17 @@ void DailyProfileManager::LoadTable(std::string filename)
 int DailyProfileManager::GetMaxDayNumber()
 {
 	int dn = 0;
-	for(std::vector<DailyProfile>::iterator it = mProfiles.begin(); it != mProfiles.end(); ++it) {
-		DailyProfile p = *it;
+	for(auto p : mProfiles) {
 		if(p.dayNumber > dn)
 			dn = p.dayNumber;
 	}
 	return dn;
 }
 
-std::vector<DailyProfile> DailyProfileManager::GetProfiles(int dayNumber, int level)
+vector<DailyProfile> DailyProfileManager::GetProfiles(int dayNumber, int level)
 {
-	std::vector<DailyProfile> l;
-	for(std::vector<DailyProfile>::iterator it = mProfiles.begin(); it != mProfiles.end(); ++it) {
-		DailyProfile p = *it;
+	vector<DailyProfile> l;
+	for(auto p :  mProfiles) {
 		if(p.dayNumber == dayNumber && level >= p.minLevel && level <= p.maxLevel) {
 			l.push_back(p);
 		}

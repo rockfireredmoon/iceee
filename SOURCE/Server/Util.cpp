@@ -18,6 +18,8 @@
 #include <locale>
 #include <memory.h>
 #include <string.h>
+#include <errno.h>
+#include <limits.h>
 
 #include "util/Log.h"
 
@@ -1428,6 +1430,18 @@ std::string EncodeJSONString(std::string &str) {
 	return str;
 }
 
+
+string ReplaceAllTo(const string str, const string& from,
+		const string& to) {
+	string n = str;
+	size_t start_pos = 0;
+	while ((start_pos = n.find(from, start_pos)) != string::npos) {
+		n.replace(start_pos, from.length(), to);
+		start_pos += to.length();
+	}
+	return n;
+}
+
 void ReplaceAll(std::string& str, const std::string& from,
 		const std::string& to) {
 	size_t start_pos = 0;
@@ -1437,9 +1451,9 @@ void ReplaceAll(std::string& str, const std::string& from,
 	}
 }
 
-void RemoveStringsFrom(const char *search, std::string& operativeString) {
+void RemoveStringsFrom(const std::string &search, std::string& operativeString) {
 	size_t pos = 0;
-	size_t len = strlen(search);
+	size_t len = search.length();
 	do {
 		pos = operativeString.find(search, pos);
 		if (pos != std::string::npos) {
@@ -1744,6 +1758,112 @@ unsigned char RadianToRotationByte(float radians) {
 	/* This weird cast is to take a difference on Arm into account.
 	 * https://stackoverflow.com/questions/4752315/coercing-float-into-unsigned-char-on-arm-vs-intel */
 	return (unsigned char)((int)RadianToRotation(radians));
+}
+
+time_t ToTimeT(fs::file_time_type &tp) {
+    using namespace chrono;
+    auto sctp = time_point_cast<system_clock::duration>(tp - fs::file_time_type::clock::now()
+              + system_clock::now());
+    return system_clock::to_time_t(sctp);
+}
+
+string RightOf(const string &path, const string &delim)
+{
+	STRINGLIST v;
+	const string p = path;
+	Util::Split(p, delim.c_str(), v);
+	if(v.size() == 0)
+		return "";
+	else
+		return v[v.size() - 1];
+}
+
+string LowerCase(const string& in) {
+	string a = in;
+	transform(a.begin(), a.end(), a.begin(), ::tolower);
+	return a;
+}
+
+string UpperCase(const string& in) {
+	string a = in;
+	transform(a.begin(), a.end(), a.begin(), ::toupper);
+	return a;
+}
+
+int SafeParseInt(const string& str) {
+	return SafeParseInt(str, 0);
+}
+
+int SafeParseInt(const string& str, int defaultValue) {
+	char *end;
+	long  l;
+	const char *s = str.c_str();
+	l = strtol(s, &end, 0);
+	if ((errno == ERANGE && l == LONG_MAX) || l > INT_MAX) {
+		return defaultValue;
+	}
+	if ((errno == ERANGE && l == LONG_MIN) || l < INT_MIN) {
+		return defaultValue;
+	}
+	if (*s == '\0' || *end != '\0') {
+		return defaultValue;
+	}
+	return l;
+}
+
+unsigned long ParseTimeHHMM(const string& timeString) {
+	tm t = { };
+	istringstream ss(timeString);
+	ss >> get_time(&t, "%H:%M");
+	return (t.tm_hour * HOUR_MS) + (t.tm_min * MINUTE_MS);
+}
+
+unsigned long ParseTimeHHMMSS(const string& timeString) {
+	tm t = { };
+	istringstream ss(timeString);
+	ss >> get_time(&t, "%H:%M:%SS");
+	return (t.tm_hour * HOUR_MS) + (t.tm_min * MINUTE_MS)
+			+ (t.tm_sec * SECOND_MS);
+}
+
+string FormatTimeHHMM(unsigned long ms) {
+	unsigned int hh = ms / HOUR_MS;
+	unsigned int mm = (ms - (hh * HOUR_MS)) / MINUTE_MS;
+	return Format("%02d:%02d", hh, mm);
+}
+
+string FormatTimeHHMMSS(unsigned long ms) {
+	unsigned int hh = ms / HOUR_MS;
+	unsigned int mm = (ms - (hh * HOUR_MS)) / MINUTE_MS;
+	unsigned int ss = (ms - ((hh * HOUR_MS) + (mm * MINUTE_MS))) / SECOND_MS;
+	return Format("%02d:%02d:%02d", hh, mm, ss);
+}
+
+string FormatTimeHHMMSSmm(unsigned long ms) {
+	unsigned int hh = ms / HOUR_MS;
+	unsigned int mm = (ms - (hh * HOUR_MS)) / MINUTE_MS;
+	unsigned int ss = (ms - ((hh * HOUR_MS) + (mm * MINUTE_MS))) / SECOND_MS;
+	unsigned int mms = (ms - ((hh * HOUR_MS) + (mm * MINUTE_MS) + (ss * SECOND_MS)));
+	return Format("%02d:%02d:%02d:%02d", hh, mm, ss, mms);
+}
+
+string Format(const string fmt_str, ...) {
+	int final_n, n = max(1024, ((int) fmt_str.size()) * 2); /* Reserve two times as much as the length of the fmt_str or 1k whichever is bigger. This really sucks and should be fixed properly */
+	unique_ptr<char[]> formatted;
+	va_list ap;
+	while (1) {
+		formatted.reset(new char[n]); /* Wrap the plain char array into the unique_ptr */
+		strcpy(&formatted[0], fmt_str.c_str());
+		va_start(ap, fmt_str);
+		final_n = vsnprintf(&formatted[0], n, fmt_str.c_str(), ap);
+		va_end(ap);
+		if (final_n < 0 || final_n >= n)
+			n += abs(final_n - n + 1);
+		else
+			break;
+	}
+	string x = string(formatted.get());
+	return x;
 }
 
 } //namespace Util

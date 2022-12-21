@@ -3,7 +3,6 @@
 
 #include "Config.h"
 #include "GameConfig.h"
-#include "StringUtil.h"
 #include <string.h>
 #include "util/Log.h"
 
@@ -173,7 +172,7 @@ void ActiveBuffManager :: WriteEntity(AbstractEntityWriter *writer)
 		if(abEntry != NULL && remain > 0 && !abEntry->IsPassive()) {
 			g_Logs.server->info("Saving ability %v,%v,%v,%v,%v\r\n", buffList[i].tier,
 					buffList[i].buffType, buffList[i].abID, buffList[i].abgID, remain);
-			l.push_back(StringUtil::Format("%d,%d,%d,%d,%lu", buffList[i].tier,
+			l.push_back(Util::Format("%d,%d,%d,%d,%lu", buffList[i].tier,
 					buffList[i].buffType, buffList[i].abID, buffList[i].abgID, remain));
 		}
 	}
@@ -260,7 +259,7 @@ void ActiveCooldownManager :: WriteEntity(AbstractEntityWriter *writer)
 			unsigned long el = cooldownList[i].GetElapsedTimeMS();
 			g_Logs.data->info("AbilityTyime WriteEntity %v = %v %v", name, rem, el);
 
-			writer->Value(name, StringUtil::Format("%lu,%lu", rem, el));
+			writer->Value(name, Util::Format("%lu,%lu", rem, el));
 		}
 	}
 }

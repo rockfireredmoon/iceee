@@ -28,7 +28,6 @@
 #include "Instance.h"
 #include "Chat.h"
 #include "Cluster.h"
-#include "StringUtil.h"
 #include <string.h>
 #include <algorithm>
 
@@ -45,25 +44,25 @@ int WriteAuctionItem(char *buffer,
 		AuctionHouseItem *item, std::string sellerName) {
 	int wpos = 0;
 	// 1
-	wpos += PutStringUTF(&buffer[wpos], StringUtil::Format("%d", item->mId).c_str());
+	wpos += PutStringUTF(&buffer[wpos], Util::Format("%d", item->mId).c_str());
 	// 2
 	wpos += PutStringUTF(&buffer[wpos], FormatAuctionItemProto(item).c_str());
 	// 3
 	wpos += PutStringUTF(&buffer[wpos], sellerName.c_str());
 	// 4
-	wpos += PutStringUTF(&buffer[wpos], StringUtil::Format("%lu", item->GetSecondsRemaining()).c_str());
+	wpos += PutStringUTF(&buffer[wpos], Util::Format("%lu", item->GetSecondsRemaining()).c_str());
 	// 5
-	wpos += PutStringUTF(&buffer[wpos], StringUtil::Format("%lu", item->mBuyItNowCopper).c_str());
+	wpos += PutStringUTF(&buffer[wpos], Util::Format("%lu", item->mBuyItNowCopper).c_str());
 	// 6
-	wpos += PutStringUTF(&buffer[wpos], StringUtil::Format("%lu", item->mBuyItNowCredits).c_str());
+	wpos += PutStringUTF(&buffer[wpos], Util::Format("%lu", item->mBuyItNowCredits).c_str());
 	// 7
-	wpos += PutStringUTF(&buffer[wpos], StringUtil::Format("%d", item->mBids.size()).c_str());
+	wpos += PutStringUTF(&buffer[wpos], Util::Format("%d", item->mBids.size()).c_str());
 	if (item->mBids.size() > 0) {
 		AuctionHouseBid highBid = item->mBids[item->mBids.size() - 1];
 		// 8
-		wpos += PutStringUTF(&buffer[wpos], StringUtil::Format("%lu", highBid.mCopper).c_str());
+		wpos += PutStringUTF(&buffer[wpos], Util::Format("%lu", highBid.mCopper).c_str());
 		// 9
-		wpos += PutStringUTF(&buffer[wpos], StringUtil::Format("%lu", highBid.mCredits).c_str());
+		wpos += PutStringUTF(&buffer[wpos], Util::Format("%lu", highBid.mCredits).c_str());
 	} else {
 		// 8
 		wpos += PutStringUTF(&buffer[wpos], "0");
@@ -157,7 +156,7 @@ AuctionHouseItem::~AuctionHouseItem() {
 }
 
 bool AuctionHouseItem :: WriteEntity(AbstractEntityWriter *writer) {
-	writer->Key(KEYPREFIX_AUCTION_ITEM, StringUtil::Format("%d", mId));
+	writer->Key(KEYPREFIX_AUCTION_ITEM, Util::Format("%d", mId));
 	writer->Value("BeginDate", mStartDate);
 	writer->Value("EndDate", mEndDate);
 	writer->Value("Seller", mSeller);
@@ -173,7 +172,7 @@ bool AuctionHouseItem :: WriteEntity(AbstractEntityWriter *writer) {
 	writer->Value("LookId", mLookId);
 	STRINGLIST l;
 	for (auto it = mBids.begin(); it != mBids.end(); ++it) {
-		l.push_back(StringUtil::Format("%d,%lu,%lu,%lld", it->mBuyer, it->mCopper,
+		l.push_back(Util::Format("%d,%lu,%lu,%lld", it->mBuyer, it->mCopper,
 				it->mCredits, (long long) it->mBidTime));
 	}
 	writer->ListValue("Bid", l);
@@ -181,7 +180,7 @@ bool AuctionHouseItem :: WriteEntity(AbstractEntityWriter *writer) {
 }
 
 bool AuctionHouseItem :: EntityKeys(AbstractEntityReader *reader) {
-	reader->Key(KEYPREFIX_AUCTION_ITEM, StringUtil::Format("%d", mId), true);
+	reader->Key(KEYPREFIX_AUCTION_ITEM, Util::Format("%d", mId), true);
 	return true;
 }
 
@@ -766,7 +765,7 @@ bool AuctionHouseManager::RemoveItem(int id) {
 			g_Logs.data->error("Failed to remove auction house item [%v] from cluster", ah.mId);
 		}
 		else {
-			g_ClusterManager.ListRemove(LISTPREFIX_AUCTION_ITEMS, StringUtil::Format("%d", id));
+			g_ClusterManager.ListRemove(LISTPREFIX_AUCTION_ITEMS, Util::Format("%d", id));
 			g_ClusterManager.AuctionItemRemoved(ah.mId, ah.mAuctioneer);
 		}
 	}
@@ -879,12 +878,12 @@ AuctionHouseItem AuctionHouseManager::Auction(CreatureInstance *creatureInstance
 	ahItem.mSecondsRemaining = slot.secondsRemaining;
 
 	if(SaveItem(ahItem))
-		g_ClusterManager.ListAdd(LISTPREFIX_AUCTION_ITEMS, StringUtil::Format("%d", ahItem.mId));
+		g_ClusterManager.ListAdd(LISTPREFIX_AUCTION_ITEMS, Util::Format("%d", ahItem.mId));
 	// Finish auction
 
 	CharacterData *auctioneerInstance= g_CharacterManager.GetPointerByID(auctioneer);
 	ItemDef *item = g_ItemManager.GetSafePointerByID(ahItem.mItemId);
-	ChatMessage cm(StringUtil::Format("%s is selling %s at %s's auction house",
+	ChatMessage cm(Util::Format("%s is selling %s at %s's auction house",
 			pld->charPtr->cdef.css.display_name, item->mDisplayName.c_str(),
 			auctioneerInstance->cdef.css.display_name));
 	cm.mChannelName = "tc/";
@@ -915,13 +914,13 @@ void AuctionHouseManager::BroadcastUpdate(int auctioneerCID, AuctionHouseItem &i
 	wpos2 += PutByte(&buf[wpos2], 97);
 	wpos2 += PutShort(&buf[wpos2], 0);
 	wpos2 += PutByte(&buf[wpos2], 2);
-	wpos2 += PutStringUTF(&buf[wpos2], StringUtil::Format("%d", auctioneerCID).c_str());
-	wpos2 += PutStringUTF(&buf[wpos2], StringUtil::Format("%d", item.mId).c_str());
-	wpos2 += PutStringUTF(&buf[wpos2], StringUtil::Format("%lu", item.GetSecondsRemaining()).c_str());
-	wpos2 += PutStringUTF(&buf[wpos2], StringUtil::Format("%d", item.mBids.size()).c_str());
+	wpos2 += PutStringUTF(&buf[wpos2], Util::Format("%d", auctioneerCID).c_str());
+	wpos2 += PutStringUTF(&buf[wpos2], Util::Format("%d", item.mId).c_str());
+	wpos2 += PutStringUTF(&buf[wpos2], Util::Format("%lu", item.GetSecondsRemaining()).c_str());
+	wpos2 += PutStringUTF(&buf[wpos2], Util::Format("%d", item.mBids.size()).c_str());
 	AuctionHouseBid highBid = item.mBids[item.mBids.size() - 1];
-	wpos2 += PutStringUTF(&buf[wpos2], StringUtil::Format("%lu", highBid.mCopper).c_str());
-	wpos2 += PutStringUTF(&buf[wpos2], StringUtil::Format("%lu", highBid.mCredits).c_str());
+	wpos2 += PutStringUTF(&buf[wpos2], Util::Format("%lu", highBid.mCopper).c_str());
+	wpos2 += PutStringUTF(&buf[wpos2], Util::Format("%lu", highBid.mCredits).c_str());
 	PutShort(&buf[1], wpos2 - 3);
 	g_SimulatorManager.SendToAllSimulators(buf, wpos2, NULL);
 }
@@ -932,8 +931,8 @@ void AuctionHouseManager::BroadcastRemovedItem(int auctioneerCID, int auctionIte
 	wpos2 += PutByte(&buf[wpos2], 97);
 	wpos2 += PutShort(&buf[wpos2], 0);
 	wpos2 += PutByte(&buf[wpos2], 3);
-	wpos2 += PutStringUTF(&buf[wpos2], StringUtil::Format("%d", auctioneerCID).c_str());
-	wpos2 += PutStringUTF(&buf[wpos2], StringUtil::Format("%d", auctionItemID).c_str());
+	wpos2 += PutStringUTF(&buf[wpos2], Util::Format("%d", auctioneerCID).c_str());
+	wpos2 += PutStringUTF(&buf[wpos2], Util::Format("%d", auctionItemID).c_str());
 	PutShort(&buf[1], wpos2 - 3);
 	g_SimulatorManager.SendToAllSimulators(buf, wpos2, NULL);
 }
@@ -952,7 +951,7 @@ void AuctionHouseManager::BroadcastNewItem(int auctionItemID, const std::string 
 	wpos2 += PutByte(&buf[wpos2], 1);
 	/* The client should be given the CID not the CDefID if it is known. Any players that are
 	 * interacting with that auctioneer on this shard will handle the update */
-	wpos2 += PutStringUTF(&buf[wpos2], StringUtil::Format("%d", cinst == NULL ? 0 : cinst->CreatureID).c_str());
+	wpos2 += PutStringUTF(&buf[wpos2], Util::Format("%d", cinst == NULL ? 0 : cinst->CreatureID).c_str());
 	wpos2 += WriteAuctionItem(&buf[wpos2], &ahItem, sellerName);
 	PutShort(&buf[1], wpos2 - 3);
 	g_SimulatorManager.SendToAllSimulators(buf, wpos2, NULL);

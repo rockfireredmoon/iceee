@@ -20,6 +20,8 @@
 
 #include "Query.h"
 
+using namespace std;
+
 class SpawnCreateHandler : public QueryHandler {
 public:
 	~SpawnCreateHandler() {};

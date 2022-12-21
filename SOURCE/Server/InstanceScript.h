@@ -11,6 +11,10 @@
 #include "PartyManager.h"
 #include "Forms.h"
 #include "util/SquirrelObjects.h"
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 class ActiveInstance;
 class CreatureInstance;
@@ -20,8 +24,8 @@ namespace InstanceScript {
 class MonitorArea {
 public:
 	Squirrel::Area area;
-	std::vector<int> creatureIds;
-	std::string name;
+	vector<int> creatureIds;
+	string name;
 
 	MonitorArea() {
 		Clear();
@@ -32,11 +36,11 @@ public:
 	}
 
 	void Remove(int creatureId) {
-		creatureIds.erase(std::find(creatureIds.begin(), creatureIds.end(), creatureId));
+		creatureIds.erase(find(creatureIds.begin(), creatureIds.end(), creatureId));
 	}
 
 	bool Contains(int creatureId) {
-		return std::find(creatureIds.begin(), creatureIds.end(), creatureId) != creatureIds.end();
+		return find(creatureIds.begin(), creatureIds.end(), creatureId) != creatureIds.end();
 	}
 
 	void Clear() {
@@ -51,11 +55,11 @@ public:
 	virtual ~InstanceNutDef();
 
 	bool LoadFromCluster(int zoneID);
-	static std::string GetInstanceNutScriptPath(int zoneID);
-	static std::string GetInstanceScriptPath(int zoneID, bool pathIfNotExists);
+	static fs::path GetInstanceNutScriptPath(int zoneID);
+	static fs::path GetInstanceScriptPath(int zoneID, bool pathIfNotExists);
 
 private:
-	std::map<std::string, Squirrel::Area> mLocationDef;
+	map<string, Squirrel::Area> mLocationDef;
 };
 
 class ActiveInteraction {
@@ -82,8 +86,8 @@ public:
 	Sqrat::Object Props(Squirrel::Vector3I location);
 
 	int GetNPCID(int CDefID);
-	void MonitorArea(std::string name, Squirrel::Area area);
-	void UnmonitorArea(std::string name);
+	void MonitorArea(string name, Squirrel::Area area);
+	void UnmonitorArea(string name);
 	int GetCIDForPropID(int propID);
 	int GetCreatureDistance(int CID, int CID2);
 	int GetCreatureSpawnProp(int CID);
@@ -112,27 +116,27 @@ public:
 	bool IsAtTether(int CID);
 	bool TargetSelf(int CID);
 	bool SetEnvironment(const char *environment);
-	std::string GetTimeOfDay();
-	std::string GetEnvironment(int x, int y);
-	void SetTimeOfDay(std::string timeOfDay);
+	string GetTimeOfDay();
+	string GetEnvironment(int x, int y);
+	void SetTimeOfDay(string timeOfDay);
 	unsigned long GetServerFlags(int CID);
 	static SQInteger Scan(HSQUIRRELVM v);
 	static SQInteger ScanNPCs(HSQUIRRELVM v);
 	int ScanNPC(Squirrel::Area *location, int CDefID);
-	std::vector<int> ScanForNPCs(Squirrel::Area *location, int CDefID);
-	std::vector<InstanceScript::MonitorArea> monitorAreas;
+	vector<int> ScanForNPCs(Squirrel::Area *location, int CDefID);
+	vector<InstanceScript::MonitorArea> monitorAreas;
 protected:
 	CreatureInstance* GetNPCPtr(int CID);
 	CreatureInstance* GetCreaturePtr(int CID);
 	ActiveInstance *actInst;
-	std::vector<ActiveInteraction> interactions;
+	vector<ActiveInteraction> interactions;
 };
 
 class InstanceNutPlayer: public AbstractInstanceNutPlayer {
 public:
-	std::vector<int> spawned;
-	std::vector<int> genericSpawned;
-	std::map<int, int> openedForms;
+	vector<int> spawned;
+	vector<int> genericSpawned;
+	map<int, int> openedForms;
 	InstanceNutPlayer();
 	virtual ~InstanceNutPlayer();
 	virtual void RegisterFunctions();
@@ -156,7 +160,7 @@ public:
 	bool AddToVirtualParty(int partyID, int CID);
 	int GetVirtualPartySize(int partyID);
 	bool QuitParty(int CID);
-	std::vector<int> GetVirtualPartyMembers(int partyID);
+	vector<int> GetVirtualPartyMembers(int partyID);
 	int GetVirtualPartyLeader(int partyID);
 	void DetachItem(int CID, const char *type, const char *node);
 	void AttachItem(int CID, const char *type, const char *node);
@@ -200,10 +204,10 @@ public:
 	int GetTarget(int CID);
 	bool SetTarget(int CID, int targetCID);
 	bool SetEnvironment(const char *environment);
-	std::string GetEnvironment(int x, int y);
-	std::string PopEnvironment();
-	std::string GetTimeOfDay();
-	void SetTimeOfDay(std::string timeOfDay);
+	string GetEnvironment(int x, int y);
+	string PopEnvironment();
+	string GetTimeOfDay();
+	void SetTimeOfDay(string timeOfDay);
 	bool Interact(int CID, const char *text, int time, bool gather, Sqrat::Function function);
 	void AddInteraction(CreatureInstance *creature, ScriptCore::NutScriptEvent *evt);
 	void RemoveInteraction(int CID);
@@ -215,7 +219,7 @@ public:
 	void CloseForm(int CID, int formId);
 
 private:
-	std::vector<SceneryEffect> activeEffects;
+	vector<SceneryEffect> activeEffects;
 	void DoUnremoveProp(int propID);
 	ActiveParty * DoCreateParty(int leaderCID, int team);
 
@@ -279,11 +283,11 @@ private:
 
 class InstanceScriptDef: public ScriptCore::ScriptDef {
 public:
-	static std::string GetInstanceTslScriptPath(int zoneID);
+	static fs::path GetInstanceTslScriptPath(int zoneID);
 	Squirrel::Area *GetLocationByName(const char *location);
 
 private:
-	std::map<std::string, Squirrel::Area> mLocationDef;
+	map<string, Squirrel::Area> mLocationDef;
 	virtual void GetExtendedOpCodeTable(OpCodeInfo **arrayStart,
 			size_t &arraySize);
 	virtual void SetMetaDataDerived(const char *opname,
@@ -303,9 +307,9 @@ private:
 	Squirrel::Area* GetLocationByName(const char *name);
 
 	//Script helper functions, often utilizing the Instance for lookups.
-	void ScanNPCCID(Squirrel::Area *location, std::vector<int>& destResult);
+	void ScanNPCCID(Squirrel::Area *location, vector<int>& destResult);
 	void ScanNPCCIDFor(Squirrel::Area *location, int CDefId,
-			std::vector<int>& destResult);
+			vector<int>& destResult);
 	CreatureInstance* GetNPCPtr(int CID);
 };
 

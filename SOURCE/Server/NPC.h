@@ -5,9 +5,13 @@
 #include <list>
 #include <map>
 #include <string>
+#include <filesystem>
 
-typedef std::vector<std::string> STRINGLIST;
-typedef std::vector<STRINGLIST> MULTISTRING;
+using namespace std;
+namespace fs = filesystem;
+
+typedef vector<string> STRINGLIST;
+typedef vector<STRINGLIST> MULTISTRING;
 
 //Holds the actual values of hate against a specific creature instance (usually a player).
 struct HateCreatureData
@@ -40,7 +44,7 @@ public:
 	HateProfile();
 	~HateProfile();
 
-	std::vector<HateCreatureData> hateList;
+	vector<HateCreatureData> hateList;
 	unsigned long tauntReleaseTime;    //If a target is taunted, this is the time when the taunt wears off.
 	unsigned long nextRefreshTime;     //Forces a delay between sorting and verifying updated hate profiles.
 
@@ -62,7 +66,7 @@ class HateProfileContainer
 public:
 	HateProfileContainer();
 	~HateProfileContainer();
-	std::list<HateProfile> profileList;
+	list<HateProfile> profileList;
 	HateProfile * GetProfile(void);
 	void RemoveProfile(HateProfile* profile);
 	void UnHate(int CreatureDefID);
@@ -72,10 +76,10 @@ public:
 struct PetDef
 {
 	int mCreatureDefID;            //ID of the CreatureDef entry.  Used as a key into the table, but otherwise has no effect on server operations.
-	std::string mDisplayName;      //Display name sent to the client pet table.
+	string mDisplayName;      //Display name sent to the client pet table.
 	int mLevel;                    //Level sent to the client.
 	int mCost;                     //Cost sent to the client, and used when actually purchasing pets.
-	std::string mDesc;             //Description sent to the client.
+	string mDesc;             //Description sent to the client.
 	int mItemDefID;                //ItemDef ID of the inventory item that added when purchasing the pet.
 	PetDef();
 	void Clear(void);
@@ -85,7 +89,7 @@ struct PetDef
 class PetDefManager
 {
 public:
-	typedef std::map<int, PetDef> PETDEF_MAP;
+	typedef map<int, PetDef> PETDEF_MAP;
 
 	PETDEF_MAP mDefs;
 
@@ -94,7 +98,7 @@ public:
 
 	void AddEntry(PetDef& data);
 	PetDef* GetEntry(int CreatureDefID);
-	void LoadFile(std::string filename);
+	void LoadFile(const fs::path &filename);
 	int GetStandardCount(void);
 	void FillQueryResponse(MULTISTRING& output);
 };
@@ -130,7 +134,7 @@ public:
 	NPCDialogParagraph(const NPCDialogParagraph &other);
 	~NPCDialogParagraph();
 
-	std::string mValue;
+	string mValue;
 	int mType;
 
 };
@@ -141,8 +145,8 @@ public:
 	NPCDialogItem();
 	~NPCDialogItem();
 
-	std::string mName;
-	std::vector<NPCDialogParagraph> mParagraphs;
+	string mName;
+	vector<NPCDialogParagraph> mParagraphs;
 	int mSequence;
 	int mMinInterval;
 	int mMaxInterval;
@@ -155,12 +159,12 @@ public:
 
 	NPCDialogManager();
 	~NPCDialogManager();
-	std::map<std::string, NPCDialogItem*> mItems;
-	NPCDialogItem* LoadItem(std::string name);
+	map<string, NPCDialogItem*> mItems;
+	NPCDialogItem* LoadItem(const fs::path &name);
 	int LoadItems(void);
-	NPCDialogItem* GetItem(std::string name);
-	bool RemoveItem(std::string name);
-	std::string GetPath(std::string name);
+	NPCDialogItem* GetItem(const string &name);
+	bool RemoveItem(const string &name);
+	fs::path GetPath(const string &name);
 	bool SaveItem(NPCDialogItem * item);
 
 };

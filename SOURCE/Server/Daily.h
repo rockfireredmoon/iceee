@@ -6,6 +6,10 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 namespace RewardType
 {
@@ -18,15 +22,15 @@ namespace RewardType
 		MAX
 	};
 	const char *GetNameByID(int eventID);
-	int GetIDByName(const std::string &eventName);
+	int GetIDByName(const string &eventName);
 }
 
 class ItemReward
 {
 public:
-	std::vector<int> itemIDs;
+	vector<int> itemIDs;
 	ItemReward();
-	void FromData(std::string data);
+	void FromData(string data);
 	void CopyFrom(const ItemReward &source);
 };
 
@@ -34,7 +38,7 @@ class VirtualItemRewardComponent
 {
 public:
 	int equipType;
-	std::vector<int> weaponTypes;
+	vector<int> weaponTypes;
 	VirtualItemRewardComponent();
 	void CopyFrom(const VirtualItemRewardComponent &source);
 };
@@ -43,10 +47,10 @@ class VirtualItemReward
 {
 public:
 	unsigned long minItemRarity;
-	std::vector<VirtualItemRewardComponent> components;
-	std::string dropRateProfileName;
+	vector<VirtualItemRewardComponent> components;
+	string dropRateProfileName;
 	VirtualItemReward();
-	void FromData(std::string data);
+	void FromData(string data);
 	void CopyFrom(const VirtualItemReward &source);
 };
 
@@ -55,7 +59,7 @@ class CreditReward
 public:
 	unsigned long credits;
 	CreditReward();
-	void FromData(std::string data);
+	void FromData(string data);
 	void CopyFrom(const CreditReward &source);
 };
 
@@ -84,12 +88,12 @@ public:
 	void LoadData(void);
 
 	int GetMaxDayNumber();
-	std::vector<DailyProfile> GetProfiles(int dayNumber, int tier);
+	vector<DailyProfile> GetProfiles(int dayNumber, int tier);
 	int GetNumberOfProfiles();
 
 private:
-	std::vector<DailyProfile> mProfiles;
-	void LoadTable(std::string filename);
+	vector<DailyProfile> mProfiles;
+	void LoadTable(const fs::path &filename);
 
 	static const DailyProfile mNullProfile;
 };

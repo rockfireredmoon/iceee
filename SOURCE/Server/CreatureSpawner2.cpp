@@ -6,10 +6,12 @@
 #include "FileReader.h"
 #include "Util.h"
 #include "Random.h"
+#include "Scheduler.h"
 #include <cmath>
 #include <algorithm>
 #include "Globals.h"
 #include "EliteMob.h"
+#include "Simulator.h"
 
 #include "Config.h"  //For debug behavior state
 
@@ -807,15 +809,9 @@ void SpawnTile :: RemoveSpawnPointCreature(ActiveSpawner *spawner, int creatureI
 		CreatureInstance *ptr = &cit->second;
 		if((creatureID == 0 || creatureID == ptr->CreatureID) && (ptr->serverFlags & ServerFlags::IsNPC) && ptr->spawnGen == spawner)
 		{
-			MessageComponent msg;
-			msg.SimulatorID = -1;
-			msg.message = BCM_RemoveCreature;
-			msg.param1 = ptr->CreatureID;
-			msg.param2 = 0;
-			msg.x = ptr->CurrentX;
-			msg.z = ptr->CurrentZ;
-			msg.actInst = manager->actInst;
-			bcm.AddEventCopy(msg);
+			ptr->Submit([ptr](){
+				ptr->actInst->LSendToLocalSimulator(GSendBuf, PrepExt_RemoveCreature(GSendBuf, ptr->CreatureID), ptr->CurrentX, ptr->CurrentZ, -1);
+			});
 
 			manager->actInst->EraseAllCreatureReference(ptr);
 			manager->actInst->NPCList.erase(cit++);
@@ -1348,7 +1344,7 @@ void SpawnPackageList :: Free(void)
 int SpawnPackageList :: LoadFromFile(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
+	if(lfr.OpenText(filename) != Err_OK)
 	{
 		g_Logs.server->error("Cannot open spawn package definition file: %v", filename);
 		return -1;
@@ -1494,13 +1490,12 @@ SpawnPackageManager :: ~SpawnPackageManager()
 	packageList.clear();
 }
 
-void SpawnPackageManager :: LoadFromFile(std::string subfolder, std::string filename)
+void SpawnPackageManager :: LoadFromFile(const fs::path &filename)
 {
 	FileReader lfr;
-	std::string f = Platform::JoinPath(subfolder, filename);
-	if(lfr.OpenText(f.c_str()) != Err_OK)
+	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Logs.server->error("Could not open master spawn package list [%v].", f);
+		g_Logs.server->error("Could not open master spawn package list [%v].", filename);
 		return;
 	}
 
@@ -1513,7 +1508,7 @@ void SpawnPackageManager :: LoadFromFile(std::string subfolder, std::string file
 		r = lfr.RemoveBeginningWhitespace();
 		if(r > 0)
 		{
-			f = Platform::JoinPath(subfolder, lfr.DataBuffer);
+			auto f = filename.parent_path() / lfr.DataBuffer;
 			if(newItem.LoadFromFile(f) >= 0)
 			{
 				packageList.push_back(newItem);

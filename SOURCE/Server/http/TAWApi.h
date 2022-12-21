@@ -25,6 +25,7 @@
 #include "../CreditShop.h"
 #include "../AuctionHouse.h"
 
+using namespace std;
 
 namespace HTTPD {
 

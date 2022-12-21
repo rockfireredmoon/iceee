@@ -4,7 +4,6 @@
 
 #include "Character.h"
 #include "Config.h"
-#include "StringUtil.h"
 #include "Cluster.h"
 #include <dirent.h>
 #include "util/Log.h"
@@ -27,7 +26,7 @@ Petition::~Petition() {
 }
 
 bool Petition :: WriteEntity(AbstractEntityWriter *writer) {
-	writer->Key(KEYPREFIX_PETITION, StringUtil::Format("%d", petitionId));
+	writer->Key(KEYPREFIX_PETITION, Util::Format("%d", petitionId));
 	writer->Value("ID", petitionId);
 	writer->Value("Category", category);
 	writer->Value("CDefID", petitionerCDefID);
@@ -40,7 +39,7 @@ bool Petition :: WriteEntity(AbstractEntityWriter *writer) {
 }
 
 bool Petition :: EntityKeys(AbstractEntityReader *reader) {
-	reader->Key(KEYPREFIX_PETITION, StringUtil::Format("%d", petitionId), true);
+	reader->Key(KEYPREFIX_PETITION, Util::Format("%d", petitionId), true);
 	return true;
 }
 
@@ -90,8 +89,8 @@ bool PetitionManager::Take(int petitionId, int sageCharacterId) {
 		g_Logs.data->error("Failed to write petition %v (sage: %v) to take it", petitionId, sageCharacterId);
 		return false;
 	}
-	g_ClusterManager.ListRemove(LISTPREFIX_PENDING_PETITIONS, StringUtil::Format("%d", petitionId), true);
-	g_ClusterManager.ListAdd(StringUtil::Format("%s:%d", LISTPREFIX_TAKEN_PETITIONS.c_str(), sageCharacterId), StringUtil::Format("%d", petitionId).c_str(), true);
+	g_ClusterManager.ListRemove(LISTPREFIX_PENDING_PETITIONS, Util::Format("%d", petitionId), true);
+	g_ClusterManager.ListAdd(Util::Format("%s:%d", LISTPREFIX_TAKEN_PETITIONS.c_str(), sageCharacterId), Util::Format("%d", petitionId).c_str(), true);
 	return true;
 }
 
@@ -111,8 +110,8 @@ bool PetitionManager::Untake(int petitionId, int sageCharacterId) {
 		g_Logs.data->error("Failed to write petition %v (sage: %v) to untake it", petitionId, sageCharacterId);
 		return false;
 	}
-	g_ClusterManager.ListAdd(LISTPREFIX_PENDING_PETITIONS, StringUtil::Format("%d", petitionId), true);
-	g_ClusterManager.ListRemove(StringUtil::Format("%s:%d", LISTPREFIX_TAKEN_PETITIONS.c_str(), sageCharacterId), StringUtil::Format("%d", petitionId).c_str(), true);
+	g_ClusterManager.ListAdd(LISTPREFIX_PENDING_PETITIONS, Util::Format("%d", petitionId), true);
+	g_ClusterManager.ListRemove(Util::Format("%s:%d", LISTPREFIX_TAKEN_PETITIONS.c_str(), sageCharacterId), Util::Format("%d", petitionId).c_str(), true);
 	return true;
 }
 
@@ -132,9 +131,9 @@ bool PetitionManager::Close(int petitionId, int sageCharacterId) {
 		g_Logs.data->error("Failed to write petition %v (sage: %v) to close it", petitionId, sageCharacterId);
 		return false;
 	}
-	g_ClusterManager.ListRemove(LISTPREFIX_PENDING_PETITIONS, StringUtil::Format("%d", petitionId), true);
-	g_ClusterManager.ListRemove(StringUtil::Format("%s:%d", LISTPREFIX_TAKEN_PETITIONS.c_str(), sageCharacterId), StringUtil::Format("%d", petitionId).c_str(), true);
-	g_ClusterManager.ListAdd(LISTPREFIX_CLOSED_PETITIONS, StringUtil::Format("%d", petitionId));
+	g_ClusterManager.ListRemove(LISTPREFIX_PENDING_PETITIONS, Util::Format("%d", petitionId), true);
+	g_ClusterManager.ListRemove(Util::Format("%s:%d", LISTPREFIX_TAKEN_PETITIONS.c_str(), sageCharacterId), Util::Format("%d", petitionId).c_str(), true);
+	g_ClusterManager.ListAdd(LISTPREFIX_CLOSED_PETITIONS, Util::Format("%d", petitionId));
 	return true;
 }
 
@@ -147,7 +146,7 @@ int PetitionManager::NewPetition(int petitionerCDefID, int category, const char 
 	p.petitionerCDefID = petitionerCDefID;
 	p.timestamp = g_ServerTime;
 	if(g_ClusterManager.WriteEntity(&p)) {
-		g_ClusterManager.ListAdd(LISTPREFIX_PENDING_PETITIONS, StringUtil::Format("%d", p.petitionId));
+		g_ClusterManager.ListAdd(LISTPREFIX_PENDING_PETITIONS, Util::Format("%d", p.petitionId));
 		return p.petitionId;
 	}
 	g_Logs.data->error("Failed to saving petition %v to cluster", p.petitionId);
@@ -158,7 +157,7 @@ std::vector<Petition> PetitionManager::GetPetitions(int sageCharacterID) {
 	std::vector<Petition> v;
 	STRINGLIST p =  g_ClusterManager.GetList(LISTPREFIX_PENDING_PETITIONS);
 	FillPetitions(p, v);
-	p = g_ClusterManager.GetList(StringUtil::Format("%s:%d", LISTPREFIX_TAKEN_PETITIONS.c_str(), sageCharacterID));
+	p = g_ClusterManager.GetList(Util::Format("%s:%d", LISTPREFIX_TAKEN_PETITIONS.c_str(), sageCharacterID));
 	FillPetitions(p, v);
 	return v;
 }

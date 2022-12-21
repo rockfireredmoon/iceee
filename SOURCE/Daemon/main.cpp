@@ -40,7 +40,6 @@
 #include <SimulatorBase.h>
 #include <Simulator.h>
 #include <Scheduler.h>
-#include <BroadCast.h>
 #include <Util.h>
 #include <Scenery2.h>
 #include <Instance.h>
@@ -135,6 +134,7 @@ int InitService();
 #include <unistd.h>
 #endif
 
+using namespace std;
 //extern GuildManager g_GuildManager;
 
 ChangeData g_AutoSaveTimer;
@@ -149,7 +149,6 @@ void UnloadResources(void);
 bool VerifyOperation(void);
 void RunActiveInstances(void);
 void CheckCharacterAutosave(bool force);
-void RunUpgradeCheck(void);
 
 void BroadcastLocationToParty(SimulatorThread &player);
 
@@ -216,11 +215,11 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg) {
 		g_Logs.server->fatal("Stack trace:");
 		if (result != NULL) {
 			for (int a = 0; a < numPtr; a++) {
-				std::string line = "UNKNOWN";
-				std::vector<std::string> parts;
+				string line = "UNKNOWN";
+				vector<string> parts;
 				Util::Split(result[a], " ", parts);
 				if (parts.size() > 0) {
-					std::string addr = parts[parts.size() - 1];
+					string addr = parts[parts.size() - 1];
 					char cmd[512];
 					Util::SafeFormat(cmd, sizeof(cmd), "addr2line -e %s -a %s",
 							g_Executable, addr.c_str());
@@ -295,12 +294,12 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg) {
 			}
 		}
 
-		if (g_Config.ShutdownHandlerScript.size() > 0) {
-			char scriptCall[g_Config.ShutdownHandlerScript.size() + 64];
+		if (!g_Config.ShutdownHandlerScript.empty()) {
+			char scriptCall[g_Config.ShutdownHandlerScript.string().length() + 64];
 			g_Logs.server->fatal("Calling shutdown handler script %v",
 					g_Config.ShutdownHandlerScript);
 			Util::SafeFormat(scriptCall, sizeof(scriptCall), "%s %d",
-					g_Config.ShutdownHandlerScript.c_str(), signum);
+					g_Config.ShutdownHandlerScript.string().c_str(), signum);
 
 			g_Logs.server->fatal(
 					"Shutdown handler script %v completed with status %v",
@@ -355,7 +354,7 @@ int main(int argc, char *argv[]) {
 	 */
 	char buffer[MAX_PATH];
 	GetModuleFileName(NULL, buffer, MAX_PATH);
-	std::string dn = Platform::Dirname(buffer);
+	string dn = Platform::Dirname(buffer);
 	PLATFORM_CHDIR(dn.c_str());
 
 	SERVICE_TABLE_ENTRY ServiceTable[2];
@@ -395,8 +394,8 @@ void ServiceMain(int argc, char** argv) {
 		return;
 	}
 
-//	std::string cwd = Platform::GetDirectory();
-//	std::string exe = argv[0];
+//	string cwd = Platform::GetDirectory();
+//	string exe = argv[0];
 //
 //	if (Platform::IsAbsolute(exe)) {
 //		cwd = Platform::Dirname(exe.c_str());
@@ -419,7 +418,7 @@ int InitServerMain(int argc, char *argv[]) {
 	}
 
 	bool daemonize = false;
-	std::string pidfile = "";
+	string pidfile = "";
 	el::Level lvl = el::Level::Warning;
 	bool consoleOut = false;
 	bool configSet = false;
@@ -448,7 +447,7 @@ int InitServerMain(int argc, char *argv[]) {
 		} else if (strcmp(argv[i], "-L") == 0) {
 			i++;
 			if (i < argc) {
-				std::string str = argv[i];
+				string str = argv[i];
 				Util::ToLowerCase(str);
 				if (str.compare("info") == 0) {
 					lvl = el::Level::Info;
@@ -469,7 +468,6 @@ int InitServerMain(int argc, char *argv[]) {
 
 	g_Logs.Init(lvl, consoleOut , "LogConfig.txt");
 	curl_global_init(CURL_GLOBAL_DEFAULT);
-	bcm.mlog.reserve(100);
 
 	//
 	// TODO
@@ -483,12 +481,12 @@ int InitServerMain(int argc, char *argv[]) {
 	//Init the time.  When the environment config is set during the load phase, it needs
 	//to know the present time to initialize the first time cycle.
 
-	std::vector<std::string> paths = g_Config.ResolveLocalConfigurationPath();
-	for (std::vector<std::string>::iterator it = paths.begin();
+	auto paths = g_Config.ResolveLocalConfigurationPath();
+	for (auto  it = paths.begin();
 			it != paths.end(); ++it) {
-		std::string dir = *it;
-		std::string filename = Platform::JoinPath(dir, "ServerConfig.txt");
-		if(!LoadConfig(filename) && it == paths.begin())
+		auto dir = *it;
+		auto filename = dir / "ServerConfig.txt";
+		if(!g_Config.LoadConfig(filename) && it == paths.begin())
 			g_Logs.data->error("Could not open server configuration file: %v", filename);
 	}
 	g_Logs.server->info("Working directory %v.", g_WorkingDirectory);
@@ -895,11 +893,8 @@ int InitServerMain(int argc, char *argv[]) {
 //	else if(query.name.compare("pref.set") == 0)
 //		handle_query_pref_set();
 
-	for (std::vector<std::string>::iterator it = paths.begin();
-			it != paths.end(); ++it) {
-		std::string dir = *it;
-		g_ClusterManager.LoadConfiguration(
-				Platform::JoinPath(dir, "Cluster.txt"));
+	for (auto dir : paths) {
+		g_ClusterManager.LoadConfiguration(dir / "Cluster.txt");
 	}
 
 	if (!g_ClusterManager.Init()) {
@@ -912,49 +907,25 @@ int InitServerMain(int argc, char *argv[]) {
 	g_AchievementsManager.LoadItems();
 	g_Logs.data->info("Loaded %v Achievements.",
 			g_AchievementsManager.mDefs.size());
-	g_ModManager.LoadFromFile(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"ItemMod"), "ModTables.txt"));
+	g_ModManager.LoadFromFile(g_Config.ResolveStaticDataPath() /"ItemMod" / "ModTables.txt");
 	g_Logs.data->info("Loaded %v ModTables.", g_ModManager.modTable.size());
-	g_ModTemplateManager.LoadFromFile(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"ItemMod"), "ModTemplates.txt"));
+	g_ModTemplateManager.LoadFromFile(g_Config.ResolveStaticDataPath() / "ItemMod" / "ModTemplates.txt");
 	g_Logs.data->info("Loaded %v ModTemplates.",
 			g_ModTemplateManager.equipTemplate.size());
-	g_EquipAppearance.LoadFromFile(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"ItemMod"), "Appearances.txt"));
+	g_EquipAppearance.LoadFromFile(g_Config.ResolveStaticDataPath() / "ItemMod" / "Appearances.txt");
 	g_Logs.data->info("Loaded %v EquipAppearance.",
 			g_EquipAppearance.dataEntry.size());
-	g_EquipIconAppearance.LoadFromFile(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"ItemMod"), "Icons.txt"));
+	g_EquipIconAppearance.LoadFromFile(g_Config.ResolveStaticDataPath() / "ItemMod" / "Icons.txt");
 	g_Logs.data->info("Loaded %v EquipIconAppearance.",
 			g_EquipIconAppearance.dataEntry.size());
-	g_EquipTable.LoadFromFile(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"ItemMod"), "EquipTable.txt"));
+	g_EquipTable.LoadFromFile(g_Config.ResolveStaticDataPath() / "ItemMod" / "EquipTable.txt");
 	g_Logs.data->info("Loaded %v EquipTable.", g_EquipTable.equipList.size());
-	g_NameTemplateManager.LoadFromFile(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"ItemMod"), "Names.txt"));
+	g_NameTemplateManager.LoadFromFile(g_Config.ResolveStaticDataPath() / "ItemMod" / "Names.txt");
 	g_Logs.data->info("Loaded %v Name Templates.",
 			g_NameTemplateManager.nameTemplate.size());
-	g_NameModManager.LoadFromFile(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"ItemMod"), "NameMod.txt"));
+	g_NameModManager.LoadFromFile(g_Config.ResolveStaticDataPath() / "ItemMod" / "NameMod.txt");
 	g_Logs.data->info("Loaded %v NameMods", g_NameModManager.mModList.size());
-	g_NameWeightManager.LoadFromFile(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"ItemMod"), "NameWeight.txt"));
+	g_NameWeightManager.LoadFromFile(g_Config.ResolveStaticDataPath() / "ItemMod" / "NameWeight.txt");
 	g_Logs.data->info("Loaded %v NameWeight",
 			g_NameWeightManager.mWeightList.size());
 	g_VirtualItemModSystem.LoadSettings();
@@ -970,31 +941,19 @@ int InitServerMain(int argc, char *argv[]) {
 
 	//g_EquipAppearance.Debug_CheckForNames();
 
-	CreatureDef.LoadPackages(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"Packages"), "CreaturePack.txt"));
+	CreatureDef.LoadPackages(g_Config.ResolveStaticDataPath() / "Packages" / "CreaturePack.txt");
 	g_Logs.data->info("Loaded %v CreatureDefs.", CreatureDef.NPC.size());
 
-	g_PetDefManager.LoadFile(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"Data"), "Pets.txt"));
+	g_PetDefManager.LoadFile(g_Config.ResolveStaticDataPath() / "Data" / "Pets.txt");
 	g_Logs.data->info("Loaded %v PetDefs.", g_PetDefManager.GetStandardCount());
 
 	g_AccountManager.LoadAllData();
 
-	g_GambleManager.LoadFile(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"Data"), "Gamble.txt"));
+	g_GambleManager.LoadFile(g_Config.ResolveStaticDataPath() / "Data" / "Gamble.txt");
 	g_Logs.data->info("Loaded %v Gamble definitions.",
 			g_GambleManager.GetStandardCount());
 
-	g_GuildManager.LoadFile(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"Data"), "GuildDef.txt"));
+	g_GuildManager.LoadFile(g_Config.ResolveStaticDataPath() / "Data" / "GuildDef.txt");
 	g_Logs.data->info("Loaded %v Guild definitions.",
 			g_GuildManager.GetStandardCount());
 
@@ -1008,46 +967,28 @@ int InitServerMain(int argc, char *argv[]) {
 	g_Logs.data->info("Loaded %v NPC Dialog items.",
 			g_NPCDialogManager.mItems.size());
 
-	g_AssetCatalogueManager.LoadFromDirectory(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"AssetCatalogue"));
+	g_AssetCatalogueManager.LoadFromDirectory(g_Config.ResolveStaticDataPath() /"AssetCatalogue");
 	g_Logs.data->info("Loaded %v asset catalogue items.",
 			g_AssetCatalogueManager.Count());
 
 	g_ZoneDefManager.LoadData();
 	g_GroveTemplateManager.LoadData();
 
-	g_ZoneBarrierManager.LoadFromFile(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"Data"), "MapBarrier.txt"));
+	g_ZoneBarrierManager.LoadFromFile(g_Config.ResolveStaticDataPath() / "Data" /  "MapBarrier.txt");
 	g_Logs.data->info("Loaded %v MapBarrier.",
 			g_ZoneBarrierManager.GetLoadedCount());
 
-	g_ZoneMarkerDataManager.LoadFile(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"Data"), "ZoneMarkers.txt"));
-	g_Logs.data->info("Loaded %v zones with marker data.",
-			g_ZoneMarkerDataManager.zoneList.size());
+	g_ZoneMarkerDataManager.LoadFile(g_Config.ResolveStaticDataPath() / "Data" / "ZoneMarkers.txt");
+	g_Logs.data->info("Loaded %v zones with marker data.", g_ZoneMarkerDataManager.zoneList.size());
 
-	MapDef.LoadFile(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"Data"), "MapDef.txt"));
+	MapDef.LoadFile(g_Config.ResolveStaticDataPath() / "Data" / "MapDef.txt");
 	g_Logs.data->info("Loaded %v MapDef.", MapDef.mMapList.size());
 
-	MapLocation.LoadFile(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"Data"), "MapLocations.txt"));
+	MapLocation.LoadFile(g_Config.ResolveStaticDataPath() / "Data" / "MapLocations.txt");
 	g_Logs.data->info("Loaded %v MapLocation zones.",
 			MapLocation.mLocationSet.size());
 
-	g_WeatherManager.LoadFromFile(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"Data"), "Weather.txt"));
+	g_WeatherManager.LoadFromFile(g_Config.ResolveStaticDataPath() / "Data" /  "Weather.txt");
 	g_Logs.data->info("Loaded %v weather definitions.",
 			g_WeatherManager.mWeatherDefinitions.size());
 
@@ -1056,27 +997,16 @@ int InitServerMain(int argc, char *argv[]) {
 	}
 	g_Logs.data->info("Loaded %v Tips.", g_InfoManager.GetTips().size());
 
-	g_SpawnPackageManager.LoadFromFile(
-			Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-					"SpawnPackages"), "SpawnPackageList.txt");
+	g_SpawnPackageManager.LoadFromFile(g_Config.ResolveStaticDataPath() / "SpawnPackages" / "SpawnPackageList.txt");
 	g_Logs.data->info("Loaded %v Spawn Package lists.",
 			g_SpawnPackageManager.packageList.size());
 
-	QuestDef.LoadQuestPackages(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"Packages"), "QuestPack.txt"));
+	QuestDef.LoadQuestPackages(g_Config.ResolveStaticDataPath() / "Packages" / "QuestPack.txt");
 	g_Logs.data->info("Loaded %v Quests.", QuestDef.mQuests.size());
-	QuestScript::LoadQuestScripts(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"Data"), "QuestScript.txt"));
+	QuestScript::LoadQuestScripts(g_Config.ResolveStaticDataPath() / "Data" / "QuestScript.txt");
 	QuestDef.ResolveQuestMarkers();
 
-	g_InteractObjectContainer.LoadFromFile(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"Data"), "InteractDef.txt"));
+	g_InteractObjectContainer.LoadFromFile(g_Config.ResolveStaticDataPath() / "Data" / "InteractDef.txt");
 	g_Logs.data->info("Loaded %v InteractDef.",
 			g_InteractObjectContainer.objList.size());
 
@@ -1084,10 +1014,7 @@ int InitServerMain(int argc, char *argv[]) {
 
 	g_EliteManager.LoadData();
 
-	Global::LoadResCostTable(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"Data"), "ResCost.txt"));
+	Global::LoadResCostTable(g_Config.ResolveStaticDataPath() / "Data" / "ResCost.txt");
 
 	g_InstanceScaleManager.LoadData();
 	g_DropRateProfileManager.LoadData();
@@ -1491,8 +1418,6 @@ void UnloadResources(void) {
 	WSACleanup();
 #endif
 
-	bcm.Free();
-
 	MapDef.FreeList();
 	g_ZoneDefManager.Free();
 	g_ActiveInstanceManager.Clear(); //Instances contain loot packages, which need to be freed before the Item system is destroyed.
@@ -1584,12 +1509,11 @@ void RunServerMain(void) {
 							>= (unsigned long) g_ForceUpdateTime) {
 						it->pld.PendingMovement = 0;
 						it->pld.MovementTime = 0;
-						it->AddMessage((long) it->creatureInst, 0,
-								BCM_UpdateFullPosition);
+						it->creatureInst->Submit(bind(&CreatureInstance::BroadcastFullPositionUpdate, it->creatureInst, 0));
 					}
 				}
 			} else if (g_ServerTime - it->LastUpdate >= g_RebroadcastDelay) {
-				it->AddMessage((long) it->creatureInst, 0, BCM_UpdatePosInc);
+				it->creatureInst->Submit(bind(&CreatureInstance::BroadcastIncrementalPositionUpdate, it->creatureInst));
 				it->LastUpdate = g_ServerTime;
 			}
 			BroadcastLocationToParty(*it);
@@ -1597,8 +1521,7 @@ void RunServerMain(void) {
 	}
 
 	SendHeartbeatMessages();
-	g_Scheduler.RunProcessingCycle();
-	RunPendingMessages();
+	g_Scheduler.RunScheduledTasks();
 	SendDebugPings();
 	g_SceneryManager.CheckAutosave(false);
 
@@ -1673,7 +1596,7 @@ void SendHeartbeatMessages(void) {
 
 void RunActiveInstances(void) {
 	for (size_t i = 0; i < g_ActiveInstanceManager.instListPtr.size(); i++)
-		g_ActiveInstanceManager.instListPtr[i]->RunProcessingCycle();
+		g_ActiveInstanceManager.instListPtr[i]->RunScheduledTasks();
 
 	pendingOperations.UpdateList_Process();
 	pendingOperations.DeathList_Process();
@@ -1683,7 +1606,7 @@ void RunActiveInstances(void) {
 	g_ActiveInstanceManager.CheckActiveInstances();
 
 	if (g_ZoneDefManager.ZoneUnloadReady() == true) {
-		std::vector<int> activeList;
+		vector<int> activeList;
 		for (size_t i = 0; i < g_ActiveInstanceManager.instListPtr.size(); i++)
 			activeList.push_back(g_ActiveInstanceManager.instListPtr[i]->mZone);
 		g_ZoneDefManager.UnloadInactiveZones(activeList);
@@ -1709,33 +1632,6 @@ void RunActiveInstances(void) {
 		g_SceneryManager.TransferActiveLocations(activeList);
 		g_SceneryManager.ReleaseThread();
 	}
-}
-
-void RunPendingMessages(void) {
-	//Get a quick size to see if operations are pending.
-	//If so, get the real size from within the critical section, since a mismatch
-	//might occur.  Process the messages in the order they were added.  Delete
-	//the list when done.
-	if (bcm.mlog.size() == 0)
-		return;
-
-	bcm.EnterCS("RunPendingMessages");
-	for (size_t i = 0; i < bcm.mlog.size(); i++) {
-#ifdef DEBUG_TIME
-		Debug::TimeTrack("RunPendingMessages", 100);
-#endif
-
-		MessageComponent *msg = &bcm.mlog[i];
-
-		if (msg->actInst != NULL)
-			msg->actInst->ProcessMessage(msg);
-		else
-			g_Logs.server->error(
-					"Invalid Active Instance [%v] message for Sim:%v",
-					msg->actInst, msg->SimulatorID);
-	}
-	bcm.mlog.clear();
-	bcm.LeaveCS();
 }
 
 void SendDebugPings(void) {
@@ -1805,7 +1701,7 @@ void Debug_OutputCharacter(FILE *output, int index, CreatureInstance *cInst) {
 			cInst->css.might_charges, cInst->css.will, cInst->css.will_charges);
 	if (cInst->serverFlags & ServerFlags::IsPlayer) {
 		QuestReferenceContainer act = cInst->charPtr->questJournal.activeQuests;
-		for (std::vector<QuestReference>::iterator it = act.itemList.begin();
+		for (vector<QuestReference>::iterator it = act.itemList.begin();
 				it != act.itemList.end(); ++it) {
 			QuestReference ref = *it;
 			fprintf(output, "    Quest: %d (ACT %d)\r\n", ref.QuestID,
@@ -1861,9 +1757,7 @@ void Debug_OutputCharacter(FILE *output, int index, CreatureInstance *cInst) {
 void Debug_FullDump(void) {
 	g_Logs.server->fatal("Writing crash dump.");
 	FILE *output =
-			fopen(
-					Platform::JoinPath(g_Config.ResolveLogPath(),
-							"CrashDump.log").c_str(), "wb");
+			fopen((g_Config.ResolveLogPath() / "CrashDump.log").string().c_str(), "wb");
 	if (output == NULL)
 		return;
 

@@ -31,15 +31,18 @@
 #include <AssetCatalogue.h>
 #include <CreditShop.h>
 #include <IGForum.h>
-#include <StringUtil.h>
 #include <FriendStatus.h>
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 class VirtualItemPage: public AbstractEntity {
 public:
 	static const int ITEMS_PER_PAGE = 256;
 	static const int AUTOSAVE_TIMER = 60000;
 	int pageIndex;
-	std::vector<VirtualItemDef> itemList;
+	vector<VirtualItemDef> itemList;
 	VirtualItemPage();
 	VirtualItemPage(int page);
 	void Clear(void);
@@ -51,8 +54,8 @@ public:
 
 class IGFCategoryPage: public AbstractEntity {
 public:
-	typedef std::map<int, IGFCategory> CATEGORYENTRY;
-	typedef std::pair<int, IGFCategory> CATEGORYPAGE;
+	typedef map<int, IGFCategory> CATEGORYENTRY;
+	typedef pair<int, IGFCategory> CATEGORYPAGE;
 	CATEGORYENTRY mEntries;
 
 	int mPage;
@@ -65,8 +68,8 @@ public:
 
 class IGFThreadPage: public AbstractEntity {
 public:
-	typedef std::map<int, IGFThread> THREADENTRY;
-	typedef std::pair<int, IGFThread> THREADPAIR;
+	typedef map<int, IGFThread> THREADENTRY;
+	typedef pair<int, IGFThread> THREADPAIR;
 	THREADENTRY mEntries;
 	int mPage;
 	IGFThreadPage();
@@ -79,8 +82,8 @@ public:
 
 class IGFPostPage: public AbstractEntity {
 public:
-	typedef std::map<int, IGFPost> POSTENTRY;
-	typedef std::pair<int, IGFPost> POSTPAIR;
+	typedef map<int, IGFPost> POSTENTRY;
+	typedef pair<int, IGFPost> POSTPAIR;
 	POSTENTRY mEntries;
 	int mPage;
 	IGFPostPage();
@@ -106,7 +109,7 @@ VirtualItemPage :: VirtualItemPage(int page)
 
 
 bool VirtualItemPage::EntityKeys(AbstractEntityReader *reader) {
-	reader->Key(KEYPREFIX_VIRTUAL_ITEM, StringUtil::Format("%d", pageIndex), true);
+	reader->Key(KEYPREFIX_VIRTUAL_ITEM, Util::Format("%d", pageIndex), true);
 	return true;
 }
 
@@ -146,7 +149,7 @@ IGFPostPage :: IGFPostPage()
 }
 
 bool IGFPostPage::EntityKeys(AbstractEntityReader *reader) {
-	reader->Key(KEYPREFIX_IGF_POST, StringUtil::Format("%d", mPage), true);
+	reader->Key(KEYPREFIX_IGF_POST, Util::Format("%d", mPage), true);
 	return true;
 }
 
@@ -185,7 +188,7 @@ IGFCategoryPage :: IGFCategoryPage()
 }
 
 bool IGFCategoryPage::EntityKeys(AbstractEntityReader *reader) {
-	reader->Key(KEYPREFIX_IGF_CATEGORY, StringUtil::Format("%d", mPage), true);
+	reader->Key(KEYPREFIX_IGF_CATEGORY, Util::Format("%d", mPage), true);
 	return true;
 }
 
@@ -221,7 +224,7 @@ IGFThreadPage :: IGFThreadPage()
 }
 
 bool IGFThreadPage::EntityKeys(AbstractEntityReader *reader) {
-	reader->Key(KEYPREFIX_IGF_THREAD, StringUtil::Format("%d", mPage), true);
+	reader->Key(KEYPREFIX_IGF_THREAD, Util::Format("%d", mPage), true);
 	return true;
 }
 
@@ -258,7 +261,7 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 
-	std::string userDataPath;
+	fs::path userDataPath;
 	bool configSet = false;
 
 	el::Level lvl = el::Level::Warning;
@@ -286,54 +289,47 @@ int main(int argc, char *argv[]) {
 	curl_global_init(CURL_GLOBAL_DEFAULT);
 	g_PlatformTime.Init();
 
-	std::vector<std::string> paths = g_Config.ResolveLocalConfigurationPath();
-	for (std::vector<std::string>::iterator it = paths.begin();
-			it != paths.end(); ++it) {
-		std::string dir = *it;
-		std::string filename = Platform::JoinPath(dir, "ServerConfig.txt");
-		if(!LoadConfig(filename) && it == paths.begin())
+	auto paths = g_Config.ResolveLocalConfigurationPath();
+	for (auto it = paths.begin(); it != paths.end(); ++it) {
+		auto dir = *it;
+		auto filename = dir / "ServerConfig.txt";
+		if(!g_Config.LoadConfig(filename) && it == paths.begin())
 			g_Logs.data->error("Could not open server configuration file: %v", filename);
 	}
 
-	if(userDataPath.length() == 0)
+	if(userDataPath.empty())
 		userDataPath = "User";
 
 	g_ClusterManager.mNoEvents = true;
-	for (std::vector<std::string>::iterator it = paths.begin();
-			it != paths.end(); ++it) {
-		std::string dir = *it;
-		g_ClusterManager.LoadConfiguration(Platform::JoinPath(*it, "Cluster.txt"));
+	for (auto it = paths.begin(); it != paths.end(); ++it) {
+		auto dir = *it;
+		g_ClusterManager.LoadConfiguration(dir / "Cluster.txt");
 	}
 
 	if(!g_ClusterManager.Init())
 		return 1;
 
-	std::string path;
-	DIR *dir;
-	struct dirent *ent;
+	fs::path path;
 
 	/* We need some static data */
 	g_ItemManager.LoadData();
 	g_AbilityManager.LoadData();
-	g_AssetCatalogueManager.LoadFromDirectory(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"AssetCatalogue"));
+	g_AssetCatalogueManager.LoadFromDirectory(g_Config.ResolveStaticDataPath() /  "AssetCatalogue");
 	g_ZoneDefManager.LoadData();
 
 	g_Logs.data->info("Reading user data from %v", userDataPath);
 
 	/* Virtual Items */
-	path = Platform::JoinPath(userDataPath, "VirtualItems");
-	if ((dir = opendir(path.c_str())) != NULL) {
+	path = userDataPath / "VirtualItems";
+	if(fs::is_directory(path)) {
 		int maxc = ItemManager::BASE_VIRTUAL_ITEM_ID;
-		while ((ent = readdir(dir)) != NULL) {
-			string s = string(ent->d_name);
-			Util::RemoveStringsFrom(".txt", s);
-			int id = atoi(s.c_str());
+		for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
+			auto path = entry.path();
+			auto s = path.string();
+			int id = stoi(path.stem());
 			if (id != 0) {
-				std::string fullfile = Platform::JoinPath(path, ent->d_name);
-				g_Logs.data->debug("Found virtual item file %v (%v)", id, fullfile);
-				TextFileEntityReader r(fullfile, Case_None, Comment_Semi);
+				g_Logs.data->debug("Found virtual item file %v (%v)", id, path);
+				TextFileEntityReader r(path, Case_None, Comment_Semi);
 
 				VirtualItemPage vip;
 				vip.pageIndex = id;
@@ -347,21 +343,18 @@ int main(int argc, char *argv[]) {
 						if (g_ClusterManager.WriteEntity(&vi)) {
 							g_Logs.data->info("    Migrated virtual item %v", vi.mID);
 						} else {
-							g_Logs.data->error("Failed to write virtual item %v",
-									ent->d_name);
+							g_Logs.data->error("Failed to write virtual item %v", id);
 							return 1;
 						}
 					}
 				} else {
-					g_Logs.data->error("Failed to load virtual item from %v",
-							ent->d_name);
+					g_Logs.data->error("Failed to load virtual item from %v", id);
 					return 1;
 				}
 				r.PopSection();
 			}
 		}
-		g_ClusterManager.SetKey(ID_NEXT_VIRTUAL_ITEM_ID, StringUtil::Format("%d", maxc));
-		closedir(dir);
+		g_ClusterManager.SetKey(ID_NEXT_VIRTUAL_ITEM_ID, Util::Format("%d", maxc));
 	} else {
 		g_Logs.data->error(
 				"Failed to open virtual item directory %v, does it exist?", path);
@@ -370,37 +363,31 @@ int main(int argc, char *argv[]) {
 
 	/* Accounts */
 
-	path = Platform::JoinPath(userDataPath,
-			"Accounts");
-	if ((dir = opendir(path.c_str())) != NULL) {
+	path = userDataPath / "Accounts";
+
+	if(fs::is_directory(path)) {
 		int maxa = 1;
-		while ((ent = readdir(dir)) != NULL) {
-			string s = string(ent->d_name);
-			Util::RemoveStringsFrom(".txt", s);
-			int id = atoi(s.c_str());
+		for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
+			auto path = entry.path();
+			auto s = path.string();
+			int id = stoi(path.stem());
 			if (id > 0) {
 				AccountData ad;
 				ad.ID = id;
 				if(id > maxa)
 					maxa = id;
-				std::string fullfile = Platform::JoinPath(
-						Platform::JoinPath(userDataPath,
-								"Accounts"), ent->d_name);
-				g_Logs.data->debug("Found account %v (%v)", id, fullfile);
-				TextFileEntityReader r(fullfile, Case_None, Comment_Semi);
+				TextFileEntityReader r(path, Case_None, Comment_Semi);
 				r.PushSection("ENTRY");
 				if (ad.EntityKeys(&r) && ad.ReadEntity(&r)) {
 					if (g_ClusterManager.WriteEntity(&ad)) {
 						g_AccountManager.AppendQuickData(&ad);
-						g_Logs.data->info("Migrated account %v", ent->d_name);
+						g_Logs.data->info("Migrated account %v", id);
 					} else {
-						g_Logs.data->error("Failed to write account %v",
-								ent->d_name);
+						g_Logs.data->error("Failed to write account %v", id);
 						return 1;
 					}
 				} else {
-					g_Logs.data->error("Failed to read account from %v",
-							ent->d_name);
+					g_Logs.data->error("Failed to read account from %v", id);
 					return 1;
 				}
 				r.PopSection();
@@ -410,17 +397,13 @@ int main(int argc, char *argv[]) {
 				 *
 				 * TODO should use real Character data when that is ported?
 				 */
-				for (auto it = ad.characterCache.cacheData.begin();
-						it != ad.characterCache.cacheData.end(); ++it) {
-					g_UsedNameDatabase.Add((*it).creatureDefID,
-							(*it).display_name);
+				for (auto it : ad.characterCache.cacheData) {
+					g_UsedNameDatabase.Add(it.creatureDefID, it.display_name);
 				}
 			}
 		}
 
-		g_ClusterManager.SetKey(ID_NEXT_ACCOUNT_ID, StringUtil::Format("%d", maxa));
-
-		closedir(dir);
+		g_ClusterManager.SetKey(ID_NEXT_ACCOUNT_ID, Util::Format("%d", maxa));
 	} else {
 		g_Logs.data->error(
 				"Failed to open Accounts directory %v, does it exist?", path);
@@ -428,59 +411,54 @@ int main(int argc, char *argv[]) {
 	}
 
 	/* ZoneDefs */
-	path = Platform::JoinPath(userDataPath, "ZoneDef");
-	if ((dir = opendir(path.c_str())) != NULL) {
+	path = userDataPath / "ZoneDef";
+	if (fs::exists(path)) {
 		int maxz = ZoneDefManager::GROVE_ZONE_ID_DEFAULT;
-		while ((ent = readdir(dir)) != NULL) {
-			string s = string(ent->d_name);
-			Util::RemoveStringsFrom(".txt", s);
-			int id = atoi(s.c_str());
+		for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
+			auto path = entry.path();
+			int id = stoi(path.stem());
 			if (id > 0) {
 				ZoneDefInfo zd;
 				zd.mID = id;
 				if(id > maxz)
 					maxz = id;
-				std::string fullfile = Platform::JoinPath(
-						Platform::JoinPath(userDataPath,
-								"ZoneDef"), ent->d_name);
-				g_Logs.data->debug("Found ZoneDef %v (%v)", id, fullfile);
-				TextFileEntityReader r(fullfile, Case_None, Comment_Semi);
+				g_Logs.data->debug("Found ZoneDef %v (%v)", id, path);
+				TextFileEntityReader r(path, Case_None, Comment_Semi);
 				r.PushSection("ENTRY");
 				if (zd.EntityKeys(&r) && zd.ReadEntity(&r)) {
 					if (g_ClusterManager.WriteEntity(&zd)) {
 
 						g_ClusterManager.SetKey(
-								StringUtil::Format("%s:%s",
+								Util::Format("%s:%s",
 										KEYPREFIX_WARP_NAME_TO_ZONE_ID.c_str(),
 										zd.mWarpName.c_str()),
-								StringUtil::Format("%d", zd.mID));
+								Util::Format("%d", zd.mID));
 						g_ClusterManager.ListAdd(
-								StringUtil::Format("%s:%s",
+								Util::Format("%s:%s",
 										LISTPREFIX_GROVE_NAME_TO_ZONE_ID.c_str(),
 										zd.mGroveName.c_str()),
-								StringUtil::Format("%d", zd.mID));
+								Util::Format("%d", zd.mID));
 						g_ClusterManager.ListAdd(
-								StringUtil::Format("%s:%d",
+								Util::Format("%s:%d",
 										LISTPREFIX_ACCOUNT_ID_TO_ZONE_ID.c_str(),
 										zd.mAccountID),
-								StringUtil::Format("%d", zd.mID));
+								Util::Format("%d", zd.mID));
 
-						g_Logs.data->info("Migrated zone def %v", ent->d_name);
+						g_Logs.data->info("Migrated zone def %v", path);
 					} else {
 						g_Logs.data->error("Failed to zone def %v",
-								ent->d_name);
+								path);
 						return 1;
 					}
 				} else {
 					g_Logs.data->error("Failed to load zone def from %v",
-							ent->d_name);
+							path);
 					return 1;
 				}
 				r.PopSection();
 			}
 		}
-		g_ClusterManager.SetKey(ID_NEXT_ZONE_ID, StringUtil::Format("%d", maxz));
-		closedir(dir);
+		g_ClusterManager.SetKey(ID_NEXT_ZONE_ID, Util::Format("%d", maxz));
 	} else {
 		g_Logs.data->error(
 				"Failed to open ZoneDefs directory %v, does it exist?", path);
@@ -488,23 +466,20 @@ int main(int argc, char *argv[]) {
 	}
 
 	/* Characters */
-	path = Platform::JoinPath(userDataPath, "Characters");
-	if ((dir = opendir(path.c_str())) != NULL) {
+	path = userDataPath / "Characters";
+
+	if (fs::exists(path)) {
 		int maxc = AccountManager::DEFAULT_CHARACTER_ID;
-		while ((ent = readdir(dir)) != NULL) {
-			string s = string(ent->d_name);
-			Util::RemoveStringsFrom(".txt", s);
-			int id = atoi(s.c_str());
+		for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
+			auto path = entry.path();
+			int id = stoi(path.stem());
 			if (id != 0) {
 				CharacterData zd;
 				zd.cdef.CreatureDefID = id;
 				if(id < maxc)
 					maxc = id;
-				std::string fullfile = Platform::JoinPath(
-						Platform::JoinPath(userDataPath,
-								"Characters"), ent->d_name);
-				g_Logs.data->debug("Found character %v (%v)", id, fullfile);
-				TextFileEntityReader r(fullfile, Case_None, Comment_Semi);
+				g_Logs.data->debug("Found character %v (%v)", id, path);
+				TextFileEntityReader r(path, Case_None, Comment_Semi);
 				r.PushSection("ENTRY");
 				if (zd.EntityKeys(&r) && zd.ReadEntity(&r)) {
 					if (g_ClusterManager.WriteEntity(&zd)) {
@@ -524,23 +499,22 @@ int main(int argc, char *argv[]) {
 						 * and reset all the state
 						 */
 						for(auto fr = zd.friendList.begin(); fr != zd.friendList.end(); ++fr)
-							g_ClusterManager.ListAdd(StringUtil::Format("%s:%d", LISTPREFIX_FRIEND_NETWORK.c_str(), we.creatureDefID), StringUtil::Format("%d", (*fr).CDefID));
+							g_ClusterManager.ListAdd(Util::Format("%s:%d", LISTPREFIX_FRIEND_NETWORK.c_str(), we.creatureDefID), Util::Format("%d", (*fr).CDefID));
 
-						g_Logs.data->info("Migrated character %v", ent->d_name);
+						g_Logs.data->info("Migrated character %v", path);
 					} else {
 						g_Logs.data->error("Failed to migrate character %v",
-								ent->d_name);
+								path);
 						return 1;
 					}
 				} else {
 					g_Logs.data->error("Failed to load character from %v",
-							ent->d_name);
+							path);
 					return 1;
 				}
 			}
 		}
-		g_ClusterManager.SetKey(ID_NEXT_CHARACTER_ID, StringUtil::Format("%d", maxc));
-		closedir(dir);
+		g_ClusterManager.SetKey(ID_NEXT_CHARACTER_ID, Util::Format("%d", maxc));
 	} else {
 		g_Logs.data->error(
 				"Failed to open Characters directory %v, does it exist?", path);
@@ -548,61 +522,55 @@ int main(int argc, char *argv[]) {
 	}
 
 	/* Grove */
-	path = Platform::JoinPath(userDataPath, "Grove");
-	if ((dir = opendir(path.c_str())) != NULL) {
-		while ((ent = readdir(dir)) != NULL) {
-			string s = string(ent->d_name);
-			string zonepath = Platform::JoinPath(path, s);
-			int sid = atoi(s.c_str());
-			if (sid != 0 && Platform::DirExists(zonepath)) {
-				DIR *zonedir;
-				if ((zonedir = opendir(zonepath.c_str())) != NULL) {
-					int maxID = 0;
-					while ((ent = readdir(zonedir)) != NULL) {
-						string page = string(ent->d_name);
-						string tilepath = Platform::JoinPath(zonepath, page);
-						if(Util::HasEnding(page, ".txt")) {
-							int x = atoi(page.substr(1, 4).c_str());
-							int y = atoi(page.substr(5, 8).c_str());
+	path = userDataPath / "Grove";
+	if (fs::exists(path)) {
+		for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
+			auto dir = entry.path();
+			int sid = stoi(dir.stem());
+			if (sid != 0) {
 
-							SceneryPage p;
-							p.mTileX = x;
-							p.mTileY = y;
-							p.mZone = sid;
-							g_Logs.data->info("Migrating grove scenery %v:%v:%v (%v objects)", sid, x, y);
+				int maxID = 0;
+				for(const fs::directory_entry& innerEntry : fs::directory_iterator(dir)) {
+					auto file = innerEntry.path();
+					auto page = file.filename();
+					if(path.extension() == ".txt") {
+						int x = atoi(page.string().substr(1, 4).c_str());
+						int y = atoi(page.string().substr(5, 8).c_str());
 
-							TextFileEntityReader r(tilepath, Case_None, Comment_Semi);
-							if(p.EntityKeys(&r) && p.ReadEntity(&r)) {
-								g_Logs.data->info("  Read %v OK. Contains %v objects", tilepath, p.mSceneryList.size());
-								for(auto a = p.mSceneryList.begin(); a != p.mSceneryList.end(); ++a) {
-									SceneryObject o = (*a).second;
-									if(o.ID > maxID)
-										maxID = o.ID;
-									g_Logs.data->info("    Object: %v [%v]", o.ID, o.Asset);
-									if(g_ClusterManager.WriteEntity(&o)) {
-										if(sid >= ZoneDefManager::GROVE_ZONE_ID_DEFAULT)
-											g_ClusterManager.ListAdd(StringUtil::Format("%s:%d:%d:%d", KEYPREFIX_GROVE.c_str(), sid, x, y), StringUtil::Format("%d", o.ID));
-										else
-											g_ClusterManager.ListAdd(StringUtil::Format("%s:%d:%d:%d", KEYPREFIX_SCENERY.c_str(), sid, x, y), StringUtil::Format("%d", o.ID));
-									}
-									else {
-										g_Logs.data->error("Failed to write scenery object %v in %v", (*a).first,
-												tilepath);
-										return 1;
-									}
+						SceneryPage p;
+						p.mTileX = x;
+						p.mTileY = y;
+						p.mZone = sid;
+						g_Logs.data->info("Migrating grove scenery %v:%v:%v (%v objects)", sid, x, y);
+
+						TextFileEntityReader r(file, Case_None, Comment_Semi);
+						if(p.EntityKeys(&r) && p.ReadEntity(&r)) {
+							g_Logs.data->info("  Read %v OK. Contains %v objects", file, p.mSceneryList.size());
+							for(auto a = p.mSceneryList.begin(); a != p.mSceneryList.end(); ++a) {
+								SceneryObject o = (*a).second;
+								if(o.ID > maxID)
+									maxID = o.ID;
+								g_Logs.data->info("    Object: %v [%v]", o.ID, o.Asset);
+								if(g_ClusterManager.WriteEntity(&o)) {
+									if(sid >= ZoneDefManager::GROVE_ZONE_ID_DEFAULT)
+										g_ClusterManager.ListAdd(Util::Format("%s:%d:%d:%d", KEYPREFIX_GROVE.c_str(), sid, x, y), Util::Format("%d", o.ID));
+									else
+										g_ClusterManager.ListAdd(Util::Format("%s:%d:%d:%d", KEYPREFIX_SCENERY.c_str(), sid, x, y), Util::Format("%d", o.ID));
 								}
-							} else {
-								g_Logs.data->error("Failed to load scenery tile from %v",
-										tilepath);
-								return 1;
+								else {
+									g_Logs.data->error("Failed to write scenery object %v in %v", (*a).first, file);
+									return 1;
+								}
 							}
+						} else {
+							g_Logs.data->error("Failed to load scenery tile from %v", file);
+							return 1;
 						}
 					}
-					g_ClusterManager.SetKey(StringUtil::Format("%s:%d", ID_NEXT_SCENERY.c_str(), sid), StringUtil::Format("%d", maxID));
 				}
+				g_ClusterManager.SetKey(Util::Format("%s:%d", ID_NEXT_SCENERY.c_str(), sid), Util::Format("%d", maxID));
 			}
 		}
-		closedir(dir);
 	} else {
 		g_Logs.data->error(
 				"Failed to open Characters directory %v, does it exist?", path);
@@ -611,98 +579,84 @@ int main(int argc, char *argv[]) {
 
 	/* Static zones. We don't write these to redis, but we scan all scenery looking
 	 * for the highest prop ID in the zone, and set the zones next ID value to that */
-	path = Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Scenery");
-	if ((dir = opendir(path.c_str())) != NULL) {
-		while ((ent = readdir(dir)) != NULL) {
-			string s = string(ent->d_name);
-			string zonepath = Platform::JoinPath(path, s);
-			int sid = atoi(s.c_str());
-			if (sid != 0 && Platform::DirExists(zonepath)) {
-				DIR *zonedir;
-				if ((zonedir = opendir(zonepath.c_str())) != NULL) {
-					int maxID = 0;
-					while ((ent = readdir(zonedir)) != NULL) {
-						string page = string(ent->d_name);
-						string tilepath = Platform::JoinPath(zonepath, page);
-						if(Util::HasEnding(page, ".txt")) {
-							int x = atoi(page.substr(1, 4).c_str());
-							int y = atoi(page.substr(5, 8).c_str());
+	path = g_Config.ResolveVariableDataPath() / "Scenery";
+	if (fs::exists(path)) {
+		for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
+			auto dir = entry.path();
+			if(fs::is_directory(dir)) {
+				int sid = stoi(dir.stem());
+				int maxID = 0;
+				for(const fs::directory_entry& innerEntry : fs::directory_iterator(dir)) {
+					auto file = innerEntry.path();
+					auto page = file.filename();
+					if(path.extension() == ".txt") {
+						int x = atoi(page.string().substr(1, 4).c_str());
+						int y = atoi(page.string().substr(5, 8).c_str());
 
-							SceneryPage p;
-							p.mTileX = x;
-							p.mTileY = y;
-							p.mZone = sid;
-							g_Logs.data->info("Reading overworld scenery %v:%v:%v", sid, x, y);
+						SceneryPage p;
+						p.mTileX = x;
+						p.mTileY = y;
+						p.mZone = sid;
+						g_Logs.data->info("Reading overworld scenery %v:%v:%v", sid, x, y);
 
-							TextFileEntityReader r(tilepath, Case_None, Comment_Semi);
-							if(p.EntityKeys(&r) && p.ReadEntity(&r)) {
-								g_Logs.data->info("  Read %v OK. Contains %v objects", tilepath, p.mSceneryList.size());
-								for(auto a = p.mSceneryList.begin(); a != p.mSceneryList.end(); ++a) {
-									SceneryObject o = (*a).second;
-									if(o.ID > maxID)
-										maxID = o.ID;
-									g_Logs.data->info("    Object: %v [%v]", o.ID, o.Asset);
-								}
-							} else {
-								g_Logs.data->error("Failed to load overworld scenery tile from %v",
-										tilepath);
-								return 1;
+						TextFileEntityReader r(file, Case_None, Comment_Semi);
+						if(p.EntityKeys(&r) && p.ReadEntity(&r)) {
+							g_Logs.data->info("  Read %v OK. Contains %v objects", file, p.mSceneryList.size());
+							for(auto a = p.mSceneryList.begin(); a != p.mSceneryList.end(); ++a) {
+								SceneryObject o = (*a).second;
+								if(o.ID > maxID)
+									maxID = o.ID;
+								g_Logs.data->info("    Object: %v [%v]", o.ID, o.Asset);
 							}
+						} else {
+							g_Logs.data->error("Failed to load overworld scenery tile from %v",
+									file);
+							return 1;
 						}
 					}
-					g_Logs.data->info("Setting current ID for zone %v to %v", sid, maxID);
-					g_ClusterManager.SetKey(StringUtil::Format("%s:%d", ID_NEXT_SCENERY.c_str(), sid), StringUtil::Format("%d", maxID));
 				}
+				g_Logs.data->info("Setting current ID for zone %v to %v", sid, maxID);
+				g_ClusterManager.SetKey(Util::Format("%s:%d", ID_NEXT_SCENERY.c_str(), sid), Util::Format("%d", maxID));
 			}
 		}
-		closedir(dir);
-	} else {
-		g_Logs.data->error(
-				"Failed to open Characters directory %v, does it exist?", path);
-		return 1;
 	}
 
 	/* IGF Categories */
-	path = Platform::JoinPath(Platform::JoinPath(userDataPath, "IGForum"), "Category");
-	if ((dir = opendir(path.c_str())) != NULL) {
-		while ((ent = readdir(dir)) != NULL) {
-			string s = string(ent->d_name);
-			if(s == ".." || s == ".")
-				continue;
+	path = userDataPath / "IGForum" / "Category";
 
-			Util::RemoveStringsFrom(".txt", s);
-			string catpath = Platform::JoinPath(path, ent->d_name);
-			int id = atoi(s.c_str());
+	if (fs::exists(path)) {
+		for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
+			auto file = entry.path();
+			int id = stoi(file.stem());
 
 			IGFCategoryPage p;
 			p.mPage = id;
 			g_Logs.data->info("Migrating IGF category %v", id);
 
-			TextFileEntityReader r(catpath, Case_None, Comment_Semi);
+			TextFileEntityReader r(file, Case_None, Comment_Semi);
 			int maxID = 0;
 			if(p.EntityKeys(&r) && p.ReadEntity(&r)) {
-				g_Logs.data->info("  Read %v OK. Contains %v objects", catpath, p.mEntries.size());
+				g_Logs.data->info("  Read %v OK. Contains %v objects", file, p.mEntries.size());
 				for(auto a = p.mEntries.begin(); a != p.mEntries.end(); ++a) {
 					IGFCategory o = (*a).second;
 					if(o.mID > maxID)
 						maxID = o.mID;
 					g_Logs.data->info("    Category: %v [%v]", o.mID, o.mTitle);
 					if(g_ClusterManager.WriteEntity(&o)) {
-						g_ClusterManager.ListAdd(LISTPREFIX_IGF_CATEGORIES, StringUtil::Format("%d", o.mID));
+						g_ClusterManager.ListAdd(LISTPREFIX_IGF_CATEGORIES, Util::Format("%d", o.mID));
 					}
 					else {
 						g_Logs.data->error("Failed to write scenery object %v in %v", (*a).first,
-								catpath);
+								file);
 						return 1;
 					}
 				}
 			} else {
-				g_Logs.data->error("Failed to load IGF category tile from %v", catpath);
+				g_Logs.data->error("Failed to load IGF category tile from %v", file);
 				return 1;
 			}
-			g_ClusterManager.SetKey(ID_IGF_CATEGORY_ID, StringUtil::Format("%d", maxID));
+			g_ClusterManager.SetKey(ID_IGF_CATEGORY_ID, Util::Format("%d", maxID));
 		}
-		closedir(dir);
 	} else {
 		g_Logs.data->error(
 				"Failed to open IGF categories directory %v, does it exist?", path);
@@ -710,25 +664,20 @@ int main(int argc, char *argv[]) {
 	}
 
 	/* IGF Threads */
-	path = Platform::JoinPath(Platform::JoinPath(userDataPath, "IGForum"), "Thread");
-	if ((dir = opendir(path.c_str())) != NULL) {
-		while ((ent = readdir(dir)) != NULL) {
-			string s = string(ent->d_name);
-			if(s == ".." || s == ".")
-				continue;
-
-			Util::RemoveStringsFrom(".txt", s);
-			string threadpath = Platform::JoinPath(path, ent->d_name);
-			int id = atoi(s.c_str());
+	path = userDataPath / "IGForum" / "Thread";
+	if (fs::exists(path)) {
+		for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
+			auto file = entry.path();
+			int id = stoi(file.stem());
 
 			IGFThreadPage p;
 			p.mPage = id;
 			g_Logs.data->info("Migrating IGF thread %v", id);
 
-			TextFileEntityReader r(threadpath, Case_None, Comment_Semi);
+			TextFileEntityReader r(file, Case_None, Comment_Semi);
 			int maxID = 0;
 			if(p.EntityKeys(&r) && p.ReadEntity(&r)) {
-				g_Logs.data->info("  Read %v OK. Contains %v objects", threadpath, p.mEntries.size());
+				g_Logs.data->info("  Read %v OK. Contains %v objects", file, p.mEntries.size());
 				for(auto a = p.mEntries.begin(); a != p.mEntries.end(); ++a) {
 					IGFThread o = (*a).second;
 					if(o.mID > maxID)
@@ -736,17 +685,16 @@ int main(int argc, char *argv[]) {
 					g_Logs.data->info("    Thread: %v [%v]", o.mID, o.mTitle);
 					if(!g_ClusterManager.WriteEntity(&o)) {
 						g_Logs.data->error("Failed to write thread %v in %v", (*a).first,
-								threadpath);
+								file);
 						return 1;
 					}
 				}
 			} else {
-				g_Logs.data->error("Failed to load IGF threads tile from %v", threadpath);
+				g_Logs.data->error("Failed to load IGF threads tile from %v", file);
 				return 1;
 			}
-			g_ClusterManager.SetKey(ID_IGF_THREAD_ID, StringUtil::Format("%d", maxID));
+			g_ClusterManager.SetKey(ID_IGF_THREAD_ID, Util::Format("%d", maxID));
 		}
-		closedir(dir);
 	} else {
 		g_Logs.data->error(
 				"Failed to open IGF threads directory %v, does it exist?", path);
@@ -754,25 +702,20 @@ int main(int argc, char *argv[]) {
 	}
 
 	/* IGF Posts */
-	path = Platform::JoinPath(Platform::JoinPath(userDataPath, "IGForum"), "Post");
-	if ((dir = opendir(path.c_str())) != NULL) {
-		while ((ent = readdir(dir)) != NULL) {
-			string s = string(ent->d_name);
-			if(s == ".." || s == ".")
-				continue;
-
-			Util::RemoveStringsFrom(".txt", s);
-			string postpath = Platform::JoinPath(path, ent->d_name);
-			int id = atoi(s.c_str());
+	path = userDataPath / "IGForum" / "Post";
+	if (fs::exists(path)) {
+		for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
+			auto file = entry.path();
+			int id = stoi(file.stem());
 
 			IGFPostPage p;
 			p.mPage = id;
 			g_Logs.data->info("Migrating IGF post %v", id);
 
-			TextFileEntityReader r(postpath, Case_None, Comment_Semi);
+			TextFileEntityReader r(file, Case_None, Comment_Semi);
 			int maxID = 0;
 			if(p.EntityKeys(&r) && p.ReadEntity(&r)) {
-				g_Logs.data->info("  Read %v OK. Contains %v objects", postpath, p.mEntries.size());
+				g_Logs.data->info("  Read %v OK. Contains %v objects", file, p.mEntries.size());
 				for(auto a = p.mEntries.begin(); a != p.mEntries.end(); ++a) {
 					IGFPost o = (*a).second;
 					if(o.mID > maxID)
@@ -780,17 +723,16 @@ int main(int argc, char *argv[]) {
 					g_Logs.data->info("    Post: %v", o.mID);
 					if(!g_ClusterManager.WriteEntity(&o)) {
 						g_Logs.data->error("Failed to write post %v in %v", (*a).first,
-								postpath);
+								file);
 						return 1;
 					}
 				}
 			} else {
-				g_Logs.data->error("Failed to load IGF post from %v", postpath);
+				g_Logs.data->error("Failed to load IGF post from %v", file);
 				return 1;
 			}
-			g_ClusterManager.SetKey(ID_IGF_POST_ID, StringUtil::Format("%d", maxID));
+			g_ClusterManager.SetKey(ID_IGF_POST_ID, Util::Format("%d", maxID));
 		}
-		closedir(dir);
 	} else {
 		g_Logs.data->error(
 				"Failed to open IGF posts directory %v, does it exist?", path);
@@ -798,39 +740,34 @@ int main(int argc, char *argv[]) {
 	}
 
 	/* Credit Shop */
-	path = Platform::JoinPath(g_Config.ResolveVariableDataPath(), "CreditShop");
-	if ((dir = opendir(path.c_str())) != NULL) {
+	path = g_Config.ResolveVariableDataPath() / "CreditShop";
+	if (fs::exists(path)) {
 		int maxc = 0;
-		while ((ent = readdir(dir)) != NULL) {
-			string s = string(ent->d_name);
-			Util::RemoveStringsFrom(".txt", s);
-			int id = atoi(s.c_str());
+		for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
+			auto file = entry.path();
+			int id = stoi(file.stem());
 			if (id != 0) {
 				CS::CreditShopItem zd;
 				zd.mId = id;
 				if(id > maxc)
 					maxc = id;
-				std::string fullfile = Platform::JoinPath(path, ent->d_name);
-				g_Logs.data->info("Migrating Credit Shop item %v (%v)", id, fullfile);
-				TextFileEntityReader r(fullfile, Case_None, Comment_Semi);
+				g_Logs.data->info("Migrating Credit Shop item %v (%v)", id, file);
+				TextFileEntityReader r(file, Case_None, Comment_Semi);
 				r.PushSection("ENTRY");
 				if (zd.EntityKeys(&r) && zd.ReadEntity(&r)) {
 					if (!g_ClusterManager.WriteEntity(&zd)) {
-						g_Logs.data->error("Failed to migrate credit shop item %v",
-								ent->d_name);
+						g_Logs.data->error("Failed to migrate credit shop item %v", file);
 						return 1;
 					}
 					else
-						g_ClusterManager.ListAdd(LISTPREFIX_CS_ITEMS, StringUtil::Format("%d", zd.mId));
+						g_ClusterManager.ListAdd(LISTPREFIX_CS_ITEMS, Util::Format("%d", zd.mId));
 				} else {
-					g_Logs.data->error("Failed to load credit shop item from %v",
-							ent->d_name);
+					g_Logs.data->error("Failed to load credit shop item from %v", file);
 					return 1;
 				}
 			}
 		}
-		g_ClusterManager.SetKey(ID_CS_ITEM_ID, StringUtil::Format("%d", maxc));
-		closedir(dir);
+		g_ClusterManager.SetKey(ID_CS_ITEM_ID, Util::Format("%d", maxc));
 	} else {
 		g_Logs.data->error(
 				"Failed to open Credit Shop directory %v, does it exist?", path);
@@ -838,9 +775,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	/* Shutdown cleanly so all messags get sent */
-	g_Logs.data->info(
-			"Import of data completed.");
+	g_Logs.data->info("Import of data completed.");
 	g_ClusterManager.Shutdown(true);
-	g_Logs.data->info(
-			"End of import process.");
+	g_Logs.data->info("End of import process.");
 }

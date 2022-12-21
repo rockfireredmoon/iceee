@@ -6,6 +6,10 @@
 #include <string>
 #include <map>
 #include "CommonTypes.h"
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 struct QualityArray
 {
@@ -62,7 +66,7 @@ public:
 	//int Flags[ARRAY_SIZE];  //The flags of creature rarity and named status that must be met to drop the associated quality.
 	//int Level[ARRAY_SIZE];  //The minimum level a mob must be to drop the associated quality.
 
-	std::string mName;    //Not really needed in this class, but helps with debugging to know what name a pointer is set to.
+	string mName;    //Not really needed in this class, but helps with debugging to know what name a pointer is set to.
 
 	QualityArray Chance;
 	QualityArray Flags;
@@ -99,11 +103,11 @@ public:
 	static const char *STANDARD;
 	static const char *INSTANCE;
 
-	const DropRateProfile& GetProfileByName(const std::string &name);
+	const DropRateProfile& GetProfileByName(const string &name);
 
 private:
-	std::map<std::string, DropRateProfile> mProfiles;
-	void LoadTable(std::string filename);
+	map<string, DropRateProfile> mProfiles;
+	void LoadTable(const fs::path &filename);
 
 	static const DropRateProfile mNullProfile;
 };
@@ -134,8 +138,8 @@ int DropRateTable::GetDropRate(int rarity, bool instance)
 class InstanceScaleProfile
 {
 public:
-	std::string mDifficultyName;    //Internal lookup name, and sent to the client for info.
-	std::string mDropRateProfileName; //Name of the DropRateProfile to use.  If present it will override the instance's default instance profile, which is acquired from its ZoneDef information.
+	string mDifficultyName;    //Internal lookup name, and sent to the client for info.
+	string mDropRateProfileName; //Name of the DropRateProfile to use.  If present it will override the instance's default instance profile, which is acquired from its ZoneDef information.
 	int mLevelOffset;               //-1 to match player level.  0 or higher as a flat level bonus.
 	float mCoreMultPerLev;          //Core stats (str/dex/con/psy/spi) are multiplied by this amount per level difference.
 	float mDmgMultPerLev;           //Base weapon damage is multiplied by this amount per level difference.
@@ -145,7 +149,7 @@ public:
 	float mDmgMultBonus;            //Damage multiplier after level difference is applied.
 	float mArmorMultBonus;          //Armor multiplier after level difference is applied.
 	float mDropMult;                //Multiplier to drop rate for all spawns in the instance.
-	std::string mDescription;       //Description to give to the client.
+	string mDescription;       //Description to give to the client.
 	InstanceScaleProfile();
 	void Clear();
 };
@@ -155,14 +159,14 @@ class InstanceScaleManager
 public:
 	InstanceScaleManager();
 	void LoadData(void);
-	const InstanceScaleProfile* GetProfile(const std::string &name);
+	const InstanceScaleProfile* GetProfile(const string &name);
 	const InstanceScaleProfile* GetDefaultProfile(void);
 	void EnumProfileList(MULTISTRING &output);
 
 private:
-	//std::map<std::string, InstanceScaleProfile> mProfiles;
-	std::vector<InstanceScaleProfile> mProfiles;
-	void LoadTable(std::string filename);
+	//map<string, InstanceScaleProfile> mProfiles;
+	vector<InstanceScaleProfile> mProfiles;
+	void LoadTable(const fs::path &filename);
 
 	InstanceScaleProfile mNullScaleProfile;
 };

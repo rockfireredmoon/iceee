@@ -2,6 +2,11 @@
 #define FILEREADER3_H
 
 #include <stdio.h>
+#include <string>
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 class FileReader3
 {
@@ -26,7 +31,7 @@ public:
 	FileReader3();
 	~FileReader3();
 
-	int OpenFile(const char *filename);     //Open a file for reading.
+	int OpenFile(const fs::path &filename);     //Open a file for reading.
 	void CloseFile(void);                   //Close the file.
 	bool Readable(void);                    //Check if the file is still readable (both open and not end-of-file).
 

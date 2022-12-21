@@ -21,7 +21,6 @@
 #include "../Chat.h"
 #include "../Instance.h"
 #include "../Cluster.h"
-#include "../StringUtil.h"
 #include <algorithm>
 
 using namespace std;

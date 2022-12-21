@@ -13,6 +13,10 @@
 #include "sqrat.h"
 #include "util/SquirrelObjects.h"
 #include "Entities.h"
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 const int USE_FAIL_DELAY = 250; //Milliseconds to wait before retrying a failed script "use" command.
 
@@ -101,14 +105,14 @@ public:
 	OpCodeParamType type;
 	int iValue;
 	float fValue;
-	std::string strValue;
+	string strValue;
 	bool bValue;
 	Sqrat::Table tValue;
 
 	ScriptParam();
 	ScriptParam(int iValue);
 	ScriptParam(float fValue);
-	ScriptParam(std::string strValue);
+	ScriptParam(string strValue);
 	ScriptParam(bool bValue);
 	ScriptParam(Sqrat::Table tValue);
 };
@@ -124,7 +128,7 @@ struct OpData {
 };
 
 struct LabelDef {
-	std::string name;
+	string name;
 	int instrOffset;
 	LabelDef(const char *labelName, int targInst);
 };
@@ -132,8 +136,8 @@ struct LabelDef {
 #define MAX_ARRAY_DATA_SIZE 64
 
 struct IntArray {
-	std::string name;
-	std::vector<int> arrayData;
+	string name;
+	vector<int> arrayData;
 
 	IntArray();
 	IntArray(const char *intArrName);
@@ -153,7 +157,7 @@ struct IntArray {
 //Holds a triggered event.  If it is ready to fire, the label name will be called.
 class ScriptEvent {
 public:
-	std::string mLabel;              //Label to jump to.
+	string mLabel;              //Label to jump to.
 	unsigned long mFireTime;         //Time to fire this event.
 	ScriptEvent(const char *label, unsigned long fireTime);
 };
@@ -176,20 +180,20 @@ public:
 
 	int mCurrentNestLevel;
 	int mLastNestLevel;
-	std::vector<BlockData> mBlockData;
-	std::string mSourceFile;
+	vector<BlockData> mBlockData;
+	string mSourceFile;
 	int mLineNumber;
-	std::vector<std::string> mTokens;
+	vector<string> mTokens;
 	int mInlineBeginInstr;
-	std::map<std::string, std::string> mSymbols; //Maps symbol names to their values.  Tokens that match the symbols will be replaced with their values before they are compiled into the instructions.
-	std::vector<int> mPendingLabelReference;
+	map<string, string> mSymbols; //Maps symbol names to their values.  Tokens that match the symbols will be replaced with their values before they are compiled into the instructions.
+	vector<int> mPendingLabelReference;
 
 	ScriptCompiler();
 	void OpenBlock(int lineNumber, int instructionIndex);
 	bool CloseBlock(void);
 	BlockData* GetLastUnresolvedBlock(void);
-	void AddSymbol(const std::string &key, const std::string &value);
-	bool HasSymbol(const std::string &token);
+	void AddSymbol(const string &key, const string &value);
+	bool HasSymbol(const string &token);
 	void CheckSymbolReplacements(void);
 	bool ExpectTokens(size_t count, const char *op, const char *desc);
 	void AddPendingLabelReference(int instructionIndex);
@@ -199,28 +203,28 @@ class ScriptDef {
 	friend class ScriptPlayer;
 
 public:
-	typedef std::vector<std::string> STRINGLIST;
-	std::string scriptName;            //Internal name of the script.
-	std::vector<OpData> instr;         //Compiled array of instructions.
+	typedef vector<string> STRINGLIST;
+	string scriptName;            //Internal name of the script.
+	vector<OpData> instr;         //Compiled array of instructions.
 	STRINGLIST stringList;             //Holds all registered strings.
 
 	ScriptDef();
 	virtual ~ScriptDef();
 	void ClearBase(void); //Initialize all data to their reset state.  It will call ClearDerived()
 	virtual void ClearDerived(void); //Override this to allow clearing of new members present in a derived class.
-	void CompileFromSource(std::string sourceFile);
+	void CompileFromSource(const fs::path &sourceFile);
 	void CompileLine(char *line, ScriptCompiler &compileData);
 	void BeginInlineBlock(ScriptCompiler &compileData); //Begins a block of inline compiled code, essentially resuming compilation elsewhere.  Existing labels, variables, etc are accessible as normal.
 	void FinishInlineBlock(ScriptCompiler &compileData); //Closes a block of inline compiled code, running label resolution on them.
 	void OutputDisassemblyToFile(FILE *output);
 
 protected:
-	std::vector<LabelDef> label;             //Holds all registered labels.
-	std::vector<std::string> varName;     //Holds all registered variable names.
+	vector<LabelDef> label;             //Holds all registered labels.
+	vector<string> varName;     //Holds all registered variable names.
 	int curInst;      //Tracks the current instruction as opcodes are generated.
-	std::vector<std::string> extVarName;     //Holds extended variable names.
-	std::map<std::string, int> mLabelMap; //Maps label names to their array index for fast lookups.
-	std::vector<IntArray> mIntArray;         //An array of integer arrays.
+	vector<string> extVarName;     //Holds extended variable names.
+	map<string, int> mLabelMap; //Maps label names to their array index for fast lookups.
+	vector<IntArray> mIntArray;         //An array of integer arrays.
 
 	//General string utilities.
 	void Tokenize(const char *srcString, STRINGLIST &destList);
@@ -289,7 +293,7 @@ private:
 
 	bool Expect(const char *token, int paramType);
 	const char* GetExpectedDetail(int paramType);
-	void IncludeFile(const std::string &token, ScriptCompiler &compileData);
+	void IncludeFile(const string &token, ScriptCompiler &compileData);
 };
 
 class ScriptPlayer {
@@ -303,9 +307,9 @@ public:
 
 	ScriptPlayer();
 	virtual ~ScriptPlayer();
-	std::vector<int> vars;
-	std::vector<IntArray> intArray;      //An array of integer arrays.
-	std::vector<ScriptEvent> scriptEventQueue;
+	vector<int> vars;
+	vector<IntArray> intArray;      //An array of integer arrays.
+	vector<ScriptEvent> scriptEventQueue;
 
 	void Initialize(ScriptDef *defPtr);
 	bool RunSingleInstruction(void);     //Run a single instruction.
@@ -323,7 +327,7 @@ public:
 protected:
 	static const size_t MAX_STACK_SIZE = 16;
 	static const size_t MAX_QUEUE_SIZE = 32;
-	std::vector<int> varStack;
+	vector<int> varStack;
 
 	virtual int GetApplicationPropertyAsInteger(const char *propertyName); //Override this function to substitute application-defined variables.
 
@@ -332,7 +336,7 @@ protected:
 	const char * GetStringPtr(int index);
 	int GetVarValue(int index);
 
-	std::vector<int> callStack;
+	vector<int> callStack;
 	void PushCallStack(int value);
 	int PopCallStack(void);
 	void Call(int targetInstructionIndex);
@@ -361,12 +365,12 @@ class NutDef : public AbstractEntity {
 	friend class NutPlayer;
 
 public:
-	typedef std::vector<std::string> STRINGLIST;
-	std::string scriptName;            //Internal name of the script.
-	std::string mSourceFile;
-	std::string mAuthor;
-	std::string mDescription;
-	std::string mScriptContent;
+	typedef vector<string> STRINGLIST;
+	string scriptName;            //Internal name of the script.
+	fs::path mSourceFile;
+	string mAuthor;
+	string mDescription;
+	string mScriptContent;
 	bool mQueueEvents;
 	int mScriptIdleSpeed;
 	unsigned long mVMSize;
@@ -378,9 +382,9 @@ public:
 	bool WriteEntity(AbstractEntityWriter *writer);
 	bool ReadEntity(AbstractEntityReader *reader);
 	bool EntityKeys(AbstractEntityReader *reader);
-	void LoadFromLocalFile(std::string source);
+	void LoadFromLocalFile(const fs::path &source);
 	bool CanIdle();
-	std::string GetBytecodeLocation();
+	fs::path GetBytecodeLocation();
 	void SetLastModified(unsigned long lastModified);
 	virtual void ClearDerived();
 	bool HasFlag(unsigned int flag);
@@ -412,9 +416,9 @@ private:
 
 class NutScriptCallStringParser {
 public:
-	std::string mScriptName;
-	std::vector<std::string> mArgs;
-	NutScriptCallStringParser(std::string string);
+	string mScriptName;
+	vector<string> mArgs;
+	NutScriptCallStringParser(string string);
 };
 
 struct Result
@@ -506,7 +510,7 @@ public:
 	bool mPreventReentry; // Currently used for instance walks, will prevent certain calls calling themselves
 	NutScriptEvent *mExecutingEvent; // If not NULL, will be the currently executing event
 
-	std::vector<std::string> mArgs; // Scripts may be called with arguments. This vector should be set before initialising the player
+	vector<string> mArgs; // Scripts may be called with arguments. This vector should be set before initialising the player
 
 	unsigned int long mCalls; // Total number of calls (including initial, events and all external function calls)
 	unsigned int long mGCCounter; // Increased at same times as mCalls, but when it reaches a predefined limit, GC is performed
@@ -526,7 +530,7 @@ public:
 	virtual void HaltedDerived();
 	NutScriptEvent* GetEvent(unsigned long id);
 	void HaltExecution();
-	void Initialize(NutDef *defPtr, std::string &errors);
+	void Initialize(NutDef *defPtr, string &errors);
 	bool Tick(void);     //Run a single instruction.
 	void RunScript(void);                //Run the script until it ends.
 	void FullReset(void);
@@ -537,13 +541,13 @@ public:
 	bool IsPaused(void);
 	bool Resume(void);
 	int GC(void);
-	std::string GetStatus();
+	string GetStatus();
 	bool JumpToLabel(const char *name);
-	bool JumpToLabel(const char *name, std::vector<ScriptParam> parms);
-	bool JumpToLabel(const char *name, std::vector<ScriptParam> parms, bool queue);
-	std::string RunFunctionWithStringReturn(std::string name, std::vector<ScriptParam> parms, bool time);
-	bool RunFunctionWithBoolReturn(std::string name, std::vector<ScriptParam> parms, bool time, bool defaultIfNoFunction);
-	bool RunFunction(std::string name, std::vector<ScriptParam> parms, bool time);
+	bool JumpToLabel(const char *name, vector<ScriptParam> parms);
+	bool JumpToLabel(const char *name, vector<ScriptParam> parms, bool queue);
+	string RunFunctionWithStringReturn(string name, vector<ScriptParam> parms, bool time);
+	bool RunFunctionWithBoolReturn(string name, vector<ScriptParam> parms, bool time, bool defaultIfNoFunction);
+	bool RunFunction(string name, vector<ScriptParam> parms, bool time);
 	void Broadcast(const char *message);
 	unsigned long GetServerTime();
 	int GetCaller();
@@ -574,21 +578,21 @@ public:
 	static long AbsoluteSeconds();
 	static long Milliseconds();
 
-	bool WakeVM(std::string name);
+	bool WakeVM(string name);
 	int ClearQueue();
 
 	static bool ArrayContains(Sqrat::Array table, int value);
 
-	std::vector<NutScriptEvent*> mQueue;
-	std::vector<NutScriptEvent*> mQueueAdd;
-	std::vector<NutScriptEvent*> mQueueInsert;
-	std::vector<NutScriptEvent*> mQueueRemove;
+	vector<NutScriptEvent*> mQueue;
+	vector<NutScriptEvent*> mQueueAdd;
+	vector<NutScriptEvent*> mQueueInsert;
+	vector<NutScriptEvent*> mQueueRemove;
 
 private:
-	void DoInitialize(int stackSize, NutDef *defPtr, std::string &errors);
-	void FinaliseExecution(std::string name, int top);
+	void DoInitialize(int stackSize, NutDef *defPtr, string &errors);
+	void FinaliseExecution(string name, int top);
 	bool ExecEvent(NutScriptEvent *nse, unsigned int index);
-	bool DoRunFunction(std::string name, std::vector<ScriptParam> parms, bool time, bool retval);
+	bool DoRunFunction(string name, vector<ScriptParam> parms, bool time, bool retval);
 
 };
 
@@ -596,11 +600,11 @@ class RunFunctionCallback : public NutCallback
 {
 public:
 	NutPlayer* mNut;
-	std::string mFunctionName;		//Function to jump to
-	std::vector<ScriptParam> mArgs;
+	string mFunctionName;		//Function to jump to
+	vector<ScriptParam> mArgs;
 	int mCaller;
-	RunFunctionCallback(NutPlayer *nut, std::string mFunctionName);
-	RunFunctionCallback(NutPlayer *nut, std::string mFunctionName, std::vector<ScriptParam> args);
+	RunFunctionCallback(NutPlayer *nut, string mFunctionName);
+	RunFunctionCallback(NutPlayer *nut, string mFunctionName, vector<ScriptParam> args);
 	~RunFunctionCallback ();
 	bool Execute();
 };

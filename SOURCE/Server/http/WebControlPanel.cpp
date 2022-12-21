@@ -28,9 +28,13 @@
 
 #include "HTTPService.h"
 #include "../util/Log.h"
-#include <map>
 
+#include <map>
+#include <filesystem>
+
+using namespace std;
 using namespace HTTPD;
+namespace fs = filesystem;
 
 //
 // RemoteActionHandler
@@ -38,7 +42,7 @@ using namespace HTTPD;
 
 bool RemoteActionHandler::handlePost(CivetServer *server,
 		struct mg_connection *conn) {
-	std::map<std::string, std::string> parms;
+	map<string, string> parms;
 
 	/* Simple protection against drive-by penetration attempts uses user-agent */
 	if(!isUserAgent(server, conn))
@@ -54,7 +58,7 @@ bool RemoteActionHandler::handlePost(CivetServer *server,
 				== false)
 			writeStatus(server, conn, 200, "OK", "Permission denied.");
 		else {
-			std::string action = parms["action"];
+			string action = parms["action"];
 
 			// Actions
 			if (action.compare("shutdown") == 0) {
@@ -66,12 +70,11 @@ bool RemoteActionHandler::handlePost(CivetServer *server,
 			} else if (action.compare("reloadchecksum") == 0) {
 				g_FileChecksum.LoadFromFile();
 			} else if (action.compare("reloadconfig") == 0) {
-				std::vector<std::string> paths = g_Config.ResolveLocalConfigurationPath();
-				for (std::vector<std::string>::iterator it = paths.begin();
-						it != paths.end(); ++it) {
-					std::string dir = *it;
-					std::string filename = Platform::JoinPath(dir, "ServerConfig.txt");
-					if(!LoadConfig(filename) && it == paths.begin())
+				auto paths = g_Config.ResolveLocalConfigurationPath();
+				for (auto it = paths.begin(); it != paths.end(); ++it) {
+					auto dir = *it;
+					auto filename = dir / "ServerConfig.txt";
+					if(!g_Config.LoadConfig(filename) && it == paths.begin())
 						g_Logs.data->error("Could not open server configuration file: %v", filename);
 				}
 			} else if (action.compare("reloadability") == 0) {

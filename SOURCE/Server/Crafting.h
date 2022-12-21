@@ -5,14 +5,16 @@
 #include <string>
 #include <vector>
 #include "ScriptCore.h"
+#include <filesystem>
 
-typedef std::vector<std::string> STRINGVECTOR;
+using namespace std;
+namespace fs = filesystem;
+
+typedef vector<string> STRINGVECTOR;
 
 
 class ItemDef;
 class CraftManager;
-
-
 
 class CraftInputSlot
 {
@@ -31,7 +33,7 @@ class CraftRecipe
 	friend class CraftManager;  //Intended for internal use by this class.
 
 private:
-	std::string mDesc;
+	string mDesc;
 	size_t mInputCount;  //Exact number of distinct items, or stacks of items that recipe must have.
 	size_t mOutputCount; //Exact number of output items.  Used to make sure the player has enough inventory space.
 	STRINGVECTOR mConditions;
@@ -44,7 +46,7 @@ private:
 
 public:
 	int GetOutputCount(void) const;  //The craft function needs to know externally whether there is enough space in the inventory.
-	void GetRequiredItems(std::vector<int> &requiredItems) const;
+	void GetRequiredItems(vector<int> &requiredItems) const;
 	int GetRequiredItemCount(int itemID) const;
 	const char *GetName(void) const;
 };
@@ -54,8 +56,8 @@ class CraftManager
 {
 public:
 	void LoadData(void);
-	bool RunRecipe(const CraftRecipe* recipe, std::vector<CraftInputSlot> &inputItems, std::vector<CraftInputSlot> &outputItems);
-	const CraftRecipe* GetRecipe(std::vector<CraftInputSlot> &inputItems);
+	bool RunRecipe(const CraftRecipe* recipe, vector<CraftInputSlot> &inputItems, vector<CraftInputSlot> &outputItems);
+	const CraftRecipe* GetRecipe(vector<CraftInputSlot> &inputItems);
 	const CraftRecipe* GetFirstRecipeForResult(int resultItemID);
 	
 private:
@@ -72,19 +74,19 @@ private:
 	};
 	static const int INVALID_PROPERTY = -1;
 
-	std::vector<CraftRecipe> mRecipes;
-	std::string mFileName;
+	vector<CraftRecipe> mRecipes;
+	string mFileName;
 
-	void SortInputs(std::vector<CraftInputSlot> &inputItems);
-	void GenerateOutputs(const CraftRecipe *recipe, std::vector<CraftInputSlot> &inputItems, std::vector<CraftInputSlot> &outputItems);
+	void SortInputs(vector<CraftInputSlot> &inputItems);
+	void GenerateOutputs(const CraftRecipe *recipe, vector<CraftInputSlot> &inputItems, vector<CraftInputSlot> &outputItems);
 
 	int GetIntParam(const STRINGVECTOR &strVector, size_t index);
 	const char *GetStringParam(const STRINGVECTOR &strVector, size_t index);
-	bool CheckCondition(const STRINGVECTOR &conditions, const std::vector<CraftInputSlot> &inputItems);
+	bool CheckCondition(const STRINGVECTOR &conditions, const vector<CraftInputSlot> &inputItems);
 	int GetComparator(const char *symbol);
 	int GetProperty(const CraftInputSlot &object, const char *propertyName);
 	bool Compare(int leftValue, int compareOp, int rightValue);
-	void LoadRecipeFile(std::string filename);
+	void LoadRecipeFile(const fs::path &filename);
 };
 
 

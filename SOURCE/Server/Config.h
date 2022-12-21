@@ -5,8 +5,10 @@
 
 #include <vector>
 #include <string>
+#include <filesystem>
 
 using namespace std;
+namespace fs = filesystem;
 
 // External declarations and prototypes
 extern int g_ProtocolVersion;
@@ -80,8 +82,8 @@ public:
 	GlobalConfigData();
 	~GlobalConfigData();
 
-	std::string HTTPBaseFolder;
-	std::string HTTPCARFolder;
+	fs::path HTTPBaseFolder;
+	fs::path HTTPCARFolder;
 
 	std::string RemoteAuthenticationPassword;
 
@@ -180,30 +182,30 @@ public:
 	std::string APIAuthentication;		// Username:Password to allow API authentication
 	std::string SiteServiceUsername;
 	std::string SiteServicePassword;
-	std::vector<std::string> LocalConfigurationPath;
+	std::vector<fs::path> LocalConfigurationPath;
 
-	std::string ShutdownHandlerScript;
-	std::string StaticDataPath;			// Location of static data (not editable in game).
-	std::string VariableDataPath;		// Location of variable data (editable in game).
-	std::string TmpDataPath;		// Location of temporary data (editable in game).
-	std::string LogPath;				// Location of logs other than Easylogging output (Civet for example)
+	fs::path ShutdownHandlerScript;
+	fs::path StaticDataPath;			// Location of static data (not editable in game).
+	fs::path VariableDataPath;		// Location of variable data (editable in game).
+	fs::path TmpDataPath;		// Location of temporary data (editable in game).
+	fs::path LogPath;				// Location of logs other than Easylogging output (Civet for example)
 
-	std::string ResolveStaticDataPath();
-	std::string ResolveVariableDataPath();
-	std::string ResolveTmpDataPath();
-	std::string ResolveHTTPBasePath();
-	std::string ResolveHTTPCARPath();
-	std::vector<std::string> ResolveLocalConfigurationPath();
-	std::string ResolveLogPath();
+	fs::path ResolveStaticDataPath();
+	fs::path ResolveVariableDataPath();
+	fs::path ResolveTmpDataPath();
+	fs::path ResolveHTTPBasePath();
+	fs::path ResolveHTTPCARPath();
+	std::vector<fs::path> ResolveLocalConfigurationPath();
+	fs::path ResolveLogPath();
 	std::string ResolveSimulatorAddress();
 	std::string ResolveHTTPAddress(const std::string &simAddress);
 
+	bool LoadConfig(const fs::path &filename);
+
 private:
-	std::string ResolvePath(const std::string &path);
+	fs::path ResolvePath(const fs::path &path);
 };
 
 extern GlobalConfigData g_Config;
-
-bool LoadConfig(const std::string &filename);
 
 #endif //CONFIG_H

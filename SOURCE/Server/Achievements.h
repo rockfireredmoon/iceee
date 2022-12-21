@@ -7,6 +7,10 @@
 #include <string>
 #include <stdarg.h>
 #include "CommonTypes.h"
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 
 namespace Achievements
@@ -26,7 +30,7 @@ namespace Category
 		MAX
 	};
 	const char *GetNameByID(int eventID);
-	int GetIDByName(const std::string &eventName);
+	int GetIDByName(const string &eventName);
 }
 
 class AchievementObjectiveDef
@@ -35,12 +39,12 @@ public:
 	AchievementObjectiveDef();
 	~AchievementObjectiveDef();
 
-	std::string mName;
-	std::string mTitle;
-	std::string mDescription;
-	std::string mIcon1;
-	std::string mIcon2;
-	std::string mTag;
+	string mName;
+	string mTitle;
+	string mDescription;
+	string mIcon1;
+	string mIcon2;
+	string mTag;
 };
 
 class AchievementDef
@@ -49,16 +53,16 @@ public:
 	AchievementDef();
 	~AchievementDef();
 
-	std::vector<AchievementObjectiveDef*> mObjectives;
+	vector<AchievementObjectiveDef*> mObjectives;
 	int mCategory;
-	std::string mName;
-	std::string mTitle;
-	std::string mDescription;
-	std::string mIcon1;
-	std::string mIcon2;
-	std::string mTag;
+	string mName;
+	string mTitle;
+	string mDescription;
+	string mIcon1;
+	string mIcon2;
+	string mTag;
 
-	AchievementObjectiveDef* GetObjectiveDef(std::string name);
+	AchievementObjectiveDef* GetObjectiveDef(string name);
 };
 
 
@@ -71,10 +75,10 @@ public:
 	~Achievement();
 
 	AchievementDef *mDef;
-	std::vector<AchievementObjectiveDef*> mCompletedObjectives;
+	vector<AchievementObjectiveDef*> mCompletedObjectives;
 	int mID;
 
-	void CompleteObjective(std::string name);
+	void CompleteObjective(string name);
 	bool IsComplete();
 };
 
@@ -83,14 +87,14 @@ class AchievementsManager
 public:
 	AchievementsManager();
 	~AchievementsManager();
-	std::map<std::string, AchievementDef*> mDefs;
-	AchievementDef* LoadDef(std::string name);
+	map<string, AchievementDef*> mDefs;
+	AchievementDef* LoadDef(string name);
 	int LoadItems(void);
 	int GetTotalObjectives();
 	int GetTotalAchievements();
-	AchievementDef* GetItem(std::string name);
+	AchievementDef* GetItem(string name);
 private:
-	std::string GetPath(std::string name);
+	fs::path GetPath(string name);
 	int mTotalObjectives;
 
 };

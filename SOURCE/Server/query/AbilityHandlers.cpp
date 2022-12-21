@@ -21,6 +21,7 @@
 #include "../Instance.h"
 #include "../Debug.h"
 #include "../Config.h"
+#include "../Scheduler.h"
 #include "../util/Log.h"
 
 //
@@ -66,7 +67,7 @@ int AbilityBuyHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pl
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Your class cannot use that ability.");
 
-	std::vector<short> preReq;
+	vector<short> preReq;
 	abData->GetPurchasePrereqList(preReq);
 	for (size_t i = 0; i < preReq.size(); i++) {
 		if (preReq[i] > 0)
@@ -81,12 +82,10 @@ int AbilityBuyHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pl
 	if (abData->IsPassive() == true) {
 		creatureInstance->CallAbilityEvent(abilityID, EventType::onRequest);
 		creatureInstance->CallAbilityEvent(abilityID, EventType::onActivate);
-
-		//creatureInst->actInst->ActivateAbility(creatureInst, abilityID, Action::onRequest, 0);
-		//creatureInst->actInst->ActivateAbility(creatureInst, abilityID, Action::onActivate, 0);
 	}
 
-	sim->AddMessage((long) creatureInstance, 0, BCM_UpdateCreatureInstance);
+	creatureInstance->Submit(bind(&CreatureInstance::BroadcastCreatureInstanceUpdate, creatureInstance));
+
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, query->GetString(0));
 }
 
@@ -138,8 +137,10 @@ int AbilityRespecHandler::handleQuery(SimulatorThread *sim, CharacterServerData 
 	sim->ActivatePassiveAbilities();
 	sim->UpdateEqAppearance();
 
-	sim->AddMessage((long) creatureInstance, 0, BCM_UpdateCreatureInstance);
-	sim->AddMessage((long) &pld->charPtr->cdef, 0, BCM_CreatureDefRequest);
+	creatureInstance->Submit([creatureInstance, pld, sim]() {
+		creatureInstance->BroadcastCreatureInstanceUpdate();
+		creatureInstance->actInst->LSendToOneSimulator(GSendBuf, PrepExt_CreatureDef(GSendBuf, &pld->charPtr->cdef), sim->InternalID);
+	});
 
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "true");
 }

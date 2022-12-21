@@ -4,10 +4,7 @@
 #include "DirectoryAccess.h"
 #include "util/Log.h"
 #include "Util.h"
-#include "StringUtil.h"
 #include <stdlib.h>
-
-using namespace std;
 
 //
 // Abstract player class for scripts that run in instances. This includes instance scripts
@@ -36,17 +33,17 @@ AbstractEntityReader::~AbstractEntityReader() {
 
 int AbstractEntityReader::ValueInt(const string &key,
 		const int defaultValue) {
-	return atoi(Value(key, StringUtil::Format("%d", defaultValue)).c_str());
+	return atoi(Value(key, Util::Format("%d", defaultValue)).c_str());
 }
 
 float AbstractEntityReader::ValueFloat(const string &key,
 		const float defaultValue) {
-	return atof(Value(key, StringUtil::Format("%f", defaultValue)).c_str());
+	return atof(Value(key, Util::Format("%f", defaultValue)).c_str());
 }
 
 unsigned long AbstractEntityReader::ValueULong(const string &key,
 		const unsigned long defaultValue) {
-	return strtoul(Value(key, StringUtil::Format("%lu", defaultValue)).c_str(), NULL, 0);
+	return strtoul(Value(key, Util::Format("%lu", defaultValue)).c_str(), NULL, 0);
 }
 
 bool AbstractEntityReader::ValueBool(const string &key,
@@ -129,24 +126,24 @@ void AbstractEntityWriter::Section(const string &section) {
 	}
 }
 
-bool AbstractEntityWriter::Value(const std::string &key, const unsigned long value) {
-	return Value(key, StringUtil::Format("%lu", value));
+bool AbstractEntityWriter::Value(const string &key, const unsigned long value) {
+	return Value(key, Util::Format("%lu", value));
 }
 
-bool AbstractEntityWriter::Value(const std::string &key, const unsigned int value) {
-	return Value(key, StringUtil::Format("%u", value));
+bool AbstractEntityWriter::Value(const string &key, const unsigned int value) {
+	return Value(key, Util::Format("%u", value));
 }
 
-bool AbstractEntityWriter::Value(const std::string &key, const int value) {
-	return Value(key, StringUtil::Format("%d", value));
+bool AbstractEntityWriter::Value(const string &key, const int value) {
+	return Value(key, Util::Format("%d", value));
 }
 
-bool AbstractEntityWriter::Value(const std::string &key, const bool value) {
-	return Value(key, StringUtil::Format("%d", value ? 1 : 0));
+bool AbstractEntityWriter::Value(const string &key, const bool value) {
+	return Value(key, Util::Format("%d", value ? 1 : 0));
 }
 
-bool AbstractEntityWriter::Value(const std::string &key, const float value) {
-	return Value(key, StringUtil::Format("%f", value));
+bool AbstractEntityWriter::Value(const string &key, const float value) {
+	return Value(key, Util::Format("%f", value));
 }
 
 string AbstractEntityWriter::PopSection() {
@@ -162,7 +159,7 @@ string AbstractEntityWriter::PopSection() {
 // TextFileEntityReader
 //
 
-TextFileEntityReader::TextFileEntityReader(string filename, int caseConv, int commentStyle) {
+TextFileEntityReader::TextFileEntityReader(const fs::path &filename, int caseConv, int commentStyle) {
 	mFilename = filename;
 	mLoaded = false;
 	mCaseConv = caseConv;
@@ -185,26 +182,26 @@ bool TextFileEntityReader::End() {
 	return true;
 }
 
-std::string TextFileEntityReader::CheckKey(std::string key) {
+string TextFileEntityReader::CheckKey(string key) {
 	switch(mCaseConv) {
 	case Case_Upper:
-		return StringUtil::UpperCase(key);
+		return Util::UpperCase(key);
 	case Case_Lower:
-		return StringUtil::LowerCase(key);
+		return Util::LowerCase(key);
 	default:
 		return key;
 	}
 }
 
 bool TextFileEntityReader::Exists() {
-	return Platform::FileExists(mFilename);
+	return fs::exists(mFilename);
 }
 
 vector<string> TextFileEntityReader::Keys() {
 	CheckLoaded();
 	STRINGLIST l;
 	for(auto a = mValues[mSection].begin(); a != mValues[mSection].end(); ++a) {
-		if(std::find(l.begin(), l.end(), a->first) == l.end()) {
+		if(find(l.begin(), l.end(), a->first) == l.end()) {
 			l.push_back(a->first);
 		}
 	}
@@ -243,7 +240,7 @@ string TextFileEntityReader::Value(const string &key,
 	return l[0];
 }
 
-vector<string> TextFileEntityReader::ListValue(const string &key, const std::string &separator) {
+vector<string> TextFileEntityReader::ListValue(const string &key, const string &separator) {
 	if(!CheckLoaded())
 		return {};
 
@@ -269,12 +266,12 @@ bool TextFileEntityReader::CheckLoaded() {
 
 	if (!mLoaded) {
 		FileReader lfr;
-		if (lfr.OpenText(mFilename.c_str()) != Err_OK) {
+		if (lfr.OpenText(mFilename) != Err_OK) {
 			g_Logs.data->error("Failed to open entity file: %v", mFilename);
 		} else {
 			lfr.CommentStyle = mCommentStyle;
 			int r;
-			std::string sectionPath;
+			string sectionPath;
 
 			while (lfr.FileOpen()) {
 				r = lfr.ReadLine();
@@ -286,7 +283,7 @@ bool TextFileEntityReader::CheckLoaded() {
 						secName = secName.substr(2, secName.size() - 3);
 
 						/* Ignore the index for this test */
-						std::string testPath = sectionPath;
+						string testPath = sectionPath;
 						auto it = sectionPath.find_last_of("#");
 						if(it != string::npos) {
 							testPath = testPath.substr(0, it);
@@ -320,7 +317,7 @@ bool TextFileEntityReader::CheckLoaded() {
 							sectionPath = sectionPath + "/" + secName;
 
 						if(mIndexed.find(sectionPath) != mIndexed.end()) {
-							sectionPath += "#" + StringUtil::Format("%d", mIndexed[sectionPath]++);
+							sectionPath += "#" + Util::Format("%d", mIndexed[sectionPath]++);
 						}
 
 						mValues[sectionPath] = TEXT_FILE_SECTION_MAP();
@@ -348,7 +345,7 @@ bool TextFileEntityReader::CheckLoaded() {
 //
 // TextFileEntityWriter
 //
-TextFileEntityWriter::TextFileEntityWriter(std::string path) {
+TextFileEntityWriter::TextFileEntityWriter(const fs::path &path) {
 	mPath = path;
 	mOutput = NULL;
 }
@@ -386,8 +383,7 @@ bool TextFileEntityWriter::ListValue(const string & key, vector<string> &value) 
 	for (auto it = value.begin(); it != value.end(); ++it) {
 		if (v.size() > 0)
 			v += ",";
-		v += StringUtil::ReplaceAll(StringUtil::ReplaceAll((*it), "\\", "\\\\"),
-				",", "\\,");
+		v += Util::ReplaceAllTo(Util::ReplaceAllTo((*it), "\\", "\\\\"), ",", "\\,");
 	}
 	fprintf(mOutput, "%s=%s\r\n", key.c_str(), v.c_str());
 	return false;

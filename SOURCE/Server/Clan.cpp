@@ -1,7 +1,6 @@
 #include "Util.h"
 #include "Clan.h"
 #include "Config.h"
-#include "StringUtil.h"
 #include "Cluster.h"
 #include "DirectoryAccess.h"
 
@@ -72,25 +71,25 @@ Clan::~Clan() {
 }
 
 bool Clan :: WriteEntity(AbstractEntityWriter *writer) {
-	writer->Key(KEYPREFIX_CLAN, StringUtil::Format("%d", mId));
+	writer->Key(KEYPREFIX_CLAN, Util::Format("%d", mId));
 	writer->Value("Name", mName);
 	writer->Value("MOTD", mMOTD);
 	writer->Value("Created", mCreated);
 	STRINGLIST l;
 	for(auto a = mMembers.begin(); a != mMembers.end(); ++a) {
-		l.push_back(StringUtil::Format("%d:%d", (*a).mID, (*a).mRank));
+		l.push_back(Util::Format("%d:%d", (*a).mID, (*a).mRank));
 	}
 	writer->ListValue("Member", l);
 	l.clear();
 	for(auto a = mPendingMembers.begin(); a != mPendingMembers.end(); ++a) {
-		l.push_back(StringUtil::Format("%d", *a));
+		l.push_back(Util::Format("%d", *a));
 	}
 	writer->ListValue("PendingMember", l);
 	return true;
 }
 
 bool Clan :: EntityKeys(AbstractEntityReader *reader) {
-	reader->Key(KEYPREFIX_CLAN, StringUtil::Format("%d", mId), true);
+	reader->Key(KEYPREFIX_CLAN, Util::Format("%d", mId), true);
 	return true;
 }
 
@@ -202,7 +201,7 @@ std::vector<Clan> ClanManager::GetClans() {
 		STRINGLIST l;
 		Util::Split(key, ":", l);
 		c.push_back(GetClan(atoi(l[1].c_str())));
-	}, StringUtil::Format("%s:", KEYPREFIX_CLAN.c_str()));
+	}, Util::Format("%s:", KEYPREFIX_CLAN.c_str()));
 	return c;
 }
 
@@ -212,15 +211,15 @@ bool ClanManager::LoadClan(int id, Clan &clan) {
 }
 
 bool ClanManager::HasClan(int clanID) {
-	return g_ClusterManager.HasKey(StringUtil::Format("%s:%d", KEYPREFIX_CLAN.c_str(), clanID));
+	return g_ClusterManager.HasKey(Util::Format("%s:%d", KEYPREFIX_CLAN.c_str(), clanID));
 }
 
 int ClanManager::FindClanID(const std::string &clanName) {
-	return atoi(g_ClusterManager.GetKey(StringUtil::Format("%s:%s", KEYPREFIX_CLAN_NAME_TO_ID.c_str(), clanName.c_str()), "-1").c_str());
+	return atoi(g_ClusterManager.GetKey(Util::Format("%s:%s", KEYPREFIX_CLAN_NAME_TO_ID.c_str(), clanName.c_str()), "-1").c_str());
 }
 
 bool ClanManager::RemoveClan(Clan &clan) {
-	g_ClusterManager.RemoveKey(StringUtil::Format("%s:%s", KEYPREFIX_CLAN_NAME_TO_ID.c_str(), clan.mName.c_str()));
+	g_ClusterManager.RemoveKey(Util::Format("%s:%s", KEYPREFIX_CLAN_NAME_TO_ID.c_str(), clan.mName.c_str()));
 	if (!g_ClusterManager.RemoveEntity(&clan)) {
 		g_Logs.server->info("Failed to remove clan [%v] from cluster", clan.mName);
 		return false;
@@ -229,7 +228,7 @@ bool ClanManager::RemoveClan(Clan &clan) {
 }
 
 bool ClanManager::SaveClan(Clan &clan) {
-	g_ClusterManager.SetKey(StringUtil::Format("%s:%s", KEYPREFIX_CLAN_NAME_TO_ID.c_str(), clan.mName.c_str()), StringUtil::Format("%d", clan.mId));
+	g_ClusterManager.SetKey(Util::Format("%s:%s", KEYPREFIX_CLAN_NAME_TO_ID.c_str(), clan.mName.c_str()), Util::Format("%d", clan.mId));
 	if(!g_ClusterManager.WriteEntity(&clan)) {
 		g_Logs.data->warn("Failed to save clan %v (%v) to cluster.", clan.mId, clan.mName);
 		return false;

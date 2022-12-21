@@ -18,6 +18,7 @@
 #define CREATUREHANDLERS_H
 
 #include "Query.h"
+using namespace std;
 
 class CreatureIsUsableHandler : public QueryHandler {
 public:

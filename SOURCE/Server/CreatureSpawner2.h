@@ -1,10 +1,15 @@
 #ifndef CREATURESPAWNER2_H
 #define CREATURESPAWNER2_H
 
+#include "CommonTypes.h"
+
 #include <map>
 #include <vector>
 #include <list>
-#include "CommonTypes.h"
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 class SceneryObject;
 class ActiveInstance;
@@ -44,28 +49,28 @@ public:
 	static const int DEFAULT_DESPAWNTIME = 150;
 	static const int DEFAULT_MAXLEASH = 500;
 	
-	std::string spawnName;      //Internal name for this spawner entity
+	string spawnName;      //Internal name for this spawner entity
 	int leaseTime;           //Original purpose unknown... spawn delay?
-	std::string spawnPackage;   //Package to base spawn types on
-	std::string dialog;   		 //Name of NPC Dialog file
+	string spawnPackage;   //Package to base spawn types on
+	string dialog;   		 //Name of NPC Dialog file
 	int mobTotal;            //Total mobs (including dead?) that can be anchored to this point?
 	int maxActive;           //Total active that can be anchored to this point?
-	std::string aiModule;       //Unused?
+	string aiModule;       //Unused?
 	int maxLeash;            //Maximum attack distance until a mob is forced to return
 	int loyaltyRadius;       //Distance to aggro nearby idle mobs
 	int wanderRadius;        //Distance for random stray mobs
 	int despawnTime;        //Unknown purpose.  Used for spawn times.
 	int sequential;          //Unknown
-	std::string spawnLayer;     //Unknown
+	string spawnLayer;     //Unknown
 	float xpos;              //Spawn position
 	float ypos;              //Spawn position
 	float zpos;              //Spawn position
 	unsigned char facing;    //Directional facing on spawn (0-255)
 
-	std::string sceneryName;
+	string sceneryName;
 	int innerRadius;
 	int outerRadius;
-	std::vector<ExtraDataLink> link;
+	vector<ExtraDataLink> link;
 	void Clear();
 	void copyFrom(CreatureSpawnDef *source);
 	int GetLeashLength(void);
@@ -78,7 +83,7 @@ struct ActiveSpawner
 	unsigned long nextSpawn;     //Time that the next spawn will trigger.
 	SpawnPackageDef *spawnPackage;  //Pointer to the spawn package definition, for selecting a new spawn.
 	short refCount;              //Number of creatures currently spawned by this point.
-	std::vector<int> attachedCreatureID;  //A list of creature IDs attached to this spawn point.
+	vector<int> attachedCreatureID;  //A list of creature IDs attached to this spawn point.
 
 	ActiveSpawner();
 	bool HasCreature(int creatureID);
@@ -97,8 +102,8 @@ struct ActiveSpawner
 class SpawnTile
 {
 public:
-	typedef std::map<int, ActiveSpawner> SPAWN_MAP;
-	typedef std::pair<int, ActiveSpawner> SPAWN_PAIR;   //Key is Prop ID
+	typedef map<int, ActiveSpawner> SPAWN_MAP;
+	typedef pair<int, ActiveSpawner> SPAWN_PAIR;   //Key is Prop ID
 
 	/*	Notes on the following two static constants:
 	SIZE is the width of a tile.
@@ -127,7 +132,7 @@ public:
 	unsigned long releaseTime;  //If the page is not accessed again before this time (access time + offset), flag it as garbage and delete it.
 	SpawnManager *manager;
 	SPAWN_MAP activeSpawn;
-	std::vector<int> attachedCreatureID;  //Contains all Creature IDs attached to this tile.
+	vector<int> attachedCreatureID;  //Contains all Creature IDs attached to this tile.
 
 	SpawnTile();
 	~SpawnTile();
@@ -146,7 +151,7 @@ public:
 	void RemoveSpawnPointCreature(ActiveSpawner *spawner, int creatureID);
 	ActiveSpawner * GetActiveSpawner(int PropID);
 	bool QualifyDelete(void);
-	void GetAttachedCreatures(int sceneryID, std::vector<int> &results);
+	void GetAttachedCreatures(int sceneryID, vector<int> &results);
 };
 
 //This class holds the data of a spawn package defition.  It allows
@@ -221,8 +226,8 @@ public:
 	void Free(void);
 
 	int ZoneID;
-	std::vector<SpawnPackageDef> defList;
-	int LoadFromFile(std::string filename);
+	vector<SpawnPackageDef> defList;
+	int LoadFromFile(string filename);
 	void AddIfValid(SpawnPackageDef &newItem);
 	SpawnPackageDef * GetPointerByName(const char *name);
 	SpawnPackageDef * HasCreatureDef(int CreatureDefID);
@@ -235,13 +240,13 @@ public:
 	SpawnPackageManager();
 	~SpawnPackageManager();
 
-	//typedef std::map<int, SpawnPackageList> SPAWNPACKAGECONT;  //A dedicated list for each zoneID
+	//typedef map<int, SpawnPackageList> SPAWNPACKAGECONT;  //A dedicated list for each zoneID
 	//SPAWNPACKAGECONT packageList;
-	std::vector<SpawnPackageList> packageList;
+	vector<SpawnPackageList> packageList;
 	SpawnPackageDef nullSpawnPackage;
 	int fakeCreatureId;
 
-	void LoadFromFile(std::string subfolder, std::string filename);
+	void LoadFromFile(const fs::path &filename);
 	SpawnPackageDef * GetPointerByName(const char *name);
 	//SpawnPackageList* GetZone(int zoneID);
 	void EnumPackagesForCreature(int CreatureDefID, STRINGLIST &output);
@@ -249,11 +254,11 @@ public:
 
 class SpawnManager
 {
-	typedef std::pair<int, int> TILE_COORD;
-	typedef std::vector<TILE_COORD> TILELIST_CONT;
+	typedef pair<int, int> TILE_COORD;
+	typedef vector<TILE_COORD> TILELIST_CONT;
 public:
-	std::list<SpawnTile> spawnTiles;
-	std::list<int> genericSpawns;
+	list<SpawnTile> spawnTiles;
+	list<int> genericSpawns;
 	SpawnTile *GetTile(int tilePageX, int tilePageY);
 	ActiveInstance *actInst;
 	SpawnManager();
@@ -265,7 +270,7 @@ public:
 	void RunProcessing(bool force);
 	bool NotifyKill(ActiveSpawner *sourceSpawner, int creatureID);
 	void ScanActivePlayerTiles(TILELIST_CONT &outputList);
-	void EnumAttachedCreatures(int sceneryID, int sceneryX, int sceneryZ, std::vector<int> &results);
+	void EnumAttachedCreatures(int sceneryID, int sceneryX, int sceneryZ, vector<int> &results);
 
 	static const long PROCESSING_INTERVAL = 1000;     //How frequently to iterate over tiles and process spawns.
 	static const long GARBAGE_CHECK_DELAY = 60000;    //Scan for garbage tiles at this interval.
@@ -293,7 +298,7 @@ struct UniqueSpawnEntry
 	size_t mRandomIndex;      //The chosen random index of a prop in the list to spawn from.
 	int mSpawnTime;        //Delay between restarting the cycle when a reroll is requested.
 	unsigned long mRestartTime;  //Time required to allow a new spawn cycle.
-	std::vector<int> mPropID;  //IDs of the SpawnPoints that called a request.
+	vector<int> mPropID;  //IDs of the SpawnPoints that called a request.
 	UniqueSpawnEntry();
 	size_t GetPropIndex(int PropID);
 	void ReRoll(int durationSeconds);
@@ -307,8 +312,8 @@ public:
 	~UniqueSpawnManager();
 	void Clear(void);
 
-	std::map<std::string, UniqueSpawnEntry> mEntryList;   //Maps spawn package names to their entries.
-	typedef std::map<std::string, UniqueSpawnEntry>::iterator ITERATOR;
+	map<string, UniqueSpawnEntry> mEntryList;   //Maps spawn package names to their entries.
+	typedef map<string, UniqueSpawnEntry>::iterator ITERATOR;
 
 	bool TestSpawn(const char *spawnPackageName, int maxSpawnPoints, int callPropID);
 	void ReRoll(const char *spawnPackageName, int durationSeconds);

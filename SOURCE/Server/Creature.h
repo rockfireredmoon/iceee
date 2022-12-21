@@ -7,8 +7,6 @@
 #include <string>
 #include <stack>
 
-using namespace std;
-
 //Need for pointers.
 class HateProfile;
 class CharacterData;
@@ -20,12 +18,17 @@ class SimulatorThread;
 #include "AbilityTime.h"
 #include "Arena.h"
 #include "DropTable.h"
+#include "Scheduler.h"
 #include "sqrat.h"
 #include "Daily.h"
 #include "Globals.h"
 #include "ConfigString.h"
 #include "InstanceScale.h"
 #include "json/json.h"
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 class CreatureInstance;  //Forward declaration for a pointer in the SelectedObject structure
 class AIScriptPlayer;    //Forward declaration for AI script
@@ -170,8 +173,8 @@ public:
 
 struct CreatureSearchResult
 {
-	std::string type;
-	std::string name;
+	string type;
+	string name;
 	int id;
 };
 
@@ -187,16 +190,16 @@ public:
 	CharacterStatSet css;
 	int CreatureDefID;             //Creature Definition ID
 	unsigned short DefHints;       //extra creature data
-	std::vector<int> DefaultEffects;
-	std::vector<int> Items;
-	std::string DropRateProfile;
+	vector<int> DefaultEffects;
+	vector<int> Items;
+	string DropRateProfile;
 	float DropRateMult;
 	bool NamedMob;
 	int AbilityOnUse;
 	
 	bool operator < (const CreatureDefinition& other) const;
-	std::string GetExtraDataString();
-	std::string GetDropRateProfileName(void);
+	string GetExtraDataString();
+	string GetDropRateProfileName(void);
 	void SaveToStream(FILE *output);
 	void WriteToJSON(Json::Value &value);
 };
@@ -297,8 +300,8 @@ class AppearanceModifier
 {
 public:
 	virtual ~AppearanceModifier();
-	virtual std::string Modify(std::string source) =0;
-	virtual std::string ModifyEq(std::string source) =0;
+	virtual string Modify(string source) =0;
+	virtual string ModifyEq(string source) =0;
 	virtual AppearanceModifier * Clone() =0;
 };
 
@@ -306,22 +309,22 @@ class AbstractAppearanceModifier : public AppearanceModifier {
 public:
 	AbstractAppearanceModifier();
 	virtual ~AbstractAppearanceModifier();
-	std::string Modify(std::string source);
-	std::string ModifyEq(std::string source);
+	string Modify(string source);
+	string ModifyEq(string source);
 	virtual void ProcessTable(Sqrat::Table *table) =0;
 	virtual void ProcessTableEq(Sqrat::Table *table) =0;
 	virtual AppearanceModifier * Clone() =0;
 private:
-	std::string DoModify(std::string source, bool eq);
+	string DoModify(string source, bool eq);
 };
 
 class ReplaceAppearanceModifier : public AppearanceModifier {
 public:
-	std::string mReplacement;
-	ReplaceAppearanceModifier(std::string replacement);
+	string mReplacement;
+	ReplaceAppearanceModifier(string replacement);
 	~ReplaceAppearanceModifier();
-	std::string Modify(std::string source);
-	std::string ModifyEq(std::string source);
+	string Modify(string source);
+	string ModifyEq(string source);
 	AppearanceModifier * Clone();
 };
 
@@ -329,16 +332,16 @@ class NudifyAppearanceModifier : public AppearanceModifier {
 public:
 	NudifyAppearanceModifier();
 	~NudifyAppearanceModifier();
-	std::string Modify(std::string source);
-	std::string ModifyEq(std::string source);
+	string Modify(string source);
+	string ModifyEq(string source);
 	AppearanceModifier * Clone();
 };
 
 class CreatureAttributeModifier : public AbstractAppearanceModifier {
 public:
-	std::string mAttribute;
-	std::string mValue;
-	CreatureAttributeModifier(std::string attribute,std::string value);
+	string mAttribute;
+	string mValue;
+	CreatureAttributeModifier(string attribute,string value);
 	~CreatureAttributeModifier();
 	void ProcessTable(Sqrat::Table *table);
 	void ProcessTableEq(Sqrat::Table *table);
@@ -347,25 +350,25 @@ public:
 
 class AddAttachmentModifier : public AbstractAppearanceModifier {
 public:
-	std::string mType;
-	std::string mNode;
-	AddAttachmentModifier(std::string type,std::string node);
+	string mType;
+	string mNode;
+	AddAttachmentModifier(string type,string node);
 	~AddAttachmentModifier();
 	void ProcessTable(Sqrat::Table *table);
 	void ProcessTableEq(Sqrat::Table *table);
 	AppearanceModifier * Clone();
 };
 
-class CreatureInstance
+class CreatureInstance: public Schedulable
 {
 public:
 	CreatureInstance();
 	~CreatureInstance();
-	typedef std::vector<CreatureSearch> CREATURE_SEARCH;
-	typedef std::vector<CreatureInstance*> CREATURE_PTR_SEARCH;
-	void UnloadResources(void);
+	typedef vector<CreatureSearch> CREATURE_SEARCH;
+	typedef vector<CreatureInstance*> CREATURE_PTR_SEARCH;
+	void Shutdown(void);
 	bool KillAI(void);
-	bool StartAI(std::string &errors);
+	bool StartAI(string &errors);
 	void RemoveAttachedHateProfile(void);
 
 	int CreatureDefID;   //Associated Creature Def ID
@@ -440,7 +443,7 @@ public:
 	vector<ActiveStatusEffect> activeStatusEffect;
 	vector<ImplicitAction> implicitActions;
 
-	std::vector<AppearanceModifier*> appearanceModifiers;
+	vector<AppearanceModifier*> appearanceModifiers;
 
 	ActiveBuffManager buffManager;
 	ActiveCooldownManager cooldownManager;
@@ -458,14 +461,14 @@ public:
 	void PushAppearanceModifier(AppearanceModifier *modifier);
 	void RemoveAppearanceModifier(AppearanceModifier *modifier);
 	void ClearAppearanceModifiers();
-	std::string PeekAppearanceEq();
-	std::string PeekAppearance();
+	string PeekAppearanceEq();
+	string PeekAppearance();
 	int _GetBaseStatModIndex(int statID);
 	int _GetExistingModIndex(int type, int groupID, int statID);
 	void SendUpdatedBuffs(void);
 	void RemoveStatModsBySource(int buffSource);
 	void AddItemStatMod(int itemID, int statID, float amount);
-	void ApplyItemStatModFromConfig(int itemID, const std::string configStr);
+	void ApplyItemStatModFromConfig(int itemID, const string configStr);
 	void SubtractAbilityBuffStat(int statID, int abgID, float amount);
 	void CheckRemovedBuffs(void);
 	bool IsAtTether();
@@ -497,10 +500,17 @@ public:
 	void AddHeroismForKill(int targetLevel, int targetRarity);
 	void OnHeroismChange(void);
 	void SendStatUpdate(int statID);
+	void BroadcastJump(int ignoreIndex);
+	void BroadcastCreatureInstanceUpdate();
+	void BroadcastVelocityUpdate(int ignoreIndex);
+	void BroadcastFullPositionUpdate(int ignoreIndex);
+	void BroadcastPositionUpdate();
+	void BroadcastIncrementalPositionUpdate();
+
 	void SetLevel(int newLevel);
 	void CheckQuestKill(CreatureInstance *target);
 	void CheckQuestInteract(CreatureInstance *target);
-	int ProcessQuestRewards(int QuestID, int Outcome, const std::vector<QuestItemReward>& itemsToGive);
+	int ProcessQuestRewards(int QuestID, int Outcome, const vector<QuestItemReward>& itemsToGive);
 	int QuestInteractObject(char *buffer, const char *text, int time, bool gather);
 	int PrepInteractObject(char *buffer, const char *text, int time, bool gather, CreatureInstance *target);
 	int NormalInteractObject(char *outBuf, InteractObject *interactObj);
@@ -511,7 +521,7 @@ public:
 
 	float GetDropRateMultiplier(CreatureDefinition *cdef);
 
-	void PlayerLoot(int level, std::vector<DailyProfile> profiles);
+	void PlayerLoot(int level, vector<DailyProfile> profiles);
 	void CreateLoot(int finderLevel, int partySize);
 	void AddLootableID(int newLootableID);
 
@@ -662,7 +672,7 @@ public:
 	void ProcessRegen(void);
 	void ProcessAutoAttack(void);
 	bool isNPCReadyMovement(void);
-	void RunProcessingCycle(void);
+	void RunScheduledTasks(void);
 	void CheckMostHatedTarget(bool forceCheck);
 	void RunAutoTargetSelection(void);
 	float GetMaxInvisibilityDistance(bool dexBased);
@@ -769,12 +779,12 @@ public:
 	void HealthSacrifice(int amount);
 
 	void Regenerate(int amount);
-	void DoNothing(void);
+//	void DoNothing(void);
 	//void AttackMelee(int unknown);
 	//void AttackRanged(int unknown);
-	void SummonPet(int unknown);
+//	void SummonPet(int unknown);
+//	void Jump(void);
 
-	void Jump(void);
 	bool hasRangedWeapon(void);
 	void AdjustCopper(int coinChange);
 	int GetAggroRange(CreatureInstance *target);
@@ -824,8 +834,8 @@ public:
 	CreatureDefManager();
 	~CreatureDefManager();
 
-	typedef std::map<int, CreatureDefinition> CREATURE_MAP;
-	typedef std::pair<int, CreatureDefinition> CREATURE_PAIR;
+	typedef map<int, CreatureDefinition> CREATURE_MAP;
+	typedef pair<int, CreatureDefinition> CREATURE_PAIR;
 
 	CREATURE_MAP NPC;
 
@@ -834,14 +844,14 @@ public:
 	CreatureDefinition* GetPointerByCDef(int CDefID);
 	CreatureDefinition* GetPointerByName(const char *name);
 
-	int LoadPackages(std::string listFile);
-	int LoadFile(std::string filename);
+	int LoadPackages(const fs::path &listFile);
+	int LoadFile(const fs::path &filename);
 
-	int GetSpawnList(std::string searchType, std::string searchStr, vector<CreatureSearchResult> &resultList);
+	int GetSpawnList(string searchType, string searchStr, vector<CreatureSearchResult> &resultList);
 
 	void Clear(void);                 //Clear all data
 private:
-	std::string GetIndividualFilename(int accountID);
+	fs::path GetIndividualFilename(int accountID);
 };
 
 extern CreatureDefManager CreatureDef;
@@ -850,7 +860,7 @@ struct PendingCreatureUpdate
 {
 	unsigned short mask;
 	CreatureInstance *object;
-	std::vector<short> statUpdate;
+	vector<short> statUpdate;
 	void addStatUpdate(short statID);
 };
 

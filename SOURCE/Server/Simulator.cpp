@@ -33,7 +33,6 @@
 #include "Fun.h"
 #include "Crafting.h"
 #include "URL.h"
-#include "StringUtil.h"
 #include "InstanceScale.h"
 #include "Combat.h"
 #include "ConfigString.h"
@@ -177,30 +176,9 @@ SimulatorThread * GetSimulatorByCharacterName(const char *name) {
 	return NULL;
 }
 
-ThreadRequest::ThreadRequest() {
-	status = STATUS_NONE;
-}
-
-ThreadRequest::~ThreadRequest() {
-}
-
-bool ThreadRequest::WaitForStatus(int statusID, int checkInterval,
-		int maxError) {
-	int errCount = 0;
-	while (status != statusID) {
-		errCount++;
-		if (errCount == maxError)
-			return false;
-
-		PLATFORM_SLEEP(checkInterval);
-	}
-	return true;
-}
-
 SimulatorManager::SimulatorManager() {
 	debug_acquired = false;
 
-	pendingActions = 0;
 	ActiveCount = 0;
 	nextSimulatorID = 0;
 
@@ -219,35 +197,14 @@ SimulatorManager::~SimulatorManager() {
 }
 
 void SimulatorManager::Free(void) {
-	regList.clear();
-	pendingActions = 0;
-}
-
-//void SimulatorManager :: RegisterAction(SimulatorThread *simData)
-void SimulatorManager::RegisterAction(ThreadRequest *reqData) {
-	cs.Enter("SimulatorManager::RegisterAction");
-	regList.push_back(reqData);
-	pendingActions++;
-	cs.Leave();
-}
-
-void SimulatorManager::UnregisterAction(ThreadRequest *reqData) {
-	cs.Enter("SimulatorManager::UnregisterAction");
-	//while(DeleteAction(reqData) == true);
-	size_t pos = 0;
-	while (pos < regList.size()) {
-		if (regList[pos] == reqData)
-			regList.erase(regList.begin() + pos);
-		else
-			pos++;
-	}
-	cs.Leave();
 }
 
 void SimulatorManager::RunPendingActions(void) {
-	ProcessPendingDisconnects();
+	SIMULATOR_IT it;
+	for (it = Simulator.begin(); it != Simulator.end(); ++it) {
+		it->RunScheduledTasks();
+	}
 	ProcessPendingPacketData();
-	ProcessPendingActions();
 }
 
 SimulatorThread* SimulatorManager::GetPtrByID(int simID) {
@@ -256,12 +213,6 @@ SimulatorThread* SimulatorManager::GetPtrByID(int simID) {
 		if (it->InternalID == simID)
 			return &*it;
 	return NULL;
-}
-
-void SimulatorManager::AddPendingDisconnect(SimulatorThread *callObject) {
-	cs.Enter("SimulatorManager::AddPendingDisconnect");
-	pendingDisconnects.push_back(callObject);
-	cs.Leave();
 }
 
 void SimulatorManager::AddPendingPacketData(SimulatorThread *callObject) {
@@ -276,22 +227,6 @@ void SimulatorManager::AddPendingPacketData(SimulatorThread *callObject) {
 	cs.Leave();
 }
 
-void SimulatorManager::ProcessPendingDisconnects(void) {
-	if (pendingDisconnects.size() == 0)
-		return;
-
-	cs.Enter("SimulatorManager::AddPendingDisconnect");
-	for (size_t i = 0; i < pendingDisconnects.size(); i++) {
-		g_Logs.simulator->info("ProcessPendingDisconnects - Sim:%v",
-				pendingDisconnects[i]->InternalID);
-		pendingDisconnects[i]->ProcessDisconnect();
-	}
-
-	pendingDisconnects.clear();
-
-	cs.Leave();
-}
-
 void SimulatorManager::ProcessPendingPacketData(void) {
 	if (pendingPacketData.size() == 0)
 		return;
@@ -301,39 +236,6 @@ void SimulatorManager::ProcessPendingPacketData(void) {
 		pendingPacketData[i]->HandleReceivedMessage2();
 
 	pendingPacketData.clear();
-	cs.Leave();
-}
-
-void SimulatorManager::ProcessPendingActions(void) {
-	if (pendingActions == 0)
-		return;
-
-#ifdef DEBUG_TIME
-	Debug::TimeTrack("ProcessPendingActions", 100);
-#endif
-
-	cs.Enter("SimulatorManager::RunPendingActions");
-	debug_acquired = true;
-
-	for (size_t i = 0; i < regList.size(); i++) {
-		//if(regList[i]->threadsys.status != ThreadRequest::STATUS_WAITMAIN)
-		if (regList[i]->status != ThreadRequest::STATUS_WAITMAIN)
-			continue;
-
-		//regList[i]->threadsys.status = ThreadRequest::STATUS_WAITWORK;
-		regList[i]->status = ThreadRequest::STATUS_WAITWORK;
-		//bool res = regList[i]->threadsys.WaitForStatus(ThreadRequest::STATUS_COMPLETE, 5, 1000);
-		bool res = regList[i]->WaitForStatus(ThreadRequest::STATUS_COMPLETE, 1,
-				ThreadRequest::DEFAULT_WAIT_TIME);
-		if (res == false)
-			g_Logs.server->warn(
-					"RunPendingActions() timed out while waiting for worker thread to complete.");
-	}
-
-	regList.clear();
-	pendingActions = 0;
-
-	debug_acquired = false;
 	cs.Leave();
 }
 
@@ -590,8 +492,6 @@ SimulatorThread::SimulatorThread() {
 	TimeLastAutoSave = 0;
 	creatureTweakModifier = NULL;
 
-	threadsys.status = 0;
-
 	questScript.Clear();
 }
 
@@ -600,6 +500,7 @@ SimulatorThread::~SimulatorThread() {
 }
 
 void SimulatorThread::ResetValues(bool hardReset) {
+	g_Logs.simulator->debug("[%v] Reset Values: %v", InternalID, hardReset);
 	Debug_TestCondition = 0;
 	readPtr = &RecBuf[0];
 
@@ -674,8 +575,12 @@ void SimulatorThread::RunMain() {
 	isThreadExist = false;
 	LastUpdate = g_ServerTime;
 	AdjustComponentCount(-1);
-	AddPendingDisconnect();
 	g_Logs.simulator->info("Thread for Sim:%v shut down.", InternalID);
+
+	g_Scheduler.Submit([this]() {
+		ProcessDisconnect();
+		Shutdown();
+	});
 }
 
 void SimulatorThread::RunMainLoop(void) {
@@ -787,6 +692,7 @@ void SimulatorThread::RunMainLoop(void) {
 //Since this function was previously called from both the Simulator and Main threads, this is now
 //a global event.  When the main thread processes it, it calls ProcessDisconnect().
 void SimulatorThread::Disconnect(const char *debugCaller) {
+	g_Logs.simulator->debug("[%v] Disconnect: %v", InternalID, debugCaller);
 	PLATFORM_SLEEP(1);
 	isThreadActive = false;
 	sc.DisconnectClient();
@@ -902,10 +808,6 @@ int SimulatorThread::ItemMorph(bool command) {
 	return wpos;
 }
 
-void SimulatorThread::AddPendingDisconnect(void) {
-	g_SimulatorManager.AddPendingDisconnect(this);
-}
-
 void SimulatorThread::ProcessDisconnect(void) {
 	if (sim_cs.GetLockCount() > 0)
 		g_Logs.simulator->debug("[%v] Disconnect() LockCount is %v", InternalID,
@@ -919,6 +821,7 @@ void SimulatorThread::ProcessDisconnect(void) {
 }
 
 void SimulatorThread::ProcessDetach(void) {
+	g_Logs.simulator->debug("[%v] Process Detach", InternalID);
 
 	if (pld.charPtr != NULL) {
 		if (LoadStage == LOADSTAGE_GAMEPLAY) {
@@ -1247,7 +1150,10 @@ void SimulatorThread::JoinGuild(GuildDefinition *gDef, int startValour) {
 	pld.charPtr->cdef.css.SetSubName(gDef->defName.c_str());
 	g_CharacterManager.ReleaseThread();
 	creatureInst->SendStatUpdate(STAT::SUB_NAME);
-	AddMessage((long) &pld.charPtr->cdef, 0, BCM_UpdateCreatureDef);
+	creatureInst->actInst->Submit(
+			bind(&ActiveInstance::BroadcastUpdateCreatureDef,
+					creatureInst->actInst, &pld.charPtr->cdef,
+					creatureInst->CurrentX, creatureInst->CurrentZ));
 	pld.charPtr->pendingChanges++;
 }
 
@@ -1347,7 +1253,7 @@ void SimulatorThread::SetPersona(int personaIndex) {
 	ShardPlayer sp = g_ClusterManager.GetActivePlayer(CDefID);
 	if (sp.mID != 0 && sp.mShard.compare(g_ClusterManager.mShardName) != 0) {
 		ForceErrorMessage(
-				StringUtil::Format(
+				Util::Format(
 						"That character is already logged in on shard %s.",
 						sp.mShard.c_str()).c_str(), INFOMSG_INFO);
 		Disconnect("SimulatorThread::SetPersona");
@@ -1949,34 +1855,6 @@ void SimulatorThread::BroadcastShardChanged(void) {
 	}
 }
 
-void SimulatorThread::AddMessage(long param1, long param2, int message) {
-	//Normal instance check, plus hack to get the new disconnect working.
-	if (creatureInst->actInst == NULL) {
-		g_Logs.simulator->error(
-				"[%d] AddMessage on NULL instance (msg: %d, param1: %d (%p), param2: %d (%p))",
-				InternalID, message, param1, param1, param2, param2);
-		return;
-	}
-
-#ifdef DEBUG_TIME
-	Debug::TimeTrack("SimulatorThread::AddMessage", 30);
-#endif
-
-	/*
-	 if(bcm.AddEvent2(InternalIndex, param1, param2, message, creatureInst->actInst) == -1)
-	 g_Logs.simulator->error("Could not add BroadCast event.");
-	 */
-	MessageComponent msg;
-	msg.SimulatorID = InternalID;
-	msg.actInst = creatureInst->actInst;
-	msg.param1 = param1;
-	msg.param2 = param2;
-	msg.message = message;
-	msg.x = creatureInst->CurrentX;
-	msg.z = creatureInst->CurrentZ;
-	bcm.AddEventCopy(msg);
-}
-
 void SimulatorThread::SendSetMap(void) {
 }
 
@@ -2023,7 +1901,9 @@ void SimulatorThread::SetPosition(int xpos, int ypos, int zpos, int update) {
 				size += PrepExt_ModStopSwimFlag(&SendBuf[size], false);
 			creatureInst->actInst->LSendToLocalSimulator(SendBuf, size,
 					creatureInst->CurrentX, creatureInst->CurrentZ);
-			AddMessage((long) creatureInst, 0, BCM_UpdateVelocity);
+
+			creatureInst->Submit(bind(&CreatureInstance::BroadcastVelocityUpdate, creatureInst, InternalID));
+
 			AttemptSend(SendBuf, PrepExt_VelocityEvent(SendBuf, creatureInst));
 		}
 
@@ -2116,9 +1996,23 @@ void SimulatorThread::SetLoadingStatus(bool status, bool shutdown) {
 			//AddMessageG(SMSG_PlayerFriendLogState, (long)pld->charPtr, 1);
 			if (CheckPermissionSimple(Perm_Account, Permission_Invisible)
 					== false) {
-				AddMessage((long) pld.charPtr, 0, BCM_PlayerLogIn);
-				AddMessage((long) this, 1, BCM_PlayerFriendLogState);
-				AddMessage((long) creatureInst, 0, BCM_UpdatePosition);
+
+				Submit([this](){
+
+					sprintf(GAuxBuf, "%s has logged in.", this->pld.charPtr->cdef.css.display_name);
+					ChatMessage cm(GAuxBuf);
+					g_ChatManager.LogChatMessage(cm);
+					SendToAllSimulator(GSendBuf, PrepExt_SendInfoMessage(GSendBuf, GAuxBuf, INFOMSG_INFO), InternalID);
+
+					SendToFriendSimulator(GSendBuf, PrepExt_FriendsLogStatus(GSendBuf,
+							this->pld.charPtr, 1),
+							this->pld.charPtr->cdef.CreatureDefID);
+
+					creatureInst->BroadcastPositionUpdate();
+
+				});
+
+
 				/* This was originally added to try and solve the initial 120% speed issue that
 				 was sometimes present in the client.  Disabled here since it would override the
 				 new global speed increase.
@@ -2135,7 +2029,7 @@ void SimulatorThread::SetLoadingStatus(bool status, bool shutdown) {
 			}
 
 			g_PartyManager.CheckMemberLogin(creatureInst);
-			g_Scheduler.Submit(
+			creatureInst->Submit(
 					[this]() {
 						std::string message = g_InfoManager.GetMOTD();
 						if (message.size() != 0) {
@@ -2577,7 +2471,7 @@ void SimulatorThread::SaveCharacterStats(void) {
 	int Minute = (TimeSpan / 60) % 60;
 	int Second = TimeSpan % 60;
 
-	pld.charPtr->LastSession = StringUtil::Format("%02d:%02d:%02d", Hour,
+	pld.charPtr->LastSession = Util::Format("%02d:%02d:%02d", Hour,
 			Minute, Second);
 
 	int secSinceAutoSave = (g_ServerTime - TimeLastAutoSave) / 1000;
@@ -2590,7 +2484,7 @@ void SimulatorThread::SaveCharacterStats(void) {
 	Minute = (TotalSec / 60) % 60;
 	Second = TotalSec % 60;
 
-	pld.charPtr->TimeLogged = StringUtil::Format("%02d:%02d:%02d", Hour, Minute,
+	pld.charPtr->TimeLogged = Util::Format("%02d:%02d:%02d", Hour, Minute,
 			Second);
 
 	time_t curtime;
@@ -3519,8 +3413,8 @@ std::string SimulatorThread::ShardSet(std::string shardName,
 			pld.charPtr->LastWarpTime == 0 ?
 					0 : pld.charPtr->LastWarpTime + 90000;
 	if (g_ServerTime < warpAllowed) {
-		return StringUtil::Format("You can't do that yet. Remaining time: %s",
-				StringUtil::FormatTimeHHMMSS(warpAllowed - g_ServerTime).c_str());
+		return Util::Format("You can't do that yet. Remaining time: %s",
+				Util::FormatTimeHHMMSS(warpAllowed - g_ServerTime).c_str());
 	}
 
 	/* Flush to characters and the account now so that the new Sim has most up-to-date data.

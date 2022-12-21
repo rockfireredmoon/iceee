@@ -53,3 +53,7 @@ HTTPConnectionQueue=20
 ; The domain name to check against if HTTPAuthDomainCheck is true. When blank
 ; the SimulatorAddress will be used. 
 ;HTTPAuthDomain=
+
+; Directory Listing. Whether the web server should return directory listings for
+; the resources it serves. Only recommended for development / debugging.
+; DirectoryListing=1

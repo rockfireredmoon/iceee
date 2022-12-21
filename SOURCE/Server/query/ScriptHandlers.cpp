@@ -26,7 +26,6 @@
 #include "../ScriptCore.h"
 #include "../InstanceScript.h"
 #include "../QuestScript.h"
-#include "../StringUtil.h"
 #include "../util/Log.h"
 #include <algorithm>
 #include <fstream>
@@ -76,7 +75,7 @@ int AbstractScriptHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Permission denied.");
 
-	string path;
+	fs::path path;
 	int instanceId = 0;
 	int questId = 0;
 	string scriptName;
@@ -118,7 +117,7 @@ int AbstractScriptHandler::handleQuery(SimulatorThread *sim,
 
 		ZoneDefInfo *zoneDef = g_ZoneDefManager.GetPointerByID(instanceId);
 		if (zoneDef->mGrove)
-			path = StringUtil::Format("%d", instanceId);
+			path = Util::Format("%d", instanceId);
 		else
 			path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(
 					instanceId, true);
@@ -142,9 +141,7 @@ int AbstractScriptHandler::handleQuery(SimulatorThread *sim,
 		ownPlayer = false;
 		questId = atoi(parameter);
 		Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "%d.nut", questId);
-		path = Platform::JoinPath(
-				Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-						"QuestScripts"), sim->Aux1);
+		path = g_Config.ResolveStaticDataPath() / "QuestScripts" / sim->Aux1;
 		break;
 	case 2:
 		// AI script
@@ -216,10 +213,10 @@ int ScriptLoadHandler::handleScriptQuery(bool ownPlayer, int instanceID,
 		int questID, int type, std::string scriptName,
 		ScriptCore::NutPlayer *player, ScriptCore::ScriptPlayer *oldPlayer,
 		ActiveInstance *instance, CreatureInstance *targetCreature,
-		std::string path, SimulatorThread *sim, CharacterServerData *pld,
+		const fs::path &path, SimulatorThread *sim, CharacterServerData *pld,
 		SimulatorQuery *query, CreatureInstance *creatureInstance) {
 
-	if (path.length() == 0) {
+	if (path.empty()) {
 		Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
 				"Unable to open script.");
 		sim->SendInfoMessage(sim->Aux1, INFOMSG_ERROR);
@@ -241,11 +238,11 @@ int ScriptLoadHandler::handleScriptQuery(bool ownPlayer, int instanceID,
 	} else {
 
 		FileReader lfr;
-		if (Platform::FileExists(path)) {
-			if (lfr.OpenText(path.c_str()) != Err_OK) {
+		if (fs::exists(path)) {
+			if (lfr.OpenText(path) != Err_OK) {
 				g_Logs.simulator->warn(
 						"%d Load script query unable to open file: %s",
-						sim->InternalID, path.c_str());
+						sim->InternalID, path);
 				return 0;
 			}
 
@@ -313,7 +310,7 @@ int ScriptKillHandler::handleScriptQuery(bool ownPlayer, int instanceID,
 		int questID, int type, std::string scriptName,
 		ScriptCore::NutPlayer *player, ScriptCore::ScriptPlayer *oldPlayer,
 		ActiveInstance *instance, CreatureInstance *targetCreature,
-		std::string path, SimulatorThread *sim, CharacterServerData *pld,
+		const fs::path &path, SimulatorThread *sim, CharacterServerData *pld,
 		SimulatorQuery *query, CreatureInstance *creatureInstance) {
 
 	// Kill
@@ -362,7 +359,7 @@ int ScriptRunHandler::handleScriptQuery(bool ownPlayer, int instanceID,
 		int questID, int type, std::string scriptName,
 		ScriptCore::NutPlayer *player, ScriptCore::ScriptPlayer *oldPlayer,
 		ActiveInstance *instance, CreatureInstance *targetCreature,
-		std::string path, SimulatorThread *sim, CharacterServerData *pld,
+		const fs::path &path, SimulatorThread *sim, CharacterServerData *pld,
 		SimulatorQuery *query, CreatureInstance *creatureInstance) {
 	// Run
 
@@ -424,11 +421,13 @@ int ScriptSaveHandler::handleScriptQuery(bool ownPlayer, int instanceID,
 		int questID, int type, std::string scriptName,
 		ScriptCore::NutPlayer *player, ScriptCore::ScriptPlayer *oldPlayer,
 		ActiveInstance *instance, CreatureInstance *targetCreature,
-		std::string path, SimulatorThread *sim, CharacterServerData *pld,
+		const fs::path &oPath, SimulatorThread *sim, CharacterServerData *pld,
 		SimulatorQuery *query, CreatureInstance *creatureInstance) {
 	if (query->argCount < 3)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Incorrect arguments, require script content.");
+
+	fs::path path = oPath;
 
 	std::string scriptText = query->GetString(2);
 
@@ -450,36 +449,32 @@ int ScriptSaveHandler::handleScriptQuery(bool ownPlayer, int instanceID,
 		}
 	} else {
 
-		if (path.length() == 0) {
+		if (!path.empty()) {
 			if (!creatureInstance->actInst->mZoneDefPtr->mGrove) {
 				switch (type) {
 				case 0:
 					if (scriptText.substr(0, nutHeader.size()) == nutHeader)
-						path =
-								InstanceScript::InstanceNutDef::GetInstanceNutScriptPath(
+						path = InstanceScript::InstanceNutDef::GetInstanceNutScriptPath(
 										creatureInstance->actInst->mZone);
 					else if (scriptText.substr(0, tslHeader.size())
 							== tslHeader)
-						path =
-								InstanceScript::InstanceScriptDef::GetInstanceTslScriptPath(
+						path = InstanceScript::InstanceScriptDef::GetInstanceTslScriptPath(
 										creatureInstance->actInst->mZone);
 					break;
 				case 2:
 
 					if (scriptText.substr(0, nutHeader.size()) == nutHeader)
-						path =
-								InstanceScript::InstanceNutDef::GetInstanceNutScriptPath(
+						path = InstanceScript::InstanceNutDef::GetInstanceNutScriptPath(
 										creatureInstance->actInst->mZone);
 					else if (scriptText.substr(0, tslHeader.size())
 							== tslHeader)
-						path =
-								InstanceScript::InstanceScriptDef::GetInstanceTslScriptPath(
+						path = InstanceScript::InstanceScriptDef::GetInstanceTslScriptPath(
 										creatureInstance->actInst->mZone);
 					break;
 				}
 			}
 
-			if (path.length() == 0) {
+			if (path.empty()) {
 				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
 						"Not supported.");
 				sim->SendInfoMessage(sim->Aux1, INFOMSG_ERROR);
@@ -489,29 +484,30 @@ int ScriptSaveHandler::handleScriptQuery(bool ownPlayer, int instanceID,
 		}
 
 		// Create the directory
-		string dir = Platform::Dirname(path);
-		Platform::MakeDirectory(dir);
+		fs::path dir = path.parent_path();
+		fs::create_directory(dir);
 
 		g_Logs.script->info("Saving to %v in %v", path, dir);
 
 		// Save to temporary file first in case the save fails (leaving some hope of recovery)
-		string tpath = path;
-		tpath.append(".tmp");
+		fs::path tpath = dir / ( path.filename().string() + ".tmp" );
 
 		// If the script is empty, delete it
 		if (scriptText.length() == 0) {
-			Platform::Delete(tpath);
+			fs::remove(tpath);
 			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
 					"Script for %d deleted.", creatureInstance->actInst->mZone);
 			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 		} else {
-			std::ofstream out(tpath.c_str());
+			std::ofstream out(tpath);
 			out << scriptText;
 			out.close();
 
 			// If we wrote OK, delete the old file and swap in the new one
-			if (!Platform::FileExists(path) || remove(path.c_str()) == 0) {
-				if (rename(tpath.c_str(), path.c_str()) == 0) {
+			if (!fs::exists(path) || fs::remove(path)) {
+				error_code err;
+				fs::rename(tpath, path, err);
+				if (!err) {
 					Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
 							"Script for %d saved.",
 							creatureInstance->actInst->mZone);
@@ -521,14 +517,14 @@ int ScriptSaveHandler::handleScriptQuery(bool ownPlayer, int instanceID,
 				} else {
 					g_Logs.simulator->warn(
 							"[%v] Failed to rename %v to %v, old script will no longer be available, neither will new",
-							sim->InternalID, tpath.c_str(), path.c_str());
+							sim->InternalID, tpath.c_str(), path);
 					return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 							"Failed to rename new file, the script may now be missing!");
 				}
 			} else {
 				g_Logs.simulator->warn(
 						"[%v] Failed to remove %v, new script will not be available.",
-						sim->InternalID, path.c_str());
+						sim->InternalID, path);
 				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 						"Failed to delete old script file, new one not swapped in.");
 			}

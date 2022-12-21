@@ -13,6 +13,10 @@
 #include "Entities.h"
 #include "Report.h"  //For debugging
 #include "json/json.h"
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 enum SpecialItemType
 {
@@ -41,15 +45,15 @@ struct ItemDef
 	int mID;  //Used internally for ItemDef lookups
 
 	char mType;
-	std::string mDisplayName;
-	std::string mAppearance;
-	std::string mIcon;
+	string mDisplayName;
+	string mAppearance;
+	string mIcon;
 
 	char mIvType1;
 	short mIvMax1;
 	char mIvType2;
 	short mIvMax2;
-	std::string mSv1;
+	string mSv1;
 
 	int _mCopper;  //OBSOLETE     if(g_ProtocolVersion < 5)
 
@@ -107,10 +111,10 @@ struct ItemDef
 	int resultItemId;
 	int keyComponentId;
 	unsigned int numberOfItems;
-	std::vector<int> craftItemDefId;   //needs to be variable depending on <numberOfItems>
+	vector<int> craftItemDefId;   //needs to be variable depending on <numberOfItems>
 
 	//if(g_ProtocolVersion >= 9)
-	std::string mFlavorText;
+	string mFlavorText;
 
 	//this.SpecialItemType <- {
 	//	NONE = 0,
@@ -141,7 +145,7 @@ struct ItemDef
 	char mQualityLevel;
 	short mMinUseLevel;
 
-	std::string Params;   //Extended arbitrary parameters as a string of delimited key/value pairs.  Used exclusively by this server for advanced functions.
+	string Params;   //Extended arbitrary parameters as a string of delimited key/value pairs.  Used exclusively by this server for advanced functions.
 
 	void Reset();
 	void CopyFrom(ItemDef *source);
@@ -165,22 +169,22 @@ class VirtualItem
 {
 public:
 	ItemDef mStandardDef;
-	std::string mModString;
+	string mModString;
 	void InstantiateNew(int ID, int level, int rarity, int equipType, int weaponType);
-	static std::string GetAppearanceAsset(std::string& mAppearance);
+	static string GetAppearanceAsset(string& mAppearance);
 	void GenerateFlavorText(void);
 	void ApplyIntrinsicTables(EquipTemplate* eqTemplate, int level, int rarity);
 	void ApplyRandomTables(EquipTemplate* eqTemplate, int level, int rarity);
-	void AppendStat(std::string& output, const char *name, int value);
+	void AppendStat(string& output, const char *name, int value);
 	int ApplyModTable(ValidTable* validTable, int level, int rarity);
 	void UpdateArmorType(void);
 	void ApplyModString(void);
 	void CheckNameMods(void);
 	void ApplyNameMod(NameModEntry* mod);
 	const char* TransformStandardMappings(const char* search);
-	void ApplyStat(std::string& key, std::string& value);
-	int RollStats(std::string& output, int numPoints, int rarity);
-	void MergeStats(std::string& input, std::string& output);
+	void ApplyStat(string& key, string& value);
+	int RollStats(string& output, int numPoints, int rarity);
+	void MergeStats(string& input, string& output);
 	bool isItemDefStat(int statID);
 };
 
@@ -193,10 +197,10 @@ public:
 	int mValue;
 	short mLevel;
 	char mQualityLevel;
-	std::string mDisplayName;
-	std::string mIcon;
-	std::string mAppearance;
-	std::string mModString;
+	string mDisplayName;
+	string mIcon;
+	string mAppearance;
+	string mModString;
 	VirtualItemDef();
 	void Clear(void);
 
@@ -449,13 +453,13 @@ extern ItemLoadTable ItemLoadDef[];
 //extern vector<ItemDef> ItemList;
 
 int GetContainerIDFromName(const char *name);
-std::string GetContainerNameFromID(int ID);
+string GetContainerNameFromID(int ID);
 bool IsContainerIDValid(int ID);
 
 int GetEQSlotFromName(char *name);
 
 int SetItemProperty(ItemDef *item, const char *name, const char *value);
-int LoadItemFromStream(FileReader &fr, ItemDef *itemDef, std::string debugFilename);
+int LoadItemFromStream(FileReader &fr, ItemDef *itemDef, string debugFilename);
 unsigned long GetIDSlot(unsigned long ID, unsigned long slot);
 char *GetItemProto(char *convbuf, int ItemID, int count);
 
@@ -469,10 +473,10 @@ const char *GetWeaponType(int Type);
 class ItemManager
 {
 public:
-	typedef std::map<int, ItemDef> ITEM_CONT;
-	typedef std::vector<ItemDef*> ITEMDEFPTR_ARRAY;
-	typedef std::map<int, VirtualItem> VITEM_CONT;
-	typedef std::pair<int, VirtualItem> VITEM_PAIR;
+	typedef map<int, ItemDef> ITEM_CONT;
+	typedef vector<ItemDef*> ITEMDEFPTR_ARRAY;
+	typedef map<int, VirtualItem> VITEM_CONT;
+	typedef pair<int, VirtualItem> VITEM_PAIR;
 
 	ItemManager();
 	~ItemManager();
@@ -518,8 +522,8 @@ private:
 	void Sort(void);
 	void Finalize(void);
 
-	void LoadItemList(std::string filename, bool itemOverride);
-	void LoadItemPackages(std::string listFile, bool itemOverride);
+	void LoadItemList(const fs::path &filename, bool itemOverride);
+	void LoadItemPackages(const fs::path &listFile, bool itemOverride);
 };
 
 extern ItemManager g_ItemManager;

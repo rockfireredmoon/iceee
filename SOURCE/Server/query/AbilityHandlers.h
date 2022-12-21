@@ -18,6 +18,7 @@
 #define ABILITYHANDLERS_H
 
 #include "Query.h"
+using namespace std;
 
 class AbilityBuyHandler : public QueryHandler {
 public:

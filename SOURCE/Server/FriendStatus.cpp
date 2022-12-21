@@ -5,7 +5,6 @@
 #include "DirectoryAccess.h"
 #include "Config.h"
 #include "Cluster.h"
-#include "StringUtil.h"
 #include "util/Log.h"
 
 FriendListManager g_FriendListManager;
@@ -35,7 +34,7 @@ void SocialWindowEntry::CopyFrom(SocialWindowEntry& source) {
 }
 
 bool SocialWindowEntry::WriteEntity(AbstractEntityWriter *writer) {
-	writer->Key(KEYPREFIX_FRIEND_LIST, StringUtil::Format("%d", creatureDefID));
+	writer->Key(KEYPREFIX_FRIEND_LIST, Util::Format("%d", creatureDefID));
 	writer->Value("Level", level);
 	writer->Value("Profession", profession);
 	writer->Value("Online", online);
@@ -45,7 +44,7 @@ bool SocialWindowEntry::WriteEntity(AbstractEntityWriter *writer) {
 }
 
 bool SocialWindowEntry::EntityKeys(AbstractEntityReader *reader) {
-	reader->Key(KEYPREFIX_FRIEND_LIST, StringUtil::Format("%d", creatureDefID));
+	reader->Key(KEYPREFIX_FRIEND_LIST, Util::Format("%d", creatureDefID));
 	return true;
 }
 
@@ -70,7 +69,7 @@ bool FriendListManager::DeleteCharacter(int CreatureDefID) {
 	we.creatureDefID = CreatureDefID;
 	if(g_ClusterManager.RemoveEntity(&we))  {
 		g_ClusterManager.RemoveKey(
-		StringUtil::Format("%s:%d", LISTPREFIX_FRIEND_NETWORK.c_str(),
+		Util::Format("%s:%d", LISTPREFIX_FRIEND_NETWORK.c_str(),
 				CreatureDefID));
 		return true;
 	}
@@ -93,10 +92,10 @@ void FriendListManager::UpdateNetworkEntry(int CreatureDefID,
 		std::vector<int>& FriendDefIDs) {
 	STRINGLIST l;
 	for (auto a = FriendDefIDs.begin(); a != FriendDefIDs.end(); ++a) {
-		l.push_back(StringUtil::Format("%d", *a));
+		l.push_back(Util::Format("%d", *a));
 	}
 	g_ClusterManager.ListSet(
-			StringUtil::Format("%s:%d", LISTPREFIX_FRIEND_NETWORK.c_str(),
+			Util::Format("%s:%d", LISTPREFIX_FRIEND_NETWORK.c_str(),
 					CreatureDefID), l);
 }
 
@@ -110,8 +109,8 @@ bool FriendListManager::IsMutualFriendship(int selfDefID, int otherDefID) {
 
 bool FriendListManager::HasPlayerInNetwork(int firstDefID, int otherDefID) {
 	STRINGLIST friends = g_ClusterManager.GetList(
-			StringUtil::Format("%s:%d", LISTPREFIX_FRIEND_NETWORK.c_str(),
+			Util::Format("%s:%d", LISTPREFIX_FRIEND_NETWORK.c_str(),
 					firstDefID));
 	return std::find(friends.begin(), friends.end(),
-			StringUtil::Format("%d", otherDefID)) != friends.end();
+			Util::Format("%d", otherDefID)) != friends.end();
 }

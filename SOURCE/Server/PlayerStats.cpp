@@ -17,7 +17,6 @@
 
 #include "PlayerStats.h"
 #include "Util.h"
-#include "StringUtil.h"
 #include "Entities.h"
 #include <string.h>
 
@@ -57,10 +56,10 @@ void PlayerStatSet::SaveToStream(FILE *output) {
 }
 
 void PlayerStatSet::WriteEntity(AbstractEntityWriter *writer) {
-	writer->Value("TotalKills", StringUtil::Format("%d", TotalKills));
-	writer->Value("TotalDeaths", StringUtil::Format("%d", TotalDeaths));
-	writer->Value("TotalPVPKills", StringUtil::Format("%d", TotalPVPKills));
-	writer->Value("TotalPVPDeaths", StringUtil::Format("%d", TotalPVPDeaths));
+	writer->Value("TotalKills", Util::Format("%d", TotalKills));
+	writer->Value("TotalDeaths", Util::Format("%d", TotalDeaths));
+	writer->Value("TotalPVPKills", Util::Format("%d", TotalPVPKills));
+	writer->Value("TotalPVPDeaths", Util::Format("%d", TotalPVPDeaths));
 }
 void PlayerStatSet::ReadEntity(AbstractEntityReader *reader) {
 	TotalKills = atoi(reader->Value("TotalKills", "0").c_str());

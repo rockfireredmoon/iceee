@@ -7,7 +7,6 @@
 #include "Stats.h"
 #include "util/Log.h"
 #include "Util.h"
-#include "StringUtil.h"
 
 GlobalConfigData g_Config;
 
@@ -92,14 +91,14 @@ const int g_JumpConstant = 32767;
  }
  */
 
-bool LoadConfig(const std::string &filename) {
+bool GlobalConfigData::LoadConfig(const fs::path &filename) {
 	bool oauthSet = false;
 
 	//Loads the configuration options from the target file.  These are core options
 	//required for the server to operate.
 
 	FileReader lfr;
-	if (lfr.OpenText(filename.c_str()) != Err_OK) {
+	if (lfr.OpenText(filename) != Err_OK) {
 		return false;
 	}
 	static char Delimiter[] = { '=', 13, 10 };
@@ -429,42 +428,47 @@ GlobalConfigData::GlobalConfigData() {
 	VariableDataPath = "Variable";
 	TmpDataPath = "Tmp";
 	LogPath = "Logs";
-	Util::Split(LOCALCONFIGDIR, ":", LocalConfigurationPath);
+
+	STRINGLIST l;
+	Util::Split(LOCALCONFIGDIR, ":", l);
+	for(auto i = l.begin(); i != l.end(); ++i) {
+		LocalConfigurationPath.push_back(fs::path(*i));
+	}
 }
 
 GlobalConfigData::~GlobalConfigData() {
 }
 
-std::string GlobalConfigData::ResolveStaticDataPath() {
+fs::path GlobalConfigData::ResolveStaticDataPath() {
 	return ResolvePath(StaticDataPath);
 }
 
-std::vector<std::string> GlobalConfigData::ResolveLocalConfigurationPath() {
+std::vector<fs::path> GlobalConfigData::ResolveLocalConfigurationPath() {
 	return LocalConfigurationPath;
 }
 
-std::string GlobalConfigData::ResolveHTTPBasePath() {
+fs::path GlobalConfigData::ResolveHTTPBasePath() {
 	return ResolvePath(HTTPBaseFolder);
 }
 
-std::string GlobalConfigData::ResolveHTTPCARPath() {
+fs::path GlobalConfigData::ResolveHTTPCARPath() {
 	return ResolvePath(HTTPCARFolder);
 }
 
-std::string GlobalConfigData::ResolveVariableDataPath() {
+fs::path GlobalConfigData::ResolveVariableDataPath() {
 	return ResolvePath(VariableDataPath);
 }
 
-std::string GlobalConfigData::ResolveTmpDataPath() {
+fs::path GlobalConfigData::ResolveTmpDataPath() {
 	return ResolvePath(TmpDataPath);
 }
 
-std::string GlobalConfigData::ResolveLogPath() {
+fs::path GlobalConfigData::ResolveLogPath() {
 	return ResolvePath(LogPath);
 }
 
-std::string GlobalConfigData::ResolvePath(const std::string &path) {
-	return std::string(path);
+fs::path GlobalConfigData::ResolvePath(const fs::path &path) {
+	return path;
 }
 
 std::string GlobalConfigData::ResolveSimulatorAddress() {
@@ -483,15 +487,15 @@ std::string GlobalConfigData::ResolveHTTPAddress(const std::string &simAddress) 
 		if(g_HTTPSListenPort > 0)
 		{
 			if(g_HTTPSListenPort == 443)
-				return StringUtil::Format("https://%s/Release/Current", simAddress.c_str());
+				return Util::Format("https://%s/Release/Current", simAddress.c_str());
 			else
-				return StringUtil::Format("https://%s:%d/Release/Current", simAddress.c_str(), g_HTTPSListenPort);
+				return Util::Format("https://%s:%d/Release/Current", simAddress.c_str(), g_HTTPSListenPort);
 		}
 #endif
 		if(g_HTTPListenPort == 80)
-			return StringUtil::Format("http://%s/Release/Current", simAddress.c_str());
+			return Util::Format("http://%s/Release/Current", simAddress.c_str());
 		else {
-			return StringUtil::Format("http://%s:%d/Release/Current", simAddress.c_str(), g_HTTPListenPort);
+			return Util::Format("http://%s:%d/Release/Current", simAddress.c_str(), g_HTTPListenPort);
 		}
 	}
 	else

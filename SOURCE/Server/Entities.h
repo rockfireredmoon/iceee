@@ -6,6 +6,10 @@
 #include <vector>
 #include <map>
 #include <stack>
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 class AbstractEntityReader {
 
@@ -16,27 +20,27 @@ public:
 	virtual bool Start() = 0;
 	virtual bool End() = 0;
 	virtual bool Abort() = 0;
-	virtual std::string Value(const std::string &key, std::string defaultValue = "") =0;
-	virtual std::vector<std::string> ListValue(const std::string &key, const std::string &separator = "") =0;
-	virtual std::vector<std::string> Sections() =0;
-	void PushSection(const std::string &section);
-	void Section(const std::string &section);
-	void Index(const std::string &section);
-	void Key(const std::string &catalog, const std::string &id, bool flat = false);
-	int ValueInt(const std::string &key, const int defaultValue = 0);
-	float ValueFloat(const std::string &key, const float defaultValue = 0);
-	bool ValueBool(const std::string &key, const bool defaultValue = false);
-	unsigned long ValueULong(const std::string &key, const unsigned long defaultValue = 0);
+	virtual string Value(const string &key, string defaultValue = "") =0;
+	virtual vector<string> ListValue(const string &key, const string &separator = "") =0;
+	virtual vector<string> Sections() =0;
+	void PushSection(const string &section);
+	void Section(const string &section);
+	void Index(const string &section);
+	void Key(const string &catalog, const string &id, bool flat = false);
+	int ValueInt(const string &key, const int defaultValue = 0);
+	float ValueFloat(const string &key, const float defaultValue = 0);
+	bool ValueBool(const string &key, const bool defaultValue = false);
+	unsigned long ValueULong(const string &key, const unsigned long defaultValue = 0);
 	virtual bool Exists() = 0;
-	virtual std::vector<std::string> Keys() = 0;
-	std::string PopSection();
+	virtual vector<string> Keys() = 0;
+	string PopSection();
 
 	int mMaxDepth;
 	bool mFlat;
-	std::map<std::string, int> mIndexed;
-	std::string mSection;
-	std::string mCatalog;
-	std::string mID;
+	map<string, int> mIndexed;
+	string mSection;
+	string mCatalog;
+	string mID;
 };
 
 class AbstractEntityWriter {
@@ -48,21 +52,21 @@ public:
 	virtual bool Start() = 0;
 	virtual bool End() = 0;
 	virtual bool Abort() = 0;
-	virtual bool Value(const std::string &key, const std::string &value) = 0;
-	virtual bool ListValue(const std::string &key, std::vector<std::string> &value) = 0;
+	virtual bool Value(const string &key, const string &value) = 0;
+	virtual bool ListValue(const string &key, vector<string> &value) = 0;
 
-	void Key(const std::string & catalog, const std::string &id);
-	bool Value(const std::string &key, const unsigned long value);
-	bool Value(const std::string &key, const int value);
-	bool Value(const std::string &key, const unsigned int value);
-	bool Value(const std::string &key, const bool value);
-	bool Value(const std::string &key, const float value);
-	void PushSection(const std::string &section);
-	void Section(const std::string &section);
-	std::string PopSection();
-	std::string mCatalog;
-	std::string mID;
-	std::string mSection;
+	void Key(const string & catalog, const string &id);
+	bool Value(const string &key, const unsigned long value);
+	bool Value(const string &key, const int value);
+	bool Value(const string &key, const unsigned int value);
+	bool Value(const string &key, const bool value);
+	bool Value(const string &key, const float value);
+	void PushSection(const string &section);
+	void Section(const string &section);
+	string PopSection();
+	string mCatalog;
+	string mID;
+	string mSection;
 };
 
 
@@ -78,44 +82,44 @@ public:
 	virtual bool EntityKeys(AbstractEntityReader *reader) = 0;
 };
 // NULLs aren't an issue.  Much faster than the STL or Boost lex versions.
-struct ciLessLibC : public std::binary_function<std::string, std::string, bool> {
-    bool operator()(const std::string &lhs, const std::string &rhs) const {
+struct ciLessLibC : public binary_function<string, string, bool> {
+    bool operator()(const string &lhs, const string &rhs) const {
         return strcasecmp(lhs.c_str(), rhs.c_str()) < 0 ;
     }
 };
 
-typedef std::map<std::string, std::vector<std::string>, ciLessLibC> TEXT_FILE_SECTION_MAP;
+typedef map<string, vector<string>, ciLessLibC> TEXT_FILE_SECTION_MAP;
 
 
 class TextFileEntityWriter: public AbstractEntityWriter {
 public:
-	TextFileEntityWriter(std::string path);
+	TextFileEntityWriter(const fs::path &path);
 	virtual ~TextFileEntityWriter();
 
-	virtual bool Value(const std::string &key, const std::string &value);
-	virtual bool ListValue(const std::string &key, std::vector<std::string> &value);
+	virtual bool Value(const string &key, const string &value);
+	virtual bool ListValue(const string &key, vector<string> &value);
 
-	virtual void PushSection(const std::string &section);
-	virtual void Section(const std::string &section);
+	virtual void PushSection(const string &section);
+	virtual void Section(const string &section);
 
 	virtual bool Start();
 	virtual bool End();
 	virtual bool Abort();
 
 private:
-	std::string mPath;
+	fs::path mPath;
 	FILE *mOutput;
 };
 
 class TextFileEntityReader : public AbstractEntityReader {
 public:
-	TextFileEntityReader(std::string filename, int caseConv, int commentStyle);
+	TextFileEntityReader(const fs::path &filename, int caseConv, int commentStyle);
 	virtual ~TextFileEntityReader();
 
-	virtual std::string Value(const std::string &key, std::string defaultValue = "");
-	virtual std::vector<std::string> ListValue(const std::string & key, const std::string &separator = "");
-	virtual std::vector<std::string> Sections();
-	virtual std::vector<std::string> Keys();
+	virtual string Value(const string &key, string defaultValue = "");
+	virtual vector<string> ListValue(const string & key, const string &separator = "");
+	virtual vector<string> Sections();
+	virtual vector<string> Keys();
 	virtual bool Start();
 	virtual bool End();
 	virtual bool Abort();
@@ -123,14 +127,14 @@ public:
 
 private:
 	bool CheckLoaded();
-	std::string CheckKey(std::string key);
+	string CheckKey(string key);
 	bool mLoaded;
 	bool mError;
 	int mCaseConv;
 	int mCommentStyle;
-	std::string mFilename;
-	std::vector<std::string> mSections;
-	std::map<std::string, TEXT_FILE_SECTION_MAP> mValues;
+	fs::path mFilename;
+	vector<string> mSections;
+	map<string, TEXT_FILE_SECTION_MAP> mValues;
 };
 
 #endif //ENTITIES_H

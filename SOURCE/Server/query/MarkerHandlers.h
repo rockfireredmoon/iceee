@@ -20,6 +20,10 @@
 #define MARKERHANDLERS_H
 
 #include "Query.h"
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 class MarkerListHandler : public QueryHandler {
 public:

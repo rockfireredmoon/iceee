@@ -70,17 +70,31 @@ public:
 	TaskType mTask;
 };
 
-class Scheduler {
+
+class Schedulable {
+
+public:
+	Schedulable();
+	Schedulable(const Schedulable& p1);
+	virtual ~Schedulable();
+	void RunScheduledTasks();
+	void Shutdown();
+	void Submit(const TaskType& task);
+
+private:
+	boost::asio::io_service mQueue;
+};
+
+class Scheduler : public Schedulable {
 public:
 	Scheduler();
 	~Scheduler();
 	void Init();
-	void RunProcessingCycle();
+	void RunScheduledTasks();
 	void Pool(const TaskType& task);
 	int ScheduleIn(const TaskType& task, unsigned long wait);
 	int Schedule(const TaskType& task, unsigned long when);
 	int Schedule(const TaskType& task);
-	void Submit(const TaskType& task);
 	void Cancel(int id);
 	void Shutdown();
 	bool IsRunning();
@@ -88,7 +102,6 @@ private:
 	bool mRunning;
 	unsigned long mNextRun;
 	int mNextTaskId;
-	boost::asio::io_service mQueue;
 	boost::asio::thread_pool *mPool;
 	std::recursive_mutex mMutex;
 	std::vector<ScheduledTimerTask> scheduled;

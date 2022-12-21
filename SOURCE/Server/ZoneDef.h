@@ -1,9 +1,6 @@
 #ifndef ZONEDEF_H
 #define ZONEDEF_H
 
-#include <string>
-#include <list>
-#include <map>
 
 #include "Components.h"
 #include "Audit.h"
@@ -15,12 +12,20 @@
 
 #include "json/json.h"
 
-static std::string KEYPREFIX_ZONE_DEF_INFO = "ZoneDefInfo";
-static std::string LISTPREFIX_GROVE_NAME_TO_ZONE_ID = "GroveNameToZoneID";
-static std::string KEYPREFIX_WARP_NAME_TO_ZONE_ID = "WarpNameToZoneID";
-static std::string LISTPREFIX_ACCOUNT_ID_TO_ZONE_ID = "AccountIDToZoneID";
-static std::string ID_NEXT_ZONE_ID = "NextZoneID";
-static std::string ID_NEXT_WORLD_ZONE_ID = "NextWorldZoneID";
+#include <string>
+#include <list>
+#include <map>
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
+
+static string KEYPREFIX_ZONE_DEF_INFO = "ZoneDefInfo";
+static string LISTPREFIX_GROVE_NAME_TO_ZONE_ID = "GroveNameToZoneID";
+static string KEYPREFIX_WARP_NAME_TO_ZONE_ID = "WarpNameToZoneID";
+static string LISTPREFIX_ACCOUNT_ID_TO_ZONE_ID = "AccountIDToZoneID";
+static string ID_NEXT_ZONE_ID = "NextZoneID";
+static string ID_NEXT_WORLD_ZONE_ID = "NextWorldZoneID";
 
 class DropRateProfile;
 
@@ -29,7 +34,7 @@ class ZoneEditPermission
 public:
 	int mEditType;  //Corresponds to EditType enum below.
 	int mID;
-	std::string mCharacterName;
+	string mCharacterName;
 	int mX1;
 	int mY1;
 	int mX2;
@@ -50,7 +55,7 @@ public:
 	};
 
 private:
-	int GetTypeIDByName(const std::string &name);
+	int GetTypeIDByName(const string &name);
 	const char *GetTypeNameByID(int ID);
 };
 
@@ -89,7 +94,7 @@ struct EnvironmentTileKey
 struct WeatherKey
 {
 	int instance;
-	std::string mapName;
+	string mapName;
 	WeatherKey(const WeatherKey &other) { instance = other.instance; mapName = other.mapName; };
 	WeatherKey() { instance = 0; mapName = ""; }
 	WeatherKey(int pInstance, int pMapName) { instance = pInstance; mapName = pMapName; }
@@ -119,9 +124,9 @@ struct WeatherKey
 class WeatherDef
 {
 public:
-	std::string mMapName;
-	std::string mTimeOfDay;
-	std::string mUse; // an alternative definition to use for this region
+	string mMapName;
+	string mTimeOfDay;
+	string mUse; // an alternative definition to use for this region
 	unsigned long mFineMin; // minimum number of seconds the weather is fine for (zero means never fine)
 	unsigned long mFineMax; // maximum number of seconds the weather is fine for
 	int mLightChance; //  chance (out of 100) that the new weather will be light
@@ -129,7 +134,7 @@ public:
 	int mHeavyChance; //  chance (out of 100) that the new weather will be heavy
 	unsigned long mWeatherMin; // minimum number of seconds the weather will last
 	unsigned long mWeatherMax; // maximum number of seconds the weather will last
-	std::vector<std::string> mWeatherTypes;
+	vector<string> mWeatherTypes;
 	int mThunderChance; // chance that there will be thunder with the new weather
 	unsigned long mThunderGapMin; // minimum number of seconds between thunder
 	unsigned long mThunderGapMax; // maximum number of seconds between thunder
@@ -163,11 +168,11 @@ public:
 
 	WeatherState(int instanceId, WeatherDef &def);
 	~WeatherState();
-	std::vector<std::string> mMapNames; //all the map names this state is for
+	vector<string> mMapNames; //all the map names this state is for
 	WeatherDef mDefinition; // the weather definition this state was derived from
 	int mInstanceId; // the instance the weather applies to
 	unsigned long mNextStateChange; // server time when the next state change occurs
-	std::string mWeatherType; // the type of weather chosen for this activation
+	string mWeatherType; // the type of weather chosen for this activation
 	int mWeatherWeight; // whether currently light, medium or heavy
 	int mEscalateState; // the current state of escalation, 0 - dont escalate, 1 - escalating, 2 - de-escalating
 	bool mThunder; // whether or not thunder will occur
@@ -188,17 +193,17 @@ public:
 	// from the Sparkplay audit logs.
 	int mID;                       //Internal ID.  Must be unique to all other ZoneDefs.
 	int mAccountID;                //Matches the grove to an account ID
-	std::string mDesc;
-	std::string mName;             //Client: Name of the Zone [Minimap: Name (Shard)]
-	std::string mTerrainConfig;    //Client: the terrain configuration file.
-	std::string mEnvironmentType;  //Client: Environment (sky effect)
-	std::string mMapName;          //Client: The image to use as the background map.
-	std::string mRegions;          //Client: Unknown, the color map for region boundaries?
+	string mDesc;
+	string mName;             //Client: Name of the Zone [Minimap: Name (Shard)]
+	string mTerrainConfig;    //Client: the terrain configuration file.
+	string mEnvironmentType;  //Client: Environment (sky effect)
+	string mMapName;          //Client: The image to use as the background map.
+	string mRegions;          //Client: Unknown, the color map for region boundaries?
 
 	// These values were taken from the instance.
-	std::string mGroveName;        //For groves, the special grove name that is provided when creating an account, used to help trace a grove back to its owner.
-	std::string mWarpName;         //Internal name used for on-demand warping.
-	std::string mTimeOfDay;		   //Start time of day (for when using TOD, but not cycling)
+	string mGroveName;        //For groves, the special grove name that is provided when creating an account, used to help trace a grove back to its owner.
+	string mWarpName;         //Internal name used for on-demand warping.
+	string mTimeOfDay;		   //Start time of day (for when using TOD, but not cycling)
 	int DefX;                 //Default X coordinate when entering the region.
 	int DefY;                 //Default Y coordinate when entering the region.
 	int DefZ;                 //Default Z coordinate when entering the region.
@@ -220,9 +225,9 @@ public:
 	int mClan;				 //If non-zero, this is a clan grove for the clan with that ID
 
 	int mPlayerFilterType;    //If nonzero, filter players according to type.
-	std::vector<int> mPlayerFilterID;  //Creature Def IDs of the players to filter.
+	vector<int> mPlayerFilterID;  //Creature Def IDs of the players to filter.
 
-	std::map<EnvironmentTileKey, std::string> mTileEnvironment; // Use a specific environment for certain tiles (the key is a string "<x>,<y>")
+	map<EnvironmentTileKey, string> mTileEnvironment; // Use a specific environment for certain tiles (the key is a string "<x>,<y>")
 
 	static const int DEFAULT_PAGESIZE = 1920;
 	static const int DEFAULT_MAXAGGRORANGE = 1920;  //This value doesn't matter if it's greater than the range of the spawn system's maximum aggro range.  Only if it's lower.
@@ -234,7 +239,7 @@ public:
 	static const int FILTER_PLAYER_BLACKLIST = 2;   //Block the players on the filter list.
 
 
-	std::vector<ZoneEditPermission> mEditPermissions;
+	vector<ZoneEditPermission> mEditPermissions;
 
 	unsigned long mNextAuditSave;
 	ZoneAudit mZoneAudit;
@@ -272,10 +277,10 @@ public:
 	void ChangeEnvironment(const char *newEnvironment);
 	void ChangeEnvironmentUsage(void);
 	bool QualifyDelete(void);
-	std::string GetTileEnvironment(int x, int y);
-	std::string GetDropRateProfile();
-	std::string GetTimeOfDay();
-	void SetDropRateProfile(std::string profile);
+	string GetTileEnvironment(int x, int y);
+	string GetDropRateProfile();
+	string GetTimeOfDay();
+	void SetDropRateProfile(string profile);
 
 	bool AllowSceneryAudits(void);
 	void AuditScenery(const char *username, int zone, const SceneryObject *sceneryObject, int opType);
@@ -285,7 +290,7 @@ public:
 	void ReadFromJSON(Json::Value &value);
 
 private:
-	std::string mDropRateProfile;
+	string mDropRateProfile;
 	void CreateDefaultGrovePermission(void);
 };
 
@@ -293,8 +298,8 @@ struct ZoneIndexEntry
 {
 	int mID;
 	int mAccountID;
-	std::string mWarpName;
-	std::string mGroveName;
+	string mWarpName;
+	string mGroveName;
 	ZoneIndexEntry();
 	void CopyFrom(const ZoneIndexEntry& other);
 };
@@ -307,19 +312,19 @@ public:
 	void Free(void);
 
 	//New groves will expand the Zone Definitions, so use a list instead of vector.
-	std::map<int, ZoneDefInfo> mZoneList;
-	typedef std::map<int, ZoneDefInfo>::iterator ZONEDEF_ITERATOR;
+	map<int, ZoneDefInfo> mZoneList;
+	typedef map<int, ZoneDefInfo>::iterator ZONEDEF_ITERATOR;
 
-	typedef std::map<int, ZoneIndexEntry>::iterator ZONEINDEX_ITERATOR;
+	typedef map<int, ZoneIndexEntry>::iterator ZONEINDEX_ITERATOR;
 
 	void LoadData(void);
 
 	ZoneDefInfo* GetPointerByID(int ID);
-	ZoneDefInfo* GetPointerByPartialWarpName(const std::string &name);
+	ZoneDefInfo* GetPointerByPartialWarpName(const string &name);
 	ZoneDefInfo* GetPointerByExactWarpName(const char *name);
 	ZoneDefInfo* GetPointerByGroveName(const char *name);
 
-	std::string GetNextGroveName(std::string groveName);
+	string GetNextGroveName(string groveName);
 
 	static const int GROVE_ZONE_ID_INCREMENT = 8;
 	static const int GROVE_ZONE_ID_DEFAULT = 5000;
@@ -331,16 +336,16 @@ public:
 	int CreateGrove(int accountID, const char *grovename);
 	int CheckAutoSave(bool force);
 
-	//int EnumerateGroves(std::string &groveName, std::vector<ZoneDefInfo*> &groveList);
-	int EnumerateGroves(int searchAccountID, int creatureDefId, std::vector<std::string>& groveList);
-	int EnumerateGroveIds(int searchAccountID, int creatureDefId, std::vector<int>& groveList);
-	int EnumerateArenas(std::vector<std::string>& arenaList);
+	//int EnumerateGroves(string &groveName, vector<ZoneDefInfo*> &groveList);
+	int EnumerateGroves(int searchAccountID, int creatureDefId, vector<string>& groveList);
+	int EnumerateGroveIds(int searchAccountID, int creatureDefId, vector<int>& groveList);
+	int EnumerateArenas(vector<string>& arenaList);
 	void UpdateGroveAccountID(const char *groveName, int newAccountID);
 	void UpdateZoneIndex(int zoneID, int accountID, const char *warpName, const char *groveName, bool allowCreate);
 
 	void NotifyConfigurationChange(void);
 	bool ZoneUnloadReady(void);
-	void UnloadInactiveZones(std::vector<int>& activeZones);
+	void UnloadInactiveZones(vector<int>& activeZones);
 	void RemoveZoneFromIndexes(ZoneDefInfo *def);
 	bool DeleteZone(int id);
 	
@@ -361,7 +366,7 @@ private:
 
 	int GetNewGroveZoneID(void);
 	int GetNewWorldZoneID(void);
-	int LoadFile(std::string fileName);
+	int LoadFile(string fileName);
 
 	ZoneDefInfo * ResolveZoneDef(int ID);
 	ZoneDefInfo * LoadZoneDef(int ID);
@@ -381,34 +386,34 @@ struct MapBarrierPoint
 class ZoneBarrierManager
 {
 public:
-	typedef std::map<int, std::vector<MapBarrierPoint> > BARRIER_CONT;
+	typedef map<int, vector<MapBarrierPoint> > BARRIER_CONT;
 	BARRIER_CONT zoneList;
 
 	void AddEntry(int zoneID, MapBarrierPoint &data);
 	bool CheckCollision(int zoneID, int &x, int &z);
-	void LoadFromFile(std::string filename);
+	void LoadFromFile(const fs::path &filename);
 	int GetLoadedCount(void);
 };
 
 class WeatherManager
 {
 public:
-	std::map<WeatherKey, WeatherState*> mWeather; // all currently maintained weather
-	std::map<std::string, WeatherDef> mWeatherDefinitions; // all weather definitions
-	std::vector<WeatherState*> RegisterInstance(ActiveInstance *instance); // when an instance loads, we find all of it's weather regions (i.e. map names) and start maintaining them if there is a weather definition
-	void Deregister(std::vector<WeatherState*> *states); // when an instance dies, we stop maintaining its weather regions (i.e. map names)
-	int LoadFromFile(std::string filename);
-	WeatherState* GetWeather(std::string mapName, int instanceId);
-	void ZoneThunder(int zoneId, std::string mapName);
-	void ZoneWeather(int zoneId, std::string mapName, std::string weatherType, int weight);
+	map<WeatherKey, WeatherState*> mWeather; // all currently maintained weather
+	map<string, WeatherDef> mWeatherDefinitions; // all weather definitions
+	vector<WeatherState*> RegisterInstance(ActiveInstance *instance); // when an instance loads, we find all of it's weather regions (i.e. map names) and start maintaining them if there is a weather definition
+	void Deregister(vector<WeatherState*> *states); // when an instance dies, we stop maintaining its weather regions (i.e. map names)
+	int LoadFromFile(string filename);
+	WeatherState* GetWeather(string mapName, int instanceId);
+	void ZoneThunder(int zoneId, string mapName);
+	void ZoneWeather(int zoneId, string mapName, string weatherType, int weight);
 private:
-	bool MaybeAddWeatherDef(int instanceID, std::string actualMapName, std::vector<WeatherState*> &m);
+	bool MaybeAddWeatherDef(int instanceID, string actualMapName, vector<WeatherState*> &m);
 };
 
 class EnvironmentCycle
 {
 public:
-	std::string mName;
+	string mName;
 	unsigned long mStart;
 	unsigned long mEnd;
 	unsigned long GetDuration();
@@ -422,14 +427,14 @@ public:
 	static const int DEFAULT_CYCLE_TIME = 3600000;  //1 hour
 	static const int MILLISECOND_PER_SECOND = 1000;  //60000;
 
-	std::string mConfig;
-	std::vector<EnvironmentCycle> mCycles;
+	string mConfig;
+	vector<EnvironmentCycle> mCycles;
 
 	EnvironmentCycleManager();
 	~EnvironmentCycleManager();
 	void RescheduleUpdate();
 	void Init();
-	void ApplyConfig(const std::string str);
+	void ApplyConfig(const string str);
 	EnvironmentCycle GetCurrentCycle(void);
 private:
 	int mChangeTaskID;
@@ -438,12 +443,12 @@ private:
 class GroveTemplate
 {
 public:
-	std::string mShortName;    //Used for internal lookups by name.
-	std::string mFileName;     //Not actually required.
-	std::string mTerrainCfg;   //The ZoneDefInfo::mTerrainConfig property.
-	std::string mEnvType;      //The ZoneDefInfo::mEnvironmentType property.
-	std::string mMapName;      //The ZoneDefInfo::mMapName property.
-	std::string mRegionsPng;   //The ZoneDefInfo::mRegions property.
+	string mShortName;    //Used for internal lookups by name.
+	string mFileName;     //Not actually required.
+	string mTerrainCfg;   //The ZoneDefInfo::mTerrainConfig property.
+	string mEnvType;      //The ZoneDefInfo::mEnvironmentType property.
+	string mMapName;      //The ZoneDefInfo::mMapName property.
+	string mRegionsPng;   //The ZoneDefInfo::mRegions property.
 	int mTileX1;               //Scenery tile coordinate (distinct from terrain tiles, scenery tiles are 1920 units wide).
 	int mTileY1;
 	int mTileX2;
@@ -455,7 +460,7 @@ public:
 	GroveTemplate();
 	void Clear();
 	bool HasProps() const;
-	void GetProps(std::vector<SceneryObject> &objects) const;
+	void GetProps(vector<SceneryObject> &objects) const;
 };
 
 class GroveTemplateManager
@@ -467,10 +472,10 @@ public:
 	void LoadData(void);
 
 private:
-	std::map<std::string, GroveTemplate> mTemplateEntries;    //This holds the actual template entries.
-	std::map<std::string, const GroveTemplate*> mTerrainMap;  //This maps GroveTemplate::mTerrainCfg values to their template for faster internal lookups.
+	map<string, GroveTemplate> mTemplateEntries;    //This holds the actual template entries.
+	map<string, const GroveTemplate*> mTerrainMap;  //This maps GroveTemplate::mTerrainCfg values to their template for faster internal lookups.
 	void ResolveTerrainMap(void);
-	void LoadFile(std::string filename);
+	void LoadFile(const fs::path &filename);
 };
 
 int WriteZoneDefInfo(char *buffer, ZoneDefInfo *item);

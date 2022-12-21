@@ -88,7 +88,7 @@ int CraftRecipe::GetRequiredItemCount(int itemID) const
 	return 0;
 }
 
-void CraftRecipe::GetRequiredItems(std::vector<int> &requiredItems) const
+void CraftRecipe::GetRequiredItems(vector<int> &requiredItems) const
 {
 	for(size_t i = 0; i < mConditions.size(); i++)
 	{
@@ -133,15 +133,15 @@ void CraftManager::LoadData(void)
 {
 	mRecipes.clear();  //Just in case we're reloading for debug purposes.
 
-	LoadRecipeFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "CraftDef.txt"));
+	LoadRecipeFile(g_Config.ResolveStaticDataPath() / "Data" / "CraftDef.txt");
 
 	g_Logs.data->info("Loaded %v crafting recipes.", mRecipes.size());
 }
 
-void CraftManager::LoadRecipeFile(std::string filename)
+void CraftManager::LoadRecipeFile(const fs::path &filename)
 {
 	FileReader3 fr;
-	if(fr.OpenFile(filename.c_str()) != FileReader3::SUCCESS)
+	if(fr.OpenFile(filename) != FileReader3::SUCCESS)
 	{
 		g_Logs.data->error("Error opening crafting recipe file:%v", filename);
 		return;
@@ -159,7 +159,7 @@ void CraftManager::LoadRecipeFile(std::string filename)
 			entry.mInputCount = fr.BlockToIntC(1);
 			entry.mOutputCount = fr.BlockToIntC(2);
 
-			std::string line;
+			string line;
 
 			line = fr.BlockToStringC(3);
 			Util::TrimWhitespace(line);
@@ -194,7 +194,7 @@ const char *CraftManager::GetStringParam(const STRINGVECTOR &strVector, size_t i
 }
 
 
-const CraftRecipe* CraftManager::GetRecipe(std::vector<CraftInputSlot> &inputItems)
+const CraftRecipe* CraftManager::GetRecipe(vector<CraftInputSlot> &inputItems)
 {
 	SortInputs(inputItems);
 	size_t inputCount = inputItems.size();
@@ -231,7 +231,7 @@ const CraftRecipe* CraftManager::GetFirstRecipeForResult(int resultItemID)
 	return NULL;
 }
 
-bool CraftManager::CheckCondition(const STRINGVECTOR &conditions, const std::vector<CraftInputSlot> &inputItems)
+bool CraftManager::CheckCondition(const STRINGVECTOR &conditions, const vector<CraftInputSlot> &inputItems)
 {
 	size_t passed = 0;
 	for(size_t i = 0; i < conditions.size(); i++)
@@ -324,7 +324,7 @@ bool CraftManager::CheckCondition(const STRINGVECTOR &conditions, const std::vec
 }
 
 //Return true if the recipe conditions were successful and an output list 
-bool CraftManager::RunRecipe(const CraftRecipe* recipe, std::vector<CraftInputSlot> &inputItems, std::vector<CraftInputSlot> &outputItems)
+bool CraftManager::RunRecipe(const CraftRecipe* recipe, vector<CraftInputSlot> &inputItems, vector<CraftInputSlot> &outputItems)
 {
 	SortInputs(inputItems);
 
@@ -341,7 +341,7 @@ bool CraftManager::RunRecipe(const CraftRecipe* recipe, std::vector<CraftInputSl
 	return false;
 }
 
-void CraftManager::GenerateOutputs(const CraftRecipe *recipe, std::vector<CraftInputSlot> &inputItems, std::vector<CraftInputSlot> &outputItems)
+void CraftManager::GenerateOutputs(const CraftRecipe *recipe, vector<CraftInputSlot> &inputItems, vector<CraftInputSlot> &outputItems)
 {
 	for(size_t i = 0; i < recipe->mActions.size(); i++)
 	{
@@ -389,9 +389,9 @@ void CraftManager::GenerateOutputs(const CraftRecipe *recipe, std::vector<CraftI
 	}
 }
 
-void CraftManager::SortInputs(std::vector<CraftInputSlot> &inputItems)
+void CraftManager::SortInputs(vector<CraftInputSlot> &inputItems)
 {
-	std::sort(inputItems.begin(), inputItems.end(), CraftInputSlot::SortComparator);
+	sort(inputItems.begin(), inputItems.end(), CraftInputSlot::SortComparator);
 }
 
 int CraftManager::GetComparator(const char *symbol)

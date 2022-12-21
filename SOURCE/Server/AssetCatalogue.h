@@ -31,9 +31,13 @@
 #include "Scheduler.h"
 #include "http/SiteClient.h"
 #include "Entities.h"
+#include <filesystem>
 
-static std::string KEYPREFIX_CUSTOM_PROP_ITEM = "CustomPropItem";
-static std::string LISTPREFIX_CUSTOM_PROP_ITEMS = "CustomPropItems";
+using namespace std;
+namespace fs = filesystem;
+
+static string KEYPREFIX_CUSTOM_PROP_ITEM = "CustomPropItem";
+static string LISTPREFIX_CUSTOM_PROP_ITEMS = "CustomPropItems";
 
 namespace AssetCatalogueItemType
 {
@@ -48,7 +52,7 @@ namespace AssetCatalogueItemType
 		SKIN = 6,
 		VARIANT = 7
 	};
-	std::string GetDescription(int propTypeID);
+	string GetDescription(int propTypeID);
 }
 
 class AssetCatalogueSearch
@@ -57,7 +61,7 @@ public:
 	AssetCatalogueSearch();
 	~AssetCatalogueSearch();
 	int mPropTypeID;
-	std::string mSearch;
+	string mSearch;
 	unsigned int mMax;
 };
 
@@ -66,18 +70,18 @@ public:
 	AssetCatalogueItem();
 	~AssetCatalogueItem();
 
-	std::string GetDisplayName();
-	std::string GetAsset();
+	string GetDisplayName();
+	string GetAsset();
 
-	std::string mName;
-	std::string mDisplayName;
-	std::string mDescription;
-	std::string mAsset;
+	string mName;
+	string mDisplayName;
+	string mDescription;
+	string mAsset;
 	int mOrder;
 	int mType;
 	STRINGLIST mKeywords;
-	std::vector<AssetCatalogueItem*> mParents;
-	std::vector<AssetCatalogueItem*> mChildren;
+	vector<AssetCatalogueItem*> mParents;
+	vector<AssetCatalogueItem*> mChildren;
 };
 
 class AssetCatelogueManager
@@ -87,17 +91,17 @@ public:
 
 	AssetCatelogueManager();
 	~AssetCatelogueManager();
-	int LoadFromDirectory(std::string directory);
-	void Search(AssetCatalogueSearch search, std::vector<AssetCatalogueItem*> *results);
+	int LoadFromDirectory(const fs::path &directory);
+	void Search(AssetCatalogueSearch search, vector<AssetCatalogueItem*> *results);
 	unsigned int Count();
-	bool Contains(std::string name);
-	AssetCatalogueItem* GetItem(std::string name);
-	AssetCatalogueItem* GetByID(std::string id);
-	std::vector<AssetCatalogueItem*> GetChildren(std::string name, CharacterServerData *pld);
+	bool Contains(string name);
+	AssetCatalogueItem* GetItem(string name);
+	AssetCatalogueItem* GetByID(string id);
+	vector<AssetCatalogueItem*> GetChildren(string name, CharacterServerData *pld);
 private:
-	std::map<std::string, AssetCatalogueItem*> mItems;
+	map<string, AssetCatalogueItem*> mItems;
 	AssetCatalogueItem* mFavourites;
-	void SearchProps(std::vector<AssetCatalogueItem*> *items, AssetCatalogueSearch search, AssetCatalogueItem* mItem);
+	void SearchProps(vector<AssetCatalogueItem*> *items, AssetCatalogueSearch search, AssetCatalogueItem* mItem);
 };
 
 int WriteAssetCatalogueItem(char *buffer, AssetCatalogueItem *item);

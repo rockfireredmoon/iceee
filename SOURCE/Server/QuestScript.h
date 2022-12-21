@@ -12,6 +12,10 @@
 #include <list>
 #include "util/SquirrelObjects.h"
 #include "sqrat.h"
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 class ActiveInstance;
 class SimulatorThread;
@@ -29,7 +33,7 @@ class QuestNutDef: public ScriptCore::NutDef {
 public:
 	QuestNutDef(int questID);
 	int mQuestID;
-	std::string GetQuestNutScriptPath();
+	fs::path GetQuestNutScriptPath();
 	virtual ~QuestNutDef();
 };
 
@@ -47,7 +51,7 @@ public:
 	QuestNutPlayer();
 	virtual ~QuestNutPlayer();
 
-	void Initialize(ActiveInstance *actInst, QuestNutDef *defPtr, std::string &errors);
+	void Initialize(ActiveInstance *actInst, QuestNutDef *defPtr, string &errors);
 	virtual void RegisterFunctions();
 	void RegisterQuestFunctions(NutPlayer *instance, Sqrat::DerivedClass<QuestNutPlayer, NutPlayer> *instanceClass);
 	virtual void HaltDerivedExecution();
@@ -64,8 +68,8 @@ public:
 	bool Abandon();
 	int AddQuest(QuestDefinition questDefinition);
 	bool Invite(int questID);
-	QuestObjective KillObjective(std::string description, Sqrat::Array &cdefIds, int amount, std::string completeText, std::string markerLocations);
-	QuestObjective TalkObjective(std::string description, int creatureDefId, std::string markerLocations);
+	QuestObjective KillObjective(string description, Sqrat::Array &cdefIds, int amount, string completeText, string markerLocations);
+	QuestObjective TalkObjective(string description, int creatureDefId, string markerLocations);
 
 	void ScatterSidekicks();
 	void CallSidekicks();
@@ -115,10 +119,10 @@ class QuestNutManager
 public:
 	QuestNutManager();
 	~QuestNutManager();
-	std::map<int, QuestNutDef*> questDef;
-	std::map<int, std::list<QuestNutPlayer*> > questAct;
-	std::list<QuestNutPlayer*> GetActiveScripts(int CID);
-	std::list<QuestNutPlayer*> GetActiveQuestScripts(int questID);
+	map<int, QuestNutDef*> questDef;
+	map<int, list<QuestNutPlayer*> > questAct;
+	list<QuestNutPlayer*> GetActiveScripts(int CID);
+	list<QuestNutPlayer*> GetActiveQuestScripts(int questID);
 	Platform_CriticalSection cs;
 	QuestNutPlayer * GetOrAddActiveScript(CreatureInstance *creature,  int questID);
 	QuestNutPlayer * GetActiveScript(int CID, int questID);
@@ -190,7 +194,7 @@ private:
 	virtual void RunImplementationCommands(int opcode);
 };
 
-void LoadQuestScripts(std::string filename);
+void LoadQuestScripts(string filename);
 void ClearQuestScripts(void);
 
 //namespace QuestScript

@@ -112,24 +112,24 @@ public:
 	unsigned long mCountForceDelay;        //If a delay between retrying packets has been forced, this is number of times this has occurred. 
 	unsigned long mCountForceDelayAck;     //Total count of times hwere a forced delay was acknowledged by passing over a pending socket.
 	unsigned long mTotalWait;
+	
+	void AddOutgoingPacket2(int socket, const Packet &data);
+	void ExternalAddPacket(int socket, const char *data, int length);
+	void SendPacketsFor(int socket);
+	void GenerateDebugReport(ReportBuffer &report);
+
+private:
+	PendingSocket* GetPendingSocket(int socket);
+	int AttemptSend2(int socket, const char *buffer, int length);
+	int SendSocket(int socket, PendingSocket &data);
+	void SendPackets2(void);
+	void GetPackets2(void);
+	PendingSocket* GetSendSocket(int socket);
 
 	std::list<PendingSocket> mQueueData;   //Data queued for sending.  The thread hasn't acquired this data yet.
 	std::list<PendingSocket> mTransition;  //Transitional buffer.  The data has been taken from the Queue, but needs to be processed into the Send list.
 	std::list<PendingSocket> mSendData;    //Data acquired by the thread, and undergoing send processing.
 	std::map<int, DebugPacketManager> mDebugData;
-	
-	void AddOutgoingPacket2(int socket, const Packet &data);
-	void ExternalAddPacket(int socket, const char *data, int length);
-	PendingSocket* GetPendingSocket(int socket);
-	PendingSocket* GetSendSocket(int socket);
-	void GetPackets2(void);
-	void SendPacketsFor(int socket);
-	void SendPackets2(void);
-	int SendSocket(int socket, PendingSocket &data);
-	int AttemptSend2(int socket, const char *buffer, int length);
-	void GenerateDebugReport(ReportBuffer &report);
-
-private:
 	boost::thread *mThread;
 	int mLastError;
 	Platform_CriticalSection cs;

@@ -23,6 +23,8 @@
 #include "../Instance.h"
 #include "../Config.h"
 
+using namespace std;
+
 //
 // SidekickAddHandler
 //
@@ -152,7 +154,7 @@ int SidekickAttackHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
 	creatureInstance->RemoveNoncombatantStatus("skattack");
-	sim->AddMessage((long) creatureInstance, 0, BCM_SidekickAttack);
+	creatureInstance->actInst->Submit(bind(&ActiveInstance::SidekickAttack, creatureInstance->actInst, creatureInstance));
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
@@ -164,7 +166,7 @@ int SidekickDefendHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
 	creatureInstance->RemoveNoncombatantStatus("skattack");
-	sim->AddMessage((long) creatureInstance, 0, BCM_SidekickDefend);
+	creatureInstance->actInst->Submit(bind(&ActiveInstance::SidekickDefend, creatureInstance->actInst, creatureInstance));
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
@@ -175,7 +177,7 @@ int SidekickDefendHandler::handleQuery(SimulatorThread *sim,
 int SidekickCallHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
-	sim->AddMessage((long) creatureInstance, 0, BCM_SidekickCall);
+	creatureInstance->actInst->Submit(bind(&ActiveInstance::SidekickCall, creatureInstance->actInst, creatureInstance));
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
@@ -186,7 +188,7 @@ int SidekickCallHandler::handleQuery(SimulatorThread *sim,
 int SidekickWarpHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
-	sim->AddMessage((long) creatureInstance, 0, BCM_SidekickWarp);
+	creatureInstance->actInst->Submit(bind(&ActiveInstance::SidekickWarp, creatureInstance->actInst, creatureInstance));
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 //
@@ -196,7 +198,7 @@ int SidekickWarpHandler::handleQuery(SimulatorThread *sim,
 int SidekickScatterHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
-	sim->AddMessage((long) creatureInstance, 0, BCM_SidekickScatter);
+	creatureInstance->actInst->Submit(bind(&ActiveInstance::SidekickScatter, creatureInstance->actInst, creatureInstance));
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 

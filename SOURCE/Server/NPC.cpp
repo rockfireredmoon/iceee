@@ -7,6 +7,7 @@
 #include "util/Log.h"
 #include "Components.h"
 #include "Config.h"
+#include <boost/format.hpp>
 
 PetDefManager g_PetDefManager;
 
@@ -97,7 +98,7 @@ bool HateProfile :: CheckRefreshAndUpdate(void)
 
 	nextRefreshTime = g_ServerTime + REFRESH_DELAY;
 
-	std::sort(hateList.begin(), hateList.end(), HateCreatureData::SortByHate);
+	sort(hateList.begin(), hateList.end(), HateCreatureData::SortByHate);
 
 	return true;
 }
@@ -124,7 +125,7 @@ HateProfile * HateProfileContainer :: GetProfile(void)
 
 void HateProfileContainer :: RemoveProfile(HateProfile* profile)
 {
-	std::list<HateProfile>::iterator it;
+	list<HateProfile>::iterator it;
 	for(it = profileList.begin(); it != profileList.end(); ++it)
 	{
 		if(&*it == profile)
@@ -138,7 +139,7 @@ void HateProfileContainer :: RemoveProfile(HateProfile* profile)
 
 void HateProfileContainer :: UnHate(int CreatureDefID)
 {
-	std::list<HateProfile>::iterator it;
+	list<HateProfile>::iterator it;
 	for(it = profileList.begin(); it != profileList.end(); ++it)
 	{
 		it->UnHate(CreatureDefID);
@@ -209,10 +210,10 @@ PetDef* PetDefManager :: GetEntry(int CreatureDefID)
 	return &it->second;
 }
 
-void PetDefManager :: LoadFile(std::string filename)
+void PetDefManager :: LoadFile(const fs::path &filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
+	if(lfr.OpenText(filename) != Err_OK)
 	{
 		g_Logs.data->error("Error opening file: %v", filename);
 		return;
@@ -301,7 +302,7 @@ NPCDialogManager::~NPCDialogManager() {
 }
 
 bool NPCDialogManager::SaveItem(NPCDialogItem * item) {
-	std::string path = GetPath(item->mName);
+	string path = GetPath(item->mName);
 	g_Logs.data->info("Saving dialog item to %v.", path.c_str());
 	FILE *output = fopen(path.c_str(), "wb");
 	if (output == NULL) {
@@ -315,7 +316,7 @@ bool NPCDialogManager::SaveItem(NPCDialogItem * item) {
 	fprintf(output, "MinInterval=%d\r\n", item->mMinInterval);
 	fprintf(output, "MaxInterval=%d\r\n", item->mMaxInterval);
 
-	std::vector<NPCDialogParagraph>::iterator it;
+	vector<NPCDialogParagraph>::iterator it;
 	for (it = item->mParagraphs.begin(); it != item->mParagraphs.end(); ++it) {
 		NPCDialogParagraph p = *it;
 		fprintf(output, "\r\n[PARAGRAPH]\r\n");
@@ -329,8 +330,8 @@ bool NPCDialogManager::SaveItem(NPCDialogItem * item) {
 	return true;
 }
 
-NPCDialogItem * NPCDialogManager::LoadItem(std::string name) {
-//	std::string buf = GetPath(name);
+NPCDialogItem * NPCDialogManager::LoadItem(const fs::path &name) {
+//	string buf = GetPath(name);
 //	if (!Platform::FileExists(buf.c_str())) {
 //		g_Logs.data->error("No file for dialog item [%v]", buf.c_str());
 //		return NULL;
@@ -340,7 +341,7 @@ NPCDialogItem * NPCDialogManager::LoadItem(std::string name) {
 	item->mName = name;
 
 	FileReader lfr;
-	if (lfr.OpenText(name.c_str()) != Err_OK) {
+	if (lfr.OpenText(name) != Err_OK) {
 		g_Logs.data->error("Could not open file [%v]", name);
 		return NULL;
 	}
@@ -381,60 +382,47 @@ NPCDialogItem * NPCDialogManager::LoadItem(std::string name) {
 }
 
 
-bool NPCDialogManager::RemoveItem(std::string name) {
-	const char * path = GetPath(name).c_str();
-	if (!Platform::FileExists(path)) {
+bool NPCDialogManager::RemoveItem(const string &name) {
+	auto path = GetPath(name);
+	if (!fs::exists(path)) {
 		g_Logs.data->error("No file for NPC dialog item [%v] to remove", path);
 		return false;
 	}
-	std::map<std::string, NPCDialogItem*>::iterator it = mItems.find(name);
+	map<string, NPCDialogItem*>::iterator it = mItems.find(name);
 	if(it != mItems.end()) {
 		delete it->second;
 		mItems.erase(it);
 	}
-	char buf[128];
-	Util::SafeFormat(buf, sizeof(buf), "%s.del", name.c_str());
-	std::string filename = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Dialog"), buf);
-	if(!Platform::FileExists(filename) || remove(filename.c_str()) == 0) {
-		if(!rename(path, filename.c_str()) == 0) {
-			g_Logs.data->error("Failed to remove NPC dialog item %v", name.c_str());
-			return false;
-		}
+	auto filename = g_Config.ResolveStaticDataPath() / "Dialog" / str(boost::format("%s.del") % name);
+	if(!fs::exists(filename) || fs::remove(filename)) {
+		fs::rename(path, filename);
 	}
 	return true;
 }
 
-std::string NPCDialogManager::GetPath(std::string name) {
-	char buf[128];
-	Util::SafeFormat(buf, sizeof(buf), "%s.txt", name.c_str());
-	return Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Dialog"), buf);
+fs::path NPCDialogManager::GetPath(const string &name) {
+	return g_Config.ResolveStaticDataPath()/ "Dialog" / str(boost::format("%s.txt") % name);
 }
 
 int NPCDialogManager::LoadItems(void) {
-	for(std::map<std::string, NPCDialogItem*>::iterator it = mItems.begin(); it != mItems.end(); ++it)
+	for(auto it = mItems.begin(); it != mItems.end(); ++it)
 		delete it->second;
 	mItems.clear();
 
-	Platform_DirectoryReader r;
-	std::string dir = r.GetDirectory();
-	std::string dirpath = Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Dialog");
-	r.SetDirectory(dirpath);
-	r.ReadFiles();
-	r.SetDirectory(dir.c_str());
+	auto dirpath = g_Config.ResolveStaticDataPath()/ "Dialog";
 
-	std::vector<std::string>::iterator it;
-	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
-		std::string p = *it;
-		if (Util::HasEnding(p, ".txt")) {
-			LoadItem(Platform::JoinPath(dirpath, Platform::Filename(p).c_str()));
+	for(const fs::directory_entry& entry : fs::directory_iterator(dirpath)) {
+		auto path = entry.path();
+		if (path.extension() == ".txt") {
+			LoadItem(path);
 		}
 	}
 
 	return 0;
 }
 
-NPCDialogItem * NPCDialogManager::GetItem(std::string name) {
-	std::map<std::string, NPCDialogItem*>::iterator it = mItems.find(name);
+NPCDialogItem * NPCDialogManager::GetItem(const string &name) {
+	map<string, NPCDialogItem*>::iterator it = mItems.find(name);
 	return it == mItems.end() ? NULL : it->second;
 }
 

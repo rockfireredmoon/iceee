@@ -14,7 +14,6 @@
 #include "Globals.h"
 #include "ZoneDef.h"
 #include "Util.h"
-#include "StringUtil.h"
 #include "Cluster.h"
 #include "ConfigString.h"
 #include "Inventory.h"
@@ -257,7 +256,7 @@ void AccountData::SetRoles(std::vector<std::string> &roles) {
 }
 
 bool AccountData::EntityKeys(AbstractEntityReader *reader) {
-	reader->Key(KEYPREFIX_ACCOUNT_DATA, StringUtil::Format("%d", ID));
+	reader->Key(KEYPREFIX_ACCOUNT_DATA, Util::Format("%d", ID));
 	reader->Index("CHARACTERCACHE/CACHEENTRY");
 	return true;
 }
@@ -295,7 +294,7 @@ bool AccountData::ReadEntity(AbstractEntityReader *reader) {
 		MaxCharacters = s;
 	STRINGLIST perms = reader->ListValue("Permissions", ",");
 	for (auto a = perms.begin(); a != perms.end(); ++a) {
-		if (SetPermission(Perm_Account, StringUtil::LowerCase(*a).c_str(), true)
+		if (SetPermission(Perm_Account, Util::LowerCase(*a).c_str(), true)
 				== false)
 			g_Logs.data->warn(
 					"Unknown permission identifier [%v] in Account %v.", ID);
@@ -356,7 +355,7 @@ bool AccountData::ReadEntity(AbstractEntityReader *reader) {
 			std::string cnt = GetContainerNameFromID(a);
 			STRINGLIST inv = reader->ListValue(cnt);
 			for (auto a = inv.begin(); a != inv.end(); ++a) {
-				ReadInventory(cnt, *a, inventory, StringUtil::Format("%d", ID),
+				ReadInventory(cnt, *a, inventory, Util::Format("%d", ID),
 						Name, "Account");
 			}
 		}
@@ -376,7 +375,7 @@ bool AccountData::ReadEntity(AbstractEntityReader *reader) {
 }
 
 bool AccountData::WriteEntity(AbstractEntityWriter *writer) {
-	writer->Key(KEYPREFIX_ACCOUNT_DATA, StringUtil::Format("%d", ID));
+	writer->Key(KEYPREFIX_ACCOUNT_DATA, Util::Format("%d", ID));
 	writer->Value("Name", Name);
 	writer->Value("Auth", AuthData);
 	writer->Value("RegKey", RegKey);
@@ -400,7 +399,7 @@ bool AccountData::WriteEntity(AbstractEntityWriter *writer) {
 	for (int a = 0; a < MaxCharacters; a++) {
 		if (CharacterSet[a] == 0)
 			continue;
-		l.push_back(StringUtil::Format("%d", CharacterSet[a]));
+		l.push_back(Util::Format("%d", CharacterSet[a]));
 	}
 	writer->ListValue("Characters", l);
 
@@ -418,7 +417,7 @@ bool AccountData::WriteEntity(AbstractEntityWriter *writer) {
 				(*it).second.mCompletedObjectives.begin();
 				it2 != (*it).second.mCompletedObjectives.end(); ++it2)
 			l.push_back(
-					StringUtil::Format("%s/%s", (*it).first.c_str(),
+					Util::Format("%s/%s", (*it).first.c_str(),
 							(*it2)->mName.c_str()));
 	writer->ListValue("Achievements", l);
 
@@ -434,14 +433,14 @@ bool AccountData::WriteEntity(AbstractEntityWriter *writer) {
 	for (size_t i = 0; i < BuildPermissionList.size(); i++) {
 		BuildPermissionArea &bpa = BuildPermissionList[i];
 		l.push_back(
-				StringUtil::Format("%d,%d,%d,%d,%d", bpa.ZoneID, bpa.x1, bpa.y1,
+				Util::Format("%d,%d,%d,%d,%d", bpa.ZoneID, bpa.x1, bpa.y1,
 						bpa.x2, bpa.y2));
 	}
 	writer->ListValue("Build", l);
 
 	l = STRINGLIST();
 	for (auto it = AccountQuests.begin(); it != AccountQuests.end(); ++it)
-		l.push_back(StringUtil::Format("%d", *it));
+		l.push_back(Util::Format("%d", *it));
 	writer->ListValue("AccountQuest", l);
 
 	l = STRINGLIST();
@@ -462,13 +461,13 @@ bool AccountData::WriteEntity(AbstractEntityWriter *writer) {
 
 				if (extend == true)
 					l.push_back(
-							StringUtil::Format("%lu,%d,%d,%d,%d,%ld",
+							Util::Format("%lu,%d,%d,%d,%d,%ld",
 									slot->CCSID & CONTAINER_SLOT, slot->IID,
 									slot->count, slot->customLook,
 									slot->bindStatus, slot->AdjustTimes()));
 				else
 					l.push_back(
-							StringUtil::Format("%lu,%d",
+							Util::Format("%lu,%d",
 									slot->CCSID & CONTAINER_SLOT, slot->IID));
 			}
 			if (l.size() > 0)
@@ -1332,7 +1331,7 @@ STRINGLIST AccountManager::MatchAccountNames(std::string globPattern) {
 		STRINGLIST l;
 		Util::Split(key, ":", l);
 		accounts.push_back(l[1]);
-	}, StringUtil::Format("%s:*:DEFAULT", KEYPREFIX_ACCOUNT_QUICK_DATA.c_str()));
+	}, Util::Format("%s:*:DEFAULT", KEYPREFIX_ACCOUNT_QUICK_DATA.c_str()));
 	return accounts;
 }
 
@@ -1467,7 +1466,7 @@ int AccountManager::ValidateNameParts(const std::string &first,
 
 	//Check character name
 	if (g_UsedNameDatabase.HasName(
-			StringUtil::Format("%s %s", first.c_str(), last.c_str())))
+			Util::Format("%s %s", first.c_str(), last.c_str())))
 		return CHARACTER_NAMEEXIST;
 
 	return CHARACTER_SUCCESS;
@@ -1800,7 +1799,7 @@ AccountData * AccountManager::LoadAccountID(int accountID) {
 void AccountManager::LoadAllData(void) {
 	if (!g_ClusterManager.HasKey(ID_NEXT_CHARACTER_ID)) {
 		g_ClusterManager.SetKey(ID_NEXT_CHARACTER_ID,
-				StringUtil::Format("%d", DEFAULT_CHARACTER_ID));
+				Util::Format("%d", DEFAULT_CHARACTER_ID));
 	}
 }
 
@@ -1901,7 +1900,7 @@ CharacterCacheEntry* CharacterCacheManager::UpdateCharacter(
 void CharacterCacheManager::RemoveCharacter(int cdefID) {
 	for (size_t i = 0; i < cacheData.size(); i++) {
 		if (cacheData[i].creatureDefID == cdefID) {
-			g_ClusterManager.RemoveKey(StringUtil::Format("%s:%s", KEYPREFIX_CHARACTER_NAME_TO_ID.c_str(), cacheData[i].display_name.c_str()));
+			g_ClusterManager.RemoveKey(Util::Format("%s:%s", KEYPREFIX_CHARACTER_NAME_TO_ID.c_str(), cacheData[i].display_name.c_str()));
 			CharacterData *cd = g_CharacterManager.RequestCharacter(cdefID, true);
 			if(cd != NULL) {
 				g_ClusterManager.RemoveEntity(cd);
@@ -1919,7 +1918,7 @@ bool CharacterCacheManager::ReadEntity(AbstractEntityReader *reader) {
 	int i = 0;
 	for (auto a = sections.begin(); a != sections.end(); ++a) {
 		CharacterCacheEntry e;
-		reader->PushSection(StringUtil::Format("CACHEENTRY#%d", i++));
+		reader->PushSection(Util::Format("CACHEENTRY#%d", i++));
 		bool ok = e.ReadEntity(reader);
 		reader->PopSection();
 		if (!ok)
@@ -1931,7 +1930,7 @@ bool CharacterCacheManager::ReadEntity(AbstractEntityReader *reader) {
 
 bool CharacterCacheManager::WriteEntity(AbstractEntityWriter *writer) {
 	for (size_t i = 0; i < cacheData.size(); i++) {
-		writer->PushSection(StringUtil::Format("CACHEENTRY#%d", i));
+		writer->PushSection(Util::Format("CACHEENTRY#%d", i));
 		bool ok = cacheData[i].WriteEntity(writer);
 		writer->PopSection();
 		if (!ok)
@@ -1952,10 +1951,10 @@ UsedNameDatabase::~UsedNameDatabase() {
 
 void UsedNameDatabase::Add(int CDefID, const std::string &name) {
 	g_ClusterManager.SetKey(
-			StringUtil::Format("%s:%s", KEYPREFIX_CHARACTER_NAME_TO_ID.c_str(),
-					name.c_str()), StringUtil::Format("%d", CDefID));
+			Util::Format("%s:%s", KEYPREFIX_CHARACTER_NAME_TO_ID.c_str(),
+					name.c_str()), Util::Format("%d", CDefID));
 	g_ClusterManager.SetKey(
-			StringUtil::Format("%s:%d", KEYPREFIX_CHARACTER_ID_TO_NAME.c_str(),
+			Util::Format("%s:%d", KEYPREFIX_CHARACTER_ID_TO_NAME.c_str(),
 					CDefID), name.c_str());
 }
 
@@ -1963,36 +1962,36 @@ void UsedNameDatabase::Remove(int CDefID) {
 	std::string name = GetNameByID(CDefID);
 	if (name.length() > 0)
 		g_ClusterManager.RemoveKey(
-				StringUtil::Format("%s:%s", KEYPREFIX_CHARACTER_NAME_TO_ID,
+				Util::Format("%s:%s", KEYPREFIX_CHARACTER_NAME_TO_ID,
 						name.c_str()));
 	g_ClusterManager.RemoveKey(
-			StringUtil::Format("%s:%d", KEYPREFIX_CHARACTER_ID_TO_NAME.c_str(),
+			Util::Format("%s:%d", KEYPREFIX_CHARACTER_ID_TO_NAME.c_str(),
 					CDefID));
 }
 
 bool UsedNameDatabase::HasID(int CDefID) {
 	return g_ClusterManager.HasKey(
-			StringUtil::Format("%s:%d", KEYPREFIX_CHARACTER_ID_TO_NAME.c_str(),
+			Util::Format("%s:%d", KEYPREFIX_CHARACTER_ID_TO_NAME.c_str(),
 					CDefID));
 }
 
 const char* UsedNameDatabase::GetNameByID(int CDefID) {
 	return g_ClusterManager.GetKey(
-			StringUtil::Format("%s:%d", KEYPREFIX_CHARACTER_ID_TO_NAME.c_str(),
+			Util::Format("%s:%d", KEYPREFIX_CHARACTER_ID_TO_NAME.c_str(),
 					CDefID)).c_str();
 }
 
 int UsedNameDatabase::GetIDByName(const std::string &name) {
 	return atoi(
 			g_ClusterManager.GetKey(
-					StringUtil::Format("%s:%d",
+					Util::Format("%s:%d",
 							KEYPREFIX_CHARACTER_NAME_TO_ID.c_str(),
 							name.c_str())).c_str());
 }
 
 bool UsedNameDatabase::HasName(const std::string &name) {
 	return g_ClusterManager.HasKey(
-			StringUtil::Format("%s:%d", KEYPREFIX_CHARACTER_NAME_TO_ID.c_str(),
+			Util::Format("%s:%d", KEYPREFIX_CHARACTER_NAME_TO_ID.c_str(),
 					name.c_str()));
 }
 

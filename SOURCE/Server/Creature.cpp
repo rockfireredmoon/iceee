@@ -25,6 +25,7 @@
 #include "Config.h"
 #include "Quest.h"
 #include "Combat.h"
+#include "Scheduler.h"
 #include "InstanceScale.h"
 #include "VirtualItem.h"
 #include "Guilds.h"
@@ -182,18 +183,18 @@ bool ActiveAbilityInfo::IsBusy(void) {
 AppearanceModifier::~AppearanceModifier() {
 }
 
-ReplaceAppearanceModifier::ReplaceAppearanceModifier(std::string replacement) {
+ReplaceAppearanceModifier::ReplaceAppearanceModifier(string replacement) {
 	mReplacement = replacement;
 }
 
 ReplaceAppearanceModifier::~ReplaceAppearanceModifier() {
 }
 
-std::string ReplaceAppearanceModifier::Modify(std::string source) {
+string ReplaceAppearanceModifier::Modify(string source) {
 	return mReplacement;
 }
 
-std::string ReplaceAppearanceModifier::ModifyEq(std::string source) {
+string ReplaceAppearanceModifier::ModifyEq(string source) {
 	return source;
 }
 
@@ -209,15 +210,15 @@ AbstractAppearanceModifier::AbstractAppearanceModifier() {
 AbstractAppearanceModifier::~AbstractAppearanceModifier() {
 }
 
-std::string AbstractAppearanceModifier::Modify(std::string source) {
+string AbstractAppearanceModifier::Modify(string source) {
 	return DoModify(source, false);
 }
 
-std::string AbstractAppearanceModifier::ModifyEq(std::string source) {
+string AbstractAppearanceModifier::ModifyEq(string source) {
 	return DoModify(source, true);
 }
 
-std::string AbstractAppearanceModifier::DoModify(std::string source, bool eq) {
+string AbstractAppearanceModifier::DoModify(string source, bool eq) {
 	string currentAppearance = source;
 	size_t pos = currentAppearance.find(":");
 	if (pos == string::npos) {
@@ -253,7 +254,7 @@ std::string AbstractAppearanceModifier::DoModify(std::string source, bool eq) {
 		ProcessTable(&table);
 
 	Squirrel::Printer printer;
-	std::string newAppearance = prefix;
+	string newAppearance = prefix;
 	printer.PrintTable(&newAppearance, table);
 	g_Logs.server->debug("Attaching item. New appearance is. %v",
 			newAppearance.c_str());
@@ -262,8 +263,8 @@ std::string AbstractAppearanceModifier::DoModify(std::string source, bool eq) {
 }
 
 //
-CreatureAttributeModifier::CreatureAttributeModifier(std::string attribute,
-		std::string value) {
+CreatureAttributeModifier::CreatureAttributeModifier(string attribute,
+		string value) {
 	mAttribute = attribute;
 	mValue = value;
 }
@@ -285,8 +286,8 @@ AppearanceModifier * CreatureAttributeModifier::Clone() {
 
 //
 
-AddAttachmentModifier::AddAttachmentModifier(std::string type,
-		std::string node) {
+AddAttachmentModifier::AddAttachmentModifier(string type,
+		string node) {
 	mType = type;
 	mNode = node;
 }
@@ -322,11 +323,11 @@ NudifyAppearanceModifier::NudifyAppearanceModifier() {
 NudifyAppearanceModifier::~NudifyAppearanceModifier() {
 }
 
-std::string NudifyAppearanceModifier::Modify(std::string source) {
+string NudifyAppearanceModifier::Modify(string source) {
 	return source;
 }
 
-std::string NudifyAppearanceModifier::ModifyEq(std::string source) {
+string NudifyAppearanceModifier::ModifyEq(string source) {
 	return "{}";
 }
 AppearanceModifier * NudifyAppearanceModifier::Clone() {
@@ -377,7 +378,7 @@ void CreatureDefinition::WriteToJSON(Json::Value &value) {
 	value["defHints"] = DefHints;
 	value["abilityOnUse"] = AbilityOnUse;
 	Json::Value defx(Json::arrayValue);
-	for (std::vector<int>::iterator it = DefaultEffects.begin();
+	for (vector<int>::iterator it = DefaultEffects.begin();
 			it != DefaultEffects.end(); ++it) {
 		defx.append(*it);
 	}
@@ -393,7 +394,7 @@ void CreatureDefinition::WriteToJSON(Json::Value &value) {
 	value["css"] = jcss;
 }
 
-std::string CreatureDefinition::GetExtraDataString() {
+string CreatureDefinition::GetExtraDataString() {
 	ConfigString ExtraData;
 	if (NamedMob)
 		ExtraData.SetKeyValue("namedmob", "");
@@ -404,7 +405,7 @@ std::string CreatureDefinition::GetExtraDataString() {
 		Util::SafeFormat(buf, sizeof(buf), "%f", DropRateMult);
 		ExtraData.SetKeyValue("dropratemulti", buf);
 	}
-	for (std::vector<int>::iterator it = Items.begin(); it != Items.end();
+	for (vector<int>::iterator it = Items.begin(); it != Items.end();
 			++it) {
 		STRINGLIST str;
 		str.push_back("item");
@@ -413,7 +414,7 @@ std::string CreatureDefinition::GetExtraDataString() {
 	}
 
 	if (!ExtraData.IsEmpty()) {
-		std::string str;
+		string str;
 		ExtraData.GenerateString(str);
 		return str;
 	}
@@ -429,14 +430,14 @@ void CreatureDefinition::SaveToStream(FILE *output) {
 		fprintf(output, "AbilityOnUse=%d\r\n", AbilityOnUse);
 
 
-	std::string extraDataString = GetExtraDataString();
+	string extraDataString = GetExtraDataString();
 	if (extraDataString.length() > 0) {
 		fprintf(output, "ExtraData=%s\r\n", extraDataString.c_str());
 	}
 
 	if (DefaultEffects.size() > 0) {
 		fprintf(output, "Effects=");
-		for (std::vector<int>::iterator it = DefaultEffects.begin();
+		for (vector<int>::iterator it = DefaultEffects.begin();
 				it != DefaultEffects.end(); ++it) {
 			if (it != DefaultEffects.begin())
 				fprintf(output, ",");
@@ -585,9 +586,11 @@ bool CreatureInstance::KillAI(void) {
 	return killed;
 }
 
-void CreatureInstance::UnloadResources(void) {
+void CreatureInstance::Shutdown(void) {
 	g_Logs.server->debug("Unloading resources for creature %v (%v)", CreatureID,
 			CreatureDefID);
+
+	this->Schedulable::Shutdown();
 
 	//NOTE: Should only be called by the main thread.
 	//Unloads any resources attached to this object (or that this object is specially linked to
@@ -743,7 +746,7 @@ void CreatureInstance::CopyFrom(CreatureInstance *source) {
 
 	// TODO - Em - why the need to clear? this implies it is getting called twice when copying
 	ClearAppearanceModifiers();
-	for (std::vector<AppearanceModifier*>::iterator it =
+	for (vector<AppearanceModifier*>::iterator it =
 			source->appearanceModifiers.begin();
 			it != source->appearanceModifiers.end(); ++it) {
 		AppearanceModifier *ap = *it;
@@ -774,7 +777,7 @@ void CreatureInstance::CopyBuffsFrom(CreatureInstance *source) {
 	buffManager.CopyFrom(source->buffManager);
 }
 
-bool CreatureInstance::StartAI(std::string &errors) {
+bool CreatureInstance::StartAI(string &errors) {
 	if (aiNut != NULL || aiScript != NULL)
 		return false;
 
@@ -833,7 +836,7 @@ void CreatureInstance::Instantiate(void) {
 		}
 	}
 
-	std::string errors;
+	string errors;
 	StartAI(errors);
 
 	//Need this or else spawned props may retain aggro status
@@ -871,7 +874,7 @@ void CreatureInstance::Instantiate(void) {
 
 	// TODO floods events
 	/*if(actInst != NULL && actInst->nutScriptPlayer != NULL && actInst->nutScriptPlayer->mActive) {
-	 std::vector<ScriptCore::ScriptParam> parms;
+	 vector<ScriptCore::ScriptParam> parms;
 	 parms.push_back(ScriptCore::ScriptParam(CreatureID));
 	 parms.push_back(ScriptCore::ScriptParam(CreatureDefID));
 	 actInst->nutScriptPlayer->JumpToLabel("on_spawn", parms);
@@ -1376,7 +1379,7 @@ void CreatureInstance::SetCombatStatus(void) {
 		return;
 
 	if (!HasStatus(StatusEffects::IN_COMBAT) && aiNut != NULL) {
-		std::vector<ScriptCore::ScriptParam> p;
+		vector<ScriptCore::ScriptParam> p;
 
 		/* This MUST run immediately (and not be queued) as the script probably wants to clear out
 		 * the queue entirely, which might need to re-activated by on_target_acquired.
@@ -1961,7 +1964,7 @@ void CreatureInstance::AddItemStatMod(int itemID, int statID, float amount) {
 }
 
 void CreatureInstance::ApplyItemStatModFromConfig(int itemID,
-		const std::string configStr) {
+		const string configStr) {
 	STRINGLIST modentry;
 	STRINGLIST moddata;
 	Util::Split(configStr, "&", modentry);
@@ -2714,8 +2717,7 @@ void CreatureInstance::PortalRequest(CreatureInstance *caster,
 	simulatorPtr->pld.SetPortalRequestDest(externalname, 0);
 
 	if (caster == this)
-		bcm.AddEvent2(simulatorPtr->InternalID, (long) simulatorPtr, 0,
-				BCM_RunPortalRequest, actInst);
+		simulatorPtr->Submit(bind(&SimulatorThread::RunPortalRequest, simulatorPtr));
 	else {
 		int wpos = PrepExt_CreatureEventPortalRequest(GSendBuf, CreatureID,
 				caster->css.display_name, externalname);
@@ -2743,7 +2745,7 @@ void CreatureInstance::BindTranslocate(void) {
 		css.translocate_destination = sanct->descName;
 		if (sanct->descName.size() != 0) {
 			SendStatUpdate(STAT::TRANSLOCATE_DESTINATION);
-			std::string msg = "You have bound to ";
+			string msg = "You have bound to ";
 			msg.append(sanct->descName);
 			int wpos = PrepExt_SendInfoMessage(GSendBuf, msg.c_str(),
 					INFOMSG_INFO);
@@ -3034,14 +3036,14 @@ void CreatureInstance::ProcessDeath(void) {
 			}
 
 			// Now add a kill for the all the attackers
-			std::vector<int> teamsCredited;
+			vector<int> teamsCredited;
 
 			for (size_t i = 0; i < attackerList.size(); i++) {
 				CreatureInstance *attacker = attackerList[i].ptr;
 				ActiveParty * attackerTeam = actInst->pvpGame->GetTeamForPlayer(
 						attacker->CreatureID);
 				if (attackerTeam != NULL) {
-					std::vector<int>::iterator it = std::find(
+					vector<int>::iterator it = find(
 							teamsCredited.begin(), teamsCredited.end(),
 							attackerTeam->mPartyID);
 					if (it == teamsCredited.end()) {
@@ -3067,11 +3069,11 @@ void CreatureInstance::ProcessDeath(void) {
 	if (actInst->mZoneDefPtr->mGrove == false) {
 
 		if ((serverFlags & ServerFlags::IsSidekick) && AnchorObject != NULL) {
-			std::list<QuestScript::QuestNutPlayer*> l =
+			list<QuestScript::QuestNutPlayer*> l =
 					g_QuestNutManager.GetActiveScripts(CreatureID);
-			std::vector<ScriptCore::ScriptParam> p;
+			vector<ScriptCore::ScriptParam> p;
 			p.push_back(CreatureID);
-			for (std::list<QuestScript::QuestNutPlayer*>::iterator it =
+			for (list<QuestScript::QuestNutPlayer*>::iterator it =
 					l.begin(); it != l.end(); ++it) {
 				(*it)->JumpToLabel("on_sidekick_death", p);
 			}
@@ -3107,7 +3109,7 @@ void CreatureInstance::ProcessDeath(void) {
 			/* This is a player death, determine if they were killed during PVP way. Loot
 			 * is not given in arenas
 			 */
-			std::vector<CreatureInstance*> pvpAttackers;
+			vector<CreatureInstance*> pvpAttackers;
 
 			if (charPtr->Mode == PVP::GameMode::PVP
 					&& !actInst->mZoneDefPtr->mArena) {
@@ -3222,7 +3224,7 @@ void CreatureInstance::ProcessDeath(void) {
 
 							// Add all PVP attackers as looting creatures as well as the player themselves so they can retrieve the loot if the attacker doesn't take
 							lootInst->AddLootableID(CreatureDefID);
-							for (std::vector<CreatureInstance*>::iterator it =
+							for (vector<CreatureInstance*>::iterator it =
 									pvpAttackers.begin();
 									it != pvpAttackers.end(); ++it) {
 								lootInst->AddLootableID((*it)->CreatureDefID);
@@ -3482,7 +3484,7 @@ void CreatureInstance::ResolveAttackers(CREATURE_SEARCH& results) {
 
 	int instance = actInst->mInstanceID;
 
-	std::vector<int> partyID;
+	vector<int> partyID;
 	for (size_t i = 0; i < hate->hateList.size(); i++) {
 		int CDefID = hate->hateList[i].CDefID;
 		CreatureInstance *lookup = actInst->GetPlayerByCDefID(CDefID);
@@ -3537,12 +3539,38 @@ void CreatureInstance::_OnModChanged(void) {
 		char buffer[16];
 		sprintf(buffer, "%g", totalVal[a]);
 		WriteStatToSet(statID[a], buffer, &css);
-		int size = PrepExt_CreatureInstance(GSendBuf, this);
-		actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
 	}
+	BroadcastCreatureInstanceUpdate();
 
 	statID.clear();
 	totalVal.clear();
+}
+
+void CreatureInstance::BroadcastCreatureInstanceUpdate() {
+	actInst->LSendToLocalSimulator(GSendBuf,  PrepExt_CreatureInstance(GSendBuf, this), CurrentX, CurrentZ);
+}
+
+void CreatureInstance::BroadcastVelocityUpdate(int ignoreIndex) {
+	actInst->LSendToLocalSimulator(GSendBuf,  PrepExt_UpdateVelocity(GSendBuf, this), CurrentX, CurrentZ, ignoreIndex);
+}
+
+void CreatureInstance::BroadcastPositionUpdate() {
+	auto size = PrepExt_CreaturePos(GSendBuf, this);
+	size += PrepExt_GeneralMoveUpdate(&GSendBuf[size], this);
+	actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
+}
+
+void CreatureInstance::BroadcastJump(int ignoreIndex) {
+	actInst->LSendToLocalSimulator(GSendBuf, PrepExt_ActorJump(GSendBuf, CreatureID), CurrentX, CurrentZ,
+			ignoreIndex);
+}
+
+void CreatureInstance::BroadcastIncrementalPositionUpdate() {
+	actInst->LSendToLocalSimulator(GSendBuf, PrepExt_GeneralMoveUpdate(GSendBuf, this), CurrentX, CurrentZ);
+}
+
+void CreatureInstance::BroadcastFullPositionUpdate(int ignoreIndex) {
+	actInst->LSendToLocalSimulator(GSendBuf, PrepExt_UpdateFullPosition(GSendBuf, this), CurrentX, CurrentZ, ignoreIndex);
 }
 
 void CreatureInstance::_UpdateHealthMod(void) {
@@ -3723,8 +3751,8 @@ bool CreatureInstance::Translocate(bool test) {
 	if (test == true)
 		return true;
 
-	bcm.AddEvent2(simulatorPtr->InternalID, (long) simulatorPtr, 0,
-			BCM_RunTranslocate, actInst);
+	simulatorPtr->Submit(bind(&SimulatorThread::RunTranslocate, simulatorPtr));
+
 	return true;
 }
 
@@ -3750,14 +3778,14 @@ void CreatureInstance::Regenerate(int amount) {
 	Heal(amount);
 }
 
-void CreatureInstance::DoNothing(void) {
-}
-
-void CreatureInstance::SummonPet(int unknown) {
-}
-
-void CreatureInstance::Jump(void) {
-}
+//void CreatureInstance::DoNothing(void) {
+//}
+//
+//void CreatureInstance::SummonPet(int unknown) {
+//}
+//
+//void CreatureInstance::Jump(void) {
+//}
 
 int CreatureInstance::AdjustMight(int amount) {
 	_LimitAdjust(css.might, amount, 0, ABGlobals::MAX_MIGHT);
@@ -3869,9 +3897,9 @@ void CreatureInstance::CancelPending_Ex(ActiveAbilityInfo *ability) {
 				actInst->nutScriptPlayer->InterruptInteraction(CreatureID);
 			}
 
-			std::list<QuestScript::QuestNutPlayer*> l =
+			list<QuestScript::QuestNutPlayer*> l =
 					g_QuestNutManager.GetActiveScripts(CreatureID);
-			std::list<QuestScript::QuestNutPlayer*>::iterator it = l.begin();
+			list<QuestScript::QuestNutPlayer*>::iterator it = l.begin();
 			for (; it != l.end(); ++it) {
 				QuestScript::QuestNutPlayer *player = *it;
 				player->InterruptInteraction();
@@ -4822,7 +4850,7 @@ void CreatureInstance::SendAutoAttack(int abilityID, int targetID) {
 }
 
 void CreatureInstance::ActivateSavedAbilities(void) {
-	std::vector<ActiveBuff>::iterator it;
+	vector<ActiveBuff>::iterator it;
 	if (g_GameConfig.UsePersistentBuffs) {
 		if (buffManager.buffList.size() > 0)
 			/* First copy active buffs to persistent buffs. This is done because is the player logs out
@@ -5243,7 +5271,9 @@ bool CreatureInstance::isNPCReadyMovement(void) {
 	return true;
 }
 
-void CreatureInstance::RunProcessingCycle(void) {
+void CreatureInstance::RunScheduledTasks(void) {
+	this->Schedulable::RunScheduledTasks();
+
 	CheckActiveStatusEffects();
 	RunActiveAbilities();
 
@@ -5963,7 +5993,7 @@ void CreatureInstance::SelectTarget(CreatureInstance *newTarget) {
 	if (newTarget != CurrentTarget.targ) {
 		// Inform the AI script a target was lost
 		if (CurrentTarget.targ != NULL && aiNut != NULL) {
-			std::vector<ScriptCore::ScriptParam> p;
+			vector<ScriptCore::ScriptParam> p;
 			p.push_back(CurrentTarget.targ->CreatureID);
 
 			/* Need to run immediately as it may clear the queue, thus clearing any queued events in the
@@ -6021,7 +6051,7 @@ void CreatureInstance::SelectTarget(CreatureInstance *newTarget) {
 		CurrentTarget.targ = newTarget;
 
 		if (aiNut != NULL && CurrentTarget.targ != NULL) {
-			std::vector<ScriptCore::ScriptParam> p;
+			vector<ScriptCore::ScriptParam> p;
 			p.push_back(CurrentTarget.targ->CreatureID);
 			g_Logs.server->debug("%v acquired target (which is %v).",
 					CreatureID, CurrentTarget.targ->CreatureID);
@@ -6370,11 +6400,11 @@ void CreatureInstance::_RemoveStatusList(int statusID) {
 
 int CreatureInstance::GetStatDurationSec(int index) {
 	if (activeStatMod[index].expireTime == PlatformTime::MAX_TIME)
-		return std::numeric_limits<int>::max();
+		return numeric_limits<int>::max();
 	else {
 		int x = ((activeStatMod[index].expireTime - g_ServerTime) / 1000UL);
 		if (x < 0) {
-			return std::numeric_limits<int>::max();
+			return numeric_limits<int>::max();
 		}
 		return x;
 	}
@@ -6640,7 +6670,7 @@ void CreatureInstance::CheckLootTimers(void) {
 		size = lootBag->size;
 	}
 
-	std::string lootStr;
+	string lootStr;
 	LootSystem::BuildAppearanceOverride(lootStr, prop, size,
 			LootSystem::tombstone);
 
@@ -6937,7 +6967,7 @@ void CreatureInstance::CheckQuestKill(CreatureInstance *target) {
 }
 
 int CreatureInstance::ProcessQuestRewards(int QuestID, int outcomeIdx,
-		const std::vector<QuestItemReward>& itemsToGive) {
+		const vector<QuestItemReward>& itemsToGive) {
 	if (!(serverFlags & ServerFlags::IsPlayer)) {
 		g_Logs.server->error(
 				"ProcessQuestRewards(%v) must be a player to receive inventory objects",
@@ -7150,7 +7180,7 @@ void CreatureInstance::CheckQuestInteract(CreatureInstance *target) {
 		 * inventory
 		 */
 
-		for (std::vector<int>::iterator it = cdef->Items.begin();
+		for (vector<int>::iterator it = cdef->Items.begin();
 				it != cdef->Items.end(); ++it) {
 			/* For now we only allow use if the player doesn't already have
 			 * the item. There could be other uses for this though. I'll
@@ -7277,8 +7307,8 @@ void CreatureInstance::RunObjectInteraction(CreatureInstance *target) {
 	//We need to add this to the message queue, because the instance changing code will
 	//remove (and invalidate) this creature instance before the ability processing
 	//is complete, potentially causing a crash.
-	bcm.AddEvent2(simulatorPtr->InternalID, (long) simulatorPtr,
-			target->CreatureID, BCM_RunObjectInteraction, actInst);
+
+	actInst->Submit(bind(&ActiveInstance::RunObjectInteraction, actInst, simulatorPtr, target->CreatureID));
 }
 
 void CreatureInstance::SendUpdatedLoot(void) {
@@ -7375,7 +7405,7 @@ float CreatureInstance::GetDropRateMultiplier(CreatureDefinition *cdef) {
 }
 
 void CreatureInstance::PlayerLoot(int level,
-		std::vector<DailyProfile> profiles) {
+		vector<DailyProfile> profiles) {
 	//Don't fetch a new loot container if it already has one.
 	if (activeLootID != 0)
 		return;
@@ -7385,7 +7415,7 @@ void CreatureInstance::PlayerLoot(int level,
 	ActiveLootContainer loot;
 	loot.CreatureID = CreatureID;
 
-	for (std::vector<DailyProfile>::iterator it = profiles.begin();
+	for (vector<DailyProfile>::iterator it = profiles.begin();
 			it != profiles.end(); ++it) {
 		DailyProfile profile = *it;
 		switch (profile.rewardType) {
@@ -7452,7 +7482,7 @@ void CreatureInstance::PlayerLoot(int level,
 	//New drop system.  Uses the drop tables found in the Loot subfolder.
 	//Roll the drops then merge them into the single container that will be assigned
 	//to the creature.
-//	std::vector<int> itemList;
+//	vector<int> itemList;
 //	DropRollParameters drp;
 //	drp.mCreatureDefID = CreatureDefID;
 //	drp.mCreatureLevel = level;
@@ -7557,7 +7587,7 @@ void CreatureInstance::CreateLoot(int finderLevel, int partySize) {
 	//New drop system.  Uses the drop tables found in the Loot subfolder.
 	//Roll the drops then merge them into the single container that will be assigned
 	//to the creature.
-	std::vector<int> itemList;
+	vector<int> itemList;
 	DropRollParameters drp;
 	drp.mCreatureDefID = CreatureDefID;
 	drp.mCreatureLevel = css.level;
@@ -7618,7 +7648,7 @@ void CreatureInstance::SetLevel(int newLevel) {
 			css.display_name, css.level);
 	g_SimulatorManager.BroadcastMessage(sbuffer);
 
-	std::vector<short> statList;
+	vector<short> statList;
 	RemoveStatModsBySource(BuffSource::ITEM);
 	charPtr->UpdateBaseStats(this, true);
 	charPtr->UpdateEquipStats(this);
@@ -7916,7 +7946,7 @@ void CreatureInstance::AttachItem(const char *type, const char *node) {
 }
 
 void CreatureInstance::ClearAppearanceModifiers() {
-	std::vector<AppearanceModifier*>::iterator it = appearanceModifiers.begin();
+	vector<AppearanceModifier*>::iterator it = appearanceModifiers.begin();
 	for (; it != appearanceModifiers.end(); ++it)
 		delete *it;
 	appearanceModifiers.clear();
@@ -7926,7 +7956,7 @@ void CreatureInstance::RemoveAppearanceModifier(AppearanceModifier *modifier) {
 	g_Logs.server->debug(
 			"Removing an appearance modifier for %v from a list of %v",
 			CreatureID, appearanceModifiers.size());
-	std::vector<AppearanceModifier*>::iterator it = appearanceModifiers.begin();
+	vector<AppearanceModifier*>::iterator it = appearanceModifiers.begin();
 	for (; it != appearanceModifiers.end(); ++it) {
 		AppearanceModifier *app = *it;
 		if (app == modifier) {
@@ -7939,17 +7969,17 @@ void CreatureInstance::RemoveAppearanceModifier(AppearanceModifier *modifier) {
 			PrepExt_UpdateAppearance(GSendBuf, this), CurrentX, CurrentZ);
 }
 
-std::string CreatureInstance::PeekAppearanceEq() {
-	std::string appearance = css.eq_appearance;
-	std::vector<AppearanceModifier*>::iterator it = appearanceModifiers.begin();
+string CreatureInstance::PeekAppearanceEq() {
+	string appearance = css.eq_appearance;
+	vector<AppearanceModifier*>::iterator it = appearanceModifiers.begin();
 	for (; it != appearanceModifiers.end(); ++it)
 		appearance = (*it)->ModifyEq(appearance);
 	return appearance;
 }
 
-std::string CreatureInstance::PeekAppearance() {
-	std::string appearance = css.appearance;
-	std::vector<AppearanceModifier*>::iterator it = appearanceModifiers.begin();
+string CreatureInstance::PeekAppearance() {
+	string appearance = css.appearance;
+	vector<AppearanceModifier*>::iterator it = appearanceModifiers.begin();
 	for (; it != appearanceModifiers.end(); ++it)
 		appearance = (*it)->Modify(appearance);
 	return appearance;
@@ -8474,7 +8504,7 @@ CreatureDefinition* CreatureDefManager::GetPointerByName(const char *name) {
 
 void CreatureDefManager::SaveCreatureTweak(CreatureDefinition *def) {
 
-	std::string filename = GetIndividualFilename(def->CreatureDefID);
+	string filename = GetIndividualFilename(def->CreatureDefID);
 	FILE *output = fopen(filename.c_str(), "wb");
 	if (output == NULL) {
 		g_Logs.data->error("[ERROR] SaveAccountToStream could not open: %s",
@@ -8486,19 +8516,17 @@ void CreatureDefManager::SaveCreatureTweak(CreatureDefinition *def) {
 	fclose(output);
 }
 
-std::string CreatureDefManager::GetIndividualFilename(int accountID) {
+fs::path CreatureDefManager::GetIndividualFilename(int accountID) {
 	char buf[32];
 	Util::SafeFormat(buf, sizeof(buf), "%08d.txt", accountID);
-	return Platform::JoinPath(
-			Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Creatures"),
-			buf);
+	return g_Config.ResolveStaticDataPath() / "Creatures" / buf;
 }
 
-int CreatureDefManager::LoadPackages(std::string listFile) {
+int CreatureDefManager::LoadPackages(const fs::path &listFile) {
 	g_Logs.data->info("Loading creature packages file %v", listFile);
 
 	FileReader lfr;
-	if (lfr.OpenText(listFile.c_str()) != Err_OK) {
+	if (lfr.OpenText(listFile) != Err_OK) {
 		g_Logs.data->error("Could not open Creature list file [%v]", listFile);
 		return -1;
 	}
@@ -8506,42 +8534,31 @@ int CreatureDefManager::LoadPackages(std::string listFile) {
 	while (lfr.FileOpen() == true) {
 		int r = lfr.ReadLine();
 		if (r > 0)
-			LoadFile(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							Platform::FixPaths(lfr.DataBuffer)));
+			LoadFile(g_Config.ResolveStaticDataPath() / Platform::FixPaths(lfr.DataBuffer));
 	}
 	lfr.CloseCurrent();
 
 	/* Now load any creatures from the separate files (as written by creature tweak), replacing those we
 	 * have already loaded. The should be periodically moved into the static data files.
 	 */
-	std::string overridesDir = Platform::JoinPath(
-			g_Config.ResolveVariableDataPath(), "Creatures");
-	Platform::MakeDirectory(overridesDir);
-	Platform_DirectoryReader r;
-	string dir = r.GetDirectory();
-	r.SetDirectory(overridesDir);
-	r.ReadFiles();
-	r.SetDirectory(dir.c_str());
-	vector<std::string>::iterator it;
-	char StrBuf[256] = { 0 };
-	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
-		std::string p = *it;
-		if (Util::HasEnding(p, ".txt")) {
-			Util::SafeFormat(StrBuf, sizeof(StrBuf), "%s/%s",
-					overridesDir.c_str(), p.c_str());
-			LoadFile(StrBuf);
+	auto overridesDir = g_Config.ResolveVariableDataPath() / "Creatures";
+	if(!fs::exists(overridesDir)) {
+		fs::create_directories(overridesDir);
+	}
+	for(const fs::directory_entry& entry : fs::directory_iterator(overridesDir)) {
+		auto file = entry.path();
+		if(file.extension() == ".txt") {
+			LoadFile(file);
 		}
 	}
-
 	return 0;
 }
 
-int CreatureDefManager::LoadFile(std::string filename) {
+int CreatureDefManager::LoadFile(const fs::path &filename) {
 	g_Logs.data->info("Loading creatures file %v", filename);
 
 	FileReader lfr;
-	if (lfr.OpenText(filename.c_str()) != Err_OK) {
+	if (lfr.OpenText(filename) != Err_OK) {
 		g_Logs.data->error("Could not open CreatureDef file [%v]", filename);
 		return -1;
 	}
@@ -8619,8 +8636,8 @@ int CreatureDefManager::LoadFile(std::string filename) {
 	return count;
 }
 
-int CreatureDefManager::GetSpawnList(std::string  searchType,
-		std::string  searchStr, vector<CreatureSearchResult> &resultList) {
+int CreatureDefManager::GetSpawnList(string  searchType,
+		string  searchStr, vector<CreatureSearchResult> &resultList) {
 	int filter = 0;
 
 	if (searchType ==  "Creatures")
@@ -8654,7 +8671,7 @@ int CreatureDefManager::GetSpawnList(std::string  searchType,
 				if (searchStr.length() == 0 ||
 					Util::CaseInsensitiveStringFind(it->second.css.display_name, searchStr) ||
 					Util::CaseInsensitiveStringFind(it->second.css.sub_name, searchStr) ||
-					std::to_string(it->second.css.level).compare(searchStr) == 0) {
+					to_string(it->second.css.level).compare(searchStr) == 0) {
 					CreatureSearchResult cs;
 					cs.id= it->second.CreatureDefID;
 					cs.name = it->second.css.display_name;
@@ -8673,11 +8690,11 @@ int CreatureDefManager::GetSpawnList(std::string  searchType,
 //			CreatureDef.NPC[resList[a].id].css.level);
 //	sprintf(sim->Aux3, "%d", CreatureDef.NPC[resList[a].id].CreatureDefID);
 
-	std::vector<SpawnPackageList>::iterator it2;
+	vector<SpawnPackageList>::iterator it2;
 	if(filter == 0 || filter == 2) {
 		for (it2 = g_SpawnPackageManager.packageList.begin(); it2 != g_SpawnPackageManager.packageList.end(); ++it2) {
 			SpawnPackageList spl = *(it2);
-			std::vector<SpawnPackageDef>::iterator it3;
+			vector<SpawnPackageDef>::iterator it3;
 			for (it3 = spl.defList.begin(); it3 != spl.defList.end(); ++it3) {
 				SpawnPackageDef def = *(it3);
 
@@ -8700,7 +8717,7 @@ int CreatureDefManager::GetSpawnList(std::string  searchType,
 							if (searchStr.length() == 0 ||
 								Util::CaseInsensitiveStringFind(cdef->css.display_name, searchStr) ||
 								Util::CaseInsensitiveStringFind(cdef->css.sub_name, searchStr) ||
-								std::to_string(cdef->css.level).compare(searchStr) == 0) {
+								to_string(cdef->css.level).compare(searchStr) == 0) {
 								CreatureSearchResult cs;
 								cs.id= 0;
 								cs.name = def.packageName;

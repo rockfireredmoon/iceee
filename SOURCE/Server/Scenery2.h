@@ -10,11 +10,15 @@
 #include "Entities.h"
 #include "json/json.h"
 #include <boost/thread.hpp>
+#include <filesystem>
 
-static std::string KEYPREFIX_GROVE = "Grove";
-static std::string KEYPREFIX_SCENERY = "Scenery";
-static std::string ID_NEXT_SCENERY = "NextSceneryID";
-static std::string KEYPREFIX_SCENERY_OBJECT = "SceneryObject";
+using namespace std;
+namespace fs = filesystem;
+
+static string KEYPREFIX_GROVE = "Grove";
+static string KEYPREFIX_SCENERY = "Scenery";
+static string ID_NEXT_SCENERY = "NextSceneryID";
+static string KEYPREFIX_SCENERY_OBJECT = "SceneryObject";
 
 
 /*  
@@ -68,7 +72,7 @@ struct GlobalSceneryVars
 
 namespace ActiveLocation
 {
-	typedef std::vector<int> CONTAINER;
+	typedef vector<int> CONTAINER;
 	bool IsLocationInUse(const CONTAINER& source);
 }
 
@@ -116,8 +120,8 @@ public:
 
 	SceneryPageKey Key;
 	int Zone;
-	std::string Asset;   //Asset file
-	std::string Name;    //Arbitrary object name
+	string Asset;   //Asset file
+	string Name;    //Arbitrary object name
 
 	float LocationX;
 	float LocationY;
@@ -136,7 +140,7 @@ public:
 
 	int Layer;
 	int patrolSpeed;
-	std::string patrolEvent;
+	string patrolEvent;
 
 	bool hasExtraData;
 	CreatureSpawnDef extraData;
@@ -148,25 +152,25 @@ public:
 	bool ReadEntity(AbstractEntityReader *reader);
 	bool EntityKeys(AbstractEntityReader *reader);
 
-	int SetPosition(const std::string &buffer);
-	int SetQ(const std::string &buffer);
-	int SetS(const std::string &buffer);
+	int SetPosition(const string &buffer);
+	int SetQ(const string &buffer);
+	int SetS(const string &buffer);
 	void copyFrom(const SceneryObject *source);
 	bool CreateExtraData(void);
-	bool IsExtendedProperty(const std::string &propertyName);
-	bool SetExtendedProperty(const std::string &propertyName, const std::string &propertyValue);
+	bool IsExtendedProperty(const string &propertyName);
+	bool SetExtendedProperty(const string &propertyName, const string &propertyValue);
 	void WriteToStream(FILE *file) const;
 	void AddLink(int PropID, int type);
 	void RemoveLink(int PropID);
 	bool HasLinks(int linkType);
-	void EnumLinks(int linkType, std::vector<int> &output);
+	void EnumLinks(int linkType, vector<int> &output);
 	bool IsSpawnPoint(void);
-	std::string GetClusterKey();
+	string GetClusterKey();
 
 	const char *GetSpawnPackageName(void);
 
-	std::string GetAssetName();
-	bool ExtractATS(std::string& outputStr) const;
+	string GetAssetName();
+	bool ExtractATS(string& outputStr) const;
 
 	void WriteToJSON(Json::Value &value);
 	void ReadFromJSON(Json::Value &value);
@@ -176,7 +180,7 @@ public:
 class SceneryPage: public AbstractEntity {
 	friend class SimulatorThread; //For debugging purposes!
 public:
-	typedef std::map<int, SceneryObject> SCENERY_MAP;  //Map PropID to its SceneryObject data.
+	typedef map<int, SceneryObject> SCENERY_MAP;  //Map PropID to its SceneryObject data.
 	typedef SCENERY_MAP::iterator SCENERY_IT;
 
 	SceneryPage();
@@ -199,8 +203,8 @@ public:
 	bool DeleteProp(int propID);
 	void LoadScenery(void);
 	void CheckAutosave(int& debugPagesSaved, int& debugPropsSaved);
-	std::string GetFileName();
-	std::string GetFolderName();
+	fs::path GetFileName();
+	fs::path GetFolderName();
 	SceneryObject *GetPropPtr(int propID);
 	void NotifyAccess(bool notifyPendingChange);
 	bool IsTileExpired(void);
@@ -209,12 +213,12 @@ public:
 	bool IsClusteredZone();
 	void RemoveFromCluster();
 	void LoadSceneryFromCluster();
-	void LoadSceneryFromFile(std::string fileName);
+	void LoadSceneryFromFile(const fs::path &fileName);
 
 private:
 	unsigned long mLastAccessTime;
-	void RemoveFile(std::string fileName);
-	bool SaveFile(std::string fileName);
+	void RemoveFile(const fs::path &fileName);
+	bool SaveFile(const fs::path &fileName);
 	bool SaveToCluster();
 };
 
@@ -222,7 +226,7 @@ private:
 class SceneryZone
 {
 public:
-	typedef std::map<SceneryPageKey, SceneryPage> PAGEMAP;
+	typedef map<SceneryPageKey, SceneryPage> PAGEMAP;
 	PAGEMAP mPages;      //Pages hold the prop objects themselves.
 
 	static const int DEFAULT_PAGE_SIZE = 1920;
@@ -260,15 +264,15 @@ struct SceneryPageRequest
 	int x;         //Tile coordinate to fetch scenery from.
 	int y;         //Tile coordinate to fetch scenery from.
 	bool skipQuery;  //Don't compile a query response.
-	std::list<int> excludedProps; //A list of prop IDs that should be excluded
+	list<int> excludedProps; //A list of prop IDs that should be excluded
 };
 
 //The root container for all scenery objects, subdivided into zones.
 class SceneryManager
 {
 public:
-	typedef std::map<int, SceneryZone> CONTAINER;
-	typedef std::map<int, SceneryZone>::iterator ITERATOR;
+	typedef map<int, SceneryZone> CONTAINER;
+	typedef map<int, SceneryZone>::iterator ITERATOR;
 	CONTAINER mZones;
 
 	SceneryZone* FindZone(int zoneID);
@@ -285,7 +289,7 @@ public:
 	void GetThread(const char *request);
 	void ReleaseThread(void);
 
-	bool ValidATSEntry(const std::string& atsName);
+	bool ValidATSEntry(const string& atsName);
 	bool VerifyATS(SceneryObject& prop);
 	SceneryObject* GlobalGetPropPtr(int zoneID, int propID, SceneryPage** foundPage);
 	SceneryObject* AddProp(int zoneID, const SceneryObject& prop);
@@ -295,12 +299,12 @@ public:
 	bool UpdateLink(int zoneID, int propID1, int propID2, int type);
 	void NotifyChangedProp(int zoneID, int propID);
 	
-	void AddPageRequest(int socket, int queryID, int zone, int x, int y, bool skipQuery, std::list<int> excludedProps);
+	void AddPageRequest(int socket, int queryID, int zone, int x, int y, bool skipQuery, list<int> excludedProps);
 
 	bool IsGarbageCheckReady(void);
 	void TransferActiveLocations(const ActiveLocation::CONTAINER& source);
 
-	void EnumPropsInRange(int zoneID, int posX, int posZ, int radius, std::vector<SceneryObject*>& searchResults);
+	void EnumPropsInRange(int zoneID, int posX, int posZ, int radius, vector<SceneryObject*>& searchResults);
 	
 	// Utilities
 	static int WriteAttachParticles(char *outbuf, const char *itemDefName, char roll, const char *bidder);
@@ -320,8 +324,8 @@ private:
 	boost::thread *mThread;
 	Platform_CriticalSection cs;
 	unsigned long mNextAutosaveTime;
-	std::vector<SceneryPageRequest> mPendingPageRequest;
-	std::vector<SceneryPageRequest> mImmediatePageRequest;
+	vector<SceneryPageRequest> mPendingPageRequest;
+	vector<SceneryPageRequest> mImmediatePageRequest;
 
 	unsigned long mNextGarbageCheckTime;
 	ActiveLocation::CONTAINER mActiveLocations;
@@ -330,7 +334,7 @@ private:
 
 	void TransferPageRequests(void);
 	void ProcessPageRequests(void);
-	void SendPageRequest(const SceneryPageRequest& request, std::list<PacketManager::PACKET_PAIR>& outgoingPackets);
+	void SendPageRequest(const SceneryPageRequest& request, list<PacketManager::PACKET_PAIR>& outgoingPackets);
 	void RunGarbageCheck(void);
 };
 

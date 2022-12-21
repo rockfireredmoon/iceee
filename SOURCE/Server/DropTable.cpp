@@ -554,10 +554,10 @@ DropTableManager :: ~DropTableManager()
 {
 }
 
-void DropTableManager :: LoadSetFile(std::string filename)
+void DropTableManager :: LoadSetFile(const fs::path &filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
+	if(lfr.OpenText(filename) != Err_OK)
 	{
 		g_Logs.data->error("Could not open file [%v]", filename);
 		return;
@@ -584,10 +584,10 @@ void DropTableManager :: LoadSetFile(std::string filename)
 	lfr.CloseCurrent();
 }
 
-void DropTableManager :: LoadPackageFile(std::string filename)
+void DropTableManager :: LoadPackageFile(const fs::path &filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
+	if(lfr.OpenText(filename) != Err_OK)
 	{
 		g_Logs.data->error("Could not open file [%v]", filename);
 		return;
@@ -614,10 +614,10 @@ void DropTableManager :: LoadPackageFile(std::string filename)
 	lfr.CloseCurrent();
 }
 
-void DropTableManager :: LoadCreatureFile(std::string filename)
+void DropTableManager :: LoadCreatureFile(const fs::path &filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
+	if(lfr.OpenText(filename) != Err_OK)
 	{
 		g_Logs.data->error("Could not open file [%v]", filename);
 		return;
@@ -645,9 +645,9 @@ void DropTableManager :: LoadCreatureFile(std::string filename)
 
 void DropTableManager :: LoadData(void)
 {
-	LoadSetFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Loot"), "Sets.txt"));
-	LoadPackageFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Loot"), "Packages.txt"));
-	LoadCreatureFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Loot"), "Creatures.txt"));
+	LoadSetFile(g_Config.ResolveStaticDataPath() / "Loot" / "Sets.txt");
+	LoadPackageFile(g_Config.ResolveStaticDataPath() / "Loot" / "Packages.txt");
+	LoadCreatureFile(g_Config.ResolveStaticDataPath() / "Loot" / "Creatures.txt");
 
 	ResolveClassFlags();
 	ResolveAutotable();

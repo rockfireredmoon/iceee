@@ -19,7 +19,6 @@
 #include "DirectoryAccess.h"
 #include "FileReader.h"
 #include "Simulator.h"
-#include "StringUtil.h"
 
 #include "Random.h"
 #include "Cluster.h"
@@ -29,7 +28,7 @@
 
 extern unsigned long g_ServerTime;
 
-static std::string KEYPREFIX_SCRIPT = "Script";
+static string KEYPREFIX_SCRIPT = "Script";
 
 void PrintFunc(HSQUIRRELVM v, const SQChar *s, ...) {
 	va_list vl;
@@ -136,7 +135,7 @@ namespace ScriptCore
 		strValue = "";
 		bValue = false;
 	}
-	ScriptParam::ScriptParam(std::string v) {
+	ScriptParam::ScriptParam(string v) {
 		type = OPT_STR;
 		iValue = 0;
 		fValue = 0;
@@ -167,7 +166,7 @@ namespace ScriptCore
 	// possibility of groves customising scripts for the creatures they use
 	//
 
-	NutScriptCallStringParser::NutScriptCallStringParser(std::string callString) {
+	NutScriptCallStringParser::NutScriptCallStringParser(string callString) {
 		int idx = callString.find('(');
 		if(idx != -1) {
 			mScriptName = callString.substr(0, idx);
@@ -251,34 +250,27 @@ namespace ScriptCore
 		return ((mFlags & flag) != 0);
 	}
 
-	std::string NutDef :: GetBytecodeLocation() {
-		std::string base = Platform::Basename(mSourceFile);
-		std::string dir = Platform::Dirname(mSourceFile);
+	fs::path NutDef :: GetBytecodeLocation() {
+		auto base = mSourceFile.stem();
+		auto dir = mSourceFile.parent_path();
 		if(fromCluster) {
-			return Platform::JoinPath(g_Config.ResolveTmpDataPath(), Platform::JoinPath(dir, StringUtil::Format("%s.cnut", base.c_str())));
+			return g_Config.ResolveTmpDataPath() / dir / ( base.string() + ".cnut" );
 		}
 		else {
-			STRINGLIST v;
-			const std::string d(1, PLATFORM_FOLDERVALID);
-			std::string cnut;
-			v.push_back(dir);
-			v.push_back(base);
-			Util::Join(v, d.c_str(), cnut);
-			cnut.append(".cnut");
-			return cnut;
+			return dir / ( base.string() + ".cnut" );
 		}
 	}
 
-	void NutDef::LoadFromLocalFile(std::string sourceFile) {
+	void NutDef::LoadFromLocalFile(const fs::path &sourceFile) {
 		g_Logs.script->info("Initializing Squirrel script from local file '%v'", sourceFile);
 		mSourceFile = sourceFile;
-		scriptName = Platform::Basename(mSourceFile);
+		scriptName = mSourceFile.stem();
 		mLastModified = Platform::GetLastModified(mSourceFile);
 		fromCluster = false;
 
 		FileReader lfr;
-		if (Platform::FileExists(mSourceFile)) {
-			if (lfr.OpenText(mSourceFile.c_str()) != Err_OK) {
+		if (fs::exists(mSourceFile)) {
+			if (lfr.OpenText(mSourceFile) != Err_OK) {
 				/* Error */
 				mScriptContent = "#!/bin/sq\n#\n# Failed to load script content.\n";
 				return;
@@ -455,12 +447,12 @@ namespace ScriptCore
 	//
 	// Run a named function.
 	//
-	RunFunctionCallback::RunFunctionCallback(NutPlayer *nut, std::string functionName) {
+	RunFunctionCallback::RunFunctionCallback(NutPlayer *nut, string functionName) {
 		mNut = nut;
 		mCaller = mNut->mCaller;
 		mFunctionName = functionName;
 	}
-	RunFunctionCallback::RunFunctionCallback(NutPlayer *nut, std::string functionName, std::vector<ScriptParam> args) {
+	RunFunctionCallback::RunFunctionCallback(NutPlayer *nut, string functionName, vector<ScriptParam> args) {
 		mNut = nut;
 		mCaller = mNut->mCaller;
 		mFunctionName = functionName;
@@ -541,7 +533,7 @@ namespace ScriptCore
 		}
 	}
 
-	std::string NutPlayer::GetStatus() {
+	string NutPlayer::GetStatus() {
 		if(mHalting) {
 			return "Halting";
 		}
@@ -570,7 +562,7 @@ namespace ScriptCore
 		}
 		else {
 			WakeVM("NutPlayer::ClearQueue");
-			std::vector<ScriptCore::NutScriptEvent*>::iterator it;
+			vector<ScriptCore::NutScriptEvent*>::iterator it;
 			total += mQueue.size() + mQueueAdd.size() + mQueueInsert.size();
 			for(it = mQueue.begin(); it != mQueue.end(); ++it)
 				delete *it;
@@ -586,7 +578,7 @@ namespace ScriptCore
 		return total;
 	}
 
-	void NutPlayer::Initialize(NutDef *defPtr, std::string &errors) {
+	void NutPlayer::Initialize(NutDef *defPtr, string &errors) {
 		unsigned long started = g_PlatformTime.getMilliseconds();
 
 		def = defPtr;
@@ -600,40 +592,40 @@ namespace ScriptCore
 
 		sqstd_seterrorhandlers(vm); //registers the default error handlers
 		sq_setprintfunc(vm, PrintFunc, Errorfunc); //sets the print function
-		g_Logs.script->info("Processing Squirrel script '%v'", def->mSourceFile.c_str());
+		g_Logs.script->info("Processing Squirrel script '%v'", def->mSourceFile);
 
 
 		/* Look for the compiled NUT file (.cnut). If it exists, test if the modification
 		 * time is the same as the .nut file. If it isn't (or the .cnut doesn't exist at all),
 		 * then compile AND write the bytecode
 		 */
-		std::string cnut = def->GetBytecodeLocation();
+		auto cnut = def->GetBytecodeLocation();
 		unsigned long cnutMod = Platform::GetLastModified(cnut);
 
 		Sqrat::Script script(vm);
 
 		if(cnutMod != def->mLastModified) {
-			g_Logs.script->info("Recompiling Squirrel script '%v'", def->mSourceFile.c_str());
+			g_Logs.script->info("Recompiling Squirrel script '%v'", def->mSourceFile);
 			script.CompileString(def->mScriptContent, errors, def->scriptName);
 		}
 		else {
-			g_Logs.script->info("Loading existing Squirrel script bytecode for '%v'", cnut.c_str());
+			g_Logs.script->info("Loading existing Squirrel script bytecode for '%v'", cnut);
 			script.CompileFile(_SC(cnut.c_str()), errors);
 		}
 
 		if (Sqrat::Error::Occurred(vm)) {
 			errors.append(Sqrat::Error::Message(vm).c_str());
-			g_Logs.script->error("Squirrel script %v failed to compile. %v", def->mSourceFile.c_str(), Sqrat::Error::Message(vm).c_str());
+			g_Logs.script->error("Squirrel script %v failed to compile. %v", def->mSourceFile, Sqrat::Error::Message(vm).c_str());
 		}
 		else {
 			if(cnutMod != def->mLastModified) {
-				g_Logs.script->info("Writing Squirrel script bytecode for '%v' to '%v' (in %v)", def->mSourceFile.c_str(), cnut.c_str(), Platform::GetDirectory());
-				Platform::MakeDirectories(Platform::Dirname(cnut));
+				g_Logs.script->info("Writing Squirrel script bytecode for '%v' to '%v' (in %v)", def->mSourceFile, cnut, cnut.parent_path());
+				fs::create_directories(cnut.parent_path());
 				try {
 					script.WriteCompiledFile(cnut);
 				}
 				catch(int e) {
-					g_Logs.script->error("Failed to write Squirrel script bytecode for '%v' to '%v'. Err %v", def->mSourceFile.c_str(), cnut.c_str(), e);
+					g_Logs.script->error("Failed to write Squirrel script bytecode for '%v' to '%v'. Err %v", def->mSourceFile, cnut, e);
 				}
 				Platform::SetLastModified(cnut, def->mLastModified);
 			}
@@ -644,7 +636,7 @@ namespace ScriptCore
 			if (Sqrat::Error::Occurred(vm)) {
 				mActive = false;
 				errors.append(Sqrat::Error::Message(vm).c_str());
-				g_Logs.script->error("Squirrel script %v failed to run. %v", def->mSourceFile.c_str(), Sqrat::Error::Message(vm).c_str());
+				g_Logs.script->error("Squirrel script %v failed to run. %v", def->mSourceFile, Sqrat::Error::Message(vm).c_str());
 			}
 
 			// The script might have provided an info table
@@ -652,11 +644,11 @@ namespace ScriptCore
 			if(!infoObject.IsNull()) {
 				Sqrat::Object author = infoObject.GetSlot("author");
 				if(!author.IsNull()) {
-					def->mAuthor = author.Cast<std::string>();
+					def->mAuthor = author.Cast<string>();
 				}
 				Sqrat::Object description = infoObject.GetSlot("description");
 				if(!description.IsNull()) {
-					def->mAuthor = description.Cast<std::string>();
+					def->mAuthor = description.Cast<string>();
 				}
 				Sqrat::Object queueEvents = infoObject.GetSlot("queue_events");
 				if(!queueEvents.IsNull()) {
@@ -679,7 +671,7 @@ namespace ScriptCore
 
 				if(def->mVMSize != 0 && def->mVMSize != g_Config.SquirrelVMStackSize) {
 					vm->_stack.resize(def->mVMSize);
-					g_Logs.script->info("Squirrel script %v has requested a different VM size (%v) to the default (%v), reinitializing. ", def->mSourceFile.c_str(), def->mVMSize, g_Config.SquirrelVMStackSize);
+					g_Logs.script->info("Squirrel script %v has requested a different VM size (%v) to the default (%v), reinitializing. ", def->mSourceFile, def->mVMSize, g_Config.SquirrelVMStackSize);
 				}
 			}
 		}
@@ -708,15 +700,15 @@ namespace ScriptCore
 
 	bool NutPlayer::JumpToLabel(const char *name)
 	{
-		return JumpToLabel(name, std::vector<ScriptParam>());
+		return JumpToLabel(name, vector<ScriptParam>());
 	}
 
-	bool NutPlayer::JumpToLabel(const char *name, std::vector<ScriptParam> parms)
+	bool NutPlayer::JumpToLabel(const char *name, vector<ScriptParam> parms)
 	{
 		return JumpToLabel(name, parms, def->mQueueEvents);
 	}
 
-	bool NutPlayer::JumpToLabel(const char *name, std::vector<ScriptParam> parms, bool queue)
+	bool NutPlayer::JumpToLabel(const char *name, vector<ScriptParam> parms, bool queue)
 	{
 		if(queue) {
 			g_Logs.script->debug("Queue Jump to label %v in %v", name, def->scriptName.c_str());
@@ -836,7 +828,7 @@ namespace ScriptCore
 		Sqrat::RootTable(vm).SetValue(_SC("__argc"), SQInteger(mArgs.size()));
 		Sqrat::Array arr(vm, mArgs.size());
 		int idx = 0;
-		for(std::vector<std::string>::iterator it = mArgs.begin(); it != mArgs.end(); ++it)
+		for(vector<string>::iterator it = mArgs.begin(); it != mArgs.end(); ++it)
 			arr.SetValue(idx++, _SC(*it));
 		Sqrat::RootTable(vm).SetValue(_SC("__argv"), arr);
 	}
@@ -950,7 +942,7 @@ namespace ScriptCore
 			 */
 
 			ScriptCore::NutScriptEvent* nse;
-			for(std::vector<ScriptCore::NutScriptEvent*>::iterator it = mQueue.begin(); it != mQueue.end(); ++it) {
+			for(vector<ScriptCore::NutScriptEvent*>::iterator it = mQueue.begin(); it != mQueue.end(); ++it) {
 				nse = *it;
 				if(nse->mCallback != NULL) {
 					if(dynamic_cast<HaltCallback*>(nse->mCallback)) {
@@ -992,7 +984,7 @@ namespace ScriptCore
 			g_Logs.script->debug("Request to halt an inactive VM [%v]", def->scriptName.c_str());
 	}
 
-	void NutPlayer::FinaliseExecution(std::string name, int top) {
+	void NutPlayer::FinaliseExecution(string name, int top) {
 		const SQInteger state = sq_getvmstate(vm);
 		if( state == SQ_VMSTATE_IDLE ) {
 			sq_settop(vm,top);
@@ -1002,7 +994,7 @@ namespace ScriptCore
 		}
 	}
 
-	std::string NutPlayer::RunFunctionWithStringReturn(std::string name, std::vector<ScriptParam> parms, bool time) {
+	string NutPlayer::RunFunctionWithStringReturn(string name, vector<ScriptParam> parms, bool time) {
 		if(!mActive) {
 			g_Logs.script->warn("Attempt to run function on inactive script %v.", name.c_str());
 			return "";
@@ -1014,7 +1006,7 @@ namespace ScriptCore
 		mRunning = true;
 		WakeVM(name);
 		SQInteger top = sq_gettop(vm);
-		std::string sval = "";
+		string sval = "";
 		try {
 			if(DoRunFunction(name, parms, time, true)) {
 				const SQChar* val;
@@ -1036,7 +1028,7 @@ namespace ScriptCore
 		return sval;
 	}
 
-	bool NutPlayer::RunFunctionWithBoolReturn(std::string name, std::vector<ScriptParam> parms, bool time, bool defaultIfNoFunction) {
+	bool NutPlayer::RunFunctionWithBoolReturn(string name, vector<ScriptParam> parms, bool time, bool defaultIfNoFunction) {
 		if(!mActive) {
 			g_Logs.script->warn("Attempt to run function on inactive script %s.", name.c_str());
 			return false;
@@ -1067,7 +1059,7 @@ namespace ScriptCore
 		return val;
 	}
 
-	bool NutPlayer::RunFunction(std::string name, std::vector<ScriptParam> parms, bool time) {
+	bool NutPlayer::RunFunction(string name, vector<ScriptParam> parms, bool time) {
 
 //		g_Log.AddMessageFormat("[REMOVEME] Run function %s in %s", name.c_str(), def->mSourceFile.c_str());
 
@@ -1104,7 +1096,7 @@ namespace ScriptCore
 		return ok;
 	}
 
-	bool NutPlayer :: WakeVM(std::string name) {
+	bool NutPlayer :: WakeVM(string name) {
 
 		// Wake the VM up if it is suspend so the onFinish can be run
 		if(sq_getvmstate(vm) == SQ_VMSTATE_SUSPENDED) {
@@ -1135,14 +1127,14 @@ namespace ScriptCore
 		return false;
 	}
 
-	bool NutPlayer::DoRunFunction(std::string name, std::vector<ScriptParam> parms, bool time, bool retVal) {
+	bool NutPlayer::DoRunFunction(string name, vector<ScriptParam> parms, bool time, bool retVal) {
 		if(g_Config.DebugVerbose)
 			g_Logs.script->debug("Run function %v in %v", name.c_str(), def->mSourceFile.c_str());
 		sq_pushroottable(vm);
 		sq_pushstring(vm,_SC(name.c_str()),-1);
 		if(SQ_SUCCEEDED(sq_get(vm,-2))) {
 			sq_pushroottable(vm);
-			std::vector<ScriptCore::ScriptParam>::iterator it;
+			vector<ScriptCore::ScriptParam>::iterator it;
 			for(it = parms.begin(); it != parms.end(); ++it)
 			{
 				switch(it->type) {
@@ -1246,9 +1238,9 @@ namespace ScriptCore
 			// Apply any changes to the queue made while running the queued event
 			for(size_t i = 0; i < mQueueRemove.size(); i++)	{
 				NutScriptEvent *nse = mQueueRemove[i];
-				mQueue.erase(std::remove(mQueue.begin(), mQueue.end(), nse), mQueue.end());
-				mQueueAdd.erase(std::remove(mQueueAdd.begin(), mQueueAdd.end(), nse), mQueueAdd.end());
-				mQueueInsert.erase(std::remove(mQueueInsert.begin(), mQueueInsert.end(), nse), mQueueInsert.end());
+				mQueue.erase(remove(mQueue.begin(), mQueue.end(), nse), mQueue.end());
+				mQueueAdd.erase(remove(mQueueAdd.begin(), mQueueAdd.end(), nse), mQueueAdd.end());
+				mQueueInsert.erase(remove(mQueueInsert.begin(), mQueueInsert.end(), nse), mQueueInsert.end());
 				delete nse;
 			}
 			mQueue.insert(mQueue.end(), mQueueAdd.begin(), mQueueAdd.end());
@@ -1335,7 +1327,7 @@ namespace ScriptCore
 
 	NutScriptEvent* NutPlayer::GetEvent(unsigned long id) {
 		// Look for the event in all queues
-		std::vector<ScriptCore::NutScriptEvent*>::iterator it;
+		vector<ScriptCore::NutScriptEvent*>::iterator it;
 		for(it = mQueue.begin(); it != mQueue.end(); ++it) {
 			if((*it)->mId == id) {
 				return *it;
@@ -1353,17 +1345,17 @@ namespace ScriptCore
 		}
 		else
 		{
-			if(std::find(mQueue.begin(), mQueue.end(), evt) != mQueue.end())
-				mQueue.erase(std::find(mQueue.begin(), mQueue.end(), evt));
+			if(find(mQueue.begin(), mQueue.end(), evt) != mQueue.end())
+				mQueue.erase(find(mQueue.begin(), mQueue.end(), evt));
 
-			if(std::find(mQueueAdd.begin(), mQueueAdd.end(), evt) != mQueueAdd.end())
-				mQueueAdd.erase(std::find(mQueueAdd.begin(), mQueueAdd.end(), evt));
+			if(find(mQueueAdd.begin(), mQueueAdd.end(), evt) != mQueueAdd.end())
+				mQueueAdd.erase(find(mQueueAdd.begin(), mQueueAdd.end(), evt));
 
-			if(std::find(mQueueInsert.begin(), mQueueInsert.end(), evt) != mQueueInsert.end())
-				mQueueAdd.erase(std::find(mQueueAdd.begin(), mQueueAdd.end(), evt));
+			if(find(mQueueInsert.begin(), mQueueInsert.end(), evt) != mQueueInsert.end())
+				mQueueAdd.erase(find(mQueueAdd.begin(), mQueueAdd.end(), evt));
 
-			if(std::find(mQueueRemove.begin(), mQueueRemove.end(), evt) != mQueueRemove.end())
-				mQueueAdd.erase(std::find(mQueueAdd.begin(), mQueueAdd.end(), evt));
+			if(find(mQueueRemove.begin(), mQueueRemove.end(), evt) != mQueueRemove.end())
+				mQueueAdd.erase(find(mQueueAdd.begin(), mQueueAdd.end(), evt));
 		}
 	}
 
@@ -1465,7 +1457,7 @@ namespace ScriptCore
 				if((&left.value)->mSleeping > 0)
 					return sq_throwerror(v, _SC("already sleeping"));
 				Sqrat::Var<unsigned long> right(v, 2);
-				std::vector<int> vv;
+				vector<int> vv;
 				(&left.value)->mSleeping = right.value;
 				ResumeCallback *cb = new ResumeCallback(&left.value);
 				NutScriptEvent *nse = new NutScriptEvent(new TimeCondition (right.value), cb);
@@ -1609,10 +1601,10 @@ void ScriptDef :: ClearDerived(void)
 {
 }
 
-void ScriptDef :: CompileFromSource(std::string sourceFile)
+void ScriptDef :: CompileFromSource(const fs::path &sourceFile)
 {
 	FileReader lfr;
-	if(lfr.OpenText(sourceFile.c_str()) != Err_OK)
+	if(lfr.OpenText(sourceFile) != Err_OK)
 	{
 		g_Logs.script->warn("InstanceScript::CompileFromSource() unable to open file: %v", sourceFile);
 		return;
@@ -1988,7 +1980,7 @@ int ScriptDef :: CreateLabel(const char *name, int targInst)
 
 int ScriptDef :: GetLabelIndex(const char *name)
 {
-	std::map<std::string, int>::iterator it;
+	map<string, int>::iterator it;
 	it = mLabelMap.find(name);
 	if(it == mLabelMap.end())
 		return -1;
@@ -2091,7 +2083,7 @@ void ScriptDef :: OutputDisassemblyToFile(FILE *output)
 
 void ScriptDef :: Tokenize(const char *srcString, STRINGLIST &destList)
 {
-	std::string subStr;
+	string subStr;
 	destList.clear();
 	//printf(" 12345678901234567890\n");
 	//printf("[%s]\n", srcBuf);
@@ -2968,14 +2960,14 @@ BlockData* ScriptCompiler::GetLastUnresolvedBlock(void)
 	return NULL;
 }
 
-void ScriptCompiler::AddSymbol(const std::string &key, const std::string &value)
+void ScriptCompiler::AddSymbol(const string &key, const string &value)
 {
 	mSymbols[key] = value;
 }
 
-bool ScriptCompiler::HasSymbol(const std::string &token)
+bool ScriptCompiler::HasSymbol(const string &token)
 {
-	std::map<std::string, std::string>::iterator it;
+	map<string, string>::iterator it;
 	it = mSymbols.find(token);
 	if(it == mSymbols.end())
 		return false;
@@ -3079,7 +3071,7 @@ bool IntArray::VerifyIndex(int index)
 void IntArray::DebugPrintContents(void)
 {
 	char buffer[16];
-	std::string str = "[";
+	string str = "[";
 	for(size_t i = 0; i < arrayData.size();  i++)
 	{
 		if(i > 0)

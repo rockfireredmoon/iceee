@@ -241,15 +241,15 @@ void DropRateProfileManager::LoadData(void)
 		instance.SetMinimumLevel(q, initLev.QData[q]);
 	}
 
-	LoadTable(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "DropRateProfile.txt"));
+	LoadTable(g_Config.ResolveStaticDataPath() / "Data" / "DropRateProfile.txt");
 
 	g_Logs.data->info("Loaded %v drop rate profiles", mProfiles.size());
 }
 
-void DropRateProfileManager::LoadTable(std::string filename)
+void DropRateProfileManager::LoadTable(const fs::path &filename)
 {
 	FileReader3 fr;
-	if(fr.OpenFile(filename.c_str()) != FileReader3::SUCCESS)
+	if(fr.OpenFile(filename) != FileReader3::SUCCESS)
 	{
 		g_Logs.data->error("Could not open file [%v]", filename);
 		return;
@@ -326,14 +326,14 @@ InstanceScaleManager::InstanceScaleManager()
 void InstanceScaleManager::LoadData(void)
 {
 	mProfiles.clear();  //In case we're reloading.
-	LoadTable(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "ScaledDifficulties.txt"));
+	LoadTable(g_Config.ResolveStaticDataPath() / "Data" / "ScaledDifficulties.txt");
 	g_Logs.data->info("Loaded %v instance scaling profiles", mProfiles.size());
 }
 
-void InstanceScaleManager::LoadTable(std::string filename)
+void InstanceScaleManager::LoadTable(const fs::path &filename)
 {
 	FileReader3 fr;
-	if(fr.OpenFile(filename.c_str()) != FileReader3::SUCCESS)
+	if(fr.OpenFile(filename) != FileReader3::SUCCESS)
 	{
 		g_Logs.data->error("Could not open file [%v]", filename);
 		return;

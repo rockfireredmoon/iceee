@@ -1,5 +1,6 @@
 #include "Achievements.h"
 #include "Util.h"
+#include "Config.h"
 #include "FileReader.h"
 #include "DirectoryAccess.h"
 #include "util/Log.h"
@@ -37,7 +38,7 @@ const char *GetNameByID(int id) {
 	return "<undefined>";
 }
 
-int GetIDByName(const std::string &name) {
+int GetIDByName(const string &name) {
 	if (name.compare("COMBAT") == 0)
 		return COMBAT;
 	if (name.compare("QUESTING") == 0)
@@ -66,8 +67,8 @@ AchievementDef::AchievementDef() {
 AchievementDef::~AchievementDef() {
 }
 
-AchievementObjectiveDef* AchievementDef::GetObjectiveDef(std::string name) {
-	for(std::vector<AchievementObjectiveDef*>::iterator it = mObjectives.begin(); it != mObjectives.end(); ++it) {
+AchievementObjectiveDef* AchievementDef::GetObjectiveDef(string name) {
+	for(vector<AchievementObjectiveDef*>::iterator it = mObjectives.begin(); it != mObjectives.end(); ++it) {
 		if((*it)->mName.compare(name) == 0)
 			return (*it);
 	}
@@ -95,10 +96,10 @@ AchievementsManager::AchievementsManager() {
 AchievementsManager::~AchievementsManager() {
 }
 
-AchievementDef * AchievementsManager::LoadDef(std::string name) {
-	std::string buf = GetPath(name);
-	if (!Platform::FileExists(buf.c_str())) {
-		g_Logs.data->warn("No file for CS item [%v]", buf.c_str());
+AchievementDef * AchievementsManager::LoadDef(string name) {
+	auto buf = GetPath(name);
+	if (!fs::exists(buf)) {
+		g_Logs.data->warn("No file for CS item [%v]", buf);
 		return NULL;
 	}
 
@@ -106,8 +107,8 @@ AchievementDef * AchievementsManager::LoadDef(std::string name) {
 	AchievementObjectiveDef *obj = NULL;
 
 	FileReader lfr;
-	if (lfr.OpenText(buf.c_str()) != Err_OK) {
-		g_Logs.data->warn("Could not open file [%s]", buf.c_str());
+	if (lfr.OpenText(buf) != Err_OK) {
+		g_Logs.data->warn("Could not open file [%s]", buf);
 		return NULL;
 	}
 
@@ -186,7 +187,7 @@ AchievementDef * AchievementsManager::LoadDef(std::string name) {
 	return item;
 }
 
-std::string AchievementsManager::GetPath(std::string name) {
+fs::path AchievementsManager::GetPath(string name) {
 	char buf[128];
 	Util::SafeFormat(buf, sizeof(buf), "Achievements/%s.txt", name.c_str());
 	Platform::FixPaths(buf);
@@ -203,30 +204,24 @@ int AchievementsManager::GetTotalObjectives() {
 
 int AchievementsManager::LoadItems(void) {
 	mTotalObjectives = 0;
-	for (std::map<std::string, AchievementDef*>::iterator it = mDefs.begin();
+	for (map<string, AchievementDef*>::iterator it = mDefs.begin();
 			it != mDefs.end(); ++it)
 		delete it->second;
 	mDefs.clear();
 
-	Platform_DirectoryReader r;
-	std::string dir = r.GetDirectory();
-	r.SetDirectory("Achievements");
-	r.ReadFiles();
-	r.SetDirectory(dir.c_str());
-
-	std::vector<std::string>::iterator it;
-	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
-		std::string p = *it;
-		if (Util::HasEnding(p, ".txt")) {
-			LoadDef(Platform::Basename(p.c_str()));
+	auto path = g_Config.ResolveStaticDataPath() / fs::path("Achievements");
+	for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
+		auto path = entry.path();
+		if (path.extension() == ".txt") {
+			LoadDef(path.stem());
 		}
 	}
 
 	return 0;
 }
 
-AchievementDef * AchievementsManager::GetItem(std::string name) {
-	std::map<std::string, AchievementDef*>::iterator it = mDefs.find(name);
+AchievementDef * AchievementsManager::GetItem(string name) {
+	map<string, AchievementDef*>::iterator it = mDefs.find(name);
 	return it == mDefs.end() ? NULL : it->second;
 }
 
@@ -255,19 +250,19 @@ Achievement::~Achievement() {
 
 bool Achievement::IsComplete() {
 	size_t c = 0;
-	for(std::vector<AchievementObjectiveDef*>::iterator it = mDef->mObjectives.begin(); it != mDef->mObjectives.end(); ++it) {
-		if(std::find(mCompletedObjectives.begin(), mCompletedObjectives.end(), (*it)) != mCompletedObjectives.end()) {
+	for(vector<AchievementObjectiveDef*>::iterator it = mDef->mObjectives.begin(); it != mDef->mObjectives.end(); ++it) {
+		if(find(mCompletedObjectives.begin(), mCompletedObjectives.end(), (*it)) != mCompletedObjectives.end()) {
 			c++;
 		}
 	}
 	return c == mDef->mObjectives.size();
 }
 
-void Achievement::CompleteObjective(std::string name) {
+void Achievement::CompleteObjective(string name) {
 	AchievementObjectiveDef *def = mDef->GetObjectiveDef(name);
 	if(def == NULL)
 		g_Logs.data->warn("Request to complete achievement object that does not exist. %v", name.c_str());
-	else if(std::find(mCompletedObjectives.begin(), mCompletedObjectives.end(), def) == mCompletedObjectives.end())
+	else if(find(mCompletedObjectives.begin(), mCompletedObjectives.end(), def) == mCompletedObjectives.end())
 		mCompletedObjectives.push_back(def);
 	else
 		g_Logs.data->warn("Request to complete achievement object is already complete. %v", name.c_str());

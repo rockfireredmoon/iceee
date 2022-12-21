@@ -48,11 +48,7 @@ int MarkerListHandler::handleQuery(SimulatorThread *sim,
 			}
 
 			if (!zdef->IsPlayerGrove()) {
-				std::string p = Platform::JoinPath(
-						Platform::JoinPath(
-								Platform::JoinPath(g_Config.ResolveVariableDataPath(),
-										"Instance"), std::to_string(zdef->mID)), "WorldMarkers.txt");
-				markers.LoadFromFile(p, zdef->mID);
+				markers.LoadFromFile(g_Config.ResolveVariableDataPath() / "Instance" / to_string(zdef->mID) / "WorldMarkers.txt", zdef->mID);
 			} else
 				markers.LoadFromCluster(zdef->mID);
 		}

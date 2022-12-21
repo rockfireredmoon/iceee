@@ -6,13 +6,17 @@
 #include <vector>
 #include <string>
 #include "json/json.h"
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 
 class BookDefinition
 {
 public:
-	std::string title;
-	std::vector<std::string> pages;
+	string title;
+	vector<string> pages;
 	int bookID;
 
 	BookDefinition() { Clear(); }
@@ -27,10 +31,10 @@ public:
 	BookManager();
 	~BookManager();
 
-	std::map<int, BookDefinition> books;
+	map<int, BookDefinition> books;
 
 	void Init();
-	void LoadFile(std::string filename);
+	void LoadFile(const fs::path &filename);
 	BookDefinition GetBookDefinition(int bookID);
 };
 

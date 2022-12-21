@@ -2,11 +2,16 @@
 #ifndef ABILITY2_H
 #define ABILITY2_H
 
+#include "CommonTypes.h"
+
 #include <map>
 #include <vector>
 #include <string>
 #include <stdarg.h>
-#include "CommonTypes.h"
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 struct ActiveAbilityInfo;
 class CreatureInstance;
@@ -108,7 +113,7 @@ namespace EventType
 		MAX_EVENT
 	};
 	const char *GetNameByEventID(int eventID);
-	int GetEventIDByName(const std::string &eventName);
+	int GetEventIDByName(const string &eventName);
 }
 
 struct AbilityType
@@ -176,19 +181,19 @@ private:
 };
 
 //Verification
-void VerifyExpression(const std::string &exp, AbilityVerify &verifyInfo);
+void VerifyExpression(const string &exp, AbilityVerify &verifyInfo);
 
 //Utility functions for tokenizing strings.
-void Split(const std::string &source, const char *delim, STRINGLIST &dest);
-void SplitFunctionList(const std::string &input, STRINGLIST &output);
-bool SplitFunction(const std::string &input, STRINGLIST &output);
-void TrimWhitespace(std::string &modify);
-void TrimQuote(std::string &modify);
-void TrimParenthesis(std::string &modify);
-//void SplitDelimQuote(const std::string &input, STRINGLIST &output);
+void Split(const string &source, const char *delim, STRINGLIST &dest);
+void SplitFunctionList(const string &input, STRINGLIST &output);
+bool SplitFunction(const string &input, STRINGLIST &output);
+void TrimWhitespace(string &modify);
+void TrimQuote(string &modify);
+void TrimParenthesis(string &modify);
+//void SplitDelimQuote(const string &input, STRINGLIST &output);
 void RemoveTrailingNewlines(char *str);
 
-//void ToLowerCase(std::string &input);   //Moved to Util.h since an unrelated class needs it.
+//void ToLowerCase(string &input);   //Moved to Util.h since an unrelated class needs it.
 
 //Contains information necessary for any kind of function call.
 class AbilityFunction2
@@ -196,7 +201,7 @@ class AbilityFunction2
 public:
 	unsigned char mChance;       //Chance to trigger (1-100%).  Only considered if nonzero.
 	unsigned char mChanceID;     //All functions of the same chance block {...} will operate on a single roll.
-	std::string mFunctionName;
+	string mFunctionName;
 	STRINGLIST mArguments;
 	MULTISTRING mArgumentCache;  //This holds cached argument data, like tables of generated postfix tokens.
 	bool mCached;
@@ -204,7 +209,7 @@ public:
 	AbilityFunction2();
 	void Clear(void);
 	void Verify(AbilityManager2 *parent, AbilityVerify &verifyInfo) const;
-	void AssignFormula(const std::string &formula);
+	void AssignFormula(const string &formula);
 	const char* GetString(size_t argIndex) const;
 	int GetInteger(size_t argIndex) const;
 	float GetFloat(size_t argIndex) const;
@@ -214,9 +219,9 @@ public:
 class AbilityEvent2
 {
 public:
-	std::string mActionType;          //Corresponds to event (ex: "onActivate")
+	string mActionType;          //Corresponds to event (ex: "onActivate")
 	AbilityFunction2 mTargetTypeStr;  //Target selection function when processing this event.
-	std::vector<AbilityFunction2> mFunctionList;   //List of condition or action functions to call when the event is processed.
+	vector<AbilityFunction2> mFunctionList;   //List of condition or action functions to call when the event is processed.
 	
 	unsigned char mChanceID;       //Theoretically an event may need to have multiple chance blocks.  This allows them to separate different groups of actions with different rolls.
 	int mTargetType;               //Resolved from mTargetTypeStr 
@@ -224,7 +229,7 @@ public:
 
 	AbilityEvent2();
 	~AbilityEvent2();
-	void SetFunctionEvent(const std::string &eventFunctionList);
+	void SetFunctionEvent(const string &eventFunctionList);
 	void SetFullEvent(const STRINGLIST &eventParams);
 	void ResolveTargetingInfo(void);
 	void DebugPrint(void);
@@ -234,7 +239,7 @@ public:
 	bool HasDifferentTargetType(AbilityEvent2 *other);
 	void CopyTargetType(const AbilityEvent2 &other);
 private:
-	void AddChanceFunctionList(const std::string &eventFunctionList);
+	void AddChanceFunctionList(const string &eventFunctionList);
 };
 
 namespace TargetType
@@ -255,7 +260,7 @@ namespace TargetType
 		STP             //         Port a target somewhere.
 	};
 	const char *GetNameByTargetType(int targetType);
-	int GetTargetTypeByName(const std::string &targetTypeName);
+	int GetTargetTypeByName(const string &targetTypeName);
 }
 
 namespace TargetFilter
@@ -277,7 +282,7 @@ namespace TargetFilter
 		Friend_Alive = FLAG_FRIEND | FLAG_ALIVE,
 		Friend_Dead  = FLAG_FRIEND | FLAG_DEAD
 	};
-	int GetTargetFlagsByName(const std::string name);
+	int GetTargetFlagsByName(const string name);
 }
 
 // Determines the processing state for abilities that are currently firing.
@@ -348,7 +353,7 @@ public:
 	void Verify(AbilityManager2 *parent, AbilityVerify &verifyInfo) const;
 	AbilityEvent2* GetEvent(int eventID);
 	const char* GetRowAsCString(size_t index) const;
-	const std::string& GetRowAsString(size_t index) const;
+	const string& GetRowAsString(size_t index) const;
 	int GetRowAsInteger(size_t index) const;
 
 	//This information will be resolved after the skill entry is loaded.
@@ -363,7 +368,7 @@ public:
 	int mReqLevel;          //Required level to purchase.
 	int mReqCostOtherClass; //Required ability point cost for non-class cross abilities.
 	int mReqCostInClass;    //Required ability point cost for same class abilities.
-	std::vector<short> mReqAbilityID;  //Required abilities that must already be purchased before this one can be purchased.
+	vector<short> mReqAbilityID;  //Required abilities that must already be purchased before this one can be purchased.
 
 	int mWarmupTime;
 	int mChannelDuration;
@@ -378,7 +383,7 @@ public:
 	bool IsPurchaseableBy(int profession) const;
 	int GetPurchaseCost(void) const;
 	int GetPurchaseLevel(void) const;
-	void GetPurchasePrereqList(std::vector<short> &output) const;
+	void GetPurchasePrereqList(vector<short> &output) const;
 
 	bool CanUseWhileDead(void) const;
 
@@ -729,11 +734,11 @@ private:
 
 	bool mImplicitInProgress;   //Important status flag that indicates whether an implicit action is being triggered, which prevents this action from potentially chaining an unpredictable number of additional implicit actions.
 	int mImplicitMeleeDamage;   //Used when calculating actions in a response to incoming damage.
-	std::vector<AbilityImplicitAction> mImplicitActions;  //List of implicit actions that have been triggered by an ability.  to perform after an ability has finished processing.
+	vector<AbilityImplicitAction> mImplicitActions;  //List of implicit actions that have been triggered by an ability.  to perform after an ability has finished processing.
 
 	char mDamageStringBuf[64];
 	int mDamageStringPos;
-	std::vector<short> mStatUpdate;
+	vector<short> mStatUpdate;
 
 	static const int INTEGRAL_FRACTION_TOTAL = 1000;  //Skills often use integers to represent percentage values. (10 = 1%).  This allows functions to compute a (float) ratio with the given integer amount.
 	static const int INNATE_BLOCK_CHANCE = 50;        //All players begin with this base chance to block physical attacks (10 = 1%)
@@ -769,8 +774,8 @@ public:
 	void DebugStuff(void);
 	void Verify(void);
 	void DamageTest(CreatureInstance *playerData);
-	bool VerifyFunctionName(const std::string &functionName);
-	void VerifyFunctionArgument(const std::string &functionName, size_t argIndex, const std::string &argumentString, AbilityVerify &verifyInfo);
+	bool VerifyFunctionName(const string &functionName);
+	void VerifyFunctionArgument(const string &functionName, size_t argIndex, const string &argumentString, AbilityVerify &verifyInfo);
 
 	int EnumerateTargets(CreatureInstance *actor, int targetType, int targetFilter, int distance);
 	int ActivateAbility(CreatureInstance *cInst, short abilityID, int eventType, ActiveAbilityInfo *abInfo);
@@ -782,14 +787,14 @@ public:
 	static const int NON_PURCHASE_ID_THRESHOLD = 5000;
 
 	//Special case function needs to be called by the formula evaluation function.
-	bool CheckValidVariableName(const std::string &token);
-	double ResolveSymbol(const std::string &symbol);
+	bool CheckValidVariableName(const string &token);
+	double ResolveSymbol(const string &symbol);
 	int ResolveBuffCategoryID(const char *buffName);
 	const char* ResolveBuffCategoryName(int buffCategoryID);
 	int ResolveCooldownCategoryID(const char *cooldownName);
 	const char* ResolveCooldownCategoryName(int cooldownCategoryID);
 	int ResolveStatID(const char *statName);
-	int ResolveStatusEffectID(const std::string &statusEffectName);
+	int ResolveStatusEffectID(const string &statusEffectName);
 	int ResolveItemID(const char *itemID);
 
 	static int GetAbilityErrorCode(int value);
@@ -810,25 +815,25 @@ private:
 	typedef int (AbilityCalculator::*FunctionPtr)(ARGUMENT_LIST);
 
 	 //Stores all ability definitions.
-	typedef std::map<int, AbilityEntry2>::iterator ABILITY_ITERATOR;
-	std::map<int, AbilityEntry2> mAbilityIndex;
-	std::map<std::string, int> mAbilityStringIndex;
+	typedef map<int, AbilityEntry2>::iterator ABILITY_ITERATOR;
+	map<int, AbilityEntry2> mAbilityIndex;
+	map<string, int> mAbilityStringIndex;
 	void InsertAbility(int abilityID, const STRINGLIST &rowData);
-	void LoadAbilityTable(std::string filename);
+	void LoadAbilityTable(const fs::path &filename);
 
 	//Stores all scripted emulation functions.
-	typedef std::map<std::string, FunctionPtr>::iterator FUNCTION_ITERATOR;
-	std::map<std::string, FunctionPtr> mFunctionMap;
+	typedef map<string, FunctionPtr>::iterator FUNCTION_ITERATOR;
+	map<string, FunctionPtr> mFunctionMap;
 	void InsertFunction(const char *name, FunctionPtr function);
 
 	//Stores argument verification information for scripted emulated functions.
-	typedef std::map<std::string, ABVerifier>::iterator VERIFIER_ITERATOR;
-	std::map<std::string, ABVerifier> mVerifierMap;
+	typedef map<string, ABVerifier>::iterator VERIFIER_ITERATOR;
+	map<string, ABVerifier> mVerifierMap;
 	void InsertVerifier(const char *functionName, const ABVerifier &argInfo);
 
 	bool mFunctionTablesLoaded;
 
-	typedef std::map<std::string, int> CONSTANT_MAP;
+	typedef map<string, int> CONSTANT_MAP;
 	CONSTANT_MAP mBuffCategories;
 	CONSTANT_MAP mCooldownCategories;
 	void InitializeCategories(void);
@@ -856,7 +861,7 @@ struct UniqueAbility
 class UniqueAbilityList
 {
 public:
-	std::vector<UniqueAbility> mAbilityList;
+	vector<UniqueAbility> mAbilityList;
 	void AddAbilityToList(const AbilityEntry2 *abilityPtr);
 };
 

@@ -19,6 +19,10 @@
 #define SCRIPTHANDLERS_H
 
 #include "Query.h"
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 class AbstractScriptHandler: public QueryHandler {
 public:
@@ -31,10 +35,10 @@ public:
 	virtual int handleScriptQuery(bool ownPlayer,
 			int instanceID,
 			int questID,
-			int type, std::string scriptName,
+			int type, string scriptName,
 			ScriptCore::NutPlayer *player, ScriptCore::ScriptPlayer *oldPlayer,
 			ActiveInstance *instance, CreatureInstance *targetCreature,
-			std::string path, SimulatorThread *sim, CharacterServerData *pld,
+			const fs::path &path, SimulatorThread *sim, CharacterServerData *pld,
 			SimulatorQuery *query, CreatureInstance *creatureInstance)=0;
 };
 
@@ -45,10 +49,10 @@ public:
 
 	int handleScriptQuery(bool ownPlayer,
 			int instanceID,
-			int questID,int type, std::string scriptName,
+			int questID,int type, string scriptName,
 			ScriptCore::NutPlayer *player, ScriptCore::ScriptPlayer *oldPlayer,
 			ActiveInstance *instance, CreatureInstance *targetCreature,
-			std::string path, SimulatorThread *sim, CharacterServerData *pld,
+			const fs::path &path, SimulatorThread *sim, CharacterServerData *pld,
 			SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
@@ -59,10 +63,10 @@ public:
 
 	int handleScriptQuery(bool ownPlayer,
 			int instanceID,
-			int questID,int type, std::string scriptName,
+			int questID,int type, string scriptName,
 			ScriptCore::NutPlayer *player, ScriptCore::ScriptPlayer *oldPlayer,
 			ActiveInstance *instance, CreatureInstance *targetCreature,
-			std::string path, SimulatorThread *sim, CharacterServerData *pld,
+			const fs::path &path, SimulatorThread *sim, CharacterServerData *pld,
 			SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
@@ -73,10 +77,10 @@ public:
 
 	int handleScriptQuery(bool ownPlayer,
 			int instanceID,
-			int questID,int type, std::string scriptName,
+			int questID,int type, string scriptName,
 			ScriptCore::NutPlayer *player, ScriptCore::ScriptPlayer *oldPlayer,
 			ActiveInstance *instance, CreatureInstance *targetCreature,
-			std::string path, SimulatorThread *sim, CharacterServerData *pld,
+			const fs::path &path, SimulatorThread *sim, CharacterServerData *pld,
 			SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
@@ -87,10 +91,10 @@ public:
 
 	int handleScriptQuery(bool ownPlayer,
 			int instanceID,
-			int questID,int type, std::string scriptName,
+			int questID,int type, string scriptName,
 			ScriptCore::NutPlayer *player, ScriptCore::ScriptPlayer *oldPlayer,
 			ActiveInstance *instance, CreatureInstance *targetCreature,
-			std::string path, SimulatorThread *sim, CharacterServerData *pld,
+			const fs::path &path, SimulatorThread *sim, CharacterServerData *pld,
 			SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 

@@ -36,6 +36,10 @@ When you accept the quest, the client sends several queries.
 #include "QuestAction.h"
 #include "CommonTypes.h"
 #include "Creature.h"
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 class QuestDefinitionContainer;
 class QuestDefinition;
@@ -66,9 +70,9 @@ public:
 //	~QuestData();
 //
 //	int questID;      //[0]
-//	std::string title;     //[1]
-//	std::string bodyText;  //[2]
-//	std::string compText;  //[3] Completion text
+//	string title;     //[1]
+//	string bodyText;  //[2]
+//	string compText;  //[3] Completion text
 //	int level;        //[4]
 //	int experience;   //[5]
 //	int partySize;    //[6]
@@ -76,8 +80,8 @@ public:
 //	int coin;         //[8]
 //	bool unabandon;   //[9] Unabandonable (written as "true" or "false")
 //
-//	std::string sGiver;
-//	std::string sEnder;
+//	string sGiver;
+//	string sEnder;
 //
 //	//Three sections  (for(i = 12; i < 25; i += 6)
 //	// [12]   i+0  string description.  If not empty, get the rest.
@@ -177,7 +181,7 @@ struct QuestReference
 
 	/* DISABLED, NEVER FINISHED
 	bool HasItemObjective(void);
-	void QueryItemObjectives(std::vector<int> &resultList);
+	void QueryItemObjectives(vector<int> &resultList);
 	*/
 
 	static bool testEquivalenceByQuestID(QuestReference &a, QuestReference &b) { return (a.QuestID == b.QuestID); }
@@ -190,7 +194,7 @@ public:
 	~QuestReferenceContainer();
 	void Free(void);
 
-	std::vector<QuestReference> itemList;
+	vector<QuestReference> itemList;
 
 	void AddItem(int newQuestID, QuestDefinition *qdef);
 	void AddItem(QuestReference &newItem);
@@ -230,7 +234,7 @@ public:
 	QuestReferenceContainer activeQuests;
 	QuestReferenceContainer availableSoonQuests;
 	
-	std::vector<QuestRepeatDelay> delayedRepeat;
+	vector<QuestRepeatDelay> delayedRepeat;
 
 	bool IsCompleted(int QuestID);
 	void AddPendingQuest(QuestReference &newItem);
@@ -243,7 +247,7 @@ public:
 
 	/* DISABLED, NEVER FINISHED
 	bool HasItemObjectives(void);
-	void QueryItemObjectives(std::vector<int> &resultList);
+	void QueryItemObjectives(vector<int> &resultList);
 	int NotifyItemCount(int itemID, int itemCount, char *writeBuf);
 	*/
 	
@@ -283,7 +287,7 @@ public:
 class QuestOutcome
 {
 public:
-	std::string compText;  //[3]    The speech text that is displayed to the player when they redeem the quest and accept rewards.
+	string compText;  //[3]    The speech text that is displayed to the player when they redeem the quest and accept rewards.
 	int experience;        //[5]    Experience points awarded to the player when the quest is redeemed.
 	int numRewards;        //[7]    If the player is given a choice of which reward items to choose, this is the number of items they are required to select from the reward box.  Usually set to 1 when multiple rewards are offered.  Should not be set if the quest has only one reward, because the player implicitly accepts it, and if this field is set then the player must explicitly select it even though there are no other options.
 	int coin;              //[8]    Copper granted to the player when the quest is redeemed.
@@ -351,10 +355,10 @@ public:
 	//This data is used internally by the server to process objectives.
 	unsigned char type;
 	bool gather;
-	std::vector<int> data1;  //Data points.  See documentation.
+	vector<int> data1;  //Data points.  See documentation.
 	int data2;
 	int ActivateTime;            //Determines how much time must be spent interacting with an object, ex: needing 2 seconds to gather.
-	std::string ActivateText;    //The text string to send to the client when interacting, ex: "Opening crate..."
+	string ActivateText;    //The text string to send to the client when interacting, ex: "Opening crate..."
 
 	//Travel:
 	//  Data1: always 3 elements [x, y, z];
@@ -370,12 +374,12 @@ public:
 	//  Data2: Unused.  The return Creature ID is stored in "myCreatureDefID"
 
 	//This data is sent to the client as part of the quest information.
-	std::string description;       //[offset] + 0
+	string description;       //[offset] + 0
 	int complete;             //[offset] + 1
 	int myCreatureDefID;      //[offset] + 2
 	int myItemID;             //[offset] + 3
-	std::string completeText;      //[offset] + 4   //Shows in parenthesis after the objective.
-	std::string markerLocations;   //[offset] + 5
+	string completeText;      //[offset] + 4   //Shows in parenthesis after the objective.
+	string markerLocations;   //[offset] + 5
 	int outcome;
 
 	QuestObjective()
@@ -383,7 +387,7 @@ public:
 		Clear();
 	}
 
-	QuestObjective(int pType, std::string pDescription)
+	QuestObjective(int pType, string pDescription)
 	{
 		Clear();
 		type = pType;
@@ -480,12 +484,12 @@ class QuestAct
 {
 public:
 	QuestObjective objective[MAXOBJECTIVES];
-	std::string BodyText;  //Each act has custom body text that differs from the "genericdata" text.
+	string BodyText;  //Each act has custom body text that differs from the "genericdata" text.
 
 	QuestAct() {
 		Clear();
 	}
-	QuestAct(std::string pBodyText, QuestObjective *obj) {
+	QuestAct(string pBodyText, QuestObjective *obj) {
 		Clear();
 		BodyText = pBodyText;
 		AddObjective(0, obj);
@@ -517,15 +521,15 @@ public:
 	//Note: numbers in brackets (ex: [0]) indicate which row of the outgoing query data this field occupies.
 	char profession;    //Determines a class restriction, if applicable (0=all, 1=knight, 2=rogue, 3=mage, 4=druid)
 	int questID;           //[0]    Quest identification, for server lookups and client info.
-	std::string title;     //[1]    Title name.
-	std::string bodyText;  //[2]    Speech text that is provided to the player for them to read before they accept the quest.
+	string title;     //[1]    Title name.
+	string bodyText;  //[2]    Speech text that is provided to the player for them to read before they accept the quest.
 	int levelSuggested;    //[4]    Recommended player level, displayed on the quest accept screen.
 	int partySize;         //[6]    Recommended party size, displayed on the quest accept screen.
 	int coin;              //[8]    Copper granted to the player when the quest is redeemed.
 	bool unabandon;        //[9]    Unabandonable (written as "true" or "false")
 
-	std::string sGiver;    //[10]   Location of the quest-giver NPC.  String as "x,y,z,zone"
-	std::string sEnder;    //[11]   Location of the quest-ender NPC.  String as "x,y,z,zone"
+	string sGiver;    //[10]   Location of the quest-giver NPC.  String as "x,y,z,zone"
+	string sEnder;    //[11]   Location of the quest-ender NPC.  String as "x,y,z,zone"
 
 	//QuestObjective objective[3];
 	//Three sections  (for(i = 12; i < 25; i += 6)
@@ -544,7 +548,7 @@ public:
 	int Requires;        //A single quest ID for a quest that must be completed (leave zero for no prerequisite quest).
 	int QuestGiverID;    //Creature Definition ID of the quest-giver NPC.
 	int QuestEnderID;    //Creature Definition ID of the quest-ender NPC.
-	std::vector<QuestAct> actList;
+	vector<QuestAct> actList;
 	int actCount;
 	bool Repeat;         //Quest is repeatable and is not logged into the completed quest list. (such as bounty boards).
 	unsigned long RepeatMinuteDelay;  //Number of minutes that must pass before the quest is reactivated for another one-time completion.  Specifically used for event quests so the ID does not remain forever in the completed list.  Note this is a special case and not related to <Repeat>, which must remain false for this work correctly.
@@ -562,7 +566,7 @@ public:
 	int giverZone;
 	
 	// Outcomes
-	std::vector<QuestOutcome> outcomes;
+	vector<QuestOutcome> outcomes;
 	int outcomeCount;
 
 	//These are extentions to allow a very basic form of command scripting within the game.
@@ -580,7 +584,7 @@ public:
 	void CopyFrom(const QuestDefinition &other);
 	int GetObjective(int act, int type, int CDefID);
 	QuestAct* GetActPtrByIndex(int index);
-	bool FilterSelectedRewards(int outcomeIndex, const std::vector<size_t>& selectedIndexes, std::vector<QuestItemReward>& outputRewardList);
+	bool FilterSelectedRewards(int outcomeIndex, const vector<size_t>& selectedIndexes, vector<QuestItemReward>& outputRewardList);
 	void RunLoadDefaults(void);
 	void RunLoadValidation(void);
 	void SetRepeatTime(const char *format);
@@ -596,20 +600,20 @@ public:
 	~QuestDefinitionContainer();
 
 	unsigned long mVirtualQuestID;
-	std::map<int, QuestDefinition> mQuests;
-	typedef std::map<int, QuestDefinition>::iterator ITERATOR;
+	map<int, QuestDefinition> mQuests;
+	typedef map<int, QuestDefinition>::iterator ITERATOR;
 
 	void Clear(void);
 	QuestDefinition* GetQuestDefPtrByID(int id);
 	QuestDefinition* GetQuestDefPtrByName(const char *name);
-	void LoadQuestPackages(std::string filename);
+	void LoadQuestPackages(const fs::path &filename);
 	void ResolveQuestMarkers(void);
 	void AddIfValid(QuestDefinition &newItem);
 
 private:
-	void LoadFromFile(std::string filename);
+	void LoadFromFile(const fs::path &filename);
 	bool LimitIndex(int &value, int max);
-	void AppendString(std::string &value, char *appendStr);
+	void AppendString(string &value, char *appendStr);
 };
 
 
@@ -627,6 +631,6 @@ struct QuestIndicator
 
 extern QuestDefinitionContainer QuestDef;
 
-int PrepExt_QuestStatusMessage(char *buffer, int questID, int objectiveIndex, bool complete, std::string message);
+int PrepExt_QuestStatusMessage(char *buffer, int questID, int objectiveIndex, bool complete, string message);
 
 #endif //QUEST_H

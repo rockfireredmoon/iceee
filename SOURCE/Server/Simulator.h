@@ -10,6 +10,7 @@
 #include "QuestScript.h"
 #include "Report.h"
 #include "Guilds.h"
+#include "Scheduler.h"
 #include "DropTable.h"
 #include "PartyManager.h"
 #include "Cluster.h"
@@ -24,24 +25,6 @@ extern char GSendBuf[32767];  //Note, if this size is modified, change all "exte
 
 class AccountData;
 struct PlayerInstancePlacementData;
-
-class ThreadRequest
-{
-public:
-	ThreadRequest();
-	~ThreadRequest();
-
-	static const int DEFAULT_WAIT_TIME = 30000;
-	enum StatusNames
-	{
-		STATUS_NONE       = 0,  //No status.
-		STATUS_WAITMAIN   = 1,  //Request sent, waiting for main thread to respond.
-		STATUS_WAITWORK   = 2,  //Main thread has acknowledged and is now waiting for the worker thread to complete its task.
-		STATUS_COMPLETE   = 3   //Worker thread has finished.
-	};
-	volatile int status;
-	bool WaitForStatus(int statusID, int checkInterval, int maxError);
-};
 
 //A query that is sent to the simulator from the client.
 //Composed of a query ID, a string identifier for the query, and a
@@ -95,7 +78,7 @@ struct QueryErrorMsg
 	static const int NOCRAFT= -30;    		//Cannot craft item because ability to do so is missing.
 };
 
-class SimulatorThread
+class SimulatorThread: public Schedulable
 {
 public:
 	SimulatorThread();
@@ -158,7 +141,6 @@ public:
 	void Disconnect(const char *debugCaller);
 	void ProcessDisconnect(void);
 
-	void AddPendingDisconnect(void);
 	void ForceErrorMessage(const char *message, int msgtype);
 	int AttemptSend(const char *buffer, unsigned int buflen);
 	void OnConnect(void);
@@ -219,8 +201,6 @@ public:
 	unsigned long TimeOnline;
 	unsigned long TimeLastAutoSave;
 
-	ThreadRequest threadsys;
-
 	bool WaitUntilNonzero(int *data);
 	int ResolveCreatureDef(int CreatureID);
 	CreatureInstance* ResolveCreatureInstance(int CreatureID, int searchHint);
@@ -249,7 +229,6 @@ public:
 	void CheckSpawnTileUpdate(bool force);
 
 	void handle_abilityActivate(void);
-	void AddMessage(long param1, long param2, int message);
 	bool CheckPermissionSimple(int permissionSet, unsigned int permissionFlag);
 	void WarpToZone(ZoneDefInfo *zoneDef, int xOverride, int yOverride, int zOverride);
 	void SendAbilityErrorMessage(int abilityErrorCode);
@@ -327,33 +306,24 @@ public:
 	void Init(void);
 	void Free(void);
 
-	//std::vector<SimulatorThread*> regList;
-	std::vector<ThreadRequest*> regList;
-
 	std::list<SimulatorThread> simList;  //List of Simulator objects.
 
 	int nextSimulatorID;
 	SimulatorThread * CreateSimulator(void);
 
-	volatile int pendingActions;
 	long baseByteSent;  //Total cumulative bytes sent from all unloaded Simulators.
 	long baseByteRec;   //Total cumulative bytes received from all unloaded Simulators.
 
 	bool debug_acquired;  //For assisting in traces, determines whether the main thread has been acquired and is running processing on this object
 
-	void RegisterAction(ThreadRequest *reqData);
-	void UnregisterAction(ThreadRequest *reqData);
 	void RunPendingActions(void);
 	void SendToAllSimulators(const char *buffer, unsigned int buflen, SimulatorThread *except);
 
 	SimulatorThread* GetPtrByID(int simID);
 	
-	void AddPendingDisconnect(SimulatorThread *callObject);
 	void AddPendingPacketData(SimulatorThread *callObject);
 	void BroadcastMessage(const char *message);
 	void BroadcastChat(int characterID, const char *display_name, const char *channel, const char *message);
-
-	//CreatureInstance* GetPlayerByID(int CreatureID);
 
 	void FlushHangingSimulators(void);
 	void CheckIdleSimulatorBoot(AccountData *account);
@@ -369,12 +339,9 @@ private:
 	volatile bool RequestSimulator;
 	unsigned long nextFlushTime;
 
-	std::vector<SimulatorThread*> pendingDisconnects;
 	std::vector<SimulatorThread*> pendingPacketData;  //Holds a list of simulators that require processing of their packets.
 
-	void ProcessPendingDisconnects(void);
 	void ProcessPendingPacketData(void);
-	void ProcessPendingActions(void);
 };
 
 //This object calls an automatic query response when the object destructor is called.

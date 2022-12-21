@@ -265,6 +265,7 @@ void SocketClass :: DisconnectClient(void)
 {
 	if(ClientSocket != Invalid_Socket)
 	{
+		g_Logs.server->debug("Disconnect socket %v", debugName);
 		shutdown(ClientSocket, SHUTDOWN_PARAM);
 		CLOSE_SOCKET(ClientSocket);
 		ClientSocket = Invalid_Socket;

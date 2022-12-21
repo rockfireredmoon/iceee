@@ -18,7 +18,6 @@
 #include "Query.h"
 #include "SceneryHandlers.h"
 #include "../Cluster.h"
-#include "../StringUtil.h"
 #include "../util/Log.h"
 #include "../Instance.h"
 #include "../Config.h"

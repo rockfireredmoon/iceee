@@ -23,8 +23,8 @@
 #include "../Interact.h"
 #include "../Debug.h"
 #include "../Config.h"
+#include "../Scheduler.h"
 #include "../ZoneObject.h"
-#include "../StringUtil.h"
 #include "../util/Log.h"
 #include <cmath>
 
@@ -79,13 +79,13 @@ int GoHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 		instance = 0;
 	}
 	else if (query->argCount == 1) {
-		std::string n = query->GetString(0);
+		string n = query->GetString(0);
 		CreatureInstance *def;
 		if(n == "WARP_TARGET" && creatureInstance->CurrentTarget.targ != NULL) {
 			def = creatureInstance->CurrentTarget.targ;
 		}
 		else if(Util::HasBeginning(n, "Player/")) {
-			def = g_ActiveInstanceManager.GetPlayerCreatureByDefID(StringUtil::SafeParseInt(n.substr(7)));
+			def = g_ActiveInstanceManager.GetPlayerCreatureByDefID(Util::SafeParseInt(n.substr(7)));
 		}
 		if(def == NULL) {
 			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
@@ -137,8 +137,8 @@ int GroveEnvironmentCycleToggleHandler::handleQuery(SimulatorThread *sim,
 //
 
 struct DropPackageDefinitionCompare {
-    bool operator()(std::pair<std::string, DropPackageDefinition> &left,
-      std::pair<std::string, DropPackageDefinition> &right) {
+    bool operator()(pair<string, DropPackageDefinition> &left,
+      pair<string, DropPackageDefinition> &right) {
         return left.second.mName < right.second.mName;
     }
 };
@@ -168,13 +168,13 @@ int LootPackagesListHandler::handleQuery(SimulatorThread *sim,
 	unsigned int len = 50;
 	if(query->argCount > 1)
 		len = query->GetInteger(1);
-	std::string filter = "";
+	string filter = "";
 	if(query->argCount > 2)
 		filter = query->GetString(2);
 	if(len > 50 || len == 0)
 		len = 50;
 
-	std::vector<std::pair<std::string, DropPackageDefinition>> results(g_DropTableManager.mPackage.begin(), g_DropTableManager.mPackage.end());
+	vector<pair<string, DropPackageDefinition>> results(g_DropTableManager.mPackage.begin(), g_DropTableManager.mPackage.end());
 	sort(results.begin(), results.end(), DropPackageDefinitionCompare());
 	if(results.size() == 0)
 		len = start = 0;
@@ -189,10 +189,10 @@ int LootPackagesListHandler::handleQuery(SimulatorThread *sim,
 		DropPackageDefinition zdinfo = results[a].second;
 		wpos += PutByte(&sim->SendBuf[wpos], 5); //String count
 		wpos += PutStringUTF(&sim->SendBuf[wpos], zdinfo.mName.c_str()); // 1
-		wpos += PutStringUTF(&sim->SendBuf[wpos], std::to_string(zdinfo.mMobFlags).c_str()); // 2
-		wpos += PutStringUTF(&sim->SendBuf[wpos], std::to_string(zdinfo.mAuto).c_str()); // 3
-		wpos += PutStringUTF(&sim->SendBuf[wpos], std::to_string(zdinfo.mCombinedClassFlags).c_str()); // 4
-		std::string s;
+		wpos += PutStringUTF(&sim->SendBuf[wpos], to_string(zdinfo.mMobFlags).c_str()); // 2
+		wpos += PutStringUTF(&sim->SendBuf[wpos], to_string(zdinfo.mAuto).c_str()); // 3
+		wpos += PutStringUTF(&sim->SendBuf[wpos], to_string(zdinfo.mCombinedClassFlags).c_str()); // 4
+		string s;
 		Util::Join(zdinfo.mSetList, ",", s);
 		wpos += PutStringUTF(&sim->SendBuf[wpos], s.c_str()); // 5
 	}
@@ -275,13 +275,13 @@ int WorldListHandler::handleQuery(SimulatorThread *sim,
 		Shard s = g_ClusterManager.GetActiveShard(shards[a]);
 		wpos += PutStringUTF(&sim->SendBuf[wpos], s.mName.c_str());
 		if(pld->charPtr->Shard.compare(s.mName))
-			wpos += PutStringUTF(&sim->SendBuf[wpos], StringUtil::Format("!%s", s.mFullName.c_str()).c_str());
+			wpos += PutStringUTF(&sim->SendBuf[wpos], Util::Format("!%s", s.mFullName.c_str()).c_str());
 		else
 			wpos += PutStringUTF(&sim->SendBuf[wpos], s.mFullName.c_str());
-		wpos += PutStringUTF(&sim->SendBuf[wpos], StringUtil::Format("%d", s.mPlayers).c_str());
+		wpos += PutStringUTF(&sim->SendBuf[wpos], Util::Format("%d", s.mPlayers).c_str());
 		time_t t = s.GetLocalTime() / 1000;
 		wpos += PutStringUTF(&sim->SendBuf[wpos], Util::FormatDateTime(&t).c_str());
-		wpos += PutStringUTF(&sim->SendBuf[wpos], StringUtil::Format("%d", s.mPing).c_str());
+		wpos += PutStringUTF(&sim->SendBuf[wpos], Util::Format("%d", s.mPing).c_str());
 		wpos += PutStringUTF(&sim->SendBuf[wpos], s.IsMaster() ? "Master" : "Slave");
 	}
 	PutShort(&sim->SendBuf[1], wpos - 3);
@@ -292,8 +292,8 @@ int WorldListHandler::handleQuery(SimulatorThread *sim,
 //ZoneListHandler
 //
 struct ZoneDefInfoCompare {
-    bool operator()(std::pair<int, ZoneDefInfo> &left,
-      std::pair<int, ZoneDefInfo> &right) {
+    bool operator()(pair<int, ZoneDefInfo> &left,
+      pair<int, ZoneDefInfo> &right) {
         return left.second.mName < right.second.mName;
     }
 };
@@ -332,7 +332,7 @@ int ZoneListHandler::handleQuery(SimulatorThread *sim,
 	unsigned int len = 50;
 	if(query->argCount > 1)
 		len = query->GetInteger(1);
-	std::string filter = "";
+	string filter = "";
 	if(query->argCount > 2)
 		filter = query->GetString(2);
 	if(len > 50 || len == 0)
@@ -341,11 +341,11 @@ int ZoneListHandler::handleQuery(SimulatorThread *sim,
 	if(g_Logs.server->enabled(el::Level::Debug))
 		g_Logs.server->debug("Zone list query for zone, start at [%v], for length of [%v]. Filter is '%v'", start, len, filter);
 
-	std::vector<std::pair<int, ZoneDefInfo>> results;
+	vector<pair<int, ZoneDefInfo>> results;
 	for(auto it = g_ZoneDefManager.mZoneList.begin(); it != g_ZoneDefManager.mZoneList.end(); ++it) {
 		if((dev && !((*it).second.mGrove)) || (!dev && (*it).second.mAccountID == pld->accPtr->ID && !((*it).second.mGrove))) {
 			if(filter == "" || Util::CaseInsensitiveStringFind((*it).second.mName, filter) || Util::CaseInsensitiveStringFind((*it).second.mDesc, filter) || Util::CaseInsensitiveStringFind((*it).second.mWarpName, filter)) {
-				std::pair<int, ZoneDefInfo> pd = std::pair<int, ZoneDefInfo>(
+				pair<int, ZoneDefInfo> pd = pair<int, ZoneDefInfo>(
 						(*it).second.mID, (*it).second);
 				results.push_back(pd);
 			}
@@ -458,7 +458,7 @@ int ZoneEditHandler::handleQuery(SimulatorThread *sim,
 				int wpos = PrepExt_SendEnvironmentUpdateMsg(sim->SendBuf, creatureInstance->actInst, pld->CurrentZone, pld->zoneDef, -1, -1, 0);
 				wpos += PrepExt_SetTimeOfDay(&sim->SendBuf[wpos], sim->GetTimeOfDay().c_str());
 				creatureInstance->actInst->LSendToAllSimulator(sim->SendBuf, wpos, -1);
-				return PrepExt_QueryResponseString(sim->SendBuf, query->ID, std::to_string(zone).c_str());
+				return PrepExt_QueryResponseString(sim->SendBuf, query->ID, to_string(zone).c_str());
 			}
 			else
 				// Only devs can create zones
@@ -491,7 +491,7 @@ int ZoneEditHandler::handleQuery(SimulatorThread *sim,
 	}
 
 	if(isNew) {
-		def->mName = "New_Zone_" + std::to_string(def->mID);
+		def->mName = "New_Zone_" + to_string(def->mID);
 		def->mWarpName = def->mName;
 		def->DefX = 1;
 		def->DefY = 1;
@@ -512,8 +512,8 @@ int ZoneEditHandler::handleQuery(SimulatorThread *sim,
 	}
 
 	while(idx < query->argCount) {
-		std::string key = query->GetString(idx++);
-		std::string value = query->GetString(idx++);
+		string key = query->GetString(idx++);
+		string value = query->GetString(idx++);
 		if(key == "name")
 			def->mName = value;
 		else if(key == "terrain") {
@@ -561,36 +561,36 @@ int ZoneEditHandler::handleQuery(SimulatorThread *sim,
 		else if(key == "guildHall")
 			def->mGuildHall = value == "Y" || value == "y";
 		else if(key == "clan")
-			def->mClan = StringUtil::SafeParseInt(value, 0);
+			def->mClan = Util::SafeParseInt(value, 0);
 		else if(key == "environmentCycle")
 			def->mEnvironmentCycle = value == "Y" || value == "y";
 		else if(key == "audit")
 			def->mAudit = value == "Y" || value == "y";
 		else if(key == "maxAggroRange")
-			def->mMaxAggroRange = StringUtil::SafeParseInt(value, ZoneDefInfo::DEFAULT_MAXAGGRORANGE);
+			def->mMaxAggroRange = Util::SafeParseInt(value, ZoneDefInfo::DEFAULT_MAXAGGRORANGE);
 		else if(key == "maxLeashRange")
-			def->mMaxLeashRange = StringUtil::SafeParseInt(value, ZoneDefInfo::DEFAULT_MAXLEASHRANGEINSTANCE);
+			def->mMaxLeashRange = Util::SafeParseInt(value, ZoneDefInfo::DEFAULT_MAXLEASHRANGEINSTANCE);
 		else if(key == "minLevel")
-			def->mMinLevel = StringUtil::SafeParseInt(value, 0);
+			def->mMinLevel = Util::SafeParseInt(value, 0);
 		else if(key == "maxLevel")
-			def->mMaxLevel = StringUtil::SafeParseInt(value, 9999);
+			def->mMaxLevel = Util::SafeParseInt(value, 9999);
 		else if(key == "pageSize")
-			def->mPageSize = StringUtil::SafeParseInt(value, ZoneDefInfo::DEFAULT_PAGESIZE);
+			def->mPageSize = Util::SafeParseInt(value, ZoneDefInfo::DEFAULT_PAGESIZE);
 		else if(key == "mode")
-			def->mMode = StringUtil::SafeParseInt(value);
+			def->mMode = Util::SafeParseInt(value);
 		else if(key == "returnZone")
-			def->mReturnZone = StringUtil::SafeParseInt(value);
+			def->mReturnZone = Util::SafeParseInt(value);
 		else if(key == "timeOfDay")
 			def->mTimeOfDay = value;
 		else if(key == "def") {
 			STRINGLIST l;
 			Util::Split(value, " ", l);
 			if(l.size() > 0)
-				def->DefX = StringUtil::SafeParseInt(l[0]);
+				def->DefX = Util::SafeParseInt(l[0]);
 			else if(l.size() > 1)
-				def->DefY = StringUtil::SafeParseInt(l[1]);
+				def->DefY = Util::SafeParseInt(l[1]);
 			else if(l.size() > 2)
-				def->DefZ = StringUtil::SafeParseInt(l[2]);
+				def->DefZ = Util::SafeParseInt(l[2]);
 		}
 		else
 			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
@@ -608,7 +608,7 @@ int ZoneEditHandler::handleQuery(SimulatorThread *sim,
 		sim->WarpToZone(def, def->DefX, def->DefY, def->DefZ);
 	}
 
-	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, std::to_string(zone).c_str());
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, to_string(zone).c_str());
 }
 //
 //ShardSetHandler
@@ -620,14 +620,14 @@ int ShardSetHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	//Un-modified client only sets 1 row.  Modified client contains an additional field.
 	//[0] Shard Same
 	//[1] Character Name  [modded client]
-	std::string shardName = "";
-	std::string charName = "";
+	string shardName = "";
+	string charName = "";
 	if (query->argCount >= 1)
 		shardName = query->args[0];
 	if (query->argCount >= 2)
 		charName = query->args[1];
 
-	std::string res = sim->ShardSet(shardName, charName);
+	string res = sim->ShardSet(shardName, charName);
 	if(res.length() == 0)
 		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 	else {
@@ -807,7 +807,7 @@ int MapMarkerHandler::handleQuery(SimulatorThread *sim,
 		else if(query->args[i].compare("Henge") == 0) {
 			/* All henges in zone */
 			if(pld->zoneDef != NULL && !pld->zoneDef->IsOverworld()) {
-				for(std::vector<InteractObject>::iterator it = g_InteractObjectContainer.objList.begin(); it != g_InteractObjectContainer.objList.end(); ++it) {
+				for(vector<InteractObject>::iterator it = g_InteractObjectContainer.objList.begin(); it != g_InteractObjectContainer.objList.end(); ++it) {
 					if((*it).opType == InteractObject::TYPE_HENGE && (*it).WarpID == pld->CurrentZoneID) {
 						qRes.push_back(STRINGLIST());
 						qRes.back().push_back((*it).useMessage);
@@ -822,7 +822,7 @@ int MapMarkerHandler::handleQuery(SimulatorThread *sim,
 			/* All sanctuaries within 1000 */
 			ZoneMarkerData *zmd = g_ZoneMarkerDataManager.GetPtrByZoneID(pld->CurrentZoneID);
 			if(zmd != NULL && pld->zoneDef != NULL && !pld->zoneDef->IsOverworld()) {
-				for(std::vector<WorldCoord>::iterator it = zmd->sanctuary.begin(); it != zmd->sanctuary.end(); ++it) {
+				for(vector<WorldCoord>::iterator it = zmd->sanctuary.begin(); it != zmd->sanctuary.end(); ++it) {
 					int xlen = abs((int)(*it).x - creatureInstance->CurrentX);
 					int zlen = abs((int)(*it).z - creatureInstance->CurrentZ);
 					double dist = sqrt((double)((xlen * xlen) + (zlen * zlen)));
@@ -870,7 +870,7 @@ int PortalAcceptRequestHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
 
-	sim->AddMessage((long) this, 0, BCM_RunPortalRequest);
+	sim->Submit(bind(&SimulatorThread::RunPortalRequest, sim));
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
@@ -963,7 +963,7 @@ int SetATSHandler::handleQuery(SimulatorThread *sim,
 			}
 			SceneryObject replaceProp;
 			replaceProp.copyFrom(so);
-			std::string newAsset = replaceProp.Asset;
+			string newAsset = replaceProp.Asset;
 			size_t pos = newAsset.find("?ATS=");
 			if (pos != string::npos) {
 				newAsset.erase(pos + 5, newAsset.length()); //Erase everything after "?ATS="

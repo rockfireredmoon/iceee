@@ -21,7 +21,6 @@
 #include "../Account.h"
 #include "../Scenery2.h"
 #include "../Cluster.h"
-#include "../StringUtil.h"
 #include <curl/curl.h>
 #include "../md5.hh"
 #include "../json/json.h"
@@ -360,7 +359,7 @@ AccountData * ServiceAuthenticationHandler::authenticate(
 					accPtr->PendingMinorUpdates++;
 				} else {
 					errorMessage->clear();
-					errorMessage->append(StringUtil::Format("Failed to create account on game server. %s", g_AccountManager.GetErrorMessage(retval)));
+					errorMessage->append(Util::Format("Failed to create account on game server. %s", g_AccountManager.GetErrorMessage(retval)));
 					return NULL;
 				}
 			}
@@ -386,7 +385,7 @@ AccountData * ServiceAuthenticationHandler::authenticate(
 							grove.c_str());
 					if (def != NULL) {
 						errorMessage->clear();
-						errorMessage->append(StringUtil::Format("The Grove name '%s' is already in use by another player. Please choose another. ",
+						errorMessage->append(Util::Format("The Grove name '%s' is already in use by another player. Please choose another. ",
 								grove.c_str()));
 						return NULL;
 					}

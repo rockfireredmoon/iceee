@@ -17,7 +17,6 @@
 #include "Globals.h"
 #include "PVP.h"
 #include "Cluster.h"
-#include "StringUtil.h"
 #include "InstanceScale.h"
 #include "Inventory.h"
 #include "DirectoryAccess.h"
@@ -216,7 +215,7 @@ void CharacterData::CopyFrom(CharacterData &source) {
 }
 
 bool CharacterData::EntityKeys(AbstractEntityReader *reader) {
-	reader->Key("CharacterData", StringUtil::Format("%d", cdef.CreatureDefID),
+	reader->Key("CharacterData", Util::Format("%d", cdef.CreatureDefID),
 			true);
 	return true;
 }
@@ -332,7 +331,7 @@ bool CharacterData::ReadEntity(AbstractEntityReader *reader) {
 
 	STRINGLIST perms = reader->ListValue("Permissions", ",");
 	for (auto a = perms.begin(); a != perms.end(); ++a) {
-		if (SetPermission(Perm_Account, StringUtil::LowerCase(*a).c_str(), true)
+		if (SetPermission(Perm_Account, Util::LowerCase(*a).c_str(), true)
 				== false)
 			g_Logs.data->warn(
 					"Unknown permission identifier [%v] in Character %v.",
@@ -368,7 +367,7 @@ bool CharacterData::ReadEntity(AbstractEntityReader *reader) {
 		for (std::vector<std::string>::iterator a = l.begin(); a != l.end();
 				++a) {
 			std::string v = *a;
-			if (ReadInventory(StringUtil::LowerCase(*i), v, inventory,
+			if (ReadInventory(Util::LowerCase(*i), v, inventory,
 					"CharacterData", cdef.css.display_name, "Character")
 					== -2) {
 				g_Logs.data->warn("Character [%v] invalid inventory item [%v]",
@@ -502,7 +501,7 @@ bool CharacterData::ReadEntity(AbstractEntityReader *reader) {
 }
 
 bool CharacterData::WriteEntity(AbstractEntityWriter *writer) {
-	writer->Key("CharacterData", StringUtil::Format("%d", cdef.CreatureDefID));
+	writer->Key("CharacterData", Util::Format("%d", cdef.CreatureDefID));
 	writer->Value("characterVersion", characterVersion);
 	writer->Value("AccountID", AccountID);
 	writer->Value("Clan", clan);
@@ -530,11 +529,11 @@ bool CharacterData::WriteEntity(AbstractEntityWriter *writer) {
 	writer->Value("CreditsSpent", CreditsSpent);
 	writer->Value("ExtraAbilityPoints", ExtraAbilityPoints);
 	writer->Value("GroveReturn",
-			StringUtil::Format("%d,%d,%d,%d", groveReturnPoint[0],
+			Util::Format("%d,%d,%d,%d", groveReturnPoint[0],
 					groveReturnPoint[1], groveReturnPoint[2],
 					groveReturnPoint[3]));
 	writer->Value("BindReturn",
-			StringUtil::Format("%d,%d,%d,%d", bindReturnPoint[0],
+			Util::Format("%d,%d,%d,%d", bindReturnPoint[0],
 					bindReturnPoint[1], bindReturnPoint[2],
 					bindReturnPoint[3]));
 	writer->Value("LastWarpTime", LastWarpTime);
@@ -544,7 +543,7 @@ bool CharacterData::WriteEntity(AbstractEntityWriter *writer) {
 	PlayerStats.WriteEntity(writer);
 	STRINGLIST l;
 	for (auto a = hengeList.begin(); a != hengeList.end(); ++a)
-		l.push_back(StringUtil::Format("%d", *a));
+		l.push_back(Util::Format("%d", *a));
 	writer->ListValue("HengeList", l);
 
 	l.clear();
@@ -557,18 +556,18 @@ bool CharacterData::WriteEntity(AbstractEntityWriter *writer) {
 	l.clear();
 	for (auto a = abilityList.AbilityList.begin();
 			a != abilityList.AbilityList.end(); ++a)
-		l.push_back(StringUtil::Format("%d", *a));
+		l.push_back(Util::Format("%d", *a));
 	writer->ListValue("Abilities", l);
 
 	l.clear();
 	for (auto a = guildList.begin(); a != guildList.end(); ++a)
-		l.push_back(StringUtil::Format("%d,%d", (*a).GuildDefID, (*a).Valour));
+		l.push_back(Util::Format("%d,%d", (*a).GuildDefID, (*a).Valour));
 	writer->ListValue("GuildList", l);
 
 	l.clear();
 	for (auto a = friendList.begin(); a != friendList.end(); ++a)
 		l.push_back(
-				StringUtil::Format("%d,%s", (*a).CDefID, (*a).Name.c_str()));
+				Util::Format("%d,%s", (*a).CDefID, (*a).Name.c_str()));
 	writer->ListValue("FriendList", l);
 
 	writer->Value("MaxSidekicks", MaxSidekicks);
@@ -577,7 +576,7 @@ bool CharacterData::WriteEntity(AbstractEntityWriter *writer) {
 	l.clear();
 	for (auto a = SidekickList.begin(); a != SidekickList.end(); ++a)
 		l.push_back(
-				StringUtil::Format("%d,%d,%d", (*a).CDefID, (*a).summonType,
+				Util::Format("%d,%d,%d", (*a).CDefID, (*a).summonType,
 						(*a).summonParam));
 	writer->ListValue("Sidekicks", l);
 
@@ -606,13 +605,13 @@ bool CharacterData::WriteEntity(AbstractEntityWriter *writer) {
 			for (int b = 0; b < (int) inventory.containerList[a].size(); b++) {
 				InventorySlot *slot = &inventory.containerList[a][b];
 
-				std::string s = StringUtil::Format("%lu,%d",
+				std::string s = Util::Format("%lu,%d",
 						slot->CCSID & CONTAINER_SLOT, slot->IID);
 
 				if (slot->count > 0 || slot->customLook != 0
 						|| slot->bindStatus != 0
 						|| slot->secondsRemaining != -1)
-					s += StringUtil::Format(",%d,%d,%d,%ld", slot->count,
+					s += Util::Format(",%d,%d,%d,%ld", slot->count,
 							slot->customLook, slot->bindStatus,
 							slot->AdjustTimes());
 
@@ -630,11 +629,11 @@ bool CharacterData::WriteEntity(AbstractEntityWriter *writer) {
 	for (auto a = questJournal.activeQuests.itemList.begin();
 			a != questJournal.activeQuests.itemList.end(); ++a) {
 		QuestReference &qref = *a;
-		std::string s = StringUtil::Format("%d,%d", qref.QuestID, qref.CurAct);
+		std::string s = Util::Format("%d,%d", qref.QuestID, qref.CurAct);
 		for (int b = 0; b < MAXOBJECTIVES; b++) {
 			int comp = qref.ObjComplete[b];
 			int count = qref.ObjCounter[b];
-			s += StringUtil::Format(",%d,%d", comp, count);
+			s += Util::Format(",%d,%d", comp, count);
 		}
 		l.push_back(s);
 	}
@@ -644,7 +643,7 @@ bool CharacterData::WriteEntity(AbstractEntityWriter *writer) {
 	l.clear();
 	for (auto a = questJournal.completedQuests.itemList.begin();
 			a != questJournal.completedQuests.itemList.end(); ++a) {
-		l.push_back(StringUtil::Format("%d", (*a).QuestID));
+		l.push_back(Util::Format("%d", (*a).QuestID));
 	}
 	if (l.size() > 0)
 		writer->ListValue("complete", l);
@@ -653,7 +652,7 @@ bool CharacterData::WriteEntity(AbstractEntityWriter *writer) {
 	for (auto a = questJournal.delayedRepeat.begin();
 			a != questJournal.delayedRepeat.end(); ++a) {
 		l.push_back(
-				StringUtil::Format("%d,%lu,%lu", (*a).QuestID,
+				Util::Format("%d,%lu,%lu", (*a).QuestID,
 						(*a).StartTimeMinutes, (*a).WaitTimeMinutes));
 	}
 	if (l.size() > 0)
@@ -1628,7 +1627,7 @@ void CharacterLeaderboard::OnBuild(std::vector<Leader> *leaders) {
 					leaders->push_back(l);
 				}
 			},
-			StringUtil::Format("%s:*", KEYPREFIX_CHARACTER_NAME_TO_ID.c_str()));
+			Util::Format("%s:*", KEYPREFIX_CHARACTER_NAME_TO_ID.c_str()));
 }
 
 CharacterManager::CharacterManager() {

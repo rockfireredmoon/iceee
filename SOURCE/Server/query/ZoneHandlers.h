@@ -20,6 +20,8 @@
 
 #include "Query.h"
 
+using namespace std;
+
 class GoHandler : public QueryHandler {
 public:
 	~GoHandler() {};

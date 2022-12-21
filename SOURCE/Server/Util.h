@@ -2,19 +2,28 @@
 #define UTIL_H
 
 #include <stdarg.h>
+#include <chrono>
+
 #include "CommonTypes.h"
 #include "Books.h"
 #include "Forms.h"
 #include "Achievements.h"
 
+#define DAY_MS 86400000
+#define HOUR_MS 3600000
+#define MINUTE_MS 60000
+#define SECOND_MS 1000
+
+using namespace std;
+
 #ifdef _WIN32
 void SetNativeThreadName(uint32_t dwThreadID, const char* threadName);
 void SetNativeThreadName( const char* threadName);
-void SetNativeThreadName( std::thread* thread, const char* threadName);
+void SetNativeThreadName( thread* thread, const char* threadName);
 #elif defined(__linux__)
 void SetNativeThreadName( const char* threadName);
 #else
-void SetNativeThreadName(std::thread* thread, const char* threadName);
+void SetNativeThreadName(thread* thread, const char* threadName);
 #endif
 
 const int MODMESSAGE_EVENT_SUPERCRIT = 1;
@@ -50,7 +59,7 @@ enum InfoMsgEnum
 
 int PrepExt_SetAvatar(char *buffer, int creatureID);
 int PrepExt_SetTimeOfDay(char *buffer, const char *timeOfDay);
-int PrepExt_SetWeather(char *buffer, std::string type, int weight);
+int PrepExt_SetWeather(char *buffer, string type, int weight);
 int PrepExt_Thunder(char *buffer, int weight);
 int PrepExt_AbilityEvent(char *buffer, int creatureID, int abilityID, int abilityEvent);
 int PrepExt_CancelUseEvent(char *buffer, int CreatureID);
@@ -99,25 +108,25 @@ char *StringFromBool(char *buffer, int value);
 
 namespace Util
 {
-	void WriteString(FILE *output, const char *label, std::string &str);
+	void WriteString(FILE *output, const char *label, string &str);
 	void WriteString(FILE *output, const char *label, const char *str);
 	void WriteInteger(FILE *output, const char *label, int value);
 	void WriteIntegerIfNot(FILE *output, const char *label, int value, int ignoreVal);
 	void WriteAutoSaveHeader(FILE *output);
 	FILE * OpenSaveFile(const char *filename);
 
-	std::string StripLeadingTrailing(const std::string &source, const char *delim);
-	std::string Unescape(const std::string &source);
-	int SplitEscaped(const std::string &source, const char *delim, std::vector<std::string> &dest);
-	int Split(const std::string &source, const char *delim, std::vector<std::string> &dest);
-	void Join(std::vector<std::string> &source, const char *delim, std::string &dest);
-	void Replace(std::string &source, char find, char replace);
+	string StripLeadingTrailing(const string &source, const char *delim);
+	string Unescape(const string &source);
+	int SplitEscaped(const string &source, const char *delim, vector<string> &dest);
+	int Split(const string &source, const char *delim, vector<string> &dest);
+	void Join(vector<string> &source, const char *delim, string &dest);
+	void Replace(string &source, char find, char replace);
 	void SafeCopy(char *dest, const char *source, int destSize);
 	void SafeCopyN(char *dest, const char *source, int destSize, int copySize);
 	int IsStringTerminated(const char *buffer, int bufferSize);
 	int SafeFormat(char *destBuf, size_t maxCount, const char *format, ...);
 	int SafeFormatArg(char *destBuf, size_t maxCount, const char *format, va_list argList);
-	void StringAppendInt(std::string &dest, int value);
+	void StringAppendInt(string &dest, int value);
 	int ClipInt(int value, int min, int max);
 	int ClipIntMin(int value, int min);
 	float ClipFloat(float value, float min, float max);
@@ -125,7 +134,7 @@ namespace Util
 	int QuaternionToByteFacing(double X, double Y, double Z, double W);
 	void ClearString(char *buffer, int size);
 	char* FormatTime(char *outBuf, int bufSize, int seconds);
-	void WriteIntegerList(FILE *output, const char* label, std::vector<int>& dataList);
+	void WriteIntegerList(FILE *output, const char* label, vector<int>& dataList);
 	bool DoubleEquivalent(double left, double right);
 	bool FloatEquivalent(float left, float right);
 	int GetAdditiveFromIntegralPercent100(int value, int multiplier);
@@ -133,48 +142,66 @@ namespace Util
 	int GetAdditiveFromIntegralPercent10000(int value, int multiplier);
 	bool IntToBool(int value);
 	void SanitizeClientString(char *string);
-	void RemoveStringsFrom(const char *search, std::string& operativeString);
-	bool CaseInsensitiveStringCompare(const std::string& str1, const std::string& str2);
-	bool CaseInsensitiveStringFind(const std::string& str1, const std::string& str2);
-	void ToLowerCase(std::string &input);
-	std::string URLDecode(std::string const &src);
-	bool HasBeginning(std::string const &fullString, std::string const &ending);
-	bool HasEnding (std::string const &fullString, std::string const &ending);
-	void TrimWhitespace(std::string &modify);
-	float StringToFloat(const std::string &str);
-	int ParseDate(const std::string &str, time_t &time);
-	void EncodeHTML(std::string& data);
-	std::string EncodeJSONString(std::string &str);
-	std::string FormatDate(time_t *time);
-	std::string FormatDateTime(time_t *time);
-	std::string FormatTimeOfDay(time_t *time);
-	std::string FormatTimeOfDayMS(unsigned long);
-	std::string CaptureCommand(std::string cmd);
-	void ReplaceAll(std::string& str, const std::string& from, const std::string& to);
-	void URLDecode(std::string &str);
-	void URLEncode(std::string &str);
-	std::string &LTrim(std::string &s);
-	std::string &RTrim(std::string &s);
-	std::string &Trim(std::string &s);
+	void RemoveStringsFrom(const string &search, string& operativeString);
+	bool CaseInsensitiveStringCompare(const string& str1, const string& str2);
+	bool CaseInsensitiveStringFind(const string& str1, const string& str2);
+	void ToLowerCase(string &input);
+	string LowerCase(const string& in);
+	string UpperCase(const string& in);
+	string URLDecode(string const &src);
+	bool HasBeginning(string const &fullString, string const &ending);
+	bool HasEnding (string const &fullString, string const &ending);
+	void TrimWhitespace(string &modify);
+	float StringToFloat(const string &str);
+	int ParseDate(const string &str, time_t &time);
+	string ReplaceAllTo(const string str, const string& from,
+			const string& to);
+	void EncodeHTML(string& data);
+	string EncodeJSONString(string &str);
+	string FormatDate(time_t *time);
+	string FormatDateTime(time_t *time);
+	string FormatTimeOfDay(time_t *time);
+	string FormatTimeOfDayMS(unsigned long);
+	string CaptureCommand(string cmd);
+	void ReplaceAll(string& str, const string& from, const string& to);
+	void URLDecode(string &str);
+	void URLEncode(string &str);
+	string &LTrim(string &s);
+	string &RTrim(string &s);
+	string &Trim(string &s);
 
 	int GetInteger(const STRINGLIST &strList, size_t index);
-	int GetInteger(const std::string &str);
+	int GetInteger(const string &str);
 	float GetFloat(const char *value);
 	float GetFloat(const STRINGLIST &strList, size_t index);
-	float GetFloat(const std::string &str);
+	float GetFloat(const string &str);
 	const char *GetString(const STRINGLIST &strList, size_t index);
 	const char *GetSafeString(const STRINGLIST &strList, size_t index);
 
-	void AssignFloatArrayFromStringSplit(float *arrayDest, size_t arraySize, const std::string &strData);
-	void TokenizeByWhitespace(const std::string &input, STRINGLIST &output);
-	std::string RandomStr(unsigned int size, bool all);
-	std::string RandomStrFrom(unsigned int size, std::string from);
-	std::string RandomHexStr(unsigned int size);
+	void AssignFloatArrayFromStringSplit(float *arrayDest, size_t arraySize, const string &strData);
+	void TokenizeByWhitespace(const string &input, STRINGLIST &output);
+	string RandomStr(unsigned int size, bool all);
+	string RandomStrFrom(unsigned int size, string from);
+	string RandomHexStr(unsigned int size);
 
 	float RadianToRotation(float radians);
 	float RotationToRadians(unsigned int rotation);
 	unsigned char DistanceToRotationByte(int xlen, int zlen);
 	unsigned char RadianToRotationByte(float radians);
+
+	time_t ToTimeT(fs::file_time_type &tp);
+    string RightOf(const string &path, const string &delim);
+
+	int SafeParseInt(const string& str);
+	int SafeParseInt(const string& str, int defaultValue);
+
+	unsigned long ParseTimeHHMM(const string& timeString);
+	unsigned long ParseTimeHHMMSS(const string& timeString);
+
+	string FormatTimeHHMM(unsigned long ms);
+	string FormatTimeHHMMSS(unsigned long ms);
+	string FormatTimeHHMMSSmm(unsigned long ms);
+	string Format(const string fmt_str, ...);
 }
 
 /*

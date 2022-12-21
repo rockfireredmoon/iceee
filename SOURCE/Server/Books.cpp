@@ -33,36 +33,30 @@ BookManager::~BookManager() {
 
 
 void BookManager::Init() {
-	Platform_DirectoryReader r;
-	std::string bookDir = Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Books");
-	std::string dir = r.GetDirectory();
-	r.SetDirectory(bookDir);
-	r.ReadFiles();
-	r.SetDirectory(dir);
-	std::vector<std::string>::iterator it;
-	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
-		std::string p = *it;
-		if (Util::HasEnding(p, ".txt")) {
-			LoadFile(Platform::JoinPath(bookDir, p));
+	auto path = g_Config.ResolveStaticDataPath() / "Books";
+	for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
+		auto path = entry.path();
+		if (path.extension() == ".txt") {
+			LoadFile(path);
 		}
 	}
 }
 
-void BookManager::LoadFile(std::string filename) {
+void BookManager::LoadFile(const fs::path &filename) {
 	FileReader lfr;
-	if (lfr.OpenText(filename.c_str()) != Err_OK) {
+	if (lfr.OpenText(filename) != Err_OK) {
 		g_Logs.data->error("Could not open file [%v]", filename);
 		return;
 	}
-	int bookID = atoi(Platform::Basename(filename).c_str());
+	int bookID = stoi(filename.stem());
 	BookDefinition newItem;
 	newItem.bookID = bookID;
 	int r = 0;
-	std::string page;
+	string page;
 	bool inPageText = false;
 	while (lfr.FileOpen() == true) {
 		r = lfr.ReadLine();
-		std::string wholeLine = std::string(lfr.DataBuffer);
+		string wholeLine = string(lfr.DataBuffer);
 		bool escapedLine = Util::HasBeginning(wholeLine, "\\");
 		if (r > 0 && !escapedLine) {
 			lfr.SingleBreak("=");

@@ -23,7 +23,6 @@
 #include "../Instance.h"
 #include "../AuctionHouse.h"
 #include "../Cluster.h"
-#include "../StringUtil.h"
 #include <algorithm>
 
 using namespace std;

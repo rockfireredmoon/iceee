@@ -28,6 +28,7 @@
 #include "../Debug.h"
 #include "../DebugProfiler.h"
 #include "../Config.h"
+#include "../Scheduler.h"
 #include "../GameConfig.h"
 #include "../ScriptCore.h"
 #include "../util/Log.h"
@@ -372,7 +373,8 @@ int UpdateVelocityMessage::handleMessage(SimulatorThread *sim, CharacterServerDa
 	//Check for zone boundaries, if a player is trying to go somewhere they should not be able to access.
 	if (g_ZoneBarrierManager.CheckCollision(pld->CurrentZoneID,
 			creatureInstance->CurrentX, creatureInstance->CurrentZ) == true)
-		sim->AddMessage((long) creatureInstance, 0, BCM_UpdateFullPosition);
+
+	creatureInstance->Submit(bind(&CreatureInstance::BroadcastFullPositionUpdate, creatureInstance, sim->InternalID));
 
 	int wpos = 0;
 
@@ -380,8 +382,10 @@ int UpdateVelocityMessage::handleMessage(SimulatorThread *sim, CharacterServerDa
 	if (sim->IsGMInvisible() == true) {
 		wpos = PrepExt_GeneralMoveUpdate(sim->SendBuf, creatureInstance);
 	} else {
-		sim->AddMessage((long) creatureInstance, 0, BCM_UpdateVelocity);
-		sim->AddMessage((long) creatureInstance, 0, BCM_UpdatePosInc);
+		creatureInstance->Submit([this, creatureInstance, sim](){
+			creatureInstance->BroadcastVelocityUpdate(sim->InternalID);
+			creatureInstance->BroadcastIncrementalPositionUpdate();
+		});
 	}
 
 	pld->PendingMovement++;
@@ -666,8 +670,9 @@ int AbilityActiveMessage::handleMessage(SimulatorThread *sim, CharacterServerDat
 	}
 
 	if (aID == g_JumpConstant) {
-		if (sim->IsGMInvisible() == false)
-			sim->AddMessage(pld->CreatureID, 0, BCM_ActorJump);
+		if (sim->IsGMInvisible() == false) {
+			creatureInstance->Submit(bind(&CreatureInstance::BroadcastJump, creatureInstance, sim->InternalID));
+		}
 	} else {
 		bool allow = false;
 		if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug | Permission_Admin | Permission_Developer) == true)

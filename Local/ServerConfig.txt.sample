@@ -71,6 +71,10 @@ HTTPServeAssets=1
 ; Password for the administrative web panel
 RemoteAuthenticationPassword=admin
 
+; Directory Listing. Whether the web server should return directory listings for
+; the resources it serves. Only recommended for development / debugging.
+; DirectoryListing=1
+
 
 ; ==============================================================================
 ; Timers And Delays

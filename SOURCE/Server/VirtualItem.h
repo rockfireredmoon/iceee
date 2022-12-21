@@ -5,11 +5,15 @@
 #include "InstanceScale.h"
 #include <string>
 #include <map>
+#include <filesystem>
 
-typedef std::vector<std::string> STRINGLIST;
+using namespace std;
+namespace fs = filesystem;
 
-static std::string KEYPREFIX_VIRTUAL_ITEM = "VirtualItem";
-static std::string ID_NEXT_VIRTUAL_ITEM_ID = "NextVirtualItemID";
+typedef vector<string> STRINGLIST;
+
+static string KEYPREFIX_VIRTUAL_ITEM = "VirtualItem";
+static string ID_NEXT_VIRTUAL_ITEM_ID = "NextVirtualItemID";
 
 class DropRateProfile;
 
@@ -32,20 +36,20 @@ struct ModRow
 class ModTable
 {
 public:
-	std::string name;
-	std::vector<ModRow> modRow;
+	string name;
+	vector<ModRow> modRow;
 	ModTable();
 	~ModTable();
 	void Clear(void);
-	void LoadFromFile(std::string filename);
+	void LoadFromFile(const fs::path &filename);
 	ModRow* GetRowByLevel(int level);
 };
 
 class ModManager
 {
 public:
-	std::vector<ModTable> modTable;
-	void LoadFromFile(std::string filename);
+	vector<ModTable> modTable;
+	void LoadFromFile(const fs::path &filename);
 	ModTable* GetModTable(const char *name);
 };
 
@@ -65,9 +69,9 @@ struct EquipTemplate
 {
 	char mEquipType;     //Equivalent to ItemDef::mEquipType
 	char mWeaponType;    //Equivalent to ItemDef::mWeaponType
-	std::vector<ValidTable> intrinsicTable;  //A list of tables which are guaranteed to spawn on an item, and don't consume modifier slots.
-	std::vector<ValidTable> alwaysTable;     //A list of tables which are guaranteed to spawn on an item, and consume slots.
-	std::vector<ValidTable> randomTable;     //A list of tables which are randomly selected for application.
+	vector<ValidTable> intrinsicTable;  //A list of tables which are guaranteed to spawn on an item, and don't consume modifier slots.
+	vector<ValidTable> alwaysTable;     //A list of tables which are guaranteed to spawn on an item, and consume slots.
+	vector<ValidTable> randomTable;     //A list of tables which are randomly selected for application.
 	EquipTemplate();
 	void Clear(void);
 };
@@ -75,8 +79,8 @@ struct EquipTemplate
 class EquipTemplateManager
 {
 public:
-	std::vector<EquipTemplate> equipTemplate;
-	void LoadFromFile(std::string filename);
+	vector<EquipTemplate> equipTemplate;
+	void LoadFromFile(const fs::path &filename);
 	EquipTemplate* GetTemplate(int equipType, int weaponType);
 };
 
@@ -85,7 +89,7 @@ struct EquipAppearanceKey
 	char mEquipType;
 	char mWeaponType;
 	char mQualityLevel;
-	std::string asset;
+	string asset;
 	STRINGLIST dataList;
 
 	EquipAppearanceKey();
@@ -119,12 +123,12 @@ class EquipAppearance
 public:
 	EquipAppearance();
 	~EquipAppearance();
-	typedef std::vector<EquipAppearanceKey> APPENTRY;
-	typedef std::vector<EquipAppearanceKey*> SEARCHRESULT;
+	typedef vector<EquipAppearanceKey> APPENTRY;
+	typedef vector<EquipAppearanceKey*> SEARCHRESULT;
 	APPENTRY dataEntry;
 	void AddIfValid(EquipAppearanceKey& data);
-	void LoadFromFile(std::string filename);
-	void DebugSaveToFile(std::string filename);
+	void LoadFromFile(const fs::path &filename);
+	void DebugSaveToFile(const fs::path &filename);
 	EquipAppearanceKey* GetOrCreate(EquipAppearanceKey& object);
 	void SearchEntries(int equipType, int weaponType, SEARCHRESULT& results);
 	void SearchEntriesWithAsset(int equipType, int weaponType, const char *asset, SEARCHRESULT& results);
@@ -152,9 +156,9 @@ struct VirtualItemSpawnType
 
 struct EquipTable
 {
-	std::vector<VirtualItemSpawnType> equipList;
+	vector<VirtualItemSpawnType> equipList;
 	int maxShares;
-	void LoadFromFile(std::string filename);
+	void LoadFromFile(const fs::path &filename);
 	void TallyMaxShares(void);
 	VirtualItemSpawnType* GetRandomEntry(void);
 	EquipTable();
@@ -171,10 +175,10 @@ struct NameEntry
 struct NameTemplate
 {
 	static const char DEFAULT_NAME[];
-	std::string assetName;
+	string assetName;
 	short mEquipType;
 	short mWeaponType;
-	std::vector<NameEntry> nameList;
+	vector<NameEntry> nameList;
 	short maxShares;
 	NameTemplate();
 	void Clear(void);
@@ -201,12 +205,12 @@ struct NameTemplate
 class NameTemplateManager
 {
 public:
-	std::vector<NameTemplate> nameTemplate;
+	vector<NameTemplate> nameTemplate;
 	NameTemplateManager();
 	~NameTemplateManager();
 	void AddIfValid(NameTemplate &newItem);
-	void LoadFromFile(std::string filename);
-	void DebugSaveToFile(std::string filename);
+	void LoadFromFile(const fs::path &filename);
+	void DebugSaveToFile(const fs::path &filename);
 	const char* RetrieveName(int mEquipType, int mWeaponType, const char* asset);
 	const char* GetDefaultName(int mEquipType, int mWeaponType, const char *asset);
 	bool Debug_HasName(const char* asset, int mEquipType, int mWeaponType);
@@ -215,8 +219,8 @@ public:
 struct NameModEntry
 {
 	int mType;
-	std::string mStatBase;
-	std::string mName;
+	string mStatBase;
+	string mName;
 
 	static const int TYPE_NONE = 0;
 	static const int TYPE_PREFIX = 1;
@@ -232,8 +236,8 @@ public:
 	NameModManager();
 	~NameModManager();
 
-	std::vector<NameModEntry> mModList;
-	void LoadFromFile(std::string filename);
+	vector<NameModEntry> mModList;
+	void LoadFromFile(const fs::path &filename);
 	void ResolveModifiers(const char *firstStat, const char *secondStat, NameModEntry** firstName, NameModEntry** secondName);
 };
 
@@ -247,8 +251,8 @@ struct NameWeight
 
 struct NameWeightManager
 {
-	std::vector<NameWeight> mWeightList;
-	void LoadFromFile(std::string filename);
+	vector<NameWeight> mWeightList;
+	void LoadFromFile(const fs::path &filename);
 	float GetWeightForName(const char *statName);
 };
 
@@ -281,7 +285,7 @@ public:
 	static const int MIN_QUALITY_LEVEL = 2;
 	static const int MAX_QUALITY_LEVEL = 6;
 	RarityConfig rarityConfig[MAX_QUALITY_LEVEL + 1];
-	void LoadFromFile(std::string filename);
+	void LoadFromFile(const fs::path &filename);
 	void UpdateRarityConfig(RarityConfig& entry);
 	void LoadSettings(void);
 	int GetDropRarity(const VirtualItemSpawnParams &params);

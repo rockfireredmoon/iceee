@@ -29,7 +29,9 @@
 #include "json/json.h"
 #include "Item.h"
 #include "Account.h"
-#include "StringUtil.h"
+
+using namespace std;
+namespace fs = filesystem;
 
 int main(int argc, char *argv[]) {
 
@@ -39,9 +41,9 @@ int main(int argc, char *argv[]) {
 	}
 
 	el::Level lvl = el::Level::Warning;
-	std::vector<std::string> options;
-	std::vector<std::string> switches;
-	std::string command;
+	vector<string> options;
+	vector<string> switches;
+	string command;
 	bool configSet = false;
 	for (int i = 1; i < argc; i++) {
 		if (command == "") {
@@ -74,20 +76,18 @@ int main(int argc, char *argv[]) {
 	curl_global_init(CURL_GLOBAL_DEFAULT);
 	g_PlatformTime.Init();
 
-	std::vector<std::string> paths = g_Config.ResolveLocalConfigurationPath();
-	for (std::vector<std::string>::iterator it = paths.begin();
-			it != paths.end(); ++it) {
-		std::string dir = *it;
-		std::string filename = Platform::JoinPath(dir, "ServerConfig.txt");
-		if(!LoadConfig(filename) && it == paths.begin())
+	auto paths = g_Config.ResolveLocalConfigurationPath();
+
+	for (auto it = paths.begin(); it != paths.end(); ++it) {
+		auto dir = *it;
+		auto filename = dir / "ServerConfig.txt";
+		if(!g_Config.LoadConfig(filename) && it == paths.begin())
 			g_Logs.data->error("Could not open server configuration file: %v", filename);
 	}
 
 	g_ClusterManager.mNoEvents = true;
-	for (std::vector<std::string>::iterator it = paths.begin();
-			it != paths.end(); ++it) {
-		std::string dir = *it;
-		g_ClusterManager.LoadConfiguration(Platform::JoinPath(*it, "Cluster.txt"));
+	for (auto dir : paths) {
+		g_ClusterManager.LoadConfiguration(dir / "Cluster.txt");
 	}
 
 	if(!g_ClusterManager.Init())
@@ -98,14 +98,14 @@ int main(int argc, char *argv[]) {
 		g_Logs.data->verbose(0, "");
 		g_Logs.data->verbose(0, "For most commands, if you supply no further arguments, help for that command will be printed.");
 		g_Logs.data->verbose(0, "");
-		g_Logs.data->verbose(0, StringUtil::Format("%s create - create new accounts", argv[0]));
-		g_Logs.data->verbose(0, StringUtil::Format("%s password - change passwords", argv[0]));
-		g_Logs.data->verbose(0, StringUtil::Format("%s show - show account details", argv[0]));
-		g_Logs.data->verbose(0, StringUtil::Format("%s list - list", argv[0]));
-		g_Logs.data->verbose(0, StringUtil::Format("%s roles - show or change account roles", argv[0]));
-		g_Logs.data->verbose(0, StringUtil::Format("%s delete - delete accounts", argv[0]));
-		g_Logs.data->verbose(0, StringUtil::Format("%s groves - show account grove details", argv[0]));
-		g_Logs.data->verbose(0, StringUtil::Format("%s remove-grove - remove player groves", argv[0]));
+		g_Logs.data->verbose(0, Util::Format("%s create - create new accounts", argv[0]));
+		g_Logs.data->verbose(0, Util::Format("%s password - change passwords", argv[0]));
+		g_Logs.data->verbose(0, Util::Format("%s show - show account details", argv[0]));
+		g_Logs.data->verbose(0, Util::Format("%s list - list", argv[0]));
+		g_Logs.data->verbose(0, Util::Format("%s roles - show or change account roles", argv[0]));
+		g_Logs.data->verbose(0, Util::Format("%s delete - delete accounts", argv[0]));
+		g_Logs.data->verbose(0, Util::Format("%s groves - show account grove details", argv[0]));
+		g_Logs.data->verbose(0, Util::Format("%s remove-grove - remove player groves", argv[0]));
 	}
 	else if (command == "list") {
 		std::string glob = "*";
@@ -237,7 +237,7 @@ int main(int argc, char *argv[]) {
 					"'remove-grove' requires 1 arguments. <groveId>.");
 			return 1;
 		}
-		int gid  = StringUtil::SafeParseInt(options[0].c_str());
+		int gid  = Util::SafeParseInt(options[0].c_str());
 		ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByID(gid);
 		if (zd == NULL) {
 			g_Logs.data->error("Could not find zone %v", gid);
@@ -314,15 +314,15 @@ int main(int argc, char *argv[]) {
 
 				g_ClusterManager.RemoveEntity(accPtr);
 				g_ClusterManager.RemoveKey(
-						StringUtil::Format("%s:%d",
+						Util::Format("%s:%d",
 								LISTPREFIX_ACCOUNT_ID_TO_ZONE_ID.c_str(),
 								aqd.mID));
 				g_ClusterManager.RemoveKey(
-						StringUtil::Format("%s:%d",
+						Util::Format("%s:%d",
 								KEYPREFIX_ACCOUNT_SESSIONS.c_str(), aqd.mID));
 				if (aqd.mGroveName.length() > 0)
 					g_ClusterManager.RemoveKey(
-							StringUtil::Format("%s:%%",
+							Util::Format("%s:%%",
 									LISTPREFIX_GROVE_NAME_TO_ZONE_ID.c_str(),
 									aqd.mGroveName.c_str()));
 

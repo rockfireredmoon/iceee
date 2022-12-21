@@ -23,7 +23,6 @@
 #include "../util/base64.h"
 #include "../util/Log.h"
 #include "../Config.h"
-#include "../StringUtil.h"
 #include "../DirectoryAccess.h"
 
 using namespace HTTPD;\
@@ -50,28 +49,19 @@ void SiteSession::Clear() {
 //
 // FileResource
 //
-FileResource::FileResource(const std::string &path) {
+FileResource::FileResource(const fs::path &path) {
 	fd = 0;
-	struct stat st;
 	filePath = path;
-	if (!stat(filePath.c_str(), &st)) {
-		fileSize = st.st_size;
-		lastModified = st.st_mtime;
-	}
-	else {
-		lastModified = (std::time_t) 0;
-		fileSize = 0;
-	}
+	fileSize = fs::file_size(path);
+	lastModified = fs::last_write_time(path);
 }
 FileResource::~FileResource() { }
 
 //
 // MultiPart
-Part MultiPart::getPartWithName(std::string name) {
-	for (std::vector<Part>::iterator it = parts.begin(); it != parts.end();
-			++it) {
-		Part p = *it;
-		std::map<std::string, std::string> hv = p.getHeaderValues(
+Part MultiPart::getPartWithName(const string &name) {
+	for (auto p : parts) {
+		map<string, string> hv = p.getHeaderValues(
 				"Content-Disposition");
 		if (name.compare(hv["name"]) == 0) {
 			return p;
@@ -97,21 +87,19 @@ bool Part::write(const char *data, size_t off, size_t len) {
 	return true;
 }
 
-std::map<std::string, std::string> Part::getHeaderValues(std::string name) {
-	std::string v = headers[name];
-	std::vector<std::string> p;
+map<string, string> Part::getHeaderValues(const string &name) {
+	string v = headers[name];
+	vector<string> p;
 	Util::Split(v, ";", p);
-	std::map<std::string, std::string> m;
+	map<string, string> m;
 	size_t eidx;
-	for (std::vector<std::string>::iterator it = p.begin(); it != p.end();
-			++it) {
-		std::string v = *it;
+	for (auto v : p) {
 		eidx = v.find("=");
-		if (eidx == std::string::npos) {
+		if (eidx == string::npos) {
 			Util::Trim(v);
 			m[v] = "";
 		} else {
-			std::string s = v.substr(eidx + 1);
+			string s = v.substr(eidx + 1);
 			if (Util::HasBeginning(s, "\"")) {
 				s = s.substr(1);
 			}
@@ -166,8 +154,8 @@ void AbstractCivetHandler::send_file_data(struct mg_connection *conn, FileResour
 	}
 }
 
-void AbstractCivetHandler::sendStatusFile(struct mg_connection *conn, const struct mg_request_info * req_info, int code, const std::string &codeText, const std::string &defaultMessage) {
-	FileResource errfile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveHTTPBasePath(), "Errors"), StringUtil::Format("%d.html", code)));
+void AbstractCivetHandler::sendStatusFile(struct mg_connection *conn, const struct mg_request_info * req_info, int code, const string &codeText, const string &defaultMessage) {
+	FileResource errfile(g_Config.ResolveHTTPBasePath() / "Errors" / Util::Format("%d.html", code));
 	mg_printf(conn, "HTTP/1.1 %d %s\r\n", code, codeText.c_str());
 	mg_printf(conn, "Content-Type: text/html\r\n");
 	int errstatus = openFile(req_info, &errfile);
@@ -196,10 +184,10 @@ int AbstractCivetHandler::openFile(const struct mg_request_info * req_info, File
 	}
 }
 
-std::string AbstractCivetHandler::formatTime(std::time_t *now) {
-	std::tm * ptm = std::localtime(now);
+string AbstractCivetHandler::formatTime(time_t now) {
+	tm * ptm = localtime(&now);
 	char nowBuffer[64];
-	std::strftime(nowBuffer, 64, "%a, %d %b %Y %H:%M:%S GMT", ptm);
+	strftime(nowBuffer, 64, "%a, %d %b %Y %H:%M:%S GMT", ptm);
 	return nowBuffer;
 }
 
@@ -207,31 +195,31 @@ bool AbstractCivetHandler::parseMultiPart(CivetServer *server,
 		struct mg_connection *conn, MultiPart *multiPart) {
 
 	char postData[MG_BUF_LEN + 1];
-	std::string contentType = CivetServer::getHeader(conn, "Content-Type");
+	string contentType = CivetServer::getHeader(conn, "Content-Type");
 	int contentLength = atoi(CivetServer::getHeader(conn, "Content-Length"));
 	if (contentType.find("multipart/form-data") == 0) {
 		size_t sep = contentType.find(";");
-		if (sep == std::string::npos) {
+		if (sep == string::npos) {
 			// No boundary
 			return false;
 		}
-		std::string boundaryPair = contentType.substr(sep + 1);
+		string boundaryPair = contentType.substr(sep + 1);
 		Util::Trim(boundaryPair);
-		std::string k, v;
+		string k, v;
 		extractPair(boundaryPair, k, v);
-		std::string eob = "\r\n--" + v + "--";
+		string eob = "\r\n--" + v + "--";
 		v = "\r\n--" + v + "\r\n";
 
 		size_t dataLen, eidx, toRead = contentLength, matches = 2;
-		std::vector<std::string> prms;
+		vector<string> prms;
 		const char * boundary = v.c_str();
 		const char * boundary2 = eob.c_str();
-		std::string nlstr = "\r\n\r\n";
+		string nlstr = "\r\n\r\n";
 		const char * nl = nlstr.c_str();
 		unsigned int boundaryLen = strlen(boundary);
 
-		std::vector<std::string> headerLines;
-		std::string line;
+		vector<string> headerLines;
+		string line;
 		Part part;
 
 		// States
@@ -290,15 +278,15 @@ bool AbstractCivetHandler::parseMultiPart(CivetServer *server,
 							if (matches == 4) {
 								// Parse the headers
 								part = Part();
-								for (std::vector<std::string>::iterator it =
+								for (vector<string>::iterator it =
 										headerLines.begin();
 										it != headerLines.end(); ++it) {
-									std::string s = *it;
+									string s = *it;
 									eidx = s.find(":");
-									if (eidx != std::string::npos) {
-										std::string hk = s.substr(0, eidx);
+									if (eidx != string::npos) {
+										string hk = s.substr(0, eidx);
 										Util::Trim(hk);
-										std::string hv = s.substr(eidx + 1);
+										string hv = s.substr(eidx + 1);
 										Util::Trim(hv);
 										part.headers[hk] = hv;
 									}
@@ -328,10 +316,10 @@ bool AbstractCivetHandler::parseMultiPart(CivetServer *server,
 }
 
 bool AbstractCivetHandler::parseForm(CivetServer *server,
-		struct mg_connection *conn, std::map<std::string, std::string> &parms) {
+		struct mg_connection *conn, map<string, string> &parms) {
 
 	char postData[MG_BUF_LEN + 1];
-	std::string contentType = CivetServer::getHeader(conn, "Content-Type");
+	string contentType = CivetServer::getHeader(conn, "Content-Type");
 	int contentLength = atoi(CivetServer::getHeader(conn, "Content-Length"));
 
 	//application/x-www-form-urlencoded
@@ -339,19 +327,19 @@ bool AbstractCivetHandler::parseForm(CivetServer *server,
 
 		size_t dataLen, eidx, ptr;
 		unsigned long toRead = contentLength;
-		std::vector<std::string> prms;
+		vector<string> prms;
 
 		do {
 			dataLen = mg_read(conn, postData, sizeof(postData) - 1);
-			std::string val;
+			string val;
 			if (dataLen > 0) {
 				postData[dataLen] = 0;
-				std::string str = postData;
+				string str = postData;
 				ptr = 0;
 				while (ptr < dataLen) {
 					eidx = str.find("&", ptr);
-					if (eidx == std::string::npos) {
-						std::string rem = str.substr(ptr);
+					if (eidx == string::npos) {
+						string rem = str.substr(ptr);
 						val.append(rem);
 
 						if(val.length() > MAX_PARAMETER_SIZE || prms.size() > MAX_PARAMETERS) {
@@ -363,7 +351,7 @@ bool AbstractCivetHandler::parseForm(CivetServer *server,
 //#define MAX_MULTIPART_HEADERS 10
 						break;
 					} else {
-						std::string sec = str.substr(ptr, eidx - ptr);
+						string sec = str.substr(ptr, eidx - ptr);
 						val.append(sec);
 						prms.push_back(val);
 
@@ -373,7 +361,7 @@ bool AbstractCivetHandler::parseForm(CivetServer *server,
 							return false;
 						}
 
-						val = std::string();
+						val = string();
 					}
 					ptr = eidx + 1;
 				}
@@ -391,11 +379,11 @@ bool AbstractCivetHandler::parseForm(CivetServer *server,
 				&& (contentLength == 0 || (contentLength != 0 && toRead > 0)));
 
 		// Turn strings into parameters
-		for (std::vector<std::string>::iterator it = prms.begin();
+		for (vector<string>::iterator it = prms.begin();
 				it != prms.end(); ++it) {
-			std::string p = *it;
+			string p = *it;
 			eidx = p.find("=");
-			std::string v = eidx == std::string::npos ? "" : p.substr(eidx + 1);
+			string v = eidx == string::npos ? "" : p.substr(eidx + 1);
 			Util::URLDecode(v);
 			parms[p.substr(0, eidx)] = v;
 		}
@@ -416,15 +404,15 @@ bool AbstractCivetHandler::isUserAgent(CivetServer *server, struct mg_connection
 	return ok;
 }
 
-bool AbstractCivetHandler::isAuthorized(CivetServer *server, struct mg_connection *conn, std::string credentials) {
+bool AbstractCivetHandler::isAuthorized(CivetServer *server, struct mg_connection *conn,const  string &credentials) {
 	const char* h = server->getHeader(conn, "Authorization");
 	if(h != NULL) {
-		std::vector<std::string> l;
+		vector<string> l;
 		Util::Split(h, " ", l);
 		if(l.size() >= 2) {
-			std::string type = l[0];
-			std::string auth = l[1];
-			std::string enc = base64_encode(reinterpret_cast<const unsigned char*>(credentials.c_str()), credentials.length());
+			string type = l[0];
+			string auth = l[1];
+			string enc = base64_encode(reinterpret_cast<const unsigned char*>(credentials.c_str()), credentials.length());
 			if(type.compare("Basic") == 0 && enc.compare(auth) == 0) {
 				return true;
 			}
@@ -434,7 +422,7 @@ bool AbstractCivetHandler::isAuthorized(CivetServer *server, struct mg_connectio
 }
 
 void AbstractCivetHandler::writeWWWAuthenticate(CivetServer *server,
-		struct mg_connection *conn, std::string realm) {
+		struct mg_connection *conn, const string & realm) {
 	mg_printf(conn, "HTTP/1.1 401 Unauthorized\r\n");
 	mg_printf(conn, "WWW-Authenticate: Basic realm=\"%s\"\r\n\r\n", realm.c_str());
 	mg_set_status(conn, 401);
@@ -442,15 +430,15 @@ void AbstractCivetHandler::writeWWWAuthenticate(CivetServer *server,
 }
 
 void AbstractCivetHandler::writeJSON200(CivetServer *server,
-		struct mg_connection *conn, std::string data) {
+		struct mg_connection *conn, const string &data) {
 	mg_printf(conn, "HTTP/1.1 200 OK\r\nContent-Length: %lu\r\n", data.size());
 	mg_printf(conn, "Content-Type: application/json\r\n\r\n%s", data.c_str());
 	mg_set_status(conn, 200);
 }
 
 void AbstractCivetHandler::writeStatusPlain(CivetServer *server,
-		struct mg_connection *conn, int code, std::string msg,
-		std::string data) {
+		struct mg_connection *conn, int code, const string &msg,
+		const string &data) {
 	mg_printf(conn, "HTTP/1.1 %d %s\r\nContent-Length: %lu\r\n", code,
 			msg.c_str(), data.size());
 	mg_printf(conn, "Content-Type: text/html\r\n\r\n%s", data.c_str());
@@ -458,9 +446,9 @@ void AbstractCivetHandler::writeStatusPlain(CivetServer *server,
 }
 
 void AbstractCivetHandler::writeStatus(CivetServer *server,
-		struct mg_connection *conn, int code, std::string msg,
-		std::string data) {
-	std::string content = "<html><body><h1>" + data + "</h1></body></html>";
+		struct mg_connection *conn, int code, const string &msg,
+		const string &data) {
+	string content = "<html><body><h1>" + data + "</h1></body></html>";
 	mg_printf(conn, "HTTP/1.1 %d %s\r\nContent-Length: %lu\r\n", code,
 			msg.c_str(), content.size());
 	mg_printf(conn, "Content-Type: text/html\r\n\r\n%s", content.c_str());
@@ -468,7 +456,7 @@ void AbstractCivetHandler::writeStatus(CivetServer *server,
 }
 
 void AbstractCivetHandler::writeResponse(CivetServer *server,
-		struct mg_connection *conn, std::string data, std::string contentType) {
+		struct mg_connection *conn, const string &data, const string &contentType) {
 	mg_printf(conn, "HTTP/1.1 200 OK\r\nContent-Length: %lu\r\n", data.size());
 	mg_printf(conn, "Content-Type: %s\r\n\r\n%s", contentType.c_str(),
 			data.c_str());
@@ -487,7 +475,7 @@ PageOptions::PageOptions() {
 }
 
 void PageOptions::Init(CivetServer *server, struct mg_connection *conn) {
-	std::string p;
+	string p;
 	if (CivetServer::getParam(conn, "count", p)) {
 		count = atoi(p.c_str());
 	}

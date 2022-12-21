@@ -8,7 +8,6 @@
 #include "DebugProfiler.h"
 #include "Globals.h"
 #include "Cluster.h"
-#include "StringUtil.h"
 #include "Util.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -19,7 +18,7 @@
 SceneryManager g_SceneryManager;
 GlobalSceneryVars g_SceneryVars;
 
-static std::vector<std::string> EXTENDED_PROPERTY_NAMES = {
+static vector<string> EXTENDED_PROPERTY_NAMES = {
 	"spawnname", "leasetime", "spawnpackage", "mobtotal",
 	"maxactive", "aimodule", "maxleash", "loyaltyradius", "dialog",
 	"wanderradius", "despawntime", "sequential", "spawnlayer",
@@ -85,7 +84,7 @@ void SceneryObject :: Clear(void)
 	extraData.Clear();
 }
 
-int SceneryObject :: SetPosition(const std::string &buffer)
+int SceneryObject :: SetPosition(const string &buffer)
 {
 	//Fill in the position data from the given string.  The string should contain 3
 	//numbers separated by a space.
@@ -97,7 +96,7 @@ int SceneryObject :: SetPosition(const std::string &buffer)
 	return 0;
 }
 
-int SceneryObject :: SetQ(const std::string &buffer)
+int SceneryObject :: SetQ(const string &buffer)
 {
 	//Quaternion (orientation) ?
 	size_t Start = 0;
@@ -108,7 +107,7 @@ int SceneryObject :: SetQ(const std::string &buffer)
 	return 0;
 }
 
-int SceneryObject :: SetS(const std::string &buffer)
+int SceneryObject :: SetS(const string &buffer)
 {
 	size_t Start = 0;
 	float temp;
@@ -184,17 +183,17 @@ bool SceneryObject :: CreateExtraData(void)
 	return hasExtraData;
 }
 
-bool SceneryObject :: IsExtendedProperty(const std::string &propertyName)
+bool SceneryObject :: IsExtendedProperty(const string &propertyName)
 {
-	return std::find(EXTENDED_PROPERTY_NAMES.begin(), EXTENDED_PROPERTY_NAMES.end(), StringUtil::LowerCase(propertyName)) != EXTENDED_PROPERTY_NAMES.end();
+	return find(EXTENDED_PROPERTY_NAMES.begin(), EXTENDED_PROPERTY_NAMES.end(), Util::LowerCase(propertyName)) != EXTENDED_PROPERTY_NAMES.end();
 }
 
-bool SceneryObject :: SetExtendedProperty(const std::string &propertyName, const std::string &propertyValue)
+bool SceneryObject :: SetExtendedProperty(const string &propertyName, const string &propertyValue)
 {
 	if(CreateExtraData() == false)
 		return false;
 
-	string pn = StringUtil::LowerCase(propertyName);
+	string pn = Util::LowerCase(propertyName);
 
 	if(pn == "spawnname")
 		extraData.spawnName = propertyValue;
@@ -375,7 +374,7 @@ void SceneryObject::WriteToJSON(Json::Value &value) {
 }
 
 bool SceneryObject :: WriteEntity(AbstractEntityWriter *writer) {
-	writer->Key(KEYPREFIX_SCENERY_OBJECT, StringUtil::Format("%d:%d", Zone, ID));
+	writer->Key(KEYPREFIX_SCENERY_OBJECT, Util::Format("%d:%d", Zone, ID));
 	writer->Value("ID", ID);
 	writer->Value("Asset", Asset);
 	writer->Value("Name", Name);
@@ -385,9 +384,9 @@ bool SceneryObject :: WriteEntity(AbstractEntityWriter *writer) {
 			Name = "Untitled";
 	}
 
-	writer->Value("Pos", StringUtil::Format("%g,%g,%g", LocationX, LocationY, LocationZ));
-	writer->Value("Orient", StringUtil::Format("%g,%g,%g,%g", QuatX, QuatY, QuatZ, QuatW));
-	writer->Value("Scale", StringUtil::Format("%g,%g,%g", ScaleX, ScaleY, ScaleZ));
+	writer->Value("Pos", Util::Format("%g,%g,%g", LocationX, LocationY, LocationZ));
+	writer->Value("Orient", Util::Format("%g,%g,%g,%g", QuatX, QuatY, QuatZ, QuatW));
+	writer->Value("Scale", Util::Format("%g,%g,%g", ScaleX, ScaleY, ScaleZ));
 	writer->Value("Flags", Flags);
 	writer->Value("Layer", Layer);
 	writer->Value("PatrolSpeed", patrolSpeed);
@@ -421,7 +420,7 @@ bool SceneryObject :: WriteEntity(AbstractEntityWriter *writer) {
 			STRINGLIST l;
 			for(auto a = extraData.link.begin(); a != extraData.link.end(); ++a) {
 				if((*a).propID != 0)
-					l.push_back(StringUtil::Format("%d,%d", (*a).propID, (*a).type));
+					l.push_back(Util::Format("%d,%d", (*a).propID, (*a).type));
 			}
 			if(l.size() > 0)
 				writer->ListValue("Link", l);
@@ -431,12 +430,12 @@ bool SceneryObject :: WriteEntity(AbstractEntityWriter *writer) {
 	return true;
 }
 
-std::string SceneryObject :: GetClusterKey() {
-	return StringUtil::Format("%s:%d:%d", KEYPREFIX_SCENERY_OBJECT.c_str(), Zone, ID);
+string SceneryObject :: GetClusterKey() {
+	return Util::Format("%s:%d:%d", KEYPREFIX_SCENERY_OBJECT.c_str(), Zone, ID);
 }
 
 bool SceneryObject :: EntityKeys(AbstractEntityReader *reader) {
-	reader->Key(KEYPREFIX_SCENERY_OBJECT, StringUtil::Format("%d:%d", Zone, ID));
+	reader->Key(KEYPREFIX_SCENERY_OBJECT, Util::Format("%d:%d", Zone, ID));
 	return true;
 }
 
@@ -495,7 +494,7 @@ bool SceneryObject :: ReadEntity(AbstractEntityReader *reader) {
 	int ival = reader->ValueInt("Facing", 9999);
 	if(ival != 9999 && CreateExtraData())
 		extraData.facing = ival;
-	std::string s = reader->Value("SpawnName");
+	string s = reader->Value("SpawnName");
 	if(s.length() > 0 && CreateExtraData())
 		extraData.spawnName = s;
 	ival = reader->ValueInt("LeaseTime", -1);
@@ -644,16 +643,16 @@ const char* SceneryObject :: GetSpawnPackageName(void)
 	return extraData.spawnPackage.c_str();
 }
 
-std::string SceneryObject::GetAssetName()
+string SceneryObject::GetAssetName()
 {
-	 std::size_t res = Asset.find("?");
-	if(res == std::string::npos)
+	 size_t res = Asset.find("?");
+	if(res == string::npos)
 		return Asset;
 	else
 		return "";
 }
 
-bool SceneryObject::ExtractATS(std::string& outputStr) const
+bool SceneryObject::ExtractATS(string& outputStr) const
 {
 	const char *start = strstr(Asset.c_str(), "ATS=");
 	if(start == NULL)
@@ -715,7 +714,7 @@ bool SceneryObject :: HasLinks(int linkType)
 	return false;
 }
 
-void SceneryObject :: EnumLinks(int linkType, std::vector<int> &output)
+void SceneryObject :: EnumLinks(int linkType, vector<int> &output)
 {
 	output.clear();
 	if(!hasExtraData)
@@ -729,7 +728,7 @@ void SceneryObject :: EnumLinks(int linkType, std::vector<int> &output)
 
 bool SceneryObject :: IsSpawnPoint(void)
 {
-	if(Asset.find("Manipulator-SpawnPoint") != std::string::npos)
+	if(Asset.find("Manipulator-SpawnPoint") != string::npos)
 		return true;
 	return false;
 }
@@ -787,9 +786,9 @@ bool SceneryPage::DeleteProp(int propID)
 	if(IsClusteredZone()) {
 		g_ClusterManager.RemoveEntity(&((*it).second));
 		if(IsGroveZone())
-			g_ClusterManager.ListRemove(StringUtil::Format("%s:%d:%d:%d", KEYPREFIX_GROVE.c_str(), mZone, mTileX, mTileY), StringUtil::Format("%d", propID), false);
+			g_ClusterManager.ListRemove(Util::Format("%s:%d:%d:%d", KEYPREFIX_GROVE.c_str(), mZone, mTileX, mTileY), Util::Format("%d", propID), false);
 		else
-			g_ClusterManager.ListRemove(StringUtil::Format("%s:%d:%d:%d", KEYPREFIX_SCENERY.c_str(), mZone, mTileX, mTileY), StringUtil::Format("%d", propID), false);
+			g_ClusterManager.ListRemove(Util::Format("%s:%d:%d:%d", KEYPREFIX_SCENERY.c_str(), mZone, mTileX, mTileY), Util::Format("%d", propID), false);
 	}
 
 	mSceneryList.erase(it);
@@ -836,7 +835,7 @@ void SceneryPage::CheckAutosave(int& debugPagesSaved, int& debugPropsSaved)
 		else {
 			if(mHasSourceFile == false)
 			{
-				Platform::MakeDirectory(GetFolderName());
+				fs::create_directories(GetFolderName());
 			}
 
 			if(SaveFile(GetFileName()) == true)
@@ -868,7 +867,7 @@ void SceneryPage::RemoveFromCluster()
 	/* This will remove the index key, not the individual objects. Those should have
 	 * been removed (more or less) at the point of deletion by the user.
 	 */
-	if(g_ClusterManager.RemoveKey(StringUtil::Format("%s:%d:%d:%d",  ( IsGroveZone() ? KEYPREFIX_GROVE : KEYPREFIX_SCENERY ).c_str(), mZone, mTileX, mTileY), false)) {
+	if(g_ClusterManager.RemoveKey(Util::Format("%s:%d:%d:%d",  ( IsGroveZone() ? KEYPREFIX_GROVE : KEYPREFIX_SCENERY ).c_str(), mZone, mTileX, mTileY), false)) {
 		g_Logs.data->info("Removed scenery page [%v %vx%v] from cluster", mZone, mTileX, mTileY);
 	}
 	else {
@@ -876,10 +875,10 @@ void SceneryPage::RemoveFromCluster()
 	}
 }
 
-void SceneryPage::RemoveFile(std::string fileName)
+void SceneryPage::RemoveFile(const fs::path &fileName)
 {
 	g_Logs.data->info("Removed [%v]", fileName);
-	remove(fileName.c_str());
+	fs::remove(fileName);
 }
 
 bool SceneryPage::SaveToCluster()
@@ -898,14 +897,14 @@ bool SceneryPage::SaveToCluster()
 	{
 		g_Logs.data->debug("Saving prop [%v]", it->second.ID);
 		if(g_ClusterManager.WriteEntity(&((*it).second)), true) {
-			std::string k;
+			string k;
 			if(IsGroveZone())
-				k = StringUtil::Format("%s:%d:%d:%d", KEYPREFIX_GROVE.c_str(), mZone, mTileX, mTileY);
+				k = Util::Format("%s:%d:%d:%d", KEYPREFIX_GROVE.c_str(), mZone, mTileX, mTileY);
 			else
-				k = StringUtil::Format("%s:%d:%d:%d", KEYPREFIX_SCENERY.c_str(), mZone, mTileX, mTileY);
+				k = Util::Format("%s:%d:%d:%d", KEYPREFIX_SCENERY.c_str(), mZone, mTileX, mTileY);
 
-			g_ClusterManager.ListRemove(k, StringUtil::Format("%d", (*it).second.ID), true);
-			g_ClusterManager.ListAdd(k, StringUtil::Format("%d", (*it).second.ID));
+			g_ClusterManager.ListRemove(k, Util::Format("%d", (*it).second.ID), true);
+			g_ClusterManager.ListAdd(k, Util::Format("%d", (*it).second.ID));
 
 		}
 		else {
@@ -917,9 +916,9 @@ bool SceneryPage::SaveToCluster()
 	return true;
 }
 
-bool SceneryPage::SaveFile(std::string fileName)
+bool SceneryPage::SaveFile(const fs::path &fileName)
 {
-	FILE *output = fopen(fileName.c_str(), "wb");
+	FILE *output = fopen(fileName.string().c_str(), "wb");
 	if(output == NULL)
 	{
 		g_Logs.data->error("Could not open file for writing [%v] - %v. %v", fileName, errno, strerror(errno));
@@ -943,9 +942,9 @@ bool SceneryPage::WriteEntity(AbstractEntityWriter *writer) {
 
 bool SceneryPage::EntityKeys(AbstractEntityReader *reader) {
 	if(IsGroveZone())
-		reader->Key(KEYPREFIX_GROVE, StringUtil::Format("%d:%d:%d", mZone, mTileX, mTileY), true);
+		reader->Key(KEYPREFIX_GROVE, Util::Format("%d:%d:%d", mZone, mTileX, mTileY), true);
 	else
-		reader->Key(KEYPREFIX_SCENERY, StringUtil::Format("%d:%d:%d", mZone, mTileX, mTileY), true);
+		reader->Key(KEYPREFIX_SCENERY, Util::Format("%d:%d:%d", mZone, mTileX, mTileY), true);
 	return true;
 }
 
@@ -971,20 +970,20 @@ bool SceneryPage::ReadEntity(AbstractEntityReader *reader) {
 	return true;
 }
 
-std::string SceneryPage::GetFileName()
+fs::path SceneryPage::GetFileName()
 {
-	return Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Scenery"), StringUtil::Format("%d", mZone)), StringUtil::Format("x%03dy%03d.txt", mTileX, mTileY));
+	return g_Config.ResolveVariableDataPath() / "Scenery" / Util::Format("%d", mZone) / Util::Format("x%03dy%03d.txt", mTileX, mTileY);
 }
 
-std::string SceneryPage::GetFolderName()
+fs::path SceneryPage::GetFolderName()
 {
-	return Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Scenery"), StringUtil::Format("%d", mZone));
+	return g_Config.ResolveVariableDataPath() / "Scenery" / Util::Format("%d", mZone);
 }
 
 void SceneryPage::LoadSceneryFromCluster()
 {
 	g_Logs.data->info("Loading scenery for %v (%vx%v) from the cluster", mZone, mTileX, mTileY);
-	STRINGLIST propKeys = g_ClusterManager.GetList(StringUtil::Format("%s:%d:%d:%d",  ( IsGroveZone() ? KEYPREFIX_GROVE : KEYPREFIX_SCENERY ).c_str(), mZone, mTileX, mTileY));
+	STRINGLIST propKeys = g_ClusterManager.GetList(Util::Format("%s:%d:%d:%d",  ( IsGroveZone() ? KEYPREFIX_GROVE : KEYPREFIX_SCENERY ).c_str(), mZone, mTileX, mTileY));
 	for(auto a = propKeys.begin(); a!= propKeys.end(); ++a) {
 		SceneryObject o;
 		o.Key.x = mTileX;
@@ -1002,11 +1001,11 @@ void SceneryPage::LoadSceneryFromCluster()
 	mHasSourceFile = propKeys.size() > 0;
 }
 
-void SceneryPage::LoadSceneryFromFile(std::string fileName)
+void SceneryPage::LoadSceneryFromFile(const fs::path &fileName)
 {
 	FileReader3 fr;
 	g_Logs.data->info("Loading scenery for %v (%vx%v) from the local file %v", mZone, mTileX, mTileY, fileName);
-	if(fr.OpenFile(fileName.c_str()) != FileReader3::SUCCESS)
+	if(fr.OpenFile(fileName) != FileReader3::SUCCESS)
 	{
 		g_Logs.data->debug("Could not open file to load scenery: [%v]", fileName);
 		return;
@@ -1459,7 +1458,7 @@ void SceneryManager::CheckAutosave(bool force)
 		g_Logs.data->info("Saved %v props in %v pages.", debugPropsSaved, debugPagesSaved);
 }
 
-bool SceneryManager::ValidATSEntry(const std::string& atsName)
+bool SceneryManager::ValidATSEntry(const string& atsName)
 {
 	AssetCatalogueItem *item = g_AssetCatalogueManager.GetItem(atsName);
 	return item != NULL && item->mType == AssetCatalogueItemType::SKIN;
@@ -1468,8 +1467,8 @@ bool SceneryManager::ValidATSEntry(const std::string& atsName)
 bool SceneryManager::VerifyATS(SceneryObject& prop)
 {
 	//Return true if the asset name passes ATS inspection, or does not contain an ATS.
-	std::string ats;
-	std::string n = prop.GetAssetName();
+	string ats;
+	string n = prop.GetAssetName();
 
 	if(prop.ExtractATS(ats) == false) {
 		/* Hasn't got an ATS, should it have one? */
@@ -1584,7 +1583,7 @@ void SceneryManager :: NotifyChangedProp(int zoneID, int propID)
 	page->NotifyAccess(true);
 }
 
-void SceneryManager::AddPageRequest(int socket, int queryID, int zone, int x, int y, bool skipQuery, std::list<int> excludedProps)
+void SceneryManager::AddPageRequest(int socket, int queryID, int zone, int x, int y, bool skipQuery, list<int> excludedProps)
 {
 	SceneryPageRequest newItem;
 	newItem.socket = socket;
@@ -1619,7 +1618,7 @@ void SceneryManager::ProcessPageRequests(void)
 
 	//Build a list of packets to send out so we only have to acquire the thread
 	//once at the end.
-	std::list<PacketManager::PACKET_PAIR> outgoingPackets;
+	list<PacketManager::PACKET_PAIR> outgoingPackets;
 	for(size_t i = 0; i < pending; i++)
 	{
 		SendPageRequest(mImmediatePageRequest[i], outgoingPackets);
@@ -1628,7 +1627,7 @@ void SceneryManager::ProcessPageRequests(void)
 	if(outgoingPackets.size() > 0)
 	{
 		//Add the outgoing packets to the queue.
-		std::list<PacketManager::PACKET_PAIR>::iterator it;
+		list<PacketManager::PACKET_PAIR>::iterator it;
 
 		g_PacketManager.GetThread("SceneryManager::HandlePageRequests(s)");
 
@@ -1642,7 +1641,7 @@ void SceneryManager::ProcessPageRequests(void)
 	mImmediatePageRequest.clear();
 }
 
-void SceneryManager::SendPageRequest(const SceneryPageRequest& request, std::list<PacketManager::PACKET_PAIR>& outgoingPackets)
+void SceneryManager::SendPageRequest(const SceneryPageRequest& request, list<PacketManager::PACKET_PAIR>& outgoingPackets)
 {
 	TimeObject to("SceneryManager::SendPageRequest");
 
@@ -1668,7 +1667,7 @@ void SceneryManager::SendPageRequest(const SceneryPageRequest& request, std::lis
 
 	for(it = page->mSceneryList.begin(); it != page->mSceneryList.end(); ++it)
 	{
-		if( (std::find(request.excludedProps.begin(), request.excludedProps.end(), it->second.ID) != request.excludedProps.end()))
+		if( (find(request.excludedProps.begin(), request.excludedProps.end(), it->second.ID) != request.excludedProps.end()))
 			// Excluded prop, probably excluded as the result of a script prop removal
 			continue;
 
@@ -1767,9 +1766,9 @@ bool SceneryManager::DeleteZone(int id) {
 		return false;
 	}
 	STRINGLIST pages;
-	g_ClusterManager.Scan([this, &pages](const std::string &key) {
+	g_ClusterManager.Scan([this, &pages](const string &key) {
 		pages.push_back(key);
-	},StringUtil::Format("%s:%d:*", KEYPREFIX_GROVE.c_str(), id));
+	},Util::Format("%s:%d:*", KEYPREFIX_GROVE.c_str(), id));
 	for(auto it = pages.begin(); it != pages.end(); ++it) {
 		STRINGLIST props = g_ClusterManager.GetList(*it);
 		for(auto it2 = props.begin(); it2 != props.end(); ++it2) {
@@ -1782,7 +1781,7 @@ bool SceneryManager::DeleteZone(int id) {
 		}
 		g_ClusterManager.RemoveKey(*it);
 	}
-	g_ClusterManager.RemoveKey(StringUtil::Format("%s:%d:*", ID_NEXT_SCENERY.c_str(), id));
+	g_ClusterManager.RemoveKey(Util::Format("%s:%d:*", ID_NEXT_SCENERY.c_str(), id));
 
 	return true;
 }
@@ -1856,7 +1855,7 @@ void SceneryManager::TransferActiveLocations(const ActiveLocation::CONTAINER& so
 }
 
 //This is a debug function for specialized searches, we'll do all the work here.
-void SceneryManager::EnumPropsInRange(int zoneID, int posX, int posZ, int radius, std::vector<SceneryObject*>& searchResults)
+void SceneryManager::EnumPropsInRange(int zoneID, int posX, int posZ, int radius, vector<SceneryObject*>& searchResults)
 {
 	ITERATOR it = mZones.find(zoneID);
 	if(it == mZones.end())

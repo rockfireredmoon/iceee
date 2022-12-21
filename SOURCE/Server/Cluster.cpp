@@ -5,7 +5,6 @@
 #include "Scheduler.h"
 #include "GameConfig.h"
 #include "Util.h"
-#include "StringUtil.h"
 #include "Simulator.h"
 #include "util/Log.h"
 #include "FileReader.h"
@@ -140,7 +139,7 @@ vector<string> ClusterEntityReader::Sections() {
 	if (!mGotSections) {
 		mGotSections = true;
 		/* Read the list of all the subkeys created for this entity.  */
-		string listKey = StringUtil::Format("%s:%s^%s", mCatalog.c_str(),
+		string listKey = Util::Format("%s:%s^%s", mCatalog.c_str(),
 				mID.c_str(), "_SUBKEYS_");
 		auto getListKey = mClient->lrange(listKey, 0, -1);
 		mClient->sync_commit();
@@ -181,10 +180,10 @@ vector<string> ClusterEntityReader::Sections() {
 
 string ClusterEntityReader::CreateSectionKey() {
 	if (mSection.length() == 0)
-		return StringUtil::Format("%s:%s:DEFAULT", mCatalog.c_str(),
+		return Util::Format("%s:%s:DEFAULT", mCatalog.c_str(),
 				mID.c_str());
 	else
-		return StringUtil::Format("%s:%s:%s", mCatalog.c_str(), mID.c_str(),
+		return Util::Format("%s:%s:%s", mCatalog.c_str(), mID.c_str(),
 				mSection.c_str());
 }
 
@@ -240,10 +239,7 @@ vector<string> ClusterEntityReader::ListValue(const string &key,
 		sep = ",";
 	Util::SplitEscaped(v, ",", l);
 	for (auto a = l.begin(); a != l.end(); ++a) {
-		o.push_back(
-				StringUtil::ReplaceAll(
-						StringUtil::ReplaceAll((*a),
-								StringUtil::Format("\\%s", sep.c_str()), sep),
+		o.push_back(Util::ReplaceAllTo(Util::ReplaceAllTo((*a), Util::Format("\\%s", sep.c_str()), sep),
 						"\\\\", "\\"));
 	}
 	return o;
@@ -272,7 +268,7 @@ bool ClusterEntityWriter::Abort() {
 
 bool ClusterEntityWriter::End() {
 	string sec;
-	string secKey = StringUtil::Format("%s:%s", mCatalog.c_str(), mID.c_str());
+	string secKey = Util::Format("%s:%s", mCatalog.c_str(), mID.c_str());
 
 	g_Logs.cluster->debug("Writing entity %v", secKey);
 
@@ -282,7 +278,7 @@ bool ClusterEntityWriter::End() {
 	/* Write a key that contains a list of all the subkeys created for this entity. First
 	 * get the key. If it exists, remove all the existing keys first. Then we trim
 	 * the list, and then add the new ones on the fly */
-	string listKey = StringUtil::Format("%s^%s", secKey.c_str(), "_SUBKEYS_");
+	string listKey = Util::Format("%s^%s", secKey.c_str(), "_SUBKEYS_");
 	auto getListKey = mClient->lrange(listKey, 0, -1);
 	mClient->sync_commit();
 	auto reply = getListKey.get();
@@ -301,10 +297,10 @@ bool ClusterEntityWriter::End() {
 		if (val.section.compare(sec) != 0) {
 			if (a.size() > 0) {
 				if (sec.length() > 0)
-					secKey = StringUtil::Format("%s:%s:%s", mCatalog.c_str(),
+					secKey = Util::Format("%s:%s:%s", mCatalog.c_str(),
 							mID.c_str(), sec.c_str());
 				else
-					secKey = StringUtil::Format("%s:%s:DEFAULT",
+					secKey = Util::Format("%s:%s:DEFAULT",
 							mCatalog.c_str(), mID.c_str());
 				auto ck = find(currentKeys.begin(), currentKeys.end(), secKey);
 				g_Logs.cluster->debug("Section key %v exists", secKey);
@@ -321,10 +317,10 @@ bool ClusterEntityWriter::End() {
 	}
 	if (a.size() > 0) {
 		if (sec.length() > 0)
-			secKey = StringUtil::Format("%s:%s:%s", mCatalog.c_str(),
+			secKey = Util::Format("%s:%s:%s", mCatalog.c_str(),
 					mID.c_str(), sec.c_str());
 		else
-			secKey = StringUtil::Format("%s:%s:DEFAULT", mCatalog.c_str(),
+			secKey = Util::Format("%s:%s:DEFAULT", mCatalog.c_str(),
 					mID.c_str());
 		auto ck = find(currentKeys.begin(), currentKeys.end(), secKey);
 		g_Logs.cluster->debug("Section key %v exists", secKey);
@@ -357,8 +353,7 @@ bool ClusterEntityWriter::ListValue(const string &key, vector<string> &value) {
 	for (auto it = value.begin(); it != value.end(); ++it) {
 		if (v.size() > 0)
 			v += ",";
-		v += StringUtil::ReplaceAll(StringUtil::ReplaceAll((*it), "\\", "\\\\"),
-				",", "\\,");
+		v += Util::ReplaceAllTo(Util::ReplaceAllTo((*it), "\\", "\\\\"), ",", "\\,");
 	}
 	mStringValues.push_back( { mSection, key, v });
 	return true;
@@ -580,7 +575,7 @@ int ClusterManager::GetIntKey(const string &key, const int &defaultValue) {
 	if (rep.is_null())
 		return defaultValue;
 	else
-		return StringUtil::SafeParseInt(rep.as_string());
+		return Util::SafeParseInt(rep.as_string());
 }
 
 bool ClusterManager::RemoveKey(const string &key, bool sync) {
@@ -1021,7 +1016,7 @@ void ClusterManager::SendConfiguration() {
 //			for(int j = 0 ; j < count ; j++) {
 //				/* Only send players that belong to our cluster */
 //				mClient.publish(LOGIN,
-//						StringUtil::Format("%s:%d", mShardName.c_str(),
+//						Util::Format("%s:%d", mShardName.c_str(),
 //								it->first));
 //				mClient.commit();
 //			}
@@ -1079,8 +1074,8 @@ ShardPlayer ClusterManager::GetActivePlayer(int CDefId) {
 void ClusterManager::Login(int accountID) {
 	if (mClient.is_connected()) {
 		mClient.hset(
-				StringUtil::Format("%s:%d", KEYPREFIX_ACCOUNT_SESSIONS.c_str(),
-						accountID), StringUtil::Format("%lu", g_ServerTime),
+				Util::Format("%s:%d", KEYPREFIX_ACCOUNT_SESSIONS.c_str(),
+						accountID), Util::Format("%lu", g_ServerTime),
 				mShardName);
 		if (mClusterable) {
 			Json::Value cfg;
@@ -1093,7 +1088,7 @@ void ClusterManager::Login(int accountID) {
 
 void ClusterManager::Logout(int accountID) {
 	if (mClient.is_connected()) {
-		string key = StringUtil::Format("%s:%d",
+		string key = Util::Format("%s:%d",
 				KEYPREFIX_ACCOUNT_SESSIONS.c_str(), accountID);
 		auto asget = mClient.hgetall(key);
 		mClient.sync_commit();
@@ -1126,7 +1121,7 @@ int ClusterManager::CountAccountSessions(int accountID, bool includeLocal,
 	SYNCHRONIZED(mMutex)
 	{
 		auto asget = mClient.hgetall(
-				StringUtil::Format("%s:%d", KEYPREFIX_ACCOUNT_SESSIONS.c_str(),
+				Util::Format("%s:%d", KEYPREFIX_ACCOUNT_SESSIONS.c_str(),
 						accountID));
 		mClient.sync_commit();
 		cpp_redis::reply rep = asget.get();
@@ -1184,7 +1179,7 @@ void ClusterManager::ShardRemoved(const string &shardName) {
 						char buf[128];
 						g_SimulatorManager.SendToAllSimulators(buf,
 								PrepExt_SendInfoMessage(buf,
-										StringUtil::Format(
+										Util::Format(
 												"Shard %s is now offline.",
 												shardName.c_str()).c_str(),
 										INFOMSG_INFO), NULL);
@@ -1225,7 +1220,7 @@ void ClusterManager::NewShard(const string &shardName) {
 					char buf[128];
 					g_SimulatorManager.SendToAllSimulators(buf,
 							PrepExt_SendInfoMessage(buf,
-									StringUtil::Format(
+									Util::Format(
 											"Shard %s is now online.",
 											shardName.c_str()).c_str(),
 									INFOMSG_INFO), NULL);
@@ -1414,12 +1409,12 @@ bool ClusterManager::RemoveEntity(AbstractEntity *entity) {
 					cer.mCatalog);
 			STRINGLIST sections = cer.Sections();
 			for (auto a = sections.begin(); a != sections.end(); ++a) {
-				string k = StringUtil::Format("%s:%s:%s", cer.mCatalog.c_str(),
+				string k = Util::Format("%s:%s:%s", cer.mCatalog.c_str(),
 						cer.mID.c_str(), (*a).c_str());
 				RemoveKey(k);
 			}
 			RemoveKey(
-					StringUtil::Format("%s:%s^_SUBKEYS_", cer.mCatalog.c_str(),
+					Util::Format("%s:%s^_SUBKEYS_", cer.mCatalog.c_str(),
 							cer.mID.c_str()));
 			return cer.End();
 		} else
@@ -1597,7 +1592,7 @@ bool ClusterManager::PostInit() {
 	STRINGLIST keys;
 	Scan([this, &keys](const string &key) {
 		keys.push_back(key);
-	}, StringUtil::Format("%s:*", KEYPREFIX_ACCOUNT_SESSIONS.c_str()));
+	}, Util::Format("%s:*", KEYPREFIX_ACCOUNT_SESSIONS.c_str()));
 	if (keys.size() > 0) {
 		g_Logs.cluster->info("Found %v sessions", keys.size());
 		int removed = 0;
@@ -1660,9 +1655,9 @@ void ClusterManager::RunProcessingCycle() {
 						g_Logs.cluster->warn(
 								"Haven't had ping from shard %v for a while (last seen %v, expire %v). Will remove.",
 								it->first,
-								StringUtil::FormatTimeHHMM(
+								Util::FormatTimeHHMM(
 										it->second.mLastSeen),
-								StringUtil::FormatTimeHHMM(expire));
+								Util::FormatTimeHHMM(expire));
 						r.push_back(it->first);
 					}
 				} else {
@@ -2033,7 +2028,6 @@ void ClusterManager::Ready() {
 					Json::Value sim;
 					Json::Reader reader;
 					if (reader.parse(msg, sim)) {
-						g_Logs.cluster->info("REMOVEME XXX SIM TRANSFER %v : %v", sim["shardName"].asString(), mShardName);
 						if (sim["shardName"].asString() != mShardName
 								&& sim["target"].asString() == mShardName) {
 							g_Scheduler.Submit(

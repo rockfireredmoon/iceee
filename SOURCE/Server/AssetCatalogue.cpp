@@ -22,7 +22,6 @@
 #include "ByteBuffer.h"
 
 #include "Simulator.h"
-#include "StringUtil.h"
 #include <string.h>
 #include "AssetCatalogue.h"
 #include <algorithm>
@@ -47,7 +46,7 @@ int WriteAssetCatalogueItem(char *buffer, AssetCatalogueItem *item) {
 	wpos += PutStringUTF(&buffer[wpos], p);
 	//5
 	wpos += PutStringUTF(&buffer[wpos],
-			StringUtil::Format("%d", item->mType));
+			Util::Format("%d", item->mType));
 	//6
 	wpos += PutStringUTF(&buffer[wpos], item->GetDisplayName());
 	return wpos;
@@ -94,30 +93,20 @@ void AssetCatelogueManager::Search(AssetCatalogueSearch search, std::vector<Asse
 	SearchProps(results, search, mItems[""]);
 }
 
-int AssetCatelogueManager::LoadFromDirectory(std::string fileName) {
-
-
+int AssetCatelogueManager::LoadFromDirectory(const fs::path &fileName) {
 	AssetCatalogueItem *rootItem = new AssetCatalogueItem();
 	mItems[""] = rootItem;
 
 	AssetCatalogueItem *newItem = new AssetCatalogueItem();
 	int lastType = 0;
-
-	Platform_DirectoryReader r;
-	r.SetDirectory(fileName);
-	r.ReadFiles();
-
-	vector<std::string>::iterator it;
 	int line = 0;
-	std::string p;
-	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
-		p = Platform::JoinPath(fileName, *it);
-		line = 0;
-		if(Util::HasEnding(p, ".txt")) {
+	for(const fs::directory_entry& entry : fs::directory_iterator(fileName)) {
+		auto path = entry.path();
+		if (path.extension() == ".txt") {
 			FileReader lfr;
 			lfr.CommentStyle = Comment_Both;
-			if (lfr.OpenText(p.c_str()) != Err_OK) {
-				g_Logs.data->error("Could not open file [%v]", p);
+			if (lfr.OpenText(path) != Err_OK) {
+				g_Logs.data->error("Could not open file [%v]", path);
 				return -1;
 			}
 
@@ -134,7 +123,7 @@ int AssetCatelogueManager::LoadFromDirectory(std::string fileName) {
 								(*it)->mChildren.push_back(newItem);
 							}
 							if(mItems.count(newItem->mName) > 0)
-								g_Logs.data->warn("Asset catalogue item named [%v] defined again at line [%v] in [%v]", newItem->mName, line, p);
+								g_Logs.data->warn("Asset catalogue item named [%v] defined again at line [%v] in [%v]", newItem->mName, line, path);
 							mItems[newItem->mName] = newItem;
 						}
 						newItem = new AssetCatalogueItem();
@@ -158,10 +147,8 @@ int AssetCatelogueManager::LoadFromDirectory(std::string fileName) {
 							newItem->mAsset = lfr.BlockToStringC(1, 0);
 						} else if (strcmp(lfr.SecBuffer, "NAME") == 0) {
 							newItem->mName = lfr.BlockToStringC(1, 0);
-							std::string path = Platform::JoinPath(
-									Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-											"AssetCatalogue"), newItem->mName + ".html");
-							if (Platform::FileExists(path)) {
+							auto path = g_Config.ResolveStaticDataPath() / "AssetCatalogue" / ( newItem->mName + ".html" );
+							if (fs::exists(path)) {
 								std::ifstream ifs(path);
 								std::string content(
 										(std::istreambuf_iterator<char>(ifs)),
@@ -216,7 +203,7 @@ int AssetCatelogueManager::LoadFromDirectory(std::string fileName) {
 		if(newItem->mParents.size() == 0)
 			newItem->mParents.push_back(rootItem);
 		if(mItems.count(newItem->mName) > 0)
-			g_Logs.data->warn("Asset catalogue item named [%v] defined again at line [%v] in [%v]", newItem->mName, line, p);
+			g_Logs.data->warn("Asset catalogue item named [%v] defined again at line [%v] in [%v]", newItem->mName, line, fileName);
 		mItems[newItem->mName] = newItem;
 		for(auto it = newItem->mParents.begin() ; it != newItem->mParents.end(); ++it) {
 			(*it)->mChildren.push_back(newItem);

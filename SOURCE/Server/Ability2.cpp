@@ -141,7 +141,7 @@ namespace EventType
 		}
 		return "<undefined>";
 	}
-	int GetEventIDByName(const std::string &eventName)
+	int GetEventIDByName(const string &eventName)
 	{
 		if(eventName.compare("onRequest") == 0) return onRequest;
 		if(eventName.compare("onActivate") == 0) return onActivate;
@@ -172,7 +172,7 @@ void AbilityImplicitAction :: Clear(void)
 	memset(this, 0, sizeof(AbilityImplicitAction));
 }
 
-void VerifyExpression(const std::string &exp, AbilityVerify &verifyInfo)
+void VerifyExpression(const string &exp, AbilityVerify &verifyInfo)
 {
 	int nestLevel = 0;
 	for(size_t i = 0; i < exp.size(); i++)
@@ -244,7 +244,7 @@ namespace TargetType
 		}
 		return "<undefined>";
 	}
-	int GetTargetTypeByName(const std::string &targetTypeName)
+	int GetTargetTypeByName(const string &targetTypeName)
 	{
 		//Self and ST are most common, just start with those.
 		if(targetTypeName.compare("Self") == 0) return TargetType::Self;
@@ -273,7 +273,7 @@ namespace TargetFilter
 		const char *name;
 		int flags;
 	};
-	int GetTargetFlagsByName(const std::string name)
+	int GetTargetFlagsByName(const string name)
 	{
 		static const _KeyValue pairs[] = {
 			{ "Dead",         TargetFilter::Dead         },
@@ -295,24 +295,24 @@ namespace TargetFilter
 }
 
 //Tokenize a string, breaking at the given delimiter(s).
-void Split(const std::string &source, const char *delim, STRINGLIST &dest)
+void Split(const string &source, const char *delim, STRINGLIST &dest)
 {
 	if(dest.size() > 0)
 		dest.clear();
 	size_t pos = 0;
 	size_t fpos = 0;
-	std::string extract;
+	string extract;
 	do
 	{
 		fpos = source.find(delim, pos);
-		if(fpos != std::string::npos)
+		if(fpos != string::npos)
 		{
 			extract = source.substr(pos, fpos - pos);
 			dest.push_back(extract);
 			pos = fpos + 1;
 		}
-	} while(fpos != std::string::npos);
-	extract = source.substr(pos, std::string::npos);
+	} while(fpos != string::npos);
+	extract = source.substr(pos, string::npos);
 	dest.push_back(extract);
 }
 
@@ -322,7 +322,7 @@ void Split(const std::string &source, const char *delim, STRINGLIST &dest)
 //  [0]=[a(1)]
 //  [1]=[ b(2) ]
 //  [2]=[c(3)]
-void SplitFunctionList(const std::string &input, STRINGLIST &output) 
+void SplitFunctionList(const string &input, STRINGLIST &output)
 {
 	size_t len = input.length();
 	int nestLevel = 0;
@@ -356,10 +356,10 @@ void SplitFunctionList(const std::string &input, STRINGLIST &output)
 // [1] = [identifier]
 // [2] = [ (value * 20) + 1 ]
 // [3] = [1000]
-bool SplitFunction(const std::string &input, STRINGLIST &output)
+bool SplitFunction(const string &input, STRINGLIST &output)
 {
 	size_t first = input.find("(");
-	if(first == std::string::npos)
+	if(first == string::npos)
 	{
 		output.push_back(input);
 		return true;
@@ -372,7 +372,7 @@ bool SplitFunction(const std::string &input, STRINGLIST &output)
 	first++;
 	int nestLevel = 1;  //Already got the opening parenthesis
 
-	size_t last = std::string::npos;
+	size_t last = string::npos;
 	size_t len = input.length();
 	bool quote = false;
 	for(size_t i = first; i < len; i++)
@@ -413,7 +413,7 @@ bool SplitFunction(const std::string &input, STRINGLIST &output)
 		g_Logs.data->error("Malformed parenthesis: [%v]", input.c_str());
 		return false;
 	}
-	if(last != std::string::npos && first != last)
+	if(last != string::npos && first != last)
 	{
 		output.push_back(input.substr(first, last - first));
 		return true;
@@ -424,26 +424,26 @@ bool SplitFunction(const std::string &input, STRINGLIST &output)
 //Modify a string that contains quote-wrapped text to remove anything before
 //and after the quotes, including the quotes themselves.
 //Example: [  "example"  ]    --->   [example]
-void TrimQuote(std::string &modify)
+void TrimQuote(string &modify)
 {
 	size_t pos = modify.find_first_of("\"");
-	if(pos != std::string::npos)
+	if(pos != string::npos)
 		modify.erase(0, pos + 1);
 
 	pos = modify.find_last_of("\"");
-	if(pos != std::string::npos)
+	if(pos != string::npos)
 		modify.erase(pos, modify.length());
 }
 
 //Remove the outer parenthesis from a string, if they exist.
-void TrimParenthesis(std::string &modify)
+void TrimParenthesis(string &modify)
 {
 	size_t pos = modify.find_first_of("(");
-	if(pos != std::string::npos)
+	if(pos != string::npos)
 		modify.erase(0, pos + 1);
 
 	pos = modify.find_last_of(")");
-	if(pos != std::string::npos)
+	if(pos != string::npos)
 		modify.erase(pos, modify.length());
 }
 
@@ -460,7 +460,7 @@ void RemoveTrailingNewlines(char *str)
 }
 
 /*
-void SplitDelimQuote(const std::string &input, STRINGLIST &output)
+void SplitDelimQuote(const string &input, STRINGLIST &output)
 {
     //Note: Some special case functions like "PortalRequest" have string arguments.
 	//Skip over any quotes that might be within parenthesis. 
@@ -523,7 +523,7 @@ void AbilityFunction2 :: Verify(AbilityManager2 *parent, AbilityVerify &verifyIn
 
 // Expects a generic formula string like: test(a, b, c)
 // Or in special cases string arguments like: test("a", "b")
-void AbilityFunction2 :: AssignFormula(const std::string &formula)
+void AbilityFunction2 :: AssignFormula(const string &formula)
 {
 	STRINGLIST result;
 	SplitFunction(formula, result);
@@ -532,7 +532,7 @@ void AbilityFunction2 :: AssignFormula(const std::string &formula)
 	for(size_t i = 1; i < result.size(); i++)
 	{
 		Util::TrimWhitespace(result[i]);
-		if(result[i].find('"') != std::string::npos)
+		if(result[i].find('"') != string::npos)
 			TrimQuote(result[i]);
 		mArguments.push_back(result[i]);
 	}
@@ -602,7 +602,7 @@ AbilityEvent2 :: ~AbilityEvent2()
 {
 }
 
-void AbilityEvent2 :: SetFunctionEvent(const std::string &eventFunctionList)
+void AbilityEvent2 :: SetFunctionEvent(const string &eventFunctionList)
 {
 	STRINGLIST extract;
 	SplitFunctionList(eventFunctionList, extract);
@@ -627,26 +627,26 @@ void AbilityEvent2 :: SetFunctionEvent(const std::string &eventFunctionList)
 //This is a special case function, only called if a list of function calls is supposed
 //to be triggered on "chance".
 //Example string: ~25%{Interrupt()}
-void AbilityEvent2 :: AddChanceFunctionList(const std::string &eventFunctionList)
+void AbilityEvent2 :: AddChanceFunctionList(const string &eventFunctionList)
 {
 	AbilityFunction2 newFunction;
 
 	size_t first = eventFunctionList.find("~");
 	size_t second = eventFunctionList.find("%");
-	if(first == std::string::npos || second == std::string::npos)
+	if(first == string::npos || second == string::npos)
 	{
 		g_Logs.data->error("Missing percentage chance in chance function list [%v]", eventFunctionList.c_str());
 		return;
 	}
 	first++; //Advance beyond the tilde
-	std::string ext = eventFunctionList.substr(first, second - first);
+	string ext = eventFunctionList.substr(first, second - first);
 	unsigned char chance = static_cast<unsigned char>(atoi(ext.c_str()));
 	if(chance > 100)
 		chance = 100;
 
 	first = eventFunctionList.find("{", second);
 	second = eventFunctionList.find("}", second);
-	if(first == std::string::npos || second == std::string::npos)
+	if(first == string::npos || second == string::npos)
 	{
 		g_Logs.data->error("Missing curly braces in chance function list: [%v]", eventFunctionList.c_str());
 		return;
@@ -1044,9 +1044,9 @@ const char* AbilityEntry2 :: GetRowAsCString(size_t index) const
 	return mRowData[index].c_str();
 }
 
-const std::string& AbilityEntry2 :: GetRowAsString(size_t index) const
+const string& AbilityEntry2 :: GetRowAsString(size_t index) const
 {
-	static const std::string nullString;
+	static const string nullString;
 	if(index >= mRowData.size())
 		return nullString;
 	return mRowData[index];
@@ -1103,7 +1103,7 @@ int AbilityEntry2 :: GetPurchaseLevel(void) const
 	return mReqLevel;
 }
 
-void AbilityEntry2 :: GetPurchasePrereqList(std::vector<short> &output) const
+void AbilityEntry2 :: GetPurchasePrereqList(vector<short> &output) const
 {
 	output.assign(mReqAbilityID.begin(), mReqAbilityID.end());
 }
@@ -1355,8 +1355,8 @@ void AbilityManager2 :: LoadData(void)
 	mAbilityIndex.clear();
 	mAbilityStringIndex.clear();
 
-	LoadAbilityTable(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "AbilityTable.txt"));
-	LoadAbilityTable(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "AbilityTableAdmin.txt"));
+	LoadAbilityTable(g_Config.ResolveStaticDataPath() / "Data" / "AbilityTable.txt");
+	LoadAbilityTable(g_Config.ResolveStaticDataPath() / "Data" / "AbilityTableAdmin.txt");
 
 	//Need to override special case functions.
 	AbilityEvent2 *evt = NULL;
@@ -1443,16 +1443,16 @@ void AbilityManager2 :: StatNameLowercase(void)
 	}
 }
 
-void AbilityManager2 :: LoadAbilityTable(std::string filename)
+void AbilityManager2 :: LoadAbilityTable(const fs::path &filename)
 {
-	FILE *input = fopen(filename.c_str(), "rb");
+	FILE *input = fopen(filename.string().c_str(), "rb");
 	if(input == NULL)
 	{
 		g_Logs.data->error("Cannot open ability table file [%v]", filename);
 		return;
 	}
 	char buffer[4096];
-	std::string lineEntry;
+	string lineEntry;
 	int lineNumber = 0;
 	int loadCount = 0;
 	while(!feof(input))
@@ -1518,7 +1518,7 @@ bool AbilityManager2 :: GetPageAsStrings(unsigned int page, unsigned int pageSiz
 	unsigned int r = page * pageSize;
 	unsigned int e = r + pageSize;
 	unsigned int i = 0;
-	for (std::map<int, AbilityEntry2>::iterator it2 = mAbilityIndex.begin();
+	for (map<int, AbilityEntry2>::iterator it2 = mAbilityIndex.begin();
 			it2 != mAbilityIndex.end(); ++it2) {
 		i++;
 		if(i > e)
@@ -1563,7 +1563,7 @@ void AbilityManager2 :: Verify(void)
 	}
 }
 
-bool AbilityManager2 :: VerifyFunctionName(const std::string &functionName)
+bool AbilityManager2 :: VerifyFunctionName(const string &functionName)
 {
 	FUNCTION_ITERATOR it = mFunctionMap.find(functionName);
 	if(it != mFunctionMap.end())
@@ -1571,7 +1571,7 @@ bool AbilityManager2 :: VerifyFunctionName(const std::string &functionName)
 	return false;
 }
 
-void AbilityManager2 :: VerifyFunctionArgument(const std::string &functionName, size_t argIndex, const std::string &argumentString, AbilityVerify &verifyInfo)
+void AbilityManager2 :: VerifyFunctionArgument(const string &functionName, size_t argIndex, const string &argumentString, AbilityVerify &verifyInfo)
 {
 	//First check basic stuff in the expression.
 	VerifyExpression(argumentString, verifyInfo);
@@ -2043,7 +2043,7 @@ int AbilityManager2 :: CheckActivateSpecialAbility(CreatureInstance *cInst, shor
 }
 
 //Check for all valid variable names.  Should have a matching conditional return value in ResolveSymbol()
-bool AbilityManager2 :: CheckValidVariableName(const std::string &token)
+bool AbilityManager2 :: CheckValidVariableName(const string &token)
 {
 	const char *validTokens[] = {
 		"A_STRENGTH", "A_DEXTERITY", "A_SPIRIT", "A_PSYCHE", "A_CONSTITUTION",
@@ -2062,7 +2062,7 @@ bool AbilityManager2 :: CheckValidVariableName(const std::string &token)
 	return false;
 }
 
-double AbilityManager2 :: ResolveSymbol(const std::string &symbol)
+double AbilityManager2 :: ResolveSymbol(const string &symbol)
 {
 	//Note: for mightCharges and willCharges, we want to get the amount of charges
 	//registered to the source's own ability data.  We don't want to amounts in
@@ -2163,7 +2163,7 @@ int AbilityManager2 :: ResolveStatID(const char *statName)
 	g_Logs.data->warn("ResolveStatID failed to resolve [%v]", statName);
 	return -1;
 }
-int AbilityManager2 :: ResolveStatusEffectID(const std::string &statusEffectName)
+int AbilityManager2 :: ResolveStatusEffectID(const string &statusEffectName)
 {
 	int ID = GetStatusIDByName(statusEffectName);
 	if(ID >= 0)
@@ -2272,7 +2272,7 @@ const char* AbilityManager2 :: GetAbilityNameByID(int abilityID)
 //Return the ability name.  Intended for use by scripting.
 int AbilityManager2 :: GetAbilityIDByName(const char *name)
 {
-	std::map<std::string, int>::iterator it;
+	map<string, int>::iterator it;
 	it = mAbilityStringIndex.find(name);
 	if(it != mAbilityStringIndex.end())
 		return it->second;
@@ -2669,7 +2669,7 @@ int AbilityCalculator :: AddGrove(ARGUMENT_LIST args)
 			}
 		}
 
-		std::string name = g_ZoneDefManager.GetNextGroveName(ciTarget->simulatorPtr->pld.accPtr->GroveName);
+		string name = g_ZoneDefManager.GetNextGroveName(ciTarget->simulatorPtr->pld.accPtr->GroveName);
 		if(name.size() == 0)
 			ciTarget->simulatorPtr->SendInfoMessage("No free grove names.", INFOMSG_ERROR);
 		else {
@@ -2703,12 +2703,12 @@ int AbilityCalculator :: AddGrove(ARGUMENT_LIST args)
 			bp.y2 = gt->mTileY2;
 
 			if(gt->HasProps()) {
-				std::vector<SceneryObject> objects;
+				vector<SceneryObject> objects;
 				// TODO this should go off in a thread
 				gt->GetProps(objects);
 				g_SceneryManager.GetThread("AbilityCalculator::AddGrove");
 				g_SceneryManager.GetOrCreateZone(bp.ZoneID);
-				for(std::vector<SceneryObject>::iterator oit = objects.begin(); oit != objects.end(); ++oit) {
+				for(vector<SceneryObject>::iterator oit = objects.begin(); oit != objects.end(); ++oit) {
 					SceneryObject so;
 					SceneryObject oo = *oit;
 					so.copyFrom(&oo);
@@ -3994,7 +3994,7 @@ void AbilityManager2 :: DamageTest(CreatureInstance *playerData)
 	static const int repCount = sizeof(replaceSrc) / sizeof(replaceSrc[0]);
 
 
-	std::string outstr;
+	string outstr;
 	for(it = mAbilityIndex.begin(); it != mAbilityIndex.end(); ++it)
 	{
 		bool header = false;
@@ -4057,7 +4057,7 @@ void AbilityManager2 :: DamageTest(CreatureInstance *playerData)
 					for(size_t s = 0; s < repCount; s++)
 					{
 						pos = outstr.find(replaceSrc[s]);
-						if(pos != std::string::npos)
+						if(pos != string::npos)
 						{
 							size_t srcLen = strlen(replaceSrc[s]);
 							//size_t dstLen = strlen(replaceDst[s]);
@@ -4089,7 +4089,7 @@ void AbilityManager2::DebugStuff(void)
 		return;
 	int itemID = 70000;
 	ABILITY_ITERATOR it;
-	std::map<int, int> plist;
+	map<int, int> plist;
 	for(it = mAbilityIndex.begin(); it != mAbilityIndex.end(); ++it)
 	{
 		if(it->second.IsPassive() == true)

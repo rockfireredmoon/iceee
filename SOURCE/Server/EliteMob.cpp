@@ -62,17 +62,17 @@ void EliteManager :: LoadData(void)
 	mEliteType.clear();
 	mAffixEntry.clear();
 
-	LoadTypeTable(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "EliteType.txt"));
-	LoadAffixTable(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "EliteAffix.txt"));
+	LoadTypeTable(g_Config.ResolveStaticDataPath() / "Data" / "EliteType.txt");
+	LoadAffixTable(g_Config.ResolveStaticDataPath() / "Data" / "EliteAffix.txt");
 
 	g_Logs.data->info("Loaded %v EliteType", mEliteType.size());
 	g_Logs.data->info("Loaded %v EliteAffix", mAffixEntry.size());
 }
 
-void EliteManager :: LoadTypeTable(std::string filename)
+void EliteManager :: LoadTypeTable(const fs::path &filename)
 {
 	FileReader3 fr;
-	if(fr.OpenFile(filename.c_str()) != FileReader3::SUCCESS)
+	if(fr.OpenFile(filename) != FileReader3::SUCCESS)
 	{
 		g_Logs.data->error("Could not open file: %v", filename);
 		return;
@@ -104,11 +104,11 @@ void EliteManager :: LoadTypeTable(std::string filename)
 	fr.CloseFile();
 }
 
-void EliteManager :: LoadAffixTable(std::string filename)
+void EliteManager :: LoadAffixTable(const fs::path &filename)
 {
 
 	FileReader3 fr;
-	if(fr.OpenFile(filename.c_str()) != FileReader3::SUCCESS)
+	if(fr.OpenFile(filename) != FileReader3::SUCCESS)
 	{
 		g_Logs.data->error("Could not open file: %v", filename);
 		return;
@@ -141,7 +141,7 @@ void EliteManager :: LoadAffixTable(std::string filename)
 	fr.CloseFile();
 }
 
-void EliteManager :: QueryType(int level, std::vector<EliteType*> &outputResults)
+void EliteManager :: QueryType(int level, vector<EliteType*> &outputResults)
 {
 	for(size_t i = 0; i < mEliteType.size(); i++)
 	{
@@ -150,7 +150,7 @@ void EliteManager :: QueryType(int level, std::vector<EliteType*> &outputResults
 	}
 }
 
-void EliteManager :: QueryAffix(const std::string &name, int level, std::vector<AffixEntry*> &outputResults)
+void EliteManager :: QueryAffix(const string &name, int level, vector<AffixEntry*> &outputResults)
 {
 	if(name.size() == 0)
 		return;
@@ -170,7 +170,7 @@ void EliteManager :: QueryAffix(const std::string &name, int level, std::vector<
 	}
 }
 
-void EliteManager :: QueryAffixesByLevel(int level, std::vector<AffixEntry*> &outputResults)
+void EliteManager :: QueryAffixesByLevel(int level, vector<AffixEntry*> &outputResults)
 {
 	for(size_t i = 0; i < mAffixEntry.size(); i++)
 	{
@@ -183,7 +183,7 @@ void EliteManager :: ApplyTransformation(CreatureInstance *creature)
 {
 	int level = creature->css.level;
 
-	std::vector<EliteType*> types;
+	vector<EliteType*> types;
 	QueryType(level, types);
 
 	if(types.size() == 0)
@@ -197,12 +197,12 @@ void EliteManager :: ApplyTransformation(CreatureInstance *creature)
 	if(chance > 1)  //No spawn.
 		return;
 
-	const std::string &affixGroup = typeSel->mAffixGroup;
+	const string &affixGroup = typeSel->mAffixGroup;
 	ProcessAffixes(level, creature, affixGroup, 0);
 	int bonusExp = typeSel->mBonusExp;
 	int bonusDrop = typeSel->mBonusDrop;
 
-	std::vector<AffixEntry*> randomAffixes;
+	vector<AffixEntry*> randomAffixes;
 	QueryAffixesByLevel(level, randomAffixes);
 	/* DEBUG, NO LONGER NEEDED
 	for(size_t i = 0; i < randomAffixes.size(); i++)
@@ -235,7 +235,7 @@ void EliteManager :: ApplyTransformation(CreatureInstance *creature)
 		randomAffixes.erase(randomAffixes.begin() + affixSel);
 	}
 
-	std::string nameStr = typeSel->mDisplayName;
+	string nameStr = typeSel->mDisplayName;
 	nameStr.append(" ");
 	nameStr.append(creature->css.display_name);
 	creature->css.SetDisplayName(nameStr.c_str());
@@ -261,7 +261,7 @@ This function processes a named affix entry.  It can operate on either a single 
 chained affix or group.  In the case of a group, it will call itself recursively until all group
 references have been resolved.
 */
-void EliteManager :: ProcessAffixes(int level, CreatureInstance *creature, const std::string &affixName, int nestlevel)
+void EliteManager :: ProcessAffixes(int level, CreatureInstance *creature, const string &affixName, int nestlevel)
 {
 	//The nest level is a generic debug test to make sure that the recursion isn't getting too deep.
 	//Could be caused by incorrect table data, or memory corruption.
@@ -275,7 +275,7 @@ void EliteManager :: ProcessAffixes(int level, CreatureInstance *creature, const
 	if(affixName.size() == 0)
 		return;
 
-	std::vector<AffixEntry*> affixes;
+	vector<AffixEntry*> affixes;
 
 	QueryAffix(affixName, level, affixes);
 	if(affixes.size() == 0)
@@ -323,7 +323,7 @@ void EliteManager :: ApplyAffixStat(const AffixEntry *affix, CreatureInstance *c
 	}
 }
 
-void EliteManager :: AppendInfoNameTo(const std::string &infoName, STRINGLIST &infoList)
+void EliteManager :: AppendInfoNameTo(const string &infoName, STRINGLIST &infoList)
 {
 	for(size_t i = 0; i < infoList.size(); i++)
 	{

@@ -14,7 +14,6 @@
 #include "Simulator.h"
 #include "Cluster.h"
 #include "Scheduler.h"
-#include "StringUtil.h"
 #include "util/Log.h"
 #include "ByteBuffer.h"
 
@@ -41,23 +40,23 @@ void ZoneEditPermission::WriteEntity(AbstractEntityWriter *writer) {
 	switch (mEditType) {
 	case PERMISSION_TYPE_ACCOUNT:
 		writer->Value("BuildPermission",
-				StringUtil::Format("account,%d,%d,%d,%d,%d", mID, mX1, mY1, mX2,
+				Util::Format("account,%d,%d,%d,%d,%d", mID, mX1, mY1, mX2,
 						mY2));
 		break;
 	case PERMISSION_TYPE_CDEF:
 		writer->Value("BuildPermission",
-				StringUtil::Format("cdef,%d,%d,%d,%d,%d", mID, mX1, mY1, mX2,
+				Util::Format("cdef,%d,%d,%d,%d,%d", mID, mX1, mY1, mX2,
 						mY2));
 		break;
 	case PERMISSION_TYPE_PLAYER:
 		writer->Value("BuildPermission",
-				StringUtil::Format("account,%d,%d,%d,%d,%d",
+				Util::Format("account,%d,%d,%d,%d,%d",
 						mCharacterName.c_str(), mX1, mY1, mX2, mY2));
 		break;
 	}
 }
 
-int ZoneEditPermission::GetTypeIDByName(const std::string &name) {
+int ZoneEditPermission::GetTypeIDByName(const string &name) {
 	if (name.compare("account") == 0)
 		return PERMISSION_TYPE_ACCOUNT;
 	if (name.compare("cdef") == 0)
@@ -86,7 +85,7 @@ void ZoneEditPermission::LoadFromConfig(const char *configStr) {
 	if (configStr == NULL)
 		return;
 
-	std::string args = configStr;
+	string args = configStr;
 	STRINGLIST paramList;
 	Util::Split(args, ",", paramList);
 
@@ -309,7 +308,7 @@ void ZoneDefInfo::SetDefaults(void) {
 }
 
 bool ZoneDefInfo::EntityKeys(AbstractEntityReader *reader) {
-	reader->Key(KEYPREFIX_ZONE_DEF_INFO, StringUtil::Format("%d", mID));
+	reader->Key(KEYPREFIX_ZONE_DEF_INFO, Util::Format("%d", mID));
 	return true;
 }
 
@@ -400,7 +399,7 @@ bool ZoneDefInfo::ReadEntity(AbstractEntityReader *reader) {
 }
 
 bool ZoneDefInfo::WriteEntity(AbstractEntityWriter *writer) {
-	writer->Key(KEYPREFIX_ZONE_DEF_INFO, StringUtil::Format("%d", mID));
+	writer->Key(KEYPREFIX_ZONE_DEF_INFO, Util::Format("%d", mID));
 	writer->Value("AccountID", mAccountID);
 	writer->Value("Name", mName);
 	writer->Value("Desc", mDesc);
@@ -438,23 +437,23 @@ bool ZoneDefInfo::WriteEntity(AbstractEntityWriter *writer) {
 		writer->Value("PlayerFilterType", mPlayerFilterType);
 	STRINGLIST l;
 	for (auto a = mPlayerFilterID.begin(); a != mPlayerFilterID.end(); ++a) {
-		l.push_back(StringUtil::Format("%d", *a));
+		l.push_back(Util::Format("%d", *a));
 	}
 	if (l.size() > 0)
 		writer->ListValue("PlayerFilterID", l);
 
-	writer->Value("DefLoc", StringUtil::Format("%d,%d,%d", DefX, DefY, DefZ));
+	writer->Value("DefLoc", Util::Format("%d,%d,%d", DefX, DefY, DefZ));
 	STRINGLIST l2, l2b;
 	for (auto a = mTileEnvironment.begin(); a != mTileEnvironment.end(); ++a) {
 		STRINGLIST ll;
 		Util::Split(a->second, ",", ll);
 		if (ll.size() > 3) {
 			l2b.push_back(
-					StringUtil::Format("%d,%d,%s", a->first.x, a->first.y,
+					Util::Format("%d,%d,%s", a->first.x, a->first.y,
 							a->second.c_str()));
 		} else {
 			l2.push_back(
-					StringUtil::Format("%d,%d,%s", a->first.x, a->first.y,
+					Util::Format("%d,%d,%s", a->first.x, a->first.y,
 							a->second.c_str()));
 		}
 	}
@@ -550,21 +549,21 @@ bool ZoneDefInfo::CanPlayerWarp(int CreatureDefID, int AccountID) {
 	return false;
 }
 
-void ZoneDefInfo::SetDropRateProfile(std::string profile) {
+void ZoneDefInfo::SetDropRateProfile(string profile) {
 	mDropRateProfile = profile;
 }
 
 int ZoneDefInfo::GetNextPropID() {
 	return g_ClusterManager.NextValue(
-			StringUtil::Format("%s:%d", ID_NEXT_SCENERY.c_str(), mID));
+			Util::Format("%s:%d", ID_NEXT_SCENERY.c_str(), mID));
 }
 
-std::string ZoneDefInfo::GetTileEnvironment(int x, int y) {
+string ZoneDefInfo::GetTileEnvironment(int x, int y) {
 	// Convert to scenery tile (use /info scenerytile to help with this)
 	int px = x / mPageSize;
 	int py = y / mPageSize;
 	if (x >= 0 && y >= 0) {
-		std::map<EnvironmentTileKey, string>::iterator it;
+		map<EnvironmentTileKey, string>::iterator it;
 		EnvironmentTileKey etk;
 		etk.x = px;
 		etk.y = py;
@@ -676,7 +675,7 @@ void ZoneDefInfo::UpdateGrovePermission(STRINGLIST &params) {
 	}
 }
 
-std::string ZoneDefInfo::GetDropRateProfile() {
+string ZoneDefInfo::GetDropRateProfile() {
 	if (mDropRateProfile.length() > 0)
 		return mDropRateProfile;
 	else {
@@ -716,7 +715,7 @@ bool ZoneDefInfo::QualifyDelete(void) {
 	return false;
 }
 
-std::string ZoneDefInfo::GetTimeOfDay() {
+string ZoneDefInfo::GetTimeOfDay() {
 	//If the environment time string is null, attempt to find the active time for the
 	//current zone, if applicable.
 	if (mEnvironmentCycle == true)
@@ -885,7 +884,7 @@ void ZoneDefInfo::WriteToJSON(Json::Value &value) {
 		Json::Value filter;
 		filter["type"] = mPlayerFilterType;
 		Json::Value creatureDefs;
-		for (std::vector<int>::iterator it = mPlayerFilterID.begin();
+		for (vector<int>::iterator it = mPlayerFilterID.begin();
 				it != mPlayerFilterID.end(); ++it)
 			creatureDefs.append(*it);
 		filter["creatureDefs"] = creatureDefs;
@@ -896,7 +895,7 @@ void ZoneDefInfo::WriteToJSON(Json::Value &value) {
 
 	if (mTileEnvironment.size() > 0) {
 		Json::Value envtiles;
-		for (std::map<EnvironmentTileKey, std::string>::iterator it =
+		for (map<EnvironmentTileKey, string>::iterator it =
 				mTileEnvironment.begin(); it != mTileEnvironment.end(); ++it) {
 			Json::Value item;
 			Json::Value key;
@@ -927,11 +926,11 @@ void ZoneDefManager::Free(void) {
 	mZoneList.clear();
 }
 
-int ZoneDefManager::LoadFile(std::string fileName) {
+int ZoneDefManager::LoadFile(string fileName) {
 	//Note: the official grove file is loaded first, then the custom grove file.
 	//This should point here. 
 	FileReader lfr;
-	if (lfr.OpenText(fileName.c_str()) != Err_OK) {
+	if (lfr.OpenText(fileName) != Err_OK) {
 		g_Logs.data->error("Could not open file [%v]", fileName);
 		return -1;
 	}
@@ -1095,14 +1094,12 @@ ZoneDefInfo* ZoneDefManager::LoadZoneDef(int ID) {
 
 int ZoneDefManager::UpdateWorldZone(ZoneDefInfo &newZone) {
 	mZoneList[newZone.mID].CopyFrom(newZone);
-	std::string instancesPath = Platform::JoinPath(
-			g_Config.ResolveVariableDataPath(), "Instance");
-	std::string p = Platform::JoinPath(instancesPath,
-			std::to_string(newZone.mID));
-	if (!Platform::DirExists(p)) {
-		Platform::MakeDirectories(p);
+	auto instancesPath = g_Config.ResolveVariableDataPath() / "Instance";
+	auto p = instancesPath / to_string(newZone.mID);
+	if(!fs::exists(p)) {
+		fs::create_directories(p);
 	}
-	p = Platform::JoinPath(p, "ZoneDef.txt");
+	p = p / "ZoneDef.txt";
 	TextFileEntityWriter tew(p);
 	tew.PushSection("ENTITY");
 	if (tew.Start()) {
@@ -1120,28 +1117,20 @@ void ZoneDefManager::LoadData(void) {
 //					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
 //							"Data"), "ZoneDef.txt"));
 
-	std::string instancesPath = Platform::JoinPath(
-			g_Config.ResolveVariableDataPath(), "Instance");
+	auto instancesPath = g_Config.ResolveVariableDataPath() / "Instance";
 
 	//
 	// Temporary. Convert All static zones to instance zonedef.txt files
 	//
-//	std::map<int, ZoneDefInfo>::iterator it2;
+//	map<int, ZoneDefInfo>::iterator it2;
 //	for (it2 = mZoneList.begin(); it2 != mZoneList.end(); ++it2) {
 //		ZoneDefInfo zd = it2->second;
 //		UpdateWorldZone(zd);
 //	}
 
-	Platform_DirectoryReader r;
-	string dir = r.GetDirectory();
-	r.SetDirectory(instancesPath);
-	r.ReadDirectories();
-	r.SetDirectory(dir);
-
-	vector<std::string>::iterator it;
-	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
-		std::string p = Platform::JoinPath(instancesPath, *it);
-		p = Platform::JoinPath(p, "ZoneDef.txt");
+	for(const fs::directory_entry& entry : fs::directory_iterator(instancesPath)) {
+		auto dir  = entry.path();
+		auto p = dir / "ZoneDef.txt";
 		TextFileEntityReader ter(p, Case_None, Comment_Semi);
 		ter.Start();
 		if (!ter.Exists()) {
@@ -1156,7 +1145,7 @@ void ZoneDefManager::LoadData(void) {
 		for (auto a = sections.begin(); a != sections.end(); ++a) {
 			ter.PushSection(*a);
 			ZoneDefInfo t;
-			t.mID = StringUtil::SafeParseInt(*it);
+			t.mID = Util::SafeParseInt(dir.stem().c_str());
 			if (!t.EntityKeys(&ter) || !t.ReadEntity(&ter)) {
 				continue;
 			}
@@ -1171,20 +1160,20 @@ void ZoneDefManager::LoadData(void) {
 
 	if (!g_ClusterManager.HasKey(ID_NEXT_ZONE_ID)) {
 		g_ClusterManager.SetKey(ID_NEXT_ZONE_ID,
-				StringUtil::Format("%d", GROVE_ZONE_ID_DEFAULT));
+				Util::Format("%d", GROVE_ZONE_ID_DEFAULT));
 	}
 
 	/* Check the highest world zone ID */
-	std::map<int, ZoneDefInfo>::iterator it2;
+	map<int, ZoneDefInfo>::iterator it2;
 	int highest = 0;
 	for (it2 = mZoneList.begin(); it2 != mZoneList.end(); ++it2) {
 		ZoneDefInfo zd = it2->second;
 		if(!zd.mGrove && !zd.mArena) {
-			highest = std::max(zd.mID, highest);
+			highest = max(zd.mID, highest);
 		}
 	}
 	g_ClusterManager.SetKey(ID_NEXT_WORLD_ZONE_ID,
-			StringUtil::Format("%d", highest));
+			Util::Format("%d", highest));
 }
 
 ZoneDefInfo* ZoneDefManager::GetPointerByID(int ID) {
@@ -1193,7 +1182,7 @@ ZoneDefInfo* ZoneDefManager::GetPointerByID(int ID) {
 	retptr = ResolveZoneDef(ID);
 
 	/* OBSOLETE
-	 std::list<ZoneDefInfo>::iterator it;
+	 list<ZoneDefInfo>::iterator it;
 	 for(it = mZoneList.begin(); it != mZoneList.end(); ++it)
 	 if(it->mID == ID)
 	 {
@@ -1207,15 +1196,15 @@ ZoneDefInfo* ZoneDefManager::GetPointerByID(int ID) {
 }
 
 ZoneDefInfo* ZoneDefManager::GetPointerByPartialWarpName(
-		const std::string &name) {
+		const string &name) {
 	ZoneDefInfo *retptr = NULL;
 
 	STRINGLIST l;
-	g_ClusterManager.Scan([this, &l](const std::string &match) {
+	g_ClusterManager.Scan([this, &l](const string &match) {
 		l.push_back(match);
 	}
 			,
-			StringUtil::Format("%s:*%s*",
+			Util::Format("%s:*%s*",
 					KEYPREFIX_WARP_NAME_TO_ZONE_ID.c_str(), name.c_str()), 1);
 
 	int zoneID = -1;
@@ -1241,7 +1230,7 @@ ZoneDefInfo* ZoneDefManager::GetPointerByPartialWarpName(
 	return retptr;
 }
 
-std::string ZoneDefManager::GetNextGroveName(std::string groveName) {
+string ZoneDefManager::GetNextGroveName(string groveName) {
 	/* Find the next available grove name. The accounts original grove name is
 	 * used, and a number appended until a grove with that name is not found.
 	 */
@@ -1263,8 +1252,8 @@ std::string ZoneDefManager::GetNextGroveName(std::string groveName) {
 ZoneDefInfo* ZoneDefManager::GetPointerByExactWarpName(const char *name) {
 	ZoneDefInfo *retptr = NULL;
 
-	std::string zoneIdStr = g_ClusterManager.GetKey(
-			StringUtil::Format("%s:%s", KEYPREFIX_WARP_NAME_TO_ZONE_ID.c_str(),
+	string zoneIdStr = g_ClusterManager.GetKey(
+			Util::Format("%s:%s", KEYPREFIX_WARP_NAME_TO_ZONE_ID.c_str(),
 					name));
 	if (zoneIdStr.length() > 0) {
 		retptr = ResolveZoneDef(atoi(zoneIdStr.c_str()));
@@ -1286,8 +1275,8 @@ ZoneDefInfo* ZoneDefManager::GetPointerByExactWarpName(const char *name) {
 ZoneDefInfo* ZoneDefManager::GetPointerByGroveName(const char *name) {
 	ZoneDefInfo *retptr = NULL;
 
-	std::vector<std::string> zoneIdStrs = g_ClusterManager.GetList(
-			StringUtil::Format("%s:%s",
+	vector<string> zoneIdStrs = g_ClusterManager.GetList(
+			Util::Format("%s:%s",
 					LISTPREFIX_GROVE_NAME_TO_ZONE_ID.c_str(), name));
 	if (zoneIdStrs.size() > 0) {
 		retptr = ResolveZoneDef(atoi(zoneIdStrs[0].c_str()));
@@ -1385,20 +1374,20 @@ void ZoneDefManager::InsertZone(const ZoneDefInfo &newZone, bool createIndex) {
 	//Create the index entry.
 	if (createIndex == true) {
 		g_ClusterManager.SetKey(
-				StringUtil::Format("%s:%s",
+				Util::Format("%s:%s",
 						KEYPREFIX_WARP_NAME_TO_ZONE_ID.c_str(),
 						newZone.mWarpName.c_str()),
-				StringUtil::Format("%d", newZone.mID), false);
+				Util::Format("%d", newZone.mID), false);
 		g_ClusterManager.ListAdd(
-				StringUtil::Format("%s:%s",
+				Util::Format("%s:%s",
 						LISTPREFIX_GROVE_NAME_TO_ZONE_ID.c_str(),
 						newZone.mGroveName.c_str()),
-				StringUtil::Format("%d", newZone.mID), false);
+				Util::Format("%d", newZone.mID), false);
 		g_ClusterManager.ListAdd(
-				StringUtil::Format("%s:%d",
+				Util::Format("%s:%d",
 						LISTPREFIX_ACCOUNT_ID_TO_ZONE_ID.c_str(),
 						newZone.mAccountID),
-				StringUtil::Format("%d", newZone.mID), false);
+				Util::Format("%d", newZone.mID), false);
 	}
 }
 
@@ -1424,17 +1413,17 @@ bool ZoneDefManager::DeleteZone(int id) {
 
 void ZoneDefManager::RemoveZoneFromIndexes(ZoneDefInfo *def) {
 	g_ClusterManager.RemoveKey(
-			StringUtil::Format("%s:%s", KEYPREFIX_WARP_NAME_TO_ZONE_ID.c_str(),
+			Util::Format("%s:%s", KEYPREFIX_WARP_NAME_TO_ZONE_ID.c_str(),
 					def->mWarpName.c_str()), false);
 	g_ClusterManager.ListRemove(
-			StringUtil::Format("%s:%s",
+			Util::Format("%s:%s",
 					LISTPREFIX_GROVE_NAME_TO_ZONE_ID.c_str(),
 					def->mGroveName.c_str()),
-			StringUtil::Format("%d", def->mID), false);
+			Util::Format("%d", def->mID), false);
 	g_ClusterManager.ListRemove(
-			StringUtil::Format("%s:%d",
+			Util::Format("%s:%d",
 					LISTPREFIX_ACCOUNT_ID_TO_ZONE_ID.c_str(), def->mAccountID),
-			StringUtil::Format("%d", def->mID), false);
+			Util::Format("%d", def->mID), false);
 
 }
 
@@ -1456,7 +1445,7 @@ int ZoneDefManager::CheckAutoSave(bool force) {
 }
 
 int ZoneDefManager::EnumerateGroveIds(int searchAccountID, int characterDefId,
-		std::vector<int> &groveIdList) {
+		vector<int> &groveIdList) {
 	cs.Enter("ZoneDefManager::EnumerateGroveIds");
 	ZONEINDEX_ITERATOR it;
 	CharacterData *cdata =
@@ -1464,7 +1453,7 @@ int ZoneDefManager::EnumerateGroveIds(int searchAccountID, int characterDefId,
 					NULL : g_CharacterManager.GetPointerByID(characterDefId);
 
 	STRINGLIST accountGroves = g_ClusterManager.GetList(
-			StringUtil::Format("%s:%d",
+			Util::Format("%s:%d",
 					LISTPREFIX_ACCOUNT_ID_TO_ZONE_ID.c_str(), searchAccountID));
 	for (auto a = accountGroves.begin(); a != accountGroves.end(); ++a) {
 		groveIdList.push_back(atoi((*a).c_str()));
@@ -1489,7 +1478,7 @@ int ZoneDefManager::EnumerateGroveIds(int searchAccountID, int characterDefId,
 
 
 int ZoneDefManager::EnumerateGroves(int searchAccountID, int characterDefId,
-		std::vector<std::string> &groveList) {
+		vector<string> &groveList) {
 	cs.Enter("ZoneDefManager::EnumerateGroves");
 	ZONEINDEX_ITERATOR it;
 	CharacterData *cdata =
@@ -1497,7 +1486,7 @@ int ZoneDefManager::EnumerateGroves(int searchAccountID, int characterDefId,
 					NULL : g_CharacterManager.GetPointerByID(characterDefId);
 
 	STRINGLIST accountGroves = g_ClusterManager.GetList(
-			StringUtil::Format("%s:%d",
+			Util::Format("%s:%d",
 					LISTPREFIX_ACCOUNT_ID_TO_ZONE_ID.c_str(), searchAccountID));
 	for (auto a = accountGroves.begin(); a != accountGroves.end(); ++a) {
 		ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByID(atoi((*a).c_str()));
@@ -1525,7 +1514,7 @@ int ZoneDefManager::EnumerateGroves(int searchAccountID, int characterDefId,
 	return static_cast<int>(groveList.size());
 }
 
-int ZoneDefManager::EnumerateArenas(std::vector<std::string> &arenaList) {
+int ZoneDefManager::EnumerateArenas(vector<string> &arenaList) {
 	ZONEDEF_ITERATOR it;
 	for (it = mZoneList.begin(); it != mZoneList.end(); ++it) {
 		if (it->second.mArena == true)
@@ -1540,7 +1529,7 @@ void ZoneDefManager::UpdateGroveAccountID(const char *groveName,
 	for (it = mZoneList.begin(); it != mZoneList.end(); ++it) {
 		if (it->second.mGrove == false)
 			continue;
-		std::string name = it->second.mWarpName;
+		string name = it->second.mWarpName;
 		size_t pos = name.find_first_of("0123456789");
 		if (pos != string::npos)
 			name.erase(pos);
@@ -1568,7 +1557,7 @@ bool ZoneDefManager::ZoneUnloadReady(void) {
 	return false;
 }
 
-void ZoneDefManager::UnloadInactiveZones(std::vector<int> &activeZones) {
+void ZoneDefManager::UnloadInactiveZones(vector<int> &activeZones) {
 	ZONEDEF_ITERATOR it;
 	it = mZoneList.begin();
 	while (it != mZoneList.end()) {
@@ -1678,9 +1667,9 @@ bool ZoneBarrierManager::CheckCollision(int zoneID, int &x, int &z) {
 	return false;
 }
 
-void ZoneBarrierManager::LoadFromFile(std::string filename) {
+void ZoneBarrierManager::LoadFromFile(const fs::path &filename) {
 	FileReader lfr;
-	if (lfr.OpenText(filename.c_str()) != Err_OK) {
+	if (lfr.OpenText(filename) != Err_OK) {
 		g_Logs.data->error("Could not load Zone Barrier file: %v", filename);
 		return;
 	}
@@ -1784,12 +1773,12 @@ void EnvironmentCycleManager::RescheduleUpdate() {
 	unsigned long wait = next / TIME_FACTOR;
 	g_Logs.server->info(
 			"Will switch environment from %v [Start: %v  End: %v   Next: %v (%v)] in %vms (%v)",
-			current.mName, StringUtil::FormatTimeHHMMSS(current.mStart),
-			StringUtil::FormatTimeHHMMSS(current.mEnd),
-			StringUtil::FormatTimeHHMMSS(next), next, wait,
-			StringUtil::FormatTimeHHMMSS(wait));
+			current.mName, Util::FormatTimeHHMMSS(current.mStart),
+			Util::FormatTimeHHMMSS(current.mEnd),
+			Util::FormatTimeHHMMSS(next), next, wait,
+			Util::FormatTimeHHMMSS(wait));
 	mChangeTaskID = g_Scheduler.Schedule([this]() {
-		std::string tod = GetCurrentCycle().mName;
+		string tod = GetCurrentCycle().mName;
 		g_Logs.server->info("Switching environment to %v", tod);
 		for (size_t i = 0; i < g_ActiveInstanceManager.instListPtr.size(); i++) {
 	g_ActiveInstanceManager.instListPtr[i]->UpdateEnvironmentCycle(tod);
@@ -1799,7 +1788,7 @@ void EnvironmentCycleManager::RescheduleUpdate() {
 
 }
 
-void EnvironmentCycleManager::ApplyConfig(const std::string str) {
+void EnvironmentCycleManager::ApplyConfig(const string str) {
 	//Config expects a list of time ranges
 	//Ex: Sunrise=05:30,Day=08:30,Sunset=18:00,Night=20:30
 
@@ -1816,15 +1805,15 @@ void EnvironmentCycleManager::ApplyConfig(const std::string str) {
 		EnvironmentCycle c;
 		c.mName = keyval[0];
 
-		unsigned long ms = StringUtil::ParseTimeHHMM(keyval[1]);
+		unsigned long ms = Util::ParseTimeHHMM(keyval[1]);
 
 		if (i > 0) {
 			/* Fill in the previous cycles end time */
 			prev.mEnd = ms;
 			mCycles[i - 1] = prev;
 			g_Logs.server->info("Environment cycle %v runs from %v to %v",
-					prev.mName, StringUtil::FormatTimeHHMM(prev.mStart),
-					StringUtil::FormatTimeHHMM(prev.mEnd));
+					prev.mName, Util::FormatTimeHHMM(prev.mStart),
+					Util::FormatTimeHHMM(prev.mEnd));
 		}
 
 		c.mStart = ms;
@@ -1835,8 +1824,8 @@ void EnvironmentCycleManager::ApplyConfig(const std::string str) {
 		mCycles[mCycles.size() - 1].mEnd = mCycles[0].mStart;
 		g_Logs.server->info("Environment cycle %v runs from %v to %v",
 				mCycles[mCycles.size() - 1].mName,
-				StringUtil::FormatTimeHHMM(mCycles[mCycles.size() - 1].mStart),
-				StringUtil::FormatTimeHHMM(mCycles[mCycles.size() - 1].mEnd));
+				Util::FormatTimeHHMM(mCycles[mCycles.size() - 1].mStart),
+				Util::FormatTimeHHMM(mCycles[mCycles.size() - 1].mEnd));
 	}
 
 }
@@ -1873,28 +1862,18 @@ void GroveTemplate::Clear(void) {
 }
 
 bool GroveTemplate::HasProps() const {
-	return Platform::DirExists(
-			Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-					Platform::JoinPath("GroveTemplates", mShortName)));
+	return fs::exists(g_Config.ResolveStaticDataPath() / "GroveTemplates" / mShortName);
 }
 
-void GroveTemplate::GetProps(std::vector<SceneryObject> &objects) const {
-	std::string fileName = Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-			Platform::JoinPath("GroveTemplates", mShortName));
+void GroveTemplate::GetProps(vector<SceneryObject> &objects) const {
+	auto fileName = g_Config.ResolveStaticDataPath() / "GroveTemplates" /  mShortName;
 
-	Platform_DirectoryReader r;
-	r.SetDirectory(fileName);
-	r.ReadFiles();
-
-	std::vector<std::string>::iterator it;
-	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
-		std::string p = *it;
-		if (Util::HasEnding(p, ".txt")) {
+	for(const fs::directory_entry& entry : fs::directory_iterator(fileName)) {
+		auto file = entry.path();
+		if(file.stem() == ".txt") {
 			SceneryPage page;
-			page.LoadSceneryFromFile(Platform::JoinPath(fileName, p.c_str()));
-			for (std::map<int, SceneryObject>::iterator mit =
-					page.mSceneryList.begin(); mit != page.mSceneryList.end();
-					++mit) {
+			page.LoadSceneryFromFile(file);
+			for (auto mit = page.mSceneryList.begin(); mit != page.mSceneryList.end(); ++mit) {
 				objects.push_back((*mit).second);
 			}
 		}
@@ -1905,19 +1884,16 @@ GroveTemplateManager::GroveTemplateManager() {
 }
 
 void GroveTemplateManager::LoadData(void) {
-	LoadFile(
-			Platform::JoinPath(
-					Platform::JoinPath(g_Config.ResolveStaticDataPath(),
-							"Data"), "GroveTemplate.txt"));
+	LoadFile(g_Config.ResolveStaticDataPath() / "Data" / "GroveTemplate.txt");
 
 	// Need to set up the TerrainCfg lookup table.
 	ResolveTerrainMap();
 	g_Logs.data->info("Loaded %v Grove Templates", mTemplateEntries.size());
 }
 
-void GroveTemplateManager::LoadFile(std::string filename) {
+void GroveTemplateManager::LoadFile(const fs::path &filename) {
 	FileReader3 fr;
-	if (fr.OpenFile(filename.c_str()) != fr.SUCCESS) {
+	if (fr.OpenFile(filename) != fr.SUCCESS) {
 		g_Logs.data->error("Unable to open grove template file [%v]", filename);
 		return;
 	}
@@ -1929,7 +1905,7 @@ void GroveTemplateManager::LoadFile(std::string filename) {
 		fr.ReadLine();
 		int r = fr.MultiBreak("\t");
 		if (r > 1) {
-			std::string key = fr.BlockToStringC(0);
+			string key = fr.BlockToStringC(0);
 			GroveTemplate &data = mTemplateEntries[key];
 
 			data.mShortName = key;
@@ -1952,7 +1928,7 @@ void GroveTemplateManager::LoadFile(std::string filename) {
 
 const GroveTemplate* GroveTemplateManager::GetTemplateByShortName(
 		const char *name) {
-	std::map<std::string, GroveTemplate>::iterator it;
+	map<string, GroveTemplate>::iterator it;
 	it = mTemplateEntries.find(name);
 	if (it != mTemplateEntries.end())
 		return &it->second;
@@ -1961,7 +1937,7 @@ const GroveTemplate* GroveTemplateManager::GetTemplateByShortName(
 
 const GroveTemplate* GroveTemplateManager::GetTemplateByTerrainCfg(
 		const char *cfg) {
-	std::map<std::string, const GroveTemplate*>::iterator it;
+	map<string, const GroveTemplate*>::iterator it;
 	it = mTerrainMap.find(cfg);
 	if (it != mTerrainMap.end())
 		return it->second;
@@ -1970,7 +1946,7 @@ const GroveTemplate* GroveTemplateManager::GetTemplateByTerrainCfg(
 
 void GroveTemplateManager::ResolveTerrainMap(void) {
 	mTerrainMap.clear();
-	std::map<std::string, GroveTemplate>::iterator it;
+	map<string, GroveTemplate>::iterator it;
 	for (it = mTemplateEntries.begin(); it != mTemplateEntries.end(); ++it) {
 		mTerrainMap[it->second.mTerrainCfg] = &it->second;
 	}
@@ -2125,9 +2101,9 @@ void WeatherState::RunCycle(ActiveInstance *instance) {
 
 void WeatherState::SendWeatherUpdate(ActiveInstance *instance,
 		bool sentToCluster) {
-	for (std::vector<SimulatorThread*>::iterator it = instance->RegSim.begin();
+	for (vector<SimulatorThread*>::iterator it = instance->RegSim.begin();
 			it != instance->RegSim.end(); ++it) {
-		for (std::vector<std::string>::iterator it2 = mMapNames.begin();
+		for (vector<string>::iterator it2 = mMapNames.begin();
 				it2 != mMapNames.end(); it2++) {
 			SimulatorThread *sim = *it;
 			if (sim->pld.CurrentMapInt == -1
@@ -2149,10 +2125,10 @@ void WeatherState::SendWeatherUpdate(ActiveInstance *instance,
 	}
 }
 void WeatherState::SendThunder(ActiveInstance *instance, bool sendToCluster) {
-	for (std::vector<SimulatorThread*>::iterator it = instance->RegSim.begin();
+	for (vector<SimulatorThread*>::iterator it = instance->RegSim.begin();
 			it != instance->RegSim.end(); ++it) {
 		SimulatorThread *sim = *it;
-		for (std::vector<std::string>::iterator it2 = mMapNames.begin();
+		for (vector<string>::iterator it2 = mMapNames.begin();
 				it2 != mMapNames.end(); it2++) {
 			if (sim->pld.CurrentMapInt == -1
 					|| MapDef.mMapList[sim->pld.CurrentMapInt].Name.compare(
@@ -2232,7 +2208,7 @@ void WeatherState::StopWeather() {
 }
 
 bool WeatherManager::MaybeAddWeatherDef(int instanceID,
-		std::string actualMapName, std::vector<WeatherState*> &m) {
+		string actualMapName, vector<WeatherState*> &m) {
 	if (mWeatherDefinitions.find(actualMapName) == mWeatherDefinitions.end())
 		return false;
 
@@ -2280,10 +2256,10 @@ bool WeatherManager::MaybeAddWeatherDef(int instanceID,
 	return true;
 }
 
-std::vector<WeatherState*> WeatherManager::RegisterInstance(
+vector<WeatherState*> WeatherManager::RegisterInstance(
 		ActiveInstance *instance) {
-	std::vector<MapDefInfo> d;
-	std::vector<WeatherState*> m;
+	vector<MapDefInfo> d;
+	vector<WeatherState*> m;
 
 	MapDef.GetZone(instance->mZoneDefPtr->mMapName.c_str(), d);
 
@@ -2301,7 +2277,7 @@ std::vector<WeatherState*> WeatherManager::RegisterInstance(
 	}
 
 	/* Set up a weather state for all the MapDefInfo in this instance that have a weather def */
-	for (std::vector<MapDefInfo>::iterator it = d.begin(); it != d.end();
+	for (vector<MapDefInfo>::iterator it = d.begin(); it != d.end();
 			++it) {
 		if (!MaybeAddWeatherDef(instance->mInstanceID, (*it).Name, m))
 			continue;
@@ -2310,7 +2286,7 @@ std::vector<WeatherState*> WeatherManager::RegisterInstance(
 	return m;
 }
 
-void WeatherManager::ZoneThunder(int zoneId, std::string mapName) {
+void WeatherManager::ZoneThunder(int zoneId, string mapName) {
 	/* This is only for overworld zones triggered over the cluster, so there will only be one active instance */
 	ActiveInstance *inst = g_ActiveInstanceManager.GetPtrByZoneID(zoneId);
 	if (inst == NULL)
@@ -2328,8 +2304,8 @@ void WeatherManager::ZoneThunder(int zoneId, std::string mapName) {
 	}
 }
 
-void WeatherManager::ZoneWeather(int zoneId, std::string mapName,
-		std::string weatherType, int weight) {
+void WeatherManager::ZoneWeather(int zoneId, string mapName,
+		string weatherType, int weight) {
 	/* This is only for overworld zones triggered over the cluster, so there will only be one active instance */
 	ActiveInstance *inst = g_ActiveInstanceManager.GetPtrByZoneID(zoneId);
 	if (inst == NULL)
@@ -2349,7 +2325,7 @@ void WeatherManager::ZoneWeather(int zoneId, std::string mapName,
 	}
 }
 
-WeatherState* WeatherManager::GetWeather(std::string mapName, int instanceId) {
+WeatherState* WeatherManager::GetWeather(string mapName, int instanceId) {
 
 	WeatherKey k;
 	k.instance = instanceId;
@@ -2357,16 +2333,16 @@ WeatherState* WeatherManager::GetWeather(std::string mapName, int instanceId) {
 	return mWeather[k];
 }
 
-void WeatherManager::Deregister(std::vector<WeatherState*> *states) {
+void WeatherManager::Deregister(vector<WeatherState*> *states) {
 
 	/* Set up a weather state for all the map locations in this instance that have a weather def */
-	for (std::vector<WeatherState*>::iterator it = states->begin();
+	for (vector<WeatherState*>::iterator it = states->begin();
 			it != states->end(); ++it) {
 		WeatherState *ws = *it;
 		if (g_Config.DebugVerbose)
 			g_Logs.simulator->info("Clearing up weather for %v (%v)",
 					ws->mInstanceId, ws->mDefinition.mMapName.c_str());
-		for (std::vector<std::string>::iterator it2 = ws->mMapNames.begin();
+		for (vector<string>::iterator it2 = ws->mMapNames.begin();
 				it2 != ws->mMapNames.end(); ++it2) {
 			if (g_Config.DebugVerbose)
 				g_Logs.simulator->info("    Map (%v)", (*it2).c_str());
@@ -2382,12 +2358,12 @@ void WeatherManager::Deregister(std::vector<WeatherState*> *states) {
 	states->clear();
 }
 
-int WeatherManager::LoadFromFile(std::string fileName) {
+int WeatherManager::LoadFromFile(string fileName) {
 
 	//Note: the official grove file is loaded first, then the custom grove file.
 	//This should point here.
 	FileReader lfr;
-	if (lfr.OpenText(fileName.c_str()) != Err_OK) {
+	if (lfr.OpenText(fileName) != Err_OK) {
 		g_Logs.data->error("Could not open file [%v]", fileName);
 		return -1;
 	}
@@ -2428,7 +2404,7 @@ int WeatherManager::LoadFromFile(std::string fileName) {
 				else if (strcmp(lfr.SecBuffer, "WEATHERTYPE") == 0) {
 					r = lfr.MultiBreak("=,"); //Re-split for this particular data.
 					for (int s = 1; s < r; s++) {
-						std::string typeStr = lfr.BlockToStringC(1, 0);
+						string typeStr = lfr.BlockToStringC(1, 0);
 						newItem.mWeatherTypes.push_back(typeStr);
 					}
 				} else if (strcmp(lfr.SecBuffer, "THUNDERCHANCE") == 0)
@@ -2489,7 +2465,7 @@ int WriteZoneDefInfo(char *buffer,
 	int wpos = 0;
 
 	wpos += PutByte(&buffer[wpos], 28); //String count
-	wpos += PutStringUTF(&buffer[wpos], std::to_string(item->mID)); // 1
+	wpos += PutStringUTF(&buffer[wpos], to_string(item->mID)); // 1
 	wpos += PutStringUTF(&buffer[wpos], item->mName); // 2
 	wpos += PutStringUTF(&buffer[wpos], item->mTerrainConfig); // 3
 	wpos += PutStringUTF(&buffer[wpos], item->mEnvironmentType); // 4
@@ -2508,14 +2484,14 @@ int WriteZoneDefInfo(char *buffer,
 	wpos += PutStringUTF(&buffer[wpos], item->mGuildHall ? "Y" : "N"); // 17 guild hall
 	wpos += PutStringUTF(&buffer[wpos], item->mEnvironmentCycle ? "Y" : "N"); // 18 environment cycle
 	wpos += PutStringUTF(&buffer[wpos], item->mAudit ? "Y" : "N"); // 19 audit changes
-	wpos += PutStringUTF(&buffer[wpos], std::to_string(item->mMaxAggroRange) ); // 20 max aggro range
-	wpos += PutStringUTF(&buffer[wpos], std::to_string(item->mMaxLeashRange) ); // 21 max leash range
-	wpos += PutStringUTF(&buffer[wpos], std::to_string(item->mMinLevel) ); // 22 max aggro range
-	wpos += PutStringUTF(&buffer[wpos], std::to_string(item->mMaxLevel) ); // 23 max leash range
-	wpos += PutStringUTF(&buffer[wpos], std::to_string(item->DefX) + " " + std::to_string(item->DefY) + " " + std::to_string(item->DefZ) ); // 24 def x
-	wpos += PutStringUTF(&buffer[wpos], std::to_string(item->mPageSize) ); // 25 page size
-	wpos += PutStringUTF(&buffer[wpos], std::to_string(item->mMode ) ); // 26 page size
-	wpos += PutStringUTF(&buffer[wpos], std::to_string(item->mReturnZone) ); // 27 return zone
+	wpos += PutStringUTF(&buffer[wpos], to_string(item->mMaxAggroRange) ); // 20 max aggro range
+	wpos += PutStringUTF(&buffer[wpos], to_string(item->mMaxLeashRange) ); // 21 max leash range
+	wpos += PutStringUTF(&buffer[wpos], to_string(item->mMinLevel) ); // 22 max aggro range
+	wpos += PutStringUTF(&buffer[wpos], to_string(item->mMaxLevel) ); // 23 max leash range
+	wpos += PutStringUTF(&buffer[wpos], to_string(item->DefX) + " " + to_string(item->DefY) + " " + to_string(item->DefZ) ); // 24 def x
+	wpos += PutStringUTF(&buffer[wpos], to_string(item->mPageSize) ); // 25 page size
+	wpos += PutStringUTF(&buffer[wpos], to_string(item->mMode ) ); // 26 page size
+	wpos += PutStringUTF(&buffer[wpos], to_string(item->mReturnZone) ); // 27 return zone
 	wpos += PutStringUTF(&buffer[wpos], item->mTimeOfDay); // 28
 
 	return wpos;

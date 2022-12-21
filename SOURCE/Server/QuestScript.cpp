@@ -27,15 +27,16 @@ QuestNutDef::QuestNutDef(int questID)
 	mQuestID = questID;
 	char strBuf[100];
 	Util::SafeFormat(strBuf, sizeof(strBuf), "%d.nut", mQuestID);
-	mSourceFile = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "QuestScripts"), strBuf);
-	scriptName = std::string(Platform::Basename(mSourceFile));
+	mSourceFile = g_Config.ResolveStaticDataPath() / "QuestScripts" / strBuf;
+ 	scriptName = mSourceFile.stem();
 }
 
 QuestNutDef::~QuestNutDef()
 {
 
 }
-std::string QuestNutDef::GetQuestNutScriptPath() {
+
+fs::path QuestNutDef::GetQuestNutScriptPath() {
 	return mSourceFile;
 }
 
@@ -48,11 +49,11 @@ QuestNutManager::~QuestNutManager() {
 }
 
 QuestNutDef * QuestNutManager::GetScriptByID(int questID) {
-	std::map<int, QuestNutDef*>::iterator it = questDef.find(questID);
+	map<int, QuestNutDef*>::iterator it = questDef.find(questID);
 	if(it == questDef.end()) {
 		// Create script def
 		QuestNutDef *d = new QuestNutDef(questID);
-		if(Platform::FileExists(d->GetQuestNutScriptPath())) {
+		if(fs::exists(d->GetQuestNutScriptPath())) {
 			questDef[questID] = d;
 			return d;
 		}
@@ -70,20 +71,20 @@ QuestNutDef * QuestNutManager::GetScriptByID(int questID) {
 	return it->second;
 }
 
-std::list<QuestNutPlayer*> QuestNutManager::GetActiveScripts(int CID)
+list<QuestNutPlayer*> QuestNutManager::GetActiveScripts(int CID)
 {
-	return questAct.find(CID) == questAct.end() ? std::list<QuestNutPlayer*>() : questAct[CID];
+	return questAct.find(CID) == questAct.end() ? list<QuestNutPlayer*>() : questAct[CID];
 }
 
-std::list<QuestNutPlayer*> QuestNutManager::GetActiveQuestScripts(int questID)
+list<QuestNutPlayer*> QuestNutManager::GetActiveQuestScripts(int questID)
 {
 	// TODO make this faster, maintain a map keyed by quest ID
-	std::list<QuestNutPlayer*> l;
-	std::map<int, std::list<QuestNutPlayer*> >::iterator it;
+	list<QuestNutPlayer*> l;
+	map<int, list<QuestNutPlayer*> >::iterator it;
 	it = questAct.begin();
-	std::list<QuestNutPlayer*>::iterator eit;
+	list<QuestNutPlayer*>::iterator eit;
 	for(; it != questAct.end(); ++ it) {
-		std::list<QuestNutPlayer*> p;
+		list<QuestNutPlayer*> p;
 		p = it->second;
 		eit = p.begin();
 		for(; eit != p.end(); ++ eit) {
@@ -99,7 +100,7 @@ std::list<QuestNutPlayer*> QuestNutManager::GetActiveQuestScripts(int questID)
 QuestNutPlayer * QuestNutManager::GetActiveScript(int CID, int questID)
 {
 
-	std::list<QuestNutPlayer*> l = questAct[CID];
+	list<QuestNutPlayer*> l = questAct[CID];
 	list<QuestNutPlayer*>::iterator it;
 	for (it = l.begin(); it != l.end(); ++it) {
 		QuestNutPlayer *pl = *it;
@@ -127,7 +128,7 @@ QuestNutPlayer * QuestNutManager::AddActiveScript(CreatureInstance *creature, in
 
 	g_Logs.script->info("Compiling quest script %v", questID);
 	QuestNutPlayer * player = new QuestNutPlayer();
-	std::string errors;
+	string errors;
 	player->source = creature;
 	player->sourceDef = &creature->charPtr->cdef;
 	creature->actInst->questNutScriptList.push_back(player);
@@ -138,7 +139,7 @@ QuestNutPlayer * QuestNutManager::AddActiveScript(CreatureInstance *creature, in
 				def->scriptName.c_str(), errors.c_str());
 
 	if(questAct.find(creature->CreatureID) == questAct.end()) {
-		std::list<QuestNutPlayer*> l;
+		list<QuestNutPlayer*> l;
 		l.push_back(player);
 		questAct[creature->CreatureID] = l;
 	}
@@ -153,12 +154,12 @@ QuestNutPlayer * QuestNutManager::AddActiveScript(CreatureInstance *creature, in
 void QuestNutManager::RemoveActiveScripts(int CID) {
 	cs.Enter("QuestNutManager::RemoveActiveScript");
 	g_Logs.script->info("Removing active scripts for %v", CID);
-	std::list<QuestNutPlayer*> l = questAct[CID];
+	list<QuestNutPlayer*> l = questAct[CID];
 	for (list<QuestNutPlayer*>::iterator it = l.begin(); it != l.end(); ++it) {
 		QuestNutPlayer* player = *it;
 		if(player->source != NULL && player->source->actInst != NULL)
 			player->source->actInst->questNutScriptList.erase(
-					std::remove(player->source->actInst->questNutScriptList.begin(), player->source->actInst->questNutScriptList.end(), player), player->source->actInst->questNutScriptList.end());
+					remove(player->source->actInst->questNutScriptList.begin(), player->source->actInst->questNutScriptList.end(), player), player->source->actInst->questNutScriptList.end());
 		if(player->mActive)
 			player->HaltExecution();
 		delete (*it);
@@ -170,14 +171,14 @@ void QuestNutManager::RemoveActiveScripts(int CID) {
 
 void QuestNutManager::RemoveActiveScript(QuestNutPlayer *registeredPtr) {
 	cs.Enter("QuestNutManager::RemoveActiveScript");
-	std::list<QuestNutPlayer*> l = questAct[registeredPtr->source->CreatureID];
+	list<QuestNutPlayer*> l = questAct[registeredPtr->source->CreatureID];
 	list<QuestNutPlayer*>::iterator it;
 	for (it = l.begin(); it != l.end(); ++it) {
 		if (*it == registeredPtr) {
 			QuestNutPlayer* player = *it;
 			if(player->source != NULL && player->source->actInst != NULL)
 				player->source->actInst->questNutScriptList.erase(
-						std::remove(player->source->actInst->questNutScriptList.begin(), player->source->actInst->questNutScriptList.end(), player), player->source->actInst->questNutScriptList.end());
+						remove(player->source->actInst->questNutScriptList.begin(), player->source->actInst->questNutScriptList.end(), player), player->source->actInst->questNutScriptList.end());
 			g_Logs.script->debug("Deleting player");
 			if(player->mActive) {
 				g_Logs.script->warn("Player is active, cannot delete");
@@ -232,7 +233,7 @@ void QuestNutPlayer::RegisterFunctions() {
 
 	Sqrat::Class<QuestObjective> questObjectiveClass(vm, "QuestObjective", true);
 	questObjectiveClass.Ctor();
-	questObjectiveClass.Ctor<int, std::string>();
+	questObjectiveClass.Ctor<int, string>();
 	Sqrat::RootTable(vm).Bind(_SC("QuestObjective"), questObjectiveClass);
 
 
@@ -259,7 +260,7 @@ void QuestNutPlayer::RegisterFunctions() {
 
 	Sqrat::Class<QuestAct> questActClass(vm, "QuestAct", true);
 	questActClass.Ctor();
-	questActClass.Ctor<std::string, QuestObjective*>();
+	questActClass.Ctor<string, QuestObjective*>();
 	Sqrat::RootTable(vm).Bind(_SC("QuestAct"), questActClass);
 	questActClass.Var(_SC("body_text"), &QuestAct::BodyText);
 	questActClass.Func(_SC("set_objective"), &QuestAct::AddObjective);
@@ -332,7 +333,7 @@ void QuestNutPlayer::RegisterFunctions() {
 //		QuestItemReward rewardItem[MAXREWARDS];  //"id:# count:# required:false"
 //
 //		//This data is used internally by the server
-//		std::vector<QuestAct> actList;
+//		vector<QuestAct> actList;
 //		int actCount;
 //
 //
@@ -345,7 +346,7 @@ void QuestNutPlayer::RegisterFunctions() {
 
 }
 
-void QuestNutPlayer::Initialize(ActiveInstance *actInst, QuestNutDef *defPtr, std::string &errors) {
+void QuestNutPlayer::Initialize(ActiveInstance *actInst, QuestNutDef *defPtr, string &errors) {
 	SetInstancePointer(actInst);
 	NutPlayer::Initialize(defPtr, errors);
 }
@@ -540,7 +541,7 @@ void QuestNutPlayer::TriggerDelete(int CID, unsigned long ms) {
 	}
 }
 
-QuestObjective QuestNutPlayer::TalkObjective(std::string description, int creatureDefId, std::string markerLocations) {
+QuestObjective QuestNutPlayer::TalkObjective(string description, int creatureDefId, string markerLocations) {
 	QuestObjective o;
 	o.type = QuestObjective::OBJECTIVE_TYPE_TALK;
 	o.description = description;
@@ -551,7 +552,7 @@ QuestObjective QuestNutPlayer::TalkObjective(std::string description, int creatu
 	return o;
 }
 
-QuestObjective QuestNutPlayer::KillObjective(std::string description, Sqrat::Array &cdefIds, int amount, std::string completeText, std::string markerLocations) {
+QuestObjective QuestNutPlayer::KillObjective(string description, Sqrat::Array &cdefIds, int amount, string completeText, string markerLocations) {
 	QuestObjective o;
 	o.type = QuestObjective::OBJECTIVE_TYPE_KILL;
 	o.description = description;
@@ -590,20 +591,20 @@ int QuestNutPlayer::AddQuest(QuestDefinition questDefinition) {
 
 void QuestNutPlayer::SidekicksDefend() {
 	source->RemoveNoncombatantStatus("skattack");
-	source->simulatorPtr->AddMessage((long) source, 0, BCM_SidekickDefend);
+	source->actInst->Submit(bind(&ActiveInstance::SidekickDefend, source->actInst, source));
 }
 
 void QuestNutPlayer::SidekicksAttack() {
 	source->RemoveNoncombatantStatus("skattack");
-	source->simulatorPtr->AddMessage((long) source, 0, BCM_SidekickAttack);
+	source->actInst->Submit(bind(&ActiveInstance::SidekickAttack, source->actInst, source));
 }
 
 void QuestNutPlayer::CallSidekicks() {
-	source->simulatorPtr->AddMessage((long) source, 0, BCM_SidekickCall);
+	source->actInst->Submit(bind(&ActiveInstance::SidekickCall, source->actInst, source));
 }
 
 void QuestNutPlayer::ScatterSidekicks() {
-	source->simulatorPtr->AddMessage((long) source, 0, BCM_SidekickScatter);
+	source->actInst->Submit(bind(&ActiveInstance::SidekickScatter, source->actInst, source));
 }
 
 int QuestNutPlayer::RecruitSidekick(int CID, int type, int param, int hate) {
@@ -894,7 +895,7 @@ void QuestScriptPlayer::TriggerAbort(void)
 //}
 
 
-void LoadQuestScripts(std::string filename)
+void LoadQuestScripts(string filename)
 {
 	g_QuestScript.CompileFromSource(filename);
 }

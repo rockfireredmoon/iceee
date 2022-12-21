@@ -15,7 +15,6 @@ default static item database.
 #include "GameConfig.h"
 #include "Stats.h"
 #include "DirectoryAccess.h"
-#include "StringUtil.h"
 #include "Cluster.h"
 #include "util/Log.h"
 
@@ -169,7 +168,7 @@ void VirtualItemDef :: Clear(void)
 }
 
 bool VirtualItemDef::EntityKeys(AbstractEntityReader *reader) {
-	reader->Key(KEYPREFIX_VIRTUAL_ITEM, StringUtil::Format("%d", mID));
+	reader->Key(KEYPREFIX_VIRTUAL_ITEM, Util::Format("%d", mID));
 	return true;
 }
 
@@ -192,7 +191,7 @@ bool VirtualItemDef::ReadEntity(AbstractEntityReader *reader) {
 }
 
 bool VirtualItemDef::WriteEntity(AbstractEntityWriter *writer) {
-	writer->Key(KEYPREFIX_VIRTUAL_ITEM, StringUtil::Format("%d", mID));
+	writer->Key(KEYPREFIX_VIRTUAL_ITEM, Util::Format("%d", mID));
 	writer->Value("mID", mID);
 	writer->Value("mType", mType);
 	writer->Value("mEquipType", mEquipType);
@@ -296,7 +295,7 @@ void VirtualItem :: GenerateFlavorText(void)
 
 struct fieldCompare
 {
-	std::string name;
+	string name;
 	float value;
 	bool operator <(const fieldCompare& other) const
 	{
@@ -307,10 +306,10 @@ struct fieldCompare
 void VirtualItem :: CheckNameMods(void)
 {
 	//Merge the instrinsic and bonus modifiers into one, to compare the stats.
-	std::string output;
+	string output;
 	MergeStats(mModString, output);
 
-	std::vector<fieldCompare> values;
+	vector<fieldCompare> values;
 
 	STRINGLIST templist;
 	STRINGLIST temppair;
@@ -339,7 +338,7 @@ void VirtualItem :: CheckNameMods(void)
 	}
 
 	//Sort highest to lowest
-	std::sort(values.begin(), values.end());
+	sort(values.begin(), values.end());
 
 	const char *first = NULL;
 	const char *second = NULL;
@@ -359,7 +358,7 @@ void VirtualItem :: ApplyNameMod(NameModEntry* mod)
 {
 	if(mod == NULL)
 		return;
-	std::string result;
+	string result;
 	if(mod->mType == mod->TYPE_PREFIX)
 	{
 		result = mod->mName;
@@ -405,7 +404,7 @@ const char* VirtualItem :: TransformStandardMappings(const char* search)
 	return NULL;
 }
 
-void VirtualItem :: ApplyStat(std::string& key, std::string& value)
+void VirtualItem :: ApplyStat(string& key, string& value)
 {
 	const char *mappedStat = TransformStandardMappings(key.c_str());
 	if(mappedStat != NULL)
@@ -415,11 +414,11 @@ void VirtualItem :: ApplyStat(std::string& key, std::string& value)
 	}
 }
 
-int VirtualItem :: RollStats(std::string& output, int numPoints, int rarity)
+int VirtualItem :: RollStats(string& output, int numPoints, int rarity)
 {
 	//Randomly distribute a number of points among the 5 core vital stats.
 
-	std::vector<const char *> statID;
+	vector<const char *> statID;
 	statID.push_back("strength");
 	statID.push_back("dexterity");
 	statID.push_back("constitution");
@@ -477,7 +476,7 @@ int VirtualItem :: RollStats(std::string& output, int numPoints, int rarity)
 	*/
 }
 
-void VirtualItem :: MergeStats(std::string& input, std::string& output)
+void VirtualItem :: MergeStats(string& input, string& output)
 {
 	//Merge a list of new modifiers into the existing modifier list.
 	//If a modifier already exists, add the new value into the tally.
@@ -568,9 +567,9 @@ bool VirtualItem :: isItemDefStat(int statID)
 }
 
 
-std::string VirtualItem :: GetAppearanceAsset(std::string& mAppearance)
+string VirtualItem :: GetAppearanceAsset(string& mAppearance)
 {
-	std::string ret;
+	string ret;
 	size_t pos = mAppearance.find("[\"type\"]=\"");
 	if(pos != string::npos)
 	{
@@ -625,7 +624,7 @@ void VirtualItem :: InstantiateNew(int ID, int level, int rarity, int equipType,
 	}
 
 	search.clear();
-	std::string asset = GetAppearanceAsset(mStandardDef.mAppearance);
+	string asset = GetAppearanceAsset(mStandardDef.mAppearance);
 	//g_EquipIconAppearance.SearchEntries(equipType, weaponType, search);
 	g_EquipIconAppearance.SearchEntriesWithAsset(equipType, weaponType, asset.c_str(), search);
 	resultStr = g_EquipIconAppearance.GetRandomString(rarity, search);
@@ -711,7 +710,7 @@ void VirtualItem :: InstantiateNew(int ID, int level, int rarity, int equipType,
 	mStandardDef.mDisplayName = "TEST ITEM";
 	mStandardDef.mValue = 123456;
 
-	std::string rolledMods; 
+	string rolledMods;
 	RollStats(rolledMods, value, 3);
 	MergeStats(rolledMods);
 	ApplyModString();
@@ -731,7 +730,7 @@ struct UsedTable
 	int usedCount;
 };
 
-int IncrementTable(std::vector<UsedTable>& tableList, int index, int maxShares)
+int IncrementTable(vector<UsedTable>& tableList, int index, int maxShares)
 {
 	if(index < 0 || index >= (int)tableList.size())
 		return maxShares;
@@ -745,7 +744,7 @@ int IncrementTable(std::vector<UsedTable>& tableList, int index, int maxShares)
 	return maxShares;
 }
 
-int GetRandomTableIndex(std::vector<UsedTable>& tableList, int maxShares)
+int GetRandomTableIndex(vector<UsedTable>& tableList, int maxShares)
 {
 	//Search for any core tables
 	for(size_t i = 0; i < tableList.size(); i++)
@@ -765,7 +764,7 @@ int GetRandomTableIndex(std::vector<UsedTable>& tableList, int maxShares)
 
 void VirtualItem :: ApplyRandomTables(EquipTemplate* eqTemplate, int level, int rarity)
 {
-	std::vector<UsedTable> tableList;
+	vector<UsedTable> tableList;
 
 	UsedTable newTable;
 	int maxShares = 0;
@@ -843,7 +842,7 @@ int VirtualItem :: ApplyModTable(ValidTable* validTable, int level, int rarity)
 	}
 
 	int retval = 1;
-	std::string rolledMods = mModString; 
+	string rolledMods = mModString;
 	if(validTable->core == true)
 	{
 		//g_Log.AddMessageFormat("Distributing %d core stat points", value);
@@ -855,7 +854,7 @@ int VirtualItem :: ApplyModTable(ValidTable* validTable, int level, int rarity)
 		//g_Log.AddMessageFormat("Applying table:%s [%s]", validTable->tableName, validTable->statApp);
 
 		STRINGLIST results;
-		std::string app = validTable->statApp;
+		string app = validTable->statApp;
 		Util::Split(app, "|", results);
 		if(results.size() == 1)
 			AppendStat(rolledMods, results[0].c_str(), value);
@@ -869,7 +868,7 @@ int VirtualItem :: ApplyModTable(ValidTable* validTable, int level, int rarity)
 	return retval;
 }
 
-void VirtualItem :: AppendStat(std::string& output, const char *name, int value)
+void VirtualItem :: AppendStat(string& output, const char *name, int value)
 {
 	char buffer[32];
 	if(output.size() > 0)
@@ -953,7 +952,7 @@ int ItemManager :: CreateNewVirtualItem(int rarity, VirtualItemSpawnParams &viPa
 	VirtualItem newItem;
 	newItem.InstantiateNew(ID, viParams.level, rarity, viParams.mEquipType, viParams.mWeaponType);
 	
-	VItemList.insert(VItemList.end(), std::pair<int, VirtualItem>(ID, newItem));
+	VItemList.insert(VItemList.end(), pair<int, VirtualItem>(ID, newItem));
 	//g_Log.AddMessageFormat("Created: %d (new size: %d)", ID, VItemList.size());
 	return ID;
 }
@@ -1078,10 +1077,10 @@ void ModTable :: Clear(void)
 	modRow.clear();
 }
 
-void ModTable :: LoadFromFile(std::string filename)
+void ModTable :: LoadFromFile(const fs::path &filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
+	if(lfr.OpenText(filename) != Err_OK)
 	{
 		g_Logs.data->error("Could not load ModTable file: %v", filename);
 		return;
@@ -1119,10 +1118,10 @@ ModRow* ModTable :: GetRowByLevel(int level)
 	return NULL;
 }
 
-void ModManager :: LoadFromFile(std::string filename)
+void ModManager :: LoadFromFile(const fs::path &filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
+	if(lfr.OpenText(filename) != Err_OK)
 	{
 		g_Logs.data->error("Could not load ModTable list file: %v", filename);
 		return;
@@ -1137,7 +1136,7 @@ void ModManager :: LoadFromFile(std::string filename)
 		{
 			newItem.name = lfr.BlockToStringC(0, 0);
 			lfr.BlockToStringC(1, 0);
-			newItem.LoadFromFile(Platform::JoinPath(g_Config.ResolveStaticDataPath(), Platform::FixPaths(lfr.SecBuffer)));
+			newItem.LoadFromFile(g_Config.ResolveStaticDataPath() / Platform::FixPaths(lfr.SecBuffer));
 			modTable.push_back(newItem);
 			newItem.Clear();
 		}
@@ -1193,10 +1192,10 @@ void EquipTemplate :: Clear(void)
 	randomTable.clear();
 }
 
-void EquipTemplateManager :: LoadFromFile(std::string filename)
+void EquipTemplateManager :: LoadFromFile(const fs::path &filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
+	if(lfr.OpenText(filename) != Err_OK)
 	{
 		g_Logs.server->error("Error opening Mod Template file: %v", filename);
 		return;
@@ -1305,10 +1304,10 @@ void EquipAppearance :: AddIfValid(EquipAppearanceKey& data)
 	dataEntry.push_back(data);
 }
 
-void EquipAppearance :: LoadFromFile(std::string filename)
+void EquipAppearance :: LoadFromFile(const fs::path &filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
+	if(lfr.OpenText(filename) != Err_OK)
 	{
 		g_Logs.server->error("Unable to open EquipAppearance file [%v]", filename);
 		return;
@@ -1347,13 +1346,13 @@ void EquipAppearance :: LoadFromFile(std::string filename)
 	lfr.CloseCurrent();
 }
 
-void EquipAppearance :: DebugSaveToFile(std::string filename)
+void EquipAppearance :: DebugSaveToFile(const fs::path &filename)
 {
-	FILE *output = fopen(filename.c_str(), "wb");
+	FILE *output = fopen(filename.string().c_str(), "wb");
 	if(output == NULL)
 		return;
 
-	std::sort(dataEntry.begin(), dataEntry.end());
+	sort(dataEntry.begin(), dataEntry.end());
 	for(size_t i = 0; i < dataEntry.size(); i++)
 	{
 		fprintf(output, "[ENTRY]\r\n");
@@ -1364,7 +1363,7 @@ void EquipAppearance :: DebugSaveToFile(std::string filename)
 		fprintf(output, "mWeaponType=%d\r\n", dataEntry[i].mWeaponType);
 		if(dataEntry[i].mQualityLevel != 0)
 			fprintf(output, "mQualityLevel=%d\r\n", dataEntry[i].mQualityLevel);
-		std::sort(dataEntry[i].dataList.begin(), dataEntry[i].dataList.end());
+		sort(dataEntry[i].dataList.begin(), dataEntry[i].dataList.end());
 		for(size_t c = 0; c < dataEntry[i].dataList.size(); c++)
 			fprintf(output, "app=%s\r\n", dataEntry[i].dataList[c].c_str());
 		fprintf(output, "\r\n");
@@ -1433,7 +1432,7 @@ void EquipAppearance :: Debug_CheckForNames(void)
 	{
 		for(size_t a = 0; a < dataEntry[i].dataList.size(); a++)
 		{
-			std::string app = dataEntry[i].dataList[a];
+			string app = dataEntry[i].dataList[a];
 			app = VirtualItem::GetAppearanceAsset(app);
 			if(g_NameTemplateManager.Debug_HasName(app.c_str(), dataEntry[i].mEquipType, dataEntry[i].mWeaponType) == false)
 				g_Logs.server->warn("NAME Not found: %v (mEquipType=%v, mWeaponType=%v)", app.c_str(), dataEntry[i].mEquipType, dataEntry[i].mWeaponType);
@@ -1475,10 +1474,10 @@ EquipTable :: EquipTable()
 	maxShares = 0;
 }
 
-void EquipTable :: LoadFromFile(std::string filename)
+void EquipTable :: LoadFromFile(const fs::path &filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
+	if(lfr.OpenText(filename) != Err_OK)
 	{
 		g_Logs.server->error("Unable to open EquipTable file [%v]", filename);
 		return;
@@ -1597,10 +1596,10 @@ void NameTemplateManager :: AddIfValid(NameTemplate &newItem)
 	nameTemplate.push_back(newItem);
 }
 
-void NameTemplateManager :: LoadFromFile(std::string filename)
+void NameTemplateManager :: LoadFromFile(const fs::path &filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
+	if(lfr.OpenText(filename) != Err_OK)
 	{
 		g_Logs.server->error("Unable to open Item Name file [%v]", filename);
 		return;
@@ -1648,13 +1647,13 @@ void NameTemplateManager :: LoadFromFile(std::string filename)
 	lfr.CloseCurrent();
 }
 
-void NameTemplateManager :: DebugSaveToFile(std::string filename)
+void NameTemplateManager :: DebugSaveToFile(const fs::path &filename)
 {
-	FILE *output = fopen(filename.c_str(), "wb");
+	FILE *output = fopen(filename.string().c_str(), "wb");
 	if(output == NULL)
 		return;
 
-	std::sort(nameTemplate.begin(), nameTemplate.end());
+	sort(nameTemplate.begin(), nameTemplate.end());
 	for(size_t i = 0; i < nameTemplate.size(); i++)
 	{
 		fprintf(output, "[ENTRY]\r\n");
@@ -1663,7 +1662,7 @@ void NameTemplateManager :: DebugSaveToFile(std::string filename)
 
 		fprintf(output, "mEquipType=%d\r\n", nameTemplate[i].mEquipType);
 		fprintf(output, "mWeaponType=%d\r\n", nameTemplate[i].mWeaponType);
-		//std::sort(nameTemplate[i].nameList.begin(), nameTemplate[i].nameList.end());
+		//sort(nameTemplate[i].nameList.begin(), nameTemplate[i].nameList.end());
 		for(size_t c = 0; c < nameTemplate[i].nameList.size(); c++)
 			fprintf(output, "app=%s,%d\r\n", nameTemplate[i].nameList[c].name, nameTemplate[i].nameList[c].shares);
 		fprintf(output, "\r\n");
@@ -1778,10 +1777,10 @@ NameModManager :: ~NameModManager()
 {
 }
 
-void NameModManager :: LoadFromFile(std::string filename)
+void NameModManager :: LoadFromFile(const fs::path &filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
+	if(lfr.OpenText(filename) != Err_OK)
 	{
 		g_Logs.server->error("Unable to open NameMod file [%v]", filename);
 		return;
@@ -1861,10 +1860,10 @@ void NameWeight :: Clear(void)
 	mWeight = 0.0F;
 }
 
-void NameWeightManager :: LoadFromFile(std::string filename)
+void NameWeightManager :: LoadFromFile(const fs::path &filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
+	if(lfr.OpenText(filename) != Err_OK)
 	{
 		g_Logs.server->error("Unable to open NameWeight file [%v]", filename);
 		return;
@@ -1949,10 +1948,10 @@ int RarityConfig :: GetAdjustedCorePoints(int numPoints)
 	return (int)((float)numPoints * statPointMult);
 }
 
-void VirtualItemModSystem :: LoadFromFile(std::string filename)
+void VirtualItemModSystem :: LoadFromFile(const fs::path &filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
+	if(lfr.OpenText(filename) != Err_OK)
 	{
 		g_Logs.server->error("Unable to open ModConfig file [%v]", filename);
 		return;
@@ -2009,7 +2008,7 @@ void VirtualItemModSystem :: UpdateRarityConfig(RarityConfig& entry)
 
 void VirtualItemModSystem :: LoadSettings(void)
 {
-	LoadFromFile(Platform::JoinPath(g_Config.ResolveStaticDataPath(), Platform::JoinPath("ItemMod", "RarityConfig.txt")));
+	LoadFromFile(g_Config.ResolveStaticDataPath() / "ItemMod" / "RarityConfig.txt");
 	for(int i = 0; i <= MAX_QUALITY_LEVEL; i++)
 	{
 		if(rarityConfig[i].chance <= 0)

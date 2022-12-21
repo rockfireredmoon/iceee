@@ -24,7 +24,6 @@
 #include "../Info.h"
 #include "../Cluster.h"
 #include "../util/Log.h"
-#include "../StringUtil.h"
 #include "../Config.h"
 
 using namespace HTTPD;

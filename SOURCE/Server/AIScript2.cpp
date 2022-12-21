@@ -41,7 +41,7 @@ AINutPlayer::~AINutPlayer() {
 }
 
 void AINutPlayer::Initialize(CreatureInstance *creature, AINutDef *defPtr,
-		std::string &errors) {
+		string &errors) {
 	attachedCreature = creature;
 	SetInstancePointer(attachedCreature->actInst);
 	NutPlayer::Initialize(defPtr, errors);
@@ -177,14 +177,14 @@ SQInteger AINutPlayer::GetEnemiesNear(HSQUIRRELVM v)
 			Sqrat::Var<int> playerAbilityRestrict(v, 3);
 			Sqrat::Var<int> npcAbilityRestrict(v, 4);
 			Sqrat::Var<int> sidekickAbilityRestrict(v, 5);
-			//std::vector<CreatureInstance*> vv;
+			//vector<CreatureInstance*> vv;
 			CreatureInstance::CREATURE_PTR_SEARCH vv;
 			CreatureInstance* target = left.value.attachedCreature;
 			float x = (float)target->CurrentX;
 			float z = (float)target->CurrentZ;
 			target->AIFillCreaturesNear(range.value, x, z, playerAbilityRestrict.value, npcAbilityRestrict.value, sidekickAbilityRestrict.value, vv);
             sq_newarray(v, 0);
-            for (std::size_t i = 0; i < vv.size(); ++i) {
+            for (size_t i = 0; i < vv.size(); ++i) {
                 Sqrat::PushVar(v, i);
                 Sqrat::PushVar(v, vv[i]->CreatureID);
                 sq_rawset(v, -2);
@@ -464,20 +464,14 @@ AINutManager::~AINutManager() {
 }
 
 int AINutManager::LoadScripts(void) {
-	Platform_DirectoryReader r;
-	string dir = r.GetDirectory();
-	r.SetDirectory(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "AIScript"));
-	r.ReadFiles();
-	r.SetDirectory(dir);
 
-	vector<std::string>::iterator it;
-	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
-		std::string p = *it;
-		if (Util::HasEnding(p, ".nut")) {
-			// TODO delete this when finished with
+	auto path = g_Config.ResolveStaticDataPath() / "AIScript";
+	for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
+		auto path = entry.path();
+		if(path.extension() == ".nut") {
 			AINutDef *def = new AINutDef();
 			aiDef.push_back(def);
-			def->LoadFromLocalFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "AIScript"), p));
+			def->LoadFromLocalFile(path);
 		}
 	}
 
@@ -485,13 +479,9 @@ int AINutManager::LoadScripts(void) {
 }
 
 AINutDef * AINutManager::GetScriptByName(const char *name) {
-	if (aiDef.size() == 0)
-		return NULL;
-	list<AINutDef*>::iterator it;
-	for (it = aiDef.begin(); it != aiDef.end(); ++it) {
-		AINutDef *ai = *it;
+	for (auto ai : aiDef) {
 		if (ai->scriptName.compare(name) == 0)
-			return *it;
+			return ai;
 	}
 	return NULL;
 }
@@ -504,7 +494,7 @@ AINutDef * AINutManager::GetScriptByName(const char *name) {
 //}
 
 AINutPlayer * AINutManager::AddActiveScript(CreatureInstance *creature,
-		AINutDef *def, std::vector<std::string> args, std::string &errors) {
+		AINutDef *def, vector<string> args, string &errors) {
 	AINutPlayer * player = new AINutPlayer();
 	player->mArgs = args;
 	player->Initialize(creature, def, errors);
@@ -516,8 +506,7 @@ AINutPlayer * AINutManager::AddActiveScript(CreatureInstance *creature,
 }
 
 void AINutManager::RemoveActiveScript(AINutPlayer *registeredPtr) {
-	list<AINutPlayer*>::iterator it;
-	for (it = aiAct.begin(); it != aiAct.end(); ++it) {
+	for (auto it = aiAct.begin(); it != aiAct.end(); ++it) {
 		if (*it == registeredPtr) {
 			delete (*it);
 			aiAct.erase(it);

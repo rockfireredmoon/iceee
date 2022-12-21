@@ -36,7 +36,9 @@
 #include "../Item.h"
 #include "../json/json.h"
 #include <algorithm>
+#include <filesystem>
 
+namespace fs = filesystem;
 using namespace HTTPD;
 
 //
@@ -91,7 +93,7 @@ bool UpHandler::handleAuthenticatedGet(CivetServer *server,
 
 bool WhoHandler::handleAuthenticatedGet(CivetServer *server,
 		struct mg_connection *conn) {
-	std::string response;
+	string response;
 	char buf[256];
 	response.append("{ ");
 	SIMULATOR_IT it;
@@ -134,7 +136,7 @@ void CreditShopHandler::writeCreditShopItemToJSON(CS::CreditShopItem* item,
 		if (itemDef != NULL) {
 			if (item->mTitle.length() == 0)
 				c["computedTitle"] = itemDef->mDisplayName;
-			std::vector<std::string> l;
+			vector<string> l;
 			Util::Split(itemDef->mIcon, "|", l);
 			switch (l.size()) {
 			case 1:
@@ -155,7 +157,7 @@ void CreditShopHandler::writeCreditShopItemToJSON(CS::CreditShopItem* item,
 
 bool CreditShopHandler::handleAuthenticatedPost(CivetServer *server,
 		struct mg_connection *conn) {
-	std::map<std::string, std::string> parms;
+	map<string, string> parms;
 	if (parseForm(server, conn, parms)) {
 		if (parms.find("qty") == parms.end()
 				|| parms.find("item") == parms.end()
@@ -172,7 +174,7 @@ bool CreditShopHandler::handleAuthenticatedPost(CivetServer *server,
 				return true;
 			}
 
-			std::string characterName = parms["character"];
+			string characterName = parms["character"];
 			int cdefID = g_UsedNameDatabase.GetIDByName(characterName);
 
 			g_ActiveInstanceManager.cs.Enter(
@@ -306,14 +308,14 @@ bool CreditShopHandler::handleAuthenticatedGet(CivetServer *server,
 		struct mg_connection *conn) {
 
 	const struct mg_request_info * req_info = mg_get_request_info(conn);
-	std::string ruri;
+	string ruri;
 
 	/* Prepare the URI */
 	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 	ruri = removeStartSlash(removeEndSlash(ruri));
 
-	std::vector<std::string> pathParts;
+	vector<string> pathParts;
 	Util::Split(ruri, "/", pathParts);
 
 	PageOptions opts;
@@ -326,15 +328,15 @@ bool CreditShopHandler::handleAuthenticatedGet(CivetServer *server,
 		int category = Category::UNDEFINED;
 
 		// Parse parameters
-		std::string p;
+		string p;
 		if (CivetServer::getParam(conn, "category", p)) {
 			category = Category::GetIDByName(p.c_str());
 		}
 
 		Json::Value root;
-		std::vector<CS::CreditShopItem> allItems;
+		vector<CS::CreditShopItem> allItems;
 		g_CreditShopManager.GetItems(allItems);
-		std::vector<CS::CreditShopItem> items;
+		vector<CS::CreditShopItem> items;
 		for (auto it = allItems.begin(); it != allItems.end(); ++it) {
 			if (it->mCategory == category) {
 				items.push_back(*it);
@@ -399,10 +401,10 @@ bool LeaderboardHandler::handleAuthenticatedGet(CivetServer *server,
 	PageOptions opts;
 	opts.Init(server, conn);
 
-	std::string board = "character";
+	string board = "character";
 
 	// Parse parameters
-	std::string p;
+	string p;
 	if (CivetServer::getParam(conn, "board", p)) {
 		board = p.c_str();
 	}
@@ -416,7 +418,7 @@ bool LeaderboardHandler::handleAuthenticatedGet(CivetServer *server,
 		Json::Value root;
 
 		leaderboard->cs.Enter("LeaderboardHandler::handleAuthenticatedGet");
-		std::vector<Leader> l(leaderboard->mLeaders);
+		vector<Leader> l(leaderboard->mLeaders);
 		leaderboard->cs.Leave();
 
 		if (opts.sort.compare("deaths") == 0)
@@ -429,7 +431,7 @@ bool LeaderboardHandler::handleAuthenticatedGet(CivetServer *server,
 			sort(l.begin(), l.end(), killsSort);
 
 		if (opts.desc)
-			std::reverse(l.begin(), l.end());
+			reverse(l.begin(), l.end());
 
 		Json::Value data;
 		int didx = 0;
@@ -466,10 +468,10 @@ void ClanHandler::writeClanToJSON(Clans::Clan &clan, Json::Value &c) {
 	PlayerStatSet total;
 	clan.WriteToJSON(c);
 
-	std::vector<Clans::ClanMember> l(clan.mMembers);
+	vector<Clans::ClanMember> l(clan.mMembers);
 	sort(l.begin(), l.end(), rankSort);
 
-	for (std::vector<Clans::ClanMember>::iterator it2 = l.begin();
+	for (vector<Clans::ClanMember>::iterator it2 = l.begin();
 			it2 != l.end(); ++it2) {
 		CharacterData *cd = g_CharacterManager.RequestCharacter((*it2).mID,
 				true);
@@ -511,14 +513,14 @@ bool ClanHandler::handleAuthenticatedGet(CivetServer *server,
 
 	const struct mg_request_info * req_info = mg_get_request_info(conn);
 
-	std::string ruri;
+	string ruri;
 
 	/* Prepare the URI */
 	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 	ruri = removeStartSlash(removeEndSlash(ruri));
 
-	std::vector<std::string> pathParts;
+	vector<string> pathParts;
 	Util::Split(ruri, "/", pathParts);
 
 	PageOptions opts;
@@ -528,7 +530,7 @@ bool ClanHandler::handleAuthenticatedGet(CivetServer *server,
 	if (pathParts.size() > 0
 			&& pathParts[pathParts.size() - 1].compare("clans") == 0) {
 		// List clans
-		std::vector<Clans::Clan> clns = g_ClanManager.GetClans();
+		vector<Clans::Clan> clns = g_ClanManager.GetClans();
 		for (auto it = clns.begin(); it != clns.end(); ++it) {
 			Json::Value c;
 			writeClanToJSON(*it, c);
@@ -536,7 +538,7 @@ bool ClanHandler::handleAuthenticatedGet(CivetServer *server,
 		}
 	} else {
 		// TODO get clan
-		std::string name = pathParts[pathParts.size() - 1];
+		string name = pathParts[pathParts.size() - 1];
 		Util::URLDecode(name);
 		int clanID = g_ClanManager.FindClanID(name);
 		if (clanID == -1) {
@@ -567,10 +569,10 @@ void GuildHandler::writeGuildToJSON(GuildDefinition *guild, Json::Value &c) {
 	PlayerStatSet total;
 	guild->WriteToJSON(c);
 
-//	std::vector<Clans::ClanMember> l(clan.mMembers);
+//	vector<Clans::ClanMember> l(clan.mMembers);
 //	sort(l.begin(), l.end(), rankSort);
 //
-//	for(std::vector<Clans::ClanMember>::iterator it2 = l.begin(); it2 != l.end(); ++it2) {
+//	for(vector<Clans::ClanMember>::iterator it2 = l.begin(); it2 != l.end(); ++it2) {
 //		CharacterData *cd = g_CharacterManager.RequestCharacter((*it2).mID, true);
 //		if(cd != NULL) {
 //			char buf[12];
@@ -609,14 +611,14 @@ bool GuildHandler::handleAuthenticatedGet(CivetServer *server,
 
 	const struct mg_request_info * req_info = mg_get_request_info(conn);
 
-	std::string ruri;
+	string ruri;
 
 	/* Prepare the URI */
 	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 	ruri = removeStartSlash(removeEndSlash(ruri));
 
-	std::vector<std::string> pathParts;
+	vector<string> pathParts;
 	Util::Split(ruri, "/", pathParts);
 
 	PageOptions opts;
@@ -626,9 +628,9 @@ bool GuildHandler::handleAuthenticatedGet(CivetServer *server,
 	if (pathParts.size() > 0
 			&& pathParts[pathParts.size() - 1].compare("guilds") == 0) {
 		// List clans
-		std::vector<GuildDefinition> m = g_GuildManager.defList;
+		vector<GuildDefinition> m = g_GuildManager.defList;
 
-		for (std::vector<GuildDefinition>::iterator it = m.begin();
+		for (vector<GuildDefinition>::iterator it = m.begin();
 				it != m.end(); ++it) {
 			Json::Value c;
 			GuildDefinition guild = *it;
@@ -636,7 +638,7 @@ bool GuildHandler::handleAuthenticatedGet(CivetServer *server,
 			root[guild.defName] = c;
 		}
 	} else {
-		std::string name = pathParts[pathParts.size() - 1];
+		string name = pathParts[pathParts.size() - 1];
 		Util::URLDecode(name);
 		GuildDefinition *guild = g_GuildManager.FindGuildDefinition(name);
 		if (guild == NULL) {
@@ -659,7 +661,7 @@ bool GuildHandler::handleAuthenticatedGet(CivetServer *server,
 
 void WriteChat(Json::Value &chat, int count) {
 	char buf[256];
-	std::deque<ChatMessage>::iterator it;
+	deque<ChatMessage>::iterator it;
 	g_ChatManager.cs.Enter("HTTPDistribute::Chat");
 	int start = g_ChatManager.CircularChatBuffer.size() - 1 - count;
 	if (start < 0)
@@ -677,15 +679,15 @@ void WriteChat(Json::Value &chat, int count) {
 
 bool ChatHandler::handleAuthenticatedPost(CivetServer *server,
 		struct mg_connection *conn) {
-	std::map<std::string, std::string> parms;
+	map<string, string> parms;
 	if (parseForm(server, conn, parms)) {
 		if (parms.find("msg") == parms.end()
 				|| parms.find("from") == parms.end())
 			writeStatusPlain(server, conn, 403, "Forbidden", "Missing parameters.");
 		else {
-			std::string msg = parms["msg"];
-			std::string from = parms["from"];
-			std::string channel =
+			string msg = parms["msg"];
+			string from = parms["from"];
+			string channel =
 					parms.find("channel") == parms.end() ?
 							"rc/" : parms["channel"];
 			int count =
@@ -724,7 +726,7 @@ bool ChatHandler::handleAuthenticatedGet(CivetServer *server,
 		struct mg_connection *conn) {
 
 	// Parse parameters
-	std::string p;
+	string p;
 	int count = 20;
 	if (CivetServer::getParam(conn, "count", p)) {
 		count = atoi(p.c_str());
@@ -747,14 +749,14 @@ bool UserHandler::handleAuthenticatedGet(CivetServer *server,
 	/* Handler may access the request info using mg_get_request_info */
 	const struct mg_request_info * req_info = mg_get_request_info(conn);
 
-	std::string ruri;
+	string ruri;
 
 	/* Prepare the URI */
 	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 	ruri = removeEndSlash(ruri);
 
-	std::vector<std::string> pathParts;
+	vector<string> pathParts;
 	Util::Split(ruri, "/", pathParts);
 
 	// Parse parameters
@@ -766,12 +768,12 @@ bool UserHandler::handleAuthenticatedGet(CivetServer *server,
 	else {
 		int accountId = atoi(pathParts[pathParts.size() - 1].c_str());
 		if (accountId == 0) {
-			std::string username = pathParts[pathParts.size() - 1];
+			string username = pathParts[pathParts.size() - 1];
 			Util::URLDecode(username);
 			accountId = g_AccountManager.GetAccountQuickDataByUsername(username).mID;
 		}
 
-		std::string p;
+		string p;
 		bool detailed = false;
 		CivetServer::getParam(conn, "detailed", p);
 		if (p.compare("true") == 0) {
@@ -823,14 +825,14 @@ bool CharacterHandler::handleAuthenticatedGet(CivetServer *server,
 	/* Handler may access the request info using mg_get_request_info */
 	const struct mg_request_info * req_info = mg_get_request_info(conn);
 
-	std::string ruri;
+	string ruri;
 
 	/* Prepare the URI */
 	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 	ruri = removeEndSlash(ruri);
 
-	std::vector<std::string> pathParts;
+	vector<string> pathParts;
 	Util::Split(ruri, "/", pathParts);
 
 	// Parse parameters
@@ -843,7 +845,7 @@ bool CharacterHandler::handleAuthenticatedGet(CivetServer *server,
 		CharacterData *cd = NULL;
 		int cdefID = atoi(pathParts[pathParts.size() - 1].c_str());
 		if (cdefID == 0) {
-			std::string characterName = pathParts[pathParts.size() - 1];
+			string characterName = pathParts[pathParts.size() - 1];
 			Util::URLDecode(characterName);
 			cdefID = g_UsedNameDatabase.GetIDByName(characterName);
 		}
@@ -879,14 +881,14 @@ bool UserGrovesHandler::handleAuthenticatedGet(CivetServer *server,
 	/* Handler may access the request info using mg_get_request_info */
 	const struct mg_request_info * req_info = mg_get_request_info(conn);
 
-	std::string ruri;
+	string ruri;
 
 	/* Prepare the URI */
 	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 	ruri = removeEndSlash(ruri);
 
-	std::vector<std::string> pathParts;
+	vector<string> pathParts;
 	Util::Split(ruri, "/", pathParts);
 
 	// Parse parameters
@@ -904,10 +906,10 @@ bool UserGrovesHandler::handleAuthenticatedGet(CivetServer *server,
 			writeStatusPlain(server, conn, 404, "Not found.",
 					"The grove could not be found.");
 		} else {
-			std::vector<int> groveList;
+			vector<int> groveList;
 			g_ZoneDefManager.EnumerateGroveIds(accountId, 0, groveList);
 			Json::Value root;
-			for (std::vector<int>::iterator it = groveList.begin();
+			for (vector<int>::iterator it = groveList.begin();
 					it != groveList.end(); ++it) {
 				int id = *it;
 				ZoneDefInfo *zone = g_ZoneDefManager.GetPointerByID(id);
@@ -937,14 +939,14 @@ bool ZoneHandler::handleAuthenticatedGet(CivetServer *server,
 	/* Handler may access the request info using mg_get_request_info */
 	const struct mg_request_info * req_info = mg_get_request_info(conn);
 
-	std::string ruri;
+	string ruri;
 
 	/* Prepare the URI */
 	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 	ruri = removeEndSlash(ruri);
 
-	std::vector<std::string> pathParts;
+	vector<string> pathParts;
 	Util::Split(ruri, "/", pathParts);
 
 	// Parse parameters
@@ -961,25 +963,21 @@ bool ZoneHandler::handleAuthenticatedGet(CivetServer *server,
 			Json::Value root;
 			zone->WriteToJSON(root);
 
-			std::string dir;
+			fs::path dir;
 			char buf[16];
 			Util::SafeFormat(buf, sizeof(buf), "%d", zone->mID);
 			if (zone->mGrove) {
 				// TODO read from cluster
 			}
 			else {
-				dir = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Scenery"), buf);
-
-				Platform_DirectoryReader dr;
-				dr.SetDirectory(dir);
-				dr.ReadFiles();
+				dir = g_Config.ResolveVariableDataPath() / "Scenery" / buf;
 
 				Json::Value tiles;
 				int xx = 0;
 				int yy = 0;
-				for (std::vector<std::string>::iterator it = dr.fileList.begin();
-						it != dr.fileList.end(); ++it) {
-					if (sscanf((*it).c_str(), "x%03dy%03d.txt", &xx, &yy) == 2) {
+				for(const fs::directory_entry& entry : fs::directory_iterator(dir)) {
+					auto file = entry.path();
+					if (sscanf(file.string().c_str(), "x%03dy%03d.txt", &xx, &yy) == 2) {
 						Json::Value tile;
 						tile["x"] = xx;
 						tile["y"] = yy;
@@ -1007,13 +1005,13 @@ bool SceneryHandler::handleAuthenticatedGet(CivetServer *server,
 	/* Handler may access the request info using mg_get_request_info */
 	const struct mg_request_info * req_info = mg_get_request_info(conn);
 
-	std::string ruri;
+	string ruri;
 
 	/* Prepare the URI */
 	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 
-	std::vector<std::string> pathParts;
+	vector<string> pathParts;
 	Util::Split(ruri, "/", pathParts);
 	if (pathParts.size() < 3)
 		writeStatusPlain(server, conn, 404, "Not found.",
@@ -1059,14 +1057,14 @@ bool ItemHandler::handleAuthenticatedGet(CivetServer *server,
 
 	const struct mg_request_info * req_info = mg_get_request_info(conn);
 
-	std::string ruri;
+	string ruri;
 
 	/* Prepare the URI */
 	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 	ruri = removeEndSlash(ruri);
 
-	std::vector<std::string> pathParts;
+	vector<string> pathParts;
 	Util::Split(ruri, "/", pathParts);
 
 	// Parse parameters
@@ -1079,7 +1077,7 @@ bool ItemHandler::handleAuthenticatedGet(CivetServer *server,
 		ItemDef *itemDef = NULL;
 		int itemID = atoi(pathParts[pathParts.size() - 1].c_str());
 		if (itemID == 0) {
-			std::string itemName = pathParts[pathParts.size() - 1];
+			string itemName = pathParts[pathParts.size() - 1];
 			Util::URLDecode(itemName);
 			itemDef = g_ItemManager.GetSafePointerByExactName(itemName.c_str());
 		}
@@ -1115,14 +1113,14 @@ bool AuctionHandler::handleAuthenticatedGet(CivetServer *server,
 	char buf[256];
 
 	const struct mg_request_info * req_info = mg_get_request_info(conn);
-	std::string ruri;
+	string ruri;
 
 	/* Prepare the URI */
 	CivetServer::urlDecode(req_info->local_uri, strlen(req_info->local_uri), ruri, false);
 	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 	ruri = removeStartSlash(removeEndSlash(ruri));
 
-	std::vector<std::string> pathParts;
+	vector<string> pathParts;
 	Util::Split(ruri, "/", pathParts);
 
 	PageOptions opts;
@@ -1134,18 +1132,18 @@ bool AuctionHandler::handleAuthenticatedGet(CivetServer *server,
 			&& pathParts[pathParts.size() - 1].compare("auction") == 0) {
 
 		AuctionHouseSearch srch;
-		std::vector<AuctionHouseItem> ahis;
+		vector<AuctionHouseItem> ahis;
 		g_AuctionHouseManager.Search(srch, ahis);
-		std::vector<int> auctioneers;
+		vector<int> auctioneers;
 		for(auto it = ahis.begin(); it != ahis.end(); ++it) {
-			if(std::find(auctioneers.begin(), auctioneers.end(), it->mAuctioneer) == auctioneers.end()) {
+			if(find(auctioneers.begin(), auctioneers.end(), it->mAuctioneer) == auctioneers.end()) {
 				auctioneers.push_back(it->mAuctioneer);
 			}
 		}
 
 		Json::StyledWriter writer;
 		Json::Value root(Json::arrayValue);
-		for(std::vector<int>::iterator it = auctioneers.begin(); it != auctioneers.end(); ++it) {
+		for(vector<int>::iterator it = auctioneers.begin(); it != auctioneers.end(); ++it) {
 			CreatureDefinition *def = CreatureDef.GetPointerByCDef(*it);
 			if(def != NULL) {
 				Json::Value c;
@@ -1157,7 +1155,7 @@ bool AuctionHandler::handleAuthenticatedGet(CivetServer *server,
 	} else {
 		int id = atoi(pathParts[pathParts.size() - 1].c_str());
 		if(id == 0) {
-			std::string an = pathParts[pathParts.size() - 1];
+			string an = pathParts[pathParts.size() - 1];
 			Util::URLDecode(an);
 			CreatureDefinition *def = CreatureDef.GetPointerByName(an.c_str());
 			if(def != NULL) {
@@ -1166,7 +1164,7 @@ bool AuctionHandler::handleAuthenticatedGet(CivetServer *server,
 		}
 
 		AuctionHouseSearch srch;
-		std::vector<AuctionHouseItem> ahis;
+		vector<AuctionHouseItem> ahis;
 		g_AuctionHouseManager.Search(srch, ahis);
 
 		for(auto it = ahis.begin(); it != ahis.end(); ++it) {

@@ -5,6 +5,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 extern char Delimit_KeyVal[4];
 extern char Default_Break[2];
@@ -76,7 +80,7 @@ public:
 	int ActiveFile;
 	int LineNumber;  //Current line number, is incremented by functions that read entire lines
 
-	int OpenText(const char *filename);
+	int OpenText(const fs::path &filename);
 
 	void CloseCurrent(void);
 	bool FileOpen(void);

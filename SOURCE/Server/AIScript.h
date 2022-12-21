@@ -1,8 +1,12 @@
 #ifndef AISCRIPT_H
 #define AISCRIPT_H
-#include <list>
 
 #include "ScriptCore.h"
+#include <list>
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 class CreatureInstance;
 class ReportBuffer;
@@ -80,8 +84,8 @@ class AIScriptManager
 public:
 	AIScriptManager();
 	~AIScriptManager();
-	std::list<AIScriptDef> aiDef;
-	std::list<AIScriptPlayer> aiAct;
+	list<AIScriptDef> aiDef;
+	list<AIScriptPlayer> aiAct;
 	int LoadScripts(void);
 	AIScriptDef* GetScriptByName(const char *name);
 	AIScriptPlayer *AddActiveScript(const char *name);

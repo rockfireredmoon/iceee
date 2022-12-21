@@ -10,7 +10,6 @@
 #include <list>
 #include <string>
 
-#include "BroadCast.h"
 #include "ActiveCharacter.h" //For CharacterServerData class definition
 #include "Creature.h"
 #include "Components.h"
@@ -20,6 +19,7 @@
 #include "EssenceShop.h"
 #include "Entities.h"
 #include "DropTable.h"
+#include "Scheduler.h"
 #include "Trade.h"
 #include "ZoneDef.h"
 #include "QuestScript.h"
@@ -27,10 +27,13 @@
 #include "Arena.h"
 #include "PVP.h"
 #include "util/SquirrelObjects.h"
+#include <filesystem>
+
 using namespace std;
+namespace fs = filesystem;
 
 static string KEYPREFIX_WORLD_MARKER = "WorldMarker";
-static std::string LISTPREFIX_WORLD_MARKERS = "WorldMarkers";
+static string LISTPREFIX_WORLD_MARKERS = "WorldMarkers";
 
 class SimulatorThread;
 class InstanceScaleProfile;
@@ -54,15 +57,15 @@ extern const int FACTION_PLAYERHOSTILE;
 
 extern const int PARTY_SHARE_DISTANCE;
 
-typedef std::vector<SceneryEffect>      SceneryEffectList;
-typedef std::pair<int, SceneryEffectList> SceneryEffectPair;
-typedef std::map<int, SceneryEffectList> SceneryEffectMap;
+typedef vector<SceneryEffect>      SceneryEffectList;
+typedef pair<int, SceneryEffectList> SceneryEffectPair;
+typedef map<int, SceneryEffectList> SceneryEffectMap;
 
 
 class WorldMarker: public AbstractEntity {
 public:
-	std::string Name;
-	std::string Comment;
+	string Name;
+	string Comment;
 	float X, Y, Z;
 	int Zone;
 	WorldMarker();
@@ -82,15 +85,15 @@ public:
 	WorldMarkerContainer();
 	~WorldMarkerContainer();
 
-	std::string mFilename;
-	std::vector<WorldMarker> WorldMarkerList;
+	fs::path mFilename;
+	vector<WorldMarker> WorldMarkerList;
 	int mZoneID;
 
 	void Copy(WorldMarkerContainer &other);
 	void Clear(void);
 	bool Save();
 	void Reload();
-	void LoadFromFile(std::string filename, int zoneID);
+	void LoadFromFile(const fs::path &filename, int zoneID);
 	void LoadFromCluster(int zoneID);
 
 };
@@ -123,8 +126,8 @@ public:
 	int CreateMap(void);
 	int SearchMap(const char *primary, int xpos, int ypos);
 	int GetIndexByName(const char *name, const char *type);
-	void GetZone(const char *name, std::vector<MapDefInfo> &defs);
-	int LoadFile(std::string fileName);
+	void GetZone(const char *name, vector<MapDefInfo> &defs);
+	int LoadFile(const fs::path &fileName);
 	void FreeList(void);
 };
 
@@ -187,11 +190,11 @@ public:
 	vector<MapLocationSet> mLocationSet;
 	int AddLocation(int zone, MapLocationDef &data);
 	int ZoneExist(int zone);
-	void GetZone(int zone, std::vector<MapLocationDef> &defs);
+	void GetZone(int zone, vector<MapLocationDef> &defs);
 	int SearchLocation(int zone, int x, int z);
 	const char* GetInternalMapName(int zone, int x, int z);
 	int ResolveItems(void);
-	int LoadFile(std::string filename);
+	int LoadFile(const fs::path &filename);
 };
 
 struct ScaleConfig
@@ -230,7 +233,7 @@ struct PlayerInstancePlacementData
 	PlayerInstancePlacementData();
 	PlayerInstancePlacementData(const PlayerInstancePlacementData *data);
 	void Clear();
-	void SetInstanceScaler(const std::string &name);
+	void SetInstanceScaler(const string &name);
 
 private:
 	int mPartyLeaderDefID;
@@ -239,8 +242,9 @@ private:
 
 };
 
-class ActiveInstance
+class ActiveInstance: public Schedulable
 {
+
 public:
 	ActiveInstance();
 	~ActiveInstance();
@@ -251,9 +255,9 @@ public:
 	int mPlayers;             //Number of players registered into this instance.
 	int mOwnerCreatureDefID;  //This is the DefID of the player who created this instance (actived for Instance-type zones)
 	int mOwnerPartyID;        //If nonzero, this instance (if a dungeon) will be assigned ownership to a party ID to assist in lookups when placing players into dungeons.
-	std::string mOwnerName;   //The owner's display_name.
-	std::string mEnvironment; //overridden environment
-	std::string mTimeOfDay; // overriden time of day
+	string mOwnerName;   //The owner's display_name.
+	string mEnvironment; //overridden environment
+	string mTimeOfDay; // overriden time of day
 	unsigned long mLastHealthUpdate;  //Time of the last health increment.  TODO: OBSOLETE
 	unsigned long mNextCreatureBroadcast;
 	unsigned long mLastMovementUpdate;
@@ -272,9 +276,9 @@ public:
 
 	SceneryEffectMap mSceneryEffects;
 
-	typedef std::map<int, CreatureInstance> CREATURE_MAP;
-	typedef std::pair<int, CreatureInstance> CREATURE_PAIR;
-	typedef std::map<int, CreatureInstance>::iterator CREATURE_IT;
+	typedef map<int, CreatureInstance> CREATURE_MAP;
+	typedef pair<int, CreatureInstance> CREATURE_PAIR;
+	typedef map<int, CreatureInstance>::iterator CREATURE_IT;
 
 	list<CreatureInstance> PlayerList;
 	vector<CreatureInstance*>PlayerListPtr;
@@ -299,7 +303,7 @@ public:
 	InstanceScript::InstanceScriptPlayer *scriptPlayer;
 	InstanceScript::InstanceNutDef nutScriptDef;
 	InstanceScript::InstanceNutPlayer *nutScriptPlayer;
-	//std::list<InstanceScript::ScriptPlayer> mConcurrentInstanceScripts;   DISABLED, NOT FINISHED
+	//list<InstanceScript::ScriptPlayer> mConcurrentInstanceScripts;   DISABLED, NOT FINISHED
 
 	EssenceShopContainer essenceShopList;
 	EssenceShopContainer itemShopList;
@@ -319,7 +323,7 @@ public:
 
 	WorldMarkerContainer worldMarkers;
 
-	std::vector<WeatherState*> mWeather;
+	vector<WeatherState*> mWeather;
 
 
 	CreatureInstance * GetPlayerByID(int id);  //Searches PlayerList for a character ID, return pointer
@@ -328,7 +332,7 @@ public:
 	CreatureInstance * GetPlayerByID(int id, list<CreatureInstance>::iterator &resIterator);  //Optional version that returns a valid iterator to the found object, in case it needs to be deleted 
 	int DeletePlayerByID(int id);               //Delete PlayerList element with character ID
 
-	void Clear();
+	void Shutdown();
 	void InitializeData(void);
 	int SimExist(SimulatorThread *simPtr);
 
@@ -337,7 +341,6 @@ public:
 	int UnloadPlayer(SimulatorThread *callSim);
 	int RemovePlayerByID(int creatureID);
 
-	int ProcessMessage(MessageComponent *msg);
 	void BroadcastMessage(const char *message);
 	int LSendToAllSimulator(const char *buffer, int length, int ignoreIndex);
 	void LSendToLocalSimulator(const char *buffer, int length, int x, int z, int ignoreIndex = -1);
@@ -410,6 +413,7 @@ public:
 	void SidekickDefend(CreatureInstance* host);
 	void SidekickWarp(CreatureInstance *host);
 	void SidekickScatter(CreatureInstance* host);
+	void BroadcastUpdateCreatureDef(CreatureDefinition *cdef, int X, int Z);
 
 	void RemoveDeadCreatures(void);
 	CreatureInstance * inspectCreature(int CreatureID);
@@ -419,10 +423,10 @@ public:
 	void SendLoyaltyLinks(CreatureInstance *instigator, CreatureInstance *target, SceneryObject *spawnPoint);
 	QuestScript::QuestScriptPlayer* GetSimulatorQuestScript(SimulatorThread *simulatorPtr);
 	QuestScript::QuestNutPlayer* GetSimulatorQuestNutScript(SimulatorThread *simulatorPtr);
-	void RunProcessingCycle(void);
-	void UpdateEnvironmentCycle(std::string timeOfDay);
+	void RunScheduledTasks(void);
+	void UpdateEnvironmentCycle(string timeOfDay);
 	bool KillScript();
-	bool RunScript(std::string &errors);
+	bool RunScript(string &errors);
 	void ScriptCallPackageKill(const char *name);
 	void ScriptCallKill(int CreatureDefID, int CreatureID);
 	bool ScriptCallUse(int sourceCreatureID, int usedCreatureID, int usedCreatureDefID, bool defaultIfNoFunction);
@@ -433,12 +437,12 @@ public:
 	void FetchNearbyCreatures(SimulatorThread *simPtr, CreatureInstance *player);
 	void RunObjectInteraction(SimulatorThread *simPtr, int CDef);
 	void ApplyCreatureScale(CreatureInstance *target);
-	std::string GetEnvironment(int x, int y);
-	std::string GetTimeOfDay();
-	void SetTimeOfDay(std::string timeOfDay);
-	void SetEnvironment(std::string environment);
+	string GetEnvironment(int x, int y);
+	string GetTimeOfDay();
+	void SetTimeOfDay(string timeOfDay);
+	void SetEnvironment(string environment);
 	int CountAlive(int creatureDefID);
-	void LoadStaticObjects(std::string filename);
+	void LoadStaticObjects(const fs::path &filename);
 
 	CreatureInstance* GetMatchingSidekick(CreatureInstance *host, int searchID);
 	void SetAllPlayerPVPStatus(int x, int z, int range, bool state);
@@ -459,8 +463,8 @@ public:
 	ActiveInstanceManager();
 	~ActiveInstanceManager();
 
-	std::list<ActiveInstance> instList;
-	std::vector<ActiveInstance*> instListPtr;
+	list<ActiveInstance> instList;
+	vector<ActiveInstance*> instListPtr;
 	unsigned long nextInstanceCheck;
 
 	static const int BASE_INSTANCE_ID = 1000;

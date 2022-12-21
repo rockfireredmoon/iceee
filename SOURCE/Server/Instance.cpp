@@ -2,7 +2,6 @@
 #include "GameConfig.h"
 #include "Debug.h"
 #include "Cluster.h"
-#include "StringUtil.h"
 #include "Random.h"
 #include "util/Log.h"
 
@@ -81,7 +80,7 @@ void WorldMarker::Clear() {
 }
 
 bool WorldMarker::EntityKeys(AbstractEntityReader *reader) {
-	reader->Key(StringUtil::Format("%s:%d", KEYPREFIX_WORLD_MARKER.c_str(), Zone), Name);
+	reader->Key(Util::Format("%s:%d", KEYPREFIX_WORLD_MARKER.c_str(), Zone), Name);
 	return true;
 }
 
@@ -96,7 +95,7 @@ bool WorldMarker::ReadEntity(AbstractEntityReader *reader) {
 }
 
 bool WorldMarker::WriteEntity(AbstractEntityWriter *writer) {
-	writer->Key(StringUtil::Format("%s:%d", KEYPREFIX_WORLD_MARKER.c_str(), Zone), Name);
+	writer->Key(Util::Format("%s:%d", KEYPREFIX_WORLD_MARKER.c_str(), Zone), Name);
 	writer->Value("Comment", Comment);
 	writer->Value("X", X);
 	writer->Value("Y", Y);
@@ -119,7 +118,7 @@ void WorldMarkerContainer::Clear() {
 bool WorldMarkerContainer::Save() {
 	if (mFilename == "") {
 		/* Remove all the existing markers for this zone */
-		std::string markerKey = StringUtil::Format("%s:%d",
+		string markerKey = Util::Format("%s:%d",
 				LISTPREFIX_WORLD_MARKERS.c_str(), mZoneID);
 		STRINGLIST keys = g_ClusterManager.GetList(markerKey);
 		for (auto it = keys.begin(); it != keys.end(); ++it) {
@@ -138,9 +137,9 @@ bool WorldMarkerContainer::Save() {
 		}
 	} else {
 
-		std::string dir = Platform::Dirname(mFilename);
-		if (!Platform::DirExists(dir)) {
-			Platform::MakeDirectory(dir);
+		auto dir = mFilename.parent_path();
+		if (!fs::exists(dir)) {
+			fs::create_directories(dir);
 		}
 
 		g_Logs.data->info("Saving world markers to %v.", mFilename.c_str());
@@ -176,7 +175,7 @@ void WorldMarkerContainer::Reload() {
 	if (mFilename == "") {
 		/* Load from cluster - Grove zone */
 		STRINGLIST markers = g_ClusterManager.GetList(
-				StringUtil::Format("%s:%d", LISTPREFIX_WORLD_MARKERS.c_str(),
+				Util::Format("%s:%d", LISTPREFIX_WORLD_MARKERS.c_str(),
 						mZoneID));
 		for (auto it = markers.begin(); it != markers.end(); ++it) {
 			WorldMarker m;
@@ -191,7 +190,7 @@ void WorldMarkerContainer::Reload() {
 	} else {
 		/* Load from file - Official zone */
 		FileReader lfr;
-		if (lfr.OpenText(mFilename.c_str()) != Err_OK) {
+		if (lfr.OpenText(mFilename) != Err_OK) {
 			g_Logs.data->error("WorldMarker file [%v] not found.",
 					mFilename.c_str());
 			return;
@@ -247,7 +246,7 @@ void WorldMarkerContainer::Reload() {
 	}
 }
 
-void WorldMarkerContainer::LoadFromFile(std::string filename, int zoneID) {
+void WorldMarkerContainer::LoadFromFile(const fs::path &filename, int zoneID) {
 	mZoneID = zoneID;
 	mFilename = filename;
 	Reload();
@@ -346,15 +345,15 @@ int MapDefContainer::GetIndexByName(const char *name, const char *type) {
 }
 
 void MapDefContainer::GetZone(const char *primary,
-		std::vector<MapDefInfo> &defs) {
+		vector<MapDefInfo> &defs) {
 	for (size_t a = 0; a < mMapList.size(); a++)
 		if (mMapList[a].Primary.compare(primary) == 0)
 			defs.push_back(mMapList[a]);
 }
 
-int MapDefContainer::LoadFile(std::string fileName) {
+int MapDefContainer::LoadFile(const fs::path &fileName) {
 	FileReader lfr;
-	if (lfr.OpenText(fileName.c_str()) != Err_OK) {
+	if (lfr.OpenText(fileName) != Err_OK) {
 		g_Logs.data->error("Error: Could not open file %v", fileName);
 		return -1;
 	}
@@ -490,11 +489,11 @@ int MapLocationHandler::AddLocation(int zone, MapLocationDef &data) {
 	return found;
 }
 
-void MapLocationHandler::GetZone(int zone, std::vector<MapLocationDef> &defs) {
+void MapLocationHandler::GetZone(int zone, vector<MapLocationDef> &defs) {
 	size_t a;
 	for (a = 0; a < mLocationSet.size(); a++) {
 		if (mLocationSet[a].mZone == zone) {
-			for (std::vector<MapLocationDef>::iterator it =
+			for (vector<MapLocationDef>::iterator it =
 					mLocationSet[a].mLocationList.begin();
 					it != mLocationSet[a].mLocationList.end(); ++it) {
 				defs.push_back(*it);
@@ -557,9 +556,9 @@ int MapLocationHandler::ResolveItems(void) {
 	return 0;
 }
 
-int MapLocationHandler::LoadFile(std::string filename) {
+int MapLocationHandler::LoadFile(const fs::path &filename) {
 	FileReader lfr;
-	if (lfr.OpenText(filename.c_str()) != Err_OK) {
+	if (lfr.OpenText(filename) != Err_OK) {
 		g_Logs.data->error("Could not open file [%v]", filename);
 		return -1;
 	}
@@ -615,18 +614,10 @@ ActiveInstance::ActiveInstance() {
 	nutScriptPlayer = NULL;
 	scriptPlayer = NULL;
 	pvpGame = NULL;
-	Clear();
-}
-
-ActiveInstance::~ActiveInstance() {
-	Clear();
-}
-
-void ActiveInstance::Clear(void) {
-	g_WeatherManager.Deregister(&mWeather);
+	mZoneDefPtr = NULL;
+	scaleProfile = NULL;
 	mZone = 0;
 	mMode = PVP::GameMode::PVE_ONLY;
-	mZoneDefPtr = NULL;
 	mInstanceID = 0;
 	mPlayers = 0;
 	mOwnerCreatureDefID = 0;
@@ -636,18 +627,36 @@ void ActiveInstance::Clear(void) {
 	mLastMovementUpdate = 0;
 	mNextTargetUpdate = 0;
 	mNextUpdateTime = 0;
+	mNextEffectTag = 0;
 	mNextCreatureLocalScan = 0;
 	mNextCreatureDeleteScan = 0;
 	mExpireTime = 0;
 	mTimeOfDay = "";
+	mEnvironment = "";
+	mDropRateBonusMultiplier = 1.0F;
+	mKillCount = 0;
+}
 
+ActiveInstance::~ActiveInstance() {
+}
+
+void ActiveInstance::Shutdown(void) {
+	g_WeatherManager.Deregister(&mWeather);
+	this->Schedulable::Shutdown();
+	mZoneDefPtr = NULL;
+	scaleProfile = NULL;
+
+	nutScriptPlayer = NULL;
+	scriptPlayer = NULL;
+	pvpGame = NULL;
+	mZoneDefPtr = NULL;
+	scaleProfile = NULL;
 	mSceneryEffects.clear();
 	PlayerList.clear();
 	PlayerListPtr.clear();
 	mNextEffectTag = 0;
 	uniqueSpawnManager.Clear();
 	worldMarkers.Clear();
-	mEnvironment = "";
 
 	StopPVP();
 
@@ -655,7 +664,7 @@ void ActiveInstance::Clear(void) {
 
 #ifdef CREATUREQAV
 	for (a = 0; a < NPCListPtr.size(); a++) {
-		NPCListPtr[a]->UnloadResources();
+		NPCListPtr[a]->Shutdown();
 		if (pendingOperations.Debug_HasCreature(NPCListPtr[a]) == true) {
 			g_Logs.server->error(
 					"Creature not removed from access list: %v (%v)",
@@ -666,11 +675,11 @@ void ActiveInstance::Clear(void) {
 #else
 	ActiveInstance::CREATURE_IT it;
 	for(it = NPCList.begin(); it != NPCList.end(); ++it)
-	it->second.UnloadResources();
+	it->second.Shutdown();
 #endif
 
 	for (a = 0; a < SidekickListPtr.size(); a++) {
-		SidekickListPtr[a]->UnloadResources();
+		SidekickListPtr[a]->Shutdown();
 		if (pendingOperations.Debug_HasCreature(SidekickListPtr[a]) == true)
 			g_Logs.server->error(
 					"Creature not removed from access list: %v (%v)",
@@ -690,10 +699,6 @@ void ActiveInstance::Clear(void) {
 	lootsys.Clear();
 	tradesys.Clear();
 	spawnsys.Clear();
-
-	scaleProfile = NULL;
-	mDropRateBonusMultiplier = 1.0F;
-	mKillCount = 0;
 
 	essenceShopList.Clear();
 	itemShopList.Clear();
@@ -846,7 +851,7 @@ CreatureInstance * ActiveInstance::LoadPlayer(CreatureInstance *source,
 	//activityManager.UpdatePlayer(source->CreatureID, tx, tz);
 
 	if (nutScriptPlayer != NULL) {
-		std::vector<ScriptCore::ScriptParam> p;
+		vector<ScriptCore::ScriptParam> p;
 		p.push_back(newItem.CreatureID);
 		nutScriptPlayer->JumpToLabel("on_loaded", p);
 		nutScriptPlayer->PlayerMovement(&newItem);
@@ -857,7 +862,7 @@ CreatureInstance * ActiveInstance::LoadPlayer(CreatureInstance *source,
 
 int ActiveInstance::UnregisterPlayer(SimulatorThread *callSim) {
 	if (nutScriptPlayer != NULL && callSim->creatureInst != NULL) {
-		std::vector<ScriptCore::ScriptParam> p;
+		vector<ScriptCore::ScriptParam> p;
 		p.push_back(callSim->creatureInst->CreatureID);
 		// Don't queue this, it's like the script will want to clean up before actual removal
 		nutScriptPlayer->RunFunction("on_unregister", p, true);
@@ -865,7 +870,7 @@ int ActiveInstance::UnregisterPlayer(SimulatorThread *callSim) {
 			for (unsigned int i = 0; i < questNutScriptList.size(); i++) {
 				QuestScript::QuestNutPlayer * p = questNutScriptList[i];
 				p->RunFunction("on_unregister",
-						std::vector<ScriptCore::ScriptParam>(), true);
+						vector<ScriptCore::ScriptParam>(), true);
 			}
 		}
 	}
@@ -881,7 +886,7 @@ int ActiveInstance::UnloadPlayer(SimulatorThread *callSim) {
 	}
 
 	if (nutScriptPlayer != NULL && callSim->creatureInst != NULL) {
-		std::vector<ScriptCore::ScriptParam> p;
+		vector<ScriptCore::ScriptParam> p;
 		p.push_back(callSim->creatureInst->CreatureID);
 		// Don't queue this, it's like the script will want to clean up before actual removal
 		nutScriptPlayer->RunFunction("on_unload", p, true);
@@ -908,7 +913,7 @@ int ActiveInstance::UnloadPlayer(SimulatorThread *callSim) {
 	AdjustPlayerCount(-1);
 
 	if (nutScriptPlayer != NULL && callSim->creatureInst != NULL) {
-		std::vector<ScriptCore::ScriptParam> p;
+		vector<ScriptCore::ScriptParam> p;
 		p.push_back(callSim->creatureInst->CreatureID);
 		// Don't queue this, it's like the script will want to clean up before actual removal
 		nutScriptPlayer->RunFunction("on_unloaded", p, true);
@@ -922,7 +927,7 @@ int ActiveInstance::RemovePlayerByID(int creatureID) {
 	for (it = PlayerList.begin(); it != PlayerList.end(); ++it) {
 		if (it->CreatureID == creatureID) {
 			if (nutScriptPlayer != NULL) {
-				std::vector<ScriptCore::ScriptParam> p;
+				vector<ScriptCore::ScriptParam> p;
 				p.push_back(creatureID);
 				// Don't queue this, it's like the script will want to clean up before actual removal
 				nutScriptPlayer->RunFunction("on_remove", p, true);
@@ -937,7 +942,7 @@ int ActiveInstance::RemovePlayerByID(int creatureID) {
 			RebuildPlayerList();
 
 			if (nutScriptPlayer != NULL) {
-				std::vector<ScriptCore::ScriptParam> p;
+				vector<ScriptCore::ScriptParam> p;
 				p.push_back(creatureID);
 				// Don't queue this, it's like the script will want to clean up before actual removal
 				nutScriptPlayer->RunFunction("on_removed", p, true);
@@ -984,7 +989,7 @@ int ActiveInstance::RemovePlayerByID(int creatureID) {
  }
  */
 
-void ActiveInstance::SetEnvironment(std::string environment) {
+void ActiveInstance::SetEnvironment(string environment) {
 	if (environment.compare(mEnvironment) != 0) {
 		mEnvironment = environment;
 		int wpos = PrepExt_SendEnvironmentUpdateMsg(GSendBuf, this,
@@ -995,14 +1000,14 @@ void ActiveInstance::SetEnvironment(std::string environment) {
 	}
 }
 
-std::string ActiveInstance::GetEnvironment(int x, int y) {
+string ActiveInstance::GetEnvironment(int x, int y) {
 	if (mEnvironment.length() == 0) {
 		return mZoneDefPtr->GetTileEnvironment(x, y);
 	}
 	return mEnvironment;
 }
 
-void ActiveInstance::SetTimeOfDay(std::string timeOfDay) {
+void ActiveInstance::SetTimeOfDay(string timeOfDay) {
 	if (timeOfDay.compare(mTimeOfDay) != 0) {
 		mTimeOfDay = timeOfDay;
 		int wpos = PrepExt_SetTimeOfDay(GSendBuf, GetTimeOfDay().c_str());
@@ -1011,222 +1016,15 @@ void ActiveInstance::SetTimeOfDay(std::string timeOfDay) {
 	}
 }
 
-std::string ActiveInstance::GetTimeOfDay() {
+void ActiveInstance::BroadcastUpdateCreatureDef(CreatureDefinition *cdef, int X, int Z) {
+	LSendToLocalSimulator(GSendBuf, PrepExt_CreatureDef(GSendBuf, cdef), X, Z);
+}
+
+string ActiveInstance::GetTimeOfDay() {
 	if (mTimeOfDay.length() != 0)
 		return mTimeOfDay;
 
 	return mZoneDefPtr->GetTimeOfDay();
-}
-
-int ActiveInstance::ProcessMessage(MessageComponent *msg) {
-	BEGINTRY
-	{
-
-		int size;
-		size = 0;
-		int r;  //Generic result for some function calls
-		switch (msg->message) {
-		case BCM_CreatureDefRequest:
-			SEND_DEBUG_MSG_ONE("BEGIN BCM_CreatureDefRequest", msg->simCall);
-			size = PrepExt_CreatureDef(GSendBuf,
-					(CreatureDefinition*) msg->param1);
-			LSendToOneSimulator(GSendBuf, size, msg->SimulatorID);
-			SEND_DEBUG_MSG_ONE("END BCM_CreatureDefRequest", msg->simCall);
-			break;
-
-		case BCM_UpdateCreatureDef:
-			SEND_DEBUG_MSG_ALL("BEGIN BCM_UpdateCreatureDef", -1);
-			size = PrepExt_CreatureDef(GSendBuf,
-					(CreatureDefinition*) msg->param1);
-			//LSendToAllSimulator(GSendBuf, size, -1);
-			LSendToLocalSimulator(GSendBuf, size, msg->x, msg->z);
-			SEND_DEBUG_MSG_ALL("END BCM_UpdateCreatureDef", -1);
-			break;
-		case BCM_UpdateCreatureInstance:
-			VERIFYCINST((CreatureInstance*)msg->param1);
-			SEND_DEBUG_MSG_ALL("BEGIN BCM_UpdateCreatureInstance", -1);
-			size = PrepExt_CreatureInstance(GSendBuf,
-					(CreatureInstance*) msg->param1);
-			//LSendToAllSimulator(GSendBuf, size, -1);
-			LSendToLocalSimulator(GSendBuf, size, msg->x, msg->z);
-			SEND_DEBUG_MSG_ALL("END BCM_UpdateCreatureInstance", -1);
-			break;
-		case BCM_UpdateVelocity:
-			VERIFYCINST((CreatureInstance*)msg->param1);
-			SEND_DEBUG_MSG_ALL("BEGIN BCM_UpdateVelocity", msg->SimulatorID);
-			size = PrepExt_UpdateVelocity(GSendBuf,
-					(CreatureInstance*) msg->param1);
-			//LSendToAllSimulator(GSendBuf, size, msg->SimulatorID);
-			LSendToLocalSimulator(GSendBuf, size, msg->x, msg->z,
-					msg->SimulatorID);
-			SEND_DEBUG_MSG_ALL("END BCM_UpdateVelocity", msg->SimulatorID);
-			break;
-		case BCM_UpdatePosition:
-			VERIFYCINST((CreatureInstance*)msg->param1);
-			SEND_DEBUG_MSG_ALL("BEGIN BCM_UpdatePosition", -1);
-			size = PrepExt_CreaturePos(GSendBuf,
-					(CreatureInstance*) msg->param1);
-			size += PrepExt_GeneralMoveUpdate(&GSendBuf[size],
-					(CreatureInstance*) msg->param1);
-			//LSendToAllSimulator(GSendBuf, size, -1);
-			LSendToLocalSimulator(GSendBuf, size, msg->x, msg->z);
-			SEND_DEBUG_MSG_ALL("END BCM_UpdatePosition", -1);
-			break;
-		case BCM_UpdateAppearance:
-			VERIFYCINST((CreatureInstance*)msg->param1);
-			size = PrepExt_UpdateAppearance(GSendBuf,
-					(CreatureInstance*) msg->param1);
-			//LSendToAllSimulator(GSendBuf, size, -1);
-			LSendToLocalSimulator(GSendBuf, size, msg->x, msg->z);
-			break;
-		case BCM_UpdatePosInc:
-			VERIFYCINST((CreatureInstance*)msg->param1);
-			SEND_DEBUG_MSG_ALL("BEGIN BCM_UpdatePosInc", -1);
-			//size = PrepExt_UpdatePosInc(GSendBuf, (CreatureInstance*) msg->param1);
-			// TODO: Change the name of this message if it works.
-			size = PrepExt_GeneralMoveUpdate(GSendBuf,
-					(CreatureInstance*) msg->param1);
-			//LSendToAllSimulator(GSendBuf, size, -1);
-			LSendToLocalSimulator(GSendBuf, size, msg->x, msg->z);
-			SEND_DEBUG_MSG_ALL("END BCM_UpdatePosInc", -1);
-			break;
-		case BCM_UpdateElevation:
-			VERIFYCINST((CreatureInstance*)msg->param1);
-			SEND_DEBUG_MSG_ALL("BEGIN BCM_UpdateElevation", msg->SimulatorID);
-			size = PrepExt_UpdateElevation(GSendBuf,
-					(CreatureInstance*) msg->param1);
-			//LSendToAllSimulator(GSendBuf, size, msg->SimulatorID);
-			LSendToLocalSimulator(GSendBuf, size, msg->x, msg->z,
-					msg->SimulatorID);
-			SEND_DEBUG_MSG_ALL("END BCM_UpdateElevation", msg->SimulatorID);
-			break;
-		case BCM_AbilityRequest:
-			VERIFYCINST((CreatureInstance*)msg->param1);
-			//ActivateAbility(msg->param1, (short)msg->param2, &SimChar[msg->simCall].csd);
-			r = ActivateAbility((CreatureInstance*) msg->param1,
-					(short) msg->param2, EventType::onRequest, 0);
-			if (r > 0 && msg->SimulatorID >= 0) {
-				SimulatorThread *simPtr = GetSimulatorByID(msg->SimulatorID);
-				if (simPtr != NULL)
-					simPtr->SendAbilityErrorMessage(r & 0xFF);
-			}
-			break;
-		case BCM_AbilityActivate2:
-			r = ActivateAbility((CreatureInstance*) msg->param1,
-					(short) msg->param2, EventType::onActivate, 0);
-			if (r == 0)
-				((CreatureInstance*) (msg->param1))->ab[0].Clear(
-						"BCM_AbilityActivate2");
-
-			break;
-		case BCM_ActorJump:
-			size = PrepExt_ActorJump(GSendBuf, msg->param1);
-			//LSendToAllSimulator(GSendBuf, size, msg->SimulatorID);
-			LSendToLocalSimulator(GSendBuf, size, msg->x, msg->z,
-					msg->SimulatorID);
-			break;
-		case BCM_RemoveCreature:
-			size = PrepExt_RemoveCreature(GSendBuf, msg->param1);
-			//LSendToAllSimulator(GSendBuf, size, msg->SimulatorID);
-			LSendToLocalSimulator(GSendBuf, size, msg->x, msg->z,
-					msg->SimulatorID);
-			break;
-		case BCM_UpdateFullPosition:
-			VERIFYCINST((CreatureInstance*)msg->param1);
-			SEND_DEBUG_MSG_ALL("BEGIN BCM_UpdateFullPosition",
-					msg->SimulatorID);
-			size = PrepExt_UpdateFullPosition(GSendBuf,
-					(CreatureInstance*) msg->param1);
-			//LSendToAllSimulator(GSendBuf, size, msg->SimulatorID);
-			LSendToLocalSimulator(GSendBuf, size, msg->x, msg->z,
-					msg->SimulatorID);
-			SEND_DEBUG_MSG_ALL("END BCM_UpdateFullPosition", msg->SimulatorID);
-			break;
-		case BCM_SpawnCreateCreature:
-			SpawnCreate((CreatureInstance*) msg->param1, msg->param2);
-			break;
-		case BCM_CreatureDelete:
-			CreatureDelete(msg->param1);
-			break;
-			/*
-			 case BCM_SidekickAdd:
-			 CreateSidekick((CreatureInstance*)msg->param1, msg->param2);
-			 break;
-			 case BCM_SidekickRemoveOne:
-			 SidekickRemoveOne((CreatureInstance*)msg->param1);
-			 break;
-			 case BCM_SidekickRemoveAll:
-			 SidekickRemoveAll((CreatureInstance*)msg->param1);
-			 break;
-			 */
-		case BCM_SidekickAttack:
-			SidekickAttack((CreatureInstance*) msg->param1);
-			break;
-		case BCM_SidekickDefend:
-			SidekickDefend((CreatureInstance*) msg->param1);
-			break;
-		case BCM_SidekickCall:
-			SidekickCall((CreatureInstance*) msg->param1);
-			break;
-		case BCM_SidekickScatter:
-			SidekickScatter((CreatureInstance*) msg->param1);
-			break;
-		case BCM_SidekickWarp:
-			SidekickWarp((CreatureInstance*) msg->param1);
-			break;
-		case BCM_PlayerLogIn: {
-			sprintf(GAuxBuf, "%s has logged in.",
-					((CharacterData*) msg->param1)->cdef.css.display_name);
-			ChatMessage cm(GAuxBuf);
-			g_ChatManager.LogChatMessage(cm);
-			size = PrepExt_SendInfoMessage(GSendBuf, GAuxBuf, INFOMSG_INFO);
-			SendToAllSimulator(GSendBuf, size, msg->SimulatorID);
-			break;
-		}
-		case BCM_PlayerLogOut: {
-			sprintf(GAuxBuf, "%s has disconnected.",
-					((CharacterData*) msg->param1)->cdef.css.display_name);
-			ChatMessage cm(GAuxBuf);
-			g_ChatManager.LogChatMessage(cm);
-			size = PrepExt_SendInfoMessage(GSendBuf, GAuxBuf, INFOMSG_INFO);
-			SendToAllSimulator(GSendBuf, size, msg->param2);
-			break;
-		}
-		case BCM_PlayerFriendLogState:
-			size = PrepExt_FriendsLogStatus(GSendBuf,
-					((SimulatorThread*) msg->param1)->pld.charPtr, msg->param2);
-			SendToFriendSimulator(GSendBuf, size,
-					((SimulatorThread*) msg->param1)->pld.charPtr->cdef.CreatureDefID);
-			break;
-		case BCM_RunObjectInteraction:
-			RunObjectInteraction((SimulatorThread*) msg->param1, msg->param2);
-			break;
-		case BCM_RunTranslocate:
-			((SimulatorThread*) (msg->param1))->RunTranslocate();
-			break;
-		case BCM_RunPortalRequest:
-			((SimulatorThread*) (msg->param1))->RunPortalRequest();
-			break;
-		}
-
-	} //End try
-	BEGINCATCH
-	{
-		char buffer[512];
-		int wpos = 0;
-		wpos += sprintf(&buffer[wpos],
-				"Exception in ActiveInstance::ProcessMessage()\r\n");
-		wpos += sprintf(&buffer[wpos], "  Instance ID: %d\r\n", mInstanceID);
-		wpos += sprintf(&buffer[wpos], "Message Properties:\r\n");
-		wpos += sprintf(&buffer[wpos], "  ID: %d\r\n", msg->message);
-		wpos += sprintf(&buffer[wpos], "  Inst: %p\r\n", msg->actInst);
-		wpos += sprintf(&buffer[wpos], "  Param1: %ld\r\n", msg->param1);
-		wpos += sprintf(&buffer[wpos], "  Param2: %ld\r\n", msg->param2);
-		wpos += sprintf(&buffer[wpos], "  SimCall: %d\r\n", msg->SimulatorID);
-		POPUP_MESSAGE(buffer, "Critical Error");
-	}
-
-	return 0;
 }
 
 void ActiveInstance::BroadcastMessage(const char *message) {
@@ -1428,7 +1226,7 @@ void ActiveInstance::RemoveDeadCreatures(void) {
 
 	mNextCreatureDeleteScan = g_ServerTime + CREATURE_DELETE_RECHECK;
 
-	std::vector<int> deadList;
+	vector<int> deadList;
 #ifdef CREATUREQAV
 	for (size_t i = 0; i < NPCListPtr.size(); i++) {
 		if (NPCListPtr[i]->serverFlags & ServerFlags::TriggerDelete) {
@@ -2001,7 +1799,7 @@ CreatureInstance* ActiveInstance::SpawnCreate(CreatureInstance * sourceActor,
 	RebuildNPCList();
 
 	if (nutScriptPlayer != NULL) {
-		std::vector<ScriptCore::ScriptParam> parms;
+		vector<ScriptCore::ScriptParam> parms;
 		parms.push_back(ScriptCore::ScriptParam(retPtr->CreatureDefID));
 		parms.push_back(ScriptCore::ScriptParam(retPtr->CreatureID));
 		nutScriptPlayer->JumpToLabel("on_spawn", parms);
@@ -2106,7 +1904,7 @@ CreatureInstance* ActiveInstance::SpawnGeneric(int CDefID, int x, int y, int z,
 	spawnsys.genericSpawns.push_back(retPtr->CreatureID);
 
 	if (nutScriptPlayer != NULL) {
-		std::vector<ScriptCore::ScriptParam> parms;
+		vector<ScriptCore::ScriptParam> parms;
 		parms.push_back(ScriptCore::ScriptParam(retPtr->CreatureDefID));
 		parms.push_back(ScriptCore::ScriptParam(retPtr->CreatureID));
 		nutScriptPlayer->JumpToLabel("on_spawn", parms);
@@ -2189,7 +1987,7 @@ CreatureInstance* ActiveInstance::SpawnAtProp(int CDefID, int PropID,
 	LSendToLocalSimulator(GSendBuf, size, x, z);
 
 	if (nutScriptPlayer != NULL) {
-		std::vector<ScriptCore::ScriptParam> parms;
+		vector<ScriptCore::ScriptParam> parms;
 		parms.push_back(ScriptCore::ScriptParam(add->CreatureDefID));
 		parms.push_back(ScriptCore::ScriptParam(add->CreatureID));
 		nutScriptPlayer->JumpToLabel("on_spawn", parms);
@@ -2200,7 +1998,7 @@ CreatureInstance* ActiveInstance::SpawnAtProp(int CDefID, int PropID,
 
 void ActiveInstance::EraseAllCreatureReference(CreatureInstance *object) {
 
-	object->UnloadResources();
+	object->Shutdown();
 	pendingOperations.UpdateList_Remove(object);
 	pendingOperations.DeathList_Remove(object);
 	EraseIndividualReference(object);
@@ -2215,9 +2013,9 @@ void ActiveInstance::EraseAllCreatureReference(CreatureInstance *object) {
 
 void ActiveInstance::RunDeath(CreatureInstance *object) {
 	if (nutScriptPlayer != NULL) {
-		std::vector<CreatureInstance*>::iterator it = std::find(
+		vector<CreatureInstance*>::iterator it = find(
 				PlayerListPtr.begin(), PlayerListPtr.end(), object);
-		std::vector<ScriptCore::ScriptParam> p;
+		vector<ScriptCore::ScriptParam> p;
 		p.push_back(object->CreatureID);
 		if (it != PlayerListPtr.end()) {
 			nutScriptPlayer->JumpToLabel("on_player_death", p);
@@ -2230,11 +2028,11 @@ void ActiveInstance::RunDeath(CreatureInstance *object) {
 
 			if ((object->serverFlags & ServerFlags::IsSidekick)
 					&& object->AnchorObject != NULL) {
-				std::list<QuestScript::QuestNutPlayer*> l =
+				list<QuestScript::QuestNutPlayer*> l =
 						g_QuestNutManager.GetActiveScripts(object->CreatureID);
-				std::vector<ScriptCore::ScriptParam> p;
+				vector<ScriptCore::ScriptParam> p;
 				p.push_back(object->CreatureID);
-				for (std::list<QuestScript::QuestNutPlayer*>::iterator it =
+				for (list<QuestScript::QuestNutPlayer*>::iterator it =
 						l.begin(); it != l.end(); ++it) {
 					(*it)->JumpToLabel("on_sidekick_death", p);
 				}
@@ -2287,7 +2085,7 @@ int ActiveInstance::EraseIndividualReference(CreatureInstance *object) {
 int ActiveInstance::RemoveNPCInstance(int CreatureID) {
 	/* TODO floods events
 	 if(nutScriptPlayer != NULL && nutScriptPlayer->mActive) {
-	 std::vector<ScriptCore::ScriptParam> parms;
+	 vector<ScriptCore::ScriptParam> parms;
 	 parms.push_back(ScriptCore::ScriptParam(CreatureID));
 	 nutScriptPlayer->JumpToLabel("on_despawn", parms);
 	 }
@@ -2361,7 +2159,7 @@ void ActiveInstanceManager::Clear(void) {
 	nextInstanceCheck = 0;
 
 	for (size_t i = 0; i < instListPtr.size(); i++)
-		instListPtr[i]->Clear();
+		instListPtr[i]->Shutdown();
 
 	instList.clear();
 	instListPtr.clear();
@@ -2493,7 +2291,7 @@ void ActiveInstance::InitializeData(void) {
 			g_Logs.server->info("Loaded script for grove zone %v from cluster", mZoneDefPtr->mID);
 			nutScriptPlayer = new InstanceScript::InstanceNutPlayer();
 			nutScriptPlayer->SetInstancePointer(this);
-			std::string errors;
+			string errors;
 			nutScriptPlayer->Initialize(&nutScriptDef, errors);
 			if (errors.length() > 0)
 				g_Logs.server->error("Failed to compile. %v", errors.c_str());
@@ -2503,13 +2301,13 @@ void ActiveInstance::InitializeData(void) {
 		}
 	}
 	else {
-		std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(
+		auto path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(
 			mZoneDefPtr->mID, false);
 		if (Util::HasEnding(path, ".nut")) {
 			nutScriptDef.LoadFromLocalFile(path.c_str());
 			nutScriptPlayer = new InstanceScript::InstanceNutPlayer();
 			nutScriptPlayer->SetInstancePointer(this);
-			std::string errors;
+			string errors;
 			nutScriptPlayer->Initialize(&nutScriptDef, errors);
 			if (errors.length() > 0)
 				g_Logs.server->error("Failed to compile. %v", errors.c_str());
@@ -2534,38 +2332,26 @@ void ActiveInstance::InitializeData(void) {
 	char buf[64];
 	Util::SafeFormat(buf, sizeof(buf), "%d", mZone);
 
-	std::string p;
+	fs::path p;
 	if (!mZoneDefPtr->IsPlayerGrove()) {
 		/* Only non-grove zones can have shops and static spawns */
-		p = Platform::JoinPath(
-				Platform::JoinPath(
-						Platform::JoinPath(g_Config.ResolveVariableDataPath(),
-								"Instance"), buf), "EssenceShop.txt");
+		p = g_Config.ResolveVariableDataPath() / "Instance" / buf / "EssenceShop.txt";
 		essenceShopList.LoadFromFile(p);
 		if (essenceShopList.EssenceShopList.size() > 0)
 			g_Logs.data->info("Loaded %v essence shops.",
 					essenceShopList.EssenceShopList.size());
 
-		p = Platform::JoinPath(
-				Platform::JoinPath(
-						Platform::JoinPath(g_Config.ResolveVariableDataPath(),
-								"Instance"), buf), "Shop.txt");
+		p = g_Config.ResolveVariableDataPath() / "Instance" / buf / "Shop.txt";
 		itemShopList.LoadFromFile(p);
 		if (itemShopList.EssenceShopList.size() > 0)
 			g_Logs.data->info("Loaded %v item shops.",
 					itemShopList.EssenceShopList.size());
 
-		p = Platform::JoinPath(
-				Platform::JoinPath(
-						Platform::JoinPath(g_Config.ResolveVariableDataPath(),
-								"Instance"), buf), "Static.txt");
+		p = g_Config.ResolveVariableDataPath() / "Instance" / buf / "Static.txt";
 		LoadStaticObjects(p);
 
 		//World markers (for devs)
-		p = Platform::JoinPath(
-				Platform::JoinPath(
-						Platform::JoinPath(g_Config.ResolveVariableDataPath(),
-								"Instance"), buf), "WorldMarkers.txt");
+		p = g_Config.ResolveVariableDataPath() / "Instance" / buf / "WorldMarkers.txt";
 		worldMarkers.LoadFromFile(p, mZone);
 	} else {
 		worldMarkers.LoadFromCluster(mZone);
@@ -3087,7 +2873,7 @@ int ActiveInstance::AddSceneryEffect(char *outbuf, SceneryEffect *effect) {
 SceneryEffect* ActiveInstance::RemoveSceneryEffect(int PropID, int tag) {
 	SceneryEffectMap::iterator it = mSceneryEffects.find(PropID);
 	if (it != mSceneryEffects.end()) {
-		for (std::vector<SceneryEffect>::size_type i = 0;
+		for (vector<SceneryEffect>::size_type i = 0;
 				i != it->second.size(); i++) {
 			SceneryEffect *sceneryEffect = &it->second[i];
 			if (sceneryEffect->tag == tag) {
@@ -3198,7 +2984,7 @@ CreatureInstance * ActiveInstance::inspectCreature(int CreatureID) {
 
 void ActiveInstance::RunScripts(void) {
 	if (questScriptList.empty() == false) {
-		std::list<QuestScript::QuestScriptPlayer>::iterator it;
+		list<QuestScript::QuestScriptPlayer>::iterator it;
 		it = questScriptList.begin();
 		while (it != questScriptList.end()) {
 			if (it->mExecuting == true) {
@@ -3226,7 +3012,7 @@ void ActiveInstance::RunScripts(void) {
 	/* DISABLED, NOT FINISHED
 	 if(mConcurrentInstanceScripts.empty() == false)
 	 {
-	 std::list<InstanceScript::ScriptPlayer>::iterator it;
+	 list<InstanceScript::ScriptPlayer>::iterator it;
 	 it = mConcurrentInstanceScripts.begin();
 	 while(it != mConcurrentInstanceScripts.end())
 	 {
@@ -3248,7 +3034,7 @@ void ActiveInstance::RunScripts(void) {
  InstanceScript::ScriptPlayer newScript;
  mConcurrentInstanceScripts.push_back(newScript);
 
- std::list<InstanceScript::ScriptPlayer>::iterator it;
+ list<InstanceScript::ScriptPlayer>::iterator it;
  it = mConcurrentInstanceScripts.back();
  if(it->active == false)
  {
@@ -3306,8 +3092,8 @@ void ActiveInstance::SendLoyaltyLinks(CreatureInstance *instigator,
 	if (spawnPoint == NULL)
 		return;
 
-	std::vector<int> openList;  //Prop IDs that need to be checked.
-	std::vector<int> propLinks; //The links returned by a prop.
+	vector<int> openList;  //Prop IDs that need to be checked.
+	vector<int> propLinks; //The links returned by a prop.
 
 	//Add the first object to the list so we can begin search.  The prop will be searched
 	//for any props it is linked to.  Those linked props will be added to the open list (if
@@ -3340,7 +3126,7 @@ void ActiveInstance::SendLoyaltyLinks(CreatureInstance *instigator,
 		return;
 
 	//Now resolve all props in the open list and make sure they're SpawnPoint props.
-	std::vector<int> creatureIDs;
+	vector<int> creatureIDs;
 	for (size_t i = 0; i < openList.size(); i++) {
 		SceneryObject *so = g_SceneryManager.GlobalGetPropPtr(mZone,
 				openList[i], NULL);
@@ -3377,7 +3163,7 @@ void ActiveInstance::SendLoyaltyLinks(CreatureInstance *instigator,
 
 QuestScript::QuestNutPlayer* ActiveInstance::GetSimulatorQuestNutScript(
 		SimulatorThread *simulatorPtr) {
-	std::vector<QuestScript::QuestNutPlayer*>::iterator it;
+	vector<QuestScript::QuestNutPlayer*>::iterator it;
 	for (it = questNutScriptList.begin(); it != questNutScriptList.end();
 			++it) {
 		QuestScript::QuestNutPlayer* q = *it;
@@ -3389,7 +3175,7 @@ QuestScript::QuestNutPlayer* ActiveInstance::GetSimulatorQuestNutScript(
 
 QuestScript::QuestScriptPlayer* ActiveInstance::GetSimulatorQuestScript(
 		SimulatorThread *simulatorPtr) {
-	std::list<QuestScript::QuestScriptPlayer>::iterator it;
+	list<QuestScript::QuestScriptPlayer>::iterator it;
 	for (it = questScriptList.begin(); it != questScriptList.end(); ++it)
 		if (it->simCall == simulatorPtr)
 			return &*it;
@@ -3397,7 +3183,7 @@ QuestScript::QuestScriptPlayer* ActiveInstance::GetSimulatorQuestScript(
 	return NULL;
 }
 
-void ActiveInstance::RunProcessingCycle(void) {
+void ActiveInstance::RunScheduledTasks(void) {
 	if (mPlayers == 0)
 		return;
 	if (g_ServerTime < mNextUpdateTime)
@@ -3417,27 +3203,29 @@ void ActiveInstance::RunProcessingCycle(void) {
 	SendActors();
 	UpdateCreatureLocalStatus();
 
+	this->Schedulable::RunScheduledTasks();
+
 	for (size_t i = 0; i < PlayerListPtr.size(); i++)
-		PlayerListPtr[i]->RunProcessingCycle();
+		PlayerListPtr[i]->RunScheduledTasks();
 
 #ifdef CREATUREQAV
 	for (size_t i = 0; i < NPCListPtr.size(); i++)
-		NPCListPtr[i]->RunProcessingCycle();
+		NPCListPtr[i]->RunScheduledTasks();
 #else
 	CREATURE_IT it;
 	for(it = NPCList.begin(); it != NPCList.end(); ++it)
-	it->second.RunProcessingCycle();
+	it->second.RunScheduledTasks();
 #endif
 
 	for (size_t i = 0; i < SidekickListPtr.size(); i++)
-		SidekickListPtr[i]->RunProcessingCycle();
+		SidekickListPtr[i]->RunScheduledTasks();
 
 	if (g_ServerTime > mNextTargetUpdate)
 		mNextTargetUpdate = g_ServerTime + 1000;
 
 	spawnsys.RunProcessing(false);
 
-	for (std::vector<WeatherState*>::iterator it = mWeather.begin();
+	for (vector<WeatherState*>::iterator it = mWeather.begin();
 			it != mWeather.end(); ++it) {
 		(*it)->RunCycle(this);
 	}
@@ -3453,7 +3241,7 @@ void ActiveInstance::SendPlaySound(const char *assetPackage,
 			RegSim[i]->SendPlaySound(assetPackage, soundFile);
 }
 
-void ActiveInstance::UpdateEnvironmentCycle(std::string timeOfDay) {
+void ActiveInstance::UpdateEnvironmentCycle(string timeOfDay) {
 	if (timeOfDay.length() == 0)
 		return;
 	if (PlayerListPtr.size() == 0)
@@ -3470,7 +3258,7 @@ void ActiveInstance::UpdateEnvironmentCycle(std::string timeOfDay) {
 //Calls a script with a particular kill event.
 void ActiveInstance::ScriptCallKill(int CreatureDefID, int CreatureID) {
 	if (nutScriptPlayer != NULL && nutScriptPlayer->mActive) {
-		std::vector<ScriptCore::ScriptParam> parms;
+		vector<ScriptCore::ScriptParam> parms;
 		parms.push_back(ScriptCore::ScriptParam(CreatureDefID));
 		parms.push_back(ScriptCore::ScriptParam(CreatureID));
 		nutScriptPlayer->JumpToLabel("on_kill", parms);
@@ -3494,8 +3282,8 @@ void ActiveInstance::ScriptCallKill(int CreatureDefID, int CreatureID) {
 
 void ActiveInstance::ScriptCallPackageKill(const char *name) {
 	if (nutScriptPlayer != NULL && nutScriptPlayer->mActive) {
-		std::vector<ScriptCore::ScriptParam> parms;
-		parms.push_back(ScriptCore::ScriptParam(std::string(name)));
+		vector<ScriptCore::ScriptParam> parms;
+		parms.push_back(ScriptCore::ScriptParam(string(name)));
 		nutScriptPlayer->JumpToLabel("on_package_kill", parms);
 
 		char buffer[64];
@@ -3524,7 +3312,7 @@ bool ActiveInstance::ScriptCallUse(int sourceCreatureID, int usedCreatureID,
 		int usedCreatureDefID, bool defaultIfNoFunction) {
 	char buffer[64];
 	if (nutScriptPlayer != NULL) {
-		std::vector<ScriptCore::ScriptParam> p;
+		vector<ScriptCore::ScriptParam> p;
 		Util::SafeFormat(buffer, sizeof(buffer), "on_use_%d",
 				usedCreatureDefID);
 		bool ok1 = nutScriptPlayer->RunFunctionWithBoolReturn(buffer, p, true,
@@ -3553,7 +3341,7 @@ void ActiveInstance::ScriptCallUseHalt(int sourceCreatureID,
 		int usedCreatureDefID) {
 	char buffer[64];
 	if (nutScriptPlayer != NULL) {
-		std::vector<ScriptCore::ScriptParam> p;
+		vector<ScriptCore::ScriptParam> p;
 		Util::SafeFormat(buffer, sizeof(buffer), "on_use_halt_%d",
 				usedCreatureDefID);
 		nutScriptPlayer->JumpToLabel(buffer, p);
@@ -3571,10 +3359,10 @@ void ActiveInstance::ScriptCallUseFinish(int sourceCreatureID,
 		int usedCreatureDefID, int usedCreaturedID) {
 	char buffer[64];
 	if (nutScriptPlayer != NULL) {
-		std::vector<ScriptCore::ScriptParam> e;
+		vector<ScriptCore::ScriptParam> e;
 		e.push_back(ScriptCore::ScriptParam(usedCreaturedID));
 
-		std::vector<ScriptCore::ScriptParam> p;
+		vector<ScriptCore::ScriptParam> p;
 		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
 		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
 		p.push_back(ScriptCore::ScriptParam(usedCreaturedID));
@@ -3584,7 +3372,7 @@ void ActiveInstance::ScriptCallUseFinish(int sourceCreatureID,
 		nutScriptPlayer->JumpToLabel(buffer, e);
 		nutScriptPlayer->JumpToLabel("on_use_finish", p);
 
-		for (std::vector<QuestScript::QuestNutPlayer*>::iterator it =
+		for (vector<QuestScript::QuestNutPlayer*>::iterator it =
 				questNutScriptList.begin(); it != questNutScriptList.end();
 				++it) {
 			QuestDefinition *def = QuestDef.GetQuestDefPtrByID(
@@ -3595,7 +3383,7 @@ void ActiveInstance::ScriptCallUseFinish(int sourceCreatureID,
 			}
 		}
 
-		std::vector<ScriptCore::ScriptParam> p2;
+		vector<ScriptCore::ScriptParam> p2;
 		p2.push_back(ScriptCore::ScriptParam(sourceCreatureID));
 		p2.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
 		nutScriptPlayer->JumpToLabel("on_use_finish", p2);
@@ -3634,7 +3422,7 @@ bool ActiveInstance::ScriptCall(const char *name) {
 	return called;
 }
 
-bool ActiveInstance::RunScript(std::string &errors) {
+bool ActiveInstance::RunScript(string &errors) {
 	if ((scriptPlayer != NULL && scriptPlayer->mActive)
 			|| (nutScriptPlayer != NULL && nutScriptPlayer->mActive)) {
 		g_Logs.script->warn(
@@ -3662,7 +3450,7 @@ bool ActiveInstance::RunScript(std::string &errors) {
 		}
 	}
 	else {
-		std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(
+		string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(
 				mZoneDefPtr->mID, false);
 		if (Util::HasEnding(path, ".nut")) {
 			g_Logs.script->info("Running Squirrel script %v", path.c_str());
@@ -3780,7 +3568,7 @@ void ActiveInstance::RunObjectInteraction(SimulatorThread *simPtr, int CID) {
 				simPtr->SetPosition(x, y, z, 1);
 			} else if (intObj->opType == InteractObject::TYPE_SCRIPT) {
 				if (nutScriptPlayer != NULL) {
-					std::vector<ScriptCore::ScriptParam> p;
+					vector<ScriptCore::ScriptParam> p;
 					p.push_back(
 							ScriptCore::ScriptParam(
 									simPtr->creatureInst->CreatureID));
@@ -3824,9 +3612,9 @@ int ActiveInstance::CountAlive(int creatureDefID) {
 	return count;
 }
 
-void ActiveInstance::LoadStaticObjects(std::string filename) {
+void ActiveInstance::LoadStaticObjects(const fs::path &filename) {
 	FileReader lfr;
-	if (lfr.OpenText(filename.c_str()) != Err_OK)
+	if (lfr.OpenText(filename) != Err_OK)
 		return;
 	lfr.CommentStyle = Comment_Semi;
 	while (lfr.FileOpen() == true) {
@@ -4044,10 +3832,10 @@ int ActiveInstanceManager::FlushSimulator(int SimulatorID) {
 	//Remove any pending messages left by this calling simulator.
 	//Any remaining messages which use creature pointers are now unsafe.
 	//int a;
-	int debug_deleted = 0;
-	debug_deleted = bcm.RemoveSimulator(SimulatorID);
-	if (debug_deleted > 0)
-		g_Logs.server->info("Flushed %v remaining messages", debug_deleted);
+//	int debug_deleted = 0;
+//	debug_deleted = bcm.RemoveSimulator(SimulatorID);
+//	if (debug_deleted > 0)
+//		g_Logs.server->info("Flushed %v remaining messages", debug_deleted);
 
 	return 1;
 }
@@ -4055,7 +3843,7 @@ int ActiveInstanceManager::FlushSimulator(int SimulatorID) {
 CreatureInstance* ActiveInstanceManager::GetPlayerCreatureByName(
 		const char *name) {
 	CreatureInstance *search = NULL;
-	std::list<ActiveInstance>::iterator it;
+	list<ActiveInstance>::iterator it;
 	for (it = instList.begin(); it != instList.end(); ++it) {
 		search = it->GetPlayerByName(name);
 		if (search != NULL)
@@ -4067,7 +3855,7 @@ CreatureInstance* ActiveInstanceManager::GetPlayerCreatureByName(
 CreatureInstance* ActiveInstanceManager::GetPlayerCreatureByDefID(
 		int CreatureDefID) {
 	CreatureInstance *search = NULL;
-	std::list<ActiveInstance>::iterator it;
+	list<ActiveInstance>::iterator it;
 	for (it = instList.begin(); it != instList.end(); ++it) {
 		search = it->GetPlayerByCDefID(CreatureDefID);
 		if (search != NULL)
@@ -4079,7 +3867,7 @@ CreatureInstance* ActiveInstanceManager::GetPlayerCreatureByDefID(
 CreatureInstance* ActiveInstanceManager::GetNPCCreatureByDefID(
 		int CreatureDefID) {
 	CreatureInstance *search = NULL;
-	std::list<ActiveInstance>::iterator it;
+	list<ActiveInstance>::iterator it;
 	for (it = instList.begin(); it != instList.end(); ++it) {
 		search = it->GetNPCInstanceByCDefID(CreatureDefID);
 		if (search != NULL)
@@ -4099,7 +3887,7 @@ void ActiveInstanceManager::CheckActiveInstances(void) {
 	if (instList.size() == 0)
 		return;
 
-	std::list<ActiveInstance>::iterator it;
+	list<ActiveInstance>::iterator it;
 	int delCount = 0;
 	it = instList.begin();
 	cs.Enter("ActiveInstanceManager :: CheckActiveInstances");
@@ -4108,7 +3896,7 @@ void ActiveInstanceManager::CheckActiveInstances(void) {
 			g_Logs.server->info("Removing inactive instance [%v : %v]",
 					it->mZoneDefPtr->mName.c_str(), it->mZone);
 			delCount++;
-			it->Clear();
+			it->Shutdown();
 			instList.erase(it++);
 		} else {
 			++it;
@@ -4122,7 +3910,7 @@ void ActiveInstanceManager::CheckActiveInstances(void) {
 
 //All instances with zero players will be triggered for immediate deletion on the next cycle.
 void ActiveInstanceManager::DebugFlushInactiveInstances(void) {
-	std::list<ActiveInstance>::iterator it;
+	list<ActiveInstance>::iterator it;
 	for (it = instList.begin(); it != instList.end(); ++it) {
 		if (it->mPlayers == 0)
 			it->mExpireTime = g_ServerTime;
@@ -4155,7 +3943,7 @@ void PlayerInstancePlacementData::Clear(void) {
 	memset(this, 0, sizeof(PlayerInstancePlacementData));
 }
 
-void PlayerInstancePlacementData::SetInstanceScaler(const std::string &name) {
+void PlayerInstancePlacementData::SetInstanceScaler(const string &name) {
 	const InstanceScaleProfile *profile = GetPartyLeaderInstanceScaler();
 	if (profile == NULL) {
 		if (in_partyID == 0

@@ -53,18 +53,18 @@ void ItemSetManager::CheckItem(int itemID, ItemSetTally &tally)
 
 void ItemSetManager::LoadData(void)
 {
-	LoadFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "ItemSet.txt"));
-	mScriptDef.CompileFromSource(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "ItemSetScript.txt"));
+	LoadFile(g_Config.ResolveStaticDataPath() / "Data" / "ItemSet.txt");
+	mScriptDef.CompileFromSource(g_Config.ResolveStaticDataPath() / "Data" / "ItemSetScript.txt");
 	
 	UpdateFlavorText();
 	
 	g_Logs.data->info("Loaded %v Item Sets", mRegisteredSets.size());
 }
 
-void ItemSetManager::LoadFile(std::string filename)
+void ItemSetManager::LoadFile(const fs::path &filename)
 {
 	FileReader3 fr;
-	if(fr.OpenFile(filename.c_str()) != FileReader3::SUCCESS)
+	if(fr.OpenFile(filename) != FileReader3::SUCCESS)
 	{
 		g_Logs.data->error("Could not open file [%v]", filename);
 		return;

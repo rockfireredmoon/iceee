@@ -23,6 +23,7 @@
 #include "../InstanceScale.h"
 #include "../Debug.h"
 #include "../Config.h"
+#include "../Scheduler.h"
 #include "../util/Log.h"
 
 extern char GSendBuf[32767];
@@ -111,7 +112,7 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 			if (status[0] == 'N') {
 				CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(target->CreatureDefID);
 				if(cdef != NULL && (cdef->DefHints & CDEF_HINT_ITEM_GIVER)) {
-					for(std::vector<int>::iterator it = cdef->Items.begin(); it != cdef->Items.end(); ++it) {
+					for(vector<int>::iterator it = cdef->Items.begin(); it != cdef->Items.end(); ++it) {
 						/* For now we only allow use if the player doesn't already have
 						 * the item. There could be other uses for this though. I'll
 						 * add logic as and when it's needed
@@ -267,8 +268,8 @@ int CreatureDefEditHandler::handleQuery(SimulatorThread *sim,
 	//(appearance so far), and the value contains the information
 	//to apply.
 	for (unsigned int i = 1 + argOffset; i < query->argCount; i += 2) {
-		std::string n = query->args[i];
-		std::transform(n.begin(), n.end(), n.begin(), ::tolower);
+		string n = query->args[i];
+		transform(n.begin(), n.end(), n.begin(), ::tolower);
 		const char *name = n.c_str();
 		const char *value = query->args[i + 1].c_str();
 
@@ -316,11 +317,11 @@ int CreatureDefEditHandler::handleQuery(SimulatorThread *sim,
 	if (cInst != NULL)
 		cInst->css.CopyFrom(css);
 
-	sim->AddMessage((long) cDef, 0, BCM_UpdateCreatureDef);
+	creatureInstance->Submit(bind(&ActiveInstance::BroadcastUpdateCreatureDef, creatureInstance->actInst, cDef, creatureInstance->CurrentX, creatureInstance->CurrentZ));
 
 	if (argOffset > 0 && cInst != NULL) {
 		// If update from a sage, sent the updates to the target as well
-		cInst->simulatorPtr->AddMessage((long) cDef, 0, BCM_UpdateCreatureDef);
+		cInst->simulatorPtr->Submit(bind(&ActiveInstance::BroadcastUpdateCreatureDef, cInst->actInst, cDef, cInst->CurrentX, cInst->CurrentZ));
 	}
 
 	if (pld->CreatureDefID == CDefID) {
@@ -436,7 +437,7 @@ int CreatureUseHandler::handleQuery(SimulatorThread *sim,
 						ActiveInstance *inst =
 								g_ActiveInstanceManager.ResolveExistingInstance(
 										pd, zoneDef);
-						std::string outputMsg;
+						string outputMsg;
 						if (inst != NULL) {
 							g_Logs.server->info(
 									"There is an active instance for zone %v for player %v",
@@ -638,7 +639,8 @@ int CreatureDeleteHandler::handleQuery(SimulatorThread *sim,
 	if (creature != NULL) {
 		if (sim->HasPropEditPermission(NULL, (float) creature->CurrentX,
 				(float) creature->CurrentZ) == true) {
-			sim->AddMessage(CreatureID, 0, BCM_CreatureDelete);
+
+			g_Scheduler.Submit(bind(&ActiveInstance::CreatureDelete, creatureInstance->actInst, CreatureID));
 		}
 	}
 

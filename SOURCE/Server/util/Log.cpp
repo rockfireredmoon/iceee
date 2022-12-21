@@ -161,21 +161,19 @@ void LogManager::Init(el::Level level, bool outputToConsole, std::string configF
 	mLevel = level;
 	mOutputToConsole = outputToConsole;
 
-	std::string logConfig;
-	std::vector<std::string> paths = g_Config.ResolveLocalConfigurationPath();
-	for (std::vector<std::string>::iterator it = paths.begin();
-			it != paths.end(); ++it) {
-		std::string dir = *it;
-		std::string filename = Platform::JoinPath(dir, configFilename);
-		if (Platform::FileExists(filename))
+	fs::path logConfig;
+	auto paths = g_Config.ResolveLocalConfigurationPath();
+	for (auto dir = paths.begin();
+			dir != paths.end(); ++dir) {
+		auto filename = *dir / configFilename;
+		if (fs::exists(filename))
 			logConfig = filename;
 	}
-	if (logConfig.size() == 0)
-		el::Loggers::configureFromGlobal(
-				Platform::JoinPath(g_Config.ResolveLocalConfigurationPath()[0],
-						configFilename).c_str());
+	if (logConfig.empty())
+		el::Loggers::configureFromGlobal(logConfig.string().c_str());
 	else
-		el::Loggers::configureFromGlobal(logConfig.c_str());
+		el::Loggers::configureFromGlobal((
+				g_Config.ResolveLocalConfigurationPath()[0] / configFilename).string().c_str());
 
 	el::Loggers::addFlag(el::LoggingFlag::NewLineForContainer);
 	el::Loggers::addFlag(el::LoggingFlag::DisableApplicationAbortOnFatalLog);

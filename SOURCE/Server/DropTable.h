@@ -13,6 +13,10 @@
 #include <map>
 #include <set>
 #include <string>
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 class CreatureInstance;
 
@@ -27,12 +31,12 @@ public:
 	~ActiveLootContainer();
 	int CreatureID;              //The owner of this container.  Ex: The ID of the dead creature.
 	int robinID;				 //The ID of the current round robin for party loot
-	std::map<int, bool> stage2Map; //Whether the looting is on it's second stage (i.e. robin offered/leader offered)
-	std::vector<int> lootableID; //List of CreatureDefIDs that may loot this creature.
-	std::vector<int> itemList;   //List of items left in this container.
-	std::map<int, std::set<int> > greeded;   //Map of ItemIDs and CreatureIDs that have greeded this loot.
-	std::map<int, std::set<int> > needed;    //Map of ItemIDs and CreatureIDs that have needed this loot.
-	std::map<int, std::set<int> > passed;    //Map of ItemIDs and CreatureIDs that have passed on this loot.
+	map<int, bool> stage2Map; //Whether the looting is on it's second stage (i.e. robin offered/leader offered)
+	vector<int> lootableID; //List of CreatureDefIDs that may loot this creature.
+	vector<int> itemList;   //List of items left in this container.
+	map<int, set<int> > greeded;   //Map of ItemIDs and CreatureIDs that have greeded this loot.
+	map<int, set<int> > needed;    //Map of ItemIDs and CreatureIDs that have needed this loot.
+	map<int, set<int> > passed;    //Map of ItemIDs and CreatureIDs that have passed on this loot.
 
 	bool IsStage2(int itemId);
 	void SetStage2(int itemId, bool stage2);
@@ -43,7 +47,7 @@ public:
 	bool HasAnyDecided(int itemId, int looterCreatureId);
 	void AddItem(int itemID);
 	void RemoveCreatureRolls(int itemId, int looterCreatureId);
-	void RemoveCreatureRollsFromMap(int itemId, int looterCreatureId, std::map<int, std::set<int> > * map);
+	void RemoveCreatureRollsFromMap(int itemId, int looterCreatureId, map<int, set<int> > * map);
 	int CountDecisions(int itemId);
 	void Greed(int itemId, int looterCreatureId);
 	void Pass(int itemId, int looterCreatureId);
@@ -58,8 +62,8 @@ public:
 	int GetItemCount(void) const;
 	void CopyLootContents(const ActiveLootContainer &source);
 private:
-	bool Decided(int itemId, int creatureId, std::map<int, std::set<int> > * map);
-	int Count(int itemId, std::map<int, std::set<int> > * map);
+	bool Decided(int itemId, int creatureId, map<int, set<int> > * map);
+	int Count(int itemId, map<int, set<int> > * map);
 };
 
 
@@ -72,7 +76,7 @@ public:
 	WorldLootContainer();
 	~WorldLootContainer();
 
-	std::map<int, ActiveLootContainer> creatureList;
+	map<int, ActiveLootContainer> creatureList;
 
 	int AttachLootToCreature(const ActiveLootContainer &loot, int CreatureID);
 	int GetCreature(int creatureID);
@@ -89,10 +93,10 @@ public:
 //be properly calculated.
 struct DropSetDefinition
 {
-	std::string mName;            //Name of this set.  Required so that packages can reference this collection of items.
+	string mName;            //Name of this set.  Required so that packages can reference this collection of items.
 	int mRarity;                  //Corresponds to ItemDef mQualityLevel.  Note special cases Zero and -1.  Zero means that mChance is an explicit chance (100 = 100%).  -1 indicates the rate should be interpreted as a percentage.
 	int mChance;                  //Custom drop chance, if applicable.
-	std::vector<int> mItemList;
+	vector<int> mItemList;
 	static const int CHANCE_PERCENT = 0;    //If mRarity is this, mChance calculates drop chances based on integer percents (1-100, or higher for multiple drop chances)
 	static const int CHANCE_SHARES  = -1;   //If mRarity is this, mChance is used as a denominator to calculate specific drop changes (ex: 1 / 20 = 5% chance)
 	
@@ -107,10 +111,10 @@ struct DropSetDefinition
 
 struct DropPackageDefinition
 {
-	std::string mName;            //Name of this package.
+	string mName;            //Name of this package.
 	int mAuto;                    //If above zero, this package will be automatically added into a level-specific drop table.
 	unsigned int mMobFlags;       //Flags that determine the mob types that can drop from this package.
-	std::vector<std::string> mSetList;  //A list of sets dropped by this package.
+	vector<string> mSetList;  //A list of sets dropped by this package.
 
 	unsigned int mCombinedClassFlags;     //This is resolved at load time.
 
@@ -143,19 +147,19 @@ struct DropCreatureDefinition
 {
 	int mCreatureDefID;                  //Creature to apply to.
 	bool mExplicit;                      //If true, automatic level-based packages will not be rolled, instead only using sets defined here.  If false, these sets will drop in addition to automatic level packages.
-	std::vector<std::string> mSetList;   //A list of sets (not packages!) that this creature may drop.
+	vector<string> mSetList;   //A list of sets (not packages!) that this creature may drop.
 
 	DropCreatureDefinition();
 	void Clear(void);
 	void ImportFrom(const DropCreatureDefinition& other);
 	void AssignList(const char *data);
-	bool HasSet(const std::string &search);
+	bool HasSet(const string &search);
 };
 
 struct DropLevelDefinition
 {
 	unsigned int mCombinedClassFlags;
-	std::vector<std::string> mPackageList;
+	vector<string> mPackageList;
 
 	DropLevelDefinition();
 	void Clear(void);
@@ -173,7 +177,7 @@ struct DropRollParameters
 //that when sets must be selected, it already knows what it can and can't roll.
 struct SetQueryResult
 {
-	typedef std::vector<DropSetDefinition*> RESULT_LIST;
+	typedef vector<DropSetDefinition*> RESULT_LIST;
 	unsigned int mClassFlags;
 	RESULT_LIST mSetListPtr;
 	SetQueryResult();
@@ -186,10 +190,10 @@ class DropTableManager
 {
 public:
 	//Containers for each type.
-	typedef std::map<std::string, DropSetDefinition> CSET;
-	typedef std::map<std::string, DropPackageDefinition> CPACKAGE;
-	typedef std::map<int, DropCreatureDefinition> CCREATURE;
-	typedef std::map<int, DropLevelDefinition> CLEVEL;
+	typedef map<string, DropSetDefinition> CSET;
+	typedef map<string, DropPackageDefinition> CPACKAGE;
+	typedef map<int, DropCreatureDefinition> CCREATURE;
+	typedef map<int, DropLevelDefinition> CLEVEL;
 
 	CSET mSet;
 	CPACKAGE mPackage;
@@ -207,18 +211,18 @@ public:
 	~DropTableManager();
 
 	void LoadData(void);
-	void RollDrops(const DropRollParameters& params, std::vector<int>& output);
+	void RollDrops(const DropRollParameters& params, vector<int>& output);
 
 private:
 	//These load functions are called separately by the LoadData() function and don't need
 	//to be accessed anywhere else.
-	void LoadSetFile(std::string filename);
-	void LoadPackageFile(std::string filename);
-	void LoadCreatureFile(std::string filename);
+	void LoadSetFile(const fs::path &filename);
+	void LoadPackageFile(const fs::path &filename);
+	void LoadCreatureFile(const fs::path &filename);
 
 	void ResolveClassFlags(void);
 	void ResolveAutotable(void);
-	void AddSetQueryResult(const std::string &setOrPkgName, SetQueryResult &output);
+	void AddSetQueryResult(const string &setOrPkgName, SetQueryResult &output);
 };
 
 
@@ -229,7 +233,7 @@ namespace LootSystem
 		const char *propName;
 		float size;
 	};
-	void BuildAppearanceOverride(std::string &output, const char *prop1, float scale1, const char *prop2);
+	void BuildAppearanceOverride(string &output, const char *prop1, float scale1, const char *prop2);
 	extern const LootProp lootModels[7];
 	extern const char *tombstone;
 	extern const char DefaultTombstoneAppearanceOverride[];
