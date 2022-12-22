@@ -70,15 +70,15 @@ int LootItemHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 			return PrepExt_QueryResponseString2(sim->SendBuf, query->ID, "FAIL",
 					sim->GetErrorString(result));
 
-		creatureInstance->actInst->LSendToOneSimulator(
-				sim->SendBuf, result, sim);
+//		creatureInstance->actInst->LSendToOneSimulator(
+//				sim->SendBuf, result, sim);
 
 		// Always response to the looter
 		STRINGLIST qresponse;
 		qresponse.push_back("OK");
 		sprintf(sim->Aux3, "%d", conIndex);
 		qresponse.push_back(sim->Aux3);
-		return PrepExt_QueryResponseStringList(sim->SendBuf, query->ID,
+		return PrepExt_QueryResponseStringList(&sim->SendBuf[result], query->ID,
 				qresponse);
 	}
 	return 0;
@@ -500,15 +500,13 @@ int protected_helper_query_loot_item(SimulatorThread *sim, int CID, int ItemID, 
 				static const short statList[3] =
 						{ STAT::APPEARANCE_OVERRIDE, STAT::LOOTABLE_PLAYER_IDS,
 								STAT::LOOT_SEEABLE_PLAYER_IDS };
-				WritePos += PrepExt_SendSpecificStats(sim->SendBuf, lootCreature,
-						&statList[0], 3);
-				aInst->LSendToLocalSimulator(sim->SendBuf, WritePos,
-						creatureInstance->CurrentX, creatureInstance->CurrentZ);
+				aInst->LSendToLocalSimulator(sim->SendBuf, PrepExt_SendSpecificStats(sim->SendBuf, lootCreature,
+						&statList[0], 3), creatureInstance->CurrentX, creatureInstance->CurrentZ);
 			}
 			aInst->lootsys.RemoveCreature(CID);
 		}
 
-		WritePos += AddItemUpdate(sim->SendBuf, sim->Aux3, newItem);
+		WritePos = AddItemUpdate(sim->SendBuf, sim->Aux3, newItem);
 
 	}
 	return WritePos;
