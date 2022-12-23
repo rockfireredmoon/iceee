@@ -1031,7 +1031,7 @@ namespace ScriptCore
 	bool NutPlayer::RunFunctionWithBoolReturn(string name, vector<ScriptParam> parms, bool time, bool defaultIfNoFunction) {
 		if(!mActive) {
 			g_Logs.script->warn("Attempt to run function on inactive script %s.", name.c_str());
-			return false;
+			return defaultIfNoFunction;
 		}
 		unsigned long now = g_PlatformTime.getMilliseconds();
 		mRunning = true;

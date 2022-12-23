@@ -143,7 +143,6 @@ ChangeData g_AutoSaveTimer;
 int InitServerMain(int argc, char *argv[]);
 void RunServerMain(void);
 void SendHeartbeatMessages(void);
-void RunPendingMessages(void); //Runs all pending messages in the BroadCastMessage class.
 void SendDebugPings();
 void ShutDown(void);
 void UnloadResources(void);
@@ -895,9 +894,11 @@ int InitServerMain(int argc, char *argv[]) {
 //	else if(query.name.compare("pref.set") == 0)
 //		handle_query_pref_set();
 
+	g_Logs.server->info("Loading cluster configuration");
 	for (auto dir : paths) {
 		g_ClusterManager.LoadConfiguration(dir / "Cluster.txt");
 	}
+	g_Logs.server->info("Initialising cluster support");
 
 	if (!g_ClusterManager.Init()) {
 		return 0;

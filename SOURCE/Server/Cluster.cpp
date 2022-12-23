@@ -1359,7 +1359,7 @@ void ClusterManager::AuctionItemRemoved(int auctionItemId,
 
 void ClusterManager::GameConfigChanged(const string &key, const string &value) {
 	if (mClusterable) {
-		g_Logs.cluster->info("Sending on thunder");
+		g_Logs.cluster->info("Sending on game configuration change");
 		Json::Value w;
 		w["shardName"] = mShardName;
 		w["key"] = key;
@@ -1435,6 +1435,7 @@ bool ClusterManager::ReadEntity(AbstractEntity *entity) {
 }
 
 int ClusterManager::LoadConfiguration(const string &filename) {
+	g_Logs.server->info("Loading cluster configuration from %v", filename);
 	FileReader lfr;
 	if (lfr.OpenText(filename.c_str()) != Err_OK) {
 		g_Logs.cluster->error(

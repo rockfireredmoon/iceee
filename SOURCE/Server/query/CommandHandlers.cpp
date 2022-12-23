@@ -711,10 +711,8 @@ int GameConfigHandler::handleCommand(SimulatorThread *sim,
 	if (query->argCount > 0) {
 		auto key = query->GetStringObject(0);
 		if(key.compare("reload") == 0) {
-			if(g_ClusterManager.IsClusterable())
-				g_ClusterManager.GameConfigChanged("","");
-			else
-				g_GameConfig.Reload();
+			g_ClusterManager.GameConfigChanged("","");
+			g_GameConfig.Reload();
 			sim->SendInfoMessage("Reloaded game configuration from database.", INFOMSG_INFO);
 		}
 		else {
