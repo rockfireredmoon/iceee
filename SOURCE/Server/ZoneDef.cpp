@@ -1800,7 +1800,7 @@ void EnvironmentCycleManager::ApplyConfig(const string str) {
 	EnvironmentCycle prev;
 	for (size_t i = 0; i < pairs.size(); i++) {
 		Util::Split(pairs[i], "=", keyval);
-		if (keyval.size() < 1)
+		if (keyval.size() < 2)
 			continue;
 		EnvironmentCycle c;
 		c.mName = keyval[0];
@@ -2116,7 +2116,7 @@ void WeatherState::SendWeatherUpdate(ActiveInstance *instance,
 						&& instance->mZoneDefPtr->IsOverworld()) {
 					/* If this is an overworld zone, notify all remote players of thunder */
 					g_ClusterManager.Weather(instance->mZone,
-							MapDef.mMapList[sim->pld.CurrentMapInt].Name,
+							sim->pld.CurrentMapInt == -1 ? "" : MapDef.mMapList[sim->pld.CurrentMapInt].Name,
 							mWeatherType, mWeatherWeight);
 				}
 				break;
@@ -2139,7 +2139,7 @@ void WeatherState::SendThunder(ActiveInstance *instance, bool sendToCluster) {
 						&& instance->mZoneDefPtr->IsOverworld()) {
 					/* If this is an overworld zone, notify all remote players of thunder */
 					g_ClusterManager.Thunder(instance->mZone,
-							MapDef.mMapList[sim->pld.CurrentMapInt].Name);
+							sim->pld.CurrentMapInt == -1 ? "" : MapDef.mMapList[sim->pld.CurrentMapInt].Name);
 				}
 				break;
 			}

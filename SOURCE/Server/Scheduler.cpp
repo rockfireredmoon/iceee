@@ -150,8 +150,8 @@ int Scheduler::Schedule(const TaskType& task, unsigned long when) {
 		when = g_ServerTime + g_MainSleep;
 	}
 	ScheduledTimerTask taskWrapper(task, when);
-	if(g_Logs.server->enabled(el::Level::Debug))
-			g_Logs.server->debug("This scheduler (id: %v) task will run in %v", mNextTaskId, Util::FormatTimeHHMMSSmm(when - g_ServerTime));
+	if(g_Logs.server->enabled(el::Level::Trace))
+			g_Logs.server->trace("This scheduler (id: %v) task will run in %v", mNextTaskId, Util::FormatTimeHHMMSSmm(when - g_ServerTime));
 	mMutex.lock();
 	taskWrapper.mTaskId = mNextTaskId++;
 	scheduled.push_back(taskWrapper);

@@ -531,10 +531,10 @@ public:
 	bool IsValidForPVP(void);
 
 	bool IsMountedMount();
-	bool IsMountedMounter();
+	bool IsRider();
 	bool IsMounted();
 	bool Mount(CreatureInstance *mount);
-	bool Unmount();
+	bool Dismount();
 
 	//These functions operate on "activeStatusEffect"
 	int _HasStatusList(int statusID);

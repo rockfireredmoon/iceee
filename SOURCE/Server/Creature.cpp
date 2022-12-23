@@ -612,7 +612,7 @@ void CreatureInstance::Shutdown(void) {
 	KillAI();
 
 	if(IsMounted())
-		Unmount();
+		Dismount();
 
 	RemoveAttachedHateProfile();
 	if (serverFlags & ServerFlags::IsPlayer) {
@@ -1400,7 +1400,7 @@ bool CreatureInstance::IsMountedMount() {
 	return MountedBy != NULL;
 }
 
-bool CreatureInstance::IsMountedMounter() {
+bool CreatureInstance::IsRider() {
 	return MountedOn != NULL;
 }
 
@@ -1410,7 +1410,7 @@ bool CreatureInstance::Mount(CreatureInstance *mount) {
 		return false;
 	}
 	else if(mount != NULL && mount->IsMounted()){
-		g_Logs.server->warn("Provided mount is already mount!");
+		g_Logs.server->warn("Provided mount is already mounted!");
 		return false;
 	}
 	else if(HasStatus(StatusEffects::MOUNTABLE)) {
@@ -1455,9 +1455,9 @@ bool CreatureInstance::Mount(CreatureInstance *mount) {
 	return true;
 }
 
-bool CreatureInstance::Unmount() {
+bool CreatureInstance::Dismount() {
 	if(IsMountedMount()) {
-		g_Logs.server->warn("Must unmount from the mounter creature!");
+		g_Logs.server->warn("Must dismount from the mounter creature!");
 		return false;
 	}
 	else if(IsMounted()) {
@@ -1475,7 +1475,7 @@ bool CreatureInstance::Unmount() {
 		}
 		MountAbilityId = 0;
 
-		g_Logs.server->warn("Unmounted [%v] from [%v]", css.display_name, wasMounted->css.display_name);
+		g_Logs.server->info("Unmounted [%v] from [%v]", css.display_name, wasMounted->css.display_name);
 		int wpos = 0;
 		wpos += PutByte(&GSendBuf[wpos], 101);     //_handleMount TODO!!!!
 		wpos += PutShort(&GSendBuf[wpos], 0);
@@ -2112,7 +2112,7 @@ void CreatureInstance::UpdateBaseStatMinimum(int statID, float amount) {
 // responsible for iterating or otherwise correctly determinating a valid index.
 void CreatureInstance::RemoveBuffIndex(size_t index) {
 	if(activeStatMod[index].abilityID == MountAbilityId && IsMounted()) {
-		Unmount();
+		Dismount();
 	}
 	else {
 		if (activeStatMod[index].abilityID != 0) {
@@ -3012,7 +3012,7 @@ void CreatureInstance::PrepareDeath(void) {
 void CreatureInstance::ProcessDeath(void) {
 
 	if(IsMounted()) {
-		Unmount();
+		Dismount();
 	}
 
 	CREATURE_SEARCH attackerList;
@@ -4929,7 +4929,6 @@ void CreatureInstance::RunDialog(void) {
 				&& (timer_dialog == 0 || g_ServerTime > timer_dialog)) {
 			if (spawnGen != NULL && spawnGen->spawnPoint != NULL
 					&& spawnGen->spawnPoint->hasExtraData
-					&& spawnGen->spawnPoint->hasExtraData
 					&& spawnGen->spawnPoint->extraData.dialog.length() > 0) {
 				/* Only run dialog when there is 1) a new timer or timer triggers 2) no target */
 				NPCDialogItem *diag = g_NPCDialogManager.GetItem(
@@ -5299,18 +5298,18 @@ void CreatureInstance::RunScheduledTasks(void) {
 					// NOTE: Player position is now controlled by mount, position, not the other way
 					// around. Keep this around though for now in case
 					if(IsMountedMount()) {
-						if(MountedBy->Rotation != Rotation || MountedBy->Rotation != Heading) {
-							Heading = Rotation = MountedBy->Rotation ;
-							r++;
-						}
-
-						if(MountedBy->CurrentX != CurrentX || MountedBy->CurrentZ != CurrentZ) {
-							Speed = 0;
-							CurrentX = MountedBy->CurrentX;
-							CurrentY = MountedBy->CurrentY;
-							CurrentZ = MountedBy->CurrentZ;
-							r++;
-						}
+//						if(MountedBy->Rotation != Rotation || MountedBy->Rotation != Heading) {
+//							Heading = Rotation = MountedBy->Rotation ;
+//							r++;
+//						}
+//
+//						if(MountedBy->CurrentX != CurrentX || MountedBy->CurrentZ != CurrentZ) {
+//							Speed = 0;
+//							CurrentX = MountedBy->CurrentX;
+//							CurrentY = MountedBy->CurrentY;
+//							CurrentZ = MountedBy->CurrentZ;
+//							r++;
+//						}
 					}
 					else {
 						r += RotateToTarget();
@@ -5323,9 +5322,11 @@ void CreatureInstance::RunScheduledTasks(void) {
 								CurrentZ);
 					}
 				}
-				RunAutoTargetSelection();
-				RunAIScript();
-				RunDialog();
+				if(!IsMountedMount()) {
+					RunAutoTargetSelection();
+					RunAIScript();
+					RunDialog();
+				}
 			}
 		} else if (serverFlags & ServerFlags::IsPlayer) {
 			if (serverFlags & ServerFlags::InitAttack) {

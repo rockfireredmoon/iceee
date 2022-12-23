@@ -1300,8 +1300,8 @@ bool ClusterManager::IsMaster() {
 void ClusterManager::Weather(int zoneId, const string &mapName,
 		const string &weatherType, int weight) {
 	if (mClusterable) {
-		g_Logs.cluster->info("Sending on weather %v (%v).", weatherType,
-				weight);
+		g_Logs.cluster->info("Sending on weather %v (%v) for %v (%v).", weatherType,
+				weight, zoneId, mapName);
 		Json::Value w;
 		w["shardName"] = mShardName;
 		w["zoneId"] = zoneId;
@@ -2074,6 +2074,10 @@ void ClusterManager::Ready() {
 		mClient.sync_commit();
 		g_Logs.cluster->info("Informed cluster of readyness");
 	}
+}
+
+bool ClusterManager::IsClusterable() {
+	return mClusterable;
 }
 
 void ClusterManager::PreShutdown() {

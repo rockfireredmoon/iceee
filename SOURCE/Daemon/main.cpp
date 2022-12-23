@@ -57,6 +57,7 @@
 #include <Interact.h>
 #include <DropTable.h>
 #include <Config.h>
+#include <GameConfig.h>
 #include <DirectoryAccess.h>
 #include <RemoteAction.h>
 #include <Gamble.h>
@@ -818,6 +819,7 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["ccc"] = new CCCHandler();
 	g_QueryManager.queryHandlers["ban"] = new BanHandler();
 	g_QueryManager.queryHandlers["unban"] = new UnbanHandler();
+	g_QueryManager.queryHandlers["dismount"] = new DismountHandler();
 	g_QueryManager.queryHandlers["setpermission"] = new SetPermissionHandler();
 	g_QueryManager.queryHandlers["setbuildpermission"] =
 			new SetBuildPermissionHandler();
@@ -900,7 +902,7 @@ int InitServerMain(int argc, char *argv[]) {
 	if (!g_ClusterManager.Init()) {
 		return 0;
 	}
-
+	g_GameConfig.Init();
 	g_CharacterManager.CreateDefaultCharacter();
 	g_ItemManager.LoadData();
 	g_ItemSetManager.LoadData();

@@ -120,7 +120,7 @@ std::map<std::string, std::string> GameConfig::GetAll() {
 	AddIfMissing("MaxAuctionExpiredHours", "24", map);
 
 	AddIfMissing("MaxNewCreditShopItemDays", "31", map);
-	AddIfMissing("EnvironmentCycle", "05:30,Day=08:30,Sunset=18:00,Night=20:30", map);
+	AddIfMissing("EnvironmentCycle", "Sunrise=05:30,Day=08:30,Sunset=18:00,Night=20:30", map);
 
 	AddIfMissing("UseAccountCredits", "true", map);
 	AddIfMissing("UseReagents", "true", map);
@@ -130,7 +130,7 @@ std::map<std::string, std::string> GameConfig::GetAll() {
 	return map;
 }
 
-void GameConfig::Reload() {
+void GameConfig::LoadMap() {
 	auto map = GetAll();
 	AllowEliteMob = map["AllowEliteMob"] == "true";
 	MegaLootParty = map["MegaLootParty"] == "true";
@@ -190,7 +190,10 @@ void GameConfig::Reload() {
 	UseReagents = map["UseReagents"] == "true";
 	UsePersistentBuffs = map["UsePersistentBuffs"] == "true";
 	UsePartyLoot = map["UsePartyLoot"] == "true";
+}
 
+void GameConfig::Reload() {
+	LoadMap();
 	g_EnvironmentCycleManager.ApplyConfig(EnvironmentCycle);
 }
 
@@ -217,7 +220,7 @@ std::string GameConfig::Get(const std::string &key) {
 }
 
 void GameConfig::Init(void) {
-	Reload();
+	LoadMap();
 }
 
 void GameConfig::AddIfMissing(const std::string &key, const std::string &value, std::map<std::string, std::string> &map) {

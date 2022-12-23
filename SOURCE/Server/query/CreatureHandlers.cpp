@@ -380,6 +380,13 @@ int CreatureUseHandler::handleQuery(SimulatorThread *sim,
 	//Creatures cannot be interacted with in groves unless it is a mount.
 	if (creatureInstance->actInst->mZoneDefPtr->mGrove == true && !target->HasStatus(StatusEffects::MOUNTABLE))
 		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+	else if(target->HasStatus(StatusEffects::MOUNTABLE)) {
+		if(creatureInstance->Mount(target)) {
+			return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+		}
+		else
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Failed to mount.");
+	}
 
 	//LogMessageL(MSG_DIAG, "  Request creature.use for %d", CID);
 	//int CDef = ResolveCreatureDef(CID);
@@ -502,39 +509,50 @@ int CreatureUseHandler::handleQuery(SimulatorThread *sim,
 			return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 		}
 
-		CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(
-				target->CreatureDefID);
-		if (cdef != NULL
-				&& ((cdef->DefHints & CDEF_HINT_USABLE)
-						|| (cdef->DefHints & CDEF_HINT_USABLE_SPARKLY))) {
-			g_Logs.server->info("Creature %v is usable by %v", CDef,
-					creatureInstance->CreatureDefID);
-			return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
-		}
+		bool ok = false;
+		CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(target->CreatureDefID);
+		std::string error = "Cannot use object.";
 
-		if(target->HasStatus(StatusEffects::MOUNTABLE)) {
-			if(creatureInstance->IsMounted()) {
-				if(creatureInstance->Unmount())
-					return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
-				else
-					return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Refused to be unmount.");
+		/* Is the object an ITEM_GIVER? (Item ids given are in Extra Data) */
+		if(cdef != NULL && (cdef->DefHints & CDEF_HINT_ITEM_GIVER) != 0) {
+
+			for(std::vector<int>::iterator it = cdef->Items.begin() ; it != cdef->Items.end(); ++it) {
+				/* For now we only allow use if the player doesn't already have
+				 * the item. There could be other uses for this though. I'll
+				 * add logic as and when it's needed
+				 */
+				int id = (*it);
+				if(creatureInstance->charPtr->inventory.GetItemPtrByID(id) == NULL) {
+					ItemDef *item = g_ItemManager.GetSafePointerByID(id);
+					if(item->mID == 0) {
+						Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Item with ID [%d] not found. Incorrect Creature Definition for an ITEM_GIVER.", id);
+						error = sim->Aux1;
+					}
+					else {
+						creatureInstance->SelectTarget(target);
+						Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Taking %s", item->mDisplayName.c_str());
+						sim->AttemptSend(GSendBuf, creatureInstance->QuestInteractObject(GSendBuf, sim->Aux1, 5000, true));
+						ok = true;
+					}
+
+					break;
+				}
 			}
-			else {
-				if(creatureInstance->Mount(target))
-					return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
-				else
-					return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Refused to be mounted.");
-			}
 		}
+		else
+			if(cdef != NULL && ((cdef->DefHints & CDEF_HINT_USABLE) ||(cdef->DefHints & CDEF_HINT_USABLE_SPARKLY)))
+				ok = true;
 
-		//For any other interact notify the instance on the off chance that it needs to do something.
-		if (creatureInstance->actInst->ScriptCallUse(
-				creatureInstance->CreatureID, target->CreatureID, CDef, false)) {
+		/* Ask the instance script if it's OK for this creature to use this generic object. Only assume
+		 * this is OK if the script function exists and returns true
+		 */
+		if(creatureInstance->actInst->ScriptCallUse(creatureInstance->CreatureID, target->CreatureID, CDef, false))
+			ok = true;
+
+		if(ok)
 			return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
-		}
-
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
-				"Cannot use object.");
+		else
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID, error.c_str());
 	}
 
 	int wpos = 0;

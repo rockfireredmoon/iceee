@@ -711,7 +711,10 @@ int GameConfigHandler::handleCommand(SimulatorThread *sim,
 	if (query->argCount > 0) {
 		auto key = query->GetStringObject(0);
 		if(key.compare("reload") == 0) {
-			g_ClusterManager.GameConfigChanged("","");
+			if(g_ClusterManager.IsClusterable())
+				g_ClusterManager.GameConfigChanged("","");
+			else
+				g_GameConfig.Reload();
 			sim->SendInfoMessage("Reloaded game configuration from database.", INFOMSG_INFO);
 		}
 		else {
@@ -1604,6 +1607,28 @@ int UnbanHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 	accPtr->AdjustSessionLoginCount(0);  //Force refresh.
 
 	sim->SendInfoMessage("Ban cleared.", INFOMSG_INFO);
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+//
+//DismountHandler
+//
+DismountHandler::DismountHandler() :
+		AbstractCommandHandler("Usage: /dismount", 0) {
+}
+
+int DismountHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
+		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+	if(creatureInstance->IsRider()) {
+		if(creatureInstance->Dismount()) {
+			sim->SendInfoMessage("Failed to dismount.", INFOMSG_INFO);
+		}
+		else {
+			sim->SendInfoMessage("Dismounted.", INFOMSG_INFO);
+		}
+	}
+	else {
+		sim->SendInfoMessage("Not mounted.", INFOMSG_ERROR);
+	}
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 //

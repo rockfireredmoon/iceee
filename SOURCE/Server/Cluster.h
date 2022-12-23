@@ -193,6 +193,7 @@ public:
 	bool SetKey(const std::string &key, const std::string &defaultValue, bool sync = true);
 	int Scan(const ScanCallback& task, const std::string &pattern, size_t max = 0);
 	int64_t NextValue(const std::string &key, int incr = 1);
+	bool IsClusterable();
 private:
 
 	std::string mHost;

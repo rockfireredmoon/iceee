@@ -1033,7 +1033,7 @@ bool SpawnManager :: NotifyKill(ActiveSpawner *sourceSpawner, int creatureID)
 				actInst->uniqueSpawnManager.ReRoll(sourceSpawner->spawnPackage->packageName, sourceSpawner->GetRespawnDelaySeconds());
 		}
 		
-		if(sourceSpawner->spawnPoint->hasExtraData)
+		if(!sourceSpawner->spawnPoint->hasExtraData)
 			return false;
 		if(sourceSpawner->spawnPoint->extraData.sequential != 0)
 			return true;

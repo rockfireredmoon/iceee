@@ -344,6 +344,13 @@ public:
 	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class DismountHandler : public AbstractCommandHandler {
+public:
+	DismountHandler();
+	~DismountHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
 class SetPermissionHandler : public AbstractCommandHandler {
 public:
 	SetPermissionHandler();

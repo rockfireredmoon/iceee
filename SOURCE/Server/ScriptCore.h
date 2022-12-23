@@ -5,11 +5,11 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <squirrel.h>
 #include <sqstdio.h>
 #include <sqstdaux.h>
 #include <sqstdstring.h>
 #include "Callback.h"
-#include <squirrel.h>
 #include "sqrat.h"
 #include "util/SquirrelObjects.h"
 #include "Entities.h"

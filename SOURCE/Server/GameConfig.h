@@ -86,6 +86,7 @@ public:
 	bool UsePartyLoot;						 // Whether to allow party loot
 
 private:
+	void LoadMap();
 	void AddIfMissing(const std::string &key, const std::string &value, std::map<std::string, std::string> &map);
 
 };

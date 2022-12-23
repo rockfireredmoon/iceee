@@ -6,19 +6,8 @@ project('tawd', ['cpp','c'], version: '0.9.0', default_options : [
 
 #Setup
 server_inc = include_directories('SOURCE/Server')
-squirrel_inc = include_directories('SOURCE/squirrel/include')
-squirrel_lib_inc = include_directories('SOURCE/squirrel/squirrel')
-sqstdlib_lib_inc = include_directories('SOURCE/squirrel/sqstdlib')
 cppredis_inc = include_directories('SOURCE/LibCPPRedis/includes')
 tacopie_inc = include_directories('SOURCE/LibCPPRedis/tacopie/includes')
-
-#Dependencies
-
-boost_dep = dependency('boost', modules : ['thread', 'system'])
-thread_dep = dependency('threads')
-curl_dep = dependency('libcurl')
-openssl_dep = dependency('openssl', required: false)
-pthread_dep = meson.get_compiler('c').find_library('pthread', required: false)
 
 #Other Installation
 datadir = get_option('serverdatadir')
@@ -79,6 +68,13 @@ else
 	docpath = get_option('docdir')
 endif
 
+#Dependencies
+boost_dep = dependency('boost', modules : ['thread', 'system'])
+thread_dep = dependency('threads')
+curl_dep = dependency('libcurl')
+openssl_dep = dependency('openssl', required: false)
+pthread_dep = meson.get_compiler('c').find_library('pthread', required: false)
+
 #Compiler arguments 
 
 # Temporary until i can be bother to update to the newer CivetWeb interfaces
@@ -93,39 +89,14 @@ if pthread_dep.found()
 	add_global_arguments('-DHAS_PTHREAD=1', language: ['cpp','c'])
 endif
 
-#Squirrel
-squirrel_lib = library('tawd-squirrel',[
-	'SOURCE/squirrel/squirrel/sqapi.cpp',
-	'SOURCE/squirrel/squirrel/sqbaselib.cpp',
-	'SOURCE/squirrel/squirrel/sqclass.cpp',
-	'SOURCE/squirrel/squirrel/sqcompiler.cpp',
-	'SOURCE/squirrel/squirrel/sqdebug.cpp',
-	'SOURCE/squirrel/squirrel/sqfuncstate.cpp',
-	'SOURCE/squirrel/squirrel/sqlexer.cpp',
-	'SOURCE/squirrel/squirrel/sqmem.cpp',
-	'SOURCE/squirrel/squirrel/sqobject.cpp',
-	'SOURCE/squirrel/squirrel/sqstate.cpp',
-	'SOURCE/squirrel/squirrel/sqtable.cpp',
-	'SOURCE/squirrel/squirrel/sqvm.cpp'],
-  	install : true, 
-  	version : meson.project_version(),
-	include_directories : squirrel_inc)
-	
-#Squirrel stdlib
-sqstdlib_lib = library('tawd-sqstdlib',[
-	'SOURCE/squirrel/sqstdlib/sqstdaux.cpp',
-	'SOURCE/squirrel/sqstdlib/sqstdblob.cpp',
-	'SOURCE/squirrel/sqstdlib/sqstdio.cpp',
-	'SOURCE/squirrel/sqstdlib/sqstdmath.cpp',
-	'SOURCE/squirrel/sqstdlib/sqstdrex.cpp',
-	'SOURCE/squirrel/sqstdlib/sqstdstream.cpp',
-	'SOURCE/squirrel/sqstdlib/sqstdstring.cpp',
-	'SOURCE/squirrel/sqstdlib/sqstdsystem.cpp'], 
-	include_directories : [squirrel_inc, squirrel_lib_inc],
-  	install : true,
-  	version : meson.project_version(),
-	link_with: [squirrel_lib])
-	
+# TODO squirrel 3.2 (sqRat?) is making this necessary. Can it be fixed?
+add_global_arguments('-fpermissive', language: ['cpp','c'])
+
+#Other Dependencies
+
+squirrel_dep = dependency('squirrel', fallback: ['squirrel','libsquirrel_dep'])
+sqstdlib_dep = dependency('sqstdlib', fallback: ['squirrel','libsqstdlib_dep'])
+
 #tacopie
 tacopie_lib = library('tawd-tacopie',[
 	'SOURCE/LibCPPRedis/tacopie/sources/utils/error.cpp',
@@ -309,11 +280,11 @@ server_lib = library('tawd-server',[
 	'SOURCE/Server/util/SquirrelObjects.cpp',	
 	'SOURCE/Server/util/easylogging++.cc',
 	'SOURCE/Server/util/Log.cpp'], 
-	include_directories : [squirrel_inc, sqstdlib_lib_inc, cppredis_inc, tacopie_inc],
-	dependencies: [thread_dep, curl_dep,boost_dep],
+	include_directories : [cppredis_inc, tacopie_inc],
+	dependencies: [thread_dep, curl_dep,boost_dep, squirrel_dep, sqstdlib_dep],
   	install : true,
   	version: meson.project_version(),
-	link_with: [squirrel_lib,sqstdlib_lib,cppredis_lib,tacopie_lib])
+	link_with: [cppredis_lib,tacopie_lib])
 
 #Main Daemon
 server_lib_cppargs = []
@@ -321,25 +292,25 @@ if get_option('service') and host_machine.system() == 'windows'
 	server_lib_cppargs += '-DWINDOWS_SERVICE=1'
 endif
 executable('tawd', 'SOURCE/Daemon/main.cpp', 
-	include_directories : [server_inc, squirrel_inc, sqstdlib_lib_inc, cppredis_inc, tacopie_inc], 
-	dependencies: [thread_dep, curl_dep, openssl_dep],
+	include_directories : [server_inc, cppredis_inc, tacopie_inc], 
+	dependencies: [thread_dep, curl_dep, squirrel_dep, sqstdlib_dep, openssl_dep],
 	link_with: [server_lib], install: true, cpp_args: server_lib_cppargs)
 	
 executable('eehttpd', 'SOURCE/EEHTTP/main.cpp', 
-	include_directories : [server_inc, squirrel_inc, sqstdlib_lib_inc, cppredis_inc, tacopie_inc], 
-	dependencies: [thread_dep, curl_dep, openssl_dep],
+	include_directories : [server_inc, cppredis_inc, tacopie_inc], 
+	dependencies: [thread_dep, curl_dep, squirrel_dep, sqstdlib_dep, openssl_dep],
 	link_with: [server_lib], install: true, cpp_args: server_lib_cppargs)
 	
 #Pre-TAWD text file user data to TAWD Redis database
 executable('text2redis', 'SOURCE/Tools/TextToRedis.cpp', 
-	include_directories : [server_inc, squirrel_inc, sqstdlib_lib_inc, cppredis_inc, tacopie_inc], 
-	dependencies: [thread_dep, curl_dep, openssl_dep],
+	include_directories : [server_inc, cppredis_inc, tacopie_inc], 
+	dependencies: [thread_dep, curl_dep, squirrel_dep, sqstdlib_dep, openssl_dep],
 	link_with: [server_lib], install: true)
 	
 #Account management command
 executable('eeaccount', 'SOURCE/Tools/EEAccount.cpp', 
-	include_directories : [server_inc, squirrel_inc, sqstdlib_lib_inc, cppredis_inc, tacopie_inc], 
-	dependencies: [thread_dep, curl_dep, openssl_dep],
+	include_directories : [server_inc, cppredis_inc, tacopie_inc], 
+	dependencies: [thread_dep, curl_dep, squirrel_dep, sqstdlib_dep, openssl_dep],
 	link_with: [server_lib], install: true)
 
 # Create actual configuration files from samples, changing the default
@@ -605,34 +576,6 @@ install_headers(
 	'SOURCE/LibCPPRedis/includes/cpp_redis/misc/deprecated.hpp',
 	'SOURCE/LibCPPRedis/includes/cpp_redis/misc/logger.hpp', subdir: 'tawd/LibCPPRedis')
 
-install_headers(
-	'SOURCE/squirrel/include/sqstdsystem.h',
-	'SOURCE/squirrel/include/sqstdblob.h',
-	'SOURCE/squirrel/include/sqconfig.h',
-	'SOURCE/squirrel/include/sqstdstring.h',
-	'SOURCE/squirrel/include/sqstdaux.h',
-	'SOURCE/squirrel/include/sqstdio.h',
-	'SOURCE/squirrel/include/squirrel.h',
-	'SOURCE/squirrel/include/sqstdmath.h',
-	'SOURCE/squirrel/squirrel/squserdata.h',
-	'SOURCE/squirrel/squirrel/sqstring.h',
-	'SOURCE/squirrel/squirrel/sqclass.h',
-	'SOURCE/squirrel/squirrel/squtils.h',
-	'SOURCE/squirrel/squirrel/sqpcheader.h',
-	'SOURCE/squirrel/squirrel/sqlexer.h',
-	'SOURCE/squirrel/squirrel/sqfuncstate.h',
-	'SOURCE/squirrel/squirrel/sqcompiler.h',
-	'SOURCE/squirrel/squirrel/sqarray.h',
-	'SOURCE/squirrel/squirrel/sqfuncproto.h',
-	'SOURCE/squirrel/squirrel/sqobject.h',
-	'SOURCE/squirrel/squirrel/sqvm.h',
-	'SOURCE/squirrel/squirrel/sqtable.h',
-	'SOURCE/squirrel/squirrel/sqopcodes.h',
-	'SOURCE/squirrel/squirrel/sqclosure.h',
-	'SOURCE/squirrel/squirrel/sqstate.h',
-	'SOURCE/squirrel/sqstdlib/sqstdstream.h',
-	'SOURCE/squirrel/sqstdlib/sqstdblobimpl.h', subdir: 'tawd/squirrel')
-    
 if get_option('service') and host_machine.system() == 'linux'
 	if get_option('sysvinit')
 		install_data(sources: 'Etc/Linux/tawd', install_dir : get_option('sysconfdir') + '/etc/init.d')

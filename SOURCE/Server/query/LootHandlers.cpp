@@ -78,7 +78,7 @@ int LootItemHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 		qresponse.push_back("OK");
 		sprintf(sim->Aux3, "%d", conIndex);
 		qresponse.push_back(sim->Aux3);
-		return PrepExt_QueryResponseStringList(&sim->SendBuf[result], query->ID,
+		return result + PrepExt_QueryResponseStringList(&sim->SendBuf[result], query->ID,
 				qresponse);
 	}
 	return 0;
