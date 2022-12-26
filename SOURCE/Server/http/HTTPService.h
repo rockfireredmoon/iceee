@@ -35,15 +35,15 @@ class FileChecksum
 {
 public:
 	FileChecksum();
-	typedef std::map<std::string, std::string> CHECKSUM_MAP;
+	typedef map<string, string> CHECKSUM_MAP;
 	CHECKSUM_MAP mChecksumData;
 	void LoadFromFile();
-	std::string MatchChecksum(const fs::path &filename, const std::string checksum);
+	string MatchChecksum(const fs::path &filename, const string checksum);
 private:
 	fs::path GetFilename();
 	void ScheduleCheck();
 	int mChecksumUpdateTimer;
-	unsigned long mChecksumUpdate;
+	fs::file_time_type mChecksumUpdate;
 	int mChecked;
 	//Platform_CriticalSection cs;
 };
@@ -55,10 +55,10 @@ public:
 	~HTTPService();
 	bool Start();
 	bool Shutdown();
-	void RegisterHandler(std::string name, CivetHandler *handler);
+	void RegisterHandler(string name, CivetHandler *handler);
 private:
 	CivetServer *civetServer;
-	std::map<std::string, CivetHandler*> handlers;
+	map<string, CivetHandler*> handlers;
 };
 
 }

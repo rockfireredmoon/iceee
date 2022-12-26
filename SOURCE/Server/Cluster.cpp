@@ -642,8 +642,8 @@ int ClusterManager::Scan(const ScanCallback &task, const string &pattern,
 	size_t pages = 0;
 	if (max == 0)
 		max = 10000;
-	if (g_Logs.cluster->enabled(el::Level::Debug))
-		g_Logs.cluster->debug("Scanning for keys matching %v", pattern);
+	if (g_Logs.cluster->enabled(el::Level::Trace))
+		g_Logs.cluster->trace("Scanning for keys matching %v", pattern);
 	do {
 		mClient.scan(cursor, pattern, max,
 				[this, task, pattern, &cursor, &count, max, &scanned, &pages](
@@ -662,8 +662,8 @@ int ClusterManager::Scan(const ScanCallback &task, const string &pattern,
 				});
 		mClient.sync_commit();
 	} while (cursor > 0 && (max == 0 || count < max));
-	if (g_Logs.cluster->enabled(el::Level::Debug))
-		g_Logs.cluster->debug("Scanning for keys matching %v, matched %v", pattern, count);
+	if (g_Logs.cluster->enabled(el::Level::Trace))
+		g_Logs.cluster->trace("Scanning for keys matching %v, matched %v", pattern, count);
 	return 0;
 }
 
@@ -965,8 +965,8 @@ void ClusterManager::ConfirmTransfer(int cdefId, const string &shardName,
 void ClusterManager::Send(const std::string &msg, const Json::Value &val) {
 	Json::StyledWriter writer;
 	std::string str = writer.write(val);
-	if (g_Logs.cluster->enabled(el::Level::Debug))
-		g_Logs.cluster->debug("Send cluster message: %v [%v]", msg, str);
+	if (g_Logs.cluster->enabled(el::Level::Trace))
+		g_Logs.cluster->trace("Send cluster message: %v [%v]", msg, str);
 	mClient.publish(msg, str);
 	mClient.commit();
 }
@@ -1630,8 +1630,10 @@ void ClusterManager::RunProcessingCycle() {
 	/* Because this runs in the server processing thread we use g_ServerTime instead of g_PlatformTime.getMilliseconds() */
 	if (g_ServerTime > mNextPing) {
 
-		g_Logs.cluster->debug("Sending shard ping for %v at %v", mShardName,
-				g_ServerTime);
+		if(g_Logs.cluster->enabled(el::Level::Debug)) {
+			g_Logs.cluster->debug("Sending shard ping for %v at %v", mShardName,
+					g_ServerTime);
+		}
 
 		Json::Value ping;
 		ping["shardName"] = mShardName;

@@ -418,29 +418,17 @@ AIScriptManager :: ~AIScriptManager()
 
 int AIScriptManager :: LoadScripts(void)
 {
-	auto FileName = g_Config.ResolveStaticDataPath() / "AIScript" / "script_list.txt";
-	FileReader lfr;
-	if(lfr.OpenText(FileName) != Err_OK)
-	{
-		g_Logs.data->error("Error opening master script list [%v]", FileName);
-		return -1;
-	}
-
+	auto path = g_Config.ResolveStaticDataPath() / "AIScript";
+	g_Logs.data->info("Loading TSL AI Scripts");
 	AIScriptDef newItem;
-	lfr.CommentStyle = Comment_Semi;
-	string LoadName;
-	while(lfr.FileOpen() == true)
-	{
-		int r = lfr.ReadLine();
-		if(r > 0)
-		{
+	for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
+		auto path = entry.path();
+		if(path.extension() == ".txt") {
 			aiDef.push_back(newItem);
-			aiDef.back().CompileFromSource(g_Config.ResolveStaticDataPath() / "AIScript" / lfr.DataBuffer);
+			aiDef.back().CompileFromSource(path);
 		}
 	}
-	lfr.CloseCurrent();
-	g_Logs.data->info("Loaded %v AI Scripts", aiDef.size());
-
+	g_Logs.data->info("Loaded %v TSL AI Scripts", aiDef.size());
 	return 0;
 }
 

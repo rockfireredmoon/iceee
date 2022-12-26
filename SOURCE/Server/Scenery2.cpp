@@ -1741,7 +1741,7 @@ void SceneryManager::SendPageRequest(const SceneryPageRequest& request, list<Pac
 
 void SceneryManager::InitThread()
 {
-	mThread = new boost::thread( { &SceneryManager::RunMain, this });
+	mThread = new thread(bind(&SceneryManager::RunMain, this));
 }
 
 void SceneryManager::RunMain(void)

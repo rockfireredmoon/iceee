@@ -53,13 +53,13 @@ Leaderboard::Leaderboard() {
 Leaderboard::~Leaderboard() {
 }
 
-void Leaderboard::SetName(std::string name) {
+void Leaderboard::SetName(string name) {
 	mName = name;
 	cs.SetDebugName(name.c_str());
 }
 
 void Leaderboard::Build() {
-	std::vector<Leader> l;
+	vector<Leader> l;
 	OnBuild(&l);
 	cs.Enter("Leaderboard::Build");
 	mLeaders.clear();
@@ -91,8 +91,8 @@ void LeaderboardManager::AddBoard(Leaderboard *board) {
 	mBoards.push_back(board);
 }
 
-Leaderboard* LeaderboardManager::GetBoard(std::string name) {
-	for (std::vector<Leaderboard*>::iterator it = mBoards.begin();
+Leaderboard* LeaderboardManager::GetBoard(string name) {
+	for (vector<Leaderboard*>::iterator it = mBoards.begin();
 			it != mBoards.end(); ++it) {
 		if ((*it)->mName.compare(name) == 0) {
 			return *it;
@@ -103,7 +103,7 @@ Leaderboard* LeaderboardManager::GetBoard(std::string name) {
 
 int LeaderboardManager::InitThread(int globalThreadID) {
 	mGlobalThreadID = globalThreadID;
-	mThread = new boost::thread( { &LeaderboardManager::RunMain, this });
+	mThread = new thread(bind(&LeaderboardManager::RunMain, this));
 	return 0;
 }
 
@@ -123,7 +123,7 @@ void LeaderboardManager::RunMain() {
 	unsigned seconds = 0;
 	while (mIsActive == true) {
 		if (seconds % 60 == 0) {
-			for (std::vector<Leaderboard*>::iterator it = mBoards.begin();
+			for (vector<Leaderboard*>::iterator it = mBoards.begin();
 					it != mBoards.end(); ++it) {
 				(*it)->Build();
 			}

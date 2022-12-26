@@ -23,8 +23,9 @@
 
 #include "Components.h"
 #include "SocketClass3.h"
+#include <thread>
 
-#include <boost/thread.hpp>
+using namespace std;
 
 class RouterThread
 {
@@ -49,7 +50,7 @@ private:
 	char RecBuf[64];     //Holds the receiving data.  The router should not be receiving any data, so the buffer will be uselessly short.
 	std::string BindAddress;     //Address to listen on
 	SocketClass sc;       //Controls the socket connection for this thread.
-	boost::thread *mThread;
+	thread *mThread;
 	unsigned long ThreadID;      //ID of the created thread
 	bool isActive;        //If true, the thread is active and running.
 	int InternalIndex;    //A user defined value to identify this router instance index in order to assist in diagnostics

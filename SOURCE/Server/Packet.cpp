@@ -159,7 +159,7 @@ void PacketManager::RunMain(void) {
 
 void PacketManager::InitThread()
 {
-	mThread = new boost::thread( { &PacketManager::RunMain, this });
+	mThread = new thread(bind(&PacketManager::RunMain, this));
 }
 
 void PacketManager::Shutdown(void) {
@@ -215,8 +215,8 @@ void PacketManager::GetPackets2(void) {
 
 	//Sort the transition list into the outgoing Send list according to socket.
 	//Try to cluster the packets if possible.
-	std::list<PendingSocket>::iterator it;
-	std::list<Packet>::iterator pit;
+	list<PendingSocket>::iterator it;
+	list<Packet>::iterator pit;
 	for (it = mTransition.begin(); it != mTransition.end(); ++it) {
 		PendingSocket *pSock = GetSendSocket(it->mSocket);
 		if (pSock != NULL) {
@@ -252,7 +252,7 @@ void PacketManager::SendPacketsFor(int socket) {
 	Debug::TimeTrack("SendPacketsFor", 50);
 #endif
 
-	std::list<PendingSocket>::iterator it;
+	list<PendingSocket>::iterator it;
 	it = mSendData.begin();
 	while (it != mSendData.end()) {
 		if(it->mSocket == socket) {
@@ -283,7 +283,7 @@ void PacketManager::SendPackets2(void) {
 	Debug::TimeTrack("SendPackets2", 50);
 #endif
 
-	std::list<PendingSocket>::iterator it;
+	list<PendingSocket>::iterator it;
 	it = mSendData.begin();
 	while (it != mSendData.end()) {
 		int res = SendSocket(it->mSocket, *it);
@@ -315,7 +315,7 @@ int PacketManager::SendSocket(int socket, PendingSocket &socketData) {
 		return SEND_DELAY;
 	}
 
-	std::list<Packet>::iterator pit;
+	list<Packet>::iterator pit;
 	pit = socketData.mPacketList.begin();
 	int sendRes = 0;
 
@@ -411,7 +411,7 @@ int PacketManager::AttemptSend2(int socket, const char *buffer, int length) {
 }
 
 PendingSocket* PacketManager::GetPendingSocket(int socket) {
-	std::list<PendingSocket>::iterator it;
+	list<PendingSocket>::iterator it;
 	if (mQueueData.size() > 0) {
 		for (it = mQueueData.begin(); it != mQueueData.end(); ++it)
 			if (it->mSocket == socket)
@@ -426,7 +426,7 @@ PendingSocket* PacketManager::GetPendingSocket(int socket) {
 
 PendingSocket* PacketManager::GetSendSocket(int socket) {
 	//Same as for the Queue return.
-	std::list<PendingSocket>::iterator it;
+	list<PendingSocket>::iterator it;
 	if (mSendData.size() > 0) {
 		for (it = mSendData.begin(); it != mSendData.end(); ++it)
 			if (it->mSocket == socket)
@@ -492,7 +492,7 @@ int PendingSocket::AddData(const Packet &data) {
 
 int PendingSocket::DebugGetPendingSize(void) {
 	int remain = 0;
-	std::list<Packet>::iterator it;
+	list<Packet>::iterator it;
 	for (it = mPacketList.begin(); it != mPacketList.end(); ++it)
 		remain += it->mData.size();
 

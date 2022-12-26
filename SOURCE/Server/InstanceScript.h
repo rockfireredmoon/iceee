@@ -55,10 +55,12 @@ public:
 	virtual ~InstanceNutDef();
 
 	bool LoadFromCluster(int zoneID);
+	virtual void Reload();
 	static fs::path GetInstanceNutScriptPath(int zoneID);
 	static fs::path GetInstanceScriptPath(int zoneID, bool pathIfNotExists);
 
 private:
+	int mZoneID;
 	map<string, Squirrel::Area> mLocationDef;
 };
 

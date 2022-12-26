@@ -881,11 +881,11 @@ AuctionHouseItem AuctionHouseManager::Auction(CreatureInstance *creatureInstance
 		g_ClusterManager.ListAdd(LISTPREFIX_AUCTION_ITEMS, Util::Format("%d", ahItem.mId));
 	// Finish auction
 
-	CharacterData *auctioneerInstance= g_CharacterManager.GetPointerByID(auctioneer);
+	CreatureDefinition *auctioneerInstance = CreatureDef.GetPointerByCDef(auctioneer);
 	ItemDef *item = g_ItemManager.GetSafePointerByID(ahItem.mItemId);
 	ChatMessage cm(Util::Format("%s is selling %s at %s's auction house",
 			pld->charPtr->cdef.css.display_name, item->mDisplayName.c_str(),
-			auctioneerInstance->cdef.css.display_name));
+			auctioneerInstance->css.display_name));
 	cm.mChannelName = "tc/";
 	cm.mChannel = GetChatInfoByChannel(cm.mChannelName.c_str());
 	cm.mSender = "EEBay";

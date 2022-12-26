@@ -802,15 +802,19 @@ void SpawnTile :: RemoveSpawnPointCreature(ActiveSpawner *spawner, int creatureI
 	}
 #else
 	ActiveInstance::CREATURE_IT cit;
-	cit = manager->actInst->NPCList.begin();
+	auto actInst = manager->actInst;
+	cit = actInst->NPCList.begin();
 	int count = 0;
-	while(cit != manager->actInst->NPCList.end())
+	while(cit != actInst->NPCList.end())
 	{
 		CreatureInstance *ptr = &cit->second;
 		if((creatureID == 0 || creatureID == ptr->CreatureID) && (ptr->serverFlags & ServerFlags::IsNPC) && ptr->spawnGen == spawner)
 		{
-			ptr->Submit([ptr](){
-				ptr->actInst->LSendToLocalSimulator(GSendBuf, PrepExt_RemoveCreature(GSendBuf, ptr->CreatureID), ptr->CurrentX, ptr->CurrentZ, -1);
+			auto cid = ptr->CreatureID;
+			auto cx = ptr->CurrentX;
+			auto cz = ptr->CurrentZ;
+			actInst->Submit([actInst, cid, cx, cz](){
+				actInst->LSendToLocalSimulator(GSendBuf, PrepExt_RemoveCreature(GSendBuf, cid), cx, cz, -1);
 			});
 
 			manager->actInst->EraseAllCreatureReference(ptr);

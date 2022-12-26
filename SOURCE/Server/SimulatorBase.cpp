@@ -50,7 +50,7 @@ void SimulatorBaseThread :: SetHomePort(int port)
 	HomePort = port;
 }
 
-void SimulatorBaseThread :: SetBindAddress(const std::string &address)
+void SimulatorBaseThread :: SetBindAddress(const string &address)
 {
 	BindAddress = address;
 }
@@ -62,7 +62,7 @@ void SimulatorBaseThread :: InitThread(int instanceindex, int globalThreadID)
 	InternalIndex = instanceindex;
 	GlobalThreadID = globalThreadID;
 
-	mThread = new boost::thread( { &SimulatorBaseThread::RunMain, this });
+	mThread = new thread(bind(&SimulatorBaseThread::RunMain, this));
 }
 
 void SimulatorBaseThread :: OnConnect(void)

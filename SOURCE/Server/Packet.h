@@ -6,17 +6,19 @@
 #include <string>
 #include <list>
 #include <vector>
-#include <boost/thread.hpp>
+#include <thread>
 
 #include <map>
 #include "Report.h"  //Only needed for debug report.
+
+using namespace std;
 
 class Packet
 {
 public:
 	Packet();
 	~Packet();
-	std::string mData;
+	string mData;
 	void Assign(const char *buffer, int length);
 	void AssignFrom(const Packet &source, size_t begin, size_t end);
 	void Append(const char *buffer, int length);
@@ -27,7 +29,7 @@ public:
 
 class MultiSendPacket : public Packet
 {
-	std::vector<int> mSocketList;
+	vector<int> mSocketList;
 };
 
 class PendingSocket
@@ -37,7 +39,7 @@ public:
 	PendingSocket(int socket);
 	~PendingSocket();
 	int mSocket;
-	std::list<Packet> mPacketList;
+	list<Packet> mPacketList;
 	unsigned long mForcedResumeTime;        //Experimental fix for some socket errors by delaying immediate retries for a very short time.
 	
 	int AddData(const Packet &data);
@@ -54,7 +56,7 @@ struct DebugPacketStatistics
 	unsigned long mPartialBytesTotal;   //Total number of bytes successfully sent from a failed send()
 	unsigned long mPartialEventCount;   //Total number of times the send() command was unable to send all bytes in the queue at once.
 	unsigned long mLastErrorTime;
-	std::string mErrorTimestamp;
+	string mErrorTimestamp;
 	DebugPacketStatistics();
 	void Clear(void);
 	void UpdateReport(ReportBuffer &report);
@@ -63,7 +65,7 @@ struct DebugPacketStatistics
 struct DebugPacketManager
 {
 	DebugPacketStatistics mCurrent;
-	std::vector<DebugPacketStatistics> mHistory;
+	vector<DebugPacketStatistics> mHistory;
 	void UpdateHistory(void);
 	void UpdateReport(ReportBuffer &report);
 };
@@ -74,12 +76,12 @@ public:
 	PacketManager();
 	~PacketManager();
 
-	typedef std::pair<int, Packet> PACKET_PAIR;   //int socket, Packet data
-	typedef std::list<PACKET_PAIR> PACKET_CONT;   //int socket, Packet data
-	typedef std::map<int, DebugPacketManager> DEBUG_MAP;  //int socket, struct of error information.
+	typedef pair<int, Packet> PACKET_PAIR;   //int socket, Packet data
+	typedef list<PACKET_PAIR> PACKET_CONT;   //int socket, Packet data
+	typedef map<int, DebugPacketManager> DEBUG_MAP;  //int socket, struct of error information.
 	/*
-	std::list<PACKET_PAIR> mListQueue;   //Packet data that has yet to be handled by the thread.
-	std::list<PACKET_PAIR> mListSending; //Data that has been acquired by the thread and is pending sending.
+	list<PACKET_PAIR> mListQueue;   //Packet data that has yet to be handled by the thread.
+	list<PACKET_PAIR> mListSending; //Data that has been acquired by the thread and is pending sending.
 	void AddOutgoingPacket(int socket, Packet &data);
 	bool AppendExistingPacket(int socket, Packet &data);
 	int AttemptSend(int socket, const char *buffer, int length);
@@ -126,11 +128,11 @@ private:
 	void GetPackets2(void);
 	PendingSocket* GetSendSocket(int socket);
 
-	std::list<PendingSocket> mQueueData;   //Data queued for sending.  The thread hasn't acquired this data yet.
-	std::list<PendingSocket> mTransition;  //Transitional buffer.  The data has been taken from the Queue, but needs to be processed into the Send list.
-	std::list<PendingSocket> mSendData;    //Data acquired by the thread, and undergoing send processing.
-	std::map<int, DebugPacketManager> mDebugData;
-	boost::thread *mThread;
+	list<PendingSocket> mQueueData;   //Data queued for sending.  The thread hasn't acquired this data yet.
+	list<PendingSocket> mTransition;  //Transitional buffer.  The data has been taken from the Queue, but needs to be processed into the Send list.
+	list<PendingSocket> mSendData;    //Data acquired by the thread, and undergoing send processing.
+	map<int, DebugPacketManager> mDebugData;
+	thread *mThread;
 	int mLastError;
 	Platform_CriticalSection cs;
 };

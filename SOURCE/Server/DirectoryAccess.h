@@ -7,6 +7,10 @@
 
 #include <vector>
 #include <string>
+#include <filesystem>
+
+using namespace std;
+namespace fs = filesystem;
 
 
 // Needed for the proper forward/backward slash convention depending on
@@ -32,9 +36,9 @@
 
 namespace Platform
 {
-	std::string FixPaths(const std::string &pathName);
-    unsigned long GetLastModified(const std::string &path);
-    int SetLastModified(const std::string &path, unsigned long lastModified);
+	string FixPaths(const string &pathName);
+    unsigned long GetLastModified(const fs::path &path);
+    int SetLastModified(const fs::path &path, unsigned long lastModified);
 }
 
 #endif //DIRECTORYACCESS_H

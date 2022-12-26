@@ -2112,7 +2112,7 @@ void WeatherState::SendWeatherUpdate(ActiveInstance *instance,
 				sim->AttemptSend(sim->Aux1,
 						PrepExt_SetWeather(sim->Aux1, mWeatherType,
 								mWeatherWeight));
-				if (g_ClusterManager.IsMaster()
+				if (sentToCluster && g_ClusterManager.IsMaster()
 						&& instance->mZoneDefPtr->IsOverworld()) {
 					/* If this is an overworld zone, notify all remote players of thunder */
 					g_ClusterManager.Weather(instance->mZone,
@@ -2339,13 +2339,15 @@ void WeatherManager::Deregister(vector<WeatherState*> *states) {
 	for (vector<WeatherState*>::iterator it = states->begin();
 			it != states->end(); ++it) {
 		WeatherState *ws = *it;
-		if (g_Config.DebugVerbose)
-			g_Logs.simulator->info("Clearing up weather for %v (%v)",
+		if(g_Logs.server->enabled(el::Level::Trace)) {
+			g_Logs.simulator->trace("Clearing up weather for %v (%v)",
 					ws->mInstanceId, ws->mDefinition.mMapName.c_str());
+		}
 		for (vector<string>::iterator it2 = ws->mMapNames.begin();
 				it2 != ws->mMapNames.end(); ++it2) {
-			if (g_Config.DebugVerbose)
-				g_Logs.simulator->info("    Map (%v)", (*it2).c_str());
+			if(g_Logs.server->enabled(el::Level::Trace)) {
+				g_Logs.simulator->trace("    Map (%v)", (*it2).c_str());
+			}
 			WeatherKey k;
 			k.instance = ws->mInstanceId;
 			k.mapName = *it2;

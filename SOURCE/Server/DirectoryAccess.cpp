@@ -20,10 +20,10 @@
 #include "Config.h"
 
 
-std::string Platform::FixPaths(const std::string &pathName)
+string Platform::FixPaths(const string &pathName)
 {
 	size_t len = pathName.length();
-	std::string s;
+	string s;
 	for(size_t i = 0; i < len; i++)
 	{
 		if(pathName[i] == PLATFORM_FOLDERINVALID)
@@ -34,7 +34,7 @@ std::string Platform::FixPaths(const std::string &pathName)
 	return s;
 }
 
-unsigned long Platform::GetLastModified(const std::string &path) {
+unsigned long Platform::GetLastModified(const fs::path &path) {
 #ifdef WINDOWS_PLATFORM
 
 	FILETIME ftCreate, ftAccess, ftWrite;
@@ -58,14 +58,14 @@ unsigned long Platform::GetLastModified(const std::string &path) {
 	return static_cast<unsigned long>(*val) / 10000000 - EPOCH_DIFF;   // epoch is Jan. 1, 1601: 134774 days to Jan. 1, 1970
 #else
 	struct stat attrib;
-	if(stat(path.c_str(), &attrib) < 0) {
+	if(stat(path.string().c_str(), &attrib) < 0) {
 		return 0;
 	}
 	return attrib.st_mtime;
 #endif
 }
 
-int Platform::SetLastModified(const std::string &path, unsigned long lastModifiedSec) {
+int Platform::SetLastModified(const fs::path &path, unsigned long lastModifiedSec) {
 #ifdef WINDOWS_PLATFORM
 
 	HANDLE hFile;
@@ -96,12 +96,12 @@ int Platform::SetLastModified(const std::string &path, unsigned long lastModifie
 #else
 	struct utimbuf new_times;
 	struct stat attrib;
-	if(stat(path.c_str(), &attrib) < 0) {
+	if(stat(path.string().c_str(), &attrib) < 0) {
 		return 0;
 	}
 	new_times.actime = attrib.st_atime;
 	new_times.modtime = lastModifiedSec;
-	if (utime(path.c_str(), &new_times) < 0) {
+	if (utime(path.string().c_str(), &new_times) < 0) {
 	    return 1;
 	}
 	return 1;

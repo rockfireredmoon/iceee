@@ -1,0 +1,1 @@
+option('librarynameprefix', type: 'string', value: 'tawd-', description: 'Path to prefix library names with.')

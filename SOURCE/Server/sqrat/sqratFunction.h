@@ -235,8 +235,8 @@ public:
         sq_pushobject(vm, env);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        SQUnsignedInteger nparams;
-        SQUnsignedInteger nfreevars;
+        SQInteger nparams;
+        SQInteger nfreevars;
 
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 1)) {
             sq_pop(vm, 2);
@@ -283,8 +283,8 @@ public:
         sq_pushobject(vm, env);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        SQUnsignedInteger nparams;
-        SQUnsignedInteger nfreevars;
+        SQInteger nparams;
+        SQInteger nfreevars;
 
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 2)) {
             sq_pop(vm, 2);
@@ -1265,8 +1265,8 @@ public:
         sq_pushobject(vm, env);
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        SQUnsignedInteger nparams;
-        SQUnsignedInteger nfreevars;
+        SQInteger nparams;
+        SQInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 1)) {
             sq_pop(vm, 2);
             SQTHROW(vm, _SC("wrong number of parameters"));

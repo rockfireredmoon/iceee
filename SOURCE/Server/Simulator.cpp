@@ -545,7 +545,7 @@ void SimulatorThread::ResetValues(bool hardReset) {
 
 void SimulatorThread::InitThread(int globalThreadID) {
 	GlobalThreadID = globalThreadID;
-	boost::thread t( { &SimulatorThread::RunMain, this });
+	thread t(bind(&SimulatorThread::RunMain, this));
 	t.detach();
 }
 
@@ -1480,6 +1480,8 @@ bool SimulatorThread::MainCallSetZone(int newZoneID, int newInstanceID,
 			pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX,
 			creatureInst->CurrentZ, 0);
 	wpos += PrepExt_SetTimeOfDay(&SendBuf[wpos], GetTimeOfDay().c_str());
+	wpos += PrepExt_SetWeather(&SendBuf[wpos], "", 0);
+
 	AttemptSend(SendBuf, wpos);
 
 	CheckSpawnTileUpdate(true);

@@ -26,12 +26,14 @@
 #include "Components.h"
 #include "json/json.h"
 
-#include <boost/thread.hpp>
+#include <thread>
+
+using namespace std;
 
 class Leader {
 public:
 	int mId;
-	std::string mName;
+	string mName;
 	PlayerStatSet mStats;
 	Leader();
 	void WriteToJSON(Json::Value &value);
@@ -44,13 +46,13 @@ public:
 	virtual ~Leaderboard();
 
 	Platform_CriticalSection cs;  //Needed for external account management since the HTTP threads might be accessing this concurrently.
-	std::string mName;
+	string mName;
 	unsigned long mCollected;
-	std::vector<Leader> mLeaders;
+	vector<Leader> mLeaders;
 
 	void Build();
-	void SetName(std::string name);
-	virtual void OnBuild(std::vector<Leader> *leaders) =0;
+	void SetName(string name);
+	virtual void OnBuild(vector<Leader> *leaders) =0;
 };
 
 class LeaderboardManager
@@ -62,14 +64,14 @@ public:
 	int InitThread(int globalThreadID);
 	void Shutdown();
 	void AddBoard(Leaderboard* board);
-	Leaderboard* GetBoard(std::string name);
+	Leaderboard* GetBoard(string name);
 
 private:
-	std::vector<Leaderboard*> mBoards;
+	vector<Leaderboard*> mBoards;
 	void RunMain();
 	bool mIsActive;
 	bool mIsExist;
-	boost::thread *mThread;
+	thread *mThread;
 	unsigned long mThreadID;
 	int mGlobalThreadID;
 };

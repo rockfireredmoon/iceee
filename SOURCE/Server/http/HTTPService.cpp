@@ -49,7 +49,6 @@ FileChecksum g_FileChecksum;
 
 FileChecksum::FileChecksum() {
 	mChecked = 0;
-	mChecksumUpdate = 0;
 	mChecksumUpdateTimer = 0;
 }
 
@@ -85,7 +84,7 @@ void FileChecksum::LoadFromFile() {
 		}
 	}
 	lfr.CloseCurrent();
-	mChecksumUpdate = Platform::GetLastModified(filename);
+	mChecksumUpdate = fs::last_write_time(filename);
 	ScheduleCheck();
 //	cs.Leave();
 }
@@ -101,7 +100,7 @@ void FileChecksum::ScheduleCheck() {
 	}
 	mChecksumUpdateTimer = g_Scheduler.ScheduleIn([this]() {
 		std::string filename = GetFilename();
-		if (Platform::GetLastModified(filename) != mChecksumUpdate) {
+		if (fs::last_write_time(filename) != mChecksumUpdate) {
 			// Different again, reset counter to 1 so we check checking
 			mChecked = 1;
 		}
@@ -117,7 +116,7 @@ void FileChecksum::ScheduleCheck() {
 			// Had one change, but need more
 			mChecked++;
 		}
-		mChecksumUpdate = Platform::GetLastModified(filename);
+		mChecksumUpdate = fs::last_write_time(filename);
 		ScheduleCheck();
 	}, 10000);
 }

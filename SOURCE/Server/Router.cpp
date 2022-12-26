@@ -55,7 +55,7 @@ void RouterThread::SetTargetPort(int port) {
 int RouterThread::InitThread(int instanceindex, int globalThreadID) {
 	InternalIndex = instanceindex;
 	GlobalThreadID = globalThreadID;
-	mThread = new boost::thread( { &RouterThread::RunMain, this });
+	mThread = new thread(bind(&RouterThread::RunMain, this));
 	return 0;
 }
 

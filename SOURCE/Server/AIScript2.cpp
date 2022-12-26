@@ -21,15 +21,16 @@ AINutManager aiNutManager;
 AINutDef::~AINutDef() {
 }
 
-UseCallback::UseCallback(AINutPlayer *aiNut, int abilityID) {
+UseCallback::UseCallback(AINutPlayer *aiNut, int abilityID, bool highest) {
 	mAiNut = aiNut;
 	mAbilityID = abilityID;
+	mHighest = highest;
 }
 UseCallback::~UseCallback() {
 }
 
 bool UseCallback::Execute() {
-	mAiNut->Use(mAbilityID);
+	mAiNut->DoUse(mAbilityID, true, mHighest);
 	return true;
 }
 
@@ -120,7 +121,7 @@ bool AINutPlayer::DoUse(int abilityID, bool retry, bool highest) {
 			if (retry && attachedCreature->AIAbilityFailureAllowRetry(r) == true)
 				QueueAdd(new ScriptCore::NutScriptEvent(
 							new ScriptCore::TimeCondition(USE_FAIL_DELAY),
-							new UseCallback(this, abilityID)));
+							new UseCallback(this, abilityID, highest)));
 		}
 		else
 			return true;
@@ -466,6 +467,7 @@ AINutManager::~AINutManager() {
 int AINutManager::LoadScripts(void) {
 
 	auto path = g_Config.ResolveStaticDataPath() / "AIScript";
+	g_Logs.data->info("Loading Squirrel AI Scripts");
 	for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
 		auto path = entry.path();
 		if(path.extension() == ".nut") {
@@ -474,6 +476,7 @@ int AINutManager::LoadScripts(void) {
 			def->LoadFromLocalFile(path);
 		}
 	}
+	g_Logs.data->info("Loaded %v Squirrel AI Scripts", aiDef.size());
 
 	return 0;
 }

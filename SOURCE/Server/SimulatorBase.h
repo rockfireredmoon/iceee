@@ -8,7 +8,9 @@
 #include "Components.h"
 #include "SocketClass3.h"
 
-#include <boost/thread.hpp>
+#include <thread>
+
+using namespace std;
 
 class SimulatorBaseThread {
 public:
@@ -28,9 +30,9 @@ public:
 	int Status; //This maintains the activity Status, determining whether it needs to Init, Restart, etc.
 
 	int HomePort;
-	std::string BindAddress;
+	string BindAddress;
 
-	void SetBindAddress(const std::string &address);
+	void SetBindAddress(const string &address);
 	void SetHomePort(int port);
 	void InitThread(int instanceindex, int globalThreadID);
 	void OnConnect(void);  //Called once a connection has been made
@@ -43,7 +45,7 @@ private:
 	void RunMainLoop(void);
 
 	int MessageCountRec;
-	boost::thread *mThread;
+	thread *mThread;
 	bool isActive;        //If true, the is active and running.
 	SocketClass sc;       //Controls the socket connection for this thread.
 	long RecBytes;       //The number of bytes received from the last message

@@ -200,6 +200,10 @@ namespace ScriptCore
 		return true;
 	}
 
+	bool NutDef::IsFromCluster() {
+		return fromCluster;
+	}
+
 	bool NutDef::ReadEntity(AbstractEntityReader *reader) {
 		fromCluster = true;
 		if (!reader->Exists())
@@ -220,6 +224,23 @@ namespace ScriptCore
 		return true;
 	}
 
+	void NutDef::CheckReload() {
+		if(!fromCluster) {
+			if(GetLastModified() != Platform::GetLastModified(mSourceFile)) {
+				Reload();
+			}
+		}
+	}
+
+	void NutDef::Reload() {
+		if(!fromCluster) {
+			LoadFromLocalFile(mSourceFile);
+		}
+	}
+
+	unsigned long NutDef::GetLastModified() {
+		return mLastModified;
+	}
 
 	void NutDef::SetLastModified(unsigned long lastModified) {
 		mLastModified = lastModified;
@@ -525,10 +546,12 @@ namespace ScriptCore
 	NutPlayer::~NutPlayer() {
 		ClearQueue();
 		if(mHalted) {
-			if(def == NULL)
-				g_Logs.script->debug("Closing virtual machine for unitialized Squirrel Script");
-			else
-				g_Logs.script->debug("Closing virtual machine for %v", def->mSourceFile.c_str());
+			if(g_Logs.script->enabled(el::Level::Trace)) {
+				if(def == NULL)
+					g_Logs.script->trace("Closing virtual machine for uninitialized Squirrel Script");
+				else
+					g_Logs.script->trace("Closing virtual machine for %v", def->mSourceFile.c_str());
+			}
 			sq_close(vm);
 		}
 	}
@@ -582,6 +605,8 @@ namespace ScriptCore
 		unsigned long started = g_PlatformTime.getMilliseconds();
 
 		def = defPtr;
+		def->CheckReload();
+
 		vm = sq_open(g_Config.SquirrelVMStackSize);
 
 		// Register functions needed in scripts
@@ -604,7 +629,7 @@ namespace ScriptCore
 
 		Sqrat::Script script(vm);
 
-		if(cnutMod != def->mLastModified) {
+		if(cnutMod != def->GetLastModified()) {
 			g_Logs.script->info("Recompiling Squirrel script '%v'", def->mSourceFile);
 			script.CompileString(def->mScriptContent, errors, def->scriptName);
 		}
@@ -618,7 +643,7 @@ namespace ScriptCore
 			g_Logs.script->error("Squirrel script %v failed to compile. %v", def->mSourceFile, Sqrat::Error::Message(vm).c_str());
 		}
 		else {
-			if(cnutMod != def->mLastModified) {
+			if(cnutMod != def->GetLastModified()) {
 				g_Logs.script->info("Writing Squirrel script bytecode for '%v' to '%v' (in %v)", def->mSourceFile, cnut, cnut.parent_path());
 				fs::create_directories(cnut.parent_path());
 				try {
@@ -627,7 +652,7 @@ namespace ScriptCore
 				catch(int e) {
 					g_Logs.script->error("Failed to write Squirrel script bytecode for '%v' to '%v'. Err %v", def->mSourceFile, cnut, e);
 				}
-				Platform::SetLastModified(cnut, def->mLastModified);
+				Platform::SetLastModified(cnut,  def->GetLastModified());
 			}
 			mActive = true;
 			mRunning = true;
@@ -728,7 +753,9 @@ namespace ScriptCore
 		}
 		else {
 			unsigned long spd = g_Config.SquirrelQueueSpeed / def->mScriptSpeed;
-			g_Logs.script->debug("Queueing call (exec) in %v in %v", def->scriptName.c_str(), spd);
+			if(g_Logs.script->enabled(el::Level::Trace)) {
+				g_Logs.script->trace("Queueing call (exec) in %v in %v", def->scriptName.c_str(), spd);
+			}
 			return QueueAdd(new ScriptCore::NutScriptEvent(
 						new ScriptCore::TimeCondition(spd),
 						new ScriptCore::SquirrelFunctionCallback(this, function)));
@@ -749,7 +776,9 @@ namespace ScriptCore
 			return -1;
 		}
 		else {
-			g_Logs.script->debug("Queueing call in %v in %v", def->scriptName.c_str(), fireDelay);
+			if(g_Logs.script->enabled(el::Level::Trace)) {
+				g_Logs.script->trace("Queueing call in %v in %v", def->scriptName.c_str(), fireDelay);
+			}
 			return QueueAdd(new ScriptCore::NutScriptEvent(
 						new ScriptCore::TimeCondition(fireDelay),
 						new ScriptCore::SquirrelFunctionCallback(this, function)));
@@ -1030,7 +1059,9 @@ namespace ScriptCore
 
 	bool NutPlayer::RunFunctionWithBoolReturn(string name, vector<ScriptParam> parms, bool time, bool defaultIfNoFunction) {
 		if(!mActive) {
-			g_Logs.script->warn("Attempt to run function on inactive script %s.", name.c_str());
+			if(g_Logs.server->enabled(el::Level::Trace)) {
+				g_Logs.script->trace("Attempt to run function on inactive script %s.", name.c_str());
+			}
 			return defaultIfNoFunction;
 		}
 		unsigned long now = g_PlatformTime.getMilliseconds();
@@ -1122,14 +1153,17 @@ namespace ScriptCore
 			return true;
 		}
 		else {
-			g_Logs.script->debug("Request to wake an already awake VM to run %v.", name.c_str());
+			if(g_Logs.server->enabled(el::Level::Trace)) {
+				g_Logs.script->trace("Request to wake an already awake VM to run %v.", name.c_str());
+			}
 		}
 		return false;
 	}
 
 	bool NutPlayer::DoRunFunction(string name, vector<ScriptParam> parms, bool time, bool retVal) {
-		if(g_Config.DebugVerbose)
+		if(g_Logs.server->enabled(el::Level::Trace)) {
 			g_Logs.script->debug("Run function %v in %v", name.c_str(), def->mSourceFile.c_str());
+		}
 		sq_pushroottable(vm);
 		sq_pushstring(vm,_SC(name.c_str()),-1);
 		if(SQ_SUCCEEDED(sq_get(vm,-2))) {
@@ -1567,6 +1601,7 @@ ScriptDef :: ScriptDef()
 	queueExternalJumps = false;
 	queueCallStyle = CALLSTYLE_CALL;
 	mFlags = FLAG_DEFAULT;
+	scriptName = "";
 }
 
 ScriptDef :: ~ScriptDef()
@@ -1575,7 +1610,7 @@ ScriptDef :: ~ScriptDef()
 
 void ScriptDef :: ClearBase(void)
 {
-	scriptName.clear();
+	scriptName = "";
 	instr.clear();
 	stringList.clear();
 
@@ -2318,8 +2353,9 @@ void ScriptDef :: SetMetaDataBase(const char *opname, ScriptCompiler &compileDat
 	const STRINGLIST &tokens = compileData.mTokens;  //Alias so we don't have to change the rest of the code.
 	if(strcmp(opname, "#name") == 0)
 	{
-		if(tokens.size() >= 2)
+		if(tokens.size() >= 2) {
 			scriptName = tokens[1];
+		}
 	}
 	else if(strcmp(opname, "#symbol") == 0)
 	{

@@ -17,7 +17,6 @@ class AINutDef: public ScriptCore::NutDef {
 
 public:
 	virtual ~AINutDef();
-
 };
 
 class AINutPlayer: public InstanceScript::InstanceNutPlayer {
@@ -111,9 +110,10 @@ class UseCallback : public ScriptCore::NutCallback
 {
 public:
 	int mAbilityID;
+	bool mHighest;
 	AINutPlayer* mAiNut;
 
-	UseCallback(AINutPlayer *aiNut, int abilityID);
+	UseCallback(AINutPlayer *aiNut, int abilityID, bool mHighest);
 	~UseCallback();
 	bool Execute();
 };

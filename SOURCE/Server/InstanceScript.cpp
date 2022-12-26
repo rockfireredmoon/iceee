@@ -82,6 +82,15 @@ const int maxExtOpCode = COUNT_ARRAY_ELEMENTS(extCoreOpCode);
 InstanceNutDef::~InstanceNutDef() {
 }
 
+void InstanceNutDef::Reload() {
+	if(IsFromCluster()) {
+		LoadFromCluster(mZoneID);
+	}
+	else {
+		NutDef::Reload();
+	}
+}
+
 fs::path InstanceNutDef::GetInstanceNutScriptPath(int zoneID) {
 	return g_Config.ResolveVariableDataPath() / "Instance" / Util::Format("%d", zoneID) / "Script.nut";
 }
@@ -103,6 +112,7 @@ fs::path InstanceNutDef::GetInstanceScriptPath(int zoneID,
 }
 
 bool InstanceNutDef::LoadFromCluster(int zoneID) {
+	mZoneID = zoneID;
 	mSourceFile = Util::Format("Grove/%d.nut", zoneID);
 	scriptName = Util::Format("%d", zoneID);
 	return g_ClusterManager.ReadEntity(this);

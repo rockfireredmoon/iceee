@@ -18,7 +18,7 @@
 #include <vector>
 #include <boost/asio.hpp>
 #include <boost/asio/post.hpp>
-#include <boost/thread.hpp>
+#include <thread>
 
 extern char GAuxBuf[1024];    //Note, if this size is modified, change all "extern" references
 extern char GSendBuf[32767];  //Note, if this size is modified, change all "extern" references

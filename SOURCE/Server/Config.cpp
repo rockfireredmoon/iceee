@@ -387,7 +387,6 @@ GlobalConfigData::GlobalConfigData() {
 	VerifyMovement = false;
 	VerifySpeed = false;
 	DebugLogAIScriptUse = false;
-	DebugVerbose = false;
 
 	SquirrelGCCallCount = 1000;
 	SquirrelGCDelay = 10000;

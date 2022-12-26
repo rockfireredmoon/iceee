@@ -6,8 +6,6 @@ project('tawd', ['cpp','c'], version: '0.9.0', default_options : [
 
 #Setup
 server_inc = include_directories('SOURCE/Server')
-cppredis_inc = include_directories('SOURCE/LibCPPRedis/includes')
-tacopie_inc = include_directories('SOURCE/LibCPPRedis/tacopie/includes')
 
 #Other Installation
 datadir = get_option('serverdatadir')
@@ -96,49 +94,8 @@ add_global_arguments('-fpermissive', language: ['cpp','c'])
 
 squirrel_dep = dependency('squirrel', fallback: ['squirrel','libsquirrel_dep'])
 sqstdlib_dep = dependency('sqstdlib', fallback: ['squirrel','libsqstdlib_dep'])
-
-#tacopie
-tacopie_lib = library('tawd-tacopie',[
-	'SOURCE/LibCPPRedis/tacopie/sources/utils/error.cpp',
-	'SOURCE/LibCPPRedis/tacopie/sources/utils/thread_pool.cpp',
-	'SOURCE/LibCPPRedis/tacopie/sources/utils/logger.cpp',
-	'SOURCE/LibCPPRedis/tacopie/sources/network/tcp_server.cpp',
-	'SOURCE/LibCPPRedis/tacopie/sources/network/tcp_client.cpp',
-	'SOURCE/LibCPPRedis/tacopie/sources/network/io_service.cpp',
-	'SOURCE/LibCPPRedis/tacopie/sources/network/common/tcp_socket.cpp',
-	'SOURCE/LibCPPRedis/tacopie/sources/network/windows/windows_self_pipe.cpp',
-	'SOURCE/LibCPPRedis/tacopie/sources/network/windows/windows_tcp_socket.cpp',
-	'SOURCE/LibCPPRedis/tacopie/sources/network/unix/unix_tcp_socket.cpp',
-	'SOURCE/LibCPPRedis/tacopie/sources/network/unix/unix_self_pipe.cpp'], 
-	dependencies: [thread_dep],
-  	version: meson.project_version(),
-  	install : true,
-	include_directories : [tacopie_inc])
-	
-#cpp_redis
-cppredis_lib = library('tawd-cpp_redis',[
-	'SOURCE/LibCPPRedis/sources/misc/logger.cpp',
-	'SOURCE/LibCPPRedis/sources/misc/dispatch_queue.cpp',
-	'SOURCE/LibCPPRedis/sources/builders/error_builder.cpp',
-	'SOURCE/LibCPPRedis/sources/builders/builders_factory.cpp',
-	'SOURCE/LibCPPRedis/sources/builders/integer_builder.cpp',
-	'SOURCE/LibCPPRedis/sources/builders/bulk_string_builder.cpp',
-	'SOURCE/LibCPPRedis/sources/builders/array_builder.cpp',
-	'SOURCE/LibCPPRedis/sources/builders/simple_string_builder.cpp',
-	'SOURCE/LibCPPRedis/sources/builders/reply_builder.cpp',
-	'SOURCE/LibCPPRedis/sources/core/sentinel.cpp',
-	'SOURCE/LibCPPRedis/sources/core/client.cpp',
-	'SOURCE/LibCPPRedis/sources/core/reply.cpp',
-	'SOURCE/LibCPPRedis/sources/core/types.cpp',
-	'SOURCE/LibCPPRedis/sources/core/consumer.cpp',
-	'SOURCE/LibCPPRedis/sources/core/subscriber.cpp',
-	'SOURCE/LibCPPRedis/sources/network/tcp_client.cpp',
-	'SOURCE/LibCPPRedis/sources/network/redis_connection.cpp'], 
-	dependencies: [thread_dep],
-  	install : true,
-  	version: meson.project_version(),
-	include_directories : [cppredis_inc,tacopie_inc],
-	link_with: [tacopie_lib])
+tacopie_dep = dependency('tacopie', fallback: ['LibCPPRedis','libtacopie_dep'])
+cppredis_dep = dependency('cppredis', fallback: ['LibCPPRedis','libcppredis_dep'])
 
 #Server library
 server_lib = library('tawd-server',[
@@ -280,11 +237,9 @@ server_lib = library('tawd-server',[
 	'SOURCE/Server/util/SquirrelObjects.cpp',	
 	'SOURCE/Server/util/easylogging++.cc',
 	'SOURCE/Server/util/Log.cpp'], 
-	include_directories : [cppredis_inc, tacopie_inc],
-	dependencies: [thread_dep, curl_dep,boost_dep, squirrel_dep, sqstdlib_dep],
+	dependencies: [thread_dep, curl_dep,boost_dep, squirrel_dep, sqstdlib_dep, tacopie_dep, cppredis_dep],
   	install : true,
-  	version: meson.project_version(),
-	link_with: [cppredis_lib,tacopie_lib])
+  	version: meson.project_version())
 
 #Main Daemon
 server_lib_cppargs = []
@@ -292,25 +247,25 @@ if get_option('service') and host_machine.system() == 'windows'
 	server_lib_cppargs += '-DWINDOWS_SERVICE=1'
 endif
 executable('tawd', 'SOURCE/Daemon/main.cpp', 
-	include_directories : [server_inc, cppredis_inc, tacopie_inc], 
-	dependencies: [thread_dep, curl_dep, squirrel_dep, sqstdlib_dep, openssl_dep],
+	include_directories : [server_inc], 
+	dependencies: [thread_dep, curl_dep, squirrel_dep, sqstdlib_dep, openssl_dep, tacopie_dep, cppredis_dep],
 	link_with: [server_lib], install: true, cpp_args: server_lib_cppargs)
 	
 executable('eehttpd', 'SOURCE/EEHTTP/main.cpp', 
-	include_directories : [server_inc, cppredis_inc, tacopie_inc], 
-	dependencies: [thread_dep, curl_dep, squirrel_dep, sqstdlib_dep, openssl_dep],
+	include_directories : [server_inc], 
+	dependencies: [thread_dep, curl_dep, squirrel_dep, sqstdlib_dep, openssl_dep, tacopie_dep, cppredis_dep],
 	link_with: [server_lib], install: true, cpp_args: server_lib_cppargs)
 	
 #Pre-TAWD text file user data to TAWD Redis database
 executable('text2redis', 'SOURCE/Tools/TextToRedis.cpp', 
-	include_directories : [server_inc, cppredis_inc, tacopie_inc], 
-	dependencies: [thread_dep, curl_dep, squirrel_dep, sqstdlib_dep, openssl_dep],
+	include_directories : [server_inc], 
+	dependencies: [thread_dep, curl_dep, squirrel_dep, sqstdlib_dep, openssl_dep, tacopie_dep, cppredis_dep],
 	link_with: [server_lib], install: true)
 	
 #Account management command
 executable('eeaccount', 'SOURCE/Tools/EEAccount.cpp', 
-	include_directories : [server_inc, cppredis_inc, tacopie_inc], 
-	dependencies: [thread_dep, curl_dep, squirrel_dep, sqstdlib_dep, openssl_dep],
+	include_directories : [server_inc], 
+	dependencies: [thread_dep, curl_dep, squirrel_dep, sqstdlib_dep, openssl_dep, tacopie_dep, cppredis_dep],
 	link_with: [server_lib], install: true)
 
 # Create actual configuration files from samples, changing the default
@@ -536,45 +491,6 @@ install_headers(
 	'SOURCE/Server/Preferences.h',
 	'SOURCE/Server/PlayerStats.h',
 	'SOURCE/Server/Inventory.h', subdir: 'tawd/Server')
-
-install_headers(
-	'SOURCE/LibCPPRedis/tacopie/includes/tacopie/tacopie.hpp',
-	'SOURCE/LibCPPRedis/tacopie/includes/tacopie/network/tcp_client.hpp',
-	'SOURCE/LibCPPRedis/tacopie/includes/tacopie/network/tcp_server.hpp',
-	'SOURCE/LibCPPRedis/tacopie/includes/tacopie/network/self_pipe.hpp',
-	'SOURCE/LibCPPRedis/tacopie/includes/tacopie/network/tcp_socket.hpp',
-	'SOURCE/LibCPPRedis/tacopie/includes/tacopie/network/io_service.hpp',
-	'SOURCE/LibCPPRedis/tacopie/includes/tacopie/utils/typedefs.hpp',
-	'SOURCE/LibCPPRedis/tacopie/includes/tacopie/utils/error.hpp',
-	'SOURCE/LibCPPRedis/tacopie/includes/tacopie/utils/thread_pool.hpp',
-	'SOURCE/LibCPPRedis/tacopie/includes/tacopie/utils/logger.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/core/consumer.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/core/subscriber.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/core/types.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/core/sentinel.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/core/reply.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/core/client.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/helpers/variadic_template.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/helpers/generate_rand.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/network/redis_connection.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/network/tcp_client.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/network/tcp_client_iface.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/impl/types.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/builders/reply_builder.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/builders/simple_string_builder.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/builders/bulk_string_builder.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/builders/error_builder.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/builders/integer_builder.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/builders/builder_iface.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/builders/array_builder.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/builders/builders_factory.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/misc/optional.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/misc/convert.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/misc/dispatch_queue.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/misc/error.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/misc/macro.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/misc/deprecated.hpp',
-	'SOURCE/LibCPPRedis/includes/cpp_redis/misc/logger.hpp', subdir: 'tawd/LibCPPRedis')
 
 if get_option('service') and host_machine.system() == 'linux'
 	if get_option('sysvinit')

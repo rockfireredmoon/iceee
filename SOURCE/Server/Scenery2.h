@@ -9,7 +9,7 @@
 #include "CreatureSpawner2.h"
 #include "Entities.h"
 #include "json/json.h"
-#include <boost/thread.hpp>
+#include <thread>
 #include <filesystem>
 
 using namespace std;
@@ -321,7 +321,7 @@ public:
 	static const unsigned int GARBAGE_CHECK_TILE_RANGE = 10;
 
 private:
-	boost::thread *mThread;
+	thread *mThread;
 	Platform_CriticalSection cs;
 	unsigned long mNextAutosaveTime;
 	vector<SceneryPageRequest> mPendingPageRequest;

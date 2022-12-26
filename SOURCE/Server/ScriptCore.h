@@ -181,7 +181,7 @@ public:
 	int mCurrentNestLevel;
 	int mLastNestLevel;
 	vector<BlockData> mBlockData;
-	string mSourceFile;
+	fs::path mSourceFile;
 	int mLineNumber;
 	vector<string> mTokens;
 	int mInlineBeginInstr;
@@ -374,7 +374,6 @@ public:
 	bool mQueueEvents;
 	int mScriptIdleSpeed;
 	unsigned long mVMSize;
-	unsigned long mLastModified;
 
 	NutDef();
 	virtual ~NutDef();
@@ -386,10 +385,15 @@ public:
 	bool CanIdle();
 	fs::path GetBytecodeLocation();
 	void SetLastModified(unsigned long lastModified);
+	unsigned long GetLastModified();
+	void CheckReload();
+	virtual void Reload();
 	virtual void ClearDerived();
 	bool HasFlag(unsigned int flag);
+	bool IsFromCluster();
 
 private:
+	unsigned long mLastModified;
 	int mScriptSpeed;
 	bool queueExternalJumps;
 	int queueCallStyle;
