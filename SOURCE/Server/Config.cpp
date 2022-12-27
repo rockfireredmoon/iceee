@@ -148,7 +148,7 @@ bool GlobalConfigData::LoadConfig(const fs::path &filename) {
 			}
 			else if(strcmp(NameBlock, "SSLCertificate") == 0)
 			{
-				AppendString(g_SSLCertificate, lfr.BlockToStringC(1, 0));
+				g_SSLCertificate = lfr.BlockToString(1);
 			}
 #endif
 			else if (strcmp(NameBlock, "RebroadcastDelay") == 0) {

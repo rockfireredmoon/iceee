@@ -256,7 +256,7 @@ bool HTTPService::Start() {
 		// SSL
 #ifndef NO_SSL
 		zzOptions.push_back("ssl_certificate");
-		zzOptions.push_back(g_SSLCertificate.);
+		zzOptions.push_back(g_SSLCertificate);
 #endif
 
 		g_Logs.http->info("Starting CivetWeb");
