@@ -1638,6 +1638,8 @@ void ScriptDef :: ClearDerived(void)
 
 void ScriptDef :: CompileFromSource(const fs::path &sourceFile)
 {
+	if(g_Logs.server->enabled(el::Level::Trace))
+		g_Logs.script->trace("Compiling TSL script %v", sourceFile);
 	FileReader lfr;
 	if(lfr.OpenText(sourceFile) != Err_OK)
 	{

@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "FileReader.h"
+#include "util/Log.h"
 
 char Delimit_KeyVal[4] = {'=', 13, 10, 0};   //Standard config delimiters
 char Default_Break[2] = {'=', 0};
@@ -50,6 +51,8 @@ bool FileReader :: FileOpen(void)
 
 int FileReader :: OpenText(const fs::path &filename)
 {
+	if(g_Logs.server->enabled(el::Level::Trace))
+		g_Logs.script->trace("Opening text file %v", filename);
 	if((FileHandle[File_Primary] = fopen(filename.string().c_str(), "rb")) == NULL)
 		return Err_FileInvalid;
 
