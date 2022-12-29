@@ -2396,7 +2396,7 @@ bool SimulatorThread::HasQueryArgs(unsigned int minCount) {
 	return true;
 }
 
-const char * SimulatorThread::GetScriptUsable(CreatureInstance *target) {
+string SimulatorThread::GetScriptUsable(CreatureInstance *target) {
 
 	std::vector<ScriptCore::ScriptParam> parms;
 	parms.push_back(ScriptCore::ScriptParam(target->CreatureID));
@@ -2404,7 +2404,7 @@ const char * SimulatorThread::GetScriptUsable(CreatureInstance *target) {
 	parms.push_back(ScriptCore::ScriptParam(creatureInst->CreatureID));
 	parms.push_back(ScriptCore::ScriptParam(creatureInst->CreatureDefID));
 	return creatureInst->actInst->nutScriptPlayer->RunFunctionWithStringReturn(
-			"is_usable", parms, true).c_str();
+			"is_usable", parms, true, "N");
 }
 
 /*

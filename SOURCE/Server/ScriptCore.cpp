@@ -1023,10 +1023,12 @@ namespace ScriptCore
 		}
 	}
 
-	string NutPlayer::RunFunctionWithStringReturn(string name, vector<ScriptParam> parms, bool time) {
+	string NutPlayer::RunFunctionWithStringReturn(string name, vector<ScriptParam> parms, bool time, string defaultIfNoFunction) {
 		if(!mActive) {
-			g_Logs.script->warn("Attempt to run function on inactive script %v.", name.c_str());
-			return "";
+			if(g_Logs.server->enabled(el::Level::Trace)) {
+				g_Logs.script->trace("Attempt to run function on inactive script %v.", name.c_str());
+			}
+			return defaultIfNoFunction;
 		}
 
 		g_Logs.script->debug("Run function %v", name.c_str());
@@ -1099,7 +1101,9 @@ namespace ScriptCore
 //		g_Log.AddMessageFormat("[REMOVEME] Running function %s in %s (active: %s).", name.c_str(), def->mSourceFile.c_str(), mActive ? "yes" : "no");
 
 		if(!mActive) {
-			g_Logs.script->warn("Attempt to run function on inactive script %v.", name.c_str());
+			if(g_Logs.server->enabled(el::Level::Trace)) {
+				g_Logs.script->trace("Attempt to run function on inactive script %v.", name.c_str());
+			}
 			return false;
 		}
 		unsigned long now = g_PlatformTime.getMilliseconds();

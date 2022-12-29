@@ -1457,27 +1457,6 @@ void QuestReferenceContainer::ResolveIDs(void) {
 	}
 }
 
-//TODO: move this up with the rest of the quest journal functions
-const char * QuestJournal::CreatureIsusable(int CreatureDefID) {
-	//Returns the string response for a "creature.isusable" query.
-	//The simulator will enter this string into the outgoing data.
-	static const char *responseStr[4] = { "N", "Y", "Q", "D" };
-	//"Q" is quest-usable, and will display a shimmer effect.
-	//"D" is default-usable, and will not have a shimmer effect.
-
-	int r = activeQuests.HasCreatureReturn(CreatureDefID);
-	if (r >= 0) {
-		return responseStr[1];
-	}
-
-	r = activeQuests.HasObjectInteraction(CreatureDefID);
-	if (r >= 0) {
-		return responseStr[2];
-	}
-
-	return responseStr[0];
-}
-
 const char * QuestJournal::QuestIndicator(int CreatureDefID) {
 	//Returns the string response for a "quest.indicator" query.
 	//The simulator will enter this string into the outgoing data.
@@ -2284,6 +2263,26 @@ void QuestJournal::ResolveLoadedQuests(void) {
 
 	activeQuests.ResolveIDs();
 	availableQuests.ResolveIDs();
+}
+
+string QuestJournal::CreatureIsUsable(int CreatureDefID) {
+	//Returns the string response for a "creature.isusable" query.
+	//The simulator will enter this string into the outgoing data.
+
+	//"Q" is quest-usable, and will display a shimmer effect.
+	//"D" is default-usable, and will not have a shimmer effect.
+
+	int r = activeQuests.HasCreatureReturn(CreatureDefID);
+	if (r >= 0) {
+		return "Y";
+	}
+
+	r = activeQuests.HasObjectInteraction(CreatureDefID);
+	if (r >= 0) {
+		return "Q";
+	}
+
+	return "N";
 }
 
 //Determine if the quest is complete and can be redeemed.

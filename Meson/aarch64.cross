@@ -3,7 +3,7 @@ c = '/usr/bin/aarch64-linux-gnu-gcc'
 cpp = '/usr/bin/aarch64-linux-gnu-g++'
 ar = '/usr/bin/aarch64-linux-gnu-gcc-ar'
 strip = '/usr/bin/aarch64-linux-gnu-strip'
-pkgconfig = 'pkg-config'
+#pkgconfig = 'pkg-config'
 exe_wrapper = 'qemu-aarch64'
 
 [host_machine]
@@ -11,3 +11,6 @@ system = 'linux'
 cpu_family = 'aarch64'
 cpu = 'aarch64'
 endian = 'little'
+
+[properties]
+boost_root = '/home/emerald/Applications/boost_1_74_0/boost-aarch64'

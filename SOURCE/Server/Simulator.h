@@ -257,7 +257,7 @@ public:
 	bool TargetRarityAboveNormal(void);
 	//void VerifySendBufSize(int length);
 	void VerifyGenericBuffer(const char *buffer, unsigned int buflen);
-	const char * GetScriptUsable(CreatureInstance *target);
+	string GetScriptUsable(CreatureInstance *target);
 
 	void Debug_GenerateReport(ReportBuffer *report);
 	void Debug_GenerateCreatureReport(ReportBuffer &report);

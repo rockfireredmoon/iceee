@@ -420,10 +420,10 @@ int AIScriptManager :: LoadScripts(void)
 {
 	auto path = g_Config.ResolveStaticDataPath() / "AIScript";
 	g_Logs.data->info("Loading TSL AI Scripts");
-	AIScriptDef newItem;
 	for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
 		auto path = entry.path();
 		if(path.extension() == ".txt") {
+			AIScriptDef newItem;
 			aiDef.push_back(newItem);
 			aiDef.back().CompileFromSource(path);
 		}

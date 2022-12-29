@@ -549,7 +549,7 @@ public:
 	bool JumpToLabel(const char *name);
 	bool JumpToLabel(const char *name, vector<ScriptParam> parms);
 	bool JumpToLabel(const char *name, vector<ScriptParam> parms, bool queue);
-	string RunFunctionWithStringReturn(string name, vector<ScriptParam> parms, bool time);
+	string RunFunctionWithStringReturn(string name, vector<ScriptParam> parms, bool time, string defaultIfNoFunction);
 	bool RunFunctionWithBoolReturn(string name, vector<ScriptParam> parms, bool time, bool defaultIfNoFunction);
 	bool RunFunction(string name, vector<ScriptParam> parms, bool time);
 	void Broadcast(const char *message);

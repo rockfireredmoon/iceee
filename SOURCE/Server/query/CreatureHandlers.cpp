@@ -80,14 +80,14 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 			WritePos = PrepExt_QueryResponseString(sim->SendBuf, query->ID,
 					"Q");
 	} else {
-		const char *status = pld->charPtr->questJournal.CreatureIsusable(CDef);
-		if (status[0] == 'N') {
+		auto status = pld->charPtr->questJournal.CreatureIsUsable(CDef);
+		if (status == "N") {
 
 			if (creatureInstance->actInst->nutScriptPlayer != NULL) {
 				status = sim->GetScriptUsable(target);
 			}
 
-			if (status[0] == 'N') {
+			if (status == "Y") {
 				InteractObject *ptr = g_InteractObjectContainer.GetObjectByID(
 						CDef, pld->CurrentZoneID);
 				if (ptr != NULL) {
@@ -137,7 +137,7 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 					status = "Y";
 			}
 		}
-		WritePos = PrepExt_QueryResponseString(sim->SendBuf, query->ID, status);
+		WritePos = PrepExt_QueryResponseString(sim->SendBuf, query->ID, status.c_str());
 		//LogMessageL(MSG_SHOW, "  creature.isusable: %d (%d) = %s", CID, CDef, status);
 	}
 

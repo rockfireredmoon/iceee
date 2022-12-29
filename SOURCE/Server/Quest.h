@@ -252,7 +252,7 @@ public:
 	*/
 	
 	//Experimental migratory functions
-	const char * CreatureIsusable(int CreatureDefID);
+	string CreatureIsUsable(int CreatureDefID);
 	const char * QuestIndicator(int CreatureDefID);
 	char * QuestGetQuestOffer(int CreatureDefID, char *convBuf);
 	int QuestGenericData(char *buffer, int bufsize, char *convBuf, int QuestID, int QueryIndex);
