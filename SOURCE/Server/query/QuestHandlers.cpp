@@ -74,14 +74,21 @@ int QuestGetOfferHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Invalid query->");
 
 	int CID = atoi(query->args[0].c_str());
-	g_Logs.simulator->trace("[%v]   Request quest.getquestoffer for %v",
-			sim->InternalID, CID);
+
+	if (g_Logs.simulator->enabled(el::Level::Trace)) {
+		g_Logs.simulator->trace("[%v]   Request quest.getquestoffer for %v",
+				sim->InternalID, CID);
+	}
 
 	int CDef = sim->ResolveCreatureDef(CID);
 
 	char *response = pld->charPtr->questJournal.QuestGetQuestOffer(CDef, sim->Aux3);
-	g_Logs.simulator->trace("[%v]   quest.getquestoffer for %v = %v",
-			sim->InternalID, CID, response);
+
+	if (g_Logs.simulator->enabled(el::Level::Trace)) {
+		g_Logs.simulator->trace("[%v]   quest.getquestoffer for %v = %v",
+				sim->InternalID, CID, response);
+	}
+
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, response);
 }
 
@@ -106,8 +113,10 @@ int QuestGenericDataHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Invalid query->");
 
 	int QID = atoi(query->args[0].c_str());
-	g_Logs.simulator->trace("[%v]   Requested quest.genericdata for %v",
-			sim->InternalID, QID);
+	if (g_Logs.simulator->enabled(el::Level::Trace)) {
+		g_Logs.simulator->trace("[%v]   Requested quest.genericdata for %v",
+				sim->InternalID, QID);
+	}
 	return pld->charPtr->questJournal.QuestGenericData(sim->SendBuf, sizeof(sim->SendBuf),
 			sim->Aux3, QID, query->ID);
 }
@@ -157,8 +166,10 @@ int QuestJoinHandler::handleQuery(SimulatorThread *sim,
 		return sim->ErrorMessageAndQueryOK(sim->SendBuf, "Cannot accept the quest yet.");
 	qdef->mScriptAcceptAction.ExecuteAllCommands(sim);
 
-	g_Logs.simulator->trace("[%v]   Request quest.join (QuestID: %v, CID: %v)",
-			sim->InternalID, QuestID, CID);
+	if (g_Logs.simulator->enabled(el::Level::Trace)) {
+		g_Logs.simulator->trace("[%v]   Request quest.join (QuestID: %v, CID: %v)",
+				sim->InternalID, QuestID, CID);
+	}
 
 	if (qdef->accountQuest) {
 		g_AccountManager.cs.Enter("SimulatorThread::VaultSend");
@@ -239,8 +250,11 @@ int QuestGetCompleteHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Invalid query->");
 
 	int CID = atoi(query->args[0].c_str());
-	g_Logs.simulator->trace("[%v]   Request quest.getcompletequest for %v",
-			sim->InternalID, CID);
+
+	if (g_Logs.simulator->enabled(el::Level::Trace)) {
+		g_Logs.simulator->trace("[%v]   Request quest.getcompletequest for %v",
+				sim->InternalID, CID);
+	}
 
 	// -1 means the quest is a quest without an ending creature
 	int CDef = CID == creatureInstance->CreatureID ? -1 : sim->ResolveCreatureDef(CID);

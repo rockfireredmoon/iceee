@@ -113,16 +113,19 @@ void Scheduler::RunScheduledTasks() {
 		if(now > mNextRun) {
 			ScheduledTimerTask t = scheduled[0];
 			scheduled.erase(scheduled.begin());
-			if(g_Logs.server->enabled(el::Level::Trace))
+
+			if(g_Logs.server->enabled(el::Level::Trace)) {
 				g_Logs.server->trace("Scheduled task running %v", t.mTaskId);
+			}
 
 			Submit(t.mTask);
 
 			// Update next run time
 			if(scheduled.size() > 0) {
 				mNextRun = scheduled[0].mWhen;
-				if(g_Logs.server->enabled(el::Level::Trace))
+				if(g_Logs.server->enabled(el::Level::Trace)) {
 					g_Logs.server->trace("Next scheduler task will run in %v", Util::FormatTimeHHMMSSmm(mNextRun - g_ServerTime));
+				}
 			}
 			else {
 				mNextRun = 0;
@@ -150,15 +153,20 @@ int Scheduler::Schedule(const TaskType& task, unsigned long when) {
 		when = g_ServerTime + g_MainSleep;
 	}
 	ScheduledTimerTask taskWrapper(task, when);
-	if(g_Logs.server->enabled(el::Level::Trace))
-			g_Logs.server->trace("This scheduler (id: %v) task will run in %v", mNextTaskId, Util::FormatTimeHHMMSSmm(when - g_ServerTime));
+
+	if(g_Logs.server->enabled(el::Level::Trace)) {
+		g_Logs.server->trace("This scheduler (id: %v) task will run in %v", mNextTaskId, Util::FormatTimeHHMMSSmm(when - g_ServerTime));
+	}
+
 	mMutex.lock();
 	taskWrapper.mTaskId = mNextTaskId++;
 	scheduled.push_back(taskWrapper);
 	sort(scheduled.begin(), scheduled.end(), ScheduledTaskSort);
 	mNextRun = scheduled[0].mWhen;
-	if(g_Logs.server->enabled(el::Level::Trace))
-			g_Logs.server->trace("Next scheduler task will run in %v", Util::FormatTimeHHMMSSmm(mNextRun - g_ServerTime));
+
+	if(g_Logs.server->enabled(el::Level::Trace)) {
+		g_Logs.server->trace("Next scheduler task will run in %v", Util::FormatTimeHHMMSSmm(mNextRun - g_ServerTime));
+	}
 	mMutex.unlock();
 	return taskWrapper.mTaskId;
 }

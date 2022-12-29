@@ -2339,15 +2339,19 @@ void WeatherManager::Deregister(vector<WeatherState*> *states) {
 	for (vector<WeatherState*>::iterator it = states->begin();
 			it != states->end(); ++it) {
 		WeatherState *ws = *it;
-		if(g_Logs.server->enabled(el::Level::Trace)) {
+
+		if(g_Logs.simulator->enabled(el::Level::Trace)) {
 			g_Logs.simulator->trace("Clearing up weather for %v (%v)",
 					ws->mInstanceId, ws->mDefinition.mMapName.c_str());
 		}
+
 		for (vector<string>::iterator it2 = ws->mMapNames.begin();
 				it2 != ws->mMapNames.end(); ++it2) {
-			if(g_Logs.server->enabled(el::Level::Trace)) {
+
+			if(g_Logs.simulator->enabled(el::Level::Trace)) {
 				g_Logs.simulator->trace("    Map (%v)", (*it2).c_str());
 			}
+
 			WeatherKey k;
 			k.instance = ws->mInstanceId;
 			k.mapName = *it2;

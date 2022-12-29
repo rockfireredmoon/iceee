@@ -1235,8 +1235,11 @@ void SimulatorThread::SetPersona(int personaIndex) {
 		Disconnect("SimulatorThread::SetPersona");
 		return;
 	}
-	g_Logs.simulator->trace("[%v] Setting character: %v:%v", InternalID,
-			pld.accPtr->Name, personaIndex);
+
+	if(g_Logs.server->enabled(el::Level::Trace)) {
+		g_Logs.server->trace("[%v] Setting character: %v:%v", InternalID,
+				pld.accPtr->Name, personaIndex);
+	}
 
 	//Check to make sure the persona isn't already in the active list
 	SIMULATOR_IT it;

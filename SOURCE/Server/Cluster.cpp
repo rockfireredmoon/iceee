@@ -642,8 +642,9 @@ int ClusterManager::Scan(const ScanCallback &task, const string &pattern,
 	size_t pages = 0;
 	if (max == 0)
 		max = 10000;
-	if (g_Logs.cluster->enabled(el::Level::Trace))
+	if (g_Logs.cluster->enabled(el::Level::Trace)) {
 		g_Logs.cluster->trace("Scanning for keys matching %v", pattern);
+	}
 	do {
 		mClient.scan(cursor, pattern, max,
 				[this, task, pattern, &cursor, &count, max, &scanned, &pages](
@@ -662,8 +663,9 @@ int ClusterManager::Scan(const ScanCallback &task, const string &pattern,
 				});
 		mClient.sync_commit();
 	} while (cursor > 0 && (max == 0 || count < max));
-	if (g_Logs.cluster->enabled(el::Level::Trace))
+	if (g_Logs.cluster->enabled(el::Level::Trace)) {
 		g_Logs.cluster->trace("Scanning for keys matching %v, matched %v", pattern, count);
+	}
 	return 0;
 }
 

@@ -1442,7 +1442,6 @@ void UnloadResources(void) {
 }
 
 void RunServerMain(void) {
-	SetNativeThreadName("SystemLoop");
 
 #ifdef DEBUG_TIME
 	Debug::TimeTrack("RunServerMain", 200);

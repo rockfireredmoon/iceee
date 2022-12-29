@@ -617,7 +617,10 @@ namespace ScriptCore
 
 		sqstd_seterrorhandlers(vm); //registers the default error handlers
 		sq_setprintfunc(vm, PrintFunc, Errorfunc); //sets the print function
-		g_Logs.script->info("Processing Squirrel script '%v'", def->mSourceFile);
+
+		if (g_Logs.script->enabled(el::Level::Debug)) {
+			g_Logs.script->debug("Processing Squirrel script '%v'", def->mSourceFile);
+		}
 
 
 		/* Look for the compiled NUT file (.cnut). If it exists, test if the modification
@@ -634,7 +637,9 @@ namespace ScriptCore
 			script.CompileString(def->mScriptContent, errors, def->scriptName);
 		}
 		else {
-			g_Logs.script->info("Loading existing Squirrel script bytecode for '%v'", cnut);
+			if (g_Logs.script->enabled(el::Level::Debug)) {
+				g_Logs.script->debug("Loading existing Squirrel script bytecode for '%v'", cnut);
+			}
 			script.CompileFile(_SC(cnut.c_str()), errors);
 		}
 
@@ -1025,7 +1030,7 @@ namespace ScriptCore
 
 	string NutPlayer::RunFunctionWithStringReturn(string name, vector<ScriptParam> parms, bool time, string defaultIfNoFunction) {
 		if(!mActive) {
-			if(g_Logs.server->enabled(el::Level::Trace)) {
+			if(g_Logs.script->enabled(el::Level::Trace)) {
 				g_Logs.script->trace("Attempt to run function on inactive script %v.", name.c_str());
 			}
 			return defaultIfNoFunction;
@@ -1101,7 +1106,7 @@ namespace ScriptCore
 //		g_Log.AddMessageFormat("[REMOVEME] Running function %s in %s (active: %s).", name.c_str(), def->mSourceFile.c_str(), mActive ? "yes" : "no");
 
 		if(!mActive) {
-			if(g_Logs.server->enabled(el::Level::Trace)) {
+			if(g_Logs.script->enabled(el::Level::Trace)) {
 				g_Logs.script->trace("Attempt to run function on inactive script %v.", name.c_str());
 			}
 			return false;
@@ -1157,7 +1162,7 @@ namespace ScriptCore
 			return true;
 		}
 		else {
-			if(g_Logs.server->enabled(el::Level::Trace)) {
+			if(g_Logs.script->enabled(el::Level::Trace)) {
 				g_Logs.script->trace("Request to wake an already awake VM to run %v.", name.c_str());
 			}
 		}
@@ -1642,8 +1647,9 @@ void ScriptDef :: ClearDerived(void)
 
 void ScriptDef :: CompileFromSource(const fs::path &sourceFile)
 {
-	if(g_Logs.server->enabled(el::Level::Trace))
+	if(g_Logs.script->enabled(el::Level::Trace)) {
 		g_Logs.script->trace("Compiling TSL script %v", sourceFile);
+	}
 	FileReader lfr;
 	if(lfr.OpenText(sourceFile) != Err_OK)
 	{

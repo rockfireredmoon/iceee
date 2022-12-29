@@ -1057,8 +1057,11 @@ int EssenceShopContentsHandler::handleQuery(SimulatorThread *sim,
 		return 0;
 
 	int CID = atoi(query->args[0].c_str());
-	g_Logs.simulator->trace("[%v] essenceShop.contents: %v", sim->InternalID,
-			CID);
+
+	if (g_Logs.simulator->enabled(el::Level::Trace)) {
+		g_Logs.simulator->trace("[%v] essenceShop.contents: %v", sim->InternalID,
+				CID);
+	}
 
 	int CDef = sim->ResolveCreatureDef(CID);
 

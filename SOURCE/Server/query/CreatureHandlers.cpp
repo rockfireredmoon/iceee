@@ -273,8 +273,10 @@ int CreatureDefEditHandler::handleQuery(SimulatorThread *sim,
 		const char *name = n.c_str();
 		const char *value = query->args[i + 1].c_str();
 
-		g_Logs.simulator->trace("[%v]   Name: %v", sim->InternalID, name);
-		g_Logs.simulator->trace("[%v]   Value: %v", sim->InternalID, value);
+		if (g_Logs.simulator->enabled(el::Level::Trace)) {
+			g_Logs.simulator->trace("[%v]   Name: %v", sim->InternalID, name);
+			g_Logs.simulator->trace("[%v]   Value: %v", sim->InternalID, value);
+		}
 
 		if (strcmp(name, "name") == 0) {
 			if (charData == NULL) {

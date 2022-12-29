@@ -51,8 +51,9 @@ bool FileReader :: FileOpen(void)
 
 int FileReader :: OpenText(const fs::path &filename)
 {
-	if(g_Logs.server->enabled(el::Level::Trace))
-		g_Logs.script->trace("Opening text file %v", filename);
+	if(g_Logs.server->enabled(el::Level::Trace)) {
+		g_Logs.server->trace("Opening text file %v", filename);
+	}
 	if((FileHandle[File_Primary] = fopen(filename.string().c_str(), "rb")) == NULL)
 		return Err_FileInvalid;
 
