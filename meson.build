@@ -78,17 +78,17 @@ pthread_dep = meson.get_compiler('c').find_library('pthread', required: false)
 # Temporary until i can be bother to update to the newer CivetWeb interfaces
 #add_global_arguments('-DMG_LEGACY_INTERFACE=1', language: ['cpp','c'])
 
-add_global_arguments('-DELPP_THREAD_SAFE=1', language: ['cpp','c'])
-add_global_arguments('-DLOCALCONFIGDIR="' + confdirs + '"', language: ['cpp','c'])
+add_project_arguments('-DELPP_THREAD_SAFE=1', language: ['cpp','c'])
+add_project_arguments('-DLOCALCONFIGDIR="' + confdirs + '"', language: ['cpp','c'])
 if not openssl_dep.found() or not get_option('ssl')
-	add_global_arguments('-DNO_SSL=1', language: ['cpp','c'])
+	add_project_arguments('-DNO_SSL=1', language: ['cpp','c'])
 endif
 if pthread_dep.found()
-	add_global_arguments('-DHAS_PTHREAD=1', language: ['cpp','c'])
+	add_project_arguments('-DHAS_PTHREAD=1', language: ['cpp','c'])
 endif
 
 # TODO squirrel 3.2 (sqRat?) is making this necessary. Can it be fixed?
-add_global_arguments('-fpermissive', language: ['cpp','c'])
+add_project_arguments('-fpermissive', language: ['cpp','c'])
 
 #Other Dependencies
 
