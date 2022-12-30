@@ -6,15 +6,20 @@ squirrel_lib_inc = include_directories('squirrel')
 sqstdlib_lib_inc = include_directories('sqstdlib')
 
 add_project_arguments([
-		'-fno-strict-aliasing',
-		'-fno-exceptions',
-		'-fno-rtti',
-		'-pedantic',
-		'-Wno-deprecated-copy',
-		'-Wno-implicit-fallthrough',
-		'-Wno-class-memaccess',
-		'-Wno-cast-qual'
 	], language: ['cpp','c'])
+
+if meson.get_compiler('c').get_id() == 'gcc'
+	add_project_arguments([
+			'-fno-strict-aliasing',
+			'-fno-exceptions',
+			'-fno-rtti',
+			'-pedantic',
+			'-Wno-deprecated-copy',
+			'-Wno-implicit-fallthrough',
+			'-Wno-class-memaccess',
+			'-Wno-cast-qual'
+		], language: ['cpp','c'])
+endif
 
 #Squirrel
 squirrel_lib = library(get_option('librarynameprefix') + 'squirrel',[
