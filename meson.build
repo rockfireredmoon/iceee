@@ -88,9 +88,9 @@ if pthread_dep.found()
 endif
 
 # TODO squirrel 3.2 (sqRat?) is making this necessary. Can it be fixed?
-if meson.get_compiler('c').get_id() == 'gcc'
-	add_project_arguments('-fpermissive', language: ['cpp','c'])
-endif
+#if meson.get_compiler('c').get_id() == 'gcc'
+#	add_project_arguments('-fpermissive', language: ['cpp','c'])
+#endif
 
 #Other Dependencies
 
