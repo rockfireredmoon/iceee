@@ -3342,7 +3342,10 @@ int AbilityCalculator :: Reagent(ARGUMENT_LIST args)
 	mReagentItemID = args.GetInteger(0);
 	mReagentItemCount = args.GetInteger(1);
 
-	if(g_GameConfig.UseReagents && ciSource->charPtr != NULL && ciSource->charPtr->inventory.GetItemCount(INV_CONTAINER, mReagentItemID) < mReagentItemCount)
+	if(g_GameConfig.UseReagents &&
+	  ( ciSource->serverFlags & ServerFlags::IsPlayer) &&
+		ciSource->charPtr != NULL &&
+	    ciSource->charPtr->inventory.GetItemCount(INV_CONTAINER, mReagentItemID) < mReagentItemCount)
 		return ABILITY_REAGENTS;
 
 	return ABILITY_SUCCESS;
