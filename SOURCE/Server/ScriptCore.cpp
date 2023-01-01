@@ -1054,6 +1054,8 @@ namespace ScriptCore
 				sq_getstring(vm,-1,&val);
 				sval = val;
 			}
+			else
+				sval = defaultIfNoFunction;
 		}
 		catch(int e) {
 			g_Logs.script->error("Exception when running function %v, failed with %v", name.c_str(), e);
