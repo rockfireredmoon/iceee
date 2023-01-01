@@ -188,10 +188,8 @@ AchievementDef * AchievementsManager::LoadDef(string name) {
 }
 
 fs::path AchievementsManager::GetPath(string name) {
-	char buf[128];
-	Util::SafeFormat(buf, sizeof(buf), "Achievements/%s.txt", name.c_str());
-	Platform::FixPaths(buf);
-	return buf;
+	string ename = name + ".txt";
+	return g_Config.ResolveStaticDataPath() / "Achievements" / ename;
 }
 
 int AchievementsManager::GetTotalAchievements() {

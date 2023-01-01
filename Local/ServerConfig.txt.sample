@@ -215,3 +215,5 @@ LogPath=Logs
 ; The GitHub token for posting in-game bug reports
 ;GitHubToken=XXXXXXXXXXXXXXXXXXXXXXXXXXX
 
+; The exit status to use to signal a restart is required. Defaults to 1. 
+;RestartExitStatus=1

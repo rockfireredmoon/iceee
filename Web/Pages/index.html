@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto" class="h-100">
+<head>
+<script src="js/bootstrap.bundle.min.js"></script>
+<link href="css/darkly.min.css" rel="stylesheet">
+<script src="js/util.js"></script>
+<title>Dashboard</title>
+</head>
+<body class="h-100">
+	<div class="d-flex flex-row h-100">
+		<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark h-100"
+			style="width: 280px;">
+			<a href="/"
+				class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+				<span class="fs-4">TAWD</span>
+			</a>
+			<hr>
+			<ul class="nav nav-pills flex-column mb-auto">
+				<li class="nav-item"><a href="#" class="nav-link active"
+					aria-current="page">Dashboard</a></li>
+				<li><a href="players.html" class="nav-link text-white">Players</a></li>
+				<li><a href="shards.html" class="nav-link text-white">Shards</a></li>
+			</ul>
+		</div>
+		<div class="container">
+			<div class="container">
+				<div class="row">
+					<img src="images/valkal.png"/>
+				</div>
+			</div>
+			<div class="container">
+				<h2>Time</h2>
+				<div class="row">
+					<div class="col">
+						<label>Real Server Time:</label>
+					</div>
+					<div class="col">
+						<span id="currentTime">XXXXXX</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<label>Server Startup Time:</label>
+					</div>
+					<div class="col">
+						<span id="launchTime">XXXXXX</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<label>Up Time:</label>
+					</div>
+					<div class="col">
+						<span id="upTime">XXXXXX</span>
+					</div>
+				</div>
+			</div>
+			<div class="container mt-2">
+				<h2>Actions</h2>
+				<div class="row">
+					<div class="col-md-3">
+						<button id="restart" class="btn btn-primary w-100">Restart<br/>Server</button>
+					</div>
+					<div class="col-md-3">
+						<button id="shutdown" class="btn btn-primary w-100">Shutdown<br/>Server</button>
+					</div>
+					<div class="col-md-3">
+						<button id="reload" class="btn btn-primary w-100">Reload<br/>Configuration</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		fetch('/api/up').then(function(response) {
+			return response.json();
+		}).then(function(up) {
+			document.querySelector('#currentTime').innerText = new Date(up.currentTime).toLocaleString();
+			document.querySelector('#launchTime').innerText = new Date(up.launchTime).toLocaleString();
+			document.querySelector('#upTime').innerText = formatMillisecondsTime(up.upTime);
+		});
+		
+		document.querySelector('#restart').addEventListener('click', function() {
+			if(confirm('Are you sure you want to restart the service. All players will be kicked from this shard.')) {
+				fetch('/api/shutdown?restart').then(function(response) {
+					alert('Restart signal sent');
+				});
+			}
+		});
+		
+		document.querySelector('#shutdown').addEventListener('click', function() {
+			if(confirm('Are you sure you want to shutdown the service. All players will be kicked from this shard.')) {
+				fetch('/api/shutdown').then(function(response) {
+					alert('Shutdown signal sent');
+				});
+			}
+		});
+		
+		document.querySelector('#reload').addEventListener('click', function() {
+			fetch('/api/reload').then(function(response) {
+				alert('Configuration reloaded');
+				window.location.reload();
+			});
+		});
+
+	</script>
+</body>
+</html>

@@ -63,6 +63,7 @@ enum ServerStatus
 };
 
 extern int g_ServerStatus;
+extern unsigned int g_ExitStatus;
 
 extern int ActiveComponents;
 void AdjustComponentCount(int mod);

@@ -283,7 +283,7 @@ namespace ScriptCore
 	}
 
 	void NutDef::LoadFromLocalFile(const fs::path &sourceFile) {
-		g_Logs.script->info("Initializing Squirrel script from local file '%v'", sourceFile);
+		g_Logs.script->info("Initializing Squirrel script from local file '%v'", sourceFile.string());
 		mSourceFile = sourceFile;
 		scriptName = mSourceFile.stem();
 		mLastModified = Platform::GetLastModified(mSourceFile);
@@ -301,6 +301,7 @@ namespace ScriptCore
 			while (lfr.FileOpen() == true) {
 				lfr.ReadLine();
 				mScriptContent.append(lfr.DataBuffer);
+				mScriptContent.append("\n");
 			}
 		}
 		else {
@@ -631,25 +632,29 @@ namespace ScriptCore
 		unsigned long cnutMod = Platform::GetLastModified(cnut);
 
 		Sqrat::Script script(vm);
+		bool compiled;
 
 		if(cnutMod != def->GetLastModified()) {
-			g_Logs.script->info("Recompiling Squirrel script '%v'", def->mSourceFile);
-			script.CompileString(def->mScriptContent, errors, def->scriptName);
+			g_Logs.script->info("Recompiling Squirrel script '%v' (%v)", def->mSourceFile.string(), def->scriptName);
+			if(g_Logs.script->enabled(el::Level::Trace)) {
+				g_Logs.script->trace("-------------------------------\n%v-------------------------------", def->mScriptContent);
+			}
+			compiled = script.CompileString(def->mScriptContent, errors, def->scriptName);
 		}
 		else {
 			if (g_Logs.script->enabled(el::Level::Debug)) {
-				g_Logs.script->debug("Loading existing Squirrel script bytecode for '%v'", cnut);
+				g_Logs.script->debug("Loading existing Squirrel script bytecode for '%v'", cnut.string());
 			}
-			script.CompileFile(_SC(cnut.c_str()), errors);
+			compiled = script.CompileFile(_SC(cnut.c_str()), errors);
 		}
 
-		if (Sqrat::Error::Occurred(vm)) {
+		if (!compiled /*Sqrat::Error::Occurred(vm) */) {
 			errors.append(Sqrat::Error::Message(vm).c_str());
-			g_Logs.script->error("Squirrel script %v failed to compile. %v", def->mSourceFile, Sqrat::Error::Message(vm).c_str());
+			g_Logs.script->error("Squirrel script %v failed to compile. %v", def->mSourceFile.string(), Sqrat::Error::Message(vm).c_str());
 		}
 		else {
 			if(cnutMod != def->GetLastModified()) {
-				g_Logs.script->info("Writing Squirrel script bytecode for '%v' to '%v' (in %v)", def->mSourceFile, cnut, cnut.parent_path());
+				g_Logs.script->info("Writing Squirrel script bytecode for '%v' to '%v' (in %v)", def->mSourceFile.string(), cnut.string(), cnut.parent_path().string());
 				fs::create_directories(cnut.parent_path());
 				try {
 					script.WriteCompiledFile(cnut);
@@ -666,7 +671,7 @@ namespace ScriptCore
 			if (Sqrat::Error::Occurred(vm)) {
 				mActive = false;
 				errors.append(Sqrat::Error::Message(vm).c_str());
-				g_Logs.script->error("Squirrel script %v failed to run. %v", def->mSourceFile, Sqrat::Error::Message(vm).c_str());
+ 				g_Logs.script->error("Squirrel script %v failed to run. %v", def->mSourceFile.string(), Sqrat::Error::Message(vm).c_str());
 			}
 
 			// The script might have provided an info table

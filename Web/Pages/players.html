@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto" class="h-100">
+<head>
+<script src="js/bootstrap.bundle.min.js"></script>
+<link href="css/darkly.min.css" rel="stylesheet">
+<title>Shards</title>
+</head>
+<body class="h-100">
+	<div class="d-flex flex-row h-100">
+		<div
+			class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark h-100"
+			style="width: 280px;">
+			<a href="/"
+				class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+				<span class="fs-4">TAWD</span>
+			</a>
+			<hr>
+			<ul class="nav nav-pills flex-column mb-auto">
+				<li><a href="index.html" class="nav-link text-white">Dashboard</a></li>
+				<li class="nav-item"><a href="#" class="nav-link active"
+					aria-current="page">Players</a></li>
+				<li><a href="shards.html" class="nav-link text-white">Shards</a></li>
+			</ul>
+		</div>
+		<div class="container">
+			<table id="players" class="table">
+				<thead>
+					<tr>
+						<th scope="col">Player</th>
+						<th scope="col">Zone</th>
+						<th scope="col">Shard</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script type="text/javascript">
+		fetch('/api/who').then(function(response) {
+			return response.json();
+		}).then(function(players) {
+			Object.keys(players).forEach(function(key) {
+				const player = players[key];
+				const table = document.querySelector('#players');
+				let row = document.createElement('tr');
+				
+				let nameCol = document.createElement('td');
+				nameCol.innerText = key;
+				
+				let zoneCol = document.createElement('td');
+				zoneCol.innerText = player.zone;
+				
+				let shardCol = document.createElement('td');
+				shardCol.innerText = player.shard;
+				
+				row.append(nameCol, zoneCol, shardCol);
+				table.append(row);
+			});
+		});
+	</script>
+</body>
+</html>

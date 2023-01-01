@@ -11,6 +11,7 @@ unsigned long g_ServerTime = 0;        //Current server time (milliseconds)
 unsigned long g_ServerLaunchTime = 0;  //Server launch time (milliseconds)
 
 int g_ServerStatus = 0;            //The current running status of the server.  See the ServerStatus enum.  
+unsigned int g_ExitStatus = EXIT_SUCCESS;            //The exit status to be used on normal shutdown. Can be used by wrapper to restart service
 
 int ActiveComponents = 0;          //A mutex counter, often incremented by child threads.  If zero, all threads are considered closed 
 Platform_CriticalSection component_cs("CS_COMPONENT");

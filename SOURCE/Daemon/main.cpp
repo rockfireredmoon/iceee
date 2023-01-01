@@ -1124,6 +1124,9 @@ int InitServerMain(int argc, char *argv[]) {
 		HTTPD::AuctionHandler* auctionHandler = new HTTPD::AuctionHandler();
 		g_HTTPService.RegisterHandler("/api/auction", auctionHandler);
 		g_HTTPService.RegisterHandler("/api/auction/*", auctionHandler);
+		g_HTTPService.RegisterHandler("/api/dashboard", new HTTPD::DashboardHandler());
+		g_HTTPService.RegisterHandler("/api/reload", new HTTPD::ReloadHandler());
+		g_HTTPService.RegisterHandler("/api/shutdown", new HTTPD::ShutdownHandler());
 	}
 
 	// OAuth - Used to authenticate external services
@@ -1178,7 +1181,7 @@ int InitServerMain(int argc, char *argv[]) {
 #endif
 
 	UnloadResources();
-	exit(EXIT_SUCCESS);
+	exit(g_ExitStatus);
 #ifdef _CRTDEBUGGING
 	_CrtDumpMemoryLeaks();
 #endif

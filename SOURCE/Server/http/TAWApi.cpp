@@ -35,6 +35,10 @@
 #include "../Leaderboard.h"
 #include "../Item.h"
 #include "../json/json.h"
+#include "../VirtualItem.h"
+#include "../EliteMob.h"
+#include "../Ability2.h"
+#include "HTTPService.h"
 #include <algorithm>
 #include <filesystem>
 
@@ -83,6 +87,9 @@ bool UpHandler::handleAuthenticatedGet(CivetServer *server,
 	Json::Value root;
 	Json::StyledWriter writer;
 	root["status"] = "up";
+	root["currentTime"] = Json::UInt64(g_ServerTime);
+	root["launchTime"] = Json::UInt64(g_ServerLaunchTime);
+	root["upTime"] = Json::UInt64(g_ServerTime - g_ServerLaunchTime);
 	writeJSON200(server, conn, writer.write(root));
 	return true;
 }
@@ -1194,4 +1201,62 @@ bool AuctionHandler::handleAuthenticatedGet(CivetServer *server,
 
 	return true;
 
+}
+
+
+//
+// DashboardHandler
+//
+
+bool DashboardHandler::handleAuthenticatedGet(CivetServer *server,
+		struct mg_connection *conn) {
+	Json::Value root;
+	Json::StyledWriter writer;
+//	root["status"] = "up";
+	writeJSON200(server, conn, writer.write(root));
+	return true;
+}
+
+//
+// ReloadHandler
+//
+
+bool ReloadHandler::handleAuthenticatedGet(CivetServer *server,
+		struct mg_connection *conn) {
+
+	auto paths = g_Config.ResolveLocalConfigurationPath();
+	for (auto it = paths.begin(); it != paths.end(); ++it) {
+		auto dir = *it;
+		auto filename = dir / "ServerConfig.txt";
+		if(!g_Config.LoadConfig(filename) && it == paths.begin())
+			g_Logs.data->error("Could not open server configuration file: %v", filename);
+	}
+
+	g_ClusterManager.GameConfigChanged("","");
+	g_GameConfig.Reload();
+
+	g_VirtualItemModSystem.LoadSettings();
+	g_AbilityManager.LoadData();
+	g_FileChecksum.LoadFromFile();
+	g_EliteManager.LoadData();
+	writeJSON200(server, conn, "");
+	return true;
+}
+
+
+//
+// ShutdownHandler
+//
+
+bool ShutdownHandler::handleAuthenticatedGet(CivetServer *server,
+		struct mg_connection *conn) {
+
+	string restart;
+	if(CivetServer::getParam(conn, "restart", restart, 0)) {
+		g_ExitStatus = g_Config.RestartExitStatus;
+	}
+
+	g_ServerStatus = SERVER_STATUS_STOPPED;
+	writeJSON200(server, conn, "");
+	return true;
 }

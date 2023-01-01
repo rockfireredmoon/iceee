@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto" class="h-100">
+<head>
+<script src="js/bootstrap.bundle.min.js"></script>
+<link href="css/darkly.min.css" rel="stylesheet">
+<title>Shards</title>
+</head>
+<body class="h-100">
+	<div class="d-flex flex-row h-100">
+		<div
+			class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark h-100"
+			style="width: 280px;">
+			<a href="/"
+				class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+				<span class="fs-4">TAWD</span>
+			</a>
+			<hr>
+			<ul class="nav nav-pills flex-column mb-auto">
+				<li><a href="index.html" class="nav-link text-white">Dashboard</a></li>
+				<li><a href="players.html" class="nav-link text-white">Players</a></li>
+				<li class="nav-item"><a href="#" class="nav-link active"
+					aria-current="page">Shards</a></li>
+			</ul>
+		</div>
+		<div class="container">
+			<table id="shards" class="table">
+				<thead>
+					<tr>
+						<th scope="col">Name</th>
+						<th scope="col">Description</th>
+						<th scope="col">Players</th>
+						<th scope="col">Ping</th>
+						<th scope="col">Sim. Address</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script type="text/javascript">
+		fetch('/info/shards.json').then(function(response) {
+			return response.json();
+		}).then(function(shards) {
+			Object.keys(shards).forEach(function(key) {
+				const shard = shards[key];
+				const table = document.querySelector('#shards');
+				let row = document.createElement('tr');
+				
+				let nameCol = document.createElement('td');
+				nameCol.innerText = shard.name;
+				
+				let descriptionCol = document.createElement('td');
+				descriptionCol.innerText = shard.fullName;
+				
+				let playersCol = document.createElement('td');
+				playersCol.innerText = shard.players;
+				
+				let pingCol = document.createElement('td');
+				pingCol.innerText = shard.ping;
+				
+				let simCol = document.createElement('td');
+				simCol.innerText = shard.simulatorAddress + ':' + shard.simulatorPort;
+				
+				row.append(nameCol, descriptionCol, playersCol, pingCol, simCol);
+				table.append(row);
+			});
+		});
+	</script>
+</body>
+</html>

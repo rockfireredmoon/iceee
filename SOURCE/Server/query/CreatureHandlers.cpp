@@ -48,6 +48,11 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 	int WritePos = 0;
 
 	int CID = query->GetInteger(0);
+
+	if (g_Logs.simulator->enabled(el::Level::Trace)) {
+		g_Logs.simulator->trace("Querying if creature %v is usable.", CID);
+	}
+
 	int CDef = -1;
 	CreatureInstance *target = creatureInstance->actInst->GetNPCInstanceByCID(
 			CID);
@@ -66,6 +71,9 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 
 
 	if (failed == true) {
+		if (g_Logs.simulator->enabled(el::Level::Trace)) {
+			g_Logs.simulator->trace("Creature %v is not usable, either there is no such creature nearby, player is in grove, or server flags say is unusable.", CID);
+		}
 		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "N");
 	}
 
@@ -76,73 +84,139 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 		int self =
 				creatureInstance->actInst->lootsys.creatureList[lootable].HasLootableID(
 						creatureInstance->CreatureDefID);
-		if (self >= 0)
+		if (self >= 0) {
+			if (g_Logs.simulator->enabled(el::Level::Trace)) {
+				g_Logs.simulator->trace("Creature %v is loot.", CID);
+			}
 			WritePos = PrepExt_QueryResponseString(sim->SendBuf, query->ID,
 					"Q");
+		}
 	} else {
 		auto status = pld->charPtr->questJournal.CreatureIsUsable(CDef);
 		if (status == "N") {
 
+			if (g_Logs.simulator->enabled(el::Level::Trace)) {
+				g_Logs.simulator->trace("Creature %v is not quest usable, continue ...", CID);
+			}
+
 			if (creatureInstance->actInst->nutScriptPlayer != NULL) {
 				status = sim->GetScriptUsable(target);
-			}
-
-			if (status == "Y") {
-				InteractObject *ptr = g_InteractObjectContainer.GetObjectByID(
-						CDef, pld->CurrentZoneID);
-				if (ptr != NULL) {
-					bool hasReq = false;
-					if (ptr->questReq != 0) {
-						if (pld->charPtr->questJournal.completedQuests.HasQuestID(
-								ptr->questReq) >= 0)
-							hasReq = true;
-						else {
-							if (ptr->questComp == false)
-								if (pld->charPtr->questJournal.activeQuests.HasQuestID(
-										ptr->questReq) >= 0)
-									hasReq = true;
-						}
-					} else
-						hasReq = true;
-
-					status = (hasReq == true) ? "Y" : "N";
+				if (g_Logs.simulator->enabled(el::Level::Trace)) {
+					g_Logs.simulator->trace("Creature %v script usable status is %v.", CID, status);
 				}
-			}
-
-			if (status[0] == 'N') {
-				CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(target->CreatureDefID);
-				if(cdef != NULL && (cdef->DefHints & CDEF_HINT_ITEM_GIVER)) {
-					for(vector<int>::iterator it = cdef->Items.begin(); it != cdef->Items.end(); ++it) {
-						/* For now we only allow use if the player doesn't already have
-						 * the item. There could be other uses for this though. I'll
-						 * add logic as and when it's needed
-						 */
-						int id = (*it);
-						if(creatureInstance->charPtr->inventory.GetItemPtrByID(id) == NULL) {
-							if(cdef->DefHints & CDEF_HINT_USABLE_SPARKLY)
-								status = "Q";
-							else
-								status = "Y";
-							break;
-						}
-					}
-				}
-				else if (cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE_SPARKLY))
-					status = "Q";
-				else if (cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE))
-					status = "Y";
-				else if (target->HasStatus(StatusEffects::HENGE))
-					status = "Y";
-				else if (target->HasStatus(StatusEffects::MOUNTABLE) && !target->HasStatus(StatusEffects::MOUNTED))
-					status = "Y";
 			}
 		}
+
+		if (status == "N") {
+
+			if (g_Logs.simulator->enabled(el::Level::Trace)) {
+				g_Logs.simulator->trace("Creature %v is not script usable, continue ...", CID);
+			}
+
+			InteractObject *ptr = g_InteractObjectContainer.GetObjectByID(
+					CDef, pld->CurrentZoneID);
+			if (ptr != NULL) {
+
+				if (g_Logs.simulator->enabled(el::Level::Trace)) {
+					g_Logs.simulator->trace("Creature %v has an interact def.", CID);
+				}
+
+				bool hasReq = false;
+				if (ptr->questReq != 0) {
+					if (pld->charPtr->questJournal.completedQuests.HasQuestID(
+							ptr->questReq) >= 0)
+						hasReq = true;
+					else {
+						if (ptr->questComp == false)
+							if (pld->charPtr->questJournal.activeQuests.HasQuestID(
+									ptr->questReq) >= 0)
+								hasReq = true;
+					}
+				} else
+					hasReq = true;
+
+				if (g_Logs.simulator->enabled(el::Level::Trace)) {
+					g_Logs.simulator->trace("Creature %v has requirements = %v.", CID, hasReq);
+				}
+
+				status = (hasReq == true) ? "Y" : "N";
+			}
+		}
+
+		if (status == "N") {
+
+			if (g_Logs.simulator->enabled(el::Level::Trace)) {
+				g_Logs.simulator->trace("Creature %v is not InteractDef usable, continue ...", CID);
+			}
+
+			CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(target->CreatureDefID);
+			if(cdef != NULL && (cdef->DefHints & CDEF_HINT_ITEM_GIVER)) {
+				for(vector<int>::iterator it = cdef->Items.begin(); it != cdef->Items.end(); ++it) {
+					/* For now we only allow use if the player doesn't already have
+					 * the item. There could be other uses for this though. I'll
+					 * add logic as and when it's needed
+					 */
+					int id = (*it);
+					if(creatureInstance->charPtr->inventory.GetItemPtrByID(id) == NULL) {
+						if (g_Logs.simulator->enabled(el::Level::Trace)) {
+							g_Logs.simulator->trace("Creature %v is item giver, continue ...", CID);
+						}
+
+						if(cdef->DefHints & CDEF_HINT_USABLE_SPARKLY)
+							status = "Q";
+						else
+							status = "Y";
+						break;
+					}
+				}
+			}
+			else if (cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE_SPARKLY)) {
+
+				if (g_Logs.simulator->enabled(el::Level::Trace)) {
+					g_Logs.simulator->trace("Creature %v is CDEF_HINT_USABLE_SPARKLY.", CID);
+				}
+
+				status = "Q";
+			}
+			else if (cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE)) {
+
+				if (g_Logs.simulator->enabled(el::Level::Trace)) {
+					g_Logs.simulator->trace("Creature %v is CDEF_HINT_USABLE.", CID);
+				}
+
+				status = "Y";
+			}
+			else if (target->HasStatus(StatusEffects::HENGE)) {
+
+				if (g_Logs.simulator->enabled(el::Level::Trace)) {
+					g_Logs.simulator->trace("Creature %v is henge.", CID);
+				}
+
+				status = "Y";
+			}
+			else if (target->HasStatus(StatusEffects::MOUNTABLE) && !target->HasStatus(StatusEffects::MOUNTED)) {
+
+				if (g_Logs.simulator->enabled(el::Level::Trace)) {
+					g_Logs.simulator->trace("Creature %v is mount.", CID);
+				}
+
+				status = "Y";
+			}
+		}
+
+		if (g_Logs.simulator->enabled(el::Level::Trace)) {
+			g_Logs.simulator->trace("Creature %v final usable status is %v.", CID, status);
+		}
+
 		WritePos = PrepExt_QueryResponseString(sim->SendBuf, query->ID, status.c_str());
 		//LogMessageL(MSG_SHOW, "  creature.isusable: %d (%d) = %s", CID, CDef, status);
 	}
 
 	if (WritePos == 0) {
-		//LogMessageL(MSG_WARN, "[DEBUG] Unhandled creature.isusable for object ID:%d CDef:%d", CID, CDef);
+		if (g_Logs.simulator->enabled(el::Level::Trace)) {
+			g_Logs.simulator->trace("Creature %v is not usable, nothing wanted to handle.", CID);
+		}
+
 		WritePos = PrepExt_QueryResponseString(sim->SendBuf, query->ID, "N");
 	}
 	return WritePos;

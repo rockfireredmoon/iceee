@@ -2305,6 +2305,7 @@ void ActiveInstance::InitializeData(void) {
 			mZoneDefPtr->mID, false);
 		if (Util::HasEnding(path, ".nut")) {
 			nutScriptDef.LoadFromLocalFile(path.c_str());
+			nutScriptDef.scriptName = Util::Format("Instance_Script_Zone_%d", mZoneDefPtr->mID);
 			nutScriptPlayer = new InstanceScript::InstanceNutPlayer();
 			nutScriptPlayer->SetInstancePointer(this);
 			string errors;

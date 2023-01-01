@@ -170,6 +170,33 @@ private:
 	void writeAuctionItemToJSON(AuctionHouseItem * item, Json::Value &c);
 };
 
+/*
+ * Handles /api/dashboard requests, returning a JSON response containing general statistics about
+ * the server.
+ */
+class DashboardHandler: public AuthenticatedHandler {
+public:
+	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
+};
+
+/*
+ * Handles /api/reload requests, triggering a reload of various resources from disk. No content
+ * returned.
+ */
+class ReloadHandler: public AuthenticatedHandler {
+public:
+	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
+};
+
+/*
+ * Handles /api/shutdown requests, triggering a shutdown (or restart depending on parameters). No content
+ * returned.
+ */
+class ShutdownHandler: public AuthenticatedHandler {
+public:
+	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
+};
+
 }
 
 #endif

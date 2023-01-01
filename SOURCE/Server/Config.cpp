@@ -217,6 +217,8 @@ bool GlobalConfigData::LoadConfig(const fs::path &filename) {
 				g_Config.PartyPositionSendInterval = lfr.BlockToIntC(1);
 			else if (strcmp(NameBlock, "RedisWorkers") == 0)
 				g_Config.RedisWorkers = lfr.BlockToIntC(1);
+			else if (strcmp(NameBlock, "RestartExitStatus") == 0)
+				g_Config.RestartExitStatus = lfr.BlockToIntC(1);
 			else if (strcmp(NameBlock, "SchedulerThreads") == 0)
 				g_Config.SchedulerThreads = lfr.BlockToIntC(1);
 			else if (strcmp(NameBlock, "DebugPacketSendTrigger") == 0)
@@ -391,7 +393,7 @@ GlobalConfigData::GlobalConfigData() {
 	SquirrelGCCallCount = 1000;
 	SquirrelGCDelay = 10000;
 	SquirrelGCMaxDelay = 60000;
-	SquirrelVMStackSize = 512;
+	SquirrelVMStackSize = 2048;
 	SquirrelQueueSpeed = 10000;
 
 	SSLVerifyPeer = true;
@@ -409,6 +411,7 @@ GlobalConfigData::GlobalConfigData() {
 	LegacyServer = "";
 	APIAuthentication = "";
 	RedisWorkers = 10;
+	RestartExitStatus  = 1;
 	SchedulerThreads = 4;
 
 	InvalidLoginMessage = "Account not found.  Check username and password.";

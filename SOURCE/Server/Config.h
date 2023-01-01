@@ -27,7 +27,7 @@ extern char g_BindAddress[128];
 //For the HTTP server
 extern unsigned int g_HTTPListenPort;
 extern unsigned int g_HTTPSListenPort;
-extern std::string g_SSLCertificate;
+extern string g_SSLCertificate;
 
 extern unsigned long g_RebroadcastDelay;
 extern unsigned long g_LocalActivityScanDelay;
@@ -65,9 +65,9 @@ struct StringKeyVal
 class OAuth2Client
 {
 public:
-	std::string ClientId;
-	std::string ClientSecret;
-	std::string RedirectURL;
+	string ClientId;
+	string ClientSecret;
+	string RedirectURL;
 
 	OAuth2Client() {
 	}
@@ -85,7 +85,7 @@ public:
 	fs::path HTTPBaseFolder;
 	fs::path HTTPCARFolder;
 
-	std::string RemoteAuthenticationPassword;
+	string RemoteAuthenticationPassword;
 
 	int ProperSceneryList;     //Should be set to 1.  If zero, this is basically like having a global fastload permission applied to all players, which is bad for normal players.
 	bool RemotePasswordMatch(const char *value);
@@ -114,7 +114,7 @@ public:
 	int HTTPThreads;    //Number of worker threads.
 	int HTTPConnectionQueue;     //Maximum number of accepted connections waiting to be dispatched by a worker thread.
 	bool HTTPAuthDomainCheck;    //Check server domain
-	std::string HTTPAuthDomain;    //Server domain
+	string HTTPAuthDomain;    //Server domain
 
 	int PartyPositionSendInterval; //Time (milliseconds) between sending position updates to members outside of local range.
 
@@ -134,8 +134,8 @@ public:
 	bool UseUserAgentProtection;			 // Only allow HTTP calls from the Sparkplayer client user agent - 'ire3d(VERSION)'
 	bool UseLobbyHeartbeat;					 // Send a heartbeat while in lobby
 
-	std::string InvalidLoginMessage;         //The message string to send to the client if the account is wrong.
-	std::string MaintenanceMessage;          //The message string to send to the client if the server is in maintenance mode (sages and admins only).
+	string InvalidLoginMessage;         //The message string to send to the client if the account is wrong.
+	string MaintenanceMessage;          //The message string to send to the client if the server is in maintenance mode (sages and admins only).
 
 	bool VerifyMovement;                     //If true, attempt to validate client movement and report unexpected speeds, coordinates, and update intervals.  May issues some false reports, check for consistency.  Accounts with the 'admin' permission are never validated due to conflicts with the speed command. 
 	bool VerifySpeed;                        //If true, attempt to validate client speed
@@ -147,41 +147,42 @@ public:
 	unsigned long SquirrelVMStackSize;						// Initial VM stack size
 	int SquirrelQueueSpeed;							// Global queue speed. This value is divide by the script 'speed' to get the event delay for that script
 
-	std::string GitHubToken;			// GitHub personal access token for bug reports
-	std::string ServiceAuthURL;			// URL to use for external authentication
+	string GitHubToken;			// GitHub personal access token for bug reports
+	string ServiceAuthURL;			// URL to use for external authentication
 
 	// Global SSL options
 	bool SSLVerifyPeer;					// For SSL, the default for peer verification
 	bool SSLVerifyHostname;				// For SSL, whether to verify hostname
 
 	// Mail
-	std::string SMTPHost;				// For emails, the SMTP host
-	std::string SMTPUsername;			// For emails, the SMTP username
-	std::string SMTPPassword;			// For emails, the SMTP password
+	string SMTPHost;				// For emails, the SMTP host
+	string SMTPUsername;			// For emails, the SMTP username
+	string SMTPPassword;			// For emails, the SMTP password
 	int SMTPPort;						// For emails, the SMTP port
 	bool SMTPSSL;						// For emails, whether to use SSL
-	std::string SMTPSender;				// For emails, the default sender address
+	string SMTPSender;				// For emails, the default sender address
 
 	//Holds the address HTTP requests will be made to, from a clients perspect. If not set
 	//this will be computed from the simulator address and HTTP port (if any).
 	//This is mainly used for sim switching, informing the client of the (possibly new)
 	//address that should now be used for HTTP requests
-	std::string HTTPAddress;
+	string HTTPAddress;
 
-	std::vector<OAuth2Client*> OAuth2Clients;
+	vector<OAuth2Client*> OAuth2Clients;
 	bool LegacyAccounts;
 	bool PublicAPI;
 	bool DirectoryListing;
 	bool HTTPKeepAlive;
 	bool HTTPServeAssets;
+	unsigned int RestartExitStatus;
 	unsigned int RedisWorkers;
 	unsigned int SchedulerThreads;
 
-	std::string LegacyServer;			// URL of server to transfer groves from
-	std::string APIAuthentication;		// Username:Password to allow API authentication
-	std::string SiteServiceUsername;
-	std::string SiteServicePassword;
-	std::vector<fs::path> LocalConfigurationPath;
+	string LegacyServer;			// URL of server to transfer groves from
+	string APIAuthentication;		// Username:Password to allow API authentication
+	string SiteServiceUsername;
+	string SiteServicePassword;
+	vector<fs::path> LocalConfigurationPath;
 
 	fs::path ShutdownHandlerScript;
 	fs::path StaticDataPath;			// Location of static data (not editable in game).
@@ -194,10 +195,10 @@ public:
 	fs::path ResolveTmpDataPath();
 	fs::path ResolveHTTPBasePath();
 	fs::path ResolveHTTPCARPath();
-	std::vector<fs::path> ResolveLocalConfigurationPath();
+	vector<fs::path> ResolveLocalConfigurationPath();
 	fs::path ResolveLogPath();
-	std::string ResolveSimulatorAddress();
-	std::string ResolveHTTPAddress(const std::string &simAddress);
+	string ResolveSimulatorAddress();
+	string ResolveHTTPAddress(const string &simAddress);
 
 	bool LoadConfig(const fs::path &filename);
 
