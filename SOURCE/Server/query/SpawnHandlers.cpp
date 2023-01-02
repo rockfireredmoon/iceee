@@ -232,23 +232,15 @@ int SpawnListHandler::handleQuery(SimulatorThread *sim,
 	g_Logs.simulator->info("[%d] Replying with [%d] spawn search results",
 			sim->InternalID, resList.size());
 
-	int wpos = 0;
-	wpos += PutByte(&sim->SendBuf[wpos], 1);          //_handleQueryResultMsg
-	wpos += PutShort(&sim->SendBuf[wpos], 0);     //Placeholder for message size
-	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
-	wpos += PutShort(&sim->SendBuf[wpos], resList.size());      //Number of rows
-	for (size_t a = 0; a < resList.size(); a++) {
+	QueryResponse resp(query->ID);
+	for(auto res : resList) {
+		auto row = resp.Row();
 		//3 elements: ID, Name (Level), Package Type
-		wpos += PutByte(&sim->SendBuf[wpos], 3);
-		sprintf(sim->Aux3, "%d", resList[a].id);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux3);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], resList[a].name.c_str());
-		wpos += PutStringUTF(&sim->SendBuf[wpos], resList[a].type.c_str());
+		row->push_back(to_string(res.id));
+		row->push_back(res.name);
+		row->push_back(res.type);
 	}
-
-	PutShort(&sim->SendBuf[1], wpos - 3);             //Set message size
-	resList.clear();
-	return wpos;
+	return resp.Write(sim->SendBuf);
 }
 
 //

@@ -299,7 +299,7 @@ int CreatureDefEditHandler::handleQuery(SimulatorThread *sim,
 	} else {
 		if (pld->CreatureDefID == CDefID) {
 			if (sim->CheckPermissionSimple(0, Permission_TweakSelf) == false) {
-				int res = sim->protected_helper_tweak_self(CDefID, cDef->DefHints, argOffset);
+				int res = protected_helper_tweak_self(sim, query, CDefID, cDef->DefHints, argOffset);
 				if(res == -1) {
 					sim->SendInfoMessage("Permission denied: cannot edit self.", INFOMSG_ERROR);
 					return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
@@ -312,7 +312,7 @@ int CreatureDefEditHandler::handleQuery(SimulatorThread *sim,
 			if (charData != NULL) {
 				if (sim->CheckPermissionSimple(0, Permission_TweakOther)
 						== false) {
-					int res = sim->protected_helper_tweak_self(CDefID, cDef->DefHints, argOffset);
+					int res = protected_helper_tweak_self(sim, query, CDefID, cDef->DefHints, argOffset);
 					if(res == -1) {
 						sim->SendInfoMessage("Permission denied: cannot edit other players.", INFOMSG_ERROR);
 						return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
@@ -323,7 +323,7 @@ int CreatureDefEditHandler::handleQuery(SimulatorThread *sim,
 			} else {
 				if (sim->CheckPermissionSimple(0, Permission_TweakNPC)
 						== false) {
-					int res = sim->protected_helper_tweak_self(CDefID, cDef->DefHints, argOffset);
+					int res = protected_helper_tweak_self(sim, query, CDefID, cDef->DefHints, argOffset);
 					if(res == -1) {
 						sim->SendInfoMessage("Permission denied: cannot edit creatures.", INFOMSG_ERROR);
 						return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
@@ -745,3 +745,30 @@ int CreatureDeleteHandler::handleQuery(SimulatorThread *sim,
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
+int protected_helper_tweak_self(SimulatorThread *sim, SimulatorQuery *query, int CDefID, int defhints,
+		int argOffset) {
+	if (sim->CheckPermissionSimple(0, Permission_TweakClient) == true) {
+		const char *appearance = NULL;
+		for (uint i = 1 + argOffset; i < query->argCount; i += 2) {
+			const char *name = query->args[i].c_str();
+			const char *value = query->args[i + 1].c_str();
+			if (strcmp(name, "appearance") == 0) {
+				appearance = value;
+				break;
+			}
+		}
+		int size = 0;
+		if (appearance != NULL) {
+			std::vector<short> statID;
+			statID.push_back(STAT::APPEARANCE);
+			CharacterStatSet data;
+			//Util::SafeCopy(data.appearance, appearance, sizeof(data.appearance));
+			data.SetAppearance(appearance);
+			size = PrepExt_UpdateCreatureDef(sim->SendBuf, CDefID, defhints, statID,
+					&data);
+		}
+		size += PrepExt_QueryResponseString(&sim->SendBuf[size], query->ID, "OK");
+		return size;
+	} else
+		return -1;
+}

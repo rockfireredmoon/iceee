@@ -29,6 +29,7 @@
 #include "../util/Log.h"
 #include <algorithm>
 #include <fstream>
+#include <initializer_list>
 
 using namespace std;
 
@@ -226,14 +227,19 @@ int ScriptLoadHandler::handleScriptQuery(bool ownPlayer, int instanceID,
 		return 0;
 	}
 
-	std::vector<std::string> lines;
+	QueryResponse resp(query->ID);
 
 	if (type == 0 && instance->mZoneDefPtr->mGrove) {
 		InstanceScript::InstanceNutDef def;
 		if (def.LoadFromCluster(instance->mZoneDefPtr->mID)) {
+			vector<string> lines;
 			Util::Split(def.mScriptContent, "\n", lines);
-		} else
-			lines.push_back("#!/bin/sq");
+			for(auto l : lines) {
+				resp.Row()->push_back(l);
+			}
+		} else {
+			resp.Row()->push_back("#!/bin/sq");
+		}
 
 	} else {
 
@@ -248,57 +254,84 @@ int ScriptLoadHandler::handleScriptQuery(bool ownPlayer, int instanceID,
 
 			while (lfr.FileOpen() == true) {
 				lfr.ReadLine();
-				lines.push_back(lfr.DataBuffer);
+				resp.Row()->push_back(lfr.DataBuffer);
 			}
 		} else {
-			lines.push_back("#!/bin/sq");
+			resp.Row()->push_back("#!/bin/sq");
 		}
 	}
 
-	int wpos = 0;
-	wpos += PutByte(&sim->SendBuf[wpos], 1);       //_handleQueryResultMsg
-	wpos += PutShort(&sim->SendBuf[wpos], 0);      //Message size
-	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
-	wpos += PutShort(&sim->SendBuf[wpos], lines.size() + 1);
-	for (unsigned int i = 0; i < lines.size(); i++) {
-		wpos += PutByte(&sim->SendBuf[wpos], 1);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], lines[i].c_str());
-	}
-
 	// The last record contains info about the instance itself for the editor UI
-	wpos += PutByte(&sim->SendBuf[wpos], 2);
+	auto row = resp.Row();
 
 	if (player != NULL) {
 		g_Logs.script->info("Using active new player %v",
 				player->mActive ? "active" : "inactive");
-		wpos += PutStringUTF(&sim->SendBuf[wpos],
-				player->mActive ? "true" : "false"); // active
+		row->push_back(player->mActive ? "true" : "false"); // active
 	} else if (oldPlayer != NULL) {
 		g_Logs.script->info("Using active old player %v",
 				oldPlayer->mActive ? "active" : "inactive");
-		wpos += PutStringUTF(&sim->SendBuf[wpos],
-				oldPlayer->mActive ? "true" : "false"); // active
+		row->push_back(oldPlayer->mActive ? "true" : "false"); // active
 	} else {
 		g_Logs.script->warn("No player %v!", ownPlayer ? "false" : "unknown");
-		wpos += PutStringUTF(&sim->SendBuf[wpos],
-				ownPlayer ? "false" : "unknown"); // active
+		row->push_back(ownPlayer ? "false" : "unknown"); // active
 	}
 
 	switch (type) {
-	case 0:
-		sprintf(sim->Aux1, "%d", instanceID);
-		break;
 	case 1:
 		sprintf(sim->Aux1, "%d", questID);
 		break;
 	case 2:
 		sprintf(sim->Aux1, "%s", scriptName.c_str());
 		break;
+	default:
+		sprintf(sim->Aux1, "%d", instanceID);
+		break;
 	}
-	wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+	row->push_back(sim->Aux1);
+	return resp.Write(sim->SendBuf);
 
-	PutShort(&sim->SendBuf[1], wpos - 3);
-	return wpos;
+}
+
+//
+// ScriptListHandler
+//
+
+int ScriptListHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	/*  Query: script.list
+	 Gets a list of all AI scripts
+	 */
+
+	int type = query->argCount < 1 ? - 1: query->GetInteger(0);
+
+	g_Logs.script->debug("Script list %v", type);
+
+	bool admin = sim->CheckPermissionSimple(Perm_Account, Permission_Admin);
+	bool ok = admin;
+	bool ownGrove = pld->zoneDef->mGrove == true
+			&& pld->zoneDef->mAccountID == pld->accPtr->ID;
+	if (!ok) {
+		// Players can edit their own grove scripts (some commands will be restricted)
+		if (type == 0 && ownGrove)
+			ok = true;
+	}
+	if (!ok)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Permission denied.");
+
+	QueryResponse resp(query->ID);
+	for(auto def : aiNutManager.aiDef) {
+		auto row = resp.Row();
+		row->push_back("Squirrel");
+		row->push_back(def->scriptName);
+		row->push_back(def->mAuthor);
+		row->push_back(def->mDescription);
+	}
+
+	return resp.Write(sim->SendBuf);
 
 }
 

@@ -254,11 +254,8 @@ public:
 	//Experimental migratory functions
 	string CreatureIsUsable(int CreatureDefID);
 	const char * QuestIndicator(int CreatureDefID);
-	char * QuestGetQuestOffer(int CreatureDefID, char *convBuf);
-	int QuestGenericData(char *buffer, int bufsize, char *convBuf, int QuestID, int QueryIndex);
-	int QuestData(char *buffer, char *convBuf, int QuestID, int QueryIndex);
+	string QuestGetQuestOffer(int CreatureDefID, char *convBuf);
 	int QuestJoin(char *buffer, int QuestID, int QueryIndex);
-	int QuestList(char *buffer, char *convBuf, int QueryID);
 	int QuestGetCompleteQuest(char *buffer, char *convBuf, int CreatureDefID, int QueryIndex);
 	int QuestGetCompleteQuest_Helper(int creatureDefID);
 	int QuestComplete(int QuestID);

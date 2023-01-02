@@ -29,22 +29,15 @@ using namespace std;
 int BookListHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 		SimulatorQuery *query, CreatureInstance *creatureInstance) {
 
-	int wpos = 0;
-	wpos += PutByte(&sim->SendBuf[wpos], 1);       //_handleQueryResultMsg
-	wpos += PutShort(&sim->SendBuf[wpos], 0);      //Message size
-	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
-	wpos += PutShort(&sim->SendBuf[wpos], 0);      //Books
-
+	QueryResponse resp(query->ID);
 	InventoryManager inv = creatureInstance->charPtr->inventory;
 	std::set<int> booksFound;
-	wpos = PopulateBookList(sim, wpos, inv, INV_CONTAINER, booksFound);
-	wpos = PopulateBookList(sim, wpos, inv, BOOKSHELF_CONTAINER, booksFound);
-	PutShort(&sim->SendBuf[7], booksFound.size());
-	PutShort(&sim->SendBuf[1], wpos - 3);
-	return wpos;
+	PopulateBookList(resp, inv, INV_CONTAINER, booksFound);
+	PopulateBookList(resp, inv, BOOKSHELF_CONTAINER, booksFound);
+	return resp.Write(sim->SendBuf);
 }
 
-int BookListHandler::PopulateBookList(SimulatorThread *sim, int wpos, InventoryManager &inv, int container, std::set<int> &booksFound) {
+void BookListHandler::PopulateBookList(QueryResponse &response, InventoryManager &inv, int container, std::set<int> &booksFound) {
 
 	for (size_t a = 0; a < inv.containerList[INV_CONTAINER].size(); a++) {
 		int ID = inv.containerList[INV_CONTAINER][a].IID;
@@ -59,13 +52,10 @@ int BookListHandler::PopulateBookList(SimulatorThread *sim, int wpos, InventoryM
 				BookDefinition def = g_BookManager.GetBookDefinition(
 						itemDef->mIvMax1);
 				if (def.bookID > 0) {
-					wpos += PutByte(&sim->SendBuf[wpos], 3);
-					Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2), "%d", def.bookID);
-					wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux2);
-					wpos += PutStringUTF(&sim->SendBuf[wpos], def.title.c_str());
-					Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2), "%d",
-							def.pages.size());
-					wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux2);
+					auto row = response.Row();
+					row->push_back(to_string(def.bookID));
+					row->push_back(def.title);
+					row->push_back(to_string(def.pages.size()));
 				} else {
 					g_Logs.server->warn(
 							"Item %v refers to an invalid book, %v", ID,
@@ -74,7 +64,6 @@ int BookListHandler::PopulateBookList(SimulatorThread *sim, int wpos, InventoryM
 			}
 		}
 	}
-	return wpos;
 }
 
 
@@ -94,22 +83,16 @@ int BookGetHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Invalid book");
 
-	int wpos = 0;
-	wpos += PutByte(&sim->SendBuf[wpos], 1);       //_handleQueryResultMsg
-	wpos += PutShort(&sim->SendBuf[wpos], 0);      //Message size
-	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
-	wpos += PutShort(&sim->SendBuf[wpos], 0);  //Have pages
+	QueryResponse resp(query->ID);
 
 	InventoryManager inv = creatureInstance->charPtr->inventory;
 	std::set<int> pagesFoundSet;
-	wpos = PopulateBookDetails(sim, wpos, inv, INV_CONTAINER, pagesFoundSet, def);
-	wpos = PopulateBookDetails(sim, wpos, inv, BOOKSHELF_CONTAINER, pagesFoundSet, def);
-	PutShort(&sim->SendBuf[7], pagesFoundSet.size());
-	PutShort(&sim->SendBuf[1], wpos - 3);
-	return wpos;
+	PopulateBookDetails(resp, inv, INV_CONTAINER, pagesFoundSet, def);
+	PopulateBookDetails(resp, inv, BOOKSHELF_CONTAINER, pagesFoundSet, def);
+	return resp.Write(sim->SendBuf);
 }
 
-int BookGetHandler :: PopulateBookDetails(SimulatorThread *sim, int wpos, InventoryManager &inv, int container, std::set<int> &pagesFoundSet, BookDefinition &def) {
+void BookGetHandler :: PopulateBookDetails(QueryResponse &response, InventoryManager &inv, int container, std::set<int> &pagesFoundSet, BookDefinition &def) {
 	for (size_t a = 0; a < inv.containerList[INV_CONTAINER].size(); a++) {
 		ItemDef *itemDef =
 				inv.containerList[INV_CONTAINER][a].ResolveSafeItemPtr();
@@ -119,27 +102,22 @@ int BookGetHandler :: PopulateBookDetails(SimulatorThread *sim, int wpos, Invent
 				/* An item with ItemIntegerType::BOOK but NO ItemIntegerType::BOOK_PAGE is a complete book, so return all the pages */
 				for (size_t i = 0; i < def.pages.size(); i++) {
 					pagesFoundSet.insert(itemDef->mIvMax2);
-					wpos += PutByte(&sim->SendBuf[wpos], 2);
-					Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2), "%d", i);
-					wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux2);
-					wpos += PutStringUTF(&sim->SendBuf[wpos],
-							def.pages[i].c_str());
+					auto row = response.Row();
+					row->push_back(to_string(i));
+					row->push_back(def.pages[i]);
 				}
 			} else if (itemDef->GetDynamicMax(ItemIntegerType::BOOK)
 					== def.bookID && pageNo > 0
 					&& pagesFoundSet.find(pageNo) == pagesFoundSet.end()) {
 				/* An item with ItemIntegerType::BOOK and a ItemIntegerType::BOOK_PAGE is book page, so return just the pages */
 				pagesFoundSet.insert(itemDef->mIvMax2);
-				wpos += PutByte(&sim->SendBuf[wpos], 2);
-				Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2), "%d",
-						pageNo - 1);
-				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux2);
-				wpos += PutStringUTF(&sim->SendBuf[wpos],
-						def.pages[pageNo - 1].c_str());
+
+				auto row = response.Row();
+				row->push_back(to_string(pageNo - 1));
+				row->push_back(def.pages[pageNo - 1]);
 			}
 		}
 	}
-	return wpos;
 }
 
 //
@@ -209,24 +187,14 @@ int BookItemHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 
 		}
 
-		int WritePos = 0;
-		WritePos += PutByte(&sim->SendBuf[WritePos], 1); //_handleQueryResultMsg
-		WritePos += PutShort(&sim->SendBuf[WritePos], 0);      //Message size
-		WritePos += PutInteger(&sim->SendBuf[WritePos], query->ID); //Query response index
-		WritePos += PutShort(&sim->SendBuf[WritePos], 1);      //Array count
-		WritePos += PutByte(&sim->SendBuf[WritePos],
-				2 + requiredMaterials.size()); //String count
-		sprintf(sim->Aux2, "%d", bookItemId);
-		WritePos += PutStringUTF(&sim->SendBuf[WritePos], sim->Aux2);  //ID
-		sprintf(sim->Aux2, "%d", bookPages);
-		WritePos += PutStringUTF(&sim->SendBuf[WritePos], sim->Aux2);  //ID
-		for (std::vector<int>::iterator it = requiredMaterials.begin();
-				it != requiredMaterials.end(); ++it) {
-			sprintf(sim->Aux2, "%d", *it);
-			WritePos += PutStringUTF(&sim->SendBuf[WritePos], sim->Aux2);  //ID
+		QueryResponse resp(query->ID);
+		auto row = resp.Row();
+		row->push_back(to_string(bookItemId));
+		row->push_back(to_string(bookPages));
+		for(auto mat : requiredMaterials) {
+			row->push_back(to_string(mat));
 		}
-		PutShort(&sim->SendBuf[1], WritePos - 3);             //Set message size
-		return WritePos;
+		return resp.Write(sim->SendBuf);
 	}
 
 	return PrepExt_QueryResponseError(sim->SendBuf, query->ID,

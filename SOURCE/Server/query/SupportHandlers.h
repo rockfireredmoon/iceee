@@ -21,6 +21,8 @@
 #include "Query.h"
 #include <curl/curl.h>
 
+using namespace std;
+
 class BugReportHandler : public QueryHandler {
 public:
 	~BugReportHandler() {};

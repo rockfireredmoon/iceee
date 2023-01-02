@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <string.h>
 #include "util/Log.h"
+#include "query/Query.h"
 
 
 DropTableManager g_DropTableManager;
@@ -157,26 +158,12 @@ void ActiveLootContainer :: RemoveItem(int index)
 
 int ActiveLootContainer :: WriteLootQueryToBuffer(char *buffer, char *convbuf, int queryIndex)
 {
-	int wpos = 0;
-	wpos += PutByte(&buffer[wpos], 1);              //_handleQueryResultMsg
-	wpos += PutShort(&buffer[wpos], 0);             //Placeholder for message size
-	wpos += PutInteger(&buffer[wpos], queryIndex);  //Query response index
-
-	size_t lootCount = itemList.size();
-	if(lootCount == 0)
-	{
-		wpos += PutShort(&buffer[wpos], 0);   //Row count
+	QueryResponse resp(queryIndex);
+	for(auto item : itemList) {
+		auto row = resp.Row();
+		row->push_back(GetItemProto(convbuf, item, 0));
 	}
-	else
-	{
-		wpos += PutShort(&buffer[wpos], 1);             //Row count
-		wpos += PutByte(&buffer[wpos], lootCount);      //String count
-		for(size_t i = 0; i < lootCount; i++)
-			wpos += PutStringUTF(&buffer[wpos], GetItemProto(convbuf, itemList[i], 0));
-	}
-
-	PutShort(&buffer[1], wpos - 3);                 //Message size
-	return wpos;
+	return resp.Write(buffer);
 }
 
 void ActiveLootContainer :: AddLootableID(int newLootableID)

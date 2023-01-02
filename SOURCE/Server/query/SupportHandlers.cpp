@@ -27,8 +27,8 @@
 int BugReportHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
-	std::string summary = query->GetString(0);
-	std::string desc = query->GetString(2);
+	string summary = query->GetString(0);
+	string desc = query->GetString(2);
 	Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
 			"{ \"title\": \"%s\", \"body\": \"Reported By: %s\\nCategory: %s\\n\\n%s\", \"labels\": [ \"bug\", \"in game\" ] }",
 			Util::EncodeJSONString(summary).c_str(),
@@ -42,7 +42,7 @@ int BugReportHandler::handleQuery(SimulatorThread *sim,
 	curl = curl_easy_init();
 	if (curl) {
 		struct curl_slist *headers = NULL;
-		std::string auth = g_Config.GitHubToken;
+		string auth = g_Config.GitHubToken;
 
 		curl_easy_setopt(curl, CURLOPT_URL,
 				"https://api.github.com/repos/rockfireredmoon/iceee/issues");
@@ -94,76 +94,58 @@ int PetitionListHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
 
+	QueryResponse resp(query->ID, sim->SendBuf);
+
 	if (!sim->CheckPermissionSimple(Perm_Account, Permission_Sage))
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
-				"Permission denied.");
+		return resp.Error("Permission denied.");
 
-	int wpos = 0;
-	wpos += PutByte(&sim->SendBuf[wpos], 1);       //_handleQueryResultMsg
-	wpos += PutShort(&sim->SendBuf[wpos], 0);      //Message size
-	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
-
-	vector<Petition> pets = g_PetitionManager.GetPetitions(
-			pld->charPtr->cdef.CreatureDefID);
+	auto pets = g_PetitionManager.GetPetitions(pld->charPtr->cdef.CreatureDefID);
 	vector<Petition>::iterator it;
-	wpos += PutShort(&sim->SendBuf[wpos], pets.size());
 	struct tm * timeinfo;
 	g_CharacterManager.GetThread("SimulatorThread::PetitionList");
-	for (it = pets.begin(); it != pets.end(); ++it) {
-		wpos += PutByte(&sim->SendBuf[wpos], 8);
-		wpos += PutStringUTF(&sim->SendBuf[wpos],
-				it->status == PENDING ? "pending" : "mine");
-		CharacterData *petitioner = g_CharacterManager.GetPointerByID(
-				it->petitionerCDefID);
+	for (auto it : pets) {
+		auto row = resp.Row();
+		row->push_back(it.status == PENDING ? "pending" : "mine");
+		auto petitioner = g_CharacterManager.GetPointerByID(it.petitionerCDefID);
 		if (petitioner == NULL)
-			wpos += PutStringUTF(&sim->SendBuf[wpos], "<Deleted>");
+			row->push_back("<Deleted>");
 		else
-			wpos += PutStringUTF(&sim->SendBuf[wpos],
-					petitioner->cdef.css.display_name);
-		sprintf(sim->Aux1, "%d", it->petitionId);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+			row->push_back(petitioner->cdef.css.display_name);
+		row->push_back(to_string(it.petitionId));
 		if (petitioner == NULL)
-			wpos += PutStringUTF(&sim->SendBuf[wpos], "");
+			row->push_back("");
 		else {
-			AccountData * accData = g_AccountManager.FetchIndividualAccount(
-					petitioner->AccountID);
+			auto accData = g_AccountManager.FetchIndividualAccount( petitioner->AccountID);
 			if (accData == NULL)
-				wpos += PutStringUTF(&sim->SendBuf[wpos], "<Missing account>");
+				row->push_back("<Missing account>");
 			else {
 				int c = 0;
-				memset(&sim->Aux1, 0, sizeof(sim->Aux1));
-				for (unsigned int i = 0; i < accData->MAX_CHARACTER_SLOTS;
-						i++) {
-					if (accData->CharacterSet[i] != 0
-							&& accData->CharacterSet[i]
+				string n = "";
+				for (unsigned int i = 0; i < accData->MAX_CHARACTER_SLOTS; i++) {
+					if (accData->CharacterSet[i] != 0 && accData->CharacterSet[i]
 									!= petitioner->cdef.CreatureDefID) {
-						CharacterCacheEntry *cce =
-								accData->characterCache.ForceGetCharacter(
-										accData->CharacterSet[i]);
+						auto cce = accData->characterCache.ForceGetCharacter(accData->CharacterSet[i]);
 						if (cce != NULL) {
 							if (c > 0)
-								strcat(sim->Aux1, ",");
-							strcat(sim->Aux1, cce->display_name.c_str());
+								n.append(",");
+							n.append(cce->display_name);
 							c++;
 						}
 					}
 				}
-				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+				row->push_back(n);
 			}
 		}
-		sprintf(sim->Aux1, "%d", it->category);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], it->description.c_str());
-		wpos += PutStringUTF(&sim->SendBuf[wpos], "0");  // TODO score
+		row->push_back(to_string(it.category));
+		row->push_back(it.description);
+		row->push_back("0"); // TODO score
 		time_t ts;
 		timeinfo = localtime(&ts);
 		sprintf(sim->Aux1, "%s", asctime(timeinfo));
-		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+		row->push_back(sim->Aux1);
 	}
 	g_CharacterManager.ReleaseThread();
-
-	PutShort(&sim->SendBuf[1], wpos - 3);
-	return wpos;
+	return resp.Data();
 }
 
 //

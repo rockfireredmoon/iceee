@@ -44,4 +44,6 @@ public:
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+int protected_helper_tweak_self(SimulatorThread *sim, SimulatorQuery *query, int CDefID, int defhints, int argOffset);
+
 #endif

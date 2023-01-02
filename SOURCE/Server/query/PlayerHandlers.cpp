@@ -179,26 +179,12 @@ int ResCostHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	 Args: [none]
 	 */
 	//For the three resurrect options [0,1,2], the client only asks for [1,2]
-	int cost = 0;
-
-	int wpos = 0;
-	wpos += PutByte(&sim->SendBuf[wpos], 1);           //_handleQueryResultMsg
-	wpos += PutShort(&sim->SendBuf[wpos], 0);     //Placeholder for message size
-	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
-	wpos += PutShort(&sim->SendBuf[wpos], 2);           //Number of arrays
-
-	cost = Global::GetResurrectCost(creatureInstance->css.level, 1);
-	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3), "%d", cost);
-	wpos += PutByte(&sim->SendBuf[wpos], 1);
-	wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux3);
-
-	cost = Global::GetResurrectCost(creatureInstance->css.level, 2);
-	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3), "%d", cost);
-	wpos += PutByte(&sim->SendBuf[wpos], 1);
-	wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux3);
-
-	PutShort(&sim->SendBuf[1], wpos - 3);             //Set message size
-	return wpos;
+	QueryResponse resp(query->ID);
+	auto row1 = resp.Row();
+	row1->push_back(to_string(Global::GetResurrectCost(creatureInstance->css.level, 1)));
+	auto row2 = resp.Row();
+	row2->push_back(to_string(Global::GetResurrectCost(creatureInstance->css.level, 2)));
+	return resp.Write(sim->SendBuf);
 }
 
 //
@@ -213,58 +199,34 @@ int GuildInfoHandler::handleQuery(SimulatorThread *sim,
 	 Retrieves the guild info of the Simulator player.
 	 Args: [none]
 	 */
-	int wpos = 0;
-	wpos += PutByte(&sim->SendBuf[wpos], 1);       //_handleQueryResultMsg
-	wpos += PutShort(&sim->SendBuf[wpos], 0);      //Message size
-	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
-
-	if (pld->charPtr->guildList.size() == 0) {
-		wpos += PutShort(&sim->SendBuf[wpos], 0);
-	} else {
-		wpos += PutShort(&sim->SendBuf[wpos], pld->charPtr->guildList.size());
+	QueryResponse resp(query->ID);
+	if (pld->charPtr->guildList.size() > 0) {
 		for (unsigned int i = 0; i < pld->charPtr->guildList.size(); i++) {
 
-			//local defID = r[0];
-			//local valour = r[1];
-			//local guildType = r[2];
-			//local name = r[3];
-			//local motto = r[4];
-			//local rankTitle = r[5];
-			//local rankLevel = r[6];
+			auto row = resp.Row();
 
 			GuildDefinition *gdef = g_GuildManager.GetGuildDefinition(
 					pld->charPtr->guildList[i].GuildDefID);
-			wpos += PutByte(&sim->SendBuf[wpos], 7);
 
-			sprintf(sim->Aux1, "%d", pld->charPtr->guildList[i].GuildDefID);
-			wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-
-			sprintf(sim->Aux1, "%d", pld->charPtr->guildList[i].Valour);
-			wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-
-			sprintf(sim->Aux1, "%d", gdef->guildType);
-			wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-
-			wpos += PutStringUTF(&sim->SendBuf[wpos], gdef->defName.c_str());
-
-			wpos += PutStringUTF(&sim->SendBuf[wpos], gdef->motto.c_str());
+			row->push_back(to_string(pld->charPtr->guildList[i].GuildDefID));
+			row->push_back(to_string(pld->charPtr->guildList[i].Valour));
+			row->push_back(to_string(gdef->guildType));
+			row->push_back(gdef->defName);
+			row->push_back(gdef->motto);
 
 			GuildRankObject *rank = g_GuildManager.GetRank(pld->CreatureDefID,
 					gdef->guildDefinitionID);
 			if (rank == NULL) {
-				wpos += PutStringUTF(&sim->SendBuf[wpos], "No rank");
-				wpos += PutStringUTF(&sim->SendBuf[wpos], "0");
+				row->push_back("No rank");
+				row->push_back("0");
 			} else {
-
-				wpos += PutStringUTF(&sim->SendBuf[wpos], rank->title.c_str());
-				sprintf(sim->Aux1, "%d", rank->rank);
-				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+				row->push_back(rank->title);
+				row->push_back(to_string(rank->rank));
 			}
 		}
 	}
 
-	PutShort(&sim->SendBuf[1], wpos - 3);
-	return wpos;
+	return resp.Write(sim->SendBuf);
 }
 
 //
@@ -284,12 +246,12 @@ int GuildLeaveHandler::handleQuery(SimulatorThread *sim,
 	std::vector<int> defs;
 
 	// Make sure any guild quests are abandoned
-	for (it = QuestDef.mQuests.begin(); it != QuestDef.mQuests.end(); ++it) {
-		QuestDefinition *qd = &it->second;
-		if (qd->guildId == guildDefID) {
-			int QID = qd->questID;
+	for (auto it : QuestDef.mQuests) {
+		auto qd = it.second;
+		if (qd.guildId == guildDefID) {
+			int QID = qd.questID;
 			if (pld->charPtr->questJournal.activeQuests.HasQuestID(QID)) {
-				if (qd->unabandon == true) {
+				if (qd.unabandon == true) {
 					sim->SendInfoMessage("You cannot abandon that quest.",
 							INFOMSG_ERROR);
 					QID = 0; //Set to zero so it's not actually removed in the server or the client.
@@ -299,26 +261,18 @@ int GuildLeaveHandler::handleQuery(SimulatorThread *sim,
 		}
 	}
 
-	int wpos = 0;
-	wpos += PutByte(&sim->SendBuf[wpos], 1);       //_handleQueryResultMsg
-	wpos += PutShort(&sim->SendBuf[wpos], 0);      //Message size
-	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
-	wpos += PutShort(&sim->SendBuf[wpos], defs.size());
-	for (unsigned int i = 0; i < defs.size(); i++) {
-		sprintf(sim->Aux1, "%d", defs[i]);
-		wpos += PutByte(&sim->SendBuf[wpos], 1);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-	}
-	PutShort(&sim->SendBuf[1], wpos - 3);
-	sim->AttemptSend(sim->SendBuf, wpos);
-
 	pld->charPtr->LeaveGuild(guildDefID);
 	sim->BroadcastGuildChange(guildDefID);
 	pld->charPtr->pendingChanges++;
 	pld->charPtr->cdef.css.SetSubName(NULL);
 	creatureInstance->SendStatUpdate(STAT::SUB_NAME);
 
-	return 0;
+	QueryResponse resp(query->ID);
+	for(auto def : defs) {
+		auto row = resp.Row();
+		row->push_back(to_string(def));
+	}
+	return resp.Write(sim->SendBuf);
 }
 
 //
@@ -737,48 +691,35 @@ int PlayerAchievementsHandler::handleQuery(SimulatorThread *sim,
 int AchievementDefHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
+	QueryResponse resp(query->ID, sim->SendBuf);
 	if (query->argCount > 0) {
-		Achievements::AchievementDef *adata = g_AchievementsManager.GetItem(
-				query->GetString(0));
+		auto adata = g_AchievementsManager.GetItem(query->GetString(0));
 		if (adata == NULL)
-			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
-					"No such achievement.");
+			return resp.Error("No such achievement");
 
-		int wpos = 0;
-		wpos += PutByte(&sim->SendBuf[wpos], 1);         //_handleQueryResultMsg
-		wpos += PutShort(&sim->SendBuf[wpos], 0); //Placeholder for message size
-		wpos += PutInteger(&sim->SendBuf[wpos], query->ID); //Query response index
-		wpos += PutShort(&sim->SendBuf[wpos], 1 + adata->mObjectives.size()); //Row count
+		auto firstRow = resp.Row();
+		firstRow->push_back(adata->mName);  //name
+		firstRow->push_back(adata->mTitle); //title
+		firstRow->push_back(to_string(adata->mCategory));  //category
+		firstRow->push_back(adata->mDescription); //description
+		firstRow->push_back(adata->mIcon1); //icon1
+		firstRow->push_back(adata->mIcon2); //icon2
+		firstRow->push_back(adata->mTag);   //tag
 
-		wpos += PutByte(&sim->SendBuf[wpos], 7); //String count
-		wpos += PutStringUTF(&sim->SendBuf[wpos], adata->mName.c_str());  //name
-		wpos += PutStringUTF(&sim->SendBuf[wpos], adata->mTitle.c_str()); //title
-		Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "%d", adata->mCategory);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);   //category
-		wpos += PutStringUTF(&sim->SendBuf[wpos], adata->mDescription.c_str()); //description
-		wpos += PutStringUTF(&sim->SendBuf[wpos], adata->mIcon1.c_str()); //icon1
-		wpos += PutStringUTF(&sim->SendBuf[wpos], adata->mIcon2.c_str()); //icon2
-		wpos += PutStringUTF(&sim->SendBuf[wpos], adata->mTag.c_str());   //tag
-
-		for (std::vector<Achievements::AchievementObjectiveDef*>::iterator it =
-				adata->mObjectives.begin(); it != adata->mObjectives.end();
-				++it) {
-			Achievements::AchievementObjectiveDef* odef = (*it);
-			wpos += PutByte(&sim->SendBuf[wpos], 6); //String count
-			wpos += PutStringUTF(&sim->SendBuf[wpos], odef->mName.c_str()); //name
-			wpos += PutStringUTF(&sim->SendBuf[wpos], odef->mTitle.c_str()); //title
-			wpos += PutStringUTF(&sim->SendBuf[wpos],
-					odef->mDescription.c_str()); //description
-			wpos += PutStringUTF(&sim->SendBuf[wpos], odef->mIcon1.c_str()); //icon1
-			wpos += PutStringUTF(&sim->SendBuf[wpos], odef->mIcon2.c_str()); //icon2
-			wpos += PutStringUTF(&sim->SendBuf[wpos], odef->mTag.c_str()); //tag
+		for (auto odef : adata->mObjectives) {
+			auto row = resp.Row();
+			row->push_back(odef->mName); //name
+			row->push_back(odef->mTitle); //title
+			row->push_back(odef->mDescription); //description
+			row->push_back(odef->mIcon1); //icon1
+			row->push_back(odef->mIcon2); //icon2
+			row->push_back(odef->mTag); //tag
 		}
-		PutShort(&sim->SendBuf[1], wpos - 3);                 //Message size
-		return wpos;
+
+		return resp.Data();
 
 	} else {
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
-				"Missing argument.");
+		return resp.Error("Missing argument.");
 	}
-	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+	return resp.String("OK");
 }

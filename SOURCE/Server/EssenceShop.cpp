@@ -7,6 +7,7 @@
 
 #include <string.h>
 #include "util/Log.h"
+#include "query/Query.h"
 
 EssenceShopItem :: EssenceShopItem()
 {
@@ -48,51 +49,27 @@ void EssenceShop :: AddItem(int id, int cost)
 
 int EssenceShop :: WriteQueryEssenceShop(char *buffer, char *convbuf, int QueryID)
 {
-	int wpos = 0;
-	wpos += PutByte(&buffer[wpos], 1);              //_handleQueryResultMsg
-	wpos += PutShort(&buffer[wpos], 0);             //Placeholder for message size
-	wpos += PutInteger(&buffer[wpos], QueryID);     //Query response ID
+	QueryResponse resp(QueryID);
+	auto row = resp.Row(); //Always two strings.
+	row->push_back(to_string(EssenceID));
+	row->push_back("0"); //Second parameter not used for essence id?
 
-	int rowCount = EssenceList.size();
-	wpos += PutShort(&buffer[wpos], 1 + rowCount);
-
-	wpos += PutByte(&buffer[wpos], 2);              //Always two strings.
-	sprintf(convbuf, "%d", EssenceID);
-	wpos += PutStringUTF(&buffer[wpos], convbuf);
-	wpos += PutStringUTF(&buffer[wpos], "0");       //Second parameter not used for essence id?
-
-	for(int index = 0; index < rowCount; index++)
-	{
-		wpos += PutByte(&buffer[wpos], 2);              //Always two strings.
-
-		GetItemProto(convbuf, EssenceList[index].ItemID, 0);
-		wpos += PutStringUTF(&buffer[wpos], convbuf);
-		sprintf(convbuf, "%d", EssenceList[index].EssenceCost);
-		wpos += PutStringUTF(&buffer[wpos], convbuf);
+	for(auto item : EssenceList) {
+		auto irow = resp.Row(); //Always two strings.
+		irow->push_back(GetItemProto(convbuf, item.ItemID, 0));
+		irow->push_back(to_string(item.EssenceCost));
 	}
-
-	PutShort(&buffer[1], wpos - 3);
-	return wpos;
+	return resp.Write(buffer);
 }
 
 int EssenceShop :: WriteQueryShop(char *buffer, char *convbuf, int QueryID)
 {
-	int wpos = 0;
-	wpos += PutByte(&buffer[wpos], 1);              //_handleQueryResultMsg
-	wpos += PutShort(&buffer[wpos], 0);             //Placeholder for message size
-	wpos += PutInteger(&buffer[wpos], QueryID);     //Query response ID
-
-	int rowCount = EssenceList.size();
-	wpos += PutShort(&buffer[wpos], rowCount);
-
-	for(int index = 0; index < rowCount; index++)
-	{
-		wpos += PutByte(&buffer[wpos], 1);          //Always one string for regular items.
-		GetItemProto(convbuf, EssenceList[index].ItemID, 0);
-		wpos += PutStringUTF(&buffer[wpos], convbuf);
+	QueryResponse resp(QueryID);
+	for(auto item : EssenceList) {
+		auto row = resp.Row(); //Always one string for regular items.
+		row->push_back(GetItemProto(convbuf, item.ItemID, 0));
 	}
-	PutShort(&buffer[1], wpos - 3);
-	return wpos;
+	return resp.Write(buffer);
 }
 
 int EssenceShop :: GetItemIDFromProto(char *itemProtoStr)

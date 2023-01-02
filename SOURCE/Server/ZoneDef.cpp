@@ -2466,39 +2466,4 @@ int PrepExt_SendEnvironmentUpdateMsg(char *buffer, ActiveInstance *instance,
 }
 
 
-int WriteZoneDefInfo(char *buffer,
-		ZoneDefInfo *item) {
-	int wpos = 0;
 
-	wpos += PutByte(&buffer[wpos], 28); //String count
-	wpos += PutStringUTF(&buffer[wpos], to_string(item->mID)); // 1
-	wpos += PutStringUTF(&buffer[wpos], item->mName); // 2
-	wpos += PutStringUTF(&buffer[wpos], item->mTerrainConfig); // 3
-	wpos += PutStringUTF(&buffer[wpos], item->mEnvironmentType); // 4
-	wpos += PutStringUTF(&buffer[wpos], item->mMapName); // 5
-	wpos += PutStringUTF(&buffer[wpos], ""); // 6 - (was group name)?
-	wpos += PutStringUTF(&buffer[wpos], item->mInstance ? "MULTIPLE" : "SINGLE"); // 7
-	wpos += PutStringUTF(&buffer[wpos], ""); // 8 beef factor - what is this?
-	wpos += PutStringUTF(&buffer[wpos], item->mWarpName); // 9 warp name (was category)
-	wpos += PutStringUTF(&buffer[wpos], ""); // 10 regions
-	wpos += PutStringUTF(&buffer[wpos], item->mDesc); // 11 display name
-	wpos += PutStringUTF(&buffer[wpos], ""); // 12 default layers
-	wpos += PutStringUTF(&buffer[wpos], item->mGroveName); // 13 grove name
-	wpos += PutStringUTF(&buffer[wpos], item->mGrove ? "Y" : "N"); // 14 grove flag
-	wpos += PutStringUTF(&buffer[wpos], item->mPersist ? "Y" : "N"); // 15 persistent instance
-	wpos += PutStringUTF(&buffer[wpos], item->mArena ? "Y" : "N"); // 16 arena
-	wpos += PutStringUTF(&buffer[wpos], item->mGuildHall ? "Y" : "N"); // 17 guild hall
-	wpos += PutStringUTF(&buffer[wpos], item->mEnvironmentCycle ? "Y" : "N"); // 18 environment cycle
-	wpos += PutStringUTF(&buffer[wpos], item->mAudit ? "Y" : "N"); // 19 audit changes
-	wpos += PutStringUTF(&buffer[wpos], to_string(item->mMaxAggroRange) ); // 20 max aggro range
-	wpos += PutStringUTF(&buffer[wpos], to_string(item->mMaxLeashRange) ); // 21 max leash range
-	wpos += PutStringUTF(&buffer[wpos], to_string(item->mMinLevel) ); // 22 max aggro range
-	wpos += PutStringUTF(&buffer[wpos], to_string(item->mMaxLevel) ); // 23 max leash range
-	wpos += PutStringUTF(&buffer[wpos], to_string(item->DefX) + " " + to_string(item->DefY) + " " + to_string(item->DefZ) ); // 24 def x
-	wpos += PutStringUTF(&buffer[wpos], to_string(item->mPageSize) ); // 25 page size
-	wpos += PutStringUTF(&buffer[wpos], to_string(item->mMode ) ); // 26 page size
-	wpos += PutStringUTF(&buffer[wpos], to_string(item->mReturnZone) ); // 27 return zone
-	wpos += PutStringUTF(&buffer[wpos], item->mTimeOfDay); // 28
-
-	return wpos;
-}

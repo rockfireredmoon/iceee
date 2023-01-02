@@ -224,17 +224,10 @@ int CreditShopListHandler::handleQuery(SimulatorThread *sim,
 			std::vector<CS::CreditShopItem> items;
 			std::map<int, std::string> names;
 
-			int wpos = 0;
-			wpos += PutByte(&sim->SendBuf[wpos], 1);//_handleQueryResultMsg
-			wpos += PutShort(&sim->SendBuf[wpos], 0);//Message size
-			wpos += PutInteger(&sim->SendBuf[wpos], queryID);//Query response index
-
-			wpos += PutShort(&sim->SendBuf[wpos], 0);
+			QueryResponse resp(queryID);
 
 			// First row has cost of name change
-			wpos += PutByte(&sim->SendBuf[wpos], 1);
-			sprintf(sim->Aux1, "%d", g_GameConfig.NameChangeCost);
-			wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+			resp.Row()->push_back(to_string(g_GameConfig.NameChangeCost));
 
 			// Track maximum sold, to calculate what is 'HOT'.
 			unsigned int maxSold = 0;
@@ -274,83 +267,58 @@ int CreditShopListHandler::handleQuery(SimulatorThread *sim,
 			unsigned int hotAmount = max(1, (int)((float)maxSold * 0.75));
 
 			for (auto it = items.begin(); it != items.end(); ++it) {
-				wpos += PutByte(&sim->SendBuf[wpos], 12);
-
-				sprintf(sim->Aux1, "%d", (*it).mId);
-				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+				auto row = resp.Row();
+				row->push_back(to_string((*it).mId));
 				std::string name = names[(*it).mId];
 				g_Logs.cs->debug("Sending name: %v", name);
-
-				sprintf(sim->Aux1, "%s", name.c_str());
-				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-
-				sprintf(sim->Aux1, "%s", (*it).mDescription.c_str());
-				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+				row->push_back(name);
+				row->push_back((*it).mDescription);
 
 				// TODO get rid of choosable status in market editor
 				if((*it).mQuantitySold >= hotAmount) {
-					sprintf(sim->Aux1, "%s", Status::GetNameByID(Status::HOT).c_str());
+					row->push_back(Status::GetNameByID(Status::HOT));
 				}
 				else {
 					time_t expire = ( g_GameConfig.MaxNewCreditShopItemDays * 86400 ) + (*it).mCreatedDate;
 					if((*it).mCreatedDate > 0 && (time_t)(g_ServerTime / 1000UL) < expire) {
-						sprintf(sim->Aux1, "%s", Status::GetNameByID(Status::NEW).c_str());
+						row->push_back(Status::GetNameByID(Status::NEW));
 					}
 					else {
-						sprintf(sim->Aux1, "%s", Status::GetNameByID(Status::UNDEFINED).c_str());
+						row->push_back(Status::GetNameByID(Status::UNDEFINED));
 					}
 				}
-				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
 
-				sprintf(sim->Aux1, "%s", Category::GetNameByID((*it).mCategory).c_str());
-				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+				row->push_back(Category::GetNameByID((*it).mCategory));
+				row->push_back((*it).mStartDate == 0 ?
+						"" : Util::FormatDate(&(*it).mEndDate));
 
-				sprintf(sim->Aux1, "%s",
-						(*it).mStartDate == 0 ?
-						"" : Util::FormatDate(&(*it).mEndDate).c_str());
-				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-
-				sprintf(sim->Aux1, "%s",
-						(*it).mEndDate == 0 ?
+				row->push_back((*it).mEndDate == 0 ?
 						"" :
 						(g_ServerTime >= ((*it).mEndDate * 1000UL) ?
 								"Expired" :
-								Util::FormatDate(&(*it).mEndDate).c_str()));
-				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+								Util::FormatDate(&(*it).mEndDate)));
 
 				if ((*it).mPriceCurrency == Currency::COPPER) {
-					sprintf(sim->Aux1, "%lu", (*it).mPriceCopper);
+					row->push_back(to_string((*it).mPriceCopper));
 				}
 				else if ((*it).mPriceCurrency == Currency::CREDITS) {
-					sprintf(sim->Aux1, "%lu", (*it).mPriceCredits);
+					row->push_back(to_string((*it).mPriceCredits));
 				}
 				else if ((*it).mPriceCurrency == Currency::COPPER_CREDITS) {
-					sprintf(sim->Aux1, "%lu+%lu", (*it).mPriceCopper,
-							(*it).mPriceCredits);
+					row->push_back(Util::Format("%lu+%lu", (*it).mPriceCopper,
+							(*it).mPriceCredits));
 				}
 				else {
-					sprintf(sim->Aux1, "999999");
+					row->push_back(to_string(999999));
 				}
 
-				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-
-				sprintf(sim->Aux1, "%d", (*it).mPriceCurrency);
-				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-
-				sprintf(sim->Aux1, "%d", (*it).mQuantityLimit);
-				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-
-				sprintf(sim->Aux1, "%d", (*it).mQuantitySold);
-				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-
-				sprintf(sim->Aux1, "%d:%d:%d:%d", (*it).mItemId, (*it).mLookId,
-						(*it).mIv1, (*it).mIv2);
-				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-
+				row->push_back(to_string((*it).mPriceCurrency));
+				row->push_back(to_string((*it).mQuantityLimit));
+				row->push_back(to_string((*it).mQuantitySold));
+				row->push_back(Util::Format("%d:%d:%d:%d", (*it).mItemId, (*it).mLookId,
+						(*it).mIv1, (*it).mIv2));
 			}
-			PutShort(&sim->SendBuf[7], items.size() + 1);
-			PutShort(&sim->SendBuf[1], wpos - 3);
-			sim->AttemptSend(sim->SendBuf, wpos);
+			sim->AttemptSend(sim->SendBuf, resp.Write(sim->SendBuf));
 
 		});
 

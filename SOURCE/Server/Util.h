@@ -83,6 +83,7 @@ int PrepExt_ChangeTarget(char *buffer, int sourceID, int targetID);
 int PrepExt_ExperienceGain(char *buffer, int CreatureID, int ExpAmount);
 int PrepExt_SendValour(char *buffer, int CreatureID, int ValourAmount, int GuildDefID, int rank, int title);
 int PrepExt_QueryResponseNull(char *buffer, int queryIndex);
+int PrepExt_QueryResponseString(char *buffer, int queryIndex, const string &strData);
 int PrepExt_QueryResponseString(char *buffer, int queryIndex, const char *strData);
 int PrepExt_QueryResponseString2(char *buffer, int queryIndex, const char *strData1, const char *strData2);
 int PrepExt_QueryResponseStringList(char *buffer, int queryIndex, const STRINGLIST &strData);
@@ -101,10 +102,7 @@ int PrepExt_Broadcast(char *buffer, const char *message);
 int PrepExt_Info(char *buffer, const char *message, char eventID);
 int PrepExt_Chat(char *buffer, int characterID, const char *display_name, const char *channel, const char *message);
 
-char *StringFromInt(char *buffer, int value);
-char *StringFromFloat(char *buffer, double value);
-char *StringFromBool(char *buffer, bool value);
-char *StringFromBool(char *buffer, int value);
+string StringFromBool(bool value);
 
 namespace Util
 {
@@ -201,7 +199,7 @@ namespace Util
 	string FormatTimeHHMM(unsigned long ms);
 	string FormatTimeHHMMSS(unsigned long ms);
 	string FormatTimeHHMMSSmm(unsigned long ms);
-	string Format(const string fmt_str, ...);
+	string Format(const string &fmt_str, ...);
 }
 
 /*

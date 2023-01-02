@@ -28,30 +28,6 @@
 
 AssetCatelogueManager g_AssetCatalogueManager;
 
-int WriteAssetCatalogueItem(char *buffer, AssetCatalogueItem *item) {
-	int wpos = 0;
-	// 1
-	wpos += PutStringUTF(&buffer[wpos], item->mName);
-	// 2
-	wpos += PutStringUTF(&buffer[wpos], item->GetAsset());
-	// 3
-	wpos += PutStringUTF(&buffer[wpos], item->mDescription);
-	// 4
-	STRINGLIST l;
-	for(auto it = item->mParents.begin(); it != item->mParents.end(); ++it) {
-		l.push_back((*it)->mName);
-	}
-	std::string p;
-	Util::Join(l, ",", p);
-	wpos += PutStringUTF(&buffer[wpos], p);
-	//5
-	wpos += PutStringUTF(&buffer[wpos],
-			Util::Format("%d", item->mType));
-	//6
-	wpos += PutStringUTF(&buffer[wpos], item->GetDisplayName());
-	return wpos;
-}
-
 //
 // PropItem
 //

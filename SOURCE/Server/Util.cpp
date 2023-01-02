@@ -386,6 +386,11 @@ int PrepExt_QueryResponseNull(char *buffer, int queryIndex) {
 }
 
 int PrepExt_QueryResponseString(char *buffer, int queryIndex,
+		const string &strData) {
+	return PrepExt_QueryResponseString(buffer, queryIndex, strData.c_str());
+}
+
+int PrepExt_QueryResponseString(char *buffer, int queryIndex,
 		const char *strData) {
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 1);              //_handleQueryResultMsg
@@ -704,25 +709,8 @@ int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize,
 	return wpos;
 }
 
-char *StringFromInt(char *buffer, int value) {
-	sprintf(buffer, "%d", value);
-	return buffer;
-}
-
-char *StringFromFloat(char *buffer, float value) {
-	sprintf(buffer, "%g", value);
-	return buffer;
-}
-
-char *StringFromBool(char *buffer, bool value) {
-	sprintf(buffer, "%s", (value == true) ? "true" : "false");
-	return buffer;
-}
-
-char *StringFromBool(char *buffer, int value) {
-	//Some integers are used as boolean values.  Avoids compiler type warnings.
-	sprintf(buffer, "%s", (value != 0) ? "true" : "false");
-	return buffer;
+string StringFromBool(bool value) {
+	return value ? "true" : "false";
 }
 
 /*
@@ -1847,8 +1835,9 @@ string FormatTimeHHMMSSmm(unsigned long ms) {
 	return Format("%02d:%02d:%02d:%02d", hh, mm, ss, mms);
 }
 
-string Format(const string fmt_str, ...) {
-	int final_n, n = max(1024, ((int) fmt_str.size()) * 2); /* Reserve two times as much as the length of the fmt_str or 1k whichever is bigger. This really sucks and should be fixed properly */
+string Format(const string &fmt_str, ...) {
+	/* Reserve two times as much as the length of the fmt_str or 1k whichever is bigger. This really sucks and should be fixed properly */
+	int final_n, n = max(1024, ((int) fmt_str.size()) * 2);
 	unique_ptr<char[]> formatted;
 	va_list ap;
 	while (1) {

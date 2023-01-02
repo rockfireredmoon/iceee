@@ -388,21 +388,12 @@ int ItemContentsHandler::handleQuery(SimulatorThread *sim,
 
 	sim->SendInventoryData(inv.containerList[contID]);
 
-	int WritePos = 0;
+	QueryResponse resp(query->ID);
+	auto row = resp.Row();
+	row->push_back(to_string(contID)); // ID
+	row->push_back(to_string((int) inv.containerList[contID].size())); // Count
 
-	WritePos += PutByte(&sim->SendBuf[WritePos], 1);     //_handleQueryResultMsg
-	WritePos += PutShort(&sim->SendBuf[WritePos], 0);      //Message size
-	WritePos += PutInteger(&sim->SendBuf[WritePos], query->ID); //Query response index
-
-	sprintf(sim->Aux2, "%d", contID);
-	sprintf(sim->Aux3, "%d", (int) inv.containerList[contID].size());
-	WritePos += PutShort(&sim->SendBuf[WritePos], 1);      //Array count
-	WritePos += PutByte(&sim->SendBuf[WritePos], 2);       //String count
-	WritePos += PutStringUTF(&sim->SendBuf[WritePos], sim->Aux2);  //ID
-	WritePos += PutStringUTF(&sim->SendBuf[WritePos], sim->Aux3);  //Count
-	PutShort(&sim->SendBuf[1], WritePos - 3);             //Set message size
-
-	return WritePos;
+	return resp.Write(sim->SendBuf);
 }
 
 //
@@ -929,36 +920,25 @@ int ItemDefContentsHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Permission denied.");
 
-	int wpos = 0;
-	wpos += PutByte(&sim->SendBuf[wpos], 1);       //_handleQueryResultMsg
-	wpos += PutShort(&sim->SendBuf[wpos], 0);      //Message size
-	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
-	wpos += PutShort(&sim->SendBuf[wpos], 0);
+	QueryResponse resp(query->ID);
 	int id = atoi(query->args[0].c_str());
 	g_CharacterManager.GetThread("SimulatorThread::ItemDefContents");
-	CreatureInstance *creature = creatureInstance->actInst->GetPlayerByID(id);
-	int count = 0;
+	auto creature = creatureInstance->actInst->GetPlayerByID(id);
 	if (creature != NULL) {
-		CharacterData *cdata = creature->charPtr;
+		auto cdata = creature->charPtr;
 		int size = cdata->inventory.containerList[INV_CONTAINER].size();
 		int a;
 		for (a = 0; a < size; a++) {
-			InventorySlot *slot =
-					&cdata->inventory.containerList[INV_CONTAINER][a];
+			InventorySlot *slot = &cdata->inventory.containerList[INV_CONTAINER][a];
 			if (slot != NULL) {
-				wpos += PutByte(&sim->SendBuf[wpos], 2);
-				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "%d", slot->IID);
-				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-				wpos += PutStringUTF(&sim->SendBuf[wpos],
-						slot->dataPtr->mDisplayName.c_str());
-				count++;
+				auto row = resp.Row();
+				row->push_back(to_string(slot->IID));
+				row->push_back(slot->dataPtr->mDisplayName);
 			}
 		}
 	}
 	g_CharacterManager.ReleaseThread();
-	PutShort(&sim->SendBuf[7], count);
-	PutShort(&sim->SendBuf[1], wpos - 3);
-	return wpos;
+	return resp.Write(sim->SendBuf);
 }
 
 //
@@ -1006,25 +986,16 @@ int ShopContentsHandler::handleQuery(SimulatorThread *sim,
 
 		//Fill the query with the contents of the buyback information.
 		g_Logs.simulator->debug("[%v] Shop contents self.", sim->InternalID);
-		int wpos = 0;
-		wpos += PutByte(&sim->SendBuf[wpos], 1);         //_handleQueryResultMsg
-		wpos += PutShort(&sim->SendBuf[wpos], 0); //Placeholder for message size
-		wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response ID
 
-		int rowCount =
-				(int) pld->charPtr->inventory.containerList[BUYBACK_CONTAINER].size();
-		wpos += PutShort(&sim->SendBuf[wpos], rowCount);
+		QueryResponse resp(query->ID);
 
 		//Note: low index = newest, also highest slot number
-		for (int index = 0; index < rowCount; index++) {
-			wpos += PutByte(&sim->SendBuf[wpos], 1); //Always one string for regular items.
-			GetItemProto(sim->Aux3,
-					pld->charPtr->inventory.containerList[BUYBACK_CONTAINER][index].IID,
-					0);
-			wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux3);
+		for (auto item : pld->charPtr->inventory.containerList[BUYBACK_CONTAINER]) {
+			auto row = resp.Row();
+			GetItemProto(sim->Aux3, item.IID, 0);
+			row->push_back(sim->Aux3);
 		}
-		PutShort(&sim->SendBuf[1], wpos - 3);
-		return wpos;
+		return resp.Write(sim->SendBuf);
 	}
 
 	int CDef = sim->ResolveCreatureDef(CID);

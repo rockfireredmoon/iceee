@@ -23,6 +23,8 @@
 #include "../AssetCatalogue.h"
 #include <vector>
 
+using namespace std;
+
 class GetPropCategoriesHandler : public QueryHandler {
 public:
 	~GetPropCategoriesHandler() {};
@@ -35,5 +37,7 @@ public:
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 private:
 };
+
+void WriteAssetCatalogueItem(QueryResponse &query, AssetCatalogueItem &item);
 
 #endif

@@ -149,20 +149,13 @@ int LootPackagesListHandler::handleQuery(SimulatorThread *sim,
 
 	/*  Query: lootpackages.list
 		 */
-
+	QueryResponse resp(query->ID, sim->SendBuf);
 	if (query->argCount < 1)
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
-				"Invalid query.");
+		return resp.Error("Invalid query.");
 
 	bool dev = sim->CheckPermissionSimple(Perm_Account, Permission_Admin | Permission_Developer | Permission_Sage);
 	if(!dev)
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
-				"Not allowed.");
-
-	int wpos = 0;
-	wpos += PutByte(&sim->SendBuf[wpos], 1);              //_handleQueryResultMsg
-	wpos += PutShort(&sim->SendBuf[wpos], 0);           //Placeholder for message size
-	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
+		return resp.Error("Not allowed.");
 
 	unsigned int start = query->GetInteger(0);
 	unsigned int len = 50;
@@ -184,20 +177,18 @@ int LootPackagesListHandler::handleQuery(SimulatorThread *sim,
 		if(start + len >= results.size())
 			len = results.size() - start;
 	}
-	wpos += PutShort(&sim->SendBuf[wpos], len);             //Row count
 	for (size_t a = start; a < start + len; a++) {
-		DropPackageDefinition zdinfo = results[a].second;
-		wpos += PutByte(&sim->SendBuf[wpos], 5); //String count
-		wpos += PutStringUTF(&sim->SendBuf[wpos], zdinfo.mName.c_str()); // 1
-		wpos += PutStringUTF(&sim->SendBuf[wpos], to_string(zdinfo.mMobFlags).c_str()); // 2
-		wpos += PutStringUTF(&sim->SendBuf[wpos], to_string(zdinfo.mAuto).c_str()); // 3
-		wpos += PutStringUTF(&sim->SendBuf[wpos], to_string(zdinfo.mCombinedClassFlags).c_str()); // 4
+		auto zdinfo = results[a].second;
+		auto row = resp.Row();
+		row->push_back(zdinfo.mName); // 1
+		row->push_back(to_string(zdinfo.mMobFlags)); // 2
+		row->push_back(to_string(zdinfo.mAuto)); // 3
+		row->push_back(to_string(zdinfo.mCombinedClassFlags)); // 4
 		string s;
 		Util::Join(zdinfo.mSetList, ",", s);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], s.c_str()); // 5
+		row->push_back(s); // 5
 	}
-	PutShort(&sim->SendBuf[1], wpos - 3);
-	return wpos;
+	return resp.Data();
 }
 
 //
@@ -262,30 +253,25 @@ int WorldListHandler::handleQuery(SimulatorThread *sim,
 	/*  Query: world.list
 	 Requests a list of shards for use in the shard selection screen.
 	 */
-
-	int wpos = 0;
-	wpos += PutByte(&sim->SendBuf[wpos], 1);              //_handleQueryResultMsg
-	wpos += PutShort(&sim->SendBuf[wpos], 0);           //Placeholder for message size
-	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
-
+	QueryResponse resp(query->ID);
 	STRINGLIST shards = g_ClusterManager.GetAvailableShardNames();
-	wpos += PutShort(&sim->SendBuf[wpos], shards.size());             //Row count
-	for (size_t a = 0; a < shards.size(); a++) {
-		wpos += PutByte(&sim->SendBuf[wpos], 6); //String count
-		Shard s = g_ClusterManager.GetActiveShard(shards[a]);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], s.mName.c_str());
+
+	for(auto shardName : shards) {
+		auto s = g_ClusterManager.GetActiveShard(shardName);
+		auto row = resp.Row();
+
+		row->push_back(s.mName);
 		if(pld->charPtr->Shard.compare(s.mName))
-			wpos += PutStringUTF(&sim->SendBuf[wpos], Util::Format("!%s", s.mFullName.c_str()).c_str());
+			row->push_back(Util::Format("!%s", s.mFullName.c_str()));
 		else
-			wpos += PutStringUTF(&sim->SendBuf[wpos], s.mFullName.c_str());
-		wpos += PutStringUTF(&sim->SendBuf[wpos], Util::Format("%d", s.mPlayers).c_str());
+			row->push_back(s.mFullName);
+		row->push_back(to_string(s.mPlayers));
 		time_t t = s.GetLocalTime() / 1000;
-		wpos += PutStringUTF(&sim->SendBuf[wpos], Util::FormatDateTime(&t).c_str());
-		wpos += PutStringUTF(&sim->SendBuf[wpos], Util::Format("%d", s.mPing).c_str());
-		wpos += PutStringUTF(&sim->SendBuf[wpos], s.IsMaster() ? "Master" : "Slave");
+		row->push_back(Util::FormatDateTime(&t));
+		row->push_back(Util::Format("%d", s.mPing));
+		row->push_back(s.IsMaster() ? "Master" : "Slave");
 	}
-	PutShort(&sim->SendBuf[1], wpos - 3);
-	return wpos;
+	return resp.Write(sim->SendBuf);
 }
 
 //
@@ -323,11 +309,6 @@ int ZoneListHandler::handleQuery(SimulatorThread *sim,
 //	regions = row.len() > 10 ? row[10] : "",
 //	displayName = row.len() > 11 ? row[11] : ""
 
-	int wpos = 0;
-	wpos += PutByte(&sim->SendBuf[wpos], 1);              //_handleQueryResultMsg
-	wpos += PutShort(&sim->SendBuf[wpos], 0);           //Placeholder for message size
-	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
-
 	unsigned int start = query->GetInteger(0);
 	unsigned int len = 50;
 	if(query->argCount > 1)
@@ -363,13 +344,12 @@ int ZoneListHandler::handleQuery(SimulatorThread *sim,
 	if(g_Logs.server->enabled(el::Level::Debug))
 		g_Logs.server->debug("Actual zone query results, start at [%v], for length of [%v] in results of [%v]", start, len, results.size());
 
-	wpos += PutShort(&sim->SendBuf[wpos], len);             //Row count
+	QueryResponse resp(query->ID);
 	for (size_t a = start; a < start + len; a++) {
 		ZoneDefInfo zdinfo = results[a].second;
-		wpos += WriteZoneDefInfo(&sim->SendBuf[wpos], &zdinfo);
+		WriteZoneDefInfo(resp, zdinfo);
 	}
-	PutShort(&sim->SendBuf[1], wpos - 3);
-	return wpos;
+	return resp.Write(sim->SendBuf);
 }
 
 
@@ -398,19 +378,14 @@ int ZoneGetHandler::handleQuery(SimulatorThread *sim,
 					"Can only retrieve your grove.");
 	}
 
-	ZoneDefInfo *def = g_ZoneDefManager.GetPointerByID(zone);
+	auto def = g_ZoneDefManager.GetPointerByID(zone);
 	if(def == NULL)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"No such zone.");
 
-	int wpos = 0;
-	wpos += PutByte(&sim->SendBuf[wpos], 1);              //_handleQueryResultMsg
-	wpos += PutShort(&sim->SendBuf[wpos], 0);           //Placeholder for message size
-	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
-	wpos += PutShort(&sim->SendBuf[wpos], 1);             //Row count
-	wpos += WriteZoneDefInfo(&sim->SendBuf[wpos], def);
-	PutShort(&sim->SendBuf[1], wpos - 3);
-	return wpos;
+	QueryResponse resp(query->ID);
+	WriteZoneDefInfo(resp, *def);
+	return resp.Write(sim->SendBuf);
 }
 
 //
@@ -892,17 +867,12 @@ int BuildTemplateListHandler::handleQuery(SimulatorThread *sim,
 
 	//The client script code indicates that only one row is used, but with a variable
 	//number of elements.
-	int wpos = 0;
-	wpos += PutByte(&sim->SendBuf[wpos], 1);            //_handleQueryResultMsg
-	wpos += PutShort(&sim->SendBuf[wpos], 0);           //Message size
-	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);    //Query response index
-	wpos += PutShort(&sim->SendBuf[wpos], 1);           //Array count
-	wpos += PutByte(&sim->SendBuf[wpos], 3);            //String count
-	wpos += PutStringUTF(&sim->SendBuf[wpos], "Crate1");  //String data
-	wpos += PutStringUTF(&sim->SendBuf[wpos], "Crate2");  //String data
-	wpos += PutStringUTF(&sim->SendBuf[wpos], "Crate3");  //String data
-	PutShort(&sim->SendBuf[1], wpos - 3);               //Set message size
-	return wpos;
+	QueryResponse resp(query->ID, sim->SendBuf);
+	auto row = resp.Row();
+	row->push_back("Crate1");
+	row->push_back("Crate2");
+	row->push_back("Crate3");
+	return resp.Data();
 }
 
 //
@@ -1002,4 +972,38 @@ int SetATSHandler::handleQuery(SimulatorThread *sim,
 	sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
+void WriteZoneDefInfo(QueryResponse &resp,
+		ZoneDefInfo &item) {
+	auto row = resp.Row();
+
+	row->push_back(to_string(item.mID)); // 1
+	row->push_back(item.mName); // 2
+	row->push_back(item.mTerrainConfig); // 3
+	row->push_back(item.mEnvironmentType); // 4
+	row->push_back(item.mMapName); // 5
+	row->push_back(""); // 6 - (was group name)?
+	row->push_back(item.mInstance ? "MULTIPLE" : "SINGLE"); // 7
+	row->push_back(""); // 8 beef factor - what is this?
+	row->push_back(item.mWarpName); // 9 warp name (was category)
+	row->push_back(""); // 10 regions
+	row->push_back(item.mDesc); // 11 display name
+	row->push_back(""); // 12 default layers
+	row->push_back(item.mGroveName); // 13 grove name
+	row->push_back(item.mGrove ? "Y" : "N"); // 14 grove flag
+	row->push_back(item.mPersist ? "Y" : "N"); // 15 persistent instance
+	row->push_back(item.mArena ? "Y" : "N"); // 16 arena
+	row->push_back(item.mGuildHall ? "Y" : "N"); // 17 guild hall
+	row->push_back(item.mEnvironmentCycle ? "Y" : "N"); // 18 environment cycle
+	row->push_back(item.mAudit ? "Y" : "N"); // 19 audit changes
+	row->push_back(to_string(item.mMaxAggroRange) ); // 20 max aggro range
+	row->push_back(to_string(item.mMaxLeashRange) ); // 21 max leash range
+	row->push_back(to_string(item.mMinLevel) ); // 22 max aggro range
+	row->push_back(to_string(item.mMaxLevel) ); // 23 max leash range
+	row->push_back(to_string(item.DefX) + " " + to_string(item.DefY) + " " + to_string(item.DefZ) ); // 24 def x
+	row->push_back(to_string(item.mPageSize) ); // 25 page size
+	row->push_back(to_string(item.mMode ) ); // 26 page size
+	row->push_back(to_string(item.mReturnZone) ); // 27 return zone
+	row->push_back(item.mTimeOfDay); // 28
 }

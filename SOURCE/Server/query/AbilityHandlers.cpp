@@ -100,24 +100,11 @@ int AbilityOwnageListHandler::handleQuery(SimulatorThread *sim, CharacterServerD
 	 Retrieves the list of abilities which the player is able to use.
 	 Args : [none]
 	 */
-
-	int WritePos = 0;
-	WritePos += PutByte(&sim->SendBuf[WritePos], 1);   //_handleQueryResultMsg
-	WritePos += PutShort(&sim->SendBuf[WritePos], 0);          //Message size
-	WritePos += PutInteger(&sim->SendBuf[WritePos], query->ID);
-
-	int size = pld->charPtr->abilityList.AbilityList.size();
-	WritePos += PutShort(&sim->SendBuf[WritePos], size);      //Row count
-
-	int a;
-	for (a = 0; a < size; a++) {
-		WritePos += PutByte(&sim->SendBuf[WritePos], 1);
-		sprintf(sim->Aux3, "%d", pld->charPtr->abilityList.AbilityList[a]);
-		WritePos += PutStringUTF(&sim->SendBuf[WritePos], sim->Aux3);
+	QueryResponse resp(query->ID);
+	for(auto ab : pld->charPtr->abilityList.AbilityList) {
+		resp.Row()->push_back(to_string(ab));
 	}
-
-	PutShort(&sim->SendBuf[1], WritePos - 3);             //Set message size
-	return WritePos;
+	return resp.Write(sim->SendBuf);
 }
 
 //

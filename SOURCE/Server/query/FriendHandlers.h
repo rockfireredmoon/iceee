@@ -20,6 +20,8 @@
 
 #include "Query.h"
 
+using namespace std;
+
 class AddFriendHandler : public QueryHandler {
 public:
 	~AddFriendHandler() {};

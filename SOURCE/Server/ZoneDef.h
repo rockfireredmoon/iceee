@@ -478,8 +478,6 @@ private:
 	void LoadFile(const fs::path &filename);
 };
 
-int WriteZoneDefInfo(char *buffer, ZoneDefInfo *item);
-
 extern ZoneDefManager g_ZoneDefManager;
 extern ZoneBarrierManager g_ZoneBarrierManager;
 extern EnvironmentCycleManager g_EnvironmentCycleManager;

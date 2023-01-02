@@ -2283,34 +2283,6 @@ bool SimulatorThread::CheckWriteFlush(int &curPos) {
 	return false;
 }
 
-int SimulatorThread::protected_helper_tweak_self(int CDefID, int defhints,
-		int argOffset) {
-	if (CheckPermissionSimple(0, Permission_TweakClient) == true) {
-		const char *appearance = NULL;
-		for (uint i = 1 + argOffset; i < query.argCount; i += 2) {
-			const char *name = query.args[i].c_str();
-			const char *value = query.args[i + 1].c_str();
-			if (strcmp(name, "appearance") == 0) {
-				appearance = value;
-				break;
-			}
-		}
-		int size = 0;
-		if (appearance != NULL) {
-			std::vector<short> statID;
-			statID.push_back(STAT::APPEARANCE);
-			CharacterStatSet data;
-			//Util::SafeCopy(data.appearance, appearance, sizeof(data.appearance));
-			data.SetAppearance(appearance);
-			size = PrepExt_UpdateCreatureDef(SendBuf, CDefID, defhints, statID,
-					&data);
-		}
-		size += PrepExt_QueryResponseString(&SendBuf[size], query.ID, "OK");
-		return size;
-	} else
-		return -1;
-}
-
 int SimulatorThread::protected_CheckDistance(int creatureID) {
 	return protected_CheckDistanceBetweenCreatures(creatureInst, creatureID);
 }

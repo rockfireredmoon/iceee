@@ -24,6 +24,11 @@
 #include "../Creature.h"
 
 #include "../util/Log.h"
+#include <functional>
+#include <initializer_list>
+
+
+using namespace std;
 
 
 class QueryHandler {
@@ -36,11 +41,32 @@ class QueryManager {
 public:
 	QueryManager();
 	~QueryManager();
-	QueryHandler *getQueryHandler(std::string query);
-	QueryHandler *getLobbyQueryHandler(std::string query);
+	QueryHandler *getQueryHandler(string query);
+	QueryHandler *getLobbyQueryHandler(string query);
 
-	std::map<std::string, QueryHandler*> lobbyQueryHandlers;
-	std::map<std::string, QueryHandler*> queryHandlers;
+	map<string, QueryHandler*> lobbyQueryHandlers;
+	map<string, QueryHandler*> queryHandlers;
+};
+
+
+class QueryResponse {
+public:
+	QueryResponse(int queryID);
+	QueryResponse(int queryID, char *buffer);
+	~QueryResponse();
+	vector<string>* Row();
+	void AddRow(initializer_list<reference_wrapper<string>> list);
+	unsigned int Data();
+	unsigned int Error(const string &error);
+	unsigned int String(const string &string);
+	unsigned int Null();
+	unsigned int Write(char *buffer);
+private:
+	bool mCommitted;
+	bool mBufferSet;
+	char *mBuffer;
+	int mQueryID;
+	vector<vector<string>> mResponse;
 };
 
 extern QueryManager g_QueryManager;

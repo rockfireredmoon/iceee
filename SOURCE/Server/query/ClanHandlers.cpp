@@ -202,33 +202,17 @@ int ClanInfoHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	 Retrieves the clan info of the Simulator player.
 	 Args: [none]
 	 */
-
-	int wpos = 0;
-	wpos += PutByte(&sim->SendBuf[wpos], 1);       //_handleQueryResultMsg
-	wpos += PutShort(&sim->SendBuf[wpos], 0);      //Message size
-	wpos += PutInteger(&sim->SendBuf[wpos], query->ID); //Query response index
-
+	QueryResponse resp(query->ID);
 	int clanID = creatureInstance->charPtr->clan;
-	if (!g_GameConfig.Clans || clanID == 0 || !g_ClanManager.HasClan(clanID)) {
-		wpos += PutShort(&sim->SendBuf[wpos], 0);
-	} else {
-		Clans::Clan c = g_ClanManager.GetClan(clanID);
-		Clans::ClanMember leader = c.GetFirstMemberOfRank(Clans::Rank::LEADER);
-		wpos += PutShort(&sim->SendBuf[wpos], 3);
+	if (g_GameConfig.Clans && clanID != 0 && g_ClanManager.HasClan(clanID)) {
+		auto c = g_ClanManager.GetClan(clanID);
+		auto leader = c.GetFirstMemberOfRank(Clans::Rank::LEADER);
 
-		wpos += PutByte(&sim->SendBuf[wpos], 1);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], c.mName.c_str());  //Clan name
-
-		wpos += PutByte(&sim->SendBuf[wpos], 1);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], c.mMOTD.c_str()); //Message of the day
-
-		wpos += PutByte(&sim->SendBuf[wpos], 1);
-		wpos += PutStringUTF(&sim->SendBuf[wpos],
-				pld->CreatureDefID == leader.mID ? "true" : "false"); //Clan leader's name.
+		resp.Row()->push_back(c.mName); //Clan name
+		resp.Row()->push_back(c.mMOTD); //Message of the day
+		resp.Row()->push_back(pld->CreatureDefID == leader.mID ? "true" : "false"); //Clan leader's name.
 	}
-
-	PutShort(&sim->SendBuf[1], wpos - 3);
-	return wpos;
+	return resp.Write(sim->SendBuf);
 }
 
 //
@@ -517,20 +501,11 @@ int ClanListHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	 Retrieves the list of clan members for the player's clan.
 	 Args: [none]
 	 */
-
-	int wpos = 0;
-	wpos += PutByte(&sim->SendBuf[wpos], 1);      //_handleQueryResultMsg
-	wpos += PutShort(&sim->SendBuf[wpos], 0);      //Message size
-	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);   //Query response index
+	QueryResponse resp(query->ID);
 
 	int clanID = creatureInstance->charPtr->clan;
-	if (!g_GameConfig.Clans || clanID == 0 || !g_ClanManager.HasClan(clanID)) {
-		wpos += PutShort(&sim->SendBuf[wpos], 0);
-	} else {
-		Clans::Clan c = g_ClanManager.GetClan(clanID);
-
-		// Number of rows (number of clan members)
-		wpos += PutShort(&sim->SendBuf[wpos], c.mMembers.size());
+	if (g_GameConfig.Clans && clanID != 0 && g_ClanManager.HasClan(clanID)) {
+		auto c = g_ClanManager.GetClan(clanID);
 
 		/*	For each member, 5 elements per row:
 		 [0] = Character Name
@@ -539,38 +514,26 @@ int ClanListHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 		 [3] = Online Status (ex: "true" or "false")
 		 [4] = Arbitrary Rank Title (ex: "Leader", "Officer")
 		 */
-		for (std::vector<Clans::ClanMember>::iterator it = c.mMembers.begin();
-				it != c.mMembers.end(); ++it) {
-			Clans::ClanMember m = *it;
-			CharacterData *cd = g_CharacterManager.RequestCharacter(m.mID,
+		for (auto m : c.mMembers) {
+			auto cd = g_CharacterManager.RequestCharacter(m.mID,
 					true);
-			wpos += PutByte(&sim->SendBuf[wpos], 5);
+			auto row = resp.Row();
 			if (cd == NULL) {
-				wpos += PutStringUTF(&sim->SendBuf[wpos], "Missing!");
-				wpos += PutStringUTF(&sim->SendBuf[wpos], "1");
-				wpos += PutStringUTF(&sim->SendBuf[wpos], "1");
-				wpos += PutStringUTF(&sim->SendBuf[wpos], "false");
-				wpos += PutStringUTF(&sim->SendBuf[wpos],
-						Clans::Rank::GetNameByID(Clans::Rank::INITIATE));
+				row->push_back("Missing!");
+				row->push_back("1");
+				row->push_back("1");
+				row->push_back("false");
+				row->push_back(Clans::Rank::GetNameByID(Clans::Rank::INITIATE));
 			} else {
-				wpos += PutStringUTF(&sim->SendBuf[wpos],
-						cd->cdef.css.display_name);
-				Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2), "%d",
-						cd->cdef.css.level);
-				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux2);
-				Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2), "%d",
-						cd->cdef.css.profession);
-				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux2);
-				wpos += PutStringUTF(&sim->SendBuf[wpos],
-						cd->expireTime == 0 ? "true" : "false");
-				wpos += PutStringUTF(&sim->SendBuf[wpos],
-						Clans::Rank::GetNameByID(m.mRank));
+				row->push_back(cd->cdef.css.display_name);
+				row->push_back(to_string(cd->cdef.css.level));
+				row->push_back(to_string(cd->cdef.css.profession));
+				row->push_back(cd->expireTime == 0 ? "true" : "false");
+				row->push_back(Clans::Rank::GetNameByID(m.mRank));
 			}
 		}
 	}
-
-	PutShort(&sim->SendBuf[1], wpos - 3);             //Set message size
-	return wpos;
+	return resp.Write(sim->SendBuf);
 }
 
 //

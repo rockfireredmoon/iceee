@@ -50,23 +50,14 @@ int PersonaListHandler::handleQuery(SimulatorThread *sim,
 			pld->accPtr->ID);
 	//TODO: Fix a potential buffer overflow.
 
-	int WritePos = 0;
-	WritePos += PutByte(&sim->SendBuf[WritePos], 1);     //_handleQueryResultMsg
-	WritePos += PutShort(&sim->SendBuf[WritePos], 0);           //Message size
-	WritePos += PutInteger(&sim->SendBuf[WritePos], query->ID);  //Query ID
+	QueryResponse resp(query->ID);
 
 	//Character row count
 	int charCount = pld->accPtr->GetCharacterCount();
 	if (g_ProtocolVersion >= 38) {
 		//Version 0.8.9 has a an extra row in the beginning
 		//with one string, the number of characters following.
-		WritePos += PutShort(&sim->SendBuf[WritePos], charCount + 1);
-
-		WritePos += PutByte(&sim->SendBuf[WritePos], 1);
-		sprintf(sim->Aux3, "%d", charCount + 1);
-		WritePos += PutStringUTF(&sim->SendBuf[WritePos], sim->Aux3);
-	} else {
-		WritePos += PutShort(&sim->SendBuf[WritePos], charCount);
+		resp.Row()->push_back(to_string(charCount + 1));
 	}
 
 	g_CharacterManager.GetThread("SimulatorThread::handle_query_persona_list");
@@ -75,7 +66,7 @@ int PersonaListHandler::handleQuery(SimulatorThread *sim,
 	for (b = 0; b < AccountData::MAX_CHARACTER_SLOTS; b++) {
 		if (pld->accPtr->CharacterSet[b] != 0) {
 			int cdefid = pld->accPtr->CharacterSet[b];
-			CharacterCacheEntry *cce =
+			auto cce =
 					pld->accPtr->characterCache.ForceGetCharacter(cdefid);
 			if (cce == NULL) {
 				g_Logs.simulator->error("[%v] Could not request character: %v", sim->InternalID, cdefid);
@@ -85,24 +76,20 @@ int PersonaListHandler::handleQuery(SimulatorThread *sim,
 				return 0;
 			}
 
-			if (g_GameConfig.AprilFools != 0) {
-				WritePos += PutByte(&sim->SendBuf[WritePos], 6); //6 character data strings
-				WritePos += PutStringUTF(&sim->SendBuf[WritePos],
-						cce->display_name.c_str()); //Seems to be sent twice in 0.8.9.  Unknown purpose.
-				WritePos += PutStringUTF(&sim->SendBuf[WritePos],
-						cce->display_name.c_str());
-				WritePos += PutStringUTF(&sim->SendBuf[WritePos],
-						cce->appearance.c_str());
+			auto row = resp.Row();
+			row->push_back(cce->display_name); //Seems to be sent twice in 0.8.9.  Unknown purpose.
+			row->push_back(cce->display_name);
+			row->push_back(cce->appearance);
 
-				const char *eqApp = cce->eq_appearance.c_str();
+			if (g_GameConfig.AprilFools != 0) {
+
+				auto eqApp = cce->eq_appearance;
 				switch (cce->profession) {
 				case 1:
-					eqApp =
-							"{[1]=3163,[0]=141760,[6]=3019,[10]=3008,[11]=2831}";
+					eqApp = "{[1]=3163,[0]=141760,[6]=3019,[10]=3008,[11]=2831}";
 					break;
 				case 2:
-					eqApp =
-							"{[0]=141763,[1]=141764,[6]=2107,[10]=2442,[11]=2898}";
+					eqApp = "{[0]=141763,[1]=141764,[6]=2107,[10]=2442,[11]=2898}";
 					break;
 				case 3:
 					eqApp = "{[6]=2810,[10]=1980,[11]=2108,[2]=141765}";
@@ -111,41 +98,21 @@ int PersonaListHandler::handleQuery(SimulatorThread *sim,
 					eqApp = "{[2]=143609,[6]=3160,[10]=3161,[11]=3162}";
 					break;
 				}
-				WritePos += PutStringUTF(&sim->SendBuf[WritePos], eqApp);
+				row->push_back(eqApp);
 
-				//sprintf(Aux3, "%d", cce->level);
-				WritePos += PutStringUTF(&sim->SendBuf[WritePos], "1");
+				row->push_back("1");
+				row->push_back(to_string(cce->profession));
 
-				sprintf(sim->Aux3, "%d", cce->profession);
-				WritePos += PutStringUTF(&sim->SendBuf[WritePos], sim->Aux3);
-				if (WritePos >= (int) sizeof(sim->SendBuf))
-					g_Logs.server->error("Buffer overflow in persona.list");
 			} else {
 				//Normal stuff.
-				WritePos += PutByte(&sim->SendBuf[WritePos], 6); //6 character data strings
-				WritePos += PutStringUTF(&sim->SendBuf[WritePos],
-						cce->display_name.c_str()); //Seems to be sent twice in 0.8.9.  Unknown purpose.
-				WritePos += PutStringUTF(&sim->SendBuf[WritePos],
-						cce->display_name.c_str());
-				WritePos += PutStringUTF(&sim->SendBuf[WritePos],
-						cce->appearance.c_str());
-				WritePos += PutStringUTF(&sim->SendBuf[WritePos],
-						cce->eq_appearance.c_str());
-
-				sprintf(sim->Aux3, "%d", cce->level);
-				WritePos += PutStringUTF(&sim->SendBuf[WritePos], sim->Aux3);
-
-				sprintf(sim->Aux3, "%d", cce->profession);
-				WritePos += PutStringUTF(&sim->SendBuf[WritePos], sim->Aux3);
-				if (WritePos >= (int) sizeof(sim->SendBuf))
-					g_Logs.server->error("Buffer overflow in persona.list");
+				row->push_back(cce->eq_appearance);
+				row->push_back(to_string(cce->level));
+				row->push_back(to_string(cce->profession));
 			}
 		}
 	}
-	PutShort(&sim->SendBuf[1], WritePos - 3);       //Set message size
 	g_CharacterManager.ReleaseThread();
-
-	return WritePos;
+	return resp.Write(sim->SendBuf);
 }
 
 //

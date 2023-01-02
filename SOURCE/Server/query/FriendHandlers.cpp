@@ -124,38 +124,30 @@ int ListFriendsHandler::handleQuery(SimulatorThread *sim, CharacterServerData *p
 						pld->charPtr->friendList[i].Name));
 	g_FriendListManager.EnumerateFriends(search, resList);
 
-	int wpos = 0;
-	wpos += PutByte(&sim->SendBuf[wpos], 1);            //_handleQueryResultMsg
-	wpos += PutShort(&sim->SendBuf[wpos], 0);           //Message size
-	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);
-
-	wpos += PutShort(&sim->SendBuf[wpos], resList.size());   //Array count
-	for (size_t i = 0; i < resList.size(); i++) {
-		wpos += PutByte(&sim->SendBuf[wpos], 6);  //String count
+	QueryResponse resp(query->ID);
+	for(auto res : resList) {
+		auto row = resp.Row();
 
 		//Character Name
-		wpos += PutStringUTF(&sim->SendBuf[wpos], resList[i].name.c_str());
+		row->push_back(res.name);
 
 		//Level
-		sprintf(sim->Aux1, "%d", resList[i].level);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+		row->push_back(to_string(res.level));
 
 		//Profession (integer)
-		sprintf(sim->Aux1, "%d", resList[i].profession);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+		row->push_back(to_string(res.profession));
 
 		//Online ("true", "false")
-		wpos += PutStringUTF(&sim->SendBuf[wpos],
-				(resList[i].online == true) ? "true" : "false");
+		row->push_back((res.online == true) ? "true" : "false");
 
 		//Status Message
-		wpos += PutStringUTF(&sim->SendBuf[wpos], resList[i].status.c_str());
+		row->push_back(res.status);
 
 		//Shard
-		wpos += PutStringUTF(&sim->SendBuf[wpos], resList[i].shard.c_str());
+		row->push_back(res.shard);
 	}
-	PutShort(&sim->SendBuf[1], wpos - 3);
-	return wpos;
+
+	return resp.Write(sim->SendBuf);
 }
 
 

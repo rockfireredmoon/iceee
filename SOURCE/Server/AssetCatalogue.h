@@ -31,6 +31,7 @@
 #include "Scheduler.h"
 #include "http/SiteClient.h"
 #include "Entities.h"
+#include "query/Query.h"
 #include <filesystem>
 
 using namespace std;
@@ -104,7 +105,6 @@ private:
 	void SearchProps(vector<AssetCatalogueItem*> *items, AssetCatalogueSearch search, AssetCatalogueItem* mItem);
 };
 
-int WriteAssetCatalogueItem(char *buffer, AssetCatalogueItem *item);
 
 extern AssetCatelogueManager g_AssetCatalogueManager;
 

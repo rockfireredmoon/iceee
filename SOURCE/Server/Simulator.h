@@ -171,8 +171,6 @@ public:
 	int protected_CheckDistance(int creatureID);
 	int protected_helper_query_item_move(int origContainer, int origSlot, int destContainer, int destSlot, AccountData *destAccount);
 
-	int protected_helper_tweak_self(int CDefID, int defhints, int argOffset);
-
 	bool HasPropEditPermission(SceneryObject *prop, float x = 0.0F, float z = 0.0F);
 	const char * GetErrorString(int error);
 	bool HasQueryArgs(unsigned int minCount);

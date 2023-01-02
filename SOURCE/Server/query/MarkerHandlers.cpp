@@ -21,6 +21,7 @@
 #include "../Creature.h"
 #include "../Instance.h"
 #include "../Components.h"
+#include <boost/format.hpp>
 
 //
 // MarkerListHandler
@@ -61,30 +62,16 @@ int MarkerListHandler::handleQuery(SimulatorThread *sim,
 			markers.Reload();
 		}
 
-		int wpos = 0;
-		wpos += PutByte(&sim->SendBuf[wpos], 1);       //_handleQueryResultMsg
-		wpos += PutShort(&sim->SendBuf[wpos], 0);      //Message size
-		wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
-		wpos += PutShort(&sim->SendBuf[wpos],
-				markers.WorldMarkerList.size());
-		vector<WorldMarker>::iterator it;
+		QueryResponse resp(query->ID);
 
-		for (it = markers.WorldMarkerList.begin();
-				it != markers.WorldMarkerList.end();
-				++it) {
-			wpos += PutByte(&sim->SendBuf[wpos], 4);
-			sprintf(sim->Aux1, "%s", it->Name.c_str());
-			wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-			sprintf(sim->Aux1, "%d", creatureInstance->actInst->mZone);
-			wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-			sprintf(sim->Aux1, "%f %f %f", it->X, it->Y, it->Z);
-			wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-			sprintf(sim->Aux1, "%s", it->Comment.c_str());
-			wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+		for (auto it : markers.WorldMarkerList) {
+			auto row = resp.Row();
+			row->push_back(it.Name);
+			row->push_back(to_string(creatureInstance->actInst->mZone));
+			row->push_back(str(boost::format("%f %f %f") % it.X % it.Y % it.Z));
+			row->push_back(it.Comment);
 		}
-
-		PutShort(&sim->SendBuf[1], wpos - 3);
-		return wpos;
+		return resp.Write(sim->SendBuf);
 	} else {
 		g_Logs.simulator->warn("TODO Implement non-zone marker list query-> %v",
 				query->args[0].c_str());

@@ -592,6 +592,7 @@ int InitServerMain(int argc, char *argv[]) {
 
 	g_QueryManager.queryHandlers["script.run"] = new ScriptRunHandler();
 	g_QueryManager.queryHandlers["script.load"] = new ScriptLoadHandler();
+	g_QueryManager.queryHandlers["script.list"] = new ScriptListHandler();
 	g_QueryManager.queryHandlers["script.kill"] = new ScriptKillHandler();
 	g_QueryManager.queryHandlers["script.save"] = new ScriptSaveHandler();
 

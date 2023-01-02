@@ -56,6 +56,15 @@ public:
 			SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class ScriptListHandler: public QueryHandler {
+public:
+	~ScriptListHandler() {
+	}
+
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld,
+			SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
 class ScriptKillHandler: public AbstractScriptHandler {
 public:
 	~ScriptKillHandler() {

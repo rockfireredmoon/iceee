@@ -123,4 +123,7 @@ public:
 	~SetATSHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
+
+void WriteZoneDefInfo(QueryResponse &resp, ZoneDefInfo &item);
+
 #endif

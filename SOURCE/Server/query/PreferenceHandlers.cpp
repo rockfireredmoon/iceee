@@ -27,25 +27,13 @@ int RespondPrefGet(PreferenceContainer *prefSet, char *SendBuf,
 	//preferences, the query handlers will call this function with the
 	//appropriate pointer.
 
-	int WritePos = 0;
-	WritePos += PutByte(&SendBuf[WritePos], 1);          //_handleQueryResultMsg
-	WritePos += PutShort(&SendBuf[WritePos], 0);           //Message size
-	WritePos += PutInteger(&SendBuf[WritePos], query->ID); //Query response index
-
-	//Each preference request will have a matching response field.
-	WritePos += PutShort(&SendBuf[WritePos], query->argCount);
-
-	for (unsigned int i = 0; i < query->argCount; i++) {
-		std::string pref = prefSet->GetPrefValue(query->args[i]);
-
-		//One string for each preference result.
-		WritePos += PutByte(&SendBuf[WritePos], 1);
-		WritePos += PutStringUTF(&SendBuf[WritePos], pref.c_str());
+	QueryResponse resp(query->ID);
+	for(auto key : query->args) {
+		//Each preference request will have a matching response field.
+		auto row = resp.Row();
+		row->push_back(prefSet->GetPrefValue(key));
 	}
-
-	PutShort(&SendBuf[1], WritePos - 3);
-
-	return WritePos;
+	return resp.Write(SendBuf);
 }
 
 //

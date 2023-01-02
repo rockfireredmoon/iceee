@@ -86,4 +86,8 @@ public:
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+int QuestGenericData(char *buffer, int bufsize, char *convBuf, int QuestID, int QueryIndex);
+int QuestList(QuestJournal &journal, char *buffer, char *convBuf, int QueryID);
+int QuestData(QuestJournal &journal, char *buffer, char *convBuf, int QuestID, int QueryIndex);
+
 #endif

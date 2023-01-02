@@ -336,7 +336,7 @@ bool QuestReference::TestInvalid(void) {
 
 /* DISABLED, NEVER FINISHED
  // Search objectives for inventory item requirements, returning all items that count toward an objective.
- void QueryItemObjectives(std::vector<int> &resultList)
+ void QueryItemObjectives(vector<int> &resultList)
  {
  for(int i = 0; i < 3; i++)
  {
@@ -508,7 +508,7 @@ int QuestJournal::GetCurrentAct(int questID) {
  */
 
 /* DISABLED, NEVER FINISHED
- void QuestJournal :: QueryItemObjectives(std::vector<int> &resultList)
+ void QuestJournal :: QueryItemObjectives(vector<int> &resultList)
  {
  for(size_t i = 0; i < activeQuests.itemList.size(); i++)
  {
@@ -725,8 +725,8 @@ QuestAct* QuestDefinition::GetActPtrByIndex(int index) {
 //Note that numRewards is only used for quests with multiple-choice reward options, and specifies
 //exactly how many items must be selected by the player.
 bool QuestDefinition::FilterSelectedRewards(int outcomeIndex,
-		const std::vector<size_t>& selectedIndexes,
-		std::vector<QuestItemReward>& outputRewardList) {
+		const vector<size_t>& selectedIndexes,
+		vector<QuestItemReward>& outputRewardList) {
 	int possibleRewards = 0;
 	int choiceCount = 0;
 	bool add = false;
@@ -1277,7 +1277,7 @@ void QuestReferenceContainer::Free(void) {
 
 void QuestReferenceContainer::StartScript(CreatureInstance *instance) {
 
-	std::vector<QuestReference>::iterator it = itemList.begin();
+	vector<QuestReference>::iterator it = itemList.begin();
 	for (; it != itemList.end(); ++it) {
 		g_QuestNutManager.AddActiveScript(instance, it->QuestID);
 	}
@@ -1302,7 +1302,7 @@ void QuestReferenceContainer::AddItem(QuestReference &newItem) {
 
 void QuestReferenceContainer::Sort(void) {
 	/* OBSOLETE
-	 std::sort(itemList.begin(), itemList.end());
+	 sort(itemList.begin(), itemList.end());
 	 */
 }
 
@@ -1424,7 +1424,7 @@ void QuestReferenceContainer::RemoveInvalidEntries(void) {
 	} while (index >= 0);
 
 	vector<QuestReference>::iterator it;
-	it = std::unique(itemList.begin(), itemList.end(),
+	it = unique(itemList.begin(), itemList.end(),
 			QuestReference::testEquivalenceByQuestID);
 	if (it != itemList.end()) {
 		int size = itemList.end() - it;
@@ -1484,7 +1484,7 @@ const char * QuestJournal::QuestIndicator(int CreatureDefID) {
 	return QuestIndicator::QueryResponse[QuestIndicator::NONE];
 }
 
-char * QuestJournal::QuestGetQuestOffer(int CreatureDefID, char *convBuf) {
+string QuestJournal::QuestGetQuestOffer(int CreatureDefID, char *convBuf) {
 	//Returns the string response for a "quest.getquestoffer" query.
 	//The simulator will enter this string into the outgoing data.
 	int QuestID = 0;
@@ -1507,237 +1507,7 @@ char * QuestJournal::QuestGetQuestOffer(int CreatureDefID, char *convBuf) {
 			break;
 		}
 	}
-	return StringFromInt(convBuf, QuestID);
-}
-
-int QuestJournal::QuestGenericData(char *buffer, int bufsize, char *convBuf,
-		int QuestID, int QueryIndex) {
-	//The client issues this query for the quest data after receiving the
-	//quest ID from the "quest.getquestoffer" query.
-	//Prepares a response buffer for the "quest.genericdata" query.
-	//Returns the size of the buffer.
-
-	//TODO: Very long quest data may cause a buffer overflow.  May want to handle
-	//this more gracefully.
-	QuestDefinition *qd = QuestDef.GetQuestDefPtrByID(QuestID);
-	if (qd == NULL) {
-		g_Logs.server->error("Quest ID [%v] not found", QuestID);
-		return PrepExt_QueryResponseError(buffer, QueryIndex,
-				"Server error: quest not found.");
-	}
-
-	QuestOutcome *outcome = qd->GetOutcome(0);
-
-	int debug_check = qd->title.size() + qd->bodyText.size()
-			+ outcome->compText.size();
-	if (debug_check > bufsize - 100) {
-		g_Logs.server->error(
-				"QUEST DATA TOO LARGE FOR BUFFER (Quest ID:%d)",
-				QuestID);
-		return PrepExt_QueryResponseError(buffer, QueryIndex,
-				"Server error: too much data");
-	}
-
-	//Generic data has 23 rows.
-	int wpos = 0;
-	wpos += PutByte(&buffer[wpos], 1);            //_handleQueryResultMsg
-	wpos += PutShort(&buffer[wpos], 0);           //Message size
-
-	wpos += PutInteger(&buffer[wpos], QueryIndex); //Query response index
-
-	wpos += PutShort(&buffer[wpos], 1);           //Array count
-	wpos += PutByte(&buffer[wpos], 15 + ( MAXOBJECTIVES * 3 ));           //String count
-
-	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->questID)); //[0] = Quest ID
-	wpos += PutStringUTF(&buffer[wpos], qd->title.c_str());   //[1] = Title
-	wpos += PutStringUTF(&buffer[wpos], qd->bodyText.c_str());   //[2] = body
-	wpos += PutStringUTF(&buffer[wpos], outcome->compText.c_str()); //[3] = completion text
-	wpos += PutStringUTF(&buffer[wpos],
-			StringFromInt(convBuf, qd->levelSuggested));   //[4] = level
-	wpos += PutStringUTF(&buffer[wpos],
-			StringFromInt(convBuf, outcome->experience));   //[5] = experience
-	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->partySize)); //[6] = party size
-	wpos += PutStringUTF(&buffer[wpos],
-			StringFromInt(convBuf, outcome->numRewards));   //[7] = rewards
-	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->coin)); //[8] = coin
-	wpos += PutStringUTF(&buffer[wpos], StringFromBool(convBuf, qd->unabandon)); //[9] = unabandon
-	wpos += PutStringUTF(&buffer[wpos],
-			StringFromInt(convBuf, outcome->valourGiven)); //[10] = valour
-
-	//3 sets of data, 3 elements each
-	//  [0] = Objective text
-	//  [1] = Complete: either "true" or "false"
-	//  [2] = myItemID
-	//Spans Rows: {11, 12, 13}, {14, 15, 16}, {17, 18, 19}
-	int a;
-	for (a = 0; a < MAXOBJECTIVES; a++) {
-		wpos += PutStringUTF(&buffer[wpos],
-				qd->actList[0].objective[a].description.c_str());
-		wpos += PutStringUTF(&buffer[wpos],
-				StringFromBool(convBuf, qd->actList[0].objective[a].complete));
-		wpos += PutStringUTF(&buffer[wpos],
-				StringFromInt(convBuf, qd->actList[0].objective[a].myItemID));
-	}
-
-	for (a = 0; a < 4; a++)
-		wpos += PutStringUTF(&buffer[wpos],
-				outcome->rewardItem[a].Print(convBuf));
-
-	//Spans Rows: {20, 21, 22, 23}
-	PutShort(&buffer[1], wpos - 3);               //Set message size
-	return wpos;
-}
-
-int QuestJournal::QuestData(char *buffer, char *convBuf, int QuestID,
-		int QueryIndex) {
-	//The client issues the "quest.data" query when a quest is accepted, or when
-	//objectives are refreshed.
-	//Returns the size of the buffer.
-
-	QuestDefinition *qd = QuestDef.GetQuestDefPtrByID(QuestID);
-	if (qd == NULL) {
-		g_Logs.server->error("Quest ID [%v] not found", QuestID);
-		return PrepExt_QueryResponseError(buffer, QueryIndex,
-				"Server error: quest not found.");
-	}
-
-	int act = GetCurrentAct(QuestID);
-	if (act >= (int) qd->actList.size())
-		return PrepExt_QueryResponseError(buffer, QueryIndex,
-				"Server error: quest act does not exist");
-	else if (act < 0) {
-		return PrepExt_QueryResponseError(buffer, QueryIndex,
-				"Server error: quest act not set");
-	}
-
-	int QuestData = activeQuests.HasQuestID(QuestID);
-	QuestReference *qref = NULL;
-	if (QuestData >= 0)
-		qref = &activeQuests.itemList[QuestData];
-
-	QuestOutcome *outcome = qd->GetOutcome(qref == NULL ? 0 : qref->Outcome);
-
-	//Full data has 17 + (6 * MAXOBJECTIVES) rows.
-	int wpos = 0;
-	wpos += PutByte(&buffer[wpos], 1);            //_handleQueryResultMsg
-	wpos += PutShort(&buffer[wpos], 0);           //Message size
-
-	wpos += PutInteger(&buffer[wpos], QueryIndex);    //Query response index
-
-	wpos += PutShort(&buffer[wpos], 1);           //Array count
-	wpos += PutByte(&buffer[wpos], 17 + (6 * MAXOBJECTIVES));           //String count
-
-	/*
-	 if(r == -1)
-	 {
-	 g_Log.AddMessageFormat("[WARNING] Quest data not found for [%d]", questID);
-
-	 for(int a = 0; a < 34; a++)
-	 wpos += PutStringUTF(&buffer[wpos], "");
-
-	 PutShort(&buffer[1], wpos - 3);
-	 return wpos;
-	 }*/
-
-	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->questID)); //[0] = Quest ID
-	wpos += PutStringUTF(&buffer[wpos], qd->title.c_str());   //[1] = Title
-
-	//Updated: The body text changes as you complete acts.
-	//FIXED: it used to be a reference (string&) and was overwriting the body text.
-	string *bodyText = &qd->bodyText;
-	if (qd->actList[act].BodyText.size() > 0)
-		bodyText = &qd->actList[act].BodyText;
-	wpos += PutStringUTF(&buffer[wpos], bodyText->c_str());   //[2] = body
-
-	wpos += PutStringUTF(&buffer[wpos], outcome->compText.c_str()); //[3] = completion text
-	wpos += PutStringUTF(&buffer[wpos],
-			StringFromInt(convBuf, qd->levelSuggested));   //[4] = level
-	wpos += PutStringUTF(&buffer[wpos],
-			StringFromInt(convBuf, outcome->experience));   //[5] = experience
-	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->partySize)); //[6] = party size
-	wpos += PutStringUTF(&buffer[wpos],
-			StringFromInt(convBuf, outcome->numRewards));   //[7] = rewards
-	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->coin)); //[8] = coin
-	wpos += PutStringUTF(&buffer[wpos], StringFromBool(convBuf, qd->unabandon)); //[9] = unabandon
-	wpos += PutStringUTF(&buffer[wpos],
-			StringFromInt(convBuf, outcome->valourGiven));   //[10] = valour
-
-	/*
-	 sprintf(ConvBuf, "%g,%g,%g,%d", qd->sGiver.x, qd->sGiver.y, qd->sGiver.z, qd->sGiver.zone);
-	 wpos += PutStringUTF(&buffer[wpos], ConvBuf);   //[10] = giver
-
-	 sprintf(ConvBuf, "%g,%g,%g,%d", qd->sEnder.x, qd->sEnder.y, qd->sEnder.z, qd->sEnder.zone);
-	 wpos += PutStringUTF(&buffer[wpos], ConvBuf);   //[11] = ender
-	 */
-	wpos += PutStringUTF(&buffer[wpos], qd->sGiver.c_str());  //[11]
-	wpos += PutStringUTF(&buffer[wpos], qd->sEnder.c_str());  //[12]
-
-	//3 sets of data, 6 elements each
-	// [13]   i+0  description.  If not empty, get the rest.
-	// [14]   i+1  complete ("true", "false" ?)
-	// [15]   i+2  myCreatureDefID
-	// [16]   i+3  myItemID
-	// [17]   i+4  completeText
-	// [18]   i+5  markerLocations  "x,y,z,zone;x,y,z,zone;..."
-
-	//Spans Rows: {13, 14, 15, 16, 17, 18}
-	//            {19, 20, 21, 22, 23, 24}
-	//            {25, 26, 27, 28, 29, 30}
-
-	int a;
-	for (a = 0; a < MAXOBJECTIVES; a++) {
-		wpos += PutStringUTF(&buffer[wpos],
-				qd->actList[act].objective[a].description.c_str());
-
-		//TODO: probably need to enforce updated objectives at all time
-		int complete = qd->actList[act].objective[a].complete;
-		if (qref != NULL) {
-			complete = qref->ObjComplete[a];
-		}
-
-		wpos += PutStringUTF(&buffer[wpos], StringFromBool(convBuf, complete));
-		wpos += PutStringUTF(&buffer[wpos],
-				StringFromInt(convBuf,
-						qd->actList[act].objective[a].myCreatureDefID));
-		wpos += PutStringUTF(&buffer[wpos],
-				StringFromInt(convBuf, qd->actList[act].objective[a].myItemID));
-
-		//Check for updated objectives.
-		convBuf[0] = 0;
-		if (complete == 0) {
-			if (qref != NULL) {
-				if (qd->actList[act].objective[a].completeText.find(" of ")
-						!= string::npos) {
-					if (qd->actList[act].objective[a].type
-							== QuestObjective::OBJECTIVE_TYPE_ACTIVATE
-							|| qd->actList[act].objective[a].type
-									== QuestObjective::OBJECTIVE_TYPE_KILL) {
-						int need = qd->actList[act].objective[a].data2;
-						int have = qref->ObjCounter[a];
-						sprintf(convBuf, "%d of %d", have, need);
-					}
-				}
-			}
-		} else {
-			strcpy(convBuf, "Complete");
-		}
-		if (convBuf[0] == 0)
-			wpos += PutStringUTF(&buffer[wpos],
-					qd->actList[act].objective[a].completeText.c_str());
-		else
-			wpos += PutStringUTF(&buffer[wpos], convBuf);
-
-		wpos += PutStringUTF(&buffer[wpos],
-				qd->actList[act].objective[a].markerLocations.c_str());
-	}
-
-	// {31, 32, 33, 34}
-	for (a = 0; a < 4; a++)
-		wpos += PutStringUTF(&buffer[wpos],
-				outcome->rewardItem[a].Print(convBuf));
-
-	PutShort(&buffer[1], wpos - 3);               //Set message size
-	return wpos;
+	return to_string(QuestID);
 }
 
 int QuestJournal::QuestJoin(char *buffer, int QuestID, int QueryIndex) {
@@ -1772,42 +1542,6 @@ int QuestJournal::WriteQuestJoin(char *buffer, int questID) {
 	return wpos;
 }
 
-int QuestJournal::QuestList(char *buffer, char *convBuf, int QueryID) {
-	//Fill a "quest.list" query with the appropriate response data.
-	int wpos = 0;
-	wpos += PutByte(&buffer[wpos], 1);            //_handleQueryResultMsg
-	wpos += PutShort(&buffer[wpos], 0);           //Message size
-
-	wpos += PutInteger(&buffer[wpos], QueryID);
-
-	int count = activeQuests.itemList.size();
-	wpos += PutShort(&buffer[wpos], count);
-	if (count > 0) {
-		for (int a = 0; a < count; a++) {
-			int qid = activeQuests.itemList[a].QuestID;
-			QuestDefinition *qdef = activeQuests.itemList[a].GetQuestPointer();
-			if (qdef == NULL) {
-				g_Logs.server->warn(
-						"QuestList() Unknown active quest ID [%v]",
-						qid);
-				wpos += PutByte(&buffer[wpos], 3);           //String count
-				for (int b = 0; b < 3; b++)
-					wpos += PutStringUTF(&buffer[wpos], "");
-			} else {
-				wpos += PutByte(&buffer[wpos], 3);           //String count
-				wpos += PutStringUTF(&buffer[wpos],
-						StringFromInt(convBuf, qid));
-				wpos += PutStringUTF(&buffer[wpos], qdef->title.c_str());
-				wpos += PutStringUTF(&buffer[wpos],
-						StringFromInt(convBuf, qdef->partySize));
-			}
-		}
-	}
-
-	PutShort(&buffer[1], wpos - 3);               //Set message size
-	return wpos;
-}
-
 int QuestJournal::QuestGetCompleteQuest_Helper(int creatureDefID) {
 	int r = activeQuests.HasCreatureReturn(creatureDefID);
 	if (r == -1)
@@ -1822,8 +1556,7 @@ int QuestJournal::QuestGetCompleteQuest(char *buffer, char *convBuf,
 	int qid = QuestGetCompleteQuest_Helper(CreatureDefID);
 	int wpos = 0;
 	if (qid >= 0) {
-		wpos += PrepExt_QueryResponseString(&buffer[wpos], QueryIndex,
-				StringFromInt(convBuf, qid));
+		wpos += PrepExt_QueryResponseString(&buffer[wpos], QueryIndex, to_string(qid));
 		//wpos += CheckQuestTalk(&buffer[wpos], CreatureDefID);
 	} else {
 		wpos = PrepExt_QueryResponseError(buffer, QueryIndex,
@@ -1912,8 +1645,8 @@ int QuestJournal::CheckTravelLocations(int CID, char *buffer, int x, int y,
 			qr.ObjComplete[r] = 1;
 			qr.ObjCounter[r] = 1;
 
-			std::string resultText;
-			std::string *resPtr = &resultText;
+			string resultText;
+			string *resPtr = &resultText;
 			wpos += PrepExt_QuestStatusMessage(&buffer[wpos], qdef->questID, r,
 					true, "Complete");
 
@@ -1944,11 +1677,11 @@ int QuestJournal::CheckTravelLocations(int CID, char *buffer, int x, int y,
 
 			// WTF? Maybe some misguided attempt at activating party objective?
 
-//			std::list<QuestScript::QuestNutPlayer*> l = g_QuestNutManager.GetActiveQuestScripts(qr.QuestID);
+//			list<QuestScript::QuestNutPlayer*> l = g_QuestNutManager.GetActiveQuestScripts(qr.QuestID);
 //			if(l.size() > 0) {
 //				char ConvBuf[256];
 //				Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_objective_complete_%d_%d",qr.CurAct,r);
-//				for(std::list<QuestScript::QuestNutPlayer*>::iterator it = l.begin() ; it != l.end(); ++it) {
+//				for(list<QuestScript::QuestNutPlayer*>::iterator it = l.begin() ; it != l.end(); ++it) {
 //					QuestScript::QuestNutPlayer *player = *it;
 //					player->JumpToLabel(ConvBuf);
 //				}
@@ -2142,7 +1875,7 @@ void QuestJournal::QuestLeave(int CID, int QuestID) {
 				g_QuestNutManager.GetActiveScript(CID, QuestID);
 		if (player != NULL) {
 			player->RunFunction("on_leave",
-					std::vector<ScriptCore::ScriptParam>(), false);
+					vector<ScriptCore::ScriptParam>(), false);
 			player->HaltExecution();
 		}
 	}
@@ -2206,8 +1939,8 @@ int QuestJournal::FilterEmote(int CID, char *outbuf, const char *message,
 
 			qr->RunObjectiveCompleteScripts(CID, qr->CurAct, obj);
 
-			std::string resultText;
-			std::string *resPtr = &resultText;
+			string resultText;
+			string *resPtr = &resultText;
 			wpos += PrepExt_QuestStatusMessage(&outbuf[wpos], qdef->questID,
 					obj, true, "Complete");
 
@@ -2427,7 +2160,7 @@ int QuestJournal::GetRepeatDelayIndex(int questID) {
 }
 
 int PrepExt_QuestStatusMessage(char *buffer, int questID, int objectiveIndex,
-		bool complete, std::string message) {
+		bool complete, string message) {
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 7);  //_handleQuestEventMsg
 	wpos += PutShort(&buffer[wpos], 0); //Size
