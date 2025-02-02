@@ -1,6 +1,7 @@
 [Unit]
 Description=Earth Eternal - The Anubian War Daemon
 After=network.target
+Wants=redis.service
 
 [Service]
 Type=simple
