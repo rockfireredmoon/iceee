@@ -111,7 +111,7 @@ public:
 	FormDefinition() {
 		mTitle = "";
 		mId = 0;
-		mDescription == "";
+		mDescription = "";
 	}
 
 	FormDefinition(const FormDefinition &f) {
@@ -124,7 +124,7 @@ public:
 	FormDefinition(std::string _title) {
 		mTitle = _title;
 		mId = 0;
-		mDescription == "";
+		mDescription = "";
 	}
 
 	FormDefinition(std::string _title, std::string _description) {

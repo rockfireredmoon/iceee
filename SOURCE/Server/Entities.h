@@ -82,11 +82,17 @@ public:
 	virtual bool EntityKeys(AbstractEntityReader *reader) = 0;
 };
 // NULLs aren't an issue.  Much faster than the STL or Boost lex versions.
-struct ciLessLibC : public binary_function<string, string, bool> {
+//struct ciLessLibC : public binary_function<string, string, bool> {
+//    bool operator()(const string &lhs, const string &rhs) const {
+//        return strcasecmp(lhs.c_str(), rhs.c_str()) < 0 ;
+//    }
+//};
+struct ciLessLibC {
     bool operator()(const string &lhs, const string &rhs) const {
         return strcasecmp(lhs.c_str(), rhs.c_str()) < 0 ;
     }
 };
+
 
 typedef map<string, vector<string>, ciLessLibC> TEXT_FILE_SECTION_MAP;
 

@@ -50,7 +50,7 @@ FOR LINUX
 		USE_SEH_EXCEPTIONS   NOT SUPPORTED
 */
 
-#include <string.h>
+#include <string>
 
 extern unsigned long g_ServerTime;
 extern unsigned long g_ServerLaunchTime;
