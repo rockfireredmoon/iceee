@@ -62,10 +62,10 @@ void Schedulable::Shutdown() {
 //
 
 Scheduler::Scheduler() {
-	mRunning = true;
 	mNextTaskId = 0;
 	mNextRun = 0;
 	mPool = NULL;
+	mRunning = false;
 }
 
 Scheduler::~Scheduler() {
@@ -74,6 +74,7 @@ Scheduler::~Scheduler() {
 
 void Scheduler::Init() {
 	mPool = new boost::asio::thread_pool(g_Config.SchedulerThreads);
+	mRunning = true;
 }
 
 void Scheduler::Shutdown() {

@@ -75,6 +75,7 @@ public:
   //! \param nb_threads number of workers
   //!
   void set_nb_workers(std::size_t nb_threads);
+  void stop();
 
 public:
   //! callback handler typedef

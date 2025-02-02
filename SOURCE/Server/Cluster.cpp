@@ -1480,9 +1480,6 @@ bool ClusterManager::Init() {
 		return false;
 	}
 
-	//! High availablity requires at least 2 io service workers
-	cpp_redis::network::set_default_nb_workers(g_Config.RedisWorkers);
-
 	long ms = g_PlatformTime.getMilliseconds();
 	mNextPing = ms + CLUSTER_PING_INTERVAL;
 	cpp_redis::active_logger = unique_ptr<ClusterLogger>(new ClusterLogger());
@@ -1491,7 +1488,11 @@ bool ClusterManager::Init() {
 
 	auto simAddress = g_Config.ResolveSimulatorAddress();
 	mClusterable = simAddress.length() > 0;
-	if (!mClusterable) {
+	if (mClusterable) {
+		//! High availablity requires at least 2 io service workers
+		cpp_redis::network::set_default_nb_workers(g_Config.RedisWorkers);
+	}
+	else {
 		g_Logs.cluster->warn(
 				"Shards not supported, as SimulatorAddress is not specified in ServerConfig.txt");
 	}
@@ -2103,8 +2104,9 @@ void ClusterManager::PreShutdown() {
 void ClusterManager::Shutdown(bool wait) {
 	g_Logs.cluster->info("Disconnecting from Database");
 	if (mClusterable) {
-		mClient.disconnect(wait);
 		mSub.disconnect(wait);
+		mClient.disconnect(wait);
+		tacopie::get_default_io_service()->stop();
 	} else {
 		mClient.disconnect(wait);
 	}

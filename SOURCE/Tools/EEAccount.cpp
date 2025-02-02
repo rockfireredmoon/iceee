@@ -350,4 +350,6 @@ int main(int argc, char *argv[]) {
 
 	//
 	g_ClusterManager.Shutdown(true);
+//	g_Logs.FlushAll();
+//	g_Logs.CloseAll();
 }

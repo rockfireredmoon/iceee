@@ -92,6 +92,13 @@ io_service::set_nb_workers(std::size_t nb_threads) {
   m_callback_workers.set_nb_threads(nb_threads);
 }
 
+//!
+//! io service workers
+//!
+void io_service::stop() {
+	m_callback_workers.stop();
+}
+
 
 //!
 //! poll worker function
