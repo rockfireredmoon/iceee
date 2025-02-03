@@ -94,6 +94,12 @@ fs::path FileChecksum::GetFilename() {
 }
 
 void FileChecksum::ScheduleCheck() {
+
+	//
+	// TODO there is a server crash potential here. If the HTTPChecksum.txt does not
+	//      exist in the first location, the callback will crash
+	//
+
 	if(mChecksumUpdateTimer != 0) {
 		mChecksumUpdateTimer = 0;
 		g_Scheduler.Cancel(mChecksumUpdateTimer);

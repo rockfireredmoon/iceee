@@ -322,6 +322,7 @@ int main(int argc, char *argv[]) {
 	/* Virtual Items */
 	path = userDataPath / "VirtualItems";
 	if(fs::is_directory(path)) {
+		g_Logs.data->info("Migrating virtual items");
 		int maxc = ItemManager::BASE_VIRTUAL_ITEM_ID;
 		for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
 			auto path = entry.path();
@@ -366,6 +367,7 @@ int main(int argc, char *argv[]) {
 	path = userDataPath / "Accounts";
 
 	if(fs::is_directory(path)) {
+		g_Logs.data->info("Migrating accounts");
 		int maxa = 1;
 		for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
 			auto path = entry.path();
@@ -413,6 +415,7 @@ int main(int argc, char *argv[]) {
 	/* ZoneDefs */
 	path = userDataPath / "ZoneDef";
 	if (fs::exists(path)) {
+		g_Logs.data->info("Migrating zones");
 		int maxz = ZoneDefManager::GROVE_ZONE_ID_DEFAULT;
 		for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
 			auto path = entry.path();
@@ -469,6 +472,7 @@ int main(int argc, char *argv[]) {
 	path = userDataPath / "Characters";
 
 	if (fs::exists(path)) {
+		g_Logs.data->info("Migrating characters");
 		int maxc = AccountManager::DEFAULT_CHARACTER_ID;
 		for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
 			auto path = entry.path();
@@ -524,6 +528,7 @@ int main(int argc, char *argv[]) {
 	/* Grove */
 	path = userDataPath / "Grove";
 	if (fs::exists(path)) {
+		g_Logs.data->info("Migrating groves");
 		for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
 			auto dir = entry.path();
 			int sid = stoi(dir.stem());
@@ -581,6 +586,7 @@ int main(int argc, char *argv[]) {
 	 * for the highest prop ID in the zone, and set the zones next ID value to that */
 	path = g_Config.ResolveVariableDataPath() / "Scenery";
 	if (fs::exists(path)) {
+		g_Logs.data->info("Migrating scenery");
 		for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
 			auto dir = entry.path();
 			if(fs::is_directory(dir)) {
@@ -625,6 +631,7 @@ int main(int argc, char *argv[]) {
 	path = userDataPath / "IGForum" / "Category";
 
 	if (fs::exists(path)) {
+		g_Logs.data->info("Migrating IGF categories");
 		for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
 			auto file = entry.path();
 			int id = stoi(file.stem());
@@ -666,6 +673,7 @@ int main(int argc, char *argv[]) {
 	/* IGF Threads */
 	path = userDataPath / "IGForum" / "Thread";
 	if (fs::exists(path)) {
+		g_Logs.data->info("Migrating IGF threads");
 		for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
 			auto file = entry.path();
 			int id = stoi(file.stem());
@@ -704,6 +712,7 @@ int main(int argc, char *argv[]) {
 	/* IGF Posts */
 	path = userDataPath / "IGForum" / "Post";
 	if (fs::exists(path)) {
+		g_Logs.data->info("Migrating IGF posts");
 		for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
 			auto file = entry.path();
 			int id = stoi(file.stem());
@@ -742,6 +751,7 @@ int main(int argc, char *argv[]) {
 	/* Credit Shop */
 	path = g_Config.ResolveVariableDataPath() / "CreditShop";
 	if (fs::exists(path)) {
+		g_Logs.data->info("Migrating credit shop");
 		int maxc = 0;
 		for(const fs::directory_entry& entry : fs::directory_iterator(path)) {
 			auto file = entry.path();
