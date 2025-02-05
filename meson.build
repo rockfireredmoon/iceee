@@ -518,4 +518,20 @@ install_data(sources: [
 	'Doc/SERVER.md',
 	], install_dir : docpath)
 install_data(sources: ['Web/Errors/404.html'], install_dir : webpath + '/Errors')
-install_data(sources: ['Web/Pages/css/bootstrap.min.css','Web/Pages/css/darkly.min.css','Web/Pages/js/bootstrap.bundle.min.js','Web/Pages/js/util.js','Web/Pages/index.html','Web/Pages/Account.html','Web/Pages/RemoteServerTools.html','Web/Pages/ResetPassword.html'], install_dir : webpath + '/Pages')
+install_data(sources: [
+    'Web/Pages/index.html',
+    'Web/Pages/Account.html',
+    'Web/Pages/RemoteServerTools.html',
+    'Web/Pages/ResetPassword.html'
+    ], install_dir : webpath + '/Pages')
+install_data(sources: [
+    'Web/Pages/css/bootstrap.min.css',
+    'Web/Pages/css/darkly.min.css'
+    ], install_dir : webpath + '/Pages/css')
+install_data(sources: [
+    'Web/Pages/js/bootstrap.bundle.min.js',
+    'Web/Pages/js/util.js'
+    ], install_dir : webpath + '/Pages/css')
+install_data(sources: [
+    'Web/Pages/images/server-banner.png'
+    ], install_dir : webpath + '/Pages/images')
