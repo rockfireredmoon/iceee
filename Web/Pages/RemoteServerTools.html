@@ -1,287 +1,306 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-   "http://www.w3.org/TR/html4/strict.dtd">
-
-
-<html>
+<!doctype html>
+<html lang="en" data-bs-theme="auto" class="h-100">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Remote Tools</title>
-<link rel="stylesheet" href="main.css">
+<script src="js/bootstrap.bundle.min.js"></script>
+<link href="css/darkly.min.css" rel="stylesheet">
+<script src="js/util.js"></script>
+<title>Server Tools</title>
 </head>
-<body>
+<body class="h-100">
+    <div class="d-flex flex-row h-100">
+        <div class="container">
+            <div class="container">
+                <div class="row">
+                    <img src="images/server-banner.png" />
+                </div>
+            </div>
+            <h2>Server Tools</h2>
+            <div id="tools-form" class="container">
 
-<script type="text/javascript">
+                <form onSubmit="return false;">
+                    <div class="mb-3">
+                        <label for="authtoken" class="form-label">API
+                            Authentication Token</label> <input size="32" maxlength="32"
+                            type="password" class="form-control" id="authtoken"
+                            aria-describedby="authtokenHelp">
+                        <div id="authtokenHelp" class="form-text">
+                            The configured <i>API Authentication Token</i>.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sim_id" class="form-label">Simulator ID</label> <input
+                            type="number" class="form-control" id="sid_id"
+                            aria-describedby="sid_idHelp">
+                        <div id="sid_idHelp" class="form-text">Some commands require
+                            a simulator ID, enter it here.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="send_data" class="form-label">Input Data</label> <input
+                            type="number" class="form-control" id="send_data"
+                            aria-describedby="send_dataHelp">
+                        <div id="send_dataHelp" class="form-text">Some commands
+                            require additional data, enter it here.</div>
+                    </div>
+                    <div class="mt-3">
+                        <button type="button" class="btn btn-info" id="reqthread"
+                            value="Refresh Threads" onClick="Action_reqthread();">Refresh
+                            Thread</button>
+                        <button type="button" class="btn btn-info" id="reqtime" value="Refresh Time"
+                            onClick="Action_reqtime();">Refresh Time</button>
+                        <button type="button" class="btn btn-info" id="reqmods" value="Refresh Mods"
+                            onClick="Action_refreshmods();">Refresh Mods</button>
+                        <button type="button" class="btn btn-info" id="refreshplayers"
+                            value="Refresh Players" onClick="Action_refreshplayers();">Refresh
+                            Players</button>
+                        <button type="button" class="btn btn-info" id="refreshinstance"
+                            value="Refresh Instance" onClick="Action_refreshinstance();">Refresh
+                            Instance</button>
+                        <button type="button" class="btn btn-info" id="refreshscripts"
+                            value="Refresh Scripts" onClick="Action_refreshscripts();">Refresh
+                            Scripts</button>
+                        <button type="button" class="btn btn-info" id="refreshhateprofile"
+                            value="Refresh Hate Profile"
+                            onClick="Action_refreshhateprofile();">Refresh Hate</button>
+                        <button type="button" class="btn btn-info" id="refreshcharacter"
+                            value="Refresh Character" onClick="Action_refreshcharacter();">Refresh
+                            Character</button>
+                    </div>
+                    <div class="mt-3">
+                        <button type="button" class="btn btn-primary" id="refreshsim"
+                            value="Refresh Sim Data" onClick="Action_refreshsim();">Refresh
+                            Sim Data</button>
+                        <button type="button" class="btn btn-primary" id="setmotd" value="Set MOTD"
+                            onClick="Action_setmotd();">Set MOTD</button>
+                        <button type="button" class="btn btn-primary" id="reloadchecksum"
+                            value="Reload Checksum" onClick="Action_reloadchecksum();">Reload
+                            Checksum</button>
+                        <button type="button" class="btn btn-primary" id="reloadconfig"
+                            value="Reload Config" onClick="Action_reloadconfig();">Reload
+                            Config</button>
+                        <button type="button" class="btn btn-primary" id="importkeys"
+                            value="Import Keys" onClick="Action_importkeys();">Import
+                            Keys</button>
+                        <button type="button" class="btn btn-primary" id="refreshprofiler"
+                            value="Refresh Profiles" onClick="Action_refreshprofiler();">Refresh
+                            Profiles</button>
+                    </div>
+                    <div class="mt-3">
+                        <button type="button" class="btn btn-secondary" id="refreshitem"
+                            value="Refresh Item" onClick="Action_refreshitem();">Refresh
+                            Item</button>
+                        <button type="button" class="btn btn-secondary" id="refreshitemdetailed"
+                            value="Refresh Item (Detailed)"
+                            onClick="Action_refreshitemdetailed();">Refresh Item
+                            (Detailed)</button>
+                        <button type="button" class="btn btn-secondary" id="refreshpacket"
+                            value="Refresh Packet" onClick="Action_refreshpacket();">Refresh
+                            Packet</button>
+                    </div>
+                    <div class="mt-3">
+                        <button type="button" class="btn btn-danger" id="shutdown" value="Shut Down"
+                            onClick="Action_shutdown();">Shutdown</button>
+                    </div>
+                </form>
+            </div>
 
-var maxSimulator = 12;
-var xhttp;
+            <div id="tools-progress" class="container">
+                <pre>
+                    <code id="resulttext"></code>
+                </pre>
+            </div>
 
-function AppendParam(list, key, value)
-{
-	if(list.length > 0)
-		list = list + "&";
-
-	return list + key + "=" + value;
-}
-
-function AppendControlParam(list, control)
-{
-	var obj = document.getElementById(control);
-	if(!obj)
-		return list;
-
-	return AppendParam(list, obj.id, obj.value);
-}
-
-function Action_shutdown()
-{
-	var res = confirm("Confirm shutdown of the server.");
-	if(res == false)
-		return;
-
-	var np = "";
-	np = AppendParam(np, "action", "shutdown");
-	np = AppendControlParam(np, "authtoken");
-	SendPOST("remoteaction", np);
-}
-
-function Action_reqthread()
-{
-	var np = "";
-	np = AppendParam(np, "action", "refreshthreads");
-	np = AppendControlParam(np, "authtoken");
-	SendPOST("remoteaction", np);
-}
-
-function Action_reqtime()
-{
-	var np = "";
-	np = AppendParam(np, "action", "refreshtime");
-	np = AppendControlParam(np, "authtoken");
-	SendPOST("remoteaction", np);
-}
-
-function Action_refreshmods()
-{
-	var np = "";
-	np = AppendParam(np, "action", "refreshmods");
-	np = AppendControlParam(np, "authtoken");
-
-	var obj = document.getElementById("sim_id");
-	np = AppendParam(np, "sim_id", obj.value);
-
-	SendPOST("remoteaction", np);
-}
-
-function Action_refreshplayers()
-{
-	var np = "";
-	np = AppendParam(np, "action", "refreshplayers");
-	np = AppendControlParam(np, "authtoken");
-	SendPOST("remoteaction", np);
-}
-
-
-function Action_refreshscripts()
-{
-	var np = "";
-	np = AppendParam(np, "action", "refreshscripts");
-	np = AppendControlParam(np, "authtoken");
-	SendPOST("remoteaction", np);
-}
-
-function Action_refreshinstance()
-{
-	var np = "";
-	np = AppendParam(np, "action", "refreshinstance");
-	np = AppendControlParam(np, "authtoken");
-	SendPOST("remoteaction", np);
-}
-
-function Action_refreshhateprofile()
-{
-	var np = "";
-	np = AppendParam(np, "action", "refreshhateprofile");
-	np = AppendControlParam(np, "authtoken");
-	SendPOST("remoteaction", np);
-}
-
-function Action_refreshcharacter()
-{
-	var np = "";
-	np = AppendParam(np, "action", "refreshcharacter");
-	np = AppendControlParam(np, "authtoken");
-	SendPOST("remoteaction", np);
-}
-
-function Action_refreshsim()
-{
-	var np = "";
-	np = AppendParam(np, "action", "refreshsim");
-	np = AppendControlParam(np, "authtoken");
-	SendPOST("remoteaction", np);
-}
-
-function Action_setmotd()
-{
-	var np = "";
-	np = AppendParam(np, "action", "setmotd");
-	np = AppendControlParam(np, "authtoken");
-
-	var obj = document.getElementById("send_data");
-	if(obj.value.length == 0)
-	{
-		alert("Cannot send empty MOTD string.");
-		return;
-	}
-	np = AppendParam(np, "data", obj.value);
-	SendPOST("remoteaction", np);
-}
-
-function Action_reloadchecksum()
-{
-	var np = "";
-	np = AppendParam(np, "action", "reloadchecksum");
-	np = AppendControlParam(np, "authtoken");
-	SendPOST("remoteaction", np);
-}
+        </div>
+    </div>
 
 
-function Action_reloadconfig()
-{
-	var np = "";
-	np = AppendParam(np, "action", "reloadconfig");
-	np = AppendControlParam(np, "authtoken");
-	SendPOST("remoteaction", np);
-}
+    <script type="text/javascript">
+        var maxSimulator = 12;
+        var xhttp;
 
-function Action_importkeys()
-{
-	var np = "";
-	np = AppendParam(np, "action", "importkeys");
-	np = AppendControlParam(np, "authtoken");
-	SendPOST("remoteaction", np);
-}
+        function AppendParam(list, key, value) {
+            if (list.length > 0)
+                list = list + "&";
 
-function Action_refreshprofiler()
-{
-	var np = "";
-	np = AppendParam(np, "action", "refreshprofiler");
-	np = AppendControlParam(np, "authtoken");
-	SendPOST("remoteaction", np);
-}
+            return list + key + "=" + value;
+        }
 
-function Action_refreshitem()
-{
-	var np = "";
-	np = AppendParam(np, "action", "refreshitem");
-	np = AppendControlParam(np, "authtoken");
+        function AppendControlParam(list, control) {
+            var obj = document.getElementById(control);
+            if (!obj)
+                return list;
 
-	var obj = document.getElementById("sim_id");
-	np = AppendParam(np, "sim_id", obj.value);
-	SendPOST("remoteaction", np);
-}
+            return AppendParam(list, obj.id, obj.value);
+        }
 
-function Action_refreshitemdetailed()
-{
-	var np = "";
-	np = AppendParam(np, "action", "refreshitemdetailed");
-	np = AppendControlParam(np, "authtoken");
+        function Action_shutdown() {
+            var res = confirm("Confirm shutdown of the server.");
+            if (res == false)
+                return;
 
-	var obj = document.getElementById("sim_id");
-	np = AppendParam(np, "sim_id", obj.value);
-	SendPOST("remoteaction", np);
-}
+            var np = "";
+            np = AppendParam(np, "action", "shutdown");
+            np = AppendControlParam(np, "authtoken");
+            SendPOST("remoteaction", np);
+        }
 
-function Action_refreshpacket()
-{
-	var np = "";
-	np = AppendParam(np, "action", "refreshpacket");
-	np = AppendControlParam(np, "authtoken");
-	SendPOST("remoteaction", np);
-}
+        function Action_reqthread() {
+            var np = "";
+            np = AppendParam(np, "action", "refreshthreads");
+            np = AppendControlParam(np, "authtoken");
+            SendPOST("remoteaction", np);
+        }
 
-function SendPOST(file, args)
-{
-	var obj = document.getElementById("resulttext");
-	if(obj)
-		obj.innerHTML = "Request sent, waiting for server response...";
+        function Action_reqtime() {
+            var np = "";
+            np = AppendParam(np, "action", "refreshtime");
+            np = AppendControlParam(np, "authtoken");
+            SendPOST("remoteaction", np);
+        }
 
-	xhttp = new XMLHttpRequest(); 
-	xhttp.onreadystatechange = HandlerOnReadyStateChange;
-	xhttp.open("POST", "/" + file);
-	xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xhttp.setRequestHeader("User-Agent", "EETAW");
-	xhttp.send(args);    
-}
+        function Action_refreshmods() {
+            var np = "";
+            np = AppendParam(np, "action", "refreshmods");
+            np = AppendControlParam(np, "authtoken");
 
+            var obj = document.getElementById("sim_id");
+            np = AppendParam(np, "sim_id", obj.value);
 
-function HandlerOnReadyStateChange()
-{	
-	if(xhttp.readyState == 4)
-	{
-		if(xhttp.status == 200 )
-		{
-			var obj = document.getElementById("resulttext");
-			obj.innerHTML = xhttp.responseText;
-		}
-	}
-}
+            SendPOST("remoteaction", np);
+        }
 
+        function Action_refreshplayers() {
+            var np = "";
+            np = AppendParam(np, "action", "refreshplayers");
+            np = AppendControlParam(np, "authtoken");
+            SendPOST("remoteaction", np);
+        }
 
-</script>
+        function Action_refreshscripts() {
+            var np = "";
+            np = AppendParam(np, "action", "refreshscripts");
+            np = AppendControlParam(np, "authtoken");
+            SendPOST("remoteaction", np);
+        }
 
+        function Action_refreshinstance() {
+            var np = "";
+            np = AppendParam(np, "action", "refreshinstance");
+            np = AppendControlParam(np, "authtoken");
+            SendPOST("remoteaction", np);
+        }
 
-<p>
-Authorization Token: <input type="text" id="authtoken">
+        function Action_refreshhateprofile() {
+            var np = "";
+            np = AppendParam(np, "action", "refreshhateprofile");
+            np = AppendControlParam(np, "authtoken");
+            SendPOST("remoteaction", np);
+        }
 
+        function Action_refreshcharacter() {
+            var np = "";
+            np = AppendParam(np, "action", "refreshcharacter");
+            np = AppendControlParam(np, "authtoken");
+            SendPOST("remoteaction", np);
+        }
 
-<p>
-Simulator ID:
-<input type="text" size="6" id="sim_id" value="0">
+        function Action_refreshsim() {
+            var np = "";
+            np = AppendParam(np, "action", "refreshsim");
+            np = AppendControlParam(np, "authtoken");
+            SendPOST("remoteaction", np);
+        }
 
-<p>
-Input Data:
-<input type="text" size="128" id="send_data" value="">
+        function Action_setmotd() {
+            var np = "";
+            np = AppendParam(np, "action", "setmotd");
+            np = AppendControlParam(np, "authtoken");
 
-<p style="text-align: right">
-<input type="button" id="shutdown" value="Shut Down" onClick="Action_shutdown();">
-<p>
+            var obj = document.getElementById("send_data");
+            if (obj.value.length == 0) {
+                alert("Cannot send empty MOTD string.");
+                return;
+            }
+            np = AppendParam(np, "data", obj.value);
+            SendPOST("remoteaction", np);
+        }
 
-<input type="button" id="reqthread" value="Refresh Threads" onClick="Action_reqthread();">
+        function Action_reloadchecksum() {
+            var np = "";
+            np = AppendParam(np, "action", "reloadchecksum");
+            np = AppendControlParam(np, "authtoken");
+            SendPOST("remoteaction", np);
+        }
 
-<input type="button" id="reqtime" value="Refresh Time" onClick="Action_reqtime();">
+        function Action_reloadconfig() {
+            var np = "";
+            np = AppendParam(np, "action", "reloadconfig");
+            np = AppendControlParam(np, "authtoken");
+            SendPOST("remoteaction", np);
+        }
 
-<input type="button" id="reqmods" value="Refresh Mods" onClick="Action_refreshmods();">
+        function Action_importkeys() {
+            var np = "";
+            np = AppendParam(np, "action", "importkeys");
+            np = AppendControlParam(np, "authtoken");
+            SendPOST("remoteaction", np);
+        }
 
-<input type="button" id="refreshplayers" value="Refresh Players" onClick="Action_refreshplayers();">
+        function Action_refreshprofiler() {
+            var np = "";
+            np = AppendParam(np, "action", "refreshprofiler");
+            np = AppendControlParam(np, "authtoken");
+            SendPOST("remoteaction", np);
+        }
 
-<input type="button" id="refreshinstance" value="Refresh Instance" onClick="Action_refreshinstance();">
+        function Action_refreshitem() {
+            var np = "";
+            np = AppendParam(np, "action", "refreshitem");
+            np = AppendControlParam(np, "authtoken");
 
-<input type="button" id="refreshscripts" value="Refresh Scripts" onClick="Action_refreshscripts();">
+            var obj = document.getElementById("sim_id");
+            np = AppendParam(np, "sim_id", obj.value);
+            SendPOST("remoteaction", np);
+        }
 
-<input type="button" id="refreshhateprofile" value="Refresh Hate Profile" onClick="Action_refreshhateprofile();">
+        function Action_refreshitemdetailed() {
+            var np = "";
+            np = AppendParam(np, "action", "refreshitemdetailed");
+            np = AppendControlParam(np, "authtoken");
 
-<input type="button" id="refreshcharacter" value="Refresh Character" onClick="Action_refreshcharacter();">
-<p>
+            var obj = document.getElementById("sim_id");
+            np = AppendParam(np, "sim_id", obj.value);
+            SendPOST("remoteaction", np);
+        }
 
-<input type="button" id="refreshsim" value="Refresh Sim Data" onClick="Action_refreshsim();">
+        function Action_refreshpacket() {
+            var np = "";
+            np = AppendParam(np, "action", "refreshpacket");
+            np = AppendControlParam(np, "authtoken");
+            SendPOST("remoteaction", np);
+        }
 
-<input type="button" id="setmotd" value="Set MOTD" onClick="Action_setmotd();">
+        function SendPOST(file, args) {
+            var obj = document.getElementById("resulttext");
+            if (obj)
+                obj.innerHTML = "Request sent, waiting for server response...";
 
-<input type="button" id="reloadchecksum" value="Reload Checksum" onClick="Action_reloadchecksum();">
+            xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = HandlerOnReadyStateChange;
+            xhttp.open("POST", "/" + file);
+            xhttp.setRequestHeader("Content-Type",
+                    "application/x-www-form-urlencoded");
+            xhttp.setRequestHeader("User-Agent", "EETAW");
+            xhttp.send(args);
+        }
 
-<input type="button" id="reloadconfig" value="Reload Config" onClick="Action_reloadconfig();">
-<input type="button" id="importkeys" value="Import Keys" onClick="Action_importkeys();">
-<input type="button" id="refreshprofiler" value="Refresh Profiles" onClick="Action_refreshprofiler();">
-<p>
-<input type="button" id="refreshitem" value="Refresh Item" onClick="Action_refreshitem();">
-<input type="button" id="refreshitemdetailed" value="Refresh Item (Detailed)" onClick="Action_refreshitemdetailed();">
-<input type="button" id="refreshpacket" value="Refresh Packet" onClick="Action_refreshpacket();">
-<hr>
-
-<div><b>Server response:</b></div>
-<code><pre>
-<p id="resulttext">
-No action has been sent yet.
-</pre></code>
+        function HandlerOnReadyStateChange() {
+            if (xhttp.readyState == 4) {
+                if (xhttp.status == 200) {
+                    var obj = document.getElementById("resulttext");
+                    obj.innerHTML = xhttp.responseText;
+                }
+            }
+        }
+    </script>
 </body>
 </html>
