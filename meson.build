@@ -508,6 +508,7 @@ install_data(sources: ['Local/ServerConfig.txt.sample','Local/LogConfig.txt.samp
 install_data(sources: [
 	'README.md',
 	'LICENSE', 
+    'Doc/API.md', 
 	'Doc/ACCOUNTS.md', 
 	'Doc/BUILD.md',  
 	'Doc/DEVELOPERS.md',
@@ -517,4 +518,4 @@ install_data(sources: [
 	'Doc/SERVER.md',
 	], install_dir : docpath)
 install_data(sources: ['Web/Errors/404.html'], install_dir : webpath + '/Errors')
-install_data(sources: ['Web/Pages/index.html','Web/Pages/Account.html','Web/Pages/RemoteServerTools.html','Web/Pages/ResetPassword.html'], install_dir : webpath + '/Pages')
+install_data(sources: ['Web/Pages/css/bootstrap.min.css','Web/Pages/css/darkly.min.css','Web/Pages/js/bootstrap.bundle.min.js','Web/Pages/js/util.js','Web/Pages/index.html','Web/Pages/Account.html','Web/Pages/RemoteServerTools.html','Web/Pages/ResetPassword.html'], install_dir : webpath + '/Pages')
