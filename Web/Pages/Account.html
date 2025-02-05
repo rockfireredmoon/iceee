@@ -1,201 +1,205 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-   "http://www.w3.org/TR/html4/strict.dtd">
-
-<html>
+<!doctype html>
+<html lang="en" data-bs-theme="auto" class="h-100">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="main.css">
-<title>Create New Account</title>
-
-<style type="text/css">
-
-
-</style>
-
+<script src="js/bootstrap.bundle.min.js"></script>
+<link href="css/darkly.min.css" rel="stylesheet">
+<script src="js/util.js"></script>
+<title>Create Account</title>
 </head>
-<body>
-<div>
+<body class="h-100">
+	<div class="d-flex flex-row h-100">
+		<div class="container">
+			<div class="container">
+				<div class="row">
+					<img src="images/server-banner.png" />
+				</div>
+			</div>
+            <h2>Create Account</h2>
+			<div id="register-form" class="container">
+				<div class="alert alert-info">
+					<strong>Do You Have Your Registration Key?</strong> This is a
+					private key invite-only server. When you were invited, you will
+					have been given a <strong>Registration Key</strong>. You <u>MUST</u>
+					keep this safe, as you will need it if you ever forget you
+					password.</strong>.
+				</div>
 
-<script type="text/javascript">
+				<form  onSubmit="Action_createaccount(); return false;">
+					<div class="mb-3">
+						<label for="regkey" class="form-label">Registration Key</label> <input
+							type="text" size="48" maxlength="48" class="form-control"
+							id="regkey" aria-describedby="regkeyHelp">
+						<div id="regkeyHelp" class="form-text">Your Registration Key
+							given to you on invite.</div>
+					</div>
+					<div class="mb-3">
+						<label for="username" class="form-label">Username</label> <input
+							size="32" maxlength="32" type="text" class="form-control"
+							id="username" aria-describedby="usernameHelp">
+						<div id="usernameHelp" class="form-text">Your chosen
+							username, this will never be displayed to other players.</div>
+					</div>
+					<div class="mb-3">
+						<label for="grove" class="form-label">Grove Name</label> <input
+							size="32" maxlength="32" type="text" class="form-control"
+							id="grove" aria-describedby="groveHelp">
+						<div id="groveHelp" class="form-text">
+							The grove name is used to identify groves and help link them to
+							their originating accounts. It must be unique. The name must be
+							at least 3 characters long, lowercase letters only. No spaces or
+							numbers or symbols.
+							<p>A single grove is automatically provided when you create
+								your account. More can be added by request. Each grove name is
+								prefixed with your grove tag, then appended with a number (ex:
+								grove1, grove2, etc).
+						</div>
+					</div>
+					<h3>Password</h3>
+					<div class="mb-3">
+						<label for="password" class="form-label">Password</label> <input
+							size="32" maxlength="32" type="password" class="form-control"
+							id="password" aria-describedby="passwordHelp">
+						<div id="passwordHelp" class="form-text">Your chosen
+							password.</div>
+					</div>
+					<div class="mb-3">
+						<label for="confirmPassword" class="form-label">Confirm
+							Password</label> <input size="32" maxlength="32" type="password"
+							class="form-control" id="confirmPassword"
+							aria-describedby="confirmPasswordHelp">
+						<div id="confirmPasswordHelp" class="form-text">Confirm your
+							chosen password.</div>
+					</div>
+					<hr />
+					<button type="submit" class="btn btn-primary">Create
+						Account</button>
+					<hr />
+				</form>
+			</div>
+			
+			<div id="register-progress" class="container d-none">
+			     <div id="resulttext"></div>
+			</div>
+			
+            <div id="try-again" class="container d-none mt-3">
+                <button type="button" onClick="TryAgain();" class="btn btn-primary">Try Again</button>
+            </div>
+            
+            <div id="success" class="container d-none mt-3">
+                <div class="alert alert-success">
+                    <strong>Success!</strong> Your game account is created. Remember,
+                    take note of registration key <strong id="regkeyReminder">REGKEY</strong>, you
+                    may need it in the future. 
+                </div>
+                <p>If you do not have a game client, you will now need to obtain one. 
+                You should have already been given instructions where this is available.</p>
+                <p>Once you have the client installed, start it up and use the username 
+                <strong id="usernameReminder">USERNAME</strong>, and the password you just
+                provided. Return to the <a href="index.html">Player Portal</a> if you ever need
+                to change your password.
+                <p>Good Hunting!</p>
+            </div>
+		</div>
+	</div>
 
-var xhttp;
 
-function AppendParam(list, key, value)
-{
-	if(list.length > 0)
-		list = list + "&";
+	<script type="text/javascript">
+		var xhttp;
 
-	return list + key + "=" + value;
-}
+		function AppendParam(list, key, value) {
+			if (list.length > 0)
+				list = list + "&";
 
-function AppendControlParam(list, control)
-{
-	var obj = document.getElementById(control);
-	if(!obj)
-		return list;
-	return AppendParam(list, obj.id, obj.value);
-}
-
-function SendPOST(file, args)
-{
-	var obj = document.getElementById("resulttext");
-	if(obj)
-		obj.innerHTML = "Request sent, waiting for server response...";
-
-	/* For Internet Explorer */
-	if(window.XMLHttpRequest)
-		xhttp = new window.XMLHttpRequest;
-	else
-		xhttp = new XMLHttpRequest(); 
-
-	xhttp.onreadystatechange = HandlerOnReadyStateChange;
-	xhttp.open("POST", "/" + file);
-	xhttp.setRequestHeader("User-Agent", "EETAW");
-	xhttp.send(args);    
-}
-
-
-function HandlerOnReadyStateChange()
-{	
-	if(xhttp.readyState == 4)
-	{
-		if(xhttp.status == 200 )
-		{
-			var obj = document.getElementById("resulttext");
-			obj.innerHTML = xhttp.responseText;
+			return list + key + "=" + value;
 		}
-	}
-}
 
-function RemoveInvalidCharacters(control)
-{
-	var obj = document.getElementById(control);
-	if(!obj)
-		return;
-	var str = obj.value;
-	var len = str.length;
+		function AppendControlParam(list, control) {
+			var obj = document.getElementById(control);
+			if (!obj)
+				return list;
+			return AppendParam(list, obj.id, obj.value);
+		}
 
-	var newstr = "";
-	for(i = 0; i < len; i++)
-	{
-		var c = str.charAt(i);
-		var allow = false;
-		if(c >= 'a' && c <= 'z')
-			allow = true;
-		if(c >= 'A' && c <= 'Z')
-			allow = true;
-		if(c >= '0' && c <= '9')
-			allow = true;
-		if(allow)  
-			newstr = newstr + c;
-	}
-  	obj.value = newstr;
-}
+		function SendPOST(file, args) {
+			var obj = document.getElementById("resulttext");
+			if (obj)
+				obj.innerHTML = "Request sent, waiting for server response...";
 
-function Action_createaccount()
-{
-	RemoveInvalidCharacters("regkey");
-	var np = "";
-	np = AppendParam(np, "action", "createaccount");
-	np = AppendControlParam(np, "regkey");
-	np = AppendControlParam(np, "username");
-	np = AppendControlParam(np, "password");
-	np = AppendControlParam(np, "grove");
-	SendPOST("newaccount", np);
-}
+			/* For Internet Explorer */
+			if (window.XMLHttpRequest)
+				xhttp = new window.XMLHttpRequest;
+			else
+				xhttp = new XMLHttpRequest();
 
+			xhttp.onreadystatechange = HandlerOnReadyStateChange;
+			xhttp.open("POST", "/" + file);
+			xhttp.setRequestHeader("User-Agent", "EETAW");
+			xhttp.send(args);
+		}
 
-</script>
+		function HandlerOnReadyStateChange() {
+			if (xhttp.readyState == 4) {
+				var obj = document.getElementById("resulttext");
+		        if(xhttp.status == 200 ) {
+                    obj.innerHTML = "";                 
+                    document.getElementById("success").classList.remove("d-none");
+		        }
+		        else {
+	                obj.innerHTML = xhttp.responseText;		        	
+		        	document.getElementById("try-again").classList.remove("d-none");
+		        }
+			}
+		}
 
+		function RemoveInvalidCharacters(control) {
+			var obj = document.getElementById(control);
+			if (!obj)
+				return;
+			var str = obj.value;
+			var len = str.length;
 
-<h2>Create New Account</h2>
-<p>
-<p>
-<h3>Rules:</h3>
-<ul>
-<li>Be respectful of other players.</li>
-<li>Don't be disruptive.</li>
-<li>Don't harass other players or cause drama.</li>
-<li>Accounts may be suspended at the administrator's discretion.</li>
-<li>Stability is not guaranteed.  Session data, including accounts or characters could be nuked in a freak accident.  Use at your own risk.  Contact the server administrator if there's a problem.</li>
+			var newstr = "";
+			for (i = 0; i < len; i++) {
+				var c = str.charAt(i);
+				var allow = false;
+				if (c >= 'a' && c <= 'z')
+					allow = true;
+				if (c >= 'A' && c <= 'Z')
+					allow = true;
+				if (c >= '0' && c <= '9')
+					allow = true;
+				if (allow)
+					newstr = newstr + c;
+			}
+			obj.value = newstr;
+		}
 
+        function TryAgain() {
+            document.getElementById("try-again").classList.add("d-none");
+            document.getElementById("register-form").classList.remove("d-none");
+            document.getElementById("register-progress").classList.add("d-none");
+        }
 
-</ul>
-
-
-<h3>Registration Notes:</h3>
-<div>
-<div class="highlight">Registration Key:</div>
-<div class="indent">
-<p>
-To request a registration key, contact the server administrator.
-<p>
-<span class="highlight">Please save a copy of your registration key.  It will be required for password resets, or anything else requiring account verification.</span>
-</div>
-
-<p>
-<div class="highlight">Username and Password:</div>
-<div class="indent">
-<div class="warning">Security is not guaranteed.  Choose a unique password that you don't use anywhere else.</div>
-Your username must be unique.  No email address or Facebook account is required.  Both fields must contain at least 3-32 characters, and are case sensitive.
-</div>
-
-<p>
-<div class="highlight">Grove Tag:</div>
-<div class="indent">
-The grove tag name is used to identify groves and help link them to their originating accounts.  It must be unique.  The name must be at least 3 characters long, lowercase letters only.  No spaces or numbers.
-<p>
-A single grove is automatically provided when you create your account.  More can be added by request.  Each grove name is prefixed with your grove tag, then appended with a number (ex: grove1, grove2, etc).
-</div>
-
-
-</div>
-
-
-<br>
-<h3>Account Info:</h3>
-<table width="800px">
-
-<tr>
-  <td class="lcol">Registration Key:</td>
-  <td class="rcol"><input type="text" id="regkey" size="48" maxlength="48"></td>
-</tr>
-
-<tr>
-  <td class="lcol">Username:</td>
-  <td class="rcol"><input type="text" id="username" size="32" maxlength="32"></td>
-</tr>
-
-<tr>
-  <td class="lcol">Password:</td>
-  <td class="rcol"><input type="text" id="password" size="32" maxlength="32"></td>
-</tr>
-
-<tr>
-  <td class="lcol">Grove Tag:</td>
-  <td class="rcol"><input type="text" id="grove" size="32" maxlength="32"></td>
-</tr>
-
-</table>
-
-<p>
-<br>
-Click once to submit your request.  It may take a few seconds to respond.  If you receive a message stating your key is missing or invalid, you may have clicked twice.  Try logging in the client using the username and password you entered here (case sensitive).
-<p>
-<div class="center">
-<input type="button" id="newaccount" value="Create Account" onClick="Action_createaccount();">
-</div>
-
-
-
-<hr>
-
-<div><b>Server response:</b></div>
-<p id="resulttext">
-No action has been sent yet.
-
-
-<div class="end"></div>
-</div>
+		function Action_createaccount() {
+			document.getElementById("regkeyReminder").innerHTML = document.getElementById("regkey").value;
+            document.getElementById("usernameReminder").innerHTML = document.getElementById("username").value;
+			var pw = document.getElementById("password").value; 
+            var cpw = document.getElementById("confirmPassword").value;
+            if(pw !== cpw) {
+            	alert("You password and confirmed password do not match. Try again");
+            	return;
+            }
+			document.getElementById("register-form").classList.add("d-none");
+            document.getElementById("register-progress").classList.remove("d-none");
+			RemoveInvalidCharacters("regkey");
+			var np = "";
+			np = AppendParam(np, "action", "createaccount");
+			np = AppendControlParam(np, "regkey");
+			np = AppendControlParam(np, "username");
+			np = AppendControlParam(np, "password");
+			np = AppendControlParam(np, "grove");
+			SendPOST("newaccount", np);
+		}
+	</script>
 </body>
 </html>

@@ -1,10 +1,11 @@
 #include "Random.h"
-
+#include <chrono>
 
 RandomManager g_RandomManager;
 
 RandomManager :: RandomManager()
 {
+	randomEngine.seed(std::chrono::system_clock::now().time_since_epoch().count());
 }
 
 RandomManager :: ~RandomManager()

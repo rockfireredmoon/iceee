@@ -44,10 +44,6 @@ bool RemoteActionHandler::handlePost(CivetServer *server,
 		struct mg_connection *conn) {
 	map<string, string> parms;
 
-	/* Simple protection against drive-by penetration attempts uses user-agent */
-	if(!isUserAgent(server, conn))
-		return false;
-
 	if (parseForm(server, conn, parms)) {
 
 		if (parms.find("action") == parms.end()

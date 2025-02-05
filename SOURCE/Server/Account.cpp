@@ -1255,6 +1255,10 @@ int AccountManager::AccountRecover(const char *username, const char *keypass,
 	}
 }
 
+STRINGLIST AccountManager::GetRegistrationKeys() {
+	return g_ClusterManager.GetList(KEYPREFIX_REGISTRATION_KEYS);
+}
+
 bool AccountManager::PopRegistrationKey(const std::string &authKey) {
 	return g_ClusterManager.ListRemove(KEYPREFIX_REGISTRATION_KEYS, authKey,
 			true);
@@ -1323,7 +1327,6 @@ std::string AccountManager::GenerateToken(int accountID, unsigned long ttl,
 	cs.Leave();
 	return token;
 }
-
 
 STRINGLIST AccountManager::MatchAccountNames(std::string globPattern) {
 	STRINGLIST accounts;
@@ -1836,7 +1839,7 @@ void AccountManager::RunUpdateCycle(bool force) {
 }
 
 void AccountManager::ImportKey(const char *key) {
-	g_ClusterManager.ListAdd(KEYPREFIX_REGISTRATION_KEYS, key, false);
+	g_ClusterManager.ListAdd(KEYPREFIX_REGISTRATION_KEYS, key, true);
 	g_Logs.server->info("Single key imported from external source");
 }
 

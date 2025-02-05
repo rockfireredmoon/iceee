@@ -7,6 +7,8 @@
 #include <string>
 #include <filesystem>
 
+#define MIN_REMOTE_AUTHENTICATION_PASSWORD_LENGTH 10
+
 using namespace std;
 namespace fs = filesystem;
 
@@ -85,7 +87,7 @@ public:
 	fs::path HTTPBaseFolder;
 	fs::path HTTPCARFolder;
 
-	string RemoteAuthenticationPassword;
+	string APIAuthenticationToken;
 
 	int ProperSceneryList;     //Should be set to 1.  If zero, this is basically like having a global fastload permission applied to all players, which is bad for normal players.
 	bool RemotePasswordMatch(const char *value);

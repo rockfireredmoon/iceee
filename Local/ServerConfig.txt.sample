@@ -68,8 +68,14 @@ HTTPServeAssets=1
 ; the SimulatorAddress will be used. 
 ;HTTPAuthDomain=
 
-; Password for the administrative web panel
-RemoteAuthenticationPassword=admin
+; Whether to allow Legacy Accounts. I.e. those managed by using registration keys
+;LegacyAccounts=1
+
+; Authentication token for the administrative web panel and legacy API. The default token
+; of '*' will prevent the Legacy API being used. YOU MUST SET YOUR OWN VERY STRONG
+; TOKEN OF AT LEAST 10 CHARACTERS IN LENGTH.
+
+;APIAuthenticationToken=*
 
 ; Directory Listing. Whether the web server should return directory listings for
 ; the resources it serves. Only recommended for development / debugging.

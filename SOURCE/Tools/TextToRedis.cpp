@@ -254,6 +254,8 @@ bool IGFThreadPage::WriteEntity(AbstractEntityWriter *writer) {
 	return true;
 }
 
+int do_cmd(fs::path userDataPath);
+
 int main(int argc, char *argv[]) {
 
 	if (PLATFORM_GETCWD(g_WorkingDirectory, 256) == NULL) {
@@ -308,6 +310,20 @@ int main(int argc, char *argv[]) {
 
 	if(!g_ClusterManager.Init())
 		return 1;
+
+	int retval = do_cmd(userDataPath);
+
+	/* Shutdown cleanly so all messags get sent */
+	g_Logs.data->info("Import of data completed.");
+	g_ClusterManager.Shutdown(true);
+	g_Logs.FlushAll();
+	g_Logs.CloseAll();
+	g_Logs.data->info("End of import process.");
+
+	return retval;
+}
+
+int do_cmd(fs::path userDataPath) {
 
 	fs::path path;
 
@@ -784,10 +800,5 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	/* Shutdown cleanly so all messags get sent */
-	g_Logs.data->info("Import of data completed.");
-	g_ClusterManager.Shutdown(true);
-	g_Logs.FlushAll();
-	g_Logs.CloseAll();
-	g_Logs.data->info("End of import process.");
+	return 0;
 }

@@ -30,7 +30,7 @@ cp Local/Cluster.txt.sample Local/Cluster.txt
 
 ## Editing The Files
 
-Nowyou have located the files, you can should use your favourite text editor to open and review them.
+Now you have located the files, you can should use your favourite text editor to open and review them.
 
 ### Cluster Configuration
 
@@ -115,10 +115,8 @@ set *SimulatorAddress*. If you are running multiple servers on the same machine,
 
  * Configure an IP address for each server, and use *BindAddress* in each instances ServerConfig.txt to
    bind to that address [RECOMMENDED].
- * Use the same IP address for each instance, but change *RouterPort*, *SimulatorPort* and *HTTPListPort*  in each instances ServerConfig.txt so that ports do not conflict.
+ * Use the same IP address for each instance, but change *RouterPort*, *SimulatorPort* and *HTTPListenPort*  in each instances ServerConfig.txt so that ports do not conflict.
  
-NOTE: If you are setting up a cluster, MOST other options should the SAME on all nodes. For example, you do not want each shard to have different values for *CapExperienceLevel*, but something like *MOTD_Message* is OK. This will eventually be fixed so such configuration is moved into the cluster database for all shards to share.
-
 ### Logging Configuration
 
 `LogConfig.txt`
@@ -126,3 +124,9 @@ NOTE: If you are setting up a cluster, MOST other options should the SAME on all
 Logging is provided by [EasyLogging](https://muflihun.github.io/easyloggingpp/). See this site for detailed information on how logging is configured.
 
 If you are just starting out, there should be no need to change anything in this file. All logs by default will go to the *Logs* folder. 
+
+### Legacy API and Control Panel
+
+The server has a few HTTP [API](API.md) end-points that allow for account creations and some control of the server at run-time.
+
+In order to be able to use this API, you must set `APIAuthenticationToken` in `ServerConfig.txt` to a password of at least 10 characters in length. Use the strongest most random password you can.

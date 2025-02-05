@@ -517,4 +517,4 @@ install_data(sources: [
 	'Doc/SERVER.md',
 	], install_dir : docpath)
 install_data(sources: ['Web/Errors/404.html'], install_dir : webpath + '/Errors')
-install_data(sources: ['Web/Pages/Account.html','Web/Pages/RemoteServerTools.html','Web/Pages/ResetPassword.html'], install_dir : webpath + '/Pages')
+install_data(sources: ['Web/Pages/index.html','Web/Pages/Account.html','Web/Pages/RemoteServerTools.html','Web/Pages/ResetPassword.html'], install_dir : webpath + '/Pages')

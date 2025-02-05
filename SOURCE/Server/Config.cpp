@@ -167,8 +167,8 @@ bool GlobalConfigData::LoadConfig(const fs::path &filename) {
 				g_MOTD_Name = lfr.BlockToStringC(1, 0);
 			} else if (strcmp(NameBlock, "MOTD_Channel") == 0) {
 				g_MOTD_Channel = lfr.BlockToStringC(1, 0);
-			} else if (strcmp(NameBlock, "RemoteAuthenticationPassword") == 0) {
-				g_Config.RemoteAuthenticationPassword = lfr.BlockToStringC(1,
+			} else if (strcmp(NameBlock, "APIAuthenticationToken") == 0) {
+				g_Config.APIAuthenticationToken = lfr.BlockToStringC(1,
 						0);
 			} else if (strcmp(NameBlock, "ProperSceneryList") == 0) {
 				g_Config.ProperSceneryList = lfr.BlockToIntC(1);
@@ -407,7 +407,7 @@ GlobalConfigData::GlobalConfigData() {
 	SMTPSender = "";
 
 	PublicAPI = true;
-	LegacyAccounts = false;
+	LegacyAccounts = true;
 	LegacyServer = "";
 	APIAuthentication = "";
 	RedisWorkers = 10;
@@ -505,7 +505,7 @@ std::string GlobalConfigData::ResolveHTTPAddress(const std::string &simAddress) 
 }
 
 bool GlobalConfigData::RemotePasswordMatch(const char *value) {
-	if (RemoteAuthenticationPassword.compare(value) == 0)
+	if (APIAuthenticationToken.length() >= MIN_REMOTE_AUTHENTICATION_PASSWORD_LENGTH && APIAuthenticationToken.compare(value) == 0)
 		return true;
 	return false;
 }

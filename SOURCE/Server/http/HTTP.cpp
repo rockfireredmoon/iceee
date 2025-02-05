@@ -448,7 +448,7 @@ void AbstractCivetHandler::writeStatusPlain(CivetServer *server,
 void AbstractCivetHandler::writeStatus(CivetServer *server,
 		struct mg_connection *conn, int code, const string &msg,
 		const string &data) {
-	string content = "<html><body><h1>" + data + "</h1></body></html>";
+	string content = "<html><body>" + data + "</body></html>";
 	mg_printf(conn, "HTTP/1.1 %d %s\r\nContent-Length: %lu\r\n", code,
 			msg.c_str(), content.size());
 	mg_printf(conn, "Content-Type: text/html\r\n\r\n%s", content.c_str());

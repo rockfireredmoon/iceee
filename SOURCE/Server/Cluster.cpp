@@ -2106,8 +2106,8 @@ void ClusterManager::Shutdown(bool wait) {
 	if (mClusterable) {
 		mSub.disconnect(wait);
 		mClient.disconnect(wait);
-		tacopie::get_default_io_service()->stop();
 	} else {
 		mClient.disconnect(wait);
 	}
+	tacopie::get_default_io_service()->stop();
 }

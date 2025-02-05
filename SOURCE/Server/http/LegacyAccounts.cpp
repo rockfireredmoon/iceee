@@ -30,16 +30,13 @@ using namespace HTTPD;
 
 bool NewAccountHandler::handlePost(CivetServer *server, struct mg_connection *conn) {
 
-	/* Simple protection against drive-by penetration attempts uses user-agent */
-	if(!isUserAgent(server, conn))
-		return false;
-
 	char post_data[1024];
 
 	char username[128];
 	char password[128];
 	char grove[128];
 	char regkey[256];
+	char authtoken[256];
 
 	int post_data_len;
 
@@ -54,13 +51,34 @@ bool NewAccountHandler::handlePost(CivetServer *server, struct mg_connection *co
 		&& mg_get_var(post_data, post_data_len, "grove",
 				grove, sizeof(grove)) > 0) {
 
-		int retval = 0;
-		g_AccountManager.cs.Enter("CreateAccount");
+		auto have_authtoken = mg_get_var(post_data, post_data_len, "authtoken",
+				authtoken, sizeof(authtoken)) > 0;
 
-		if(!g_AccountManager.PopRegistrationKey(regkey))
-			retval = AccountManager::ErrorCode::ACCOUNT_KEY;
-		else
-			retval = g_AccountManager.CreateAccount(username, password, regkey, grove);
+		if(have_authtoken && !g_Config.RemotePasswordMatch(authtoken)) {
+			writeStatus(server, conn, 403, "Forbidden", "Access denied");
+			return true;
+		}
+
+		int retval = 0;
+		bool popped = g_AccountManager.PopRegistrationKey(regkey);
+		if(!popped) {
+			if(have_authtoken) {
+			/* Key is not found, authtoken provided, so import this key as it is so
+			* it can be immediately used to create an account */
+				g_AccountManager.ImportKey(regkey);
+			}
+			else {
+				writeStatus(server, conn, 403, "Forbidden", "Your registration key was invalid. Please check it, or request another.");
+				return true;
+			}
+		}
+
+		g_AccountManager.cs.Enter("CreateAccount");
+		retval = g_AccountManager.CreateAccount(username, password, regkey, grove);
+		if(retval != 0 && popped) {
+			/* Put key back */
+			g_AccountManager.ImportKey(regkey);
+		}
 		g_AccountManager.cs.Leave();
 		writeStatus(server, conn, 200, "OK", g_AccountManager.GetErrorMessage(retval));
 	}
@@ -77,15 +95,12 @@ bool NewAccountHandler::handlePost(CivetServer *server, struct mg_connection *co
 
 bool ResetPasswordHandler::handlePost(CivetServer *server, struct mg_connection *conn) {
 
-	/* Simple protection against drive-by penetration attempts uses user-agent */
-	if(!isUserAgent(server, conn))
-		return false;
-
 	char post_data[1024];
 
 	char username[128];
 	char newpassword[128];
 	char regkey[256];
+	char authtoken[256];
 
 	int post_data_len;
 
@@ -98,9 +113,16 @@ bool ResetPasswordHandler::handlePost(CivetServer *server, struct mg_connection 
 		&& mg_get_var(post_data, post_data_len, "newpassword", newpassword,
 				sizeof(newpassword)) > 0) {
 
+		auto have_authtoken = mg_get_var(post_data, post_data_len, "authtoken",
+				authtoken, sizeof(authtoken)) > 0;
+
+		bool checkPermission = true;
+		if (have_authtoken && g_Config.RemotePasswordMatch(authtoken) == true)
+			checkPermission = false;
+
 		int retval = 0;
 		g_AccountManager.cs.Enter("ResetPassword");
-		retval = g_AccountManager.ResetPassword(username, newpassword, regkey, true);
+		retval = g_AccountManager.ResetPassword(username, newpassword, regkey, checkPermission);
 		g_AccountManager.cs.Leave();
 		writeStatus(server, conn, 200, "OK", g_AccountManager.GetErrorMessage(retval));
 	}
@@ -116,10 +138,6 @@ bool ResetPasswordHandler::handlePost(CivetServer *server, struct mg_connection 
 //
 
 bool AccountRecoverHandler::handlePost(CivetServer *server, struct mg_connection *conn) {
-
-	/* Simple protection against drive-by penetration attempts uses user-agent */
-	if(!isUserAgent(server, conn))
-		return false;
 
 	char post_data[1024];
 

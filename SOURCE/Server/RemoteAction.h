@@ -36,11 +36,6 @@ namespace Report
 
 char *GetDataSizeStr(long value);
 
-int RunRemoteAction(ReportBuffer &report, MULTISTRING &header, MULTISTRING &params);
-int RunAccountCreation(MULTISTRING &params);
-int RunPasswordReset(MULTISTRING &params);
-int RunAccountRecover(MULTISTRING &params);
-
 enum RemoteStatus
 {
 	REMOTE_COMPLETE      = 0,    //The operation was complete, no further action required.

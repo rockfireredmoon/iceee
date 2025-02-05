@@ -7,6 +7,8 @@
 #include "DebugTracer.h"
 #include "ByteBuffer.h"
 #include "Forms.h"
+#include "Random.h"
+
 #include <cmath>
 #include <stdlib.h>
 #include <iostream>
@@ -1716,7 +1718,8 @@ std::string &Trim(std::string &s) {
 std::string RandomStrFrom(unsigned int size, std::string from) {
 	char str[size];
 	for (unsigned int i = 0; i < sizeof(str); ++i) {
-		str[i] = from[rand() % (from.size())];
+		//str[i] = from[rand() % (from.size())];
+		str[i] = from[g_RandomManager.RandMod(from.size())];
 	}
 	str[sizeof(str) - 1] = 0;
 	return str;

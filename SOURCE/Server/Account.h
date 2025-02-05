@@ -270,6 +270,7 @@ public:
 	void LoadKeyList(std::string fileName);
 	void ImportKeys(void);
 	void ImportKey(const char *key);
+	STRINGLIST GetRegistrationKeys();
 	bool PopRegistrationKey(const std::string &authKey);
 	int CreateAccountFromService(const char *username);
 	int CreateAccount(const char *username, const char *password, const char *regKey, const char *grovename);
