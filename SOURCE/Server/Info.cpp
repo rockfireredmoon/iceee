@@ -65,10 +65,15 @@ string GetOverrideZone() {
 
 STRINGLIST GetOverridePos() {
 	STRINGLIST output;
-	Util::Split(g_GameConfig.OverrideStartLoc, ";", output);
-	STRINGLIST output2;
-	Util::Split(output[1], ",", output2);
-	return output2;
+	if(g_GameConfig.OverrideStartLoc.length() > 0) {
+		Util::Split(g_GameConfig.OverrideStartLoc, ";", output);
+		STRINGLIST output2;
+		Util::Split(output[1], ",", output2);
+		return output2;
+	}
+	else {
+		return output;
+	}
 }
 
 int InfoManager::GetStartX() {
