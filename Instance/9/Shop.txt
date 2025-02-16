@@ -1,167 +1,62 @@
 ; **** BAFFLEGATE (MIDLANDS) - Quest level 20/22
 
-; Piet Riposte <Weapon Merchant>, Bafflegate
+; Piet Riposte <Weapon Merchant>, Bafflegate (GUESSED, taken from Wilford Mercia in Nottingham, Anglorum)
 [ENTRY]
 CreatureDefID=2219
-Item=141061	; Antler Handled Axe
-Item=141073	; Stellar Mace
-Item=141038	; Soldier's Sword
-Item=141147	; Gale Force Battlemace
-Item=141250	; Ironwood Recurve Bow
-Item=141193	; Long Bow
-Item=141106	; Polar Talons
-Item=141091	; Darkened Jambiya
-Item=141158	; Dryad Walkingstick
-Item=141232	; Iron Stars
-Item=141214	; Willow Branch
-Item=141275	; Forest Axe
-Item=141276	; Grove Axe
-Item=141277	; Orchard Axe
-Item=141282	; Witch's Cudgel
-Item=141274	; Calvary Sword
-Item=141272	; Commisioned Sword
-Item=141271	; Damascus Sword
-Item=141273	; Officer's Sword
-Item=141306	; Firestone Longsword
-Item=141253	; Opal Inlaid Bow
-Item=141286	; Blighted Thorn
-Item=141292	; Zombie Claw
-Item=141314	; Witchwynd Staff
-Item=141259	; Pale Crystalline Shard
-Item=141265	; Wretched Wand
-Item=141486	; Shadewrought Axe
-Item=141489	; Shadewrought Mace
-Item=141482	; Shadewrought Blade
-Item=141312	; Eagle Capped Mace
-Item=141256	; Fog-Eater Longbow
-Item=141296	; Truffle-Digging Dagger
-Item=141303	; Waterdancer Katar
-Item=141262	; Lightning-Etched Hatchet
-Item=141268	; Faux Unikorn Horn Wand
+Item=141061  ;Broad Axe
+Item=141147  ;War Hammer
+Item=141250  ;Alder Bow
+Item=141091  ;Jambiya
+Item=141158  ;Wooden Staff
+Item=141232  ;Shurikens
+Item=141214  ;Fir Wand
+Item=141489  ;Bludgeon
+Item=141303  ;Katar
+Item=141262  ;Tomahawks
+Item=141268  ;Horned Wand
 
-; Rondo Hardhide <Armor Merchant>, Bafflegate
+; Rondo Hardhide <Armor Merchant>, Bafflegate (GUESSED, taken from Salisbury Bridgford in Nottingham, Anglorum)
 [ENTRY]
 CreatureDefID=2215
-Item=1580 ; Woven Troll Beard Sleeves
-Item=1491 ; Woven Dragonbeard Vestment
-Item=1675 ; Woven Trollbeard Slippers
-Item=1535 ; Woven Troll Beard Mitts
-Item=1625 ; Woven Troll Beard Kilt
-Item=1433 ; Fancy Silver Gorget
-Item=1735 ; Woven Troll Beard Spaulders
-Item=1762 ; Woven Trollbeard Cord
-Item=1595 ; Rockbear Sleeves
-Item=1505 ; Faux Unikorn Wrap
-Item=1690 ; Rockbear Tallboots
-Item=1550 ; Rockbear Wraps
-Item=1645 ; Rockbear Breeches
-Item=1448 ; Rockbear Collar
-Item=1744 ; Rockbear Shoulders
-Item=1771 ; Rockbear Cord
-Item=1610 ; Blighted Armguards
-Item=1520 ; Poisonous Toadskin Harness
-Item=1660 ; Blighted Britches
-Item=1463 ; Acorn Gorget
-Item=1467 ; Alpen Gorget
-Item=1753 ; Blighted Shouldercaps
-Item=1780 ; Blighted Cord
-Item=1383 ; Compass Rose Buckler
-Item=1700 ; Blighted Ankleboots
-Item=1496 ; Straw-Spun Vestment
-Item=1680 ; Straw-Spun Sandals
-Item=1540 ; Straw Spun Gloves
-Item=1635 ; River Wave Kilt
-Item=1630 ; Straw Spun Kilt
-Item=1438 ; Harlequin Collar
-Item=1738 ; Straw Spun Shoulders
-Item=1765 ; Straw Spun Cinch
-Item=1600 ; Wulfyn Star Sleeves
-Item=1510 ; Wulfyn Star Bindings
-Item=1696 ; Spibear Star Turnshores
-Item=1695 ; Wulfyn Star Turnshoes
-Item=1555 ; Wulfyn Star Gloves
-Item=1650 ; Wulfyn Star Pants
-Item=1453 ; Goliath Gorget
-Item=1747 ; Wulfyn Star Spaulders
-Item=1774 ; Wulfyn Star Cinch
-Item=1615 ; Linked Sleeves
-Item=1529 ; Drunken Goliath Hauberk
-Item=1525 ; Linked Hauberk
-Item=1710 ; Linked Travelling Boots
-Item=1570 ; Linked Guantlets
-Item=1665 ; Linked Greaves
-Item=1468 ; Comet Flecked Gorget
-Item=1756 ; Linked Spaulders
-Item=1783 ; Linked Cinch
-Item=1425 ; Laquered Azure Shield
-Item=1590 ; Riverwave Armwraps
-Item=1500 ; Riverwave Vestment
-Item=1685 ; River Wave Boots
-Item=1545 ; River Wave Handwraps
-Item=1289 ; Hedgequill Hat
-Item=1720 ; Oakleaf Cap
-Item=1640 ; Pilgrimmage Chant Kilt
-Item=1443 ; Mirror Studded Collar
-Item=1741 ; River Wave Epaulettes
-Item=1769 ; River Wave Belt
-Item=1605 ; Pilgrimmage Chant Sleeves
-Item=1515 ; Pilgrimmage ChantVestment
-Item=1701 ; Pilgrimmage Chant Footwear
-Item=1560 ; Pilgrimmage Chant Gloves
-Item=1725 ; Pilgrimmage Chant Helm
-Item=1656 ; Pilgrimmage Chant Legwraps
-Item=1458 ; Roc-Fury Drape
-Item=1750 ; Pilgrimmage Chant Shoulders
-Item=1777 ; Pilgrimmage Chant Belt
-Item=1620 ; Siren's Treasured Sleeves
-Item=1715 ; Siren's Treasured Ankleboots
-Item=1565 ; Blighted Gloves
-Item=1575 ; Siren's Treasured Gloves
-Item=1578 ; Water Drake Gloves
-Item=1730 ; Siren's Treasured Helmet
-Item=1670 ; Siren's Treasured Pants
-Item=1473 ; Crystalweave Choker
-Item=1759 ; Siren's Treasured Epaulettes
-Item=1786 ; Siren's Treasured Belt
-Item=1429 ; Abalone Shell Buckler
+Item=1425  ;Worn Shield
+Item=1605  ;Worn Sleeves
+Item=1515  ;Worn Vest
+Item=1701  ;Worn Shoes
+Item=1560  ;Worn Gloves
+Item=1725  ;Worn Helm
+Item=1656  ;Worn Legwraps
+Item=1458  ;Worn Drape
+Item=1750  ;Worn Shoulders
+Item=1777  ;Worn Belt
 
-
-; Ob Liette <Container Merchant>, Bafflegate
+; Ob Liette <Container Merchant>, Bafflegate  (OFFICIAL EER)
 [ENTRY]
 CreatureDefID=2217
 Item=9
 Item=10
 
-; Zora Qwench <Crafting Merchant>, Bafflegate
+; Zora Qwench <Crafting Merchant>, Bafflegate  (GUESSED)
 [ENTRY]
 CreatureDefID=2221
-Item=20968	; Basic Armor Mold
-Item=20967	; Basic Weapon Mold
-Item=20969	; Standard Armor Mold
-Item=20970	; Standard Weapon Mold
-Item=20971	; Expert Armor Mold
-Item=20972	; Expert Weapon Mold
-Item=20973	; Adept Armor Mold
-Item=20974	; Adept Weapon Mold
-Item=20975	; Master Armor Mold
-Item=20976	; Master Weapon Mold
+Item=20969	;Standard Armor Mold
+Item=20970	;Standard Weapon Mold
+Item=1560003 ; Magical Book Binding Glue
+Item=1560007 ; Ornate Book Cover
+Item=1560004 ; Gold Leaf
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
-
-; Mixi Sparkelle <General Merchant>, Bafflegate
+; Mixi Sparkelle <General Merchant>, Bafflegate  (GUESSED, taken from Snerd Danelaw in Anglorum)
 [ENTRY]
 CreatureDefID=2216
-Item=20522	; Infused Crystals
-Item=20523	; Blood Root
-Item=20524	; Amber
-Item=20525	; Black Pearl
-Item=20526	; Portal Stone
-Item=40053	; Basic Health Potion: Level 10
-Item=40054  ; Basic Health Potion: Level 20
-Item=40055	; Basic Health Potion: Level 30
-Item=40056	; Basic Health Potion: Level 40
-Item=40057	; Basic Health Potion: Level 50
-
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40053  ;Basic Health Potion: Level 10
 ; NEW/ADDED POTIONS
+Item=40054  ;Basic Health Potion: Level 20
 Item=40114  ;Speed Potion
 Item=40115  ;Greater Speed Potion
 Item=40116  ;Energy Drink
@@ -175,47 +70,22 @@ Item=40124  ;Armor Boost Potion: Level 20
 
 ; **** LISTERM (MIDLANDS) - Quest level 23
 
-; Blane Crav <Master Weaponsmith>, Listerm
+; Blane Crav <Weapon Merchant>, Listerm  (GUESSED, copying Bafflegate)
 [ENTRY]
 CreatureDefID=2223
-Item=141061	; Antler Handled Axe
-Item=141073	; Stellar Mace
-Item=141038	; Soldier's Sword
-Item=141147	; Gale Force Battlemace
-Item=141250	; Ironwood Recurve Bow
-Item=141193	; Long Bow
-Item=141106	; Polar Talons
-Item=141091	; Darkened Jambiya
-Item=141158	; Dryad Walkingstick
-Item=141232	; Iron Stars
-Item=141214	; Willow Branch
-Item=141275	; Forest Axe
-Item=141276	; Grove Axe
-Item=141277	; Orchard Axe
-Item=141282	; Witch's Cudgel
-Item=141274	; Calvary Sword
-Item=141272	; Commisioned Sword
-Item=141271	; Damascus Sword
-Item=141273	; Officer's Sword
-Item=141306	; Firestone Longsword
-Item=141253	; Opal Inlaid Bow
-Item=141286	; Blighted Thorn
-Item=141292	; Zombie Claw
-Item=141314	; Witchwynd Staff
-Item=141259	; Pale Crystalline Shard
-Item=141265	; Wretched Wand
-Item=141486	; Shadewrought Axe
-Item=141489	; Shadewrought Mace
-Item=141482	; Shadewrought Blade
-Item=141312	; Eagle Capped Mace
-Item=141256	; Fog-Eater Longbow
-Item=141296	; Truffle-Digging Dagger
-Item=141303	; Waterdancer Katar
-Item=141262	; Lightning-Etched Hatchet
-Item=141268	; Faux Unikorn Horn Wand
+Item=141061  ;Broad Axe
+Item=141147  ;War Hammer
+Item=141250  ;Alder Bow
+Item=141091  ;Jambiya
+Item=141158  ;Wooden Staff
+Item=141232  ;Shurikens
+Item=141214  ;Fir Wand
+Item=141489  ;Bludgeon
+Item=141303  ;Katar
+Item=141262  ;Tomahawks
+Item=141268  ;Horned Wand
 
-
-; Gul Yathbane <Master Armorsmith>, Listerm (GUESSED, copying Bafflegate)
+; Gul Yathbane <Armor Merchant>, Listerm (GUESSED, copying Bafflegate)
 [ENTRY]
 CreatureDefID=2222
 Item=1425  ;Worn Shield
@@ -229,174 +99,70 @@ Item=1458  ;Worn Drape
 Item=1750  ;Worn Shoulders
 Item=1777  ;Worn Belt
 
-; Holly Hillblight <Potions And Reagents>, Listerm
+; Holly Hillblight <General Merchant>, Listerm  (GUESSED)
 [ENTRY]
 CreatureDefID=2224
-Item=20522 	; Infused Crystals
-Item=20523 	; Blood Root
-Item=20524 	; Amber
-Item=20525 	; Black Pearl
-Item=20526 	; Portal Stone
-Item=40053 	; Basic Health Potion: Level 10
-Item=40054 	; Basic Health Potion: Level 20
-Item=40055 	; Basic Health Potion: Level 30
-Item=40056 	; Basic Health Potion: Level 40
-Item=40057 	; Basic Health Potion: Level 50
-
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40053
+Item=40054	;Basic Health Potion: Level 20
 ; NEW/ADDED POTIONS
-Item=40114  ; Speed Potion
-Item=40115  ; Greater Speed Potion
-Item=40116  ; Energy Drink
-Item=40117  ; Agility Potion
-Item=40118  ; Constitution Potion: Level 10
-Item=40119  ; Constitution Potion: Level 20
-Item=40123  ; Armor Boost Potion: Level 10
-Item=40124  ; Armor Boost Potion: Level 20
+Item=40114  ;Speed Potion
+Item=40115  ;Greater Speed Potion
+Item=40116  ;Energy Drink
+Item=40117  ;Agility Potion
+Item=40118  ;Constitution Potion: Level 10
+Item=40119  ;Constitution Potion: Level 20
+Item=40123  ;Armor Boost Potion: Level 10
+Item=40124  ;Armor Boost Potion: Level 20
 Item=1560002 ; Strong Book Binding Glue
 Item=1560006 ; Quality Book Cover
 
 
+
 ; **** BANDIT'S BLUFF (MIDLANDS) - Quest level 24/25
 
-; Zim Bronzefold <Master Armorsmith>, Bandit's Bluff
+; Zim Bronzefold <Armor Merchant>, Bandit's Bluff (GUESSED Level 25 selection)
 [ENTRY]
 CreatureDefID=2225
-Item=1580  ; Woven Troll Beard Sleeves
-Item=1491  ; Woven Dragonbeard Vestment
-Item=1675  ; Woven Trollbeard Slippers
-Item=1535  ; Woven Troll Beard Mitts
-Item=1625  ; Woven Troll Beard Kilt
-Item=1433  ; Fancy Silver Gorget
-Item=1735  ; Woven Troll Beard Spaulders
-Item=1762  ; Woven Trollbeard Cord
-Item=1595  ; Rockbear Sleeves
-Item=1505  ; Faux Unikorn Wrap
-Item=1690  ; Rockbear Tallboots
-Item=1550  ; Rockbear Wraps
-Item=1645  ; Rockbear Breeches
-Item=1448  ; Rockbear Collar
-Item=1744  ; Rockbear Shoulders
-Item=1771  ; Rockbear Cord
-Item=1610  ; Blighted Armguards
-Item=1520  ; Poisonous Toadskin Harness
-Item=1660  ; Blighted Britches
-Item=1463  ; Acorn Gorget
-Item=1467  ; Alpen Gorget
-Item=1753  ; Blighted Shouldercaps
-Item=1780  ; Blighted Cord
-Item=1383  ; Compass Rose Buckler
-Item=1700  ; Blighted Ankleboots
-Item=1496  ; Straw-Spun Vestment
-Item=1680  ; Straw-Spun Sandals
-Item=1540  ; Straw Spun Gloves
-Item=1635  ; River Wave Kilt
-Item=1630  ; Straw Spun Kilt
-Item=1438  ; Harlequin Collar
-Item=1738  ; Straw Spun Shoulders
-Item=1765  ; Straw Spun Cinch
-Item=1600  ; Wulfyn Star Sleeves
-Item=1510  ; Wulfyn Star Bindings
-Item=1696  ; Spibear Star Turnshores
-Item=1695  ; Wulfyn Star Turnshoes
-Item=1555  ; Wulfyn Star Gloves
-Item=1650  ; Wulfyn Star Pants
-Item=1453  ; Goliath Gorget
-Item=1747  ; Wulfyn Star Spaulders
-Item=1774  ; Wulfyn Star Cinch
-Item=1615  ; Linked Sleeves
-Item=1529  ; Drunken Goliath Hauberk
-Item=1525  ; Linked Hauberk
-Item=1710  ; Linked Travelling Boots
-Item=1570  ; Linked Guantlets
-Item=1665  ; Linked Greaves
-Item=1468  ; Comet Flecked Gorget
-Item=1756  ; Linked Spaulders
-Item=1783  ; Linked Cinch
-Item=1425  ; Laquered Azure Shield
-Item=1590  ; Riverwave Armwraps
-Item=1500  ; Riverwave Vestment
-Item=1685  ; River Wave Boots
-Item=1545  ; River Wave Handwraps
-Item=1289  ; Hedgequill Hat
-Item=1720  ; Oakleaf Cap
-Item=1640  ; Pilgrimmage Chant Kilt
-Item=1443  ; Mirror Studded Collar
-Item=1741  ; River Wave Epaulettes
-Item=1769  ; River Wave Belt
-Item=1605  ; Pilgrimmage Chant Sleeves
-Item=1515  ; Pilgrimmage ChantVestment
-Item=1701  ; Pilgrimmage Chant Footwear
-Item=1560  ; Pilgrimmage Chant Gloves
-Item=1725  ; Pilgrimmage Chant Helm
-Item=1656  ; Pilgrimmage Chant Legwraps
-Item=1458  ; Roc-Fury Drape
-Item=1750  ; Pilgrimmage Chant Shoulders
-Item=1777  ; Pilgrimmage Chant Belt
-Item=1620  ; Siren's Treasured Sleeves
-Item=1715  ; Siren's Treasured Ankleboots
-Item=1565  ; Blighted Gloves
-Item=1575  ; Siren's Treasured Gloves
-Item=1578  ; Water Drake Gloves
-Item=1730  ; Siren's Treasured Helmet
-Item=1670  ; Siren's Treasured Pants
-Item=1473  ; Crystalweave Choker
-Item=1759  ; Siren's Treasured Epaulettes
-Item=1786  ; Siren's Treasured Belt
-Item=1429  ; Abalone Shell Buckler
+Item=1425	;Worn Shield
+Item=1458	;Worn Drape
+Item=1515	;Worn Vest
+Item=1560	;Worn Gloves
+Item=1605	;Worn Sleeves
+Item=1656	;Worn Legwraps
+Item=1701	;Worn Shoes
+Item=1725	;Worn Helm
+Item=1750	;Worn Shoulders
+Item=1777	;Worn Belt
 
 
-; Gretta Gouge <Master Weaponsmith>, Bandit's Bluff
+
+
+; Gretta Gouge <Weapon Merchant>, Bandit's Bluff (GUESSED, level 25 selection)
 [ENTRY]
 CreatureDefID=2226
-Item=141061 ;	Antler Handled Axe
-Item=141073 ;	Stellar Mace
-Item=141038 ;	Soldier's Sword
-Item=141147 ;	Gale Force Battlemace
-Item=141250 ;	Ironwood Recurve Bow
-Item=141193 ;	Long Bow
-Item=141106 ;	Polar Talons
-Item=141091 ;	Darkened Jambiya
-Item=141158 ;	Dryad Walkingstick
-Item=141232 ;	Iron Stars
-Item=141214 ;	Willow Branch
-Item=141275 ;	Forest Axe
-Item=141276 ;	Grove Axe
-Item=141277 ;	Orchard Axe
-Item=141282 ;	Witch's Cudgel
-Item=141274 ;	Calvary Sword
-Item=141272 ;	Commisioned Sword
-Item=141271 ;	Damascus Sword
-Item=141273 ;	Officer's Sword
-Item=141306 ;	Firestone Longsword
-Item=141253 ;	Opal Inlaid Bow
-Item=141286 ;	Blighted Thorn
-Item=141292 ;	Zombie Claw
-Item=141314 ;	Witchwynd Staff
-Item=141259 ;	Pale Crystalline Shard
-Item=141265 ;	Wretched Wand
-Item=141486 ;	Shadewrought Axe
-Item=141489 ;	Shadewrought Mace
-Item=141482 ;	Shadewrought Blade
-Item=141312 ;	Eagle Capped Mace
-Item=141256 ;	Fog-Eater Longbow
-Item=141296 ;	Truffle-Digging Dagger
-Item=141303 ;	Waterdancer Katar
-Item=141262 ;	Lightning-Etched Hatchet
-Item=141268 ;	Faux Unikorn Horn Wand
+Item=141303	;Katar
+Item=141489	;Bludgeon
+Item=141358	;Zweihander
+Item=141342	;Lance
+Item=141268	;Horned Wand
+Item=141451	;Birch Bow
+Item=141262	;Tomahawks
 
-; Anai Derin <Potions and Reagents>, Bandit's Bluff
+; Anai Derin <General Merchant>, Bandit's Bluff (GUESSED)
 [ENTRY]
 CreatureDefID=2227
-Item=20522 	; Infused Crystals
-Item=20523 	; Blood Root
-Item=20524 	; Amber
-Item=20525 	; Black Pearl
-Item=20526 	; Portal Stone
-Item=40053 	; Basic Health Potion: Level 10
-Item=40054 	; Basic Health Potion: Level 20
-Item=40055 	; Basic Health Potion: Level 30
-Item=40056 	; Basic Health Potion: Level 40
-Item=40057 	; Basic Health Potion: Level 50
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40053
+Item=40054	;Basic Health Potion: Level 20
 ; NEW/ADDED POTIONS
 Item=40114  ;Speed Potion
 Item=40115  ;Greater Speed Potion
@@ -412,120 +178,30 @@ Item=1560006 ; Quality Book Cover
 
 ; **** LONGTAIL GYPSY CAMP (MIDLANDS) - Quest level 25
 
-; Dekard Rove <Master Weaponsmith>
+; Dekard Rove <Weapon Merchant>  (GUESSED, level 25)
 [ENTRY]
 CreatureDefID=2230
-Item=141061 ; Antler Handled Axe
-Item=141073 ; Stellar Mace
-Item=141038 ; Soldier's Sword
-Item=141147 ; Gale Force Battlemace
-Item=141250 ; Ironwood Recurve Bow
-Item=141193 ; Long Bow
-Item=141106 ; Polar Talons
-Item=141091 ; Darkened Jambiya
-Item=141158 ; Dryad Walkingstick
-Item=141232 ; Iron Stars
-Item=141214 ; Willow Branch
-Item=141275 ; Forest Axe
-Item=141276 ; Grove Axe
-Item=141277 ; Orchard Axe
-Item=141282 ; Witch's Cudgel
-Item=141274 ; Calvary Sword
-Item=141272 ; Commisioned Sword
-Item=141271 ; Damascus Sword
-Item=141273 ; Officer's Sword
-Item=141306 ; Firestone Longsword
-Item=141253 ; Opal Inlaid Bow
-Item=141286 ; Blighted Thorn
-Item=141292 ; Zombie Claw
-Item=141314 ; Witchwynd Staff
-Item=141259 ; Pale Crystalline Shard
+Item=141303	;Katar
+Item=141489	;Bludgeon
+Item=141358	;Zweihander
+Item=141342	;Lance
+Item=141268	;Horned Wand
+Item=141451	;Birch Bow
+Item=141262	;Tomahawks
 
-; Vangel Wayward <Master Armorsmith>
+; Vangel Wayward <Armor Merchant> (GUESSED, level 25)
 [ENTRY]
 CreatureDefID=2229
-Item=1580 ; Woven Troll Beard Sleeves
-Item=1491 ; Woven Dragonbeard Vestment
-Item=1675 ; Woven Trollbeard Slippers
-Item=1535 ; Woven Troll Beard Mitts
-Item=1625 ; Woven Troll Beard Kilt
-Item=1433 ; Fancy Silver Gorget
-Item=1735 ; Woven Troll Beard Spaulders
-Item=1762 ; Woven Trollbeard Cord
-Item=1595 ; Rockbear Sleeves
-Item=1505 ; Faux Unikorn Wrap
-Item=1690 ; Rockbear Tallboots
-Item=1550 ; Rockbear Wraps
-Item=1645 ; Rockbear Breeches
-Item=1448 ; Rockbear Collar
-Item=1744 ; Rockbear Shoulders
-Item=1771 ; Rockbear Cord
-Item=1610 ; Blighted Armguards
-Item=1520 ; Poisonous Toadskin Harness
-Item=1660 ; Blighted Britches
-Item=1463 ; Acorn Gorget
-Item=1467 ; Alpen Gorget
-Item=1753 ; Blighted Shouldercaps
-Item=1780 ; Blighted Cord
-Item=1383 ; Compass Rose Buckler
-Item=1700 ; Blighted Ankleboots
-Item=1496 ; Straw-Spun Vestment
-Item=1680 ; Straw-Spun Sandals
-Item=1540 ; Straw Spun Gloves
-Item=1635 ; River Wave Kilt
-Item=1630 ; Straw Spun Kilt
-Item=1438 ; Harlequin Collar
-Item=1738 ; Straw Spun Shoulders
-Item=1765 ; Straw Spun Cinch
-Item=1600 ; Wulfyn Star Sleeves
-Item=1510 ; Wulfyn Star Bindings
-Item=1696 ; Spibear Star Turnshores
-Item=1695 ; Wulfyn Star Turnshoes
-Item=1555 ; Wulfyn Star Gloves
-Item=1650 ; Wulfyn Star Pants
-Item=1453 ; Goliath Gorget
-Item=1747 ; Wulfyn Star Spaulders
-Item=1774 ; Wulfyn Star Cinch
-Item=1615 ; Linked Sleeves
-Item=1529 ; Drunken Goliath Hauberk
-Item=1525 ; Linked Hauberk
-Item=1710 ; Linked Travelling Boots
-Item=1570 ; Linked Guantlets
-Item=1665 ; Linked Greaves
-Item=1468 ; Comet Flecked Gorget
-Item=1756 ; Linked Spaulders
-Item=1783 ; Linked Cinch
-Item=1425 ; Laquered Azure Shield
-Item=1590 ; Riverwave Armwraps
-Item=1500 ; Riverwave Vestment
-Item=1685 ; River Wave Boots
-Item=1545 ; River Wave Handwraps
-Item=1289 ; Hedgequill Hat
-Item=1720 ; Oakleaf Cap
-Item=1640 ; Pilgrimmage Chant Kilt
-Item=1443 ; Mirror Studded Collar
-Item=1741 ; River Wave Epaulettes
-Item=1769 ; River Wave Belt
-Item=1605 ; Pilgrimmage Chant Sleeves
-Item=1515 ; Pilgrimmage ChantVestment
-Item=1701 ; Pilgrimmage Chant Footwear
-Item=1560 ; Pilgrimmage Chant Gloves
-Item=1725 ; Pilgrimmage Chant Helm
-Item=1656 ; Pilgrimmage Chant Legwraps
-Item=1458 ; Roc-Fury Drape
-Item=1750 ; Pilgrimmage Chant Shoulders
-Item=1777 ; Pilgrimmage Chant Belt
-Item=1620 ; Siren's Treasured Sleeves
-Item=1715 ; Siren's Treasured Ankleboots
-Item=1565 ; Blighted Gloves
-Item=1575 ; Siren's Treasured Gloves
-Item=1578 ; Water Drake Gloves
-Item=1730 ; Siren's Treasured Helmet
-Item=1670 ; Siren's Treasured Pants
-Item=1473 ; Crystalweave Choker
-Item=1759 ; Siren's Treasured Epaulettes
-Item=1786 ; Siren's Treasured Belt
-Item=1429 ; Abalone Shell Buckler
+Item=1425	;Worn Shield
+Item=1458	;Worn Drape
+Item=1515	;Worn Vest
+Item=1560	;Worn Gloves
+Item=1605	;Worn Sleeves
+Item=1656	;Worn Legwraps
+Item=1701	;Worn Shoes
+Item=1725	;Worn Helm
+Item=1750	;Worn Shoulders
+Item=1777	;Worn Belt
 
 ; Veedo <Container Merchant>  (OFFICIAL EER)
 [ENTRY]
@@ -533,20 +209,18 @@ CreatureDefID=3173
 Item=9
 Item=10
 
-; Finn Afoot <Potions and Reagents>  (OFFICIAL EER)
+; Finn Afoot <General Merchant>  (OFFICIAL EER)
 [ENTRY]
 CreatureDefID=2228
-Item=20522 ;	Infused Crystals
-Item=20523 ;	Blood Root
-Item=20524 ;	Amber
-Item=20525 ;	Black Pearl
-Item=20526 ;	Portal Stone
-Item=40053 ;	Basic Health Potion: Level 10
-Item=40054 ;	Basic Health Potion: Level 20
-Item=40055 ;	Basic Health Potion: Level 30
-Item=40056 ;	Basic Health Potion: Level 40
-Item=40057 ;	Basic Health Potion: Level 50
-
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40053  ;Basic Health Potion: Level 10    (ADDED)
+Item=40054
+Item=20969
+Item=20970
 ; NEW/ADDED POTIONS
 Item=40114  ;Speed Potion
 Item=40115  ;Greater Speed Potion
@@ -558,119 +232,49 @@ Item=40123  ;Armor Boost Potion: Level 10
 Item=40124  ;Armor Boost Potion: Level 20
 Item=1560002 ; Strong Book Binding Glue
 Item=1560006 ; Quality Book Cover
+
+
 
 
 ; **** EASTBRIDGE (NEW BADARI) - Quest level 27/28
 
-; Mungo Jeri <Armorsmith>
+; Mungo Jeri <Armor Merchant> (GUESSED, Level 25)
 [ENTRY]
 CreatureDefID=2390
-Item=2153 	; Spellweaver Armbindings
-Item=2302 	; Spellweaver Vestment
-Item=2041 	; Wolf Charm Slippers
-Item=1981 	; Tundraweave Cap
-Item=2096 	; First Mate's Kilt
-Item=2097 	; Spellweaver Kilt
-Item=2317 	; Spellweaver Collar
-Item=1947 	; Silk Flared Shoulders
-Item=1914 	; Thumperfur Belt
-Item=2168 	; Shade Searcher Armsheaths
-Item=2287 	; Shade Searcher Gambeson
-Item=2061 	; Enchanted Swan Shoes
-Item=1996 	; Feathered Hat
-Item=2001 	; Floppy Thinking Cap
-Item=2114 	; Shade Searcher Pants
-Item=2331 	; Shade Searcher Collar
-Item=1956 	; Flametendril Shoulderbands
-Item=1923 	; Roc-Skin Beaded Cincture
-Item=2272 	; Silent Cat Hauberk
-Item=2056 	; Toymaker's Wooden Clogs
-Item=2016 	; Forest Friend's Hat
-Item=2129 	; Silent Cat Legwraps
-Item=2346 	; Silent Cat Gorget
-Item=1965 	; Purple Sage Shoulderbands
-Item=1932 	; Riveted Leather Belt
-Item=2372 	; Warrior- oet Shield
-Item=2158 	; Runescriber Sleeves
-Item=2307 	; Runescriber Vestment
-Item=2046 	; Midnight Glass Slippers
-Item=1986 	; Gossamer Moth Headband
-Item=2102 	; Runescriber Kilt
-Item=2322 	; Runescriber Choker
-Item=1950 	; Moth Wing Epaulettes
-Item=1917 	; Tundraweave Sash
-Item=2173 	; Featherweight Sleeves
-Item=2292 	; Featherweight Gambeson
-Item=2066 	; Thrice Goldenhair Boots
-Item=2006 	; Exile's Roaming Headband
-Item=2119 	; Featherweight Whisper Legwraps
-Item=2336 	; Featherweight Throatguard
-Item=1959 	; Truthseeker Shoulders
-Item=1926 	; Wanderlust Belt
-Item=2277 	; Sunglint Hauberk
-Item=2076 	; Laughing Princess Boots
-Item=2021 	; Oakenheart Hood
-Item=2134 	; Sunglint Pants
-Item=2351 	; Sunglint Collar
-Item=1968 	; Mad Serpent Shouldercaps
-Item=1935 	; Gypsy Dancing Belt
-Item=2376 	; Woe Ballad Targe
-Item=2263 	; Warrior Poet Breastplate
-Item=2086 	; Knight Errant's Boots
-Item=2253 	; Warrior Poet Guantlets
-Item=2031 	; Trollbane Helm
-Item=2144 	; Warrior Poet Greaves
-Item=2149 	; Woe Ballad Legplates
-Item=2361 	; Warrior Poet Gorget
-Item=1974 	; Bronze Etched Pauldrons
-Item=1941 	; Polished Waist Chain
+Item=1425	;Worn Shield
+Item=1458	;Worn Drape
+Item=1515	;Worn Vest
+Item=1560	;Worn Gloves
+Item=1605	;Worn Sleeves
+Item=1656	;Worn Legwraps
+Item=1701	;Worn Shoes
+Item=1725	;Worn Helm
+Item=1750	;Worn Shoulders
+Item=1777	;Worn Belt
 
-; Rono Dueter <Weaponsmith>
+; Rono Dueter <Weapon Merchant> (GUESSED, Level 25)
 [ENTRY]
 CreatureDefID=2391
-Item=141408 ;	Forestcreeper Hatchet
-Item=141404 ;	Sunglint Sword
-Item=141358 ;	Warrior Poet Zweihander
-Item=141451 ;	Sunsong Bow
-Item=141342 ;	Petrified Beanstalk Staff
-Item=141378 ;	Abyssian Claw
-Item=141374 ;	Shadweaver Dagger
-Item=141442 ;	Sunglint Star
-Item=141433 ;	Darkening Wand
-Item=141417 ;	Solstice Singer Axe
-Item=141420 ;	Troll Cudgel
-Item=141365 ;	Woe Saga Brambleaxe
-Item=141362 ;	Warrior Cry Zweihander
-Item=141454 ;	Lunarsong Bow
-Item=141346 ;	Runed Chaos Staff
-Item=141388 ;	Solaire Cat Katar
-Item=141391 ;	Soldier Cat Claw
-Item=141445 ;	Lunar Shard Dart
-Item=141436 ;	Starbreeze Wand
-Item=141429 ;	Twilight Mace
-Item=141423 ;	Allfather's Song Sword
-Item=141370 ;	Storm Coast Greataxe
-Item=141457 ;	Twilightsong Bow
-Item=141354 ;	Runed Ash Staff
-Item=141400 ;	Frenzy Katar
-Item=141394 ;	Starbreeze Stiletto
-Item=141448 ;	Feral Twilight Knife
-Item=141439 ;	Twilight-Veined Wand
+Item=141303	;Katar
+Item=141489	;Bludgeon
+Item=141358	;Zweihander
+Item=141342	;Lance
+Item=141268	;Horned Wand
+Item=141451	;Birch Bow
+Item=141262	;Tomahawks
 
-; Elee Mistoff <Potions and Reagents>
+; Elee Mistoff <General Merchant>
 [ENTRY]
 CreatureDefID=2392 (GUESSED)
-Item=20522 ; 	Infused Crystals
-Item=20523 ;	Blood Root
-Item=20524 ;	Amber
-Item=20525 ;	Black Pearl
-Item=20526 ;	Portal Stone
-Item=40053 ;	Basic Health Potion: Level 10
-Item=40054 ;	Basic Health Potion: Level 20
-Item=40055 ;	Basic Health Potion: Level 30
-Item=40056 ;	Basic Health Potion: Level 40
-Item=40057 ;	Basic Health Potion: Level 50
-
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40053  ;Basic Health Potion: Level 10   (ADDED)
+Item=40054
+Item=20969
+Item=20970
 ; NEW/ADDED POTIONS
 Item=40114  ;Speed Potion
 Item=40115  ;Greater Speed Potion
@@ -683,116 +287,46 @@ Item=40124  ;Armor Boost Potion: Level 20
 Item=1560002 ; Strong Book Binding Glue
 Item=1560006 ; Quality Book Cover
 
+
 ; **** SEASCAPE (NEW BADARI) - Quest level 26/28
 
-; Gus Thea <Armorsmith>
+; Gus Thea <Armor Merchant> (GUESSED, level 25)
 [ENTRY]
 CreatureDefID=2396
-Item=2153 ; Spellweaver Armbindings
-Item=2302 ; Spellweaver Vestment
-Item=2041 ; Wolf Charm Slippers
-Item=1981 ; Tundraweave Cap
-Item=2096 ; First Mate's Kilt
-Item=2097 ; Spellweaver Kilt
-Item=2317 ; Spellweaver Collar
-Item=1947 ; Silk Flared Shoulders
-Item=1914 ; Thumperfur Belt
-Item=2168 ; Shade Searcher Armsheaths
-Item=2287 ; Shade Searcher Gambeson
-Item=2061 ; Enchanted Swan Shoes
-Item=1996 ; Feathered Hat
-Item=2001 ; Floppy Thinking Cap
-Item=2114 ; Shade Searcher Pants
-Item=2331 ; Shade Searcher Collar
-Item=1956 ; Flametendril Shoulderbands
-Item=1923 ; Roc-Skin Beaded Cincture
-Item=2272 ; Silent Cat Hauberk
-Item=2056 ; Toymaker's Wooden Clogs
-Item=2016 ; Forest Friend's Hat
-Item=2129 ; Silent Cat Legwraps
-Item=2346 ; Silent Cat Gorget
-Item=1965 ; Purple Sage Shoulderbands
-Item=1932 ; Riveted Leather Belt
-Item=2372 ; Warrior- oet Shield
-Item=2158 ; Runescriber Sleeves
-Item=2307 ; Runescriber Vestment
-Item=2046 ; Midnight Glass Slippers
-Item=1986 ; Gossamer Moth Headband
-Item=2102 ; Runescriber Kilt
-Item=2322 ; Runescriber Choker
-Item=1950 ; Moth Wing Epaulettes
-Item=1917 ; Tundraweave Sash
-Item=2173 ; Featherweight Sleeves
-Item=2292 ; Featherweight Gambeson
-Item=2066 ; Thrice Goldenhair Boots
-Item=2006 ; Exile's Roaming Headband
-Item=2119 ; Featherweight Whisper Legwraps
-Item=2336 ; Featherweight Throatguard
-Item=1959 ; Truthseeker Shoulders
-Item=1926 ; Wanderlust Belt
-Item=2277 ; Sunglint Hauberk
-Item=2076 ; Laughing Princess Boots
-Item=2021 ; Oakenheart Hood
-Item=2134 ; Sunglint Pants
-Item=2351 ; Sunglint Collar
-Item=1968 ; Mad Serpent Shouldercaps
-Item=1935 ; Gypsy Dancing Belt
-Item=2376 ; Woe Ballad Targe
-Item=2263 ; Warrior Poet Breastplate
-Item=2086 ; Knight Errant's Boots
-Item=2253 ; Warrior Poet Guantlets
-Item=2031 ; Trollbane Helm
-Item=2144 ; Warrior Poet Greaves
-Item=2149 ; Woe Ballad Legplates
-Item=2361 ; Warrior Poet Gorget
-Item=1974 ; Bronze Etched Pauldrons
-Item=1941 ; Polished Waist Chain
+Item=1425	;Worn Shield
+Item=1458	;Worn Drape
+Item=1515	;Worn Vest
+Item=1560	;Worn Gloves
+Item=1605	;Worn Sleeves
+Item=1656	;Worn Legwraps
+Item=1701	;Worn Shoes
+Item=1725	;Worn Helm
+Item=1750	;Worn Shoulders
+Item=1777	;Worn Belt
 
-; Rumpus <Weaponsmith>
+; Rumpus <Weapon Merchant> (GUESSED, level 25)
 [ENTRY]
 CreatureDefID=2397
-Item=141408 ;	Forestcreeper Hatchet
-Item=141404 ;	Sunglint Sword
-Item=141358 ;	Warrior Poet Zweihander
-Item=141451 ;	Sunsong Bow
-Item=141342 ;	Petrified Beanstalk Staff
-Item=141378 ;	Abyssian Claw
-Item=141374 ;	Shadweaver Dagger
-Item=141442 ;	Sunglint Star
-Item=141433 ;	Darkening Wand
-Item=141417 ;	Solstice Singer Axe
-Item=141420 ;	Troll Cudgel
-Item=141365 ;	Woe Saga Brambleaxe
-Item=141362 ;	Warrior Cry Zweihander
-Item=141454 ;	Lunarsong Bow
-Item=141346 ;	Runed Chaos Staff
-Item=141388 ;	Solaire Cat Katar
-Item=141391 ;	Soldier Cat Claw
-Item=141445 ;	Lunar Shard Dart
-Item=141436 ;	Starbreeze Wand
-Item=141429 ;	Twilight Mace
-Item=141423 ;	Allfather's Song Sword
-Item=141370 ;	Storm Coast Greataxe
-Item=141457 ;	Twilightsong Bow
-Item=141354 ;	Runed Ash Staff
-Item=141400 ;	Frenzy Katar
-Item=141394 ;	Starbreeze Stiletto
-Item=141448 ;	Feral Twilight Knife
-Item=141439 ;	Twilight-Veined Wand
-w
-; Tac Morgan <Potions and Reagents> (OFFICIAL EER)
+Item=141303	;Katar
+Item=141489	;Bludgeon
+Item=141358	;Zweihander
+Item=141342	;Lance
+Item=141268	;Horned Wand
+Item=141451	;Birch Bow
+Item=141262	;Tomahawks
+
+; Tac Morgan  (OFFICIAL EER)
 [ENTRY]
 CreatureDefID=2398
-Item=20522 ;	Infused Crystals
-Item=20523 ;	Blood Root
-Item=20524 ;	Amber
-Item=20525 ;	Black Pearl
-Item=20526 ;	Portal Stone
-Item=40053 ;	Basic Health Potion: Level 10
-Item=40054 ;	Basic Health Potion: Level 20
-Item=40055 ;	Basic Health Potion: Level 30
-Item=40056 ;	Basic Health Potion: Level 40
-Item=40057 ; 	Basic Health Potion: Level 50
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40053  ;Basic Health Potion: Level 10  (ADDED)
+Item=40054
+Item=20969
+Item=20970
 ; NEW/ADDED POTIONS
 Item=40114  ;Speed Potion
 Item=40115  ;Greater Speed Potion
@@ -808,19 +342,19 @@ Item=1560006 ; Quality Book Cover
 
 ; **** BREMEN (NEW BADARI) - Quest level 27/30
 
-; Gernosh Redler <Crafting Supplier>
+; Gernosh Redler <Crafting Merchant> (GUESSED, all material for a major town)
 [ENTRY]
 CreatureDefID=2389
-Item=20968 ;	Basic Armor Mold
-Item=20967 ;	Basic Weapon Mold
-Item=20969 ;	Standard Armor Mold
-Item=20970 ;	Standard Weapon Mold
-Item=20971 ;	Expert Armor Mold
-Item=20972 ;	Expert Weapon Mold
-Item=20973 ;	Adept Armor Mold
-Item=20974 ;	Adept Weapon Mold
-Item=20975 ;	Master Armor Mold
-Item=20976 ;	Master Weapon Mold
+Item=20967	;Basic Weapon Mold
+Item=20968	;Basic Armor Mold
+Item=20969	;Standard Armor Mold
+Item=20970	;Standard Weapon Mold
+Item=20971	;Expert Armor Mold
+Item=20972	;Expert Weapon Mold
+Item=20973	;Adept Armor Mold
+Item=20974	;Adept Weapon Mold
+Item=20975	;Master Armor Mold
+Item=20976	;Master Weapon Mold
 
 ; Mac Avity <Container Merchant>, Bremen  (OFFICIAL EER)
 [ENTRY]
@@ -831,117 +365,47 @@ Item=4
 Item=5
 Item=6
 
-; Ser Growltiger <Weaponsmith>
+; Ser Growltiger <Weapon Merchant> (GUESSED, level 30)
 [ENTRY]
 CreatureDefID=2384
-Item=141408 ;	Forestcreeper Hatchet
-Item=141404 ;	Sunglint Sword
-Item=141358 ;	Warrior Poet Zweihander
-Item=141451 ;	Sunsong Bow
-Item=141342 ;	Petrified Beanstalk Staff
-Item=141378 ;	Abyssian Claw
-Item=141374 ;	Shadweaver Dagger
-Item=141442 ;	Sunglint Star
-Item=141433 ;	Darkening Wand
-Item=141417 ;	Solstice Singer Axe
-Item=141420 ;	Troll Cudgel
-Item=141365 ;	Woe Saga Brambleaxe
-Item=141362 ;	Warrior Cry Zweihander
-Item=141454 ;	Lunarsong Bow
-Item=141346 ;	Runed Chaos Staff
-Item=141388 ;	Solaire Cat Katar
-Item=141391 ;	Soldier Cat Claw
-Item=141445 ;	Lunar Shard Dart
-Item=141436 ;	Starbreeze Wand
-Item=141429 ;	Twilight Mace
-Item=141423 ;	Allfather's Song Sword
-Item=141370 ;	Storm Coast Greataxe
-Item=141457 ;	Twilightsong Bow
-Item=141354 ;	Runed Ash Staff
-Item=141400 ;	Frenzy Katar
-Item=141394 ;	Starbreeze Stiletto
-Item=141448 ;	Feral Twilight Knife
-Item=141439 ; 	Twilight-Veined Wand
+Item=141394	;Kris
+Item=141423	;Broadsword
+Item=141370	;Great Axe
+Item=141354	;Partisan
+Item=141439	;Ebon Wand
+Item=141457	;Ash Bow
+Item=141448	;Daggers
 
-; Jenny Dot <Armorsmith>
+; Jenny Dot <Armor Merchant> (GUESSED, level 30)
 [ENTRY]
 CreatureDefID=2382
-Item=2153 ;	Spellweaver Armbindings
-Item=2302 ;	Spellweaver Vestment
-Item=2041 ;	Wolf Charm Slippers
-Item=1981 ;	Tundraweave Cap
-Item=2096 ;	First Mate's Kilt
-Item=2097 ;	Spellweaver Kilt
-Item=2317 ;	Spellweaver Collar
-Item=1947 ;	Silk Flared Shoulders
-Item=1914 ;	Thumperfur Belt
-Item=2168 ;	Shade Searcher Armsheaths
-Item=2287 ;	Shade Searcher Gambeson
-Item=2061 ;	Enchanted Swan Shoes
-Item=1996 ;	Feathered Hat
-Item=2001 ;	Floppy Thinking Cap
-Item=2114 ;	Shade Searcher Pants
-Item=2331 ;	Shade Searcher Collar
-Item=1956 ;	Flametendril Shoulderbands
-Item=1923 ;	Roc-Skin Beaded Cincture
-Item=2272 ;	Silent Cat Hauberk
-Item=2056 ;	Toymaker's Wooden Clogs
-Item=2016 ;	Forest Friend's Hat
-Item=2129 ;	Silent Cat Legwraps
-Item=2346 ;	Silent Cat Gorget
-Item=1965 ;	Purple Sage Shoulderbands
-Item=1932 ;	Riveted Leather Belt
-Item=2372 ;	Warrior- oet Shield
-Item=2158 ;	Runescriber Sleeves
-Item=2307 ;	Runescriber Vestment
-Item=2046 ;	Midnight Glass Slippers
-Item=1986 ;	Gossamer Moth Headband
-Item=2102 ;	Runescriber Kilt
-Item=2322 ;	Runescriber Choker
-Item=1950 ;	Moth Wing Epaulettes
-Item=1917 ;	Tundraweave Sash
-Item=2173 ;	Featherweight Sleeves
-Item=2292 ;	Featherweight Gambeson
-Item=2066 ;	Thrice Goldenhair Boots
-Item=2006 ;	Exile's Roaming Headband
-Item=2119 ;	Featherweight Whisper Legwraps
-Item=2336 ;	Featherweight Throatguard
-Item=1959 ;	Truthseeker Shoulders
-Item=1926 ;	Wanderlust Belt
-Item=2277 ;	Sunglint Hauberk
-Item=2076 ;	Laughing Princess Boots
-Item=2021 ;	Oakenheart Hood
-Item=2134 ;	Sunglint Pants
-Item=2351 ;	Sunglint Collar
-Item=1968 ;	Mad Serpent Shouldercaps
-Item=1935 ;	Gypsy Dancing Belt
-Item=2376 ;	Woe Ballad Targe
-Item=2263 ;	Warrior Poet Breastplate
-Item=2086 ;	Knight Errant's Boots
-Item=2253 ;	Warrior Poet Guantlets
-Item=2031 ;	Trollbane Helm
-Item=2144 ;	Warrior Poet Greaves
-Item=2149 ;	Woe Ballad Legplates
-Item=2361 ;	Warrior Poet Gorget
-Item=1974 ;	Bronze Etched Pauldrons
-Item=1941 ;	Polished Waist Chain
-Item=7076 ; Shield Ring (Custom addition)
+Item=1929	;Faded Cinch
+Item=1962	;Faded Shoulders
+Item=2011	;Faded Headpiece
+Item=2071	;Faded Boots
+Item=2124	;Faded Leggings
+Item=2178	;Faded Armbands
+Item=2258	;Faded Gloves
+Item=2297	;Faded Chestpiece
+Item=2341	;Faded Choker
+Item=2376	;Faded Shield
+Item=7076       ;Shield Ring (Custom addition)
 
-; Jelli Cles <Potions and Reagents>  (OFFICIAL EER)
+; Jelli Cles <General Merchant>  (OFFICIAL EER)
 [ENTRY]
 CreatureDefID=2387
-Item=20522 ;	Infused Crystals
-Item=20523 ;	Blood Root
-Item=20524 ;	Amber
-Item=20525 ;	Black Pearl
-Item=20526 ;	Portal Stone
-Item=40053 ;	Basic Health Potion: Level 10
-Item=40054 ;	Basic Health Potion: Level 20
-Item=40055 ;	Basic Health Potion: Level 30
-Item=40056 ;	Basic Health Potion: Level 40
-Item=40057 ;	Basic Health Potion: Level 50
-Item=20969 ;	Standard Armor Mold - custom addition
-Item=20970 ; 	Standard Weapon Mold - custom addition
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40053  ;Basic Health Potion: Level 10  (ADDED)
+Item=40054
+Item=40055  ;Basic Health Potion: Level 30  (ADDED)
+Item=40056  ;Basic Health Potion: Level 40  (ADDED)
+Item=40057  ;Basic Health Potion: Level 50  (ADDED)
+Item=20969
+Item=20970
 ; NEW POTIONS
 Item=40114  ;Speed Potion
 Item=40115  ;Greater Speed Potion
@@ -963,116 +427,45 @@ Item=1560006 ; Quality Book Cover
 
 ; **** ROLSBURG (NEW BADARI) - Quest level 29/30
 
-; Grizz Abella <Armorsmith>
+; Grizz Abella <Armor Merchant> (GUESSED, level 30)
 [ENTRY]
 CreatureDefID=2393
-Item=2153 ; Spellweaver Armbindings
-Item=2302 ; Spellweaver Vestment
-Item=2041 ; Wolf Charm Slippers
-Item=1981 ; Tundraweave Cap
-Item=2096 ; First Mate's Kilt
-Item=2097 ; Spellweaver Kilt
-Item=2317 ; Spellweaver Collar
-Item=1947 ; Silk Flared Shoulders
-Item=1914 ; Thumperfur Belt
-Item=2168 ; Shade Searcher Armsheaths
-Item=2287 ; Shade Searcher Gambeson
-Item=2061 ; Enchanted Swan Shoes
-Item=1996 ; Feathered Hat
-Item=2001 ; Floppy Thinking Cap
-Item=2114 ; Shade Searcher Pants
-Item=2331 ; Shade Searcher Collar
-Item=1956 ; Flametendril Shoulderbands
-Item=1923 ; Roc-Skin Beaded Cincture
-Item=2272 ; Silent Cat Hauberk
-Item=2056 ; Toymaker's Wooden Clogs
-Item=2016 ; Forest Friend's Hat
-Item=2129 ; Silent Cat Legwraps
-Item=2346 ; Silent Cat Gorget
-Item=1965 ; Purple Sage Shoulderbands
-Item=1932 ; Riveted Leather Belt
-Item=2372 ; Warrior- oet Shield
-Item=2158 ; Runescriber Sleeves
-Item=2307 ; Runescriber Vestment
-Item=2046 ; Midnight Glass Slippers
-Item=1986 ; Gossamer Moth Headband
-Item=2102 ; Runescriber Kilt
-Item=2322 ; Runescriber Choker
-Item=1950 ; Moth Wing Epaulettes
-Item=1917 ; Tundraweave Sash
-Item=2173 ; Featherweight Sleeves
-Item=2292 ; Featherweight Gambeson
-Item=2066 ; Thrice Goldenhair Boots
-Item=2006 ; Exile's Roaming Headband
-Item=2119 ; Featherweight Whisper Legwraps
-Item=2336 ; Featherweight Throatguard
-Item=1959 ; Truthseeker Shoulders
-Item=1926 ; Wanderlust Belt
-Item=2277 ; Sunglint Hauberk
-Item=2076 ; Laughing Princess Boots
-Item=2021 ; Oakenheart Hood
-Item=2134 ; Sunglint Pants
-Item=2351 ; Sunglint Collar
-Item=1968 ; Mad Serpent Shouldercaps
-Item=1935 ; Gypsy Dancing Belt
-Item=2376 ; Woe Ballad Targe
-Item=2263 ; Warrior Poet Breastplate
-Item=2086 ; Knight Errant's Boots
-Item=2253 ; Warrior Poet Guantlets
-Item=2031 ; Trollbane Helm
-Item=2144 ; Warrior Poet Greaves
-Item=2149 ; Woe Ballad Legplates
-Item=2361 ; Warrior Poet Gorget
-Item=1974 ; Bronze Etched Pauldrons
-Item=1941 ; Polished Waist Chain
+Item=1929	;Faded Cinch
+Item=1962	;Faded Shoulders
+Item=2011	;Faded Headpiece
+Item=2071	;Faded Boots
+Item=2124	;Faded Leggings
+Item=2178	;Faded Armbands
+Item=2258	;Faded Gloves
+Item=2297	;Faded Chestpiece
+Item=2341	;Faded Choker
+Item=2376	;Faded Shield
 
-; Bustopher Jay <Weaponsmith>
+; Bustopher Jay <Weapon Merchant> (GUESSED, level 30)
 [ENTRY]
 CreatureDefID=2394
-Item=141408 ;	Forestcreeper Hatchet
-Item=141404 ;	Sunglint Sword
-Item=141358 ;	Warrior Poet Zweihander
-Item=141451 ;	Sunsong Bow
-Item=141342 ;	Petrified Beanstalk Staff
-Item=141378 ;	Abyssian Claw
-Item=141374 ;	Shadweaver Dagger
-Item=141442 ;	Sunglint Star
-Item=141433 ;	Darkening Wand
-Item=141417 ;	Solstice Singer Axe
-Item=141420 ;	Troll Cudgel
-Item=141365 ;	Woe Saga Brambleaxe
-Item=141362 ;	Warrior Cry Zweihander
-Item=141454 ;	Lunarsong Bow
-Item=141346 ;	Runed Chaos Staff
-Item=141388 ;	Solaire Cat Katar
-Item=141391 ;	Soldier Cat Claw
-Item=141445 ;	Lunar Shard Dart
-Item=141436 ;	Starbreeze Wand
-Item=141429 ;	Twilight Mace
-Item=141423 ;	Allfather's Song Sword
-Item=141370 ;	Storm Coast Greataxe
-Item=141457 ;	Twilightsong Bow
-Item=141354 ;	Runed Ash Staff
-Item=141400 ;	Frenzy Katar
-Item=141394 ;	Starbreeze Stiletto
-Item=141448 ;	Feral Twilight Knife
-Item=141439 ;	Twilight-Veined Wand
+Item=141394	;Kris
+Item=141423	;Broadsword
+Item=141370	;Great Axe
+Item=141354	;Partisan
+Item=141439	;Ebon Wand
+Item=141457	;Ash Bow
+Item=141448	;Daggers
 
-; Teren Bergorn <Potions and Reagents>
+; Teren Bergorn <General Merchant>
 [ENTRY]
 CreatureDefID=2395
-Item=20522 ;	Infused Crystals
-Item=20523 ;	Blood Root
-Item=20524 ;	Amber
-Item=20525 ;	Black Pearl
-Item=20526 ;	Portal Stone
-Item=40053 ;	Basic Health Potion: Level 10
-Item=40054 ;	Basic Health Potion: Level 20
-Item=40055 ;	Basic Health Potion: Level 30
-Item=40056 ;	Basic Health Potion: Level 40
-Item=40057 ;	Basic Health Potion: Level 50
-Item=20969 ;	Standard Armor Mold - custom addition
-Item=20970 ; 	Standard Weapon Mold - custom addition
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40054
+Item=40055  ;Basic Health Potion: Level 30  (ADDED)
+Item=40056  ;Basic Health Potion: Level 40  (ADDED)
+Item=40057  ;Basic Health Potion: Level 50  (ADDED)
+Item=20969
+Item=20970
 ; NEW/ADDED POTIONS
 Item=40114  ;Speed Potion
 Item=40115  ;Greater Speed Potion
@@ -1092,65 +485,47 @@ Item=1560006 ; Quality Book Cover
 
 ; **** HEARTWOOD (GREAT FOREST) - Quest level 31/35
 
-; Rueben Stronghorn <Weaponry Merchant>
+; Rueben Stronghorn <Weapon Merchant> (GUESSED)
 [ENTRY]
 CreatureDefID=991
-Item=141429 ;	Twilight Mace
-Item=141423 ;	Allfather's Song Sword
-Item=141370 ;	Storm Coast Greataxe
-Item=141457 ;	Twilightsong Bow
-Item=141354 ;	Runed Ash Staff
-Item=141400 ;	Frenzy Katar
-Item=141394 ;	Starbreeze Stiletto
-Item=141448 ;	Feral Twilight Knife
-Item=141439 ;	Twilight-Veined Wand
-Item=2380 ;	Allfather's Reflective Shield
+Item=141394	;Kris
+Item=141423	;Broadsword
+Item=141370	;Great Axe
+Item=141354	;Partisan
+Item=141439	;Ebon Wand
+Item=141457	;Ash Bow
+Item=141448	;Daggers
 
-; Slitheen Daar <Master Armorer>
+; Slitheen Daar <Armor Merchant>  (GUESSED)
 [ENTRY]
 CreatureDefID=992
-Item=2312 ;	Stargazer Vestment
-Item=2163 ;	Stargazer Armwraps
-Item=2109 ;	Star Gazer Kilt
-Item=2327 ;	Stargazer Drape
-Item=2051 ;	Dark Cobbled Stockingfeet
-Item=2052 ;	Wandering Piper's Stockingfeet
-Item=1991 ;	Fatespinner Cap
-Item=1953 ;	Raven's Nest Shouldercaps
-Item=1920 ;	Cedarweave Cord
-Item=2297 ;	Forestcreeper Gambeson
-Item=2178 ;	Forestcreeper Armbands
-Item=2124 ;	Forest Shadow Leggings
-Item=2341 ;	Forestcreeper Choker
-Item=1962 ;	Future Seeker Shoulders
-Item=1929 ;	Snowcrystal Tatoo Cinch
-Item=2071 ;	Travelling Feline Boots
-Item=2011 ;	Scallywag's Lucky Headwrap
-Item=2282 ;	Abyssian Hauberk
-Item=2081 ;	Trollsbane Boots
-Item=2139 ;	Abyssian Leggings
-Item=2356 ;	Abyssian Throatguard
-Item=1971 ;	Gypsy Glammered Shoulders
-Item=1938 ;	Braided Unikorn Hide Belt
-Item=2263 ;	Warrior Poet Breastplate
-Item=2086 ;	Knight Errant's Boots
+Item=1929	;Faded Cinch
+Item=1962	;Faded Shoulders
+Item=2011	;Faded Headpiece
+Item=2071	;Faded Boots
+Item=2124	;Faded Leggings
+Item=2178	;Faded Armbands
+Item=2258	;Faded Gloves
+Item=2297	;Faded Chestpiece
+Item=2341	;Faded Choker
+Item=2376	;Faded Shield
 Item=7076       ;Shield Ring (Custom addition)
 
-; Gwin Rahmun'd <Potions and Reagents>
+; Gwin Rahmun'd <General Merchant>  (OFFICIAL EER)
 [ENTRY]
 CreatureDefID=1037
-Item=20522 ;	Infused Crystals
-Item=20523 ;	Blood Root
-Item=20524 ;	Amber
-Item=20525 ;	Black Pearl
-Item=20526 ;	Portal Stone
-Item=40053 ;	Basic Health Potion: Level 10
-Item=40054 ;	Basic Health Potion: Level 20
-Item=40055 ;	Basic Health Potion: Level 30
-Item=40056 ;	Basic Health Potion: Level 40
-Item=40057 ;	Basic Health Potion: Level 5
-Item=20973 ;    Key Crafting Component
-Item=20974 ;	Key Crafting Component
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40053  ;Basic Health Potion: Level 10  (ADDED)
+Item=40054  ;Basic Health Potion: Level 20  (ADDED)
+Item=40055  ;Basic Health Potion: Level 30  (ADDED)
+Item=40056
+Item=40057  ;Basic Health Potion: Level 50  (ADDED)
+Item=20973
+Item=20974
 ; NEW POTIONS
 Item=40114  ;Speed Potion
 Item=40115  ;Greater Speed Potion
@@ -1183,149 +558,72 @@ Item=6
 
 ; **** TALL STAND (GREAT FOREST) - Quest level 31/35
 
-; Ellyen Brahr <Crafting Supplier>
+; Ellyen Brahr <Crafting Merchant>
 [ENTRY]
 CreatureDefID=1041
-Item=20968 ;	Basic Armor Mold
-Item=20967 ;	Basic Weapon Mold
-Item=20969 ;	Standard Armor Mold
-Item=20970 ;	Standard Weapon Mold
-Item=20971 ;	Expert Armor Mold
-Item=20972 ;	Expert Weapon Mold
-Item=20973 ;	Adept Armor Mold
-Item=20974 ;	Adept Weapon Mold
-Item=20975 ;	Master Armor Mold
-Item=20976 ;	Master Weapon Mold
+Item=20971	;Expert Armor Mold
+Item=20972	;Expert Weapon Mold
+Item=1560003 ; Magical Book Binding Glue
+Item=1560007 ; Ornate Book Cover
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 
-; Anton Starque <Weaponry Merchant>
+; Anton Starque <Weapon Merchant> (GUESSED)
 [ENTRY]
 CreatureDefID=1038
-Item=2437 ;	Amberweave Vestment
-Item=2518 ;	Amberweave Arms
-Item=2598 ;	Amberweave Slippers
-Item=2478 ;	Amberweave Gloves
-Item=2638 ;	Amberweave Hood
-Item=2558 ;	Amberweave Kilt
-Item=2397 ;	Ambermane Collar
-Item=2702 ;	Amberweave Shouldercaps
-Item=2678 ;	Amberweave Sash
-Item=2448 ;	Hagwoven Vestment
-Item=2528 ;	Hagwoven Sleeves
-Item=2608 ;	Hagwoven Boots
-Item=2568 ;	Hagwoven Breeches
-Item=2488 ;	Hagwoven Handwraps
-Item=2648 ;	Hagwoven Cap
-Item=2407 ;	Hagwoven Throatgaurd
-Item=2708 ;	Hagwoven Spaulders
-Item=2684 ;	Hagwoven Cinch
-Item=2761 ;	Hagwoven Belt
-Item=2458 ;	Rhineworg Leather Doublet
-Item=2578 ;	Rhineworg Leather Leggings
-Item=2538 ;	Rhineworg Leather Sleeves
-Item=2618 ;	Rhineworg Leather Boots
-Item=2498 ;	Rhineworg Leather Gloves
-Item=2417 ;	Rhineworg Leather Gorget
-Item=2618 ;	Rhineworg Leather Boots
-Item=2658 ;	Rhineworg Leather Cap
-Item=2714 ;	Rhineworg Leather Spaulders
-Item=2690 ;	Rhineworg Leather Belt
-Item=2468 ;	Slag Dusted Breastplate
-Item=2588 ;	Slag Dusted Legplates
-Item=2548 ;	Slag Dusted Vambraces
-Item=2628 ;	Slag Dusted Sabatons
-Item=2508 ;	Slag Dusted Gauntlets
-Item=2668 ;	Slag Dusted Helm
-Item=2427 ;	Slag Dusted Gorget
-Item=2720 ;	Slag Dusted Pauldrons
-Item=2696 ;	Slag Dusted Belt
-Item=141496 ;	Troll Slayer Axe
-Item=141500 ;	Troll Legbone Mace
-Item=141492 ;	Troll-Blighter Sword
-Item=141532 ;	Warmace of the Peacock
-Item=141462 ;	Feline's Grace Bow
-Item=141516 ;	Heartseeking Dagger
-Item=141524 ;	Steel Katar
-Item=141520 ;	Urchin-Spine Claw
-Item=141468 ;	Amber Glass Star
-Item=141475 ;	Witchbone Wand
-Item=2371 ;	Warpig Spiked Shield
+Item=141394	;Kris
+Item=141423	;Broadsword
+Item=141370	;Great Axe
+Item=141354	;Partisan
+Item=141439	;Ebon Wand
+Item=141457	;Ash Bow
+Item=141448	;Daggers
 
-; Pepper Longstockings <Container Merchant>  (OFFICIAL EER)
+; Pepper Longstockings <Reagent Merchant>  (OFFICIAL EER)
 [ENTRY]
 CreatureDefID=1045
-Item=2
-Item=3
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+; NEW/ADDED POTIONS
+Item=40054  ;Basic Health Potion: Level 20
+Item=40055  ;Basic Health Potion: Level 30
+Item=40114  ;Speed Potion
+Item=40115  ;Greater Speed Potion
+Item=40116  ;Energy Drink
+Item=40117  ;Agility Potion
+Item=40119  ;Constitution Potion: Level 20
+Item=40120  ;Constitution Potion: Level 30
+Item=40124  ;Armor Boost Potion: Level 20
+Item=40125  ;Armor Boost Potion: Level 30
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 
 ; **** GREEN LINE THICKET (GREAT FOREST) - Quest level 38/39
 
-; Dupree Nolahn <Weaponry and Armor Merchant>  (OFFICIAL EER)
+; Dupree Nolahn <Dupree Nolahn>  (OFFICIAL EER)
 [ENTRY]
 CreatureDefID=1046
-Item=2443	; Spring Rites Garb
-Item=2523	; Spring Rites Armbands
-Item=2603	; Spring Rites Sandals
-Item=2483	; Spring Rites Gloves
-Item=2643	; Spring Rites Headband
-Item=2563	; Spring Rites Kilt
-Item=2402	; Spring Rites Choker
-Item=2705	; Spring Rites Shoulders
-Item=2681	; Spring Rites Cord
-Item=2453	; Legionnaire Jerkin
-Item=2573	; Legionnaire Pants
-Item=2533	; Legionnaire Sleeves
-Item=2613	; Legionnaire Footwraps
-Item=2493	; Legionnaire Mitts
-Item=2653	; Legionnaire Hat
-Item=2412	; Legionnaire Throatguard
-Item=2711	; Legionnaire Spaulders
-Item=2687	; Legionnaire Belt
-Item=2463	; Patchwork Leather Tunic
-Item=2543	; Patchwork Leather Armwraps
-Item=2422	; Patchwork Leather Gorget
-Item=2623	; Patchwork Leather Boots
-Item=2503	; Patchwork Leather Gloves
-Item=2583	; Patchwork Leather Pants
-Item=2693	; Patchwork Leather Belt
-Item=2717	; Patchwork Leather Shoulders
-Item=2663	; Patchwork Leather Headgear
-Item=2473	; Founder's Curiass
-Item=2553	; Founder's Armplates
-Item=2633	; Founder's Footplates
-Item=2593	; Founder's Greaves
-Item=2513	; Founder's Gauntlets
-Item=2673	; Founder's Helmet
-Item=2432	; Founder's Neckplate
-Item=2723	; Founder's Spaulders
-Item=2699	; Founder's Belt
-Item=2393	; Primitive Trollite Buckler
-Item=141508	; Ice Crescent Axe
-Item=141512	; Treekin Stump Mace
-Item=141504	; Icicle Shard Blade
-Item=141540	; Warpig Bashin' Warmace
-Item=141465	; Nightsky Longbow
-Item=141559	; Harlequin's Demented Spear
-Item=141563	; Keg-Tapping Dagger
-Item=141568	; Granite Claw
-Item=141572	; Tribal Dart
-Item=141471	; Spibear Spike Dart
-Item=141478	; Bright Embershard Wand
+Item=141637
+Item=141688
+Item=141606
+Item=141576
+Item=141748
+Item=141723
+Item=141735
 
-; Rhaevyn Nightbreeze <Crafting Supplier>
+; Rhaevyn Nightbreeze <Reagent Merchant>  (OFFICIAL EER)
 [ENTRY]
 CreatureDefID=1047
-Item=20968	; Basic Armor Mold
-Item=20967	; Basic Weapon Mold
-Item=20969	; Standard Armor Mold
-Item=20970	; Standard Weapon Mold
-Item=20971	; Expert Armor Mold
-Item=20972	; Expert Weapon Mold
-Item=20973	; Adept Armor Mold
-Item=20974	; Adept Weapon Mold
-Item=20975	; Master Armor Mold
-Item=20976	; Master Weapon Mold
-
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
 ; NEW/ADDED POTIONS
 Item=40114  ;Speed Potion
 Item=40115  ;Greater Speed Potion
@@ -1340,135 +638,47 @@ Item=40126  ;Armor Boost Potion: Level 40
 
 ; **** IRONBIRCH CAMP (DEADWOOD) - Quest level 41/42
 
-; Auryn Willowbourne <Master Tailor>
+; Auryn Willowbourne <Armor Merchant>  (GUESSED, using Oslis Vendors)
 [ENTRY]
 CreatureDefID=1080
-Item=2523 ; Spring Rites Armbands
-Item=2443 ; Spring Rites Garb
-Item=2603 ; Spring Rites Sandals
-Item=2483 ; Spring Rites Gloves
-Item=2643 ; Spring Rites Headband
-Item=2563 ; Spring Rites Kilt
-Item=2402 ; Spring Rites Choker
-Item=2705 ; Spring Rites Shoulders
-Item=2681 ; Spring Rites Cord
-Item=2988 ; Cloud Seeder Sleeves
-Item=3070 ; Cloud Seeder Vestment
-Item=2909 ; Cloud-Seeder Slippers
-Item=3030 ; Cloud Seeder Gloves
-Item=2868 ; Cloud Seeder Cowl
-Item=2948 ; Cloudseeder Kilt
-Item=3110 ; Cloud Seeder Collar
-Item=2844 ; Malachite Sea Shouldercaps
-Item=2816 ; Skrill Weave Sash
-Item=2993 ; Sleeves of the Rushes
-Item=3075 ; Vestment of the Rushes
-Item=2914 ; Sandals of the Rushes
-Item=3035 ; Gloves of the Rushes
-Item=2873 ; Cap of the Rushes
-Item=2953 ; Kilt of the Rushes
-Item=3115 ; Drape of the Rushes
-Item=2847 ; Changeling Wrought Shoulders
-Item=2819 ; Crystal Beaded Belt
-Item=2533 ; Legionnaire Sleeves
-Item=2453 ; Legionnaire Jerkin
-Item=2613 ; Legionnaire Footwraps
-Item=2493 ; Legionnaire Mitts
-Item=2653 ; Legionnaire Hat
-Item=2573 ; Legionnaire Pants
-Item=2412 ; Legionnaire Throatguard
-Item=2711 ; Legionnaire Spaulders
-Item=2687 ; Legionnaire Belt
-Item=2998 ; Roof-Runner's Armbands
-Item=3080 ; Roof Runner's Tunic
-Item=2918 ; Roof-Runner's Footwraps
-Item=3040 ; Roof Runner's Gloves
-Item=2878 ; Roof-Runner's Cap
-Item=3120 ; Roof-Runner's Throatgaurd
-Item=2850 ; Gloomthief Shoulders
-Item=2825 ; Silver-Buckled Belt
-Item=3003 ; Truth Swindler Armwraps
-Item=3085 ; Truth Swindler Jerkin
-Item=2923 ; Truth Swindler Boots
-Item=3045 ; Truth Swindler Gloves
-Item=2883 ; Truth Swindler Hood
-Item=2963 ; Truth Swindler Legwraps
-Item=3125 ; Truth Swindler Gorget
-Item=1959 ; Truthseeker Shoulders
-Item=2828 ; Knave's Cord
+Item=2893
+Item=2859
+Item=3095
+Item=2973
+Item=3055
+Item=2933
+Item=3135
+Item=3014
+Item=2835
+Item=3154
 
-; Mikki Sootbellower <Master Armorsmith>
+; Mikki Sootbellower <Armor Merchant> (GUESSED, not sure why there's 2 armor merchants here)
 [ENTRY]
 CreatureDefID=1081
-Item=2543 ; Patchwork Leather Armwraps
-Item=2463 ; Patchwork Leather Tunic
-Item=2623 ; Patchwork Leather Boots
-Item=2503 ; Patchwork Leather Gloves
-Item=2663 ; Patchwork Leather Headgear
-Item=2583 ; Patchwork Leather Pants
-Item=2422 ; Patchwork Leather Gorget
-Item=2717 ; Patchwork Leather Shoulders
-Item=2693 ; Patchwork Leather Belt
-Item=3009 ; Fruitful Meditation Sleeves
-Item=3090 ; Fruitful Meditation Jerkin
-Item=2928 ; Fruitful Meditation Boots
-Item=3050 ; Fruitful Meditation Mitts
-Item=2888 ; Fruitful Meditation Circlet
-Item=2968 ; Fruitful Meditation Breeches
-Item=3130 ; Fruitful Meditation Gorget
-Item=2856 ; Celestial Conjurer Pauldrons
-Item=2832 ; Rotbane Bark Belt
-Item=3014 ; Inner Circle Armbands
-Item=3095 ; Inner Circle Hauberk
-Item=2933 ; Inner Circle Boots
-Item=3055 ; Inner Circle Gloves
-Item=2893 ; Inner Circle Crown
-Item=2973 ; Inner Circle Pants
-Item=3135 ; Inner Circle Collar
-Item=2859 ; Storm Gatherer Pauldrons
-Item=2835 ; Amber Shard Belt
-Item=2553 ; Founder's Armplates
-Item=2473 ; Founder's Curiass
-Item=2633 ; Founder's Footplates
-Item=2513 ; Founder's Gauntlets
-Item=2673 ; Founder's Helmet
-Item=2593 ; Founder's Greaves
-Item=2432 ; Founder's Neckplate
-Item=2723 ; Founder's Spaulders
-Item=2699 ; Founder's Belt
-Item=3020 ; Darksteel Dusted Vambraces
-Item=3100 ; Darksteel Dusted Breastplate
-Item=2938 ; Darksteel Dusted Sabatons
-Item=3060 ; Darksteel Dusted Gauntlets
-Item=2899 ; Darksteel Dusted Greathelm
-Item=2978 ; Darksteel Dusted Greaves
-Item=3140 ; Darksteel Dusted Gorget
-Item=2862 ; Darksteel Dusted Pauldrons
-Item=2838 ; Darksteel Essence Belt
-Item=3105 ; Darksteel Plate Curiass
-Item=2943 ; Darksteel Plate Boots
-Item=3065 ; Darksteel Plate Gauntlets
-Item=2904 ; Darksteel Plate Visor
-Item=2983 ; Darksteel Plate Greaves
-Item=3145 ; Darksteel Plate Gorget
-Item=2865 ; ChivalricSteel Spaulders
-Item=2841 ; Iron Maw Belt
+Item=2393	;Simple Buckler
+Item=2422	;Simple Gorget
+Item=2463	;Simple Tunic
+Item=2503	;Simple Gloves
+Item=2543	;Simple Armwraps
+Item=2583	;Simple Pants
+Item=2623	;Simple Boots
+Item=2663	;Simple Headgear
+Item=2693	;Simple Belt
+Item=2717	;Simple Shoulders
 
-; Boomslang Skye <Outpost Rationmaster>
+
+; Boomslang Skye <General Merchant>  (OFFICIAL EER)
 [ENTRY]
 CreatureDefID=1084
-Item=20522 ;	Infused Crystals
-Item=20523 ;	Blood Root
-Item=20524 ;	Amber
-Item=20525 ;	Black Pearl
-Item=20526 ;	Portal Stone
-Item=40053 ;	Basic Health Potion: Level 10
-Item=40054 ;	Basic Health Potion: Level 20
-Item=40055 ;	Basic Health Potion: Level 30
-Item=40056 ;	Basic Health Potion: Level 40
-Item=40057 ;	Basic Health Potion: Level 50
-Item=20971 ; 	Key Crafting Component
-Item=20972 ; 	Key Crafting Component
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40055
+Item=40056  ;Basic Health Potion: Level 40  (ADDED)
+Item=20971
+Item=20972
 ; NEW/ADDED POTIONS
 Item=40114  ;Speed Potion
 Item=40115  ;Greater Speed Potion
@@ -1485,21 +695,18 @@ Item=1560006 ; Quality Book Cover
 
 ; **** NANTE'S WAYSTATION (DUSTSHORE) - Quest level 34/37
 
-; Alecia Moorbourne <Potions and Reagents>
+; Alecia Moorbourne  (OFFICIAL EER)
 [ENTRY]
 CreatureDefID=1459
-Item=20522 ;	Infused Crystals
-Item=20523 ;	Blood Root
-Item=20524 ;	Amber
-Item=20525 ;	Black Pearl
-Item=20526 ;	Portal Stone
-Item=40053 ;	Basic Health Potion: Level 10
-Item=40054 ;	Basic Health Potion: Level 20
-Item=40055 ;	Basic Health Potion: Level 30
-Item=40056 ;	Basic Health Potion: Level 40
-Item=40057 ;	Basic Health Potion: Level 50
-Item=20971 ; 	Key Crafting Component
-Item=20972 ; 	Key Crafting Component
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40055
+Item=40056  ;Basic Health Potion: Level 40  (ADDED)
+Item=20971
+Item=20972
 ; NEW/ADDED POTIONS
 Item=40114  ;Speed Potion
 Item=40115  ;Greater Speed Potion
@@ -1516,21 +723,18 @@ Item=1560006 ; Quality Book Cover
 
 ; **** BAZAART (DUSTSHORE) - Quest level 36/40   Guessing level 35 gear
 
-; Frosty Knightsbridge <Potions and Reagents>
+; Frosty Knightsbridge <General Merchant> (OFFICIAL EER)
 [ENTRY]
 CreatureDefID=1418
-Item=20522 ;	Infused Crystals
-Item=20523 ;	Blood Root
-Item=20524 ;	Amber
-Item=20525 ;	Black Pearl
-Item=20526 ;	Portal Stone
-Item=40053 ;	Basic Health Potion: Level 10
-Item=40054 ;	Basic Health Potion: Level 20
-Item=40055 ;	Basic Health Potion: Level 30
-Item=40056 ;	Basic Health Potion: Level 40
-Item=40057 ;	Basic Health Potion: Level 50
-Item=20971 ; 	Key Crafting Component
-Item=20972 ; 	Key Crafting Component
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40055
+Item=40056  ;Basic Health Potion: Level 40  (ADDED)
+Item=20971
+Item=20972
 ; NEW/ADDED POTIONS
 Item=40114  ;Speed Potion
 Item=40115  ;Greater Speed Potion
@@ -1543,138 +747,40 @@ Item=40126  ;Armor Boost Potion: Level 40
 Item=1560002 ; Strong Book Binding Glue
 Item=1560006 ; Quality Book Cover
 
-; Veridian Muckeater <Crafting Supplier>
+; Veridian Muckeater <Crafting Merchant>  (GUESSED)
 [ENTRY]
 CreatureDefID=1419
-Item=20968 ;	Basic Armor Mold
-Item=20967 ;	Basic Weapon Mold
-Item=20969 ;	Standard Armor Mold
-Item=20970 ;	Standard Weapon Mold
-Item=20971 ;	Expert Armor Mold
-Item=20972 ;	Expert Weapon Mold
-Item=20973 ;	Adept Armor Mold
-Item=20974 ;	Adept Weapon Mold
-Item=20975 ;	Master Armor Mold
-Item=20976 ;	Master Weapon Mold
+Item=20971	;Expert Armor Mold
+Item=20972	;Expert Weapon Mold
 Item=1560003 ; Magical Book Binding Glue
 Item=1560007 ; Ornate Book Cover
 
-; Rolande Black <Master Weaponsmith>
+; Rolande Black <Weapon Merchant>    (GUESSED)
 [ENTRY]
 CreatureDefID=1421
-Item=2371 ;	Warpig Spiked Shield
-Item=2393 ;	Primitive Trollite Buckler
-Item=3150 ;	Dark Steel Plate Buckler
-Item=141508 ;	Ice Crescent Axe
-Item=141512 ;	Treekin Stump Mace
-Item=141504 ;	Icicle Shard Blade
-Item=141540 ;	Warpig Bashin' Warmace
-Item=141465 ;	Nightsky Longbow
-Item=141559 ;	Harlequin's Demented Spear
-Item=141563 ;	Keg-Tapping Dagger
-Item=141568 ;	Granite Claw
-Item=141572 ;	Tribal Dart
-Item=141471 ;	Spibear Spike Dart
-Item=141478 ;	Bright Embershard Wand
-Item=141685 ;	Withering Axe
-Item=141688 ;	Roc Leg Mace
-Item=141680 ;	Goldenbirch Hilted Sword
-Item=141606 ;	Steel Dusted Warsword
-Item=141748 ;	Dawn Treader's Bow
-Item=141576 ;	Whiteoak Staff
-Item=141645 ;	Storm-Eater Katar
-Item=141637 ;	Thunderwalker Shard Stiletto
-Item=141642 ;	Tribal Outcast Claw
-Item=141735 ;	Corrupted Seed Dart
-Item=141723 ;	Forestbourne Wand
-Item=141695 ;	Labrynth Hewn Axe
-Item=141698 ;	Quackatrice Leg Mace
-Item=141692 ;	Gentlebeast's Dueling Sword
-Item=141619 ;	Clover Bladed Greataxe
-Item=141752 ;	Sacred Comet Bow
-Item=141588 ;	Windweaver Staff
-Item=141656 ;	Dagger and Rose Katar
-Item=141652 ;	Spider Whisper Claw
-Item=141649 ;	Summer Witch Rondel
-Item=141740 ;	Corrupted Treekin Splinter Dart
-Item=141727 ;	Dusty Wand
+Item=141637	;Shiv
+Item=141688	;Bone Mace
+Item=141606	;Great Sword
+Item=141576	;Long Staff
+Item=141723	;Poppy Wand
+Item=141748	;Willow Bow
+Item=141735	;Quills
 
-; Brianna Hammerforge <Master Armorsmith>
+; Brianna Hammerforge <Armor Merchant>  (GUESSED)
 [ENTRY]
 CreatureDefID=1422
-Item=2518 ; Amberweave Arms
-Item=2437 ; Amberweave Vestment
-Item=2598 ; Amberweave Slippers
-Item=2638 ; Amberweave Hood
-Item=2558 ; Amberweave Kilt
-Item=2397 ; Ambermane Collar
-Item=2702 ; Amberweave Shouldercaps
-Item=2678 ; Amberweave Sash
-Item=2528 ; Hagwoven Sleeves
-Item=2448 ; Hagwoven Vestment
-Item=2608 ; Hagwoven Boots
-Item=2488 ; Hagwoven Handwraps
-Item=2648 ; Hagwoven Cap
-Item=2568 ; Hagwoven Breeches
-Item=2407 ; Hagwoven Throatgaurd
-Item=2708 ; Hagwoven Spaulders
-Item=2684 ; Hagwoven Cinch
-Item=2538 ; Rhineworg Leather Sleeves
-Item=2458 ; Rhineworg Leather Doublet
-Item=2618 ; Rhineworg Leather Boots
-Item=2498 ; Rhineworg Leather Gloves
-Item=2658 ; Rhineworg Leather Cap
-Item=2578 ; Rhineworg Leather Leggings
-Item=2417 ; Rhineworg Leather Gorget
-Item=2714 ; Rhineworg Leather Spaulders
-Item=2690 ; Rhineworg Leather Belt
-Item=2548 ; Slag Dusted Vambraces
-Item=2468 ; Slag Dusted Breastplate
-Item=2628 ; Slag Dusted Sabatons
-Item=2508 ; Slag Dusted Gauntlets
-Item=2668 ; Slag Dusted Helm
-Item=2588 ; Slag Dusted Legplates
-Item=2427 ; Slag Dusted Gorget
-Item=2720 ; Slag Dusted Pauldrons
-Item=2696 ; Slag Dusted Belt
-Item=2523 ; Spring Rites Armbands
-Item=2443 ; Spring Rites Garb
-Item=2603 ; Spring Rites Sandals
-Item=2483 ; Spring Rites Gloves
-Item=2643 ; Spring Rites Headband
-Item=2563 ; Spring Rites Kilt
-Item=2402 ; Spring Rites Choker
-Item=2705 ; Spring Rites Shoulders
-Item=2681 ; Spring Rites Cord
-Item=2533 ; Legionnaire Sleeves
-Item=2453 ; Legionnaire Jerkin
-Item=2613 ; Legionnaire Footwraps
-Item=2493 ; Legionnaire Mitts
-Item=2653 ; Legionnaire Hat
-Item=2573 ; Legionnaire Pants
-Item=2412 ; Legionnaire Throatguard
-Item=2711 ; Legionnaire Spaulders
-Item=2687 ; Legionnaire Belt
-Item=2543 ; Patchwork Leather Armwraps
-Item=2463 ; Patchwork Leather Tunic
-Item=2623 ; Patchwork Leather Boots
-Item=2503 ; Patchwork Leather Gloves
-Item=2663 ; Patchwork Leather Headgear
-Item=2583 ; Patchwork Leather Pants
-Item=2422 ; Patchwork Leather Gorget
-Item=2717 ; Patchwork Leather Shoulders
-Item=2693 ; Patchwork Leather Belt
-Item=2553 ; Founder's Armplates
-Item=2473 ; Founder's Curiass
-Item=2633 ; Founder's Footplates
-Item=2513 ; Founder's Gauntlets
-Item=2673 ; Founder's Helmet
-Item=2593 ; Founder's Greaves
-Item=2432 ; Founder's Neckplate
-Item=2723 ; Founder's Spaulders
-Item=2699 ; Founder's Belt
+Item=2393	;Simple Buckler
+Item=2422	;Simple Gorget
+Item=2463	;Simple Tunic
+Item=2503	;Simple Gloves
+Item=2543	;Simple Armwraps
+Item=2583	;Simple Pants
+Item=2623	;Simple Boots
+Item=2663	;Simple Headgear
+Item=2693	;Simple Belt
+Item=2717	;Simple Shoulders
 
-; Killian D'Onyx <Container Merchant>
+; Killian D'Onyx <Container Merchant>  (GUESSED)
 [ENTRY]
 CreatureDefID=1424
 Item=9
@@ -1684,7 +790,7 @@ Item=10
 
 ; **** OSLIS (CRACKED ROCK) - Quest level 37/40
 
-; Lynx Furnett <Armorsmith>
+; Lynx Furnett <Armor Merchant>  (OFFICIAL EER)
 [ENTRY]
 CreatureDefID=2972
 Item=2893
@@ -1698,36 +804,29 @@ Item=3014
 Item=2835
 Item=3154
 
-; Twee Amberbeak <Potions and Reagents>
+; Twee Amberbeak <Weapon Merchant>  (OFFICIAL EER)
 [ENTRY]
 CreatureDefID=2971
-Item=20522 ;	Infused Crystals
-Item=20523 ;	Blood Root
-Item=20524 ;	Amber
-Item=20525 ;	Black Pearl
-Item=20526 ;	Portal Stone
-Item=40053 ;	Basic Health Potion: Level 10
-Item=40054 ;	Basic Health Potion: Level 20
-Item=40055 ;	Basic Health Potion: Level 30
-Item=40056 ;	Basic Health Potion: Level 40
-Item=40057 ;	Basic Health Potion: Level 50
-; NEW/ADDED POTIONS
-Item=1560002 ; Strong Book Binding Glue
-Item=1560006 ; Quality Book Cover
+Item=141660
+Item=141709
+Item=141625
+Item=141594
+Item=141756
+Item=141731
+Item=141744
 
-; Logan Plains-Hunter <Potions and Reagents>
+; Logan Plains-Hunter <General Merchant>  (OFFICIAL EER)
 [ENTRY]
 CreatureDefID=1436
-Item=20522 ;	Infused Crystals
-Item=20523 ;	Blood Root
-Item=20524 ;	Amber
-Item=20525 ;	Black Pearl
-Item=20526 ;	Portal Stone
-Item=40053 ;	Basic Health Potion: Level 10
-Item=40054 ;	Basic Health Potion: Level 20
-Item=40055 ;	Basic Health Potion: Level 30
-Item=40056 ;	Basic Health Potion: Level 40
-Item=40057 ;	Basic Health Potion: Level 50
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40055  ;Basic Health Potion: Level 30  (ADDED)
+Item=40056
+Item=20973
+Item=20974
 ; NEW/ADDED POTIONS
 Item=40114  ;Speed Potion
 Item=40115  ;Greater Speed Potion

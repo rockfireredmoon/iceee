@@ -23601,7 +23601,7 @@ might_regen=1
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","8c5e46","9c3f2e","8c8eaa","947d07","947d07"]},["chest"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","8c5e46","9c3f2e","8c8eaa","947d07","947d07"]},["arms"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","8c5e46","9c3f2e","8c8eaa","947d07","947d07"]},["leggings"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","8c5e46","9c3f2e","8c8eaa","947d07","947d07"]},["collar"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","8c5e46","9c3f2e","8c8eaa","947d07","947d07"]},["belt"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","8c5e46","9c3f2e","8c8eaa","947d07","947d07"]},["gloves"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","8c5e46","9c3f2e","8c8eaa","947d07","947d07"]}},["b"]="m",["sk"]={["base"]="6A4829",["horns"]="D4B293",["nails"]="805836",["eye"]="4EFF36",["eye_lid"]="3F2B19",["snout"]="5C4027",["eye_white"]="FFFFFF"},["g"]="m",["r"]="t"}
 level=45
 display_name=Rueben Stronghorn
-sub_name=Weaponry Merchant
+sub_name=Weapon Merchant
 profession=1
 creature_category=Mortal
 rarity=2
@@ -23616,7 +23616,7 @@ might_regen=1
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Heavy-Mid3",["colors"]=["6a1c1c","634a12","262626","4c485f","a77d19","3f0d11"]},["chest"]={["type"]="Armor-Heavy-Mid3",["colors"]=["6a1c1c","634a12","262626","4c485f","a77d19","3f0d11"]},["arms"]={["type"]="Armor-Heavy-Mid3",["colors"]=["6a1c1c","634a12","262626","4c485f","a77d19","3f0d11"]},["leggings"]={["type"]="Armor-Heavy-Mid3",["colors"]=["6a1c1c","634a12","262626","4c485f","a77d19","3f0d11"]},["collar"]={["type"]="Armor-Heavy-Mid3",["colors"]=["6a1c1c","634a12","262626","4c485f","a77d19","3f0d11"]},["belt"]={["type"]="Armor-Heavy-Mid3",["colors"]=["6a1c1c","634a12","262626","4c485f","a77d19","3f0d11"]},["gloves"]={["type"]="Armor-Light-Mid2",["colors"]=["6a1c1c","634a12","a77d19","a77d19","a77d19"]}},["b"]="m",["sk"]={["ear"]="0A550F",["lower_jaw"]="AA0000",["nails"]="0E0E0E",["horns"]="AA0000",["stripes"]="AA0000",["eye"]="0A550F",["base"]="0A550F",["diamonds"]="AA0000"},["g"]="m",["r"]="l"}
 level=45
 display_name=Slitheen Daar
-sub_name=Master Armorer
+sub_name=Armor Merchant
 profession=1
 creature_category=Mortal
 rarity=2
@@ -24529,7 +24529,7 @@ might_regen=1
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Low1",["colors"]=[]},["chest"]={["type"]="Armor-Cloth-Low1",["colors"]=["905eaa","bfbf9f","cd901f","a74755"]},["leggings"]={["type"]="Armor-Cloth-Mid4",["colors"]=["e8d7b9","f6c52e","cd901f","a74755","cfa43c"]},["belt"]={["type"]="Armor-Cloth-Low1",["colors"]=[]},["collar"]={["type"]="Armor-Cloth-Low1",["colors"]=[]},["arms"]={["type"]="Armor-Cloth-Low1",["colors"]=["7c6ba2","905eaa","e8af5e","905eaa"]}},["b"]="n",["sk"]={["wood"]="6A3425",["crest"]="AA351D",["eyes"]="94660D",["foliage"]="AA351D",["fringe"]="AA351D"},["g"]="f",["r"]="q"}
 level=45
 display_name=Gwin Rahmun'd
-sub_name=Potions and Reagents
+sub_name=General Merchant
 profession=1
 creature_category=Mortal
 rarity=2
@@ -24544,7 +24544,7 @@ might_regen=1
 appearance=c2:{["h"]=0,["b"]="m",["sk"]={["joints"]="6A0000",["brass"]="947D07",["wood_2"]="947D07",["eye"]="947D07",["wood_1"]="6A0000"},["r"]="w",["g"]="m",["sz"]="1.2"}
 level=45
 display_name=Anton Starque
-sub_name=Weaponry Merchant
+sub_name=Weapon Merchant
 profession=1
 creature_category=Mortal
 rarity=2
@@ -24589,7 +24589,7 @@ might_regen=1
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Mid5",["colors"]=["5a5a7c","aa2e2e","a5a19c","5a5a7c","6c6c6c"]},["leggings"]={["type"]="Armor-Cloth-Mid1",["colors"]=["45476a","ac6432","704525","aa2e2e","54573b"]},["belt"]={["type"]="Armor-Light-High1",["colors"]=["5a5a7c","aa2e2e","93614f","777471","8f7288"]},["chest"]={["type"]="Armor-Cloth-Mid5",["colors"]=["45476a","aa2e2e","3f3f3f","aa2e2e","6c6c6c"]},["arms"]={["type"]="Armor-Cloth-Mid5",["colors"]=["5a5a7c","aa2e2e","a5a19c","aa2e2e","6c6c6c"]}},["b"]="m",["sk"]={["plates"]="5B4B4B",["eyeball"]="000000",["lips"]="792723",["skin"]="823836",["eye"]="00FF0F",["horns"]="BAAA80",["hair"]="151515",["teeth"]="999084"},["g"]="f",["r"]="e"}
 level=45
 display_name=Ellyen Brahr
-sub_name=Crafting Supplier
+sub_name=Crafting Merchant
 profession=1
 creature_category=Mortal
 rarity=2
@@ -24648,7 +24648,7 @@ might_regen=1
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-CC-Clothing2",["colors"]=[]},["leggings"]={["type"]="Armor-Cloth-Low2",["colors"]=["4e5668","4e5668","4e5668","4e5668"]},["arms"]={["type"]="Armor-Cloth-Low1",["colors"]=["474d39","4e5668","e8af5e","6e85bb"]},["chest"]={["type"]="Armor-CC-Clothing2",["colors"]=[]}},["b"]="n",["sk"]={["hands_feet"]="C8B9AD",["eye_white"]="E1E1E1",["head_highlight"]="BBACA1",["base"]="AAAAAA",["eye"]="502C20",["nails"]="393532",["nose"]="746E84",["inner_ear"]="D2C1B4"},["g"]="f",["r"]="g"}
 level=45
 display_name=Pepper Longstockings
-sub_name=Container Merchant
+sub_name=Reagent Merchant
 profession=1
 creature_category=Mortal
 rarity=2
@@ -24663,7 +24663,7 @@ might_regen=1
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Heavy-Low2",["colors"]=["947d07","32356a","aaaaaa"]},["chest"]={["type"]="Armor-Heavy-Mid3",["colors"]=["6e72aa","947d07","aaaaaa","32356a","947d07","3f0d11"]},["arms"]={["type"]="Armor-Heavy-Low2",["colors"]=["947d07","32356a","aaaaaa"]},["leggings"]={["type"]="Armor-Heavy-Low2",["colors"]=["947d07","32356a","aaaaaa"]},["collar"]={["type"]="Armor-Heavy-Low2",["colors"]=["947d07","32356a","aaaaaa"]},["belt"]={["type"]="Armor-Heavy-Low2",["colors"]=["947d07","32356a","947d07"]},["gloves"]={["type"]="Armor-Heavy-Low2",["colors"]=["947d07","32356a","aaaaaa"]}},["b"]="m",["sk"]={["fingers_hooves"]="B69E89",["snout"]="D3C2AB",["eye_symbol"]="7F420B",["base"]="D46F12",["horns"]="B08557",["eye"]="99CBD9",["eye_white"]="FFFFFF",["nose"]="69502D",["inner_ear"]="E7D4BB"},["g"]="m",["r"]="h"}
 level=45
 display_name=Dupree Nolahn
-sub_name=Weapon and Armor Merchant
+sub_name=Weapon Merchant
 profession=1
 creature_category=Mortal
 rarity=2
@@ -24678,7 +24678,7 @@ might_regen=1
 appearance=c2:{["h"]=1,["c"]={["chest"]={["type"]="Armor-Medium-Low3",["colors"]=["3f3f3f","666335","877a62","8f9087","b68f67","4c3930"]},["leggings"]={["type"]="Armor-Medium-Low3",["colors"]=["3f3f3f","666335","877a62","8f9087","b68f67","4c3930"]},["collar"]={["type"]="Armor-Medium-Low3",["colors"]=["3f3f3f","666335","877a62","8f9087","b68f67","4c3930"]},["belt"]={["type"]="Armor-Medium-Low3",["colors"]=["3f3f3f","666335","877a62","8f9087","b68f67","4c3930"]},["arms"]={["type"]="Armor-Medium-Low3",["colors"]=["3f3f3f","666335","877a62","8f9087","b68f67","4c3930"]}},["b"]="m",["sk"]={["feet"]="6A6A6A",["head_feathers"]="6A0000",["beak"]="6A6A6A",["eye_white"]="00FF0F",["crest"]="151515",["shoulders"]="6A0000",["tail"]="6A0000",["base"]="6A0000",["eye_lid"]="6A0000",["face_highlight"]="151515",["eye"]="00FF0F",["chest"]="6A0000",["legs_hands"]="6A0000",["diamonds"]="6A0000"},["g"]="f",["r"]="v"}
 level=45
 display_name=Rhaevyn Nightbreeze
-sub_name=Crafting Supplier
+sub_name=Reagent Merchant
 profession=1
 creature_category=Mortal
 rarity=2
@@ -25385,7 +25385,7 @@ might_regen=1
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Female-Fancy1",["colors"]=[]},["chest"]={["type"]="Armor-Cloth-Female-Fancy1",["colors"]=[]},["leggings"]={["type"]="Armor-Cloth-Female-Fancy1",["colors"]=[]},["belt"]={["type"]="Armor-Cloth-Female-Fancy1",["colors"]=[]},["collar"]={["type"]="Armor-Cloth-Female-Fancy1",["colors"]=[]},["arms"]={["type"]="Armor-Cloth-Female-Fancy1",["colors"]=[]}},["b"]="m",["sk"]={["wood"]="947D38",["crest"]="7E943B",["eyes"]="6AE9E9",["foliage"]="7E943B",["fringe"]="7E943B"},["g"]="f",["r"]="q"}
 level=45
 display_name=Auryn Willowbourne
-sub_name=Master Tailor
+sub_name=Armor Merchant
 profession=1
 creature_category=Mortal
 rarity=2
@@ -25400,7 +25400,7 @@ might_regen=1
 appearance=c2:{["a"]=[{["type"]="Item-1hHammer-Basic1",["node"]="right_hand",["colors"]=["343F3F","866637","7F7F7F"]}],["h"]=0,["c"]={["boots"]={["type"]="Armor-Light-Mid4",["colors"]=[]},["chest"]={["type"]="Armor-CC-Clothing8",["colors"]=["4d4646","3d312f","8e7c73","65534b"]},["leggings"]={["type"]="Armor-Light-Mid4",["colors"]=[]},["belt"]={["type"]="Armor-Light-Mid4",["colors"]=[]},["arms"]={["type"]="Armor-Light-Mid4",["colors"]=[]},["gloves"]={["type"]="Armor-Light-Mid4",["colors"]=[]}},["b"]="m",["sk"]={["fingers_hooves"]="B69E89",["snout"]="D3C2AB",["eye_symbol"]="BCAD98",["base"]="CF9B65",["horns"]="B08557",["eye"]="99CBD9",["eye_white"]="FFFFFF",["nose"]="69502D",["inner_ear"]="E7D4BB"},["g"]="m",["r"]="h"}
 level=45
 display_name=Mikki Sootbellower
-sub_name=Master Armorsmith
+sub_name=Armor Merchant
 profession=1
 creature_category=Mortal
 rarity=2
@@ -25467,7 +25467,7 @@ might_regen=1
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Medium-Low6",["colors"]=[]},["chest"]={["type"]="Armor-Medium-Low6",["colors"]=[]},["arms"]={["type"]="Armor-Medium-Low6",["colors"]=[]},["leggings"]={["type"]="Armor-Medium-Low6",["colors"]=[]},["collar"]={["type"]="Armor-Medium-Low6",["colors"]=[]},["belt"]={["type"]="Armor-Medium-Low6",["colors"]=[]},["gloves"]={["type"]="Armor-Medium-Low6",["colors"]=[]}},["b"]="r",["sk"]={["skin"]="6E72AA",["tusks"]="CEC151",["eyeball"]="C7C5C5",["hair"]="6A6A6A",["eye"]="E8D057"},["g"]="m",["r"]="s"}
 level=45
 display_name=Boomslang Skye
-sub_name=Outpost Rationmaster
+sub_name=General Merchant
 profession=1
 creature_category=Mortal
 rarity=2
@@ -32988,7 +32988,7 @@ might_regen=1
 appearance=c2:{["h"]=0,["c"]={["leggings"]={["type"]="Armor-CC-Clothing1",["colors"]=["8c5e46","515161","552c26"]},["boots"]={["type"]="Armor-CC-Clothing1",["colors"]=["8c5e46","515161","552c26"]},["chest"]={["type"]="Armor-CC-Clothing6",["colors"]=[]}},["b"]="n",["sk"]={["detail"]="6A586A",["skin"]="C0C3E9",["hair"]="E9C57F"},["g"]="m",["r"]="y"}
 level=45
 display_name=Frosty Knightsbridge
-sub_name=Potions And Reagents
+sub_name=General Merchant
 profession=1
 creature_category=Mortal
 rarity=2
@@ -33003,7 +33003,7 @@ might_regen=1
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-High2",["colors"]=["5d461a","5d461a","5d461a","5d461a","5d461a","5d461a"]},["leggings"]={["type"]="Armor-CC-Clothing8",["colors"]=["5d461a","676848","b6b096","c5b770"]},["belt"]={["type"]="Armor-Cloth-Low1",["colors"]=["5d461a","676848","b6b096","c5b770"]},["chest"]={["type"]="Armor-Medium-Mid1",["colors"]=["5d461a","676848","b6b096","c5b770"]}},["b"]="m",["sk"]={["skin"]="606044",["tusks"]="CEC151",["eyeball"]="C7C5C5",["hair"]="C77D48",["eye"]="E8D057"},["g"]="m",["r"]="s"}
 level=45
 display_name=Veridian Muckeater
-sub_name=Crafting Supplier
+sub_name=Crafting Merchant
 profession=1
 creature_category=Mortal
 rarity=2
@@ -33032,7 +33032,7 @@ might_regen=1
 appearance=c2:{["h"]=0,["c"]={["leggings"]={["type"]="Armor-Light-Mid3",["colors"]=["54595c","8f784e","853b16","d4c9b3","a19682","846e57"]},["belt"]={["type"]="Armor-Cloth-Low8",["colors"]=["54595c","8f784e","853b16","d4c9b3"]},["gloves"]={["type"]="Armor-Cloth-Low8",["colors"]=["54595c","8f784e","853b16","d4c9b3"]}},["b"]="m",["sk"]={["plates"]="940000",["skin"]="3F3F3F",["eyeball"]="999999",["eye"]="43A364",["horns"]="674B4B",["nails"]="4D4141",["teeth"]="BABABA"},["g"]="m",["r"]="e"}
 level=45
 display_name=Rolande Black
-sub_name=Master Weaponsmith
+sub_name=Weapon Merchant
 profession=1
 creature_category=Mortal
 rarity=2
@@ -33047,7 +33047,7 @@ might_regen=1
 appearance=c2:{["a"]=[{["type"]="Item-1hHammer-Basic1",["node"]="right_hand"}],["h"]=0,["c"]={["boots"]={["type"]="Armor-Heavy-Mid2",["colors"]=["7b4d28","3d312f","8e7c73"]},["leggings"]={["type"]="Armor-Light-Low1",["colors"]=["7b4d28","3d312f","8e7c73","94702e"]},["gloves"]={["type"]="Armor-Cloth-Low7",["colors"]=["7b4d28","3d312f","8e7c73","94702e","7c6c63"]},["chest"]={["type"]="Armor-Light-Mid4",["colors"]=["7b4d28","3d312f","8e7c73","94702e","7c6c63"]}},["b"]="m",["sk"]={["hair"]="7C80BF",["lips"]="697261",["skin"]="7F6B30",["horns"]="A6A6A6",["eye"]="7F3F7F",["eyeball"]="808080",["pupil"]="2B2B2B",["fur"]="BE892B"},["g"]="f",["r"]="p"}
 level=45
 display_name=Brianna Hammerforge
-sub_name=Master Armorsmith
+sub_name=Armor Merchant
 profession=1
 creature_category=Mortal
 rarity=2
@@ -33363,7 +33363,7 @@ might_regen=1
 appearance=n4:{["c"]="Horde-Stone_Lion",["sk"]={["fur"]="AA7159",["cloth"]="5056AA",["detail"]="D4D4D4",["band"]="FFFFFF",["eye"]="F2D16E"}}
 level=45
 display_name=Logan Plains-Hunter
-sub_name=Potions And Reagents
+sub_name=General Merchant
 profession=1
 creature_category=Mortal
 rarity=2
@@ -33841,7 +33841,7 @@ might_regen=1
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Female-Fancy2",["colors"]=[]},["chest"]={["type"]="Armor-Cloth-Female-Fancy2",["colors"]=[]},["leggings"]={["type"]="Armor-Cloth-Female-Fancy2",["colors"]=[]},["belt"]={["type"]="Armor-Cloth-Female-Fancy2",["colors"]=[]},["collar"]={["type"]="Armor-Cloth-Female-Fancy2",["colors"]=[]},["arms"]={["type"]="Armor-Cloth-Female-Fancy2",["colors"]=[]}},["b"]="n",["sk"]={["hair"]="BF4538",["lips"]="697261",["skin"]="7F6B45",["horns"]="A6A6A6",["eye"]="537689",["eyeball"]="808080",["pupil"]="2B2B2B",["fur"]="BE892B"},["g"]="f",["r"]="p"}
 level=45
 display_name=Alecia Moorbourne
-sub_name=Potions and Reagents
+sub_name=General Merchant
 profession=1
 creature_category=Mortal
 rarity=2
@@ -42203,7 +42203,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=1,["c"]={["boots"]={["type"]="Armor-Heavy-Mid1",["colors"]=["6a6a6a","2a2a2a","000994"]},["chest"]={["type"]="Armor-Heavy-Mid1",["colors"]=["6a6a6a","2a2a2a","000994"]},["arms"]={["type"]="Armor-Heavy-Mid1",["colors"]=["6a6a6a","2a2a2a","000994"]},["leggings"]={["type"]="Armor-Heavy-Mid1",["colors"]=["6a6a6a","2a2a2a","000994"]},["collar"]={["type"]="Armor-Heavy-Mid1",["colors"]=["6a6a6a","2a2a2a","000994"]},["belt"]={["type"]="Armor-Heavy-Mid1",["colors"]=["6a6a6a","2a2a2a","000994"]},["gloves"]={["type"]="Armor-Heavy-Mid1",["colors"]=["6a6a6a","2a2a2a","000994"]}},["b"]="m",["sk"]={["hands_feet"]="AA580F",["eye_white"]="DDD7D2",["snout"]="AA580F",["teeth"]="DDD7D2",["tail"]="000000",["base"]="000000",["eye_lid"]="000000",["nails"]="000000",["eye"]="000000",["inner_ear"]="AA580F",["nose"]="000000",["chest"]="AA580F"},["g"]="m",["r"]="o"}
 level=45
 display_name=Alex Bitterblade
-sub_name=Master Weaponsmith
+sub_name=Weapon Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -42271,7 +42271,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=0,["c"]={["leggings"]={["type"]="Armor-CC-Clothing5",["colors"]=[]},["boots"]={["type"]="Armor-CC-Clothing5",["colors"]=[]},["chest"]={["type"]="Armor-CC-Clothing5",["colors"]=[]}},["b"]="n",["sk"]={["hair"]="2B2B2B",["lips"]="537689",["skin"]="9CBFBF",["horns"]="537689",["eye"]="3F2B05",["eyeball"]="FFFFFF",["pupil"]="000000",["fur"]="000000"},["g"]="f",["r"]="p"}
 level=45
 display_name=Mara Hur
-sub_name=Potions and Reagents
+sub_name=General Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -42501,7 +42501,7 @@ might_regen=1
 appearance=c2:{["h"]=0,["c"]={["leggings"]={["type"]="Armor-CC-Clothing8",["colors"]=[]},["boots"]={["type"]="Armor-CC-Clothing8",["colors"]=[]},["chest"]={["type"]="Armor-CC-Clothing8",["colors"]=[]}},["b"]="m",["sk"]={["hair"]="BF4538",["lips"]="697261",["skin"]="7E855B",["horns"]="A6A6A6",["eye"]="537689",["eyeball"]="808080",["pupil"]="2B2B2B",["fur"]="BE892B"},["g"]="f",["r"]="p"}
 level=45
 display_name=Gwynnith Starfury
-sub_name=Crafting Supplier
+sub_name=Crafting Merchant
 profession=1
 creature_category=Mortal
 rarity=2
@@ -45063,7 +45063,7 @@ channeling_break_chance=500
 appearance=c2:{["a"]=[{["type"]="Item-1hHammer-Basic1",["node"]="right_hand"}],["h"]=0,["c"]={["leggings"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=[]},["boots"]={["type"]="Armor-Light-Low1",["colors"]=["2b2d33","934c13","695d4a","94702e"]}},["b"]="m",["sk"]={["plates"]="AAAAAA",["skin"]="6A3425",["eyeball"]="999999",["eye"]="000AAA",["horns"]="AAAAAA",["nails"]="4D4141",["teeth"]="BABABA"},["g"]="m",["r"]="e"}
 level=45
 display_name=Lex Ridare
-sub_name=Master Weaponsmith
+sub_name=Weapon Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -45480,7 +45480,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Low7",["colors"]=["aa580f","aa7429","7c6f61","7f7f7f","7f0000"]},["leggings"]={["type"]="Armor-Cloth-Low7",["colors"]=["aa580f","aa7429","7c6f61","7f7f7f","7f0000"]},["belt"]={["type"]="Armor-Cloth-Low7",["colors"]=["aa580f","aa7429","7c6f61","7f7f7f","7f0000"]},["chest"]={["type"]="Armor-Cloth-Low7",["colors"]=["aa580f","aa7429","7c6f61","7f7f7f","7f0000"]},["gloves"]={["type"]="Armor-Cloth-Low7",["colors"]=["aa580f","aa7429","7c6f61","7f7f7f","7f0000"]}},["b"]="r",["sk"]={["skin"]="594B6A",["tusks"]="C7C5C5",["eyeball"]="C7C5C5",["hair"]="2A2A2A",["eye"]="E9E800"},["g"]="m",["r"]="s"}
 level=45
 display_name=Snerd Danelaw
-sub_name=Potions and Reagents
+sub_name=General Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -50772,7 +50772,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Medium-Low6",["colors"]=["7c80bf","6a6a6a","6a4829","806b3e","6a3847","c4a34e"]},["chest"]={["type"]="Armor-Medium-Low6",["colors"]=["7c80bf","6a6a6a","6a4829","806b3e","6a3847","c4a34e"]},["arms"]={["type"]="Armor-Medium-Low6",["colors"]=["7c80bf","6a6a6a","6a4829","806b3e","6a3847","c4a34e"]},["leggings"]={["type"]="Armor-Medium-Low6",["colors"]=["7c80bf","6a6a6a","6a4829","806b3e","6a3847","c4a34e"]},["collar"]={["type"]="Armor-Medium-Low6",["colors"]=["7c80bf","6a6a6a","6a4829","806b3e","6a3847","c4a34e"]},["belt"]={["type"]="Armor-Medium-Low6",["colors"]=["7c80bf","6a6a6a","6a4829","806b3e","6a3847","c4a34e"]},["gloves"]={["type"]="Armor-Medium-Low6",["colors"]=["7c80bf","6a6a6a","6a4829","806b3e","6a3847","c4a34e"]}},["b"]="m",["sk"]={["detail"]="BFBFBF",["skin"]="D49053",["hair"]="6A4909"},["g"]="m",["r"]="y"}
 level=45
 display_name=Gul Yathbane
-sub_name=Master Armorsmith
+sub_name=Armor Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -50801,7 +50801,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=1,["c"]={["boots"]={["type"]="Armor-Medium-Mid2",["colors"]=["554704","4b1f20","60503e","8b7f86","a19a84","524432","3d322c"]},["chest"]={["type"]="Armor-Medium-Mid2",["colors"]=["554704","4b1f20","60503e","8b7f86","a19a84","524432","3d322c"]},["arms"]={["type"]="Armor-Medium-Mid2",["colors"]=["554704","4b1f20","60503e","8b7f86","a19a84","524432","3d322c"]},["leggings"]={["type"]="Armor-Medium-Mid2",["colors"]=["554704","4b1f20","60503e","8b7f86","a19a84","524432","3d322c"]},["collar"]={["type"]="Armor-Medium-Mid2",["colors"]=["554704","4b1f20","60503e","8b7f86","a19a84","524432","3d322c"]},["belt"]={["type"]="Armor-Medium-Mid2",["colors"]=["554704","4b1f20","60503e","8b7f86","a19a84","524432","3d322c"]},["gloves"]={["type"]="Armor-Medium-Mid2",["colors"]=["554704","4b1f20","60503e","8b7f86","a19a84","524432","3d322c"]}},["b"]="n",["sk"]={["eye_whites"]="FFFFFF",["highlights"]="CAB9A8",["mask"]="BF824B",["base"]="BF824B",["eye"]="00C6FF",["tips"]="BF824B",["nose"]="575757",["chest"]="CAB9A8"},["g"]="m",["r"]="d"}
 level=45
 display_name=Blane Crav
-sub_name=Master Weaponsmith
+sub_name=Weapon Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -50830,7 +50830,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Low7",["colors"]=["2a2a2a","b38f68","7c6f61","c99877","b76057"]},["chest"]={["type"]="Armor-Cloth-Mid5",["colors"]=["2a2a2a","552c26","000000","d29e6f","6c6c6c"]},["leggings"]={["type"]="Armor-Cloth-Low7",["colors"]=["552c26","552c26","552c26","c99877","b76057"]},["belt"]={["type"]="Armor-Cloth-Low7",["colors"]=["2a2a2a","b38f68","7c6f61","c99877","2a2a2a"]},["arms"]={["type"]="Armor-Cloth-Mid5",["colors"]=["2a2a2a","552c26","a5a19c","d29e6f","6c6c6c"]},["gloves"]={["type"]="Armor-Cloth-Low7",["colors"]=["2a2a2a","b38f68","7c6f61","c99877","b76057"]}},["b"]="n",["sk"]={["hair"]="5A61BF",["lips"]="697261",["skin"]="AAAAAA",["horns"]="A6A6A6",["eye"]="007F07",["eyeball"]="808080",["pupil"]="2B2B2B",["fur"]="BE892B"},["g"]="f",["r"]="p"}
 level=45
 display_name=Holly Hillblight
-sub_name=Potions and Reagents
+sub_name=General Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -50859,7 +50859,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Light-Mid4",["colors"]=["005505","3d312f","8e7c73","65534b","7c6c63"]},["chest"]={["type"]="Armor-Light-Mid4",["colors"]=["005505","3d312f","8e7c73","65534b","7c6c63"]},["arms"]={["type"]="Armor-Light-Mid4",["colors"]=["005505","3d312f","8e7c73","65534b","7c6c63"]},["leggings"]={["type"]="Armor-Light-Mid4",["colors"]=["3d312f","005505","8e7c73","65534b","7c6c63"]},["collar"]={["type"]="Armor-Light-Mid4",["colors"]=["005505","3d312f","8e7c73","65534b","7c6c63"]},["belt"]={["type"]="Armor-Light-Mid4",["colors"]=["005505","3d312f","8e7c73","65534b","7c6c63"]},["gloves"]={["type"]="Armor-Light-Mid4",["colors"]=["005505","3d312f","8e7c73","65534b","7c6c63"]}},["b"]="m",["sk"]={["plates"]="675757",["skin"]="6A3618",["eyeball"]="999999",["eye"]="43A364",["horns"]="674B4B",["nails"]="4D4141",["teeth"]="BABABA"},["g"]="m",["r"]="e"}
 level=45
 display_name=Zim Bronzefold
-sub_name=Mater Armorsmith
+sub_name=Armor Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -50888,7 +50888,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Light-Low2",["colors"]=["6b5a7f","c39e81","75685b","91795e","826d5e","8b7b8d"]},["chest"]={["type"]="Armor-Light-Low2",["colors"]=["6b5a7f","c39e81","75685b","91795e","826d5e","8b7b8d"]},["arms"]={["type"]="Armor-Light-Low2",["colors"]=["6b5a7f","c39e81","75685b","91795e","826d5e","8b7b8d"]},["leggings"]={["type"]="Armor-Light-Low2",["colors"]=["6b5a7f","c39e81","75685b","91795e","826d5e","8b7b8d"]},["collar"]={["type"]="Armor-Light-Low2",["colors"]=["6b5a7f","c39e81","75685b","91795e","826d5e","8b7b8d"]},["belt"]={["type"]="Armor-Light-Low2",["colors"]=["6b5a7f","c39e81","75685b","91795e","826d5e","8b7b8d"]},["gloves"]={["type"]="Armor-Light-Low2",["colors"]=["6b5a7f","c39e81","75685b","91795e","826d5e","8b7b8d"]}},["b"]="m",["sk"]={["hands_feet"]="8F7E7A",["shoulders"]="7C6965",["nails"]="AC7E74",["mask"]="947E7A",["base"]="C2AD95",["eye_white"]="E2D4B7",["eye"]="6A4652",["nose"]="7C6965",["ponytail"]="6A5A56",["ears"]="D5C1A5"},["g"]="f",["r"]="r"}
 level=45
 display_name=Gretta Gouge
-sub_name=Master Weaponsmith
+sub_name=Weapon Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -50917,7 +50917,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Female-Casual1",["colors"]=[]},["chest"]={["type"]="Armor-Cloth-Female-Casual1",["colors"]=[]},["leggings"]={["type"]="Armor-Cloth-Female-Casual1",["colors"]=[]},["belt"]={["type"]="Armor-Cloth-Female-Casual1",["colors"]=[]},["collar"]={["type"]="Armor-Cloth-Female-Casual1",["colors"]=[]},["arms"]={["type"]="Armor-Cloth-Female-Casual1",["colors"]=[]}},["b"]="m",["sk"]={["eye_white"]="FFFBFB",["highlights"]="CBB09E",["shade"]="AAAAAA",["face_highlights"]="CEC3B0",["base"]="AAAAAA",["eye"]="00AA0A",["nose"]="AAAAAA",["tips"]="241C19"},["g"]="f",["r"]="d"}
 level=45
 display_name=Anai Derin
-sub_name=Potions and Reagents
+sub_name=General Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -50946,7 +50946,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=["d4d4d4","9f5147","74756d","f8e69e","634930","989960","fcfefb","36454a"]},["chest"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=["d4d4d4","9f5147","74756d","f8e69e","634930","6a5905","fcfefb","36454a"]},["leggings"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=["2b2d33","f0b0b1","d4d4d4","910b08","e2e7e9","d885b9","f5d29d"]},["belt"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=["d4d4d4","9f5147","74756d","f8e69e","634930","989960","fcfefb","36454a"]},["collar"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=["d4d4d4","9f5147","74756d","f8e69e","634930","989960","fcfefb","36454a"]},["arms"]={["type"]="Armor-Cloth-Mid4",["colors"]=["6a60a5","d4d4d4","cd901f","a74755","d4d4d4"]}},["b"]="m",["sk"]={["eye_whites"]="FFFFFF",["highlights"]="CAB9A8",["mask"]="261D17",["base"]="896A56",["eye"]="FFD70D",["tips"]="544234",["nose"]="575757",["chest"]="CAB9A8"},["g"]="m",["r"]="d"}
 level=45
 display_name=Finn Afoot
-sub_name=Potions and Reagents
+sub_name=General Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -50975,7 +50975,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Medium-Mid4",["colors"]=["484f58","7f7f7f","464b94","472c25","787870","464b94","be8c4d","5e2e22"]},["chest"]={["type"]="Armor-Medium-Mid4",["colors"]=["484f58","7f7f7f","464b94","7f7f7f","787870","d69749","be8c4d","7f7f7f"]},["arms"]={["type"]="Armor-Medium-Mid4",["colors"]=["484f58","7f7f7f","464b94","472c25","787870","d69749","be8c4d","5e2e22"]},["leggings"]={["type"]="Armor-Medium-Mid4",["colors"]=["464b94","7f7f7f","464b94","472c25","464b94","d69749","be8c4d","5e2e22"]},["collar"]={["type"]="Armor-Medium-Mid4",["colors"]=["484f58","7f7f7f","464b94","472c25","787870","d69749","be8c4d","5e2e22"]},["belt"]={["type"]="Armor-Medium-Mid4",["colors"]=["484f58","7f7f7f","464b94","472c25","787870","d69749","be8c4d","5e2e22"]},["gloves"]={["type"]="Armor-Medium-Mid4",["colors"]=["484f58","7f7f7f","464b94","472c25","787870","d69749","be8c4d","5e2e22"]}},["b"]="m",["sk"]={["eye_whites"]="FFFFFF",["highlights"]="7F5543",["mask"]="261D17",["base"]="7F570B",["eye"]="00FF0F",["tips"]="544234",["nose"]="575757",["chest"]="CAB9A8"},["g"]="m",["r"]="d"}
 level=45
 display_name=Vangel Wayward
-sub_name=Master Armorsmith
+sub_name=Armor Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -51004,7 +51004,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=1,["c"]={["boots"]={["type"]="Armor-Medium-Low2",["colors"]=[]},["chest"]={["type"]="Armor-Medium-Low2",["colors"]=[]},["arms"]={["type"]="Armor-Medium-Low2",["colors"]=[]},["leggings"]={["type"]="Armor-Medium-Low2",["colors"]=[]},["collar"]={["type"]="Armor-Medium-Low2",["colors"]=[]},["belt"]={["type"]="Armor-Medium-Low2",["colors"]=[]},["gloves"]={["type"]="Armor-Medium-Low2",["colors"]=[]}},["b"]="m",["sk"]={["ears"]="B5A492",["eye_white"]="FFFFFF",["highlight"]="A89886",["mask"]="7F7F7F",["base"]="7F7F7F",["eye"]="424A4B",["nails"]="795A3D",["nose"]="312419",["eye_brow"]="402F21"},["g"]="m",["r"]="r"}
 level=45
 display_name=Dekard Rove
-sub_name=Master Weaponsmith
+sub_name=Weapon Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -54152,7 +54152,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=2,["c"]={["leggings"]={["type"]="Armor-CC-Clothing1",["colors"]=["8c5e46","515161","8c8eaa"]},["boots"]={["type"]="Armor-CC-Warrior",["colors"]=["603913","515161","959595"]},["chest"]={["type"]="Armor-Cloth-Low4",["colors"]=["515161","8c8eaa","dbab6d","a79070","e1c057"]}},["b"]="n",["sk"]={["hands_feet"]="B79059",["inner_ear"]="B79059",["nails"]="242424",["base"]="BF8235",["head_symbol"]="947549",["eye_white"]="CBCBCB",["eye"]="5E8556",["snout"]="CCA165",["nose"]="885935",["chest"]="C89E64"},["g"]="f",["r"]="f"}
 level=45
 display_name=Jenny Dot
-sub_name=Armorsmith
+sub_name=Armor Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -54208,7 +54208,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=1,["c"]={["boots"]={["type"]="Armor-Light-Low3",["colors"]=["45476a","47332b","3f313e","906954","947d07"]},["chest"]={["type"]="Armor-Light-Low3",["colors"]=["45476a","47332b","3f313e","906954","947d07"]},["leggings"]={["type"]="Armor-Light-Low3",["colors"]=["45476a","47332b","3f313e","906954","45476a"]},["belt"]={["type"]="Armor-Light-Low3",["colors"]=["45476a","47332b","3f313e","906954","947d07"]},["arms"]={["type"]="Armor-Light-Low3",["colors"]=["45476a","47332b","3f313e","906954","947d07"]},["gloves"]={["type"]="Armor-Light-Low3",["colors"]=["45476a","47332b","3f313e","906954","947d07"]}},["b"]="n",["sk"]={["shoulders_head"]="BF6410",["hands_feet"]="BF824B",["eye_white"]="C5C4C4",["snout"]="9C8E6D",["base"]="BF6410",["nails"]="2F2313",["eye"]="91A220",["inner_ear"]="9A8567",["nose"]="887C60",["outer_ear"]="675E48"},["g"]="m",["r"]="f"}
 level=45
 display_name=Ser Growltiger
-sub_name=Weaponsmith
+sub_name=Weapon Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -54279,7 +54279,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Female-Casual1",["colors"]=["653d35","c1482b","e8be46","da852b","c1482b"]},["chest"]={["type"]="Armor-Cloth-Female-Casual1",["colors"]=["653d35","c1482b","e8be46","da852b","c1482b"]},["leggings"]={["type"]="Armor-Cloth-High1",["colors"]=["653d35","c1482b","e8be46","da852b","c1482b","e8be46"]},["belt"]={["type"]="Armor-Cloth-Female-Casual1",["colors"]=["653d35","c1482b","e8be46","da852b","c1482b"]},["collar"]={["type"]="Armor-Cloth-Female-Casual1",["colors"]=["653d35","c1482b","e8be46","da852b","00d40d"]},["arms"]={["type"]="Armor-Cloth-Female-Casual1",["colors"]=["653d35","c1482b","e8be46","da852b","c1482b"]}},["b"]="n",["sk"]={["hands_feet"]="B79059",["inner_ear"]="B79059",["nails"]="242424",["base"]="BF8235",["head_symbol"]="947549",["eye_white"]="CBCBCB",["eye"]="5E8556",["snout"]="CCA165",["nose"]="885935",["chest"]="C89E64"},["g"]="f",["r"]="f"}
 level=45
 display_name=Jelli Cles
-sub_name=Potions and Reagents
+sub_name=General Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -54323,7 +54323,7 @@ might_regen=1
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Low4",["colors"]=["6a60a5","f6c52e","cd901f","a74755","e1c057"]},["chest"]={["type"]="Armor-Cloth-Low4",["colors"]=["6a60a5","f6c52e","cd901f","a74755","e1c057"]},["leggings"]={["type"]="Armor-Cloth-Low4",["colors"]=["6a60a5","f6c52e","cd901f","a74755","e1c057"]},["belt"]={["type"]="Armor-Cloth-Mid4",["colors"]=["6a60a5","f6c52e","cd901f","a74755","e1c057"]},["collar"]={["type"]="Armor-Cloth-Mid4",["colors"]=["6a60a5","f6c52e","cd901f","a74755","cfa43c"]},["arms"]={["type"]="Armor-Cloth-Low4",["colors"]=["6a60a5","f6c52e","cd901f","a74755","e1c057"]}},["b"]="r",["sk"]={["skin"]="6A5928",["tusks"]="6A6A6A",["eyeball"]="C7C5C5",["hair"]="BF3434",["eye"]="00E90E"},["g"]="m",["r"]="s"}
 level=45
 display_name=Gernosh Redler
-sub_name=Crafting Supplier
+sub_name=Crafting Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -54352,7 +54352,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Low2",["colors"]=[]},["leggings"]={["type"]="Armor-CC-Clothing1",["colors"]=["8c5e46","5c5135","b5ad55"]},["belt"]={["type"]="Armor-Cloth-Low2",["colors"]=[]},["chest"]={["type"]="Armor-Cloth-Low2",["colors"]=[]},["gloves"]={["type"]="Armor-Cloth-Low3",["colors"]=[]}},["b"]="m",["sk"]={["ears"]="BFBFBF",["eye_white"]="FFFFFF",["highlight"]="AA7342",["mask"]="AA7342",["base"]="D4B293",["eye"]="424A4B",["nails"]="795A3D",["nose"]="312419",["eye_brow"]="402F21"},["g"]="m",["r"]="r"}
 level=45
 display_name=Mungo Jeri
-sub_name=Armorsmith
+sub_name=Armor Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -54381,7 +54381,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Light-Low8",["colors"]=["54595c","7f7f7f","494e4f","6b462f","6e634d","846e57"]},["chest"]={["type"]="Armor-Light-Mid3",["colors"]=["54595c","7f7f7f","494e4f","6b462f","6e634d","846e57"]},["leggings"]={["type"]="Armor-Light-Low8",["colors"]=["54595c","7f7f7f","494e4f","6b462f","6e634d","846e57"]},["belt"]={["type"]="Armor-Light-Low8",["colors"]=["54595c","7f7f7f","494e4f","6b462f","6e634d","846e57"]},["arms"]={["type"]="Armor-Light-Mid3",["colors"]=["54595c","7f7f7f","494e4f","6b462f","6e634d","846e57"]},["gloves"]={["type"]="Armor-Light-Mid3",["colors"]=["54595c","766752","494e4f","6b462f","6e634d","846e57"]}},["b"]="m",["sk"]={["shoulders_head"]="6A5928",["hands_feet"]="CA914C",["eye_white"]="C5C4C4",["snout"]="9C8E6D",["base"]="9A8567",["nails"]="2F2313",["eye"]="000AAA",["inner_ear"]="FFD6B1",["nose"]="887C60",["outer_ear"]="675E48"},["g"]="m",["r"]="f"}
 level=45
 display_name=Rono Dueter
-sub_name=Weaponsmith
+sub_name=Weapon Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -54410,7 +54410,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Male-Casual1",["colors"]=["6e72aa","efad57","6e72aa","6e3420","bf784e","f6f6ec"]},["chest"]={["type"]="Armor-Cloth-Male-Casual1",["colors"]=["6e72aa","efad57","6e72aa","6e3420","bf784e","f6f6ec"]},["leggings"]={["type"]="Armor-Cloth-Male-Casual1",["colors"]=["6e72aa","efad57","6e72aa","6e3420","bf784e","f6f6ec"]},["belt"]={["type"]="Armor-Cloth-Male-Casual1",["colors"]=["6e72aa","efad57","6e72aa","6e3420","bf784e","f6f6ec"]},["collar"]={["type"]="Armor-Cloth-Male-Casual1",["colors"]=["6e72aa","efad57","6e72aa","6e3420","bf784e","f6f6ec"]},["arms"]={["type"]="Armor-Cloth-Male-Casual1",["colors"]=["6e72aa","efad57","6e72aa","6e3420","bf784e","f6f6ec"]}},["b"]="n",["sk"]={["hands_feet"]="BFBFBF",["inner_ear"]="BFBFBF",["nails"]="242424",["base"]="BFBFBF",["head_symbol"]="A22CBF",["eye_white"]="CBCBCB",["eye"]="5E8556",["snout"]="BFBFBF",["nose"]="BFBFBF",["chest"]="BFBFBF"},["g"]="f",["r"]="f"}
 level=45
 display_name=Elee Mistoff
-sub_name=Potions and Reagents
+sub_name=General Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -54439,7 +54439,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Heavy-Mid2",["colors"]=["a21ae9","083f0b","2a2a2a"]},["chest"]={["type"]="Armor-Heavy-Mid2",["colors"]=["a21ae9","083f0b","2a2a2a"]},["arms"]={["type"]="Armor-Heavy-Mid2",["colors"]=["a21ae9","083f0b","2a2a2a"]},["leggings"]={["type"]="Armor-Heavy-Mid2",["colors"]=["a21ae9","083f0b","2a2a2a"]},["collar"]={["type"]="Armor-Heavy-Mid2",["colors"]=["a21ae9","083f0b","2a2a2a"]},["belt"]={["type"]="Armor-Heavy-Mid2",["colors"]=["a21ae9","083f0b","2a2a2a"]},["gloves"]={["type"]="Armor-Heavy-Mid2",["colors"]=["a21ae9","083f0b","2a2a2a"]}},["b"]="n",["sk"]={["eye_whites"]="FFFFFF",["base"]="CA7B46",["eye"]="00C6FF",["highlights"]="EFB469"},["g"]="f",["r"]="u"}
 level=45
 display_name=Grizz Abella
-sub_name=Armorsmith
+sub_name=Armor Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -54468,7 +54468,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=2,["c"]={["boots"]={["type"]="Armor-Light-High2",["colors"]=["464b94","7f7f6a","9e6f3b","493c37","d1914d"]},["chest"]={["type"]="Armor-Light-Low4",["colors"]=["464b94","7f7f6a","6d7f69","655d4b","5b5247","625141"]},["arms"]={["type"]="Armor-Light-High2",["colors"]=["464b94","7f7f6a","9e6f3b","493c37","d1914d"]},["leggings"]={["type"]="Armor-Light-High2",["colors"]=["464b94","7f7f6a","9e6f3b","493c37","d1914d"]},["collar"]={["type"]="Armor-Light-High2",["colors"]=["464b94","7f7f6a","7f7f6a","493c37","d1914d"]},["belt"]={["type"]="Armor-Light-High2",["colors"]=["464b94","7f7f6a","9e6f3b","493c37","d1914d"]},["gloves"]={["type"]="Armor-Light-High2",["colors"]=["464b94","7f7f6a","9e6f3b","493c37","d1914d"]}},["b"]="n",["sk"]={["legs_forearms"]="4B4E55",["feet"]="9E6A27",["beak"]="515151",["eye_lid"]="847D70",["head_feathers"]="925A42",["eye_detail"]="4B5367",["tail"]="554545",["base"]="554545",["eye_white"]="EFE6DB",["face_highlight"]="DACFB9",["eye"]="19E2E5",["crest"]="4C4E54",["chest"]="938467",["diamonds"]="4B5367"},["g"]="m",["r"]="v"}
 level=45
 display_name=Bustopher Jay
-sub_name=Weaponsmith
+sub_name=Weapon Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -54497,7 +54497,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=2,["c"]={["boots"]={["type"]="Armor-Cloth-Male-Casual1",["colors"]=["515534","3d304c","74756d","6e3420","bf784e","f6f6ec"]},["leggings"]={["type"]="Armor-Cloth-Male-Fancy2",["colors"]=["515534","efad57","74756d","4064c4","dc3d2a","0e0812","3d304c","5d1b01"]},["belt"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=["efad57","efad57","74756d","f8e69e","634930","989960","fcfefb","efad57"]},["chest"]={["type"]="Armor-Cloth-Male-Casual1",["colors"]=["515534","3d304c","74756d","6e3420","bf784e","f6f6ec"]},["arms"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=["515534","efad57","74756d","3d304c","634930","989960","fcfefb","36454a"]}},["b"]="r",["sk"]={["ears"]="B5A492",["eye_white"]="FFFFFF",["highlight"]="A89886",["mask"]="997067",["base"]="87635B",["eye"]="424A4B",["nails"]="795A3D",["nose"]="312419",["eye_brow"]="402F21"},["g"]="m",["r"]="r"}
 level=45
 display_name=Teren Bergorn
-sub_name=Potions and Reagents
+sub_name=General Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -54526,7 +54526,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=2,["c"]={["boots"]={["type"]="Armor-CC-Warrior",["colors"]=["959595","2d3548","959595"]},["leggings"]={["type"]="Armor-CC-Warrior",["colors"]=["959595","2d3548","959595"]},["belt"]={["type"]="Armor-Medium-Epic3",["colors"]=["959595","2d3548","959595","2d3548","784127","b0a389"]},["chest"]={["type"]="Armor-Medium-Mid4",["colors"]=["959595","2d3548","2d3548","959595","787870","2d3548","2d3548","5e2e22"]}},["b"]="m",["sk"]={["shoulders_head"]="7F7F6A",["hands_feet"]="BFBF9F",["eye_white"]="C5C4C4",["snout"]="9C8E6D",["base"]="7F7F6A",["nails"]="2F2313",["eye"]="91A220",["inner_ear"]="9A8567",["nose"]="887C60",["outer_ear"]="675E48"},["g"]="m",["r"]="f"}
 level=45
 display_name=Gus Thea
-sub_name=Armorsmith
+sub_name=Armor Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -54555,7 +54555,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=0,["c"]={["leggings"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=[]},["boots"]={["type"]="Armor-Light-Low8",["colors"]=["2b2d33","3f2212","494e4f","2b2d33","6e634d","9b9388"]},["chest"]={["type"]="Armor-CC-Clothing1",["colors"]=["2b2d33","515161","f3bd50"]}},["b"]="n",["sk"]={["skin"]="7F5632",["horn"]="8E8A6E",["eye_color"]="AAA900",["eyeball"]="878787",["hair"]="9D9FBF",["teeth"]="808080"},["g"]="m",["r"]="p"}
 level=45
 display_name=Rumpus
-sub_name=Weaponsmith
+sub_name=Weapon Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -54584,7 +54584,7 @@ channeling_break_chance=500
 appearance=c2:{["h"]=2,["c"]={["boots"]={["type"]="Armor-Cloth-Low7",["colors"]=["7f2222","b38f68","7c6f61","c99877","b76057"]},["chest"]={["type"]="Armor-Cloth-Mid1",["colors"]=["7f2222","ac6432","704525","a68456","54573b"]},["leggings"]={["type"]="Armor-Cloth-Low7",["colors"]=["7f2222","b38f68","7c6f61","c99877","b76057"]},["belt"]={["type"]="Armor-Cloth-Low7",["colors"]=["7f2222","b38f68","7c6f61","c99877","7f6b45"]},["collar"]={["type"]="Armor-Cloth-Low8",["colors"]=["7f2222","d4c9b3","853b16","8f784e"]},["arms"]={["type"]="Armor-Cloth-Low8",["colors"]=["7f2222","8f784e","853b16","d4c9b3"]}},["b"]="r",["sk"]={["hands_feet"]="BFAE9C",["goatee"]="A18065",["eye_white"]="DCDCDC",["snout"]="E5DDD0",["horns"]="90735C",["face_highlight"]="C9B6A4",["eye"]="809497",["hoves"]="89745C",["eye_lid"]="D4CDC2",["base"]="A78A6F"},["g"]="m",["r"]="c"}
 level=45
 display_name=Tac Morgan
-sub_name=Potions and Reagents
+sub_name=General Merchant
 profession=2
 creature_category=Mortal
 rarity=2
@@ -66383,7 +66383,7 @@ might_regen=1
 appearance=n4:{["sk"]={["base"]="6A5928",["tips"]="CCB3BA",["accent"]="FFD6B1",["beak"]="AA750E",["head"]="606572",["belt"]="352A1F",["eye"]="2A0E02"},["c"]="Horde-Carrionite",["sz"]="1.1"}
 level=45
 display_name=Twee Amberbeak
-sub_name=Potions and Reagents
+sub_name=Weapon Merchant
 profession=1
 creature_category=Mortal
 rarity=2
@@ -66398,7 +66398,7 @@ might_regen=1
 appearance=n4:{["sk"]={["cloth2"]="A0410D",["fur2"]="2A2A2A",["fur1"]="AA8F41",["cloth1"]="2A2A2A",["eye"]="000FFF",["cloth3"]="004A80"},["c"]="Horde-Stone_Lion2",["sz"]="1.3"}
 level=45
 display_name=Lynx Furnett
-sub_name=Armorsmith
+sub_name=Armor Merchant
 profession=1
 creature_category=Mortal
 rarity=2
