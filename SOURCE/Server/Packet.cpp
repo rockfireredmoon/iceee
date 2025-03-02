@@ -11,6 +11,7 @@ PacketManager g_PacketManager;
 #include "Config.h"
 #include "Debug.h"
 #include "util/Log.h"
+#include <functional>
 
 DebugPacketStatistics::DebugPacketStatistics() {
 	Clear();

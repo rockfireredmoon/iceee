@@ -642,7 +642,7 @@ int ClusterManager::Scan(const ScanCallback &task, const string &pattern,
 	size_t pages = 0;
 	if (max == 0)
 		max = 10000;
-	if (g_Logs.cluster->enabled(el::Level::Trace)) {
+	if (g_Logs.cluster->Enabled(el::Level::Trace)) {
 		g_Logs.cluster->trace("Scanning for keys matching %v", pattern);
 	}
 	do {
@@ -663,7 +663,7 @@ int ClusterManager::Scan(const ScanCallback &task, const string &pattern,
 				});
 		mClient.sync_commit();
 	} while (cursor > 0 && (max == 0 || count < max));
-	if (g_Logs.cluster->enabled(el::Level::Trace)) {
+	if (g_Logs.cluster->Enabled(el::Level::Trace)) {
 		g_Logs.cluster->trace("Scanning for keys matching %v, matched %v", pattern, count);
 	}
 	return 0;
@@ -967,7 +967,7 @@ void ClusterManager::ConfirmTransfer(int cdefId, const string &shardName,
 void ClusterManager::Send(const std::string &msg, const Json::Value &val) {
 	Json::StyledWriter writer;
 	std::string str = writer.write(val);
-	if (g_Logs.cluster->enabled(el::Level::Trace))
+	if (g_Logs.cluster->Enabled(el::Level::Trace))
 		g_Logs.cluster->trace("Send cluster message: %v [%v]", msg, str);
 	mClient.publish(msg, str);
 	mClient.commit();
@@ -1179,6 +1179,7 @@ void ClusterManager::ShardRemoved(const string &shardName) {
 			g_Scheduler.Submit(
 					[this, shardName]() {
 						char buf[128];
+						BroadcastShardUpdate(buf);
 						g_SimulatorManager.SendToAllSimulators(buf,
 								PrepExt_SendInfoMessage(buf,
 										Util::Format(
@@ -1201,6 +1202,14 @@ void ClusterManager::ShardRemoved(const string &shardName) {
 	}
 }
 
+void ClusterManager::BroadcastShardUpdate(char *buffer) {
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 57);  //_handleShardUpdate
+	wpos += PutShort(&buffer[wpos], 0);
+	PutShort(&buffer[1], wpos - 3);
+	g_SimulatorManager.SendToAllSimulators(buffer, wpos, NULL);
+}
+
 void ClusterManager::NewShard(const string &shardName) {
 	SYNCHRONIZED(mMutex)
 	{
@@ -1220,6 +1229,7 @@ void ClusterManager::NewShard(const string &shardName) {
 		g_Scheduler.Submit(
 				[this, shardName]() {
 					char buf[128];
+					BroadcastShardUpdate(buf);
 					g_SimulatorManager.SendToAllSimulators(buf,
 							PrepExt_SendInfoMessage(buf,
 									Util::Format(
@@ -1633,7 +1643,7 @@ void ClusterManager::RunProcessingCycle() {
 	/* Because this runs in the server processing thread we use g_ServerTime instead of g_PlatformTime.getMilliseconds() */
 	if (g_ServerTime > mNextPing) {
 
-		if(g_Logs.cluster->enabled(el::Level::Debug)) {
+		if(g_Logs.cluster->Enabled(el::Level::Debug)) {
 			g_Logs.cluster->debug("Sending shard ping for %v at %v", mShardName,
 					g_ServerTime);
 		}
@@ -1717,7 +1727,7 @@ void ClusterManager::Ready() {
 		mSub.subscribe(SERVER_CONFIGURATION,
 				[this](const string &chan, const string &msg) {
 
-					if (g_Logs.cluster->enabled(el::Level::Debug))
+					if (g_Logs.cluster->Enabled(el::Level::Debug))
 						g_Logs.cluster->debug("Received configuration %v : %v",
 								chan, msg);
 

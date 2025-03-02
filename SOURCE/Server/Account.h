@@ -145,6 +145,7 @@ public:
 	int MaxCharacters;
 
 	// Transient stuff (not store in character data)
+	bool AuthenticatedBySimTransfer;
 	bool DueDailyRewards;	// When set to true, when login has completely finished the player will be given their daily rewards
 	HTTPD::SiteSession SiteSession;
 

@@ -20,6 +20,7 @@
 
 #include "Util.h"
 #include "util/Log.h"
+#include <functional>
 
 LeaderboardManager g_LeaderboardManager;
 

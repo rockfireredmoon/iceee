@@ -547,7 +547,7 @@ namespace ScriptCore
 	NutPlayer::~NutPlayer() {
 		ClearQueue();
 		if(mHalted) {
-			if(g_Logs.script->enabled(el::Level::Trace)) {
+			if(g_Logs.script->Enabled(el::Level::Trace)) {
 				if(def == NULL)
 					g_Logs.script->trace("Closing virtual machine for uninitialized Squirrel Script");
 				else
@@ -619,7 +619,7 @@ namespace ScriptCore
 		sqstd_seterrorhandlers(vm); //registers the default error handlers
 		sq_setprintfunc(vm, PrintFunc, Errorfunc); //sets the print function
 
-		if (g_Logs.script->enabled(el::Level::Debug)) {
+		if (g_Logs.script->Enabled(el::Level::Debug)) {
 			g_Logs.script->debug("Processing Squirrel script '%v'", def->mSourceFile);
 		}
 
@@ -636,13 +636,13 @@ namespace ScriptCore
 
 		if(cnutMod != def->GetLastModified()) {
 			g_Logs.script->info("Recompiling Squirrel script '%v' (%v)", def->mSourceFile.string(), def->scriptName);
-			if(g_Logs.script->enabled(el::Level::Trace)) {
+			if(g_Logs.script->Enabled(el::Level::Trace)) {
 				g_Logs.script->trace("-------------------------------\n%v-------------------------------", def->mScriptContent);
 			}
 			compiled = script.CompileString(def->mScriptContent, errors, def->scriptName);
 		}
 		else {
-			if (g_Logs.script->enabled(el::Level::Debug)) {
+			if (g_Logs.script->Enabled(el::Level::Debug)) {
 				g_Logs.script->debug("Loading existing Squirrel script bytecode for '%v'", cnut.string());
 			}
 			compiled = script.CompileFile(_SC(cnut.c_str()), errors);
@@ -763,7 +763,7 @@ namespace ScriptCore
 		}
 		else {
 			unsigned long spd = g_Config.SquirrelQueueSpeed / def->mScriptSpeed;
-			if(g_Logs.script->enabled(el::Level::Trace)) {
+			if(g_Logs.script->Enabled(el::Level::Trace)) {
 				g_Logs.script->trace("Queueing call (exec) in %v in %v", def->scriptName.c_str(), spd);
 			}
 			return QueueAdd(new ScriptCore::NutScriptEvent(
@@ -786,7 +786,7 @@ namespace ScriptCore
 			return -1;
 		}
 		else {
-			if(g_Logs.script->enabled(el::Level::Trace)) {
+			if(g_Logs.script->Enabled(el::Level::Trace)) {
 				g_Logs.script->trace("Queueing call in %v in %v", def->scriptName.c_str(), fireDelay);
 			}
 			return QueueAdd(new ScriptCore::NutScriptEvent(
@@ -1035,7 +1035,7 @@ namespace ScriptCore
 
 	string NutPlayer::RunFunctionWithStringReturn(string name, vector<ScriptParam> parms, bool time, string defaultIfNoFunction) {
 		if(!mActive) {
-			if(g_Logs.script->enabled(el::Level::Trace)) {
+			if(g_Logs.script->Enabled(el::Level::Trace)) {
 				g_Logs.script->trace("Attempt to run function on inactive script %v.", name.c_str());
 			}
 			return defaultIfNoFunction;
@@ -1073,7 +1073,7 @@ namespace ScriptCore
 
 	bool NutPlayer::RunFunctionWithBoolReturn(string name, vector<ScriptParam> parms, bool time, bool defaultIfNoFunction) {
 		if(!mActive) {
-			if(g_Logs.server->enabled(el::Level::Trace)) {
+			if(g_Logs.server->Enabled(el::Level::Trace)) {
 				g_Logs.script->trace("Attempt to run function on inactive script %s.", name.c_str());
 			}
 			return defaultIfNoFunction;
@@ -1113,7 +1113,7 @@ namespace ScriptCore
 //		g_Log.AddMessageFormat("[REMOVEME] Running function %s in %s (active: %s).", name.c_str(), def->mSourceFile.c_str(), mActive ? "yes" : "no");
 
 		if(!mActive) {
-			if(g_Logs.script->enabled(el::Level::Trace)) {
+			if(g_Logs.script->Enabled(el::Level::Trace)) {
 				g_Logs.script->trace("Attempt to run function on inactive script %v.", name.c_str());
 			}
 			return false;
@@ -1169,7 +1169,7 @@ namespace ScriptCore
 			return true;
 		}
 		else {
-			if(g_Logs.script->enabled(el::Level::Trace)) {
+			if(g_Logs.script->Enabled(el::Level::Trace)) {
 				g_Logs.script->trace("Request to wake an already awake VM to run %v.", name.c_str());
 			}
 		}
@@ -1177,7 +1177,7 @@ namespace ScriptCore
 	}
 
 	bool NutPlayer::DoRunFunction(string name, vector<ScriptParam> parms, bool time, bool retVal) {
-		if(g_Logs.server->enabled(el::Level::Trace)) {
+		if(g_Logs.server->Enabled(el::Level::Trace)) {
 			g_Logs.script->debug("Run function %v in %v", name.c_str(), def->mSourceFile.c_str());
 		}
 		sq_pushroottable(vm);
@@ -1654,7 +1654,7 @@ void ScriptDef :: ClearDerived(void)
 
 void ScriptDef :: CompileFromSource(const fs::path &sourceFile)
 {
-	if(g_Logs.script->enabled(el::Level::Trace)) {
+	if(g_Logs.script->Enabled(el::Level::Trace)) {
 		g_Logs.script->trace("Compiling TSL script %v", sourceFile);
 	}
 	FileReader lfr;

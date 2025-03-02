@@ -319,7 +319,7 @@ int ZoneListHandler::handleQuery(SimulatorThread *sim,
 	if(len > 50 || len == 0)
 		len = 50;
 
-	if(g_Logs.server->enabled(el::Level::Debug))
+	if(g_Logs.server->Enabled(el::Level::Debug))
 		g_Logs.server->debug("Zone list query for zone, start at [%v], for length of [%v]. Filter is '%v'", start, len, filter);
 
 	vector<pair<int, ZoneDefInfo>> results;
@@ -341,7 +341,7 @@ int ZoneListHandler::handleQuery(SimulatorThread *sim,
 		if(start + len >= results.size())
 			len = results.size() - start;
 	}
-	if(g_Logs.server->enabled(el::Level::Debug))
+	if(g_Logs.server->Enabled(el::Level::Debug))
 		g_Logs.server->debug("Actual zone query results, start at [%v], for length of [%v] in results of [%v]", start, len, results.size());
 
 	QueryResponse resp(query->ID);

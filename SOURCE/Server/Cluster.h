@@ -210,6 +210,7 @@ private:
 	void TransferFromOtherShard(int cdefId, const std::string &shardName, std::string token, int simID);
 	void ConfirmTransferToOtherShard(int cdefId, const std::string &shardName, std::string token, int simID);
 	void FindMasterShard();
+	void BroadcastShardUpdate(char *buf);
 	void SendConfiguration();
 	void RequestReconfigure(const string &shardName);
 	void NewShard(const std::string &shardName);

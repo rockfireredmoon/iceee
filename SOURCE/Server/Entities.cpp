@@ -5,6 +5,7 @@
 #include "util/Log.h"
 #include "Util.h"
 #include <stdlib.h>
+#include <algorithm>
 
 //
 // Abstract player class for scripts that run in instances. This includes instance scripts

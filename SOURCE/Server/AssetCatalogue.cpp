@@ -25,6 +25,7 @@
 #include <string.h>
 #include "AssetCatalogue.h"
 #include <algorithm>
+#include <fstream>
 
 AssetCatelogueManager g_AssetCatalogueManager;
 
@@ -211,8 +212,13 @@ bool AssetCatelogueManager::Contains(std::string name) {
 AssetCatalogueItem* AssetCatelogueManager::GetByID(std::string id) {
 	for (auto const& it : mItems) {
 		AssetCatalogueItem* item = it.second;
-		if(Util::CaseInsensitiveStringCompare(item->GetAsset(), id))
-			return item;
+		if(item == NULL)
+			g_Logs.server->error("Item in list %v has NULL value. Search for %v",
+					it.first, id);
+		else {
+			if(Util::CaseInsensitiveStringCompare(item->GetAsset(), id))
+				return item;
+		}
 	}
 
 	return NULL;

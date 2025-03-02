@@ -208,10 +208,15 @@ void SimulatorManager::RunPendingActions(void) {
 }
 
 SimulatorThread* SimulatorManager::GetPtrByID(int simID) {
+//	cs.Enter("SimulatorManager::GetPtrByID");
 	SIMULATOR_IT it;
-	for (it = Simulator.begin(); it != Simulator.end(); ++it)
-		if (it->InternalID == simID)
+	for (it = Simulator.begin(); it != Simulator.end(); ++it) {
+		if (it->InternalID == simID) {
+//			cs.Leave();
 			return &*it;
+		}
+	}
+//	cs.Leave();
 	return NULL;
 }
 
@@ -1236,7 +1241,7 @@ void SimulatorThread::SetPersona(int personaIndex) {
 		return;
 	}
 
-	if(g_Logs.server->enabled(el::Level::Trace)) {
+	if(g_Logs.server->Enabled(el::Level::Trace)) {
 		g_Logs.server->trace("[%v] Setting character: %v:%v", InternalID,
 				pld.accPtr->Name, personaIndex);
 	}
@@ -1494,19 +1499,30 @@ bool SimulatorThread::MainCallSetZone(int newZoneID, int newInstanceID,
 	g_ClusterManager.JoinedShard(InternalID, pld.zoneDef->mID, pld.charPtr);
 	BroadcastShardChanged();  //Let friends know we changed shards.
 
+	g_Logs.simulator->info("[%v] Checking travel locations", InternalID);
 	int r = pld.charPtr->questJournal.CheckTravelLocations(
 			creatureInst->CreatureID, Aux1, creatureInst->CurrentX,
 			creatureInst->CurrentY, creatureInst->CurrentZ, pld.CurrentZoneID);
 	if (r > 0)
 		AttemptSend(Aux1, r);
 
+	g_Logs.simulator->info("[%v] Checking permissions", InternalID);
 	if (CheckPermissionSimple(Perm_Account, Permission_Invisible) == true)
 		creatureInst->_AddStatusList(StatusEffects::GM_INVISIBLE, -1);
 
+	g_Logs.simulator->info("[%v] Updating player references", InternalID);
 	g_PartyManager.UpdatePlayerReferences(creatureInst);
 
 	creatureInst->SetServerFlag(ServerFlags::Noncombatant, true);
 	pld.IgnoreNextMovement = true;
+
+	g_Logs.simulator->info("[%v] Zone set for: %v", InternalID,
+			newZoneID);
+
+	if(pld.accPtr->AuthenticatedBySimTransfer) {
+		g_Logs.simulator->info("[%v] This simulator is result of a transfer, marking as LOADED", InternalID);
+		LoadStage = LOADSTAGE_LOADED;
+	}
 	return true;
 }
 
@@ -1532,42 +1548,44 @@ void SimulatorThread::LoadCharacterSession(void) {
 	pld.charPtr->Shard = g_ClusterManager.mShardName;
 
 	// Determine if we should give a daily reward for the account
-	if (pld.accPtr->LastLogOn.length() == 0) {
-		pld.accPtr->DueDailyRewards = true;
-	} else {
-		// Test on the date portion only
-		STRINGLIST thisDate;
-		STRINGLIST lastLogonDate;
-		Util::Split(pld.accPtr->LastLogOn, ",", thisDate);
-		Util::Split(pld.charPtr->LastLogOn, ",", lastLogonDate);
-		pld.accPtr->DueDailyRewards = strcmp(thisDate[0].c_str(),
-				lastLogonDate[0].c_str()) != 0;
-	}
-	if (pld.accPtr->DueDailyRewards) {
-		g_Logs.simulator->info("[%v] %v is logging on for the first time today",
-				InternalID, pld.accPtr->Name);
-		pld.charPtr->LastLogOn = pld.accPtr->LastLogOn;
-
-		// Is this a consecutive day?
-		unsigned long lastLoginDay =
-				pld.accPtr->LastLogOnTimeSec == 0 ?
-						0 : pld.accPtr->LastLogOnTimeSec / 86400;
-		unsigned long nowTimeSec = time(NULL);
-		unsigned long nowTimeDay = nowTimeSec / 86400;
-		if (lastLoginDay == 0 || nowTimeDay == lastLoginDay + 1) {
-			// It is!
-			pld.accPtr->ConsecutiveDaysLoggedIn++;
-			g_Logs.simulator->info(
-					"[%v] %v has now logged in %v consecutive days.",
-					InternalID, pld.accPtr->Name,
-					pld.accPtr->ConsecutiveDaysLoggedIn);
+	if(!pld.accPtr->AuthenticatedBySimTransfer) {
+		if (pld.accPtr->LastLogOn.length() == 0) {
+			pld.accPtr->DueDailyRewards = true;
 		} else {
-			// Not a consecutive day, so not due daily rewards
-			pld.accPtr->DueDailyRewards = false;
+			// Test on the date portion only
+			STRINGLIST thisDate;
+			STRINGLIST lastLogonDate;
+			Util::Split(pld.accPtr->LastLogOn, ",", thisDate);
+			Util::Split(pld.charPtr->LastLogOn, ",", lastLogonDate);
+			pld.accPtr->DueDailyRewards = strcmp(thisDate[0].c_str(),
+					lastLogonDate[0].c_str()) != 0;
 		}
+		if (pld.accPtr->DueDailyRewards) {
+			g_Logs.simulator->info("[%v] %v is logging on for the first time today",
+					InternalID, pld.accPtr->Name);
+			pld.charPtr->LastLogOn = pld.accPtr->LastLogOn;
 
-		pld.accPtr->LastLogOnTimeSec = nowTimeSec;
-		pld.accPtr->PendingMinorUpdates++;
+			// Is this a consecutive day?
+			unsigned long lastLoginDay =
+					pld.accPtr->LastLogOnTimeSec == 0 ?
+							0 : pld.accPtr->LastLogOnTimeSec / 86400;
+			unsigned long nowTimeSec = time(NULL);
+			unsigned long nowTimeDay = nowTimeSec / 86400;
+			if (lastLoginDay == 0 || nowTimeDay == lastLoginDay + 1) {
+				// It is!
+				pld.accPtr->ConsecutiveDaysLoggedIn++;
+				g_Logs.simulator->info(
+						"[%v] %v has now logged in %v consecutive days.",
+						InternalID, pld.accPtr->Name,
+						pld.accPtr->ConsecutiveDaysLoggedIn);
+			} else {
+				// Not a consecutive day, so not due daily rewards
+				pld.accPtr->DueDailyRewards = false;
+			}
+
+			pld.accPtr->LastLogOnTimeSec = nowTimeSec;
+			pld.accPtr->PendingMinorUpdates++;
+		}
 	}
 
 	pld.charPtr->SessionsLogged++;
@@ -1834,6 +1852,9 @@ void SimulatorThread::BroadcastGuildChange(int guildDefID) {
 }
 
 void SimulatorThread::BroadcastShardChanged(void) {
+
+	g_Logs.simulator->info("[%v] Broadcast shard change", InternalID);
+
 	if (IsGMInvisible() == true)
 		return;
 

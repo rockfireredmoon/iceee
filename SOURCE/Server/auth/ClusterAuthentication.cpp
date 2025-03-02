@@ -49,16 +49,17 @@ AccountData * ClusterAuthenticationHandler::authenticate(const std::string &logi
 	g_Logs.data->info("Cluster authentication token password %v for user %v", authorizationHash, loginName);
 	g_CharacterManager.GetThread("ClusterAuthenticationHandler::authenticate");
 	cd = g_CharacterManager.RequestCharacter(psp.mID, false);
+	g_CharacterManager.ReleaseThread();
 	if(cd == NULL) {
 		g_Logs.data->warn("Could not find character %v associated with token %v", psp.mID, psp.mToken);
-		g_CharacterManager.ReleaseThread();
 		return NULL;
 	}
-	g_CharacterManager.ReleaseThread();
 
 	g_Logs.data->info("Retrieving account for %v", loginName);
 	g_AccountManager.cs.Enter("ClusterAuthenticationHandler::authenticate");
 	accPtr = g_AccountManager.FetchIndividualAccount(cd->AccountID);
+	accPtr->AuthenticatedBySimTransfer = true;
+	accPtr->DueDailyRewards = false;
 	g_AccountManager.cs.Leave();
 
 	return accPtr;

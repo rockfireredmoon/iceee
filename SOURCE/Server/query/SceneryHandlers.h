@@ -40,6 +40,16 @@ private:
 			CreatureInstance *creatureInstance);
 };
 
+class CreatureEditHandler : public QueryHandler {
+public:
+	~CreatureEditHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+private:
+	int protected_helper_query_creature_edit(SimulatorThread *sim,
+			CharacterServerData *pld, SimulatorQuery *query,
+			CreatureInstance *creatureInstance);
+};
+
 class SceneryLinkAddHandler : public QueryHandler {
 public:
 	~SceneryLinkAddHandler() {};

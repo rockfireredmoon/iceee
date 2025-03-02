@@ -159,6 +159,8 @@ int LobbyAuthenticateMessage::handleMessage(SimulatorThread *sim, CharacterServe
 				PutShort(&sim->SendBuf[1], wpos - 3);
 				sim->AttemptSend(sim->SendBuf, wpos);
 
+				g_Logs.event->info("[ACCOUNT] Sent queue position to %v", accPtr->Name);
+
 			});
 		}
 
@@ -182,14 +184,14 @@ int SelectPersonaMessage::handleMessage(SimulatorThread *sim, CharacterServerDat
 		//Extra stuff for 0.8.9
 		int var1 = GetInteger(&sim->readPtr[sim->ReadPos], sim->ReadPos);
 		int var2 = GetInteger(&sim->readPtr[sim->ReadPos], sim->ReadPos);
-		if (g_Logs.simulator->enabled(el::Level::Trace)) {
+		if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 			g_Logs.simulator->trace(
 					"[%d] 0.8.9 login data - Persona:%d, Unknowns:%d,%d",
 					sim->InternalID, personaIndex, var1, var2);
 		}
 	}
 	sim->SetPersona(personaIndex);
-	if (g_Logs.simulator->enabled(el::Level::Trace)) {
+	if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 		g_Logs.simulator->trace("[%v] -- SetPersona --", sim->InternalID);
 	}
 	return 0;

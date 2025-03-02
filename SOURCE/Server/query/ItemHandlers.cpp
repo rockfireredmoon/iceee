@@ -1029,7 +1029,7 @@ int EssenceShopContentsHandler::handleQuery(SimulatorThread *sim,
 
 	int CID = atoi(query->args[0].c_str());
 
-	if (g_Logs.simulator->enabled(el::Level::Trace)) {
+	if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 		g_Logs.simulator->trace("[%v] essenceShop.contents: %v", sim->InternalID,
 				CID);
 	}

@@ -443,7 +443,7 @@ int InitServerMain(int argc, char *argv[]) {
 		} else if (strcmp(argv[i], "-C") == 0) {
 			consoleOut = true;
 		} else if (strcmp(argv[i], "-I") == 0) {
-			el::Loggers::addFlag(el::LoggingFlag::ImmediateFlush);
+			g_Logs.AddFlag(el::Flags::ImmediateFlush);
 		} else if (strcmp(argv[i], "-L") == 0) {
 			i++;
 			if (i < argc) {
@@ -524,6 +524,8 @@ int InitServerMain(int argc, char *argv[]) {
 			new AccountTrackingHandler();
 	g_QueryManager.lobbyQueryHandlers["persona.list"] =
 			new PersonaListHandler();
+	g_QueryManager.lobbyQueryHandlers["persona.currency"] =
+			new PersonaCurrencyHandler();
 	g_QueryManager.lobbyQueryHandlers["persona.create"] =
 			new PersonaCreateHandler();
 	g_QueryManager.lobbyQueryHandlers["persona.delete"] =
@@ -651,6 +653,7 @@ int InitServerMain(int argc, char *argv[]) {
 
 	g_QueryManager.queryHandlers["scenery.list"] = new SceneryListHandler();
 	g_QueryManager.queryHandlers["scenery.edit"] = new SceneryEditHandler();
+	g_QueryManager.queryHandlers["creature.edit"] = new CreatureEditHandler();
 	g_QueryManager.queryHandlers["scenery.delete"] = new SceneryDeleteHandler();
 	g_QueryManager.queryHandlers["scenery.link.add"] =
 			new SceneryLinkAddHandler();
@@ -1151,7 +1154,7 @@ int InitServerMain(int argc, char *argv[]) {
 	// Legacy web control panel
 	g_HTTPService.RegisterHandler("/remoteaction", new HTTPD::RemoteActionHandler());
 	if(!g_HTTPService.Start() && g_Config.HTTPServeAssets) {
-		g_Logs.server->fatal("Failed to start HTTP server, and it is required to server assets.Giving up.");
+		g_Logs.server->fatal("Failed to start HTTP server, and it is required to serve assets. Giving up.");
 		return 0;
 	}
 
@@ -1491,7 +1494,7 @@ void RunServerMain(void) {
 
 	static Timer logTimer;
 	if (logTimer.ReadyWithUpdate(300000))
-		g_Logs.chat->flush();
+		g_Logs.chat->Flush();
 
 	g_SimulatorManager.RunPendingActions();
 	g_CharacterManager.CheckGarbageCharacters();

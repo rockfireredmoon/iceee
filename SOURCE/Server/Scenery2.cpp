@@ -1360,6 +1360,7 @@ size_t SceneryZone::GetTileCount(void)
 
 SceneryManager::SceneryManager()
 {
+	mThread = NULL;
 	mNextAutosaveTime = 0;
 	mNextGarbageCheckTime = 0;
 	bThreadActive = false;

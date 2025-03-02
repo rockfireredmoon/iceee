@@ -267,7 +267,7 @@ int InitServerMain(int argc, char *argv[]) {
 			consoleOut = true;
 		}
 		else if(strcmp(argv[i], "-I") == 0) {
-			el::Loggers::addFlag(el::LoggingFlag::ImmediateFlush);
+			g_Logs.AddFlag(el::Flags::ImmediateFlush);
 		}
 		else if(strcmp(argv[i], "-L") == 0) {
 			i++;

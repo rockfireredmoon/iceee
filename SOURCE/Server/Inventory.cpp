@@ -881,7 +881,7 @@ int InventoryManager :: ItemMove(char *buffer, char *convBuf, CharacterStatSet *
 int InventoryManager :: AddItemUpdate(char *buffer, char *convBuf, InventorySlot *slot)
 {
 
-	if (g_Logs.server->enabled(el::Level::Debug))
+	if (g_Logs.server->Enabled(el::Level::Debug))
 		g_Logs.server->debug("Preparing inventory update for item ID %v in container %v",
 				slot->IID, slot->CCSID);
 
@@ -919,7 +919,7 @@ int InventoryManager :: AddItemUpdate(char *buffer, char *convBuf, InventorySlot
 
 int InventoryManager :: RemoveItemUpdate(char *buffer, char *convBuf, InventorySlot *slot)
 {
-	if (g_Logs.server->enabled(el::Level::Debug))
+	if (g_Logs.server->Enabled(el::Level::Debug))
 		g_Logs.server->debug("Preparing inventory remove for item ID %v in container %v",
 				slot->IID, slot->CCSID);
 
@@ -1162,7 +1162,7 @@ const char * InventoryManager :: GetEqErrorString(int code)
 
 int AddItemUpdate(char *buffer, char *convBuf, InventorySlot *slot)
 {
-	if (g_Logs.server->enabled(el::Level::Debug))
+	if (g_Logs.server->Enabled(el::Level::Debug))
 		g_Logs.server->debug("Preparing inventory add for item ID %v in container %v",
 				slot->IID, slot->CCSID);
 
@@ -1230,7 +1230,7 @@ int AddItemUpdate(char *buffer, char *convBuf, InventorySlot *slot)
 
 int RemoveItemUpdate(char *buffer, char *convBuf, InventorySlot *slot)
 {
-	if (g_Logs.server->enabled(el::Level::Debug))
+	if (g_Logs.server->Enabled(el::Level::Debug))
 		g_Logs.server->debug("Preparing inventory remove for item ID %v in container %v",
 				slot->IID, slot->CCSID);
 

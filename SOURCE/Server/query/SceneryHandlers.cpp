@@ -237,6 +237,186 @@ int SceneryEditHandler::protected_helper_query_scenery_edit(
 
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, std::to_string(prop.ID).c_str());
 }
+
+
+
+//
+// CreatureEditHandler
+//
+int CreatureEditHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	/*  Query: creature.edit
+	 Edit an existing prop creature.
+	 Args : [variable]
+
+	 local args = [];
+		args.append(this.mCreatureId);
+		args.append("position");
+		args.append("" + this.mNew.position);
+		args.append("spawn.position");
+		args.append("" + this.mNew.position);
+		local h = "" + this._quatToHeading(this.mNew.orientation);
+		args.append("heading");
+		args.append(h);
+		args.append("rotation");
+		args.append(h);
+		args.append("spawn.heading");
+		args.append(h);
+		this._Connection.sendQuery("creature.edit", {}, args);
+
+	 */
+
+	int WritePos = 0;
+
+	WritePos = protected_helper_query_creature_edit(sim, pld, query,
+			creatureInstance);
+	if (WritePos <= 0) {
+		sim->SendInfoMessage(sim->GetErrorString(WritePos), INFOMSG_ERROR);
+		WritePos = PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+	}
+	return WritePos;
+}
+
+int CreatureEditHandler::protected_helper_query_creature_edit(
+		SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	if (query->argCount < 1)
+		return QueryErrorMsg::GENERIC;
+
+	if (pld->zoneDef == NULL)
+		return QueryErrorMsg::GENERIC;
+
+	SceneryObject prop;
+	SceneryObject *propPtr = NULL;
+	bool newProp = false;
+
+	SceneryObject oldPropData;
+
+	int PropID = query->GetInteger(0);
+	//LogMessageL(MSG_SHOW, "[DEBUG] scenery.edit: %d", PropID);
+
+	g_SceneryManager.GetThread(
+			"SimulatorThread::protected_helper_query_creature_edit");
+	//propPtr = g_SceneryManager.GetPropPtr(pld.CurrentZoneID, PropID, NULL);
+	propPtr = g_SceneryManager.GlobalGetPropPtr(pld->CurrentZoneID, PropID,
+	NULL);
+	g_SceneryManager.ReleaseThread();
+
+	if (propPtr == NULL)
+		return QueryErrorMsg::PROPNOEXIST;
+	prop.copyFrom(propPtr);
+
+	//Save the existing prop data in case there's an error
+	oldPropData.copyFrom(&prop);
+
+	if (sim->HasPropEditPermission(&prop) == false) {
+		int wpos = PrepExt_UpdateScenery(sim->SendBuf, &oldPropData);
+		sim->AttemptSend(sim->SendBuf, wpos);
+		return QueryErrorMsg::PROPLOCATION;
+	}
+
+	for (unsigned int i = 1; i < query->argCount; i += 2) {
+		std::string field = query->args[i];
+		std::string data = query->args[i + 1];
+
+		if (field == "asset")
+			prop.Asset = data;
+		else if (field == "p") {
+			prop.SetPosition(data);
+		} else if (field == "q") {
+			prop.SetQ(data);
+		} else if (field == "s")
+			prop.SetS(data);
+		else if (field == "flags")
+			prop.Flags = atoi(data.c_str());
+		else if (field == "name")
+			prop.Name = data;
+		else if (field == "layer")
+			prop.Layer = atoi(data.c_str());
+		else if (field == "patrolSpeed")
+			prop.patrolSpeed = atoi(data.c_str());
+		else if (field == "patrolEvent")
+			prop.patrolEvent = data;
+		else if (field == "ID") {
+			//Don't do anything for this, otherwise it might create a
+			//duplicate entry.
+			//prop.ID = atoi(data);
+		} else if (prop.SetExtendedProperty(field, data) == true) {
+			g_Logs.simulator->debug(
+					"[%v] scenery.edit extended property was set [%v=%v]",
+					sim->InternalID, field, data);
+		} else
+			g_Logs.simulator->error("Unknown property [%v] for scenery.edit",
+					field);
+	}
+
+	if (prop.Asset.length() == 0)
+		return QueryErrorMsg::PROPASSETNULL;
+
+	//The client makes changes internally without waiting for confirmation.
+	//If the prop edit fails, we need to send back the old prop data to force
+	//the client to revert to its prior state.
+
+	//if(pld.accPtr->CheckBuildPermissionAdv(pld.zoneDef->mID, pld.zoneDef->mPageSize, prop.LocationX, prop.LocationZ) == false)
+	if (sim->HasPropEditPermission(&prop) == false) {
+		if (newProp == false) {
+			int wpos = PrepExt_UpdateScenery(sim->SendBuf, &oldPropData);
+			sim->AttemptSend(sim->SendBuf, wpos);
+		}
+		return QueryErrorMsg::PROPLOCATION;
+	}
+
+	//Check valid asset
+	if (g_SceneryManager.VerifyATS(prop) == false) {
+		if (newProp == false) {
+			int wpos = PrepExt_UpdateScenery(sim->SendBuf, &oldPropData);
+			sim->AttemptSend(sim->SendBuf, wpos);
+		}
+		return QueryErrorMsg::PROPATS;
+	}
+
+	//Prop is good to add.
+	g_SceneryManager.GetThread(
+			"SimulatorThread::protected_helper_query_scenery_edit");
+
+	bool isSpawnPoint = prop.IsSpawnPoint();
+
+	SceneryObject *retProp = NULL;
+	if (PropID == 0) {
+		retProp = g_SceneryManager.AddProp(pld->zoneDef->mID, prop);
+		//LogMessageL(MSG_SHOW, "Added prop: %d, %s", prop.ID, prop.Asset);
+	} else {
+		if (isSpawnPoint == true)
+			creatureInstance->actInst->spawnsys.RemoveSpawnPoint(prop.ID);
+
+		retProp = g_SceneryManager.ReplaceProp(pld->zoneDef->mID, prop);
+		//LogMessageL(MSG_SHOW, "Replaced prop: %d, %s", prop.ID, prop.Asset);
+	}
+
+	// The spawn system needs to reference a stable prop location.  If it tries to
+	// reference this prop, it will crash after this local instance is destructed.
+	// So we use retProp instead, which returns with a valid pointer if AddProp()
+	// or ReplaceProp() was successful.
+	if (isSpawnPoint == true && retProp != NULL)
+		creatureInstance->actInst->spawnsys.UpdateSpawnPoint(retProp);
+
+	g_SceneryManager.ReleaseThread();
+
+	int opType = (
+			(newProp == true) ? SceneryAudit::OP_NEW : SceneryAudit::OP_EDIT);
+	pld->zoneDef->AuditScenery(creatureInstance->css.display_name,
+			pld->CurrentZoneID, &prop, opType);
+
+	int wpos = PrepExt_UpdateScenery(sim->SendBuf, &prop);
+	//creatureInst->actInst->LSendToAllSimulator(SendBuf, wpos, -1);
+	creatureInstance->actInst->LSendToLocalSimulator(sim->SendBuf, wpos,
+			creatureInstance->CurrentX, creatureInstance->CurrentZ);
+
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, std::to_string(prop.ID).c_str());
+}
+
+
 //
 // SceneryDeleteHandler
 //

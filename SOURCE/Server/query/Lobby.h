@@ -38,6 +38,12 @@ public:
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class PersonaCurrencyHandler : public QueryHandler {
+public:
+	~PersonaCurrencyHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
 class PersonaCreateHandler : public QueryHandler {
 public:
 	~PersonaCreateHandler() {};

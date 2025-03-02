@@ -75,7 +75,7 @@ int QuestGetOfferHandler::handleQuery(SimulatorThread *sim,
 
 	int CID = atoi(query->args[0].c_str());
 
-	if (g_Logs.simulator->enabled(el::Level::Trace)) {
+	if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 		g_Logs.simulator->trace("[%v]   Request quest.getquestoffer for %v",
 				sim->InternalID, CID);
 	}
@@ -84,7 +84,7 @@ int QuestGetOfferHandler::handleQuery(SimulatorThread *sim,
 
 	auto response = pld->charPtr->questJournal.QuestGetQuestOffer(CDef, sim->Aux3);
 
-	if (g_Logs.simulator->enabled(el::Level::Trace)) {
+	if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 		g_Logs.simulator->trace("[%v]   quest.getquestoffer for %v = %v",
 				sim->InternalID, CID, response);
 	}
@@ -113,7 +113,7 @@ int QuestGenericDataHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Invalid query->");
 
 	int QID = atoi(query->args[0].c_str());
-	if (g_Logs.simulator->enabled(el::Level::Trace)) {
+	if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 		g_Logs.simulator->trace("[%v]   Requested quest.genericdata for %v",
 				sim->InternalID, QID);
 	}
@@ -165,7 +165,7 @@ int QuestJoinHandler::handleQuery(SimulatorThread *sim,
 		return sim->ErrorMessageAndQueryOK(sim->SendBuf, "Cannot accept the quest yet.");
 	qdef->mScriptAcceptAction.ExecuteAllCommands(sim);
 
-	if (g_Logs.simulator->enabled(el::Level::Trace)) {
+	if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 		g_Logs.simulator->trace("[%v]   Request quest.join (QuestID: %v, CID: %v)",
 				sim->InternalID, QuestID, CID);
 	}
@@ -250,7 +250,7 @@ int QuestGetCompleteHandler::handleQuery(SimulatorThread *sim,
 
 	int CID = atoi(query->args[0].c_str());
 
-	if (g_Logs.simulator->enabled(el::Level::Trace)) {
+	if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 		g_Logs.simulator->trace("[%v]   Request quest.getcompletequest for %v",
 				sim->InternalID, CID);
 	}

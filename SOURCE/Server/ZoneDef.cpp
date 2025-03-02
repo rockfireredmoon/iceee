@@ -2340,7 +2340,7 @@ void WeatherManager::Deregister(vector<WeatherState*> *states) {
 			it != states->end(); ++it) {
 		WeatherState *ws = *it;
 
-		if(g_Logs.simulator->enabled(el::Level::Trace)) {
+		if(g_Logs.simulator->Enabled(el::Level::Trace)) {
 			g_Logs.simulator->trace("Clearing up weather for %v (%v)",
 					ws->mInstanceId, ws->mDefinition.mMapName.c_str());
 		}
@@ -2348,7 +2348,7 @@ void WeatherManager::Deregister(vector<WeatherState*> *states) {
 		for (vector<string>::iterator it2 = ws->mMapNames.begin();
 				it2 != ws->mMapNames.end(); ++it2) {
 
-			if(g_Logs.simulator->enabled(el::Level::Trace)) {
+			if(g_Logs.simulator->Enabled(el::Level::Trace)) {
 				g_Logs.simulator->trace("    Map (%v)", (*it2).c_str());
 			}
 

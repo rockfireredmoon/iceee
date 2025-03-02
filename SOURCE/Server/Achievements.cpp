@@ -4,6 +4,8 @@
 #include "FileReader.h"
 #include "DirectoryAccess.h"
 #include "util/Log.h"
+#include <string.h>
+#include <algorithm>
 
 
 Achievements::AchievementsManager g_AchievementsManager;

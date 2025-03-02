@@ -49,7 +49,7 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 
 	int CID = query->GetInteger(0);
 
-	if (g_Logs.simulator->enabled(el::Level::Trace)) {
+	if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 		g_Logs.simulator->trace("Querying if creature %v is usable.", CID);
 	}
 
@@ -71,7 +71,7 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 
 
 	if (failed == true) {
-		if (g_Logs.simulator->enabled(el::Level::Trace)) {
+		if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 			g_Logs.simulator->trace("Creature %v is not usable, either there is no such creature nearby, player is in grove, or server flags say is unusable.", CID);
 		}
 		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "N");
@@ -85,7 +85,7 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 				creatureInstance->actInst->lootsys.creatureList[lootable].HasLootableID(
 						creatureInstance->CreatureDefID);
 		if (self >= 0) {
-			if (g_Logs.simulator->enabled(el::Level::Trace)) {
+			if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 				g_Logs.simulator->trace("Creature %v is loot.", CID);
 			}
 			WritePos = PrepExt_QueryResponseString(sim->SendBuf, query->ID,
@@ -95,13 +95,13 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 		auto status = pld->charPtr->questJournal.CreatureIsUsable(CDef);
 		if (status == "N") {
 
-			if (g_Logs.simulator->enabled(el::Level::Trace)) {
+			if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 				g_Logs.simulator->trace("Creature %v is not quest usable, continue ...", CID);
 			}
 
 			if (creatureInstance->actInst->nutScriptPlayer != NULL) {
 				status = sim->GetScriptUsable(target);
-				if (g_Logs.simulator->enabled(el::Level::Trace)) {
+				if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 					g_Logs.simulator->trace("Creature %v script usable status is %v.", CID, status);
 				}
 			}
@@ -109,7 +109,7 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 
 		if (status == "N") {
 
-			if (g_Logs.simulator->enabled(el::Level::Trace)) {
+			if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 				g_Logs.simulator->trace("Creature %v is not script usable, continue ...", CID);
 			}
 
@@ -117,7 +117,7 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 					CDef, pld->CurrentZoneID);
 			if (ptr != NULL) {
 
-				if (g_Logs.simulator->enabled(el::Level::Trace)) {
+				if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 					g_Logs.simulator->trace("Creature %v has an interact def.", CID);
 				}
 
@@ -135,7 +135,7 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 				} else
 					hasReq = true;
 
-				if (g_Logs.simulator->enabled(el::Level::Trace)) {
+				if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 					g_Logs.simulator->trace("Creature %v has requirements = %v.", CID, hasReq);
 				}
 
@@ -145,7 +145,7 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 
 		if (status == "N") {
 
-			if (g_Logs.simulator->enabled(el::Level::Trace)) {
+			if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 				g_Logs.simulator->trace("Creature %v is not InteractDef usable, continue ...", CID);
 			}
 
@@ -158,7 +158,7 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 					 */
 					int id = (*it);
 					if(creatureInstance->charPtr->inventory.GetItemPtrByID(id) == NULL) {
-						if (g_Logs.simulator->enabled(el::Level::Trace)) {
+						if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 							g_Logs.simulator->trace("Creature %v is item giver, continue ...", CID);
 						}
 
@@ -172,7 +172,7 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 			}
 			else if (cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE_SPARKLY)) {
 
-				if (g_Logs.simulator->enabled(el::Level::Trace)) {
+				if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 					g_Logs.simulator->trace("Creature %v is CDEF_HINT_USABLE_SPARKLY.", CID);
 				}
 
@@ -180,7 +180,7 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 			}
 			else if (cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE)) {
 
-				if (g_Logs.simulator->enabled(el::Level::Trace)) {
+				if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 					g_Logs.simulator->trace("Creature %v is CDEF_HINT_USABLE.", CID);
 				}
 
@@ -188,7 +188,7 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 			}
 			else if (target->HasStatus(StatusEffects::HENGE)) {
 
-				if (g_Logs.simulator->enabled(el::Level::Trace)) {
+				if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 					g_Logs.simulator->trace("Creature %v is henge.", CID);
 				}
 
@@ -196,7 +196,7 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 			}
 			else if (target->HasStatus(StatusEffects::MOUNTABLE) && !target->HasStatus(StatusEffects::MOUNTED)) {
 
-				if (g_Logs.simulator->enabled(el::Level::Trace)) {
+				if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 					g_Logs.simulator->trace("Creature %v is mount.", CID);
 				}
 
@@ -204,7 +204,7 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 			}
 		}
 
-		if (g_Logs.simulator->enabled(el::Level::Trace)) {
+		if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 			g_Logs.simulator->trace("Creature %v final usable status is %v.", CID, status);
 		}
 
@@ -213,7 +213,7 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 	}
 
 	if (WritePos == 0) {
-		if (g_Logs.simulator->enabled(el::Level::Trace)) {
+		if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 			g_Logs.simulator->trace("Creature %v is not usable, nothing wanted to handle.", CID);
 		}
 
@@ -347,7 +347,7 @@ int CreatureDefEditHandler::handleQuery(SimulatorThread *sim,
 		const char *name = n.c_str();
 		const char *value = query->args[i + 1].c_str();
 
-		if (g_Logs.simulator->enabled(el::Level::Trace)) {
+		if (g_Logs.simulator->Enabled(el::Level::Trace)) {
 			g_Logs.simulator->trace("[%v]   Name: %v", sim->InternalID, name);
 			g_Logs.simulator->trace("[%v]   Value: %v", sim->InternalID, value);
 		}

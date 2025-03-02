@@ -119,6 +119,40 @@ int PersonaListHandler::handleQuery(SimulatorThread *sim,
 //PersonaCreateHandler
 //
 
+int PersonaCurrencyHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	/* Query: persona.currency
+	 Args : none
+	 Notes: NOOP
+	 Return: Unknown.
+	 */
+
+
+	MULTISTRING response;
+	STRINGLIST copper;
+
+	copper.push_back("COPPER");
+	sprintf(sim->Aux1, "%d", creatureInstance->css.copper);
+	copper.push_back(sim->Aux1);
+
+
+	STRINGLIST credits;
+	credits.push_back("CREDITS");
+	sprintf(sim->Aux1, "%d", sim->pld.accPtr->Credits);
+	credits.push_back(sim->Aux1);
+
+	response.push_back(copper);
+	response.push_back(credits);
+
+	return PrepExt_QueryResponseMultiString(sim->SendBuf, query->ID, response);
+
+}
+
+//
+//PersonaCreateHandler
+//
+
 int PersonaCreateHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {

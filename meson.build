@@ -1,5 +1,5 @@
 project('tawd', ['cpp','c'], version: '0.9.0', default_options : [
-	'cpp_std=c++17',
+	'cpp_std=c++20',
 	'prefix=/usr',
 	'sysconfdir=/etc',
 	'localstatedir=/var'])
@@ -79,6 +79,7 @@ pthread_dep = meson.get_compiler('c').find_library('pthread', required: false)
 #add_global_arguments('-DMG_LEGACY_INTERFACE=1', language: ['cpp','c'])
 
 add_project_arguments('-DELPP_THREAD_SAFE=1', language: ['cpp','c'])
+
 add_project_arguments('-DLOCALCONFIGDIR="' + confdirs + '"', language: ['cpp','c'])
 if not openssl_dep.found() or not get_option('ssl')
 	add_project_arguments('-DNO_SSL=1', language: ['cpp','c'])
@@ -237,7 +238,6 @@ server_lib = library('tawd-server',[
 	'SOURCE/Server/util/base64.cpp',
 	'SOURCE/Server/util/JsonHelpers.cpp',
 	'SOURCE/Server/util/SquirrelObjects.cpp',	
-	'SOURCE/Server/util/easylogging++.cc',
 	'SOURCE/Server/util/Log.cpp'], 
 	dependencies: [thread_dep, curl_dep,boost_dep, squirrel_dep, sqstdlib_dep, tacopie_dep, cppredis_dep],
   	install : true,
@@ -364,7 +364,6 @@ install_headers(
 	'SOURCE/Server/util/JsonHelpers.h',
 	'SOURCE/Server/util/base64.h',
 	'SOURCE/Server/util/SquirrelObjects.h',
-	'SOURCE/Server/util/easylogging++.h',
 	'SOURCE/Server/util/Log.h',
 	'SOURCE/Server/Quest.h',
 	'SOURCE/Server/Packet.h',
